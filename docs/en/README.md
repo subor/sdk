@@ -13,16 +13,9 @@ Should have received the following:
 
 ## Tutorials
 
+* [Layer0 and devtools](tutorials/layer0_devtools)
 * [Run UE4 sample on local PC](tutorials/run_ue4_sample_pc.md)
-### Run Sample on Developer PC
-
-
-
-### Run Sample on Devkit
-
-1. Get IP address
-1. Install sample to IP
-1. Launch sample at IP
+* [Run Unity sample on console](tutorials/run_unity_sample_console.md)
 
 ## SDK Integration ##
 
