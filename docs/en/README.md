@@ -5,21 +5,20 @@
 ### Pre-requisites ###
 
 Should have received the following:
-* (http://dev.playruyi.com) invite code (need one per team or team member)
+
+* [http://dev.playruyi.com]() invite code (need one per team or team member)
 * App ID and secret (need one per project- shared by all team members)
 
 1. [Register](http://dev.playruyi.com/register) at dev.playruyi.com
 
-### Run Sample on Developer PC ###
+## Tutorials
 
-1. Download SDK
-1. Run layer0 and main client
-1. Register user
-1. Setup sample
-1. Install sample
-1. Launch sample
+* [Run UE4 sample on local PC](tutorials/run_ue4_sample_pc.md)
+### Run Sample on Developer PC
 
-### Run Sample on Devkit ###
+
+
+### Run Sample on Devkit
 
 1. Get IP address
 1. Install sample to IP
@@ -46,6 +45,7 @@ Should have received the following:
 # Documentation
 
 Documentation is organized such that it is possible to use any of the following:
+
 - [Bitbucket Wiki](https://bitbucket.org/playruyi/docs/wiki/Home)
 - [mkdocs](http://www.mkdocs.org)
 	1. Install mkdocs
