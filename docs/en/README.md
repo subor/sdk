@@ -1,4 +1,4 @@
-# README #
+# Ruyi
 
 ## Hello World ##
 
@@ -42,3 +42,16 @@ Should have received the following:
 ## OS ##
 * Devkit OS reinstall
 * OS setup/configuration on PC
+
+# Documentation
+
+Documentation is organized such that it is possible to use any of the following:
+- [Bitbucket Wiki](https://bitbucket.org/playruyi/docs/wiki/Home)
+- [mkdocs](http://www.mkdocs.org)
+	1. Install mkdocs
+	1. `mkdocs serve`
+	1. Open [http://127.0.0.1:8000]() in browser
+- [gitbook](https://www.gitbook.com/)
+	1. Install gitbook
+	1. `cd docs` and `gitbook serve`
+	1. Open [http://localhost:4000]() in browser
