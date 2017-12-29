@@ -13,7 +13,7 @@ Should have received the following:
 
 ## Tutorials
 
-* [Layer0 and devtools](tutorials/layer0_devtools)
+* [Layer0 and devtools](tutorials/layer0_devtools.md)
 * [Run UE4 sample on local PC](tutorials/run_ue4_sample_pc.md)
 * [Run Unity sample on console](tutorials/run_unity_sample_console.md)
 
