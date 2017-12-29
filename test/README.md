@@ -1,7 +1,5 @@
 # README #
 
-[test](test/README.md)
-
 ## Hello World ##
 
 ### Pre-requisites ###
