@@ -1,22 +1,27 @@
-# Layer0 and Devtools
+# Launching Platform and Using Devtools
 
 ## Layer0
 
+[Layer0](../topics/layer0.md) must be running on a host machine before you can access most of the Ruyi platform.
+
+1. [Download and install the SDK](setup.md) (if you haven't already)
 1. Run layer0.exe
 	![](/img/layer0.png)
+1. Register and login as a new user
 
 ## Developer tools
 
-All developer tools are available via RuyiDev.exe.  It's designed as an interface and one or more plugins (found in the `Plugins/` folder).
+All [developer tools](../topics/devtool.md) are available via RuyiDev.exe.
 
-A GUI is available by running RuyiDev.exe:
+Double-click RuyiDev.exe to launch the GUI:
 ![](/img/ruyidev_gui.png)
 
-A commandline interface (CLI) is available by running RuyiDev.exe with an option (e.g. `RuyiDev.exe -h`):
+All plugins are listed on the left side of the window.
+
+Open a command prompt and run RuyiDev.exe with an option (e.g. `RuyiDev.exe -h`) to use the commandline interface (CLI):
 ![](/img/ruyidev_cli.png)
 	
 All plugins are used via `RuyiDev.exe <plugin> <arguments>`.
-
 Assistance for any plugin is available via `RuyiDev.exe <plugin> -h`.
 
 For example, `RuyiDev.exe settingtool -h` outputs:
@@ -55,7 +60,8 @@ Usage: 'RuyiDev [<Options>+] settingtool [<args>]'
 
 ## View Current Settings
 
-1. Select `Setting Tool` in GUI
+1. Run `RuyiDev.exe` to launch the GUI
+1. Select `Setting Tool` plugin
 1. For _Format_ select `simple`
 1. Enable `Console`
 1. Click `Run List` button
@@ -65,8 +71,8 @@ Usage: 'RuyiDev [<Options>+] settingtool [<args>]'
 
 Alternatively:
 
-1. Run `RuyiDev.exe -v verbose SettingTool --buttonlist --listformat=simple --listtoconsole=true`
-1. Console output is the same:
+1. From command prompt run `RuyiDev.exe -v verbose SettingTool --buttonlist --listformat=simple --listtoconsole=true`
+1. Console output is similar to GUI:
 ```
 [12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    Found setting amount: 22
 [12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    ScreenShot null systemsetting
@@ -83,14 +89,7 @@ Alternatively:
 [12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    UISetting null systemsetting
 [12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    UIX null systemsetting
 [12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    Mute false systemsetting
-[12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    VolumeUp null systemsetting
-[12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    AudioVolume 20 systemsetting
-[12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    SpeakerVolume 20 systemsetting
-[12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    Language 0 systemsetting
-[12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    CommandLine "-help" systemsetting
-[12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    DevModeOn false systemsetting
-[12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    FileMappings null systemsetting
-[12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    UnionMountsLayers null systemsetting
+...
 ```
 
 ## Change setting value
@@ -99,7 +98,7 @@ Alternatively:
 
 	> [12/29/2017 6:26:04 PM] [         SettingTool]  [      Info]    Mute false systemsetting
 	
-1. Set _Mute_ with `RuyiDev.exe -v verbose SettingTool --buttonset --setkey=Mute --setvalue=true --setmodule=systemsetting`:
+1. Set _Mute_ to __true__ with `RuyiDev.exe -v verbose SettingTool --buttonset --setkey=Mute --setvalue=true --setmodule=systemsetting`:
 	
 	> [12/29/2017 6:26:39 PM] [         SettingTool]  [      Info]    Set Mute to true result: True
 	

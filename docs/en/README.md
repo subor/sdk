@@ -1,50 +1,55 @@
 # Ruyi
 
-## Hello World ##
+## Pre-requisites
 
-### Pre-requisites ###
+You should have received the following:
 
-Should have received the following:
-
-* [http://dev.playruyi.com]() invite code (need one per team or team member)
+* [http://dev.playruyi.com](http://dev.playruyi.com) invite code (need one per team or team member)
+	* e.g. ABC123
 * App ID and secret (need one per project- shared by all team members)
+	* App ID similar to __12345__
+	* App Secret similar to __abcd1234-ef12-ab56-7890cdef1234__
+* Email invitation from Atlassian to join playruyi team on [Bitbucket](https://bitbucket.org/):
+	<img src="/img/bitbucket_invite.png" width="250"/>
 
-1. [Register](http://dev.playruyi.com/register) at dev.playruyi.com
+Do the following once (per team or team member as appropriate):
 
-## Tutorials
+1. Use invite code to [register at dev.playruyi.com](http://dev.playruyi.com/register):
+<br/><img src="/img/devportal_register.png" width="250"/>
+1. Open email from Atlassian to join playruyi team, and click `Accept my invitation` to gain access to [https://bitbucket.org/playruyi/](https://bitbucket.org/playruyi/)
 
-* [Layer0 and devtools](tutorials/layer0_devtools.md)
+---
+# <img src="/img/warning.png" width="32" /> NOTICE
+The Ruyi platform is still in an __early alpha__ state.
+You may experience one or more of the following:
+
+* General brokenness
+* Features haphazardly added/removed
+* API/CLI/UI in constant flux
+* Severly lacking, non-existant, or just plain missleading documentation
+* Dubious spelleng and/or grammar
+
+In other words, here be dragons.
+
+---	
+
+## Tutorials/Howto
+
+* [Setup SDK](tutorials/setup.md)
+* [Launch Platform and Use Developer Tools](tutorials/layer0_devtools.md)
 * [Run UE4 sample on local PC](tutorials/run_ue4_sample_pc.md)
-* [Run Unity sample on console](tutorials/run_unity_sample_console.md)
+* [Run Unity sample on devkit](tutorials/run_unity_sample_console.md)
 
-## SDK Integration ##
+Advanced:
 
-* [Unity Example](https://bitbucket.org/playruyi/space_shooter)
-* [UE4 Example](https://bitbucket.org/playruyi/unreal_demo)
-
-* Link to high-level wrappers/libs
-* Link to Thrift message specifications
-
-* Which functions work/don't work
-
-## devtool ##
-
-| Setting tool | Used to get/set values of the system
-
-## OS ##
 * Devkit OS reinstall
 * OS setup/configuration on PC
+* Debugging SDK
 
-# Documentation
+## Topics
 
-Documentation is organized such that it is possible to use any of the following:
-
-- [Bitbucket Wiki](https://bitbucket.org/playruyi/docs/wiki/Home)
-- [mkdocs](http://www.mkdocs.org)
-	1. Install mkdocs
-	1. `mkdocs serve`
-	1. Open [http://127.0.0.1:8000]() in browser
-- [gitbook](https://www.gitbook.com/)
-	1. Install gitbook
-	1. `cd docs` and `gitbook serve`
-	1. Open [http://localhost:4000]() in browser
+* [Platform Architecture](topics/layer0.md)
+* [Ruyi OS](topics/os.md)
+* [Developer Tools](topics/devtool.md)
+* [SDK](topics/sdk.md)
+* [Documentation](topics/docs.md)

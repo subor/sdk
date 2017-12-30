@@ -5,6 +5,3 @@
 [中文](docs/zh-cn/README.md)
 
 [日本語](docs/ja/README.md)
-
-NOTE:
-Bitbucket wiki requires this file be present
