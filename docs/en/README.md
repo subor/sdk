@@ -1,8 +1,5 @@
 # Ruyi
 
-# Rel
-![](/docs/img/warning.png)
-
 ## Pre-requisites
 
 You should have received the following:
@@ -13,12 +10,12 @@ You should have received the following:
 	* App ID similar to __12345__
 	* App Secret similar to __abcd1234-ef12-ab56-7890cdef1234__
 * Email invitation from Atlassian to join playruyi team on [Bitbucket](https://bitbucket.org/):
-	<img src="/img/bitbucket_invite.png" width="250"/>
+	<img src="/docs/img/bitbucket_invite.png" width="250"/>
 
 Do the following once (per team or team member as appropriate):
 
 1. Use invite code to [register at dev.playruyi.com](http://dev.playruyi.com/register):
-<br/><img src="/img/devportal_register.png" width="250"/>
+<br/><img src="/docs/img/devportal_register.png" width="250"/>
 1. Open email from Atlassian to join playruyi team, and click `Accept my invitation` to gain access to [https://bitbucket.org/playruyi/](https://bitbucket.org/playruyi/)
 
 ---

@@ -2,7 +2,7 @@
 
 The Ruyi platform has the following architecture:
 
-![](/img/platform_arch.png)
+![](/docs/img/platform_arch.png)
 
 Layer0 is the central entity exposing features of the Ruyi platform as a set of services.  It runs atop a host OS such as Windows 7 running on your local workstation, or [Ruyi OS](os.md) running on a Ruyi console.
 

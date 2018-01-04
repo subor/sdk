@@ -14,12 +14,12 @@
 All [developer tools](../topics/devtool.md) are available via RuyiDev.exe.
 
 Double-click RuyiDev.exe to launch the GUI:
-![](/img/ruyidev_gui.png)
+![](/docs/img/ruyidev_gui.png)
 
 All plugins are listed on the left side of the window.
 
 Open a command prompt and run RuyiDev.exe with an option (e.g. `RuyiDev.exe -h`) to use the commandline interface (CLI):
-![](/img/ruyidev_cli.png)
+![](/docs/img/ruyidev_cli.png)
 	
 All plugins are used via `RuyiDev.exe <plugin> <arguments>`.
 Assistance for any plugin is available via `RuyiDev.exe <plugin> -h`.
@@ -67,7 +67,7 @@ Usage: 'RuyiDev [<Options>+] settingtool [<args>]'
 1. Click `Run List` button
 1. Output will show all current settings:
 
-![](/img/ruyidev_gui_settings_list.png)
+![](/docs/img/ruyidev_gui_settings_list.png)
 
 Alternatively:
 

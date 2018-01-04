@@ -4,8 +4,8 @@ Similer to [layer0](layer0.md), the Ruyi developer tools are designed as an exec
 
 | Executable | Details | Image
 |-|-|-
-| RuyiDev.exe | Double-click or run _without_ an argument | ![](/img/ruyidev_gui.png)
-| RuyiDev.exe | Run with any argument (e.g. `RuyiDev.exe -h`) | ![](/img/ruyidev_cli.png)
+| RuyiDev.exe | Double-click or run _without_ an argument | ![](/docs/img/ruyidev_gui.png)
+| RuyiDev.exe | Run with any argument (e.g. `RuyiDev.exe -h`) | ![](/docs/img/ruyidev_cli.png)
 | RuyiShell.exe | CLI only
 
 ## Plugins
