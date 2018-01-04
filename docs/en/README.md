@@ -1,7 +1,7 @@
 # Ruyi
 
 # Rel
-![](../warning.png)
+![](/docs/img/warning.png)
 
 ## Pre-requisites
 
