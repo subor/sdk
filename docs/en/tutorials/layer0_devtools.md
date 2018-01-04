@@ -6,7 +6,7 @@
 
 1. [Download and install the SDK](setup.md) (if you haven't already)
 1. Run layer0.exe
-	![](/img/layer0.png)
+	![](/docs/docs/img/layer0.png)
 1. Register and login as a new user
 
 ## Developer tools
