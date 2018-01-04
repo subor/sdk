@@ -15,11 +15,11 @@ You should have received the following:
 Do the following once (per team or team member as appropriate):
 
 1. Use invite code to [register at dev.playruyi.com](http://dev.playruyi.com/register):
-<br/><img src="/docs/img/devportal_register.png" width="250"/>
+<br/>![](/docs/img/devportal_register.png)
 1. Open email from Atlassian to join playruyi team, and click `Accept my invitation` to gain access to [https://bitbucket.org/playruyi/](https://bitbucket.org/playruyi/)
 
 ---
-# <img src="/img/warning.png" width="32" /> NOTICE
+# ![](/docs/img/warning.png) NOTICE
 The Ruyi platform is still in an __early alpha__ state.
 You may experience one or more of the following:
 

@@ -1,7 +1,7 @@
 # SDK
 
 ---
-# <img src="/docs/img/warning.png" width="32" /> NOTE
+# ![](/docs/img/warning.png) NOTE
 
 * Many functions in `Ruyi.SDK.BrainCloudApi` namespace don't yet work
 	* Generally speaking, only those in `RuyiNet` work
