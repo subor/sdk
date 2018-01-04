@@ -1,5 +1,10 @@
 # Home
 
+# Abs
+![](/warning.png)
+# Relative
+![](warning.png)
+
 [English](docs/en/README.md)
 
 [中文](docs/zh-cn/README.md)
