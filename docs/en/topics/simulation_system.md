@@ -10,16 +10,17 @@ Below follows suggestions and instructions for building a simluation system or c
 - [Ryzen 1400](https://www.amd.com/en/products/cpu/amd-ryzen-5-1400)
 - 6 to 8 GB DDR4 2400
 
-![](/docs/img/warning.png) Differences from Ruyi Console:
+### Differences from Ruyi Console
 
 - Ruyi's APU will be clocked differently (CPU 3Gz- GPU final clock tbd), but otherwise similar
 - Ruyi has 8GB of shared system memory with 2GB reserved for the GPU
 
-## Installing Ruyi OS
+## Software
 
-[Ruyi OS](topics/os.md) can be installed to a PC.  By default it includes:
+Ruyi platform can be installed to a PC.  By default it includes:
 
-- [Platform software](topics/layer0.md)
+- [Windows 10 IoT Enterprise](os.md)
+- [Client software](layer0.md)
 - Device drivers for console hardware
 
 ### Instructions
@@ -39,6 +40,6 @@ Below follows suggestions and instructions for building a simluation system or c
 
 ## Ruyi Platform
 
-Ruyi platform (e.g. [layer0](topics/layer0.md)) should be installed to `c:\ruyi`:
+Ruyi platform (e.g. [layer0](layer0.md)) should be installed to `c:\ruyi`:
 
 ![](/docs/img/layer0_path.png)
