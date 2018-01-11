@@ -50,6 +50,8 @@ __Advanced:__
 
 ## Topics
 
+__[Support](topics/support.md)__
+
 * [Platform Architecture](topics/layer0.md)
 * [Ruyi OS](topics/os.md)
 * [Developer Tools](topics/devtool.md)
