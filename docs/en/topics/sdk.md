@@ -12,8 +12,5 @@
 Links:
 
 * [SDK Download](http://dev.playruyi.com/udownloadslist/SDK)
-* [UE4 Integration Example](https://bitbucket.org/playruyi/unreal_demo)
-* [Unity Integration Example](https://bitbucket.org/playruyi/space_shooter)
-* High-level wrappers for C++ and C#
-* Thrift interface definitions (Advanced)
-
+* [Unity specifics](unity.md)
+* [UE4 specifics](ue4.md)

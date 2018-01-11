@@ -10,12 +10,12 @@ You should have received the following:
 	* App ID similar to __12345__
 	* App Secret similar to __abcd1234-ef12-ab56-7890cdef1234__
 * Email invitation from Atlassian to join playruyi team on [Bitbucket](https://bitbucket.org/):
-	<img src="/docs/img/bitbucket_invite.png" width="250"/>
+![](/docs/img/bitbucket_invite.png)
 
 Do the following once (per team or team member as appropriate):
 
 1. Use invite code to [register at dev.playruyi.com](http://dev.playruyi.com/register):
-<br/>![](/docs/img/devportal_register.png)
+![](/docs/img/devportal_register.png)
 1. Open email from Atlassian to join playruyi team, and click `Accept my invitation` to gain access to [https://bitbucket.org/playruyi/](https://bitbucket.org/playruyi/)
 
 ---
@@ -29,7 +29,7 @@ You may experience one or more of the following:
 * Severly lacking, non-existant, or just plain missleading documentation
 * Dubious spelleng and/or grammar
 
-In other words, here be dragons.
+In other words, __here be dragons__.
 
 ---	
 
@@ -55,3 +55,5 @@ Advanced:
 * [Documentation](topics/docs.md)
 * [Simulation System](topics/simulation_system.md)
 * [UE4](topics/ue4.md)
+* [Unity](topics/unity.md)
+* [App Manifest](topics/app_metadata.md)

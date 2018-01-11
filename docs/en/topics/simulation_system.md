@@ -13,7 +13,7 @@ Below follows suggestions and instructions for building a simluation system or c
 ### Differences from Ruyi Console
 
 - Ruyi's APU will be clocked differently (CPU 3Gz- GPU final clock tbd), but otherwise similar
-- Ruyi has 8GB of shared system memory with 2GB reserved for the GPU
+- Ruyi has 8GB GDDR5 of shared system memory with 2GB reserved for the GPU
 
 ## Software
 
