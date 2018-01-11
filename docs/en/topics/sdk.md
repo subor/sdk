@@ -9,6 +9,41 @@
 
 ---
 
+```
++---DevTools
+|   |   ...
+|   |   RuyiDev.exe
+|   |   ...
+|   +---Resources
+|   \---Ruyi
+|       \---Presentation
+|           +   ...
+|           \---Web
+|               |   index.html
+|               \   ...
+|                       
++---Layer0
+|   |   ...
+|   |   Layer0.exe
+|   \   ...
+|                               
++---MainClient
+|   |   ...
+|   |   Client.exe
+|   \   ...
+|           
+\---SDK
+    |   
+    +---RuyiSDK
+    |   |   RuyiSDK.xml
+    |   |   
+    |   \---netstandard2.0
+    |               
+    +---RuyiSDK.nf2.0
+    |       
+    \---RuyiSDKCpp
+```
+
 Links:
 
 * [SDK Download](http://dev.playruyi.com/udownloadslist/SDK)

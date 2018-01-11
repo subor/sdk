@@ -1,11 +1,36 @@
 # Launching Platform and Using Devtools
 
+## Prerequisites
+
+- [Download and install the SDK](setup.md)
+
+## Folder structure
+```
++---DevTools
+|   |   RuyiDev.exe
+|   \---Ruyi
+|       \---Presentation
+|           \---Web
+|               |   index.html
+|                       
++---Layer0
+|   |   Layer0.exe
+|                               
++---MainClient
+|   |   Client.exe
+|           
+\---SDK
+    +---RuyiSDK
+    |   \---netstandard2.0
+    +---RuyiSDK.nf2.0
+    \---RuyiSDKCpp
+```
+
 ## Layer0
 
 [Layer0](../topics/layer0.md) must be running on a host machine before you can access most of the Ruyi platform.
 
-1. [Download and install the SDK](setup.md) (if you haven't already)
-1. Run layer0.exe
+1. Run Layer0.exe
 	![](/docs/img/layer0.png)
 1. Register and login as a new user
 

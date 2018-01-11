@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-- vs2017 15.3 version or later, make sure windows 10 sdk (10.0.15063.0) installed
+- [Visual Studio 2017](https://www.visualstudio.com/vs/community/) 15.3 version or later.  Including Windows 10 SDK (10.0.15063.0).
 - Tested with Unreal Engine 18, Compiled version.
 
 ## Instructions
@@ -16,7 +16,7 @@ PublicIncludePaths.AddRange(
 	}
 );
 ```
-1. Add "using System.IO;" to the top of the file.  Bind lib path with:
+1. Add `using System.IO;` to the top of the file.  Bind lib path with:
 ```cs
 private string ModulePath
 {

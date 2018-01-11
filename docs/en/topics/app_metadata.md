@@ -1,15 +1,43 @@
 # App Metadata
 
 ---
-# ![](/docs/img/warning.png) NOTICE
+## ![](/docs/img/warning.png) NOTICE
 Application meta-data is still being defined.
 The following is meant to be exemplary and will be updated once specification is finalized.
 
 ---	
 
+Application meta-data is comprised of:
+
+- A manifest describing the application
+- A resource folder containing assets
+
+The [Unity sample](https://bitbucket.org/playruyi/space_shooter) contains an example of application meta-data used by Ruyi platform.  Running `D:\dev\unity_demo>tree /f pack` displays:
+```
+D:\DEV\UNITY_DEMO\PACK
+│   RuyiManifest.json
+│
+├───res
+│   │   i18n.json
+│   │
+│   ├───hd
+│   │       bluetooth.png
+│   │
+│   └───ld
+│           bluetooth.png
+│
+└───space_shooter
+    │   space_shooter.exe
+    │
+    └───space_shooter_Data
+        ...
+```
+
+The `space_shooter` folder and `space_shooter.exe` should all match the appID value in the manifest file.
+
 ## Manifest
 
-App manifest similar to that found on other platforms.
+App manifest is similar to other platforms and is typically named `RuyiManifest.json`.
 
 Example from the [SDK samples](https://bitbucket.org/playruyi/space_shooter/src/47b6da28637020946bc3e50b6fa76668e3c43971/Pack/RuyiManifest.json?at=master&fileviewer=file-view-default):
 ```json
@@ -44,6 +72,8 @@ Example from the [SDK samples](https://bitbucket.org/playruyi/space_shooter/src/
 
 ## Strings
 
+Localized strings are stored in `res/i18n.json`.
+
 Example from the [SDK Samples](https://bitbucket.org/playruyi/space_shooter/src/47b6da28637020946bc3e50b6fa76668e3c43971/Pack/res/i18n.json?at=master&fileviewer=file-view-default):
 ```json
 {
@@ -63,3 +93,4 @@ Example from the [SDK Samples](https://bitbucket.org/playruyi/space_shooter/src/
 
 ## Images
 
+Images are placed in `res/hd/` and `res/ld` for high-resolution and low-resolution assets, respectively.
