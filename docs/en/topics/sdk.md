@@ -9,11 +9,43 @@
 
 ---
 
+```
++---DevTools
+|   |   ...
+|   |   RuyiDev.exe
+|   |   ...
+|   +---Resources
+|   \---Ruyi
+|       \---Presentation
+|           +   ...
+|           \---Web
+|               |   index.html
+|               \   ...
+|                       
++---Layer0
+|   |   ...
+|   |   Layer0.exe
+|   \   ...
+|                               
++---MainClient
+|   |   ...
+|   |   Client.exe
+|   \   ...
+|           
+\---SDK
+    |   
+    +---RuyiSDK
+    |   |   RuyiSDK.xml
+    |   |   
+    |   \---netstandard2.0
+    |               
+    +---RuyiSDK.nf2.0
+    |       
+    \---RuyiSDKCpp
+```
+
 Links:
 
 * [SDK Download](http://dev.playruyi.com/udownloadslist/SDK)
-* [UE4 Integration Example](https://bitbucket.org/playruyi/unreal_demo)
-* [Unity Integration Example](https://bitbucket.org/playruyi/space_shooter)
-* High-level wrappers for C++ and C#
-* Thrift interface definitions (Advanced)
-
+* [Unity specifics](unity.md)
+* [UE4 specifics](ue4.md)

@@ -13,7 +13,7 @@ Below follows suggestions and instructions for building a simluation system or c
 ### Differences from Ruyi Console
 
 - Ruyi's APU will be clocked differently (CPU 3Gz- GPU final clock tbd), but otherwise similar
-- Ruyi has 8GB of shared system memory with 2GB reserved for the GPU
+- Ruyi has 8GB GDDR5 of shared system memory with 2GB reserved for the GPU
 
 ## Software
 
@@ -30,10 +30,11 @@ Ruyi platform can be installed to a PC.  By default it includes:
     - Enable Intel VT-x / AMD-V (or SVM) virtualization
     - Enable UEFI boot
     - Enable Secure boot
+    - Boot from USB before HDD
 1. Prepare USB drive with at least 6GB space and FAT32 format
-1. Copy Ruyi OS files to root of USB drive and unmount once finished
-1. Plug USB drive into simulation system and boot from it
-    - May need to configure BIOS to boot from USB before HDD
+1. Download [Ruyi OS image](http://dev.playruyi.com/uservices)
+1. Copy OS files to root of USB drive and unmount once finished
+1. Plug USB drive into simulation system and reboot it
 1. A command prompt should appear, wait 20-40 minutes for OS to install
     - Once Windows desktop appears installation is complete
 1. __Optional__  Install any needed device drivers or 3rd-party software
