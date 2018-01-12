@@ -9,15 +9,13 @@
 
 1. Our sdk file will be in two folders: __include__ and __lib__.  Put them in one of your game module source folder.  For example, `source/ModuleName/include` and `source/ModuleName/lib`.  They may be put in a sub-folder, just make sure they're in the same folder.
 1. Open __ModuleName.Build.cs__ and add `ModuleName/xxx/include` to the `PublicIncludePaths` property.  For example:
-
-	```cs
-	PublicIncludePaths.AddRange(
-		new string[] {
-			"ModuleName/include",
-		}
-	);
-	```
-	
+    ```cs
+    PublicIncludePaths.AddRange(
+    	new string[] {
+    		"ModuleName/include",
+    	}
+    );
+    ```
 1. Add `using System.IO;` to the top of the file.  Bind lib path with:
 ```cs
 private string ModulePath
