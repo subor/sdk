@@ -5,7 +5,7 @@
 You should have received the following from us:
 
 * [http://dev.playruyi.com](http://dev.playruyi.com) invite code (need one per team or team member)
-	* e.g. ABC123
+	* e.g. __ABC123__
 * App ID and secret (need one per project- shared by all team members)
 	* App ID similar to __12345__
 	* App Secret similar to __abcd1234-ef12-ab56-7890cdef1234__
@@ -14,11 +14,9 @@ You should have received the following from us:
 
 Do the following once (per team or team member as appropriate):
 
-1. Use invite code to [register at dev.playruyi.com](http://dev.playruyi.com/register):
-
+1. Use invite code to [register at dev.playruyi.com](http://dev.playruyi.com/register):  
 ![](/docs/img/devportal_register.png)
-
-2. Open email from Atlassian to join playruyi team, and click `Accept my invitation` to gain access to [https://bitbucket.org/playruyi/](https://bitbucket.org/playruyi/)
+1. Open email from Atlassian to join playruyi team, and click __Accept my invitation__ to gain access to [https://bitbucket.org/playruyi/](https://bitbucket.org/playruyi/)
 
 We use the following software development environment:
 - Windows 10 RS2 (aka 1703, Creator's Update) or RS3 (aka 1709, Fall Creator's Update)
@@ -40,7 +38,7 @@ You may experience one or more of the following:
 
 In other words, __here be dragons__.
 
-__[Support](topics/support.md)__
+Get __[Support](topics/support.md)__
 
 ---	
 
@@ -53,8 +51,8 @@ __[Support](topics/support.md)__
 
 __Advanced:__
 
+* Setup a [PC similar to Ruyi devkit](topics/simulation_system.md)
 * Devkit OS reinstall
-* OS setup/configuration on PC
 * Debugging SDK
 
 ## Topics
