@@ -12,7 +12,7 @@ Support is available in two forms:
 1. __FILTER BY__ controls which issues are visible
 1. Use the search bar in the upper right to find similar issues
 ![](/docs/img/support_search.png)
-1. Click issue title to view details
+1. Click issue title to view details  
 ![](/docs/img/support_issue.png)
     - Add __comments__ to the issue
     - __Vote for the issue__ to push the Ruyi team to address the issue
@@ -33,4 +33,5 @@ Support is available in two forms:
 ## Make a request/suggestion
 
 Similar to [reporting an issue](#Reporting an issue), except for __Kind__ choose _Enhancement_ or _Proposal_.
+
 ![](/docs/img/support_suggestion.png)
