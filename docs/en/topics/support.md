@@ -33,4 +33,5 @@ Support is available in two forms:
 ## Make a request/suggestion
 
 Similar to [reporting an issue](#Reporting an issue), except for __Kind__ choose _Enhancement_ or _Proposal_.
+
 ![](/docs/img/support_suggestion.png)
