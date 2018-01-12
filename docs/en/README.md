@@ -9,7 +9,7 @@ You should have received the following:
 * App ID and secret (need one per project- shared by all team members)
 	* App ID similar to __12345__
 	* App Secret similar to __abcd1234-ef12-ab56-7890cdef1234__
-* Email invitation from Atlassian to join playruyi team on [Bitbucket](https://bitbucket.org/):
+* Email invitation from Atlassian to join playruyi team on [Bitbucket](https://bitbucket.org/):  
 ![](/docs/img/bitbucket_invite.png)
 
 Do the following once (per team or team member as appropriate):
