@@ -1,15 +1,10 @@
 ## Documentation
 
-This documentation is hosted in [__docs__ repository](https://bitbucket.org/playruyi/docs).
+This documentation is hosted in [__docs__ repository](https://bitbucket.org/playruyi/docs).  
+Use `git clone https://your_username_here@bitbucket.org/playruyi/docs.git` (or [Sourcetree](https://www.sourcetreeapp.com/)) to the clone the repository.
 
-Documentation is organized such that it is possible to use any of the following:
+We use [Visual Studio Code](https://code.visualstudio.com/) to make changes.  Be sure to check their [markdown editing tips](https://code.visualstudio.com/Docs/languages/markdown) for a workflow more painless than the Bitbucket editor:  
+![](/docs/img/docs_vs_code_preview.png)
 
-- [mkdocs](http://www.mkdocs.org)
-	1. Install mkdocs
-	1. Run `mkdocs serve`
-	1. Open [http://localhost:8000](http://localhost:8000) in browser
-- [gitbook](https://www.gitbook.com/) (**WONKY**)
-	1. Install gitbook
-	1. Run `cd docs` then `gitbook serve`
-	1. Open [http://localhost:4000](http://localhost:4000) in browser
-- [Bitbucket Wiki](https://bitbucket.org/playruyi/docs/wiki/Home)
+Create a [pull request](https://bitbucket.org/playruyi/docs/pull-requests/) to submit changes to us for review:  
+![](/docs/img/pull_requests.png)

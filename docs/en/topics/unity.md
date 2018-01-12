@@ -16,7 +16,7 @@ Refer to the following:
 RuyiNet is provided as high-level wrapper around the Ruyi C# API.
 
 1. [SDK libraries targetting .Net 3.5](http://dev.playruyi.com/udownloadslist/SDK) should be placed in `Assets/Plugins/x64`
-1. Create an instance of RuyiNet script and add your app id/secret:
+1. Create an instance of RuyiNet script and add your app id/secret:  
 ![](/docs/img/unity_ruyinet.png)
 
 ## Advanced Usage

@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-You should have received the following:
+You should have received the following from us:
 
 * [http://dev.playruyi.com](http://dev.playruyi.com) invite code (need one per team or team member)
 	* e.g. ABC123
@@ -20,6 +20,13 @@ Do the following once (per team or team member as appropriate):
 
 2. Open email from Atlassian to join playruyi team, and click `Accept my invitation` to gain access to [https://bitbucket.org/playruyi/](https://bitbucket.org/playruyi/)
 
+We use the following software development environment:
+- Windows 10 RS2 (aka 1703, Creator's Update) or RS3 (aka 1709, Fall Creator's Update)
+- [git](https://git-scm.com/) or [Sourcetree](https://www.sourcetreeapp.com/)
+- [Visual Studio 2017](https://www.visualstudio.com/vs/community/) 15.3+
+
+Other variations _might_ work, but they aren't tested extensively; YMMV.
+
 ---
 ## ![](/docs/img/warning.png) NOTICE
 The Ruyi platform is still in an __early alpha__ state.  
@@ -32,6 +39,8 @@ You may experience one or more of the following:
 * Dubious spelling and/or grammar
 
 In other words, __here be dragons__.
+
+__[Support](topics/support.md)__
 
 ---	
 
@@ -50,8 +59,6 @@ __Advanced:__
 
 ## Topics
 
-__[Support](topics/support.md)__
-
 * [Platform Architecture](topics/layer0.md)
 * [Ruyi OS](topics/os.md)
 * [Developer Tools](topics/devtool.md)
@@ -61,3 +68,4 @@ __[Support](topics/support.md)__
 * [UE4](topics/ue4.md)
 * [Unity](topics/unity.md)
 * [App Manifest](topics/app_metadata.md)
+* [Support](topics/support.md)
