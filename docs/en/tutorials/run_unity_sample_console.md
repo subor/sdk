@@ -13,7 +13,7 @@ In this tutorial we're going to install an example based on [Unity 3D](https://u
 1. [Download sample](https://bitbucket.org/playruyi/space_shooter) to local PC (here we will assume `d:\dev\unity_demo`).
 1. Launch Unity and open the project at `d:\dev\unity_demo`
 1. File -> Build Settings  
-![](/img/unity_build.png)
+![](/docs/img/unity_build.png)
     - Select PC, Mac & Linux Standalone
     - Target Platform is Windows
     - Build button

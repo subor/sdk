@@ -18,7 +18,8 @@ Do the following once (per team or team member as appropriate):
 ![](/docs/img/devportal_register.png)
 1. Open email from Atlassian to join playruyi team, and click __Accept my invitation__ to gain access to [https://bitbucket.org/playruyi/](https://bitbucket.org/playruyi/)
 
-We use the following software development environment:  
+__Software Development Environment__:
+
 - Windows 10 RS2 (aka 1703, Creator's Update) or RS3 (aka 1709, Fall Creator's Update)
 - [git](https://git-scm.com/) or [Sourcetree](https://www.sourcetreeapp.com/)
 - [Visual Studio 2017](https://www.visualstudio.com/vs/community/) 15.3+

@@ -7,6 +7,7 @@ We use [Visual Studio Code](https://code.visualstudio.com/) to make changes.  Be
 ![](/docs/img/docs_vs_code_preview.png)
 
 Markdown references:
+
 - [Bitbucket markdown](https://bitbucket.org/tutorials/markdowndemo/overview)
 - [Daring Fireball](https://daringfireball.net/projects/markdown/syntax)
 
