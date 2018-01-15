@@ -39,7 +39,7 @@ The `space_shooter` folder and `space_shooter.exe` should all match the appID va
 
 App manifest is similar to other platforms and is typically named `RuyiManifest.json`.
 
-Example from the [SDK samples](https://bitbucket.org/playruyi/space_shooter/src/47b6da28637020946bc3e50b6fa76668e3c43971/Pack/RuyiManifest.json?at=master&fileviewer=file-view-default):
+Example from the [SDK samples](https://bitbucket.org/playruyi/space_shooter/src/master/Pack/RuyiManifest.json):
 ```json
 {
 	"appID": "com.playruyi.space_shooter",
@@ -74,7 +74,7 @@ Example from the [SDK samples](https://bitbucket.org/playruyi/space_shooter/src/
 
 Localized strings are stored in `res/i18n.json`.
 
-Example from the [SDK Samples](https://bitbucket.org/playruyi/space_shooter/src/47b6da28637020946bc3e50b6fa76668e3c43971/Pack/res/i18n.json?at=master&fileviewer=file-view-default):
+Example from the [SDK Samples](https://bitbucket.org/playruyi/space_shooter/src/master/Pack/res/i18n.json):
 ```json
 {
   "i18n": {

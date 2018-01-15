@@ -2,7 +2,7 @@
 
 A _simulation system_ is a standard PC similar to the Ruyi console.
 
-Below follows suggestions and instructions for building a simluation system or converting a regular PC.
+Below follows suggestions and instructions for building a simluation system.
 
 ## Recommended Hardware
 
@@ -13,7 +13,7 @@ Below follows suggestions and instructions for building a simluation system or c
 ### Differences from Ruyi Console
 
 - Ruyi's APU will be clocked differently (CPU 3Gz- GPU final clock tbd), but otherwise similar
-- Ruyi has 8GB GDDR5 of shared system memory with 2GB reserved for the GPU
+- Ruyi has 8 GB GDDR5 of shared system memory with 2GB reserved for the GPU
 
 ## Software
 
@@ -25,7 +25,7 @@ Ruyi platform can be installed to a PC.  By default it includes:
 
 ### Instructions
 
-1. Consult manfucturer documentation to configure system BIOS:
+1. Consult manufacturer documentation to configure system BIOS:
     - Enable TPM (either iTPM of dTPM)
     - Enable Intel VT-x / AMD-V (or SVM) virtualization
     - Enable UEFI boot
@@ -39,8 +39,7 @@ Ruyi platform can be installed to a PC.  By default it includes:
     - Once Windows desktop appears installation is complete
 1. __Optional__  Install any needed device drivers or 3rd-party software
 
-## Ruyi Platform
+### Ruyi Client
 
-Ruyi platform (e.g. [layer0](layer0.md)) should be installed to `c:\ruyi`:
-
+Ruyi client-side software (e.g. [layer0](layer0.md)) should be installed to `c:\ruyi`:  
 ![](/docs/img/layer0_path.png)

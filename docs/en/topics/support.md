@@ -23,7 +23,7 @@ Support is available in two forms:
 1. Select __Issues__ from left panel to display list of current issues
 ![](/docs/img/support_issues.png)
 1. Use the search bar in the upper right to easily find issues similar to your own (_try this first_)
-1. If an existing issue cannot be found, click __Create issue__ to create a new ticket
+1. If an existing issue cannot be found, click __Create issue__ to create a new ticket  
 ![](/docs/img/support_create_issue.png)
 1. Complete the issue form
     - __Title__ should be short and descriptive
