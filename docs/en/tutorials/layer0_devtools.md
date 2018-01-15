@@ -30,8 +30,8 @@
 
 [Layer0](../topics/layer0.md) must be running on a host machine before you can access most of the Ruyi platform.
 
-1. Run Layer0.exe
-	![](/docs/img/layer0.png)
+1. Run Layer0.exe  
+![](/docs/img/layer0.png)
 1. Register and login as a new user
 
 ## Developer tools

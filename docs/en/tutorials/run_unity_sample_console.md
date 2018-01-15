@@ -12,8 +12,8 @@ In this tutorial we're going to install an example based on [Unity 3D](https://u
 1. Get IPv4 address of devkit.  On the devkit, in command prompt run `ipconfig` (here we will assume `192.168.1.1`).
 1. [Download sample](https://bitbucket.org/playruyi/space_shooter) to local PC (here we will assume `d:\dev\unity_demo`).
 1. Launch Unity and open the project at `d:\dev\unity_demo`
-1. File -> Build Settings
-![](/img/unity_build.png)
+1. File -> Build Settings  
+![](/docs/img/unity_build.png)
     - Select PC, Mac & Linux Standalone
     - Target Platform is Windows
     - Build button
