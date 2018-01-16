@@ -49,6 +49,7 @@ Get __[Support](topics/support.md)__
 * [Launch Platform and Use Developer Tools](tutorials/layer0_devtools.md)
 * [Run UE4 sample on local PC](tutorials/run_ue4_sample_pc.md)
 * [Run Unity sample on devkit](tutorials/run_unity_sample_console.md)
+* [Pack The App](tutorials/how_to_pack.md)
 
 __Advanced:__
 
