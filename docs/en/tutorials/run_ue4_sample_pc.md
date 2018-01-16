@@ -7,9 +7,15 @@ All the following steps should be done on your local PC.
 1. [Launch platform and login](layer0_devtools.md#Layer0)
 1. [Download sample](https://bitbucket.org/playruyi/unreal_demo).  We will assume `c:\ue4_demo\`.
 1. Build sample?
-1. Package the sample, read [Pack The App](how_to_pack.md) for more details, we will assume the organized folder would be "c:\ue4_pack\"
-    ```ruyidev.exe apprunner --pack --apppath=c:\ue4_pack\```
+1. Package the sample, read [Pack The App](how_to_pack.md) for more details, we will assume the organized folder would be `c:\ue4_pack\`
+    ```
+    ruyidev.exe apprunner --pack --apppath=c:\ue4_pack\
+    ```
 1. Install sample:
-    ```ruyidev.exe apprunner --installapp --workingchannellist=dev --installedapplist=com.playruyi.unreal_demo```
+    ```
+    ruyidev.exe apprunner --installapp --workingchannellist=dev --installedapplist=com.playruyi.unreal_demo
+    ```
 1. Launch sample:
-    ```ruyidev.exe apprunner --runapp --workingchannellist=dev --installedapplist=com.playruyi.unreal_demo```
+    ```
+    ruyidev.exe apprunner --runapp --workingchannellist=dev --installedapplist=com.playruyi.unreal_demo
+    ```
