@@ -70,6 +70,10 @@ __Advanced:__
 * [Simulation System](topics/simulation_system.md)
 * [App Manifest](topics/app_metadata.md)
 * [Support](topics/support.md)
+
 * [Input](topics/input.md)
 * [Overlay](topics/overlay.md)
 * [Low-Power Mode](topics/lpm.md)
+
+__Advanced:__
+* [Optimization](topics/optimization.md)
