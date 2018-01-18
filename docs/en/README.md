@@ -76,4 +76,5 @@ __Advanced:__
 * [Low-Power Mode](topics/lpm.md)
 
 __Advanced:__
+
 * [Optimization](topics/optimization.md)
