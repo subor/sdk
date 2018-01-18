@@ -1,4 +1,4 @@
-## Documentation
+# Documentation
 
 This documentation is hosted in [__docs__ repository](https://bitbucket.org/playruyi/docs).  
 Use `git clone https://your_username_here@bitbucket.org/playruyi/docs.git` (or [Sourcetree](https://www.sourcetreeapp.com/)) to the clone the repository.
@@ -13,3 +13,11 @@ Markdown references:
 
 Create a [pull request](https://bitbucket.org/playruyi/docs/pull-requests/) to submit changes to us for review:  
 ![](/docs/img/pull_requests.png)
+
+## Editing tips
+
+- Linking to latest version of a file in Bitbucket:
+
+		https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/support.md
+
+- 
