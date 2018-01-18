@@ -6,13 +6,13 @@ Below follows suggestions and instructions for building a simluation system.
 
 ## Recommended Hardware
 
-- [RX470](http://www.amd.com/en-us/products/graphics/radeon-rx-series/radeon-rx-480)
+- [RX470](http://www.amd.com/en-us/products/graphics/radeon-rx-series/radeon-rx-470)
 - [Ryzen 1400](https://www.amd.com/en/products/cpu/amd-ryzen-5-1400)
 - 6 to 8 GB DDR4 2400
 
 ### Differences from Ruyi Console
 
-- Ruyi's APU will be clocked differently (CPU 3Gz- GPU final clock tbd), but otherwise similar
+- Ruyi's APU will be clocked differently (CPU 3Gz- GPU final clock tbd), but otherwise similar feature-wise
 - Ruyi has 8 GB GDDR5 of shared system memory with 2GB reserved for the GPU
 
 ## Software
@@ -31,7 +31,7 @@ Ruyi platform can be installed to a PC.  By default it includes:
     - Enable UEFI boot
     - Enable Secure boot
     - Boot from USB before HDD
-1. Prepare USB drive with at least 6GB space and FAT32 format
+1. Prepare USB drive with at least 6 GB space and FAT32 format
 1. Download [Ruyi OS image](http://dev.playruyi.com/uservices)
 1. Copy OS files to root of USB drive and unmount once finished
 1. Plug USB drive into simulation system and reboot it
@@ -43,3 +43,5 @@ Ruyi platform can be installed to a PC.  By default it includes:
 
 Ruyi client-side software (e.g. [layer0](layer0.md)) should be installed to `c:\ruyi`:  
 ![](/docs/img/layer0_path.png)
+
+See [SDK setup tutorial](../tutorials/setup.md).

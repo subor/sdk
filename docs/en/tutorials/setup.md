@@ -13,7 +13,7 @@ If you received a devkit from us it should already come with the SDK pre-install
     - Main Client
 1. Uncompress to local HDD as siblings
 
-End result should be following directory structure:
+End result should directory structure similar to the following:
 ```
 |   
 +---DevTools
@@ -55,25 +55,31 @@ End result should be following directory structure:
             \---zmq
 ```
 
+Details regarding the SDK can be found [here](../topics/sdk.md).
 
 ## Launching Client, Registering, and Logging-in
 
-__IMPORTANT__ A user _must be logged in_ for most of the SDK API to work.  The retail version of the console will require a user to be logged in to launch apps.
+__IMPORTANT__ A user _must be logged in via main client_ for most of the SDK API to work.  The retail version of the console will require a user to be logged in to launch apps.
 
 1. Run `Layer0\Layer0.exe`
 1. If installed to `c:\ruyi` the main client will start automatically.  Otherwise run `MainClient\Client.exe` to launch it
 1. Register _guest_ user and login
     - Select __Guest Login__  
     ![](/docs/img/client_00.png)
-    - Ok  
+    - Ok (or press `Enter`)  
     ![](/docs/img/client_01.png)
-    - Ok  
+    - Ok (or press `Enter`)  
     ![](/docs/img/client_02.png)
-    - Ok  
+    - Ok (or press `Enter`)  
     ![](/docs/img/client_03.png)
+
+At this point you should be looking at placeholder UI for landing page of logged in user.
+
+__Next step:__
+- Try running [UE4](run_ue4_sample_pc.md) or [Unity](run_unity_sample_console.md) samples.
 
 ## Replacing/Updating SDK
 
-1. Close [Main Client and layer0](layer0.md)
-1. Delete old folder
-1. Follow [Download & Install steps](#SDK Download and Installation)
+1. Close Main Client and layer0 (if running)
+1. Delete old SDK folder
+1. Follow [download & install steps](#SDK-Download-and-Installation) above
