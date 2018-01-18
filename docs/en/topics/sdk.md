@@ -3,12 +3,14 @@
 ---
 # ![](/docs/img/warning.png) NOTE
 
-* Many functions in `Ruyi.SDK.BrainCloudApi` namespace don't yet work
-	* Generally speaking, only those in `RuyiNet` work
-    * This is not the fault of [brainCloud](http://getbraincloud.com/), it is intentionally and temporarily done by us
+- __IMPORTANT__ A user _must be logged in via main client_ for most of the SDK API to work
+- Many functions in `Ruyi.SDK.BrainCloudApi` namespace don't yet work
+	- Generally speaking, only those in `RuyiNet` work
+    - This is not the fault of [brainCloud](http://getbraincloud.com/), it is intentionally and temporarily done by us
 
 ---
 
+SDK has following directory structure (see [SDK Setup](../tutorials/setup.md)):
 ```
 +---DevTools
 |   |   ...
@@ -31,7 +33,12 @@
 |   |   ...
 |   |   Client.exe
 |   \   ...
-|           
+|
++---OverlayClient
+|   |   ...
+|   |   RuyiOverlayClient.exe
+|   \   ...
+|
 \---SDK
     |   
     +---RuyiSDK
@@ -44,8 +51,19 @@
     \---RuyiSDKCpp
 ```
 
-Links:
+Folder | Path | Description
+-|-|-
+DevTools/ | RuyiDev.exe | [Developer tools](devtool.md)
+|| Ruyi/Presentation/Web/index.html | SDK API documentation (same as [online docs](http://dev.playruyi.com/api))
+Layer0/ | Layer0.exe | Daemon portion of client (see [architecture](layer0.md))
+MainClient/ | Client.exe | End-user facing UI (requires layer0 already running)
+OverlayClient/ | RuyiOverlayClient.exe | [In-game UI overlay](overlay.md) (managed by layer0)
+SDK/ | RuyiSDK/ | C# SDK
+|| RuyiSDK.nf2.0/ | C# SDK targeting .Net Framework 3.5 (for Unity)
+|| RuyiSDKCpp/ | C++ SDK
 
-* [SDK Download](http://dev.playruyi.com/udownloadslist/SDK)
+## Links:
+
+* [SDK Downloads](http://dev.playruyi.com/uservices)
 * [Unity specifics](unity.md)
 * [UE4 specifics](ue4.md)

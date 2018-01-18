@@ -18,14 +18,6 @@ Do the following once (per team or team member as appropriate):
 ![](/docs/img/devportal_register.png)
 1. Open email from Atlassian to join playruyi team, and click __Accept my invitation__ to gain access to [https://bitbucket.org/playruyi/](https://bitbucket.org/playruyi/)
 
-__Software Development Environment__:
-
-- Windows 10 RS2 (aka 1703, Creator's Update) or RS3 (aka 1709, Fall Creator's Update)
-- [git](https://git-scm.com/) or [Sourcetree](https://www.sourcetreeapp.com/)
-- [Visual Studio 2017](https://www.visualstudio.com/vs/community/) 15.3+
-
-Other variations _might_ work, but they aren't tested extensively; YMMV.
-
 ---
 ## ![](/docs/img/warning.png) NOTICE
 The Ruyi platform is still in an __early alpha__ state.  
@@ -42,6 +34,15 @@ In other words, __here be dragons__.
 Get __[Support](topics/support.md)__
 
 ---	
+
+## Development Environment
+
+- Workstation running Windows 10 RS2 (aka 1703, Creator's Update) or RS3 (aka 1709, Fall Creator's Update)
+- [git](https://git-scm.com/) or [Sourcetree](https://www.sourcetreeapp.com/)
+- [Visual Studio 2017](https://www.visualstudio.com/vs/community/) 15.3+
+- [Supported gamepad](topics/input.md#supported-devices)
+
+Other variations _might_ work, but they aren't tested extensively; YMMV.
 
 ## Tutorials / How-to
 
@@ -63,10 +64,17 @@ __Advanced:__
 * [Ruyi OS](topics/os.md)
 * [Developer Tools](topics/devtool.md)
 * [SDK](topics/sdk.md)
+	* [UE4](topics/ue4.md)
+	* [Unity](topics/unity.md)
 * [Documentation](topics/docs.md)
 * [Simulation System](topics/simulation_system.md)
-* [UE4](topics/ue4.md)
-* [Unity](topics/unity.md)
 * [App Manifest](topics/app_metadata.md)
 * [Support](topics/support.md)
+
+* [Input](topics/input.md)
+* [Overlay](topics/overlay.md)
 * [Low-Power Mode](topics/lpm.md)
+
+__Advanced:__
+
+* [Optimization](topics/optimization.md)
