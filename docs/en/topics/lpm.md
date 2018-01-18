@@ -11,7 +11,7 @@ Reduced hardware functionality/performance:
 
 In this mode the [OS](os.md) and [Ruyi platform](layer0.md) are still running- albeit with reduced functionality (and performance).
 
-The intention is to use this mode for:
+This mode is intended for:
 
 - Downloading/uploading
 - Patching of both the system and applications

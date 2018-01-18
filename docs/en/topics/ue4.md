@@ -1,14 +1,16 @@
 # UE4 Integration
 
+Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unrealengine.com/en-US/) for the [UE4 sample](https://bitbucket.org/playruyi/unreal_demo).
+
 ## Prerequisites
 
-- [Visual Studio 2017](https://www.visualstudio.com/vs/community/) 15.3 version or later with following components:
-    - Windows 10 SDK (10.0.15063.0)
-- Tested with Unreal Engine 18, Compiled version
+- [Visual Studio 2017](https://www.visualstudio.com/vs/community/) version 15.3 or later with the following individual components:
+    - Windows 10 SDK (10.0.15063.0) (under __SDKs, libraries, and frameworks__)
+- Unreal Engine 18, Compiled version
 
 ## Instructions
 
-1. Our sdk file will be in two folders: __include__ and __lib__.  Put them in one of your game module source folder.  For example, `source/ModuleName/include` and `source/ModuleName/lib`.  They may be put in a sub-folder, just make sure they're in the same folder.
+1. Our SDK files will be in two folders: __include__ and __lib__.  Put them in one of your game module source folder.  For example, `source/ModuleName/include` and `source/ModuleName/lib`.  They may be put in a sub-folder, just make sure they're in the same folder.
 1. Open __ModuleName.Build.cs__ and add `ModuleName/xxx/include` to the `PublicIncludePaths` property.  For example:
 
         PublicIncludePaths.AddRange(
@@ -46,8 +48,8 @@
         PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_thread-vc141-mt-gd-1_64.lib"));
 
 1. Copy `lib/zmq/libzmq.dll` to the build output folder.  For example, `Binaries/Win64`.
-1. Open your project with Unreal Engine 4 Editor.  Click __File -> Refresh Visual Studio Project__ (or right-click __xxxxx.uproject__ file and click _Generate visual studio project file_).  Wait for it to finish, then reload your Visual Studio project and you will find "include" and "lib" folders in Solution Explorer.
-1. When using SDK functions, include `RuyiSDK.h` and use apprpropriate namespaces (like `Ruyi::RuyiSDK`).  Refer to the [UE4 demo source code](https://bitbucket.org/playruyi/unreal_demo) and the [SDK documentation](http://dev.playruyi.com/api) for API details.
+1. Open your project with Unreal Engine 4 Editor.  Click __File -> Refresh Visual Studio Project__ (or right-click __xxxxx.uproject__ file and click __Generate visual studio project file__).  Wait for it to finish, then reload your Visual Studio project and you will find __include__ and __lib__ folders in _Solution Explorer_ (click __View -> Solution Explorer__).
+1. When using SDK functions, include `RuyiSDK.h` and use apprpropriate namespaces (like `Ruyi::RuyiSDK`).  Refer to the [UE4 sample](https://bitbucket.org/playruyi/unreal_demo) and [SDK documentation](http://dev.playruyi.com/api) for API details.
 1. Build your project.
 
 ## Common Issues
