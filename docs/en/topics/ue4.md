@@ -1,9 +1,10 @@
 # UE4 Integration
 
-## Dependencies
+## Prerequisites
 
-- [Visual Studio 2017](https://www.visualstudio.com/vs/community/) 15.3 version or later.  Including Windows 10 SDK (10.0.15063.0).
-- Tested with Unreal Engine 18, Compiled version.
+- [Visual Studio 2017](https://www.visualstudio.com/vs/community/) 15.3 version or later with following components:
+    - Windows 10 SDK (10.0.15063.0)
+- Tested with Unreal Engine 18, Compiled version
 
 ## Instructions
 

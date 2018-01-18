@@ -20,4 +20,16 @@ Create a [pull request](https://bitbucket.org/playruyi/docs/pull-requests/) to s
 
 		https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/support.md
 
-- 
+- Configure VS Code to insert spaces instead of tabs:
+
+	1. Click __View -> Command Palette...__ (or press `Ctrl+Shift+P`)  
+	![](/docs/img/vscode_command.png)
+	1. Type all or part of `indent using spaces`  
+	![](/docs/img/vscode_indent_using.png)
+
+	OR
+
+	1. Click in the lower-right of the window  
+	![](/docs/img/vscode_lower_right.png)
+	1. Select `Indent Using Spaces`
+	![](/docs/img/vscode_spaces.png)

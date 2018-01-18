@@ -41,7 +41,9 @@ Ruyi platform can be installed to a PC.  By default it includes:
 
 ### Ruyi Client
 
-Ruyi client-side software (e.g. [layer0](layer0.md)) should be installed to `c:\ruyi`:  
-![](/docs/img/layer0_path.png)
+Ruyi client-side software should be copied from [SDK](sdk.md) to `c:\ruyi`:
+- Layer0
+- MainClient
+- OverlayClient
 
 See [SDK setup tutorial](../tutorials/setup.md).

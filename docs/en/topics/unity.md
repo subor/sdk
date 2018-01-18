@@ -2,11 +2,6 @@
 
 We're planning to support [Unity 3D](https://unity3d.com/) as a first-class development environment for Ruyi.
 
-Refer to the following:
-
-- [Unity sample](https://bitbucket.org/playruyi/space_shooter)
-- [Unity tutorial](../tutorials/run_unity_sample_console.md)
-
 ## Prerequisites
 
 - Unity 2017.1.1f1 (newer versions likely work)
@@ -22,3 +17,8 @@ RuyiNet is provided as high-level wrapper around the Ruyi C# API.
 ## Advanced Usage
 
 __Coming Soon__
+
+## Links
+
+- [Unity sample](https://bitbucket.org/playruyi/space_shooter)
+- [Unity tutorial](../tutorials/run_unity_sample_console.md)

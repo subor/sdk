@@ -1,6 +1,6 @@
 # Setup
 
-These are instructions to setup and manage the Ruyi SDK on a developer's workstation.
+These are instructions to setup and manage the Ruyi SDK on a developer's workstation or the Ruyi console.
 
 If you received a devkit from us it should already come with the SDK pre-installed to `c:\ruyi`.  But, the following instructions can be used to update it.
 
@@ -13,7 +13,7 @@ If you received a devkit from us it should already come with the SDK pre-install
     - Main Client
 1. Uncompress to local HDD as siblings
 
-End result should directory structure similar to the following:
+End result should be directory structure similar to the following:
 ```
 |   
 +---DevTools
