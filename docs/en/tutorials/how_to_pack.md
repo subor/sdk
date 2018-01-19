@@ -3,9 +3,9 @@
 1. Create the Manifest file, It must be named RuyiManifest.json, an typical content should looks like:
 ```
      {
-        appID: "com.ruyi.jade.app_id",
+        appID: "app_id",
         application:    {
-                name:"@com.ruyi.app_id",
+                name:"@app_id",
                 label:"@antestapp",
                 icon:"bluetooth.png",
                 description:"an test app description",
