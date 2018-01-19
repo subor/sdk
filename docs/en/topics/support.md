@@ -5,6 +5,10 @@ Support is available in two forms:
 - [Forums](http://dev.playruyi.com/forum/) for discussion
 - [Support repository](https://bitbucket.org/playruyi/support) for submitting tickets
 
+Other resources:
+
+- [Release Notes](release_notes.md)
+
 ## Searching for existing issues
 
 1. Open [support repository](https://bitbucket.org/playruyi/support) in web browser
