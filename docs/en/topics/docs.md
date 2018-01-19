@@ -45,5 +45,5 @@ Create a [pull request](https://bitbucket.org/playruyi/docs/pull-requests/) to s
 
 	1. Click in the lower-right of the window  
 	![](/docs/img/vscode_lower_right.png)
-	1. Select `Indent Using Spaces`
+	1. Select `Indent Using Spaces`  
 	![](/docs/img/vscode_spaces.png)
