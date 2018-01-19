@@ -57,6 +57,16 @@ End result should be directory structure similar to the following:
 
 Details regarding the SDK can be found [here](../topics/sdk.md).
 
+### Notes
+1. All assemblies above should keep in the same version, you can check that by right click on the exe/dll file, properties->details->file version
+1. Delete the old version when upgrading, don't do a copy -> replacement, make sure files not needed don't exist.
+
+### Dependencies
+1. [vcredist_2013_x64.exe](https://www.microsoft.com/en-us/download/details.aspx?id=40784)
+1. [vcredist_2017_x64.exe](https://go.microsoft.com/fwlink/?LinkId=746572)
+1. [Vulkan Runtime](../../../files/VulkanRuntime.zip) install both 32 and 64bit version
+
+
 ## Launching Client, Registering, and Logging-in
 
 __IMPORTANT__ A user _must be logged in via main client_ for most of the SDK API to work.  The retail version of the console will require a user to be logged in to launch apps.

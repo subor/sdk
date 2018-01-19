@@ -2,50 +2,50 @@
 
 1. Create the Manifest file, It must be named RuyiManifest.json, an typical content should looks like:
 ```
- {
-    appID: "com.ruyi.jade.app_id",
-    application:    {
-            name:"@com.ruyi.app_id",
-            label:"@antestapp",
-            icon:"bluetooth.png",
-            description:"an test app description",
-            logo:"logo.png",
-            activity:[
-                    {
-                            name:"main",
-                            label:"main test activity",
-                            description:"@antestapp",
-                            icon:"logo.png"
-                    }
-            ]
-    },
-    use_permissions:[
-            {
-                    name:"jade.permission.ACHIEVEMENT"
-            }
-    ],
-    use_sdk:{
-            minSdkVersion : "1.0.0.0"
+     {
+        appID: "com.ruyi.jade.app_id",
+        application:    {
+                name:"@com.ruyi.app_id",
+                label:"@antestapp",
+                icon:"bluetooth.png",
+                description:"an test app description",
+                logo:"logo.png",
+                activity:[
+                        {
+                                name:"main",
+                                label:"main test activity",
+                                description:"@antestapp",
+                                icon:"logo.png"
+                        }
+                ]
+        },
+        use_permissions:[
+                {
+                        name:"jade.permission.ACHIEVEMENT"
+                }
+        ],
+        use_sdk:{
+                minSdkVersion : "1.0.0.0"
+        }
     }
-}
 ```
 2. Create an sibling folder named "res" with your manifest file
 3. create "ld" and "hd" folder in "res", put your images used in the manifest file into them according to the "high" or "low" dimension.
 4. create the i18n.json file in "res", which should contain texts in all language you're gonna support. it should looks like this:
 ```
-{
-    "i18n": {
-        "en-US": {
-            "trc.item.succeed": "pass",
-            "antestapp": "achievement max number allowed for each title",
-            "com.ruyi.TestApp": "against every game, we only allow specific number of achievement to be created"
-        },
-        "zh-CN": {
-            "trc.item.succeed": "测试通过",
-            "antestapp": "每款APP所允许的最大的成就数量"
+    {
+        "i18n": {
+            "en-US": {
+                "trc.item.succeed": "pass",
+                "antestapp": "achievement max number allowed for each title",
+                "com.ruyi.TestApp": "against every game, we only allow specific number of achievement to be created"
+            },
+            "zh-CN": {
+                "trc.item.succeed": "测试通过",
+                "antestapp": "每款APP所允许的最大的成就数量"
+            }
         }
     }
-}
 ```
 5. create a folder with the name of your app_id in "com.ruyi.jade.app_id" next to the manifest file, and put your app into it. the exe name must be "app_id".exe
 6. create a zip file named "app_id" and contain all the content above directly in the root
