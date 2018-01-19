@@ -78,7 +78,7 @@ At this point you should be looking at placeholder UI for landing page of logged
 __Next step:__
 - Try running [UE4](run_ue4_sample_pc.md) or [Unity](run_unity_sample_console.md) samples.
 
-## Replacing/Updating SDK
+## Updating SDK
 
 1. Close Main Client and layer0 (if running)
 1. Delete old SDK folder
