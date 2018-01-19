@@ -11,6 +11,9 @@ In this tutorial we're going to install an example based on [Unity 3D](https://u
 1. On the devkit, [launch platform and login](layer0_devtools.md#Layer0)
 1. Get IPv4 address of devkit.  On the devkit, in command prompt run `ipconfig` (here we will assume `192.168.1.1`).
 1. [Download sample](https://bitbucket.org/playruyi/space_shooter) to local PC (here we will assume `d:\dev\unity_demo`).
+1. Download and install the RUYI plugin
+    - Get the DLLs from this location: http://dev.playruyi.com/udownloadslist/SDK
+    - Place the DLLs in d:\dev\unity_demo\Assets\Plugins\x64
 1. Launch Unity and open the project at `d:\dev\unity_demo`
 1. File -> Build Settings  
 ![](/docs/img/unity_build.png)
