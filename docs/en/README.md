@@ -78,3 +78,6 @@ __Advanced:__
 __Advanced:__
 
 * [Optimization](topics/optimization.md)
+
+## [FAQ](faq.md)
+
