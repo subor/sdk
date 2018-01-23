@@ -12,6 +12,12 @@ If you received a devkit from us it should already come with the SDK pre-install
     - Layer0
     - Main Client
 1. Uncompress to local HDD as siblings
+1. If necessary (see [issue](https://bitbucket.org/playruyi/support/issues/3)), __unblock__ executable files:
+    - __Right-click executable, select Properties__, enable the __Unblock__ checkbox  
+    ![](/docs/img/exe_unblock.png)
+
+    OR
+    - Run __Windows PowerShell__ as _administrator_ and execute `Get-ChildItem c:\RUYI\*.* -Recurse | Unblock-File`
 
 End result should be directory structure similar to the following:
 ```
