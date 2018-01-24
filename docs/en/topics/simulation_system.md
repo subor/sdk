@@ -47,3 +47,10 @@ Ruyi client-side software should be copied from [SDK](sdk.md) to `c:\ruyi`:
 - OverlayClient
 
 See [SDK setup tutorial](../tutorials/setup.md).
+
+### Additional Components
+
+- Visual C++ Redistributable for [Visual Studio 2013 (x64)](https://www.microsoft.com/en-us/download/details.aspx?id=40784) and 
+- [Visual Studio 2017 (x64)](https://go.microsoft.com/fwlink/?LinkId=746572)
+- Vulkan Runtime 
+- [DirectX 9.0c End-User Runtime](https://www.microsoft.com/en-us/download/details.aspx?id=34429)

@@ -1,7 +1,8 @@
 # Support
 
-Support is available in two forms:
+Support is available in several forms:
 
+- [FAQ](../faq.md)
 - [Forums](http://dev.playruyi.com/forum/) for discussion
 - [Support repository](https://bitbucket.org/playruyi/support) for submitting tickets
 
@@ -14,7 +15,7 @@ Other resources:
 1. Open [support repository](https://bitbucket.org/playruyi/support) in web browser
 1. Select __Issues__ from left panel to view current issues
 1. __FILTER BY__ controls which issues are visible
-1. Use the search bar in the upper right to find similar issues
+1. Use the search bar in the upper right to find similar issues  
 ![](/docs/img/support_search.png)
 1. Click issue title to view details  
 ![](/docs/img/support_issue.png)
@@ -24,7 +25,7 @@ Other resources:
 ## Reporting an issue
 
 1. Open [support repository](https://bitbucket.org/playruyi/support) in web browser
-1. Select __Issues__ from left panel to display list of current issues
+1. Select __Issues__ from left panel to display list of current issues  
 ![](/docs/img/support_issues.png)
 1. Use the search bar in the upper right to easily find issues similar to your own (_try this first_)
 1. If an existing issue cannot be found, click __Create issue__ to create a new ticket  
