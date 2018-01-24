@@ -4,7 +4,7 @@
 ## Layer0
 1. layer0 crashed when running the version downloaded through the dev-kit  
 	
-	> due to IE security, all untrust files which downloaded from the Intetnet will be marked 'Block' state,  right click on the executable file, such as Layer0.exe, check box 'unblock file', then apply, run again.
+	> due to IE security, all untrust files which downloaded from the Intetnet will be marked 'Block' state,  right click on the executable file, such as Layer0.exe, check box 'unblock file', then apply, run again, or just use the command 'Get-ChildItem c:\ruyi\*.* -Recurse | Unblock-File' to unblock all files.
 
 
 ## SDK
