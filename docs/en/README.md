@@ -5,10 +5,10 @@
 You should have received the following from us:
 
 * [http://dev.playruyi.com](http://dev.playruyi.com) invite code (need one per team or team member)
-	* e.g. __ABC123__
+    * e.g. __ABC123__
 * App ID and secret (need one per project- shared by all team members)
-	* App ID similar to __12345__
-	* App Secret similar to __abcd1234-ef12-ab56-7890cdef1234__
+    * App ID similar to __12345__
+    * App Secret similar to __abcd1234-ef12-ab56-7890cdef1234__
 * Email invitation from Atlassian to join playruyi team on [Bitbucket](https://bitbucket.org/):  
 ![](/docs/img/bitbucket_invite.png)
 
@@ -33,14 +33,18 @@ In other words, __here be dragons__.
 
 Get __[Support](topics/support.md)__
 
----	
+---
+
+## [FAQ](faq.md)
 
 ## Development Environment
 
-- Workstation running Windows 10 RS2 (aka 1703, Creator's Update) or RS3 (aka 1709, Fall Creator's Update)
+- Workstation running __64-bit Windows 10__ RS2 (aka 1703, Creator's Update) or RS3 (aka 1709, Fall Creator's Update)
 - [git](https://git-scm.com/) or [Sourcetree](https://www.sourcetreeapp.com/)
 - [Visual Studio 2017](https://www.visualstudio.com/vs/community/) 15.3+
+    - Windows 10 SDK (10.0.15063.0) (under __SDKs, libraries, and frameworks__)
 - [Supported gamepad](topics/input.md#supported-devices)
+- [Additional components](topics/simulation_system.md#additional-components)
 
 Other variations _might_ work, but they aren't tested extensively; YMMV.
 
@@ -64,12 +68,14 @@ __Advanced:__
 * [Ruyi OS](topics/os.md)
 * [Developer Tools](topics/devtool.md)
 * [SDK](topics/sdk.md)
-	* [UE4](topics/ue4.md)
-	* [Unity](topics/unity.md)
+    * [UE4](topics/ue4.md)
+    * [Unity](topics/unity.md)
 * [Documentation](topics/docs.md)
 * [Simulation System](topics/simulation_system.md)
 * [App Manifest](topics/app_metadata.md)
 * [Support](topics/support.md)
+    * [FAQ](faq.md)
+    * [Release notes](topics/release_notes.md)
 
 * [Input](topics/input.md)
 * [Overlay](topics/overlay.md)
@@ -78,6 +84,4 @@ __Advanced:__
 __Advanced:__
 
 * [Optimization](topics/optimization.md)
-
-## [FAQ](faq.md)
 

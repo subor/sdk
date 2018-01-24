@@ -31,6 +31,12 @@ Create a [pull request](https://bitbucket.org/playruyi/docs/pull-requests/) to s
 
       https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/support.md
 
+- Linking to support ticket/issue:
+
+    Where `1` is replaced by desired [issue number](https://bitbucket.org/playruyi/support/issues?status=new&status=open)
+
+      https://bitbucket.org/playruyi/support/issues/1
+
 - We use [Visual Studio Code](https://code.visualstudio.com/).  Check their [markdown editing tips](https://code.visualstudio.com/Docs/languages/markdown) for how to preview changes:  
 ![](/docs/img/docs_vs_code_preview.png)
 

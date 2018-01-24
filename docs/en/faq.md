@@ -2,9 +2,9 @@
 
 
 ## Layer0
-1. layer0 crashed when running the version downloaded through the dev-kit  
+1. layer0 crashes on devkit when using version downloaded from [dev portal](http://dev.playruyi.com/) (see [issue](https://bitbucket.org/playruyi/support/issues/3))
 	
-	> due to IE security, all untrust files which downloaded from the Intetnet will be marked 'Block' state,  right click on the executable file, such as Layer0.exe, check box 'unblock file', then apply, run again, or just use the command 'Get-ChildItem c:\ruyi\*.* -Recurse | Unblock-File' to unblock all files.
+	> Due to IE security, untrusted files downloaded from the Internet will be in __Blocked__ state.  Right-click the executable (such as Layer0.exe), enable __Unblock file__, then __Apply__.
 
 
 ## SDK
