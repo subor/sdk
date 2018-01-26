@@ -20,7 +20,7 @@ Get __[Support](topics/support.md)__
 ## Welcome!
 
 1. Complete [developer registration and setup your dev environment](topics/dev_onboarding.md)
-1. Look at the [tutorials](#tutorials).  In particular, how to [install the SDK](tutorials/setup.md).
+1. Look at the [tutorials](#tutorials).  In particular, how to [setup the SDK](tutorials/setup.md).
 
 ## Tutorials
 

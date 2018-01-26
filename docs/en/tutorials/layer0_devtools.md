@@ -2,16 +2,16 @@
 
 ## Prerequisites
 
-- [Download and install the SDK](setup.md)
+- [Register as a Ruyi developer and setup a development environment](../topics/dev_onboarding.md)
+- [Setup the SDK and login as a guest user](setup.md)
 
-## Folder structure
+## Developer tools
+
+All [developer tools](../topics/devtool.md) are available via `DevTools/RuyiDev.exe`.
+
 ```
 +---DevTools
 |   |   RuyiDev.exe
-|   \---Ruyi
-|       \---Presentation
-|           \---Web
-|               |   index.html
 |                       
 +---Layer0
 |   |   Layer0.exe
@@ -20,23 +20,7 @@
 |   |   Client.exe
 |           
 \---SDK
-    +---RuyiSDK
-    |   \---netstandard2.0
-    +---RuyiSDK.nf2.0
-    \---RuyiSDKCpp
 ```
-
-## Layer0
-
-[Layer0](../topics/layer0.md) must be running on a host machine before you can access most of the Ruyi platform.
-
-1. Run Layer0.exe  
-![](/docs/img/layer0.png)
-1. Register and login as a new user
-
-## Developer tools
-
-All [developer tools](../topics/devtool.md) are available via RuyiDev.exe.
 
 Double-click RuyiDev.exe to launch the GUI:
 ![](/docs/img/ruyidev_gui.png)
