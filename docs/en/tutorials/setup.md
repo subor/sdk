@@ -94,6 +94,7 @@ __IMPORTANT__ A user _must be logged in via main client_ for most of the SDK API
 At this point you should be looking at placeholder UI for landing page of logged in user.
 
 __Next step:__
+
 - Try running [UE4](run_ue4_sample_pc.md) or [Unity](run_unity_sample_console.md) samples.
 
 ## Updating SDK
