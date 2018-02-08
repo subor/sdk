@@ -11,6 +11,7 @@
     - 2 GB reserved for GPU
 
 __Comments__
+
 - Zen microarchitecture has 52% more IPC over previous generations ([source](https://www.anandtech.com/show/11143/amd-launch-ryzen-52-more-ipc-eight-cores-for-under-330-preorder-today-on-sale-march-2nd))
 
 ## Suggestions
@@ -19,16 +20,15 @@ __Comments__
     - Use profiler included with your engine ([UE4](https://docs.unrealengine.com/latest/INT/Engine/Performance/Profiler/index.html), [Unity](https://docs.unity3d.com/Manual/Profiler.html), etc.)
     - [Radeon GPU Profiler](https://gpuopen.com/gaming-product/radeon-gpu-profiler-rgp/)
     - [PIX](https://blogs.msdn.microsoft.com/pix/download/)
-- Targets:
-    - Memory usage exceeding either of the 6 GB/2 GB system/graphics memory will experience performance hits.  In general:
-        - 30 FPS: 1080p to 2k on Ultra/Very High, or 2k to 4k on High
+- Performance vs. quality targets:
+    - Exceeding either 6 GB of system or 2 GB graphics memory will result in performance penalty.  In general:
+        - 30 FPS: 1080p to 2k on Ultra/Very High settings, or 2k to 4k on High
         - 60 FPS: 1080p on Ultra, 2k on High
-    
-- Suggestions:
-    - Use [Vulkan API](https://www.khronos.org/vulkan/)
-    - Use FP16.  Vega's __Rapid Packed Math__ can _double_ throughput over single-precision float ([source](https://www.anandtech.com/show/11143/amd-launch-ryzen-52-more-ipc-eight-cores-for-under-330-preorder-today-on-sale-march-2nd))
 
+## Optimizations
 
+- Use [Vulkan API](https://www.khronos.org/vulkan/)
+- Use FP16.  Vega's __Rapid Packed Math__ can _double_ throughput over single-precision float ([source](https://www.anandtech.com/show/11143/amd-launch-ryzen-52-more-ipc-eight-cores-for-under-330-preorder-today-on-sale-march-2nd))
 
 ## Resources
 
