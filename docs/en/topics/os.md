@@ -12,6 +12,8 @@ Together with our configuration and drivers it is __Ruyi OS__.
 
 ## Installation
 
+![](/docs/img/warning.png) Flash the correct BIOS version __before__ installing the corresponding OS version (see [BIOS](bios.md)).
+
 1. Prepare USB drive with at least 6 GB space and FAT32 format
 1. Download [Ruyi OS image](http://dev.playruyi.com/uservices)
 1. Copy OS files to root of USB drive and unmount once finished
