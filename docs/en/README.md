@@ -40,6 +40,7 @@ __Advanced:__
 
 * [Platform Architecture](topics/layer0.md)
 * [Ruyi OS](topics/os.md)
+    * [BIOS](topics/bios.md)
 * [Developer Tools](topics/devtool.md)
 * [SDK](topics/sdk.md)
     * [UE4](topics/ue4.md)
@@ -54,6 +55,7 @@ __Advanced:__
 * [Input](topics/input.md)
 * [Overlay](topics/overlay.md)
 * [Low-Power Mode](topics/lpm.md)
+* [Optimization](topics/optimization.md)
 
 __Advanced:__
 
