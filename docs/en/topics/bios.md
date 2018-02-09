@@ -2,7 +2,9 @@
 
 Similar to other devices, the Ruyi box has BIOS firmware.
 
-## Checking BIOS version
+## Version
+
+__Checking BIOS version__
 
 - When machine starts
     1. Press `F2` to enter BIOS setup
@@ -11,18 +13,24 @@ Similar to other devices, the Ruyi box has BIOS firmware.
 OR
 
 - In Windows
-    1. Run `msinfo32`
-    1. Inspect __System Summary -> BIOS Version/Date__  
+    1. Run `msinfo32.exe`
+    1. Inspect __System Summary -> BIOS Version/Date__ value  
     ![](/docs/img/msinfo32_bios.png)
 
-The BIOS version must match the [Ruyi OS](os.md) version because the BIOS must be paired with a compatible AMD driver.
+The BIOS version __must__ match the [Ruyi OS](os.md) version because the BIOS must be paired with a compatible AMD driver.
 
 | BIOS Version/Date | Ruyi OS Version | AMD Driver Stack Version/Date
 |-|-|-
-| 0.08 2018/1/2 | 0.3 | 23.20.785.0 2017/12/15
-| [0.09](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220009.zip) 2018/1/8 | 0.3 | 23.20.785.0 2017/12/15
-| [0.10](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220010.zip) 2018/1/15 | 0.4 | 23.20.785.0 2018/1/5
-| [0.11](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220010.zip)
+| | 0.6 (Scheduled for release 2018/3) | 0.0.9.0 2018/2/2
+| [0.11](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220011.zip) | 0.5 | 0.0.7.4 2018/1/5 (23.20.785.0)
+| [0.10](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220010.zip) 2018/1/15 | 0.4 | 0.0.7.4 2018/1/5 (23.20.785.0)
+| [0.09](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220009.zip) 2018/1/8 | 0.3 | 0.0.7.2 2017/12/15 (23.20.785.0)
+| 0.08 2018/1/2 | 0.3 | 0.0.7.2 2017/12/15 (23.20.785.0)
+
+Also see:
+
+- How to check the [Ruyi OS verison](os.md#Version)
+- [OS Image download](http://dev.playruyi.com/uservices)
 
 ## Flashing the BIOS
 

@@ -10,6 +10,19 @@ Essentially, it is Windows 10:
 
 Together with our configuration and drivers it is __Ruyi OS__.
 
+## Version
+
+To determine the version of Ruyi OS currently installed, check the top of `c:\windows\ad.log`:
+```
+Initial all Process on 02-05-2018 20:03:26
+RUYI OS v0.5_20180205B
+```
+
+To determine the version of Ruyi OS on install media, check `<root>\sources\version.txt`:
+```
+v0.5_20180208
+```
+
 ## Installation
 
 ![](/docs/img/warning.png) Flash the correct BIOS version __before__ installing the corresponding OS version (see [BIOS](bios.md)).
