@@ -1,14 +1,27 @@
 # Ruyi OS
 
-The operating system installed on the Ruyi console is a version of Windows 10 variably known as __Windows 10 IoT Enterprise__ or __Windows 10 Enterprise LTSB 2016__.  Note that this is not the same as [Windows 10 IoT Core](https://developer.microsoft.com/en-us/windows/iot).
+The operating system installed on the Ruyi console is a version of Windows 10 variably known as __Windows 10 IoT Enterprise__ or __Windows 10 Enterprise LTSB 2016__.  Note that this is __not__ the same as [Windows 10 IoT Core](https://developer.microsoft.com/en-us/windows/iot).
 
 Essentially, it is Windows 10:
 
 * Fixed to RS1 update (aka Redstone 1, Anniversary Update, version 1607)
-* With security features of Windows 10 Enterprise (i.e. AppLocker, Bitlocker, and Device Guard)
+* With security features of Windows 10 Enterprise (i.e. [AppLocker](https://docs.microsoft.com/en-us/windows/security/threat-protection/applocker/applocker-overview), [BitLocker](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview), and [Device Guard](https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/device-guard-deployment-guide))
 * Without Microsoft Edge, Store, Cortana, and apps like Mail, Calendar, etc.
 
 Together with our configuration and drivers it is __Ruyi OS__.
+
+## Version
+
+To determine the version of Ruyi OS currently installed, check the top of `c:\windows\ad.log`:
+```
+Initial all Process on 02-05-2018 20:03:26
+RUYI OS v0.5_20180205B
+```
+
+To determine the version of Ruyi OS on install media, check `<root>\sources\version.txt`:
+```
+v0.5_20180208
+```
 
 ## Installation
 
