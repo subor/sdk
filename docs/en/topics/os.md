@@ -1,6 +1,7 @@
 # Ruyi OS
 
-The operating system installed on the Ruyi console is a version of Windows 10 variably known as __Windows 10 IoT Enterprise__ or __Windows 10 Enterprise LTSB 2016__.  Note that this is not the same as [Windows 10 IoT Core](https://developer.microsoft.com/en-us/windows/iot).
+The operating system installed on the Ruyi console is a version of Windows 10 variably known as __Windows 10 IoT Enterprise__ or __Windows 10 Enterprise LTSB 2016__.  Note that this is not the same as [Windows 10 IoT Core](https://developer.microsoft.com/en-us/windows/iot).   
+We only supply the link to download latest version of [Ruyi OS image](http://dev.playruyi.com/uservices), if you REALLY need the old one, contact our support.
 
 Essentially, it is Windows 10:
 
