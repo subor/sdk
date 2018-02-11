@@ -33,7 +33,7 @@ Get __[Support](topics/support.md)__
 __Advanced:__
 
 * Setup a [PC similar to Ruyi devkit](topics/simulation_system.md)
-* Devkit OS reinstall
+* Devkit [OS reinstall](topics/os.md#Installation)
 * Debugging SDK
 
 ## Topics
@@ -55,7 +55,6 @@ __Advanced:__
 * [Input](topics/input.md)
 * [Overlay](topics/overlay.md)
 * [Low-Power Mode](topics/lpm.md)
-* [Optimization](topics/optimization.md)
 
 __Advanced:__
 
