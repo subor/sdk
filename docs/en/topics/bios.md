@@ -71,6 +71,7 @@ __Next, On the Ruyi Box__
 1. Start flashing the BIOS by running `flash.nsh`
     - A progress bar should be displayed during the flashing process
 1. Wait around 1 minute for the flashing to complete
+1. Remove the USB stick and reboot machine
 
 ## Installing Ruyi OS
 
