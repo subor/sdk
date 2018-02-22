@@ -8,7 +8,7 @@ __Checking BIOS version__
 
 - When machine starts
     1. Press `F2` to enter BIOS setup
-    1. Enter __Utility -> Main -> BIOS Version__
+    1. Enter __Setup Utility -> Main -> BIOS Version__
 
 OR
 

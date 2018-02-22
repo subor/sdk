@@ -28,12 +28,16 @@ v0.5_20180208
 
 ![](/docs/img/warning.png) Flash the correct BIOS version __before__ installing the corresponding OS version (see [BIOS](bios.md)).
 
+Installation should take 20-40 minutes.
+
 1. Prepare USB drive with at least 6 GB space and FAT32 format
 1. Download [Ruyi OS image](http://dev.playruyi.com/uservices)
-1. Copy OS files to root of USB drive and unmount once finished
+1. Copy OS files to root of USB drive and eject/unmount once finished
 1. Plug USB drive into system and reboot it
-1. A command prompt should appear, wait 20-40 minutes for OS to install
-    - Once Windows desktop appears installation is complete
+1. A Command Prompt should appear, wait while the OS installs
+1. When prompted, remove the USB drive and press `Enter` to reboot and continue
+    - During the remainder of the installation process the machine may reboot, open PowerShell/Command Prompt windows, or display a black screen several times
+1. Once a Windows desktop with no visible applications appears, installation is complete
 
 ## Resources
 
