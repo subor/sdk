@@ -12,7 +12,7 @@ Below follows suggestions and instructions for building a simluation system.
 
 ### Differences from Ruyi Console
 
-- Ruyi's APU will be clocked differently (CPU 3Gz- GPU final clock tbd), but otherwise similar feature-wise
+- Ruyi's APU will be clocked differently (CPU 3Gz, GPU 1.2GHz), but otherwise similar feature-wise
 - Ruyi has 8 GB GDDR5 of shared system memory with 2GB reserved for the GPU
 
 ## Software
@@ -45,7 +45,13 @@ See [SDK setup tutorial](../tutorials/setup.md).
 
 ### Additional Components
 
-- Visual C++ Redistributable for [Visual Studio 2013 (x64)](https://www.microsoft.com/en-us/download/details.aspx?id=40784) and 
-- [Visual Studio 2017 (x64)](https://go.microsoft.com/fwlink/?LinkId=746572)
-- Vulkan Runtime 
-- [DirectX 9.0c End-User Runtime](https://www.microsoft.com/en-us/download/details.aspx?id=34429)
+| Component | Link | Notes
+|-|-|-
+Visual C++ Redistributable for VS 2008 | [x86](https://www.microsoft.com/en-us/download/details.aspx?id=29) and [x64](https://www.microsoft.com/en-us/download/details.aspx?id=15336) | Needed by some apps/games
+Visual C++ Redistributable for VS 2010 | [x86](https://www.microsoft.com/en-us/download/details.aspx?id=5555) and [x64](https://www.microsoft.com/en-us/download/details.aspx?id=14632) | Needed by some apps/games
+Visual C++ Redistributable for VS 2012 | [x86/x64](https://www.microsoft.com/en-us/download/details.aspx?id=30679) | Needed by some apps/games
+Visual C++ Redistributable for VS 2013 | [x86/x64](https://www.microsoft.com/en-us/download/details.aspx?id=40784) | Needed by main client some apps/games
+Visual C++ Redistributable for VS 2017 | [x86/x64](https://go.microsoft.com/fwlink/?LinkId=746572) | Needed by layer0 and some apps/games.  Also covers VS 2015.
+Vulkan Runtime v1.0.54.0 | x86/x64 | Needed by some apps/games
+DirectX 9.0c End-User Runtime | [link](https://www.microsoft.com/en-us/download/details.aspx?id=34429) | Needed by some apps/games
+.NET Framework 3.5 | [link](https://www.microsoft.com/en-us/download/details.aspx?id=22) | Needed by some apps/games
