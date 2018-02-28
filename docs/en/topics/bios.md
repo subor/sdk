@@ -34,8 +34,19 @@ Also see:
 
 ## Flashing the BIOS
 
-__First, Create USB Flash Drive__
+__Flash under windows__ (available after 0.13)
 
+_It is recommended to flash BIOS under windows unless you have difficulties or do not have a OS installed_
+
+To do that,
+
+1. Download the latest BIOS zip file
+2. Extract the zip file and locate \Winflash\ folder
+3. Run DA22XXXX.exe to flash BIOS
+
+__Flash with EFI shell__
+
+_CAUTION: Doing so will trigger bitlocker recovery mode next time you boot ruyiOS, you might have to reinstall OS to get the system working!!_
 1. Format USB drive with FAT32 filesystem
 1. Unzip [EFI shell files](https://bitbucket.org/playruyi/support/raw/master/files/bios/efi.zip) to root of USB drive
 1. Unzip [BIOS binaries](https://bitbucket.org/playruyi/support/src/master/files/bios/) to root of USB drive
