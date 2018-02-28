@@ -21,11 +21,11 @@ The BIOS version __must__ match the [Ruyi OS](os.md) version because the BIOS mu
 
 | BIOS Version/Date | Ruyi OS Version | AMD Driver Stack Version/Date
 |-|-|-
-| | 0.6 (Scheduled for release 2018/3) | 0.0.9.0 2018/2/2
-| [0.11](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220011.zip) | 0.5 | 0.0.7.4 2018/1/5 (23.20.785.0)
-| [0.10](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220010.zip) 2018/1/15 | 0.4 | 0.0.7.4 2018/1/5 (23.20.785.0)
-| [0.09](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220009.zip) 2018/1/8 | 0.3 | 0.0.7.2 2017/12/15 (23.20.785.0)
-| 0.08 2018/1/2 | 0.3 | 0.0.7.2 2017/12/15 (23.20.785.0)
+| [0.13](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220013.zip) | 0.6 | 0.0.9.0 2018/2/2
+| [0.11](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220011.zip) | 0.5 | 0.0.7.4 2018/1/5
+| [0.10](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220010.zip) 2018/1/15 | 0.4 | 0.0.7.4 2018/1/5
+| [0.09](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220009.zip) 2018/1/8 | 0.3 | 0.0.7.2 2017/12/15
+| 0.08 2018/1/2 | 0.3 | 0.0.7.2 2017/12/15
 
 Also see:
 
