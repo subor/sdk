@@ -4,7 +4,7 @@
 
 - AMD APU
     - Zen 4 core w/ SMT (8 hw threads) @ 3 GHz
-    - Vega (GCN 5th generation) 24 CU @ 1.3 GHz
+    - Vega (GCN 5th generation) 24 CU @ 1.2 GHz
         - 8 TFLOPS half-precision, 4 TFLOPS single
 - 8 GB GDDR5 shared memory
     - 256 GB/s bandwidth

@@ -5,9 +5,9 @@ Low-power mode (LPM) is a special feature of the Ruyi console where it consumes 
 Reduced hardware functionality/performance:
 
 - Single CPU core at 600 MHz (other 3 cores power-gated)
-- GPU and other IPs (including encoder/decoder) clock-gated
+- GPU and other IPs (including HW encoder/decoder) clock-gated
 - Display off
-- Memory bandwidth 51.2 GB/s
+- Memory bandwidth at 51.2 GB/s
 
 In this mode the [OS](os.md) and [Ruyi platform](layer0.md) are still running- albeit with reduced functionality and performance.
 
