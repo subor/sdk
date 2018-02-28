@@ -14,6 +14,7 @@
                         {
                                 name:"main",
                                 label:"main test activity",
+                                exePath:"path/to/your/executable.exe",
                                 description:"@antestapp",
                                 icon:"logo.png"
                         }
