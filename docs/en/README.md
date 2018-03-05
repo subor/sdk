@@ -39,6 +39,7 @@ __Advanced:__
 ## Topics
 
 * [Platform Architecture](topics/layer0.md)
+* [Hardware](topics/hardware.md)
 * [Ruyi OS](topics/os.md)
     * [BIOS](topics/bios.md)
 * [Developer Tools](topics/devtool.md)

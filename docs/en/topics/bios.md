@@ -46,7 +46,7 @@ Also see:
 
 ## Flashing the BIOS
 
-The BIOS 
+The BIOS can be flashed from Windows (the preferred method) or via EFI shell with thumb drive.
 
 __Flash under Windows__
 
