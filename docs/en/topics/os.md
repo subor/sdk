@@ -8,7 +8,7 @@ Essentially, it is Windows 10:
 * With security features of Windows 10 Enterprise (i.e. [AppLocker](https://docs.microsoft.com/en-us/windows/security/threat-protection/applocker/applocker-overview), [BitLocker](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview), and [Device Guard](https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/device-guard-deployment-guide))
 * Without Microsoft Edge, Store, Cortana, and apps like Mail, Calendar, etc.
 
-Together with our configuration and drivers it is __Ruyi OS__.
+Together with our configuration, drivers, and shell it is __Ruyi OS__.  A standard Windows Desktop environment is available in [PC mode](pc_mode.md).
 
 ## Version
 

@@ -48,10 +48,14 @@ Also see:
 
 The BIOS can be flashed from Windows (the preferred method) or via EFI shell with thumb drive.
 
+![](/docs/img/warning.png) [BIOS](bios.md) updates should only be done from [Ruyi OS](os.md).  Make sure you are __not__ in [PC mode](pc_mode.md) before updating the BIOS.
+
 __Flash under Windows__
 
 Available BIOS v0.13 and later:
 
+1. In [Command Prompt with administrator rights](https://technet.microsoft.com/en-us/library/cc947813(v=ws.10).aspx) run: `manage-bde.exe -protectors -disable c:`
+    - This temporarily disables Bitlocker.  __Failure to do this results in an unbootable OS__ due to lost encryption data in TPM chip.
 1. Download the [latest BIOS zip file](https://bitbucket.org/playruyi/support/src/master/files/bios/)
 1. Extract the zip file and locate \Winflash\ folder
 1. Run DA22XXXX.exe to flash BIOS
