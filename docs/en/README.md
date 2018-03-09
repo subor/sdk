@@ -39,8 +39,10 @@ __Advanced:__
 ## Topics
 
 * [Platform Architecture](topics/layer0.md)
+* [Hardware](topics/hardware.md)
 * [Ruyi OS](topics/os.md)
     * [BIOS](topics/bios.md)
+    * [PC mode](topics/pc_mode.md)
 * [Developer Tools](topics/devtool.md)
 * [SDK](topics/sdk.md)
     * [UE4](topics/ue4.md)

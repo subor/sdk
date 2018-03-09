@@ -1,7 +1,6 @@
 # Ruyi OS
 
 The operating system installed on the Ruyi console is a version of Windows 10 variably known as __Windows 10 IoT Enterprise__ or __Windows 10 Enterprise LTSB 2016__.  Note that this is __not__ the same as [Windows 10 IoT Core](https://developer.microsoft.com/en-us/windows/iot).   
-We only supply the link to download latest version of [Ruyi OS image](http://dev.playruyi.com/uservices), if you REALLY need the old one, contact our support.
 
 Essentially, it is Windows 10:
 
@@ -9,17 +8,23 @@ Essentially, it is Windows 10:
 * With security features of Windows 10 Enterprise (i.e. [AppLocker](https://docs.microsoft.com/en-us/windows/security/threat-protection/applocker/applocker-overview), [BitLocker](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview), and [Device Guard](https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/device-guard-deployment-guide))
 * Without Microsoft Edge, Store, Cortana, and apps like Mail, Calendar, etc.
 
-Together with our configuration and drivers it is __Ruyi OS__.
+Together with our configuration, drivers, and shell it is __Ruyi OS__.  A standard Windows Desktop environment is available in [PC mode](pc_mode.md).
 
 ## Version
 
-To determine the version of Ruyi OS currently installed, check the top of `c:\windows\ad.log`:
+__Checking Ruyi OS Version of Running Machine__
+
+If version __0.7__ or later, check registry value of `HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Subor\MachineInfo`
+
+Check the top of `c:\windows\ad.log`:
 ```
 Initial all Process on 02-05-2018 20:03:26
 RUYI OS v0.5_20180205B
 ```
 
-To determine the version of Ruyi OS on install media, check `<root>\sources\version.txt`:
+__Checking Ruyi OS Version of Install Media__
+
+Check `<root>\sources\version.txt`:
 ```
 v0.5_20180208
 ```
@@ -28,12 +33,17 @@ v0.5_20180208
 
 ![](/docs/img/warning.png) Flash the correct BIOS version __before__ installing the corresponding OS version (see [BIOS](bios.md)).
 
+Installation should take 20-40 minutes.
+
 1. Prepare USB drive with at least 6 GB space and FAT32 format
 1. Download [Ruyi OS image](http://dev.playruyi.com/uservices)
-1. Copy OS files to root of USB drive and unmount once finished
+    - We only provide a link to the latest version.  If you need an older version, contact [support](support.md).
+1. Copy OS files to root of bootable USB drive and eject/unmount once finished
 1. Plug USB drive into system and reboot it
-1. A command prompt should appear, wait 20-40 minutes for OS to install
-    - Once Windows desktop appears installation is complete
+1. A Command Prompt should appear, wait while the OS installs
+1. When prompted, remove the USB drive and press `Enter` to reboot and continue
+    - During the remainder of the installation process the machine may reboot, open PowerShell/Command Prompt windows, or display a black screen several times
+1. Once a Windows desktop with no visible applications appears, installation is complete
 
 ## Resources
 
