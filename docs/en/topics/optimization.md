@@ -1,14 +1,8 @@
 # Optimization
 
-## Hardware
+## Hardware Specs
 
-- AMD APU
-    - Zen 4 core w/ SMT (8 hw threads) @ 3 GHz
-    - Vega (GCN 5th generation) 24 CU @ 1.3 GHz
-        - 8 TFLOPS half-precision, 4 TFLOPS single
-- 8 GB GDDR5 shared memory
-    - 256 GB/s bandwidth
-    - 2 GB reserved for GPU
+See [hardware](hardware.md).
 
 __Comments__
 

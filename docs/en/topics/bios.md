@@ -1,10 +1,10 @@
 # BIOS
 
-Similar to other devices, the Ruyi box has BIOS firmware.
+Similar to other devices, Ruyi has BIOS firmware.
 
 ## Version
 
-__Checking BIOS version__
+__Checking BIOS version of Running Machine__
 
 - When machine starts
     1. Press `F2` to enter BIOS setup
@@ -17,15 +17,27 @@ OR
     1. Inspect __System Summary -> BIOS Version/Date__ value  
     ![](/docs/img/msinfo32_bios.png)
 
+__Checking BIOS version of Install Media__
+
+If archive is named `DA220013.zip` then it is version __0.13__.
+
+Check the top of the `DA220REL.txt` file:
+```
+*   [Version]:
+*   BIOS Version:  DA220013.rom (V0.13)
+```
+
+__Important__
+
 The BIOS version __must__ match the [Ruyi OS](os.md) version because the BIOS must be paired with a compatible AMD driver.
 
 | BIOS Version/Date | Ruyi OS Version | AMD Driver Stack Version/Date
 |-|-|-
-| | 0.6 (Scheduled for release 2018/3) | 0.0.9.0 2018/2/2
-| [0.11](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220011.zip) | 0.5 | 0.0.7.4 2018/1/5 (23.20.785.0)
-| [0.10](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220010.zip) 2018/1/15 | 0.4 | 0.0.7.4 2018/1/5 (23.20.785.0)
-| [0.09](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220009.zip) 2018/1/8 | 0.3 | 0.0.7.2 2017/12/15 (23.20.785.0)
-| 0.08 2018/1/2 | 0.3 | 0.0.7.2 2017/12/15 (23.20.785.0)
+| [0.13](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220013.zip) | 0.6 | 0.0.9.0 2018/2/2
+| [0.11](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220011.zip) | 0.5 | 0.0.7.4 2018/1/5
+| [0.10](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220010.zip) 2018/1/15 | 0.4 | 0.0.7.4 2018/1/5
+| [0.09](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220009.zip) 2018/1/8 | 0.3 | 0.0.7.2 2017/12/15
+| 0.08 2018/1/2 | 0.3 | 0.0.7.2 2017/12/15
 
 Also see:
 
@@ -34,9 +46,23 @@ Also see:
 
 ## Flashing the BIOS
 
-__First, Create USB Flash Drive__
+The BIOS can be flashed from Windows (the preferred method) or via EFI shell with thumb drive.
 
-1. Format USB drive with FAT32 filesystem
+__Flash under Windows__
+
+Available BIOS v0.13 and later:
+
+1. Download the [latest BIOS zip file](https://bitbucket.org/playruyi/support/src/master/files/bios/)
+1. Extract the zip file and locate \Winflash\ folder
+1. Run DA22XXXX.exe to flash BIOS
+
+__Flash with EFI shell__
+
+_We recommend flashing the BIOS under Windows instead of via EFI Shell_
+
+First, create USB flash drive:
+
+1. Create bootable USB drive formatted with FAT32 filesystem
 1. Unzip [EFI shell files](https://bitbucket.org/playruyi/support/raw/master/files/bios/efi.zip) to root of USB drive
 1. Unzip [BIOS binaries](https://bitbucket.org/playruyi/support/src/master/files/bios/) to root of USB drive
 
@@ -55,11 +81,11 @@ Resulting directory structure should be similar to the following:
             BOOTX64.efi
 ```
 
-__Next, On the Ruyi Box__
+Next, on the Ruyi:
 
-1. In [Command Prompt with administrator rights](https://technet.microsoft.com/en-us/library/cc947813(v=ws.10).aspx) run: `manage-bde.exe -protectors -disable c:`
+1. If Windows is already installed, in [Command Prompt with administrator rights](https://technet.microsoft.com/en-us/library/cc947813(v=ws.10).aspx) run: `manage-bde.exe -protectors -disable c:`
     - This temporarily disables Bitlocker.  __Failure to do this results in an unbootable OS__ due to lost encryption data in TPM chip.
-1. Plug USB flash drive into any USB port on the box and reboot the box
+1. Plug USB flash drive into any Ruyi's USB ports and reboot it
 1. Wait for EFI Shell prompt to appear:
 
        Shell>
