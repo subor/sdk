@@ -1,6 +1,5 @@
 # FAQ
 
-
 ## Hardware
 
 1. What CPU/GPU/memory?
@@ -61,11 +60,15 @@
 
 1. Can you be more specific?
 
-    Achievments, friends, chat, leaderboards, match making, tournaments, cloud saves, screenshot/video sharing, live-streaming, etc.
+    Achievments, friends, chat, leaderboards, match making, tournaments, cloud saves, screenshot/video sharing, live-streaming, IAP, etc.
 
 1. How are games distributed?
 
     Primarily digital download.  We're also considering ways to do offline install via USB storage.
+
+1. What about security?
+
+    Ruyi provides security measures comparable to other consoles.  Premium content is protected against un-authorized copying.  Cheating is prevented by blocking bots, disallowing content tampering, etc..  [Details](topics/security.md)
 
 1. Will there be TRC/TCR?
 
