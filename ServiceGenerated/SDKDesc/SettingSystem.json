@@ -1,0 +1,573 @@
+{
+    "version": "1.0.0.1",
+	"include": [
+		"ServiceCommon/SDKDesc/CommonType"
+	],
+    "category": {
+        "SDKDataTypes": {
+            "name": "DataTypes",
+            "namespaces": {
+                "csharp": "Ruyi.SDK.SettingSystem.Api",
+				"cpp" : "Ruyi.SDK.SettingSystem.Api"
+            }
+        },
+        "SDKMessages": {
+            "name": "Messages",
+            "namespaces": {
+                "csharp": "Ruyi.SDK.SettingSystem.Api",
+				"cpp" : "Ruyi.SDK.SettingSystem.Api"
+            }
+        },
+        "SDKServices": {
+            "name": "Service",
+            "namespaces": {
+                "csharp": "Ruyi.SDK.SettingSystem.Api",
+				"cpp" : "Ruyi.SDK.SettingSystem.Api"
+            }
+        }
+    },
+    "apis": {
+        "struct.CategoryNode": {
+            "name": "CategoryNode",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "parameters": {
+                "id": {
+                    "type": "string",
+                },
+                "categoryId": {
+                    "type": "string",
+                },
+                "sortingPriority": {
+                    "type": "i32",
+                },
+                "children": {
+                    "type": {
+                        "referTo": "struct.CategoryNode",
+                        "isArray": true
+                    },
+                }
+            }
+        },
+		"struct.AppDataRecord": {
+            "name": "AppDataRecord",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+                "id": {
+                    "type": "string",
+					"description": "@AppDataRecord.id.desc"
+                },
+				"value": {
+                    "type": "JSON",
+					"description": "@AppDataRecord.value.desc"
+                },
+            }
+        },
+		"struct.AppDataCollection": {
+            "name": "AppDataCollection",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+                "id": {
+                    "type": "string",
+					"description": "@AppDataCollection.id.desc"
+                },
+				"records": {
+                    "type": {
+						"referTo": "struct.AppDataRecord",
+						"isArray": true
+					},
+					"description": "@AppDataCollection.records.desc"
+                },
+            }
+        },
+		"struct.AppData": {
+            "name": "AppData",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+                "appId": {
+                    "type": "string",
+					"description": "@AppData.appId.desc"
+                },
+				"data": {
+					"type": {
+						"referTo": "struct.AppDataCollection",
+						"isArray": true
+					},
+					"description": "@AppData.data.desc"
+                },
+            }
+        },
+		
+        "request.GetSettingItem": {
+            "name": "GetSettingItem",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "SettingSystemService"
+            },
+			"description": "@GetSettingItem_Summary",
+            "parameters": {
+                "id": {
+                    "type": "string",
+					"description": "@GetSettingItem_id_desc",
+                }
+            },
+            "responses": {
+                "SettingItem": {
+                    "type": {
+                        "referTo": "CommonType.struct.SettingItem"
+                    },
+                },
+				"description": "@GetSettingItem_responses_desc"
+            },
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+        },
+        "request.GetSettingItems": {
+            "name": "GetSettingItems",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "SettingSystemService"
+            },
+			"description": "@GetSettingItems_Summary",
+            "parameters": {
+                "category": {
+                    "type": "string",
+					"description": "@GetSettingItems_category_Summary",
+                },
+				"includeChildren": {
+                    "type": "bool",
+					"description": "@GetSettingItems_includeChildren_Summary",
+                }
+            },
+            "responses": {
+                "SettingItem": {
+                    "type": {
+                        "referTo": "CommonType.struct.SettingItem",
+                        "isArray": true
+                    },
+                },
+				"description": "@GetSettingItems_responses_desc"
+            },
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+        },
+		"struct.SettingSearchResult": {
+            "name": "SettingSearchResult",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+				"Version": {
+					"type": "string",
+				},
+				"SettingItems": {
+                    "type": {
+                        "referTo": "CommonType.struct.SettingItem",
+                        "isArray": true
+                    },
+                }
+            }
+        },
+		"struct.SettingTree": {
+            "name": "SettingTree",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+				"CateNode": {
+                    "type": "struct.CategoryNode",
+                },
+				"SettingCategories": {
+                    "type": "map<string, CommonType.struct.SettingCategory>",
+                },
+				"SettingItems": {
+                    "type": "map<string, CommonType.struct.SettingItem>",
+                },
+            }
+        },
+		"request.SearchSettingItems": {
+            "name": "SearchSettingItems",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "SettingSystemService"
+            },
+			"description": "@SearchSettingItems_Summary",
+            "parameters": {
+                "filterJson": {
+                    "type": "string",
+					"description": "@SearchSettingItems_filterJson",
+                }
+            },
+            "responses": {
+                "ModuleSettings": {
+                    "type": "map<string, struct.SettingSearchResult>"
+                },
+				"description": "@SearchSettingItems_responses_desc"
+            },
+			"examples": {
+				"csharp": [
+					"@SearchSettingItems_example_1",
+					"@SearchSettingItems_example_2",
+					"@SearchSettingItems_example_3",
+					"@SearchSettingItems_example_4",
+					"@SearchSettingItems_example_5",
+					"@SearchSettingItems_example_6",
+					"@SearchSettingItems_example_7"
+				]
+			},
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+        },
+        "request.GetCategoryNode": {
+            "name": "GetCategoryNode",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "SettingSystemService"
+            },
+			"description": "@GetCategoryNode_Summary",
+            "responses": {
+                "tree": {
+					"type": "struct.SettingTree"
+				},
+				"description": "@GetCategoryNode_responses_desc"
+            },
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+        },
+		"enum.NodeType": {
+			"name": "NodeType",
+            "parameters": {
+                "Category": 1,
+                "SettingItem": 2,
+                "All": 3
+            },
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": "EnumTypes"
+            }
+        },
+		"struct.NodeList": {
+            "name": "NodeList",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+				"SettingCategories": {
+					"type": {
+                        "referTo": "CommonType.struct.SettingCategory",
+                        "isArray": true
+                    },
+                },
+				"SettingItems": {
+                    "type": {
+                        "referTo": "CommonType.struct.SettingItem",
+                        "isArray": true
+                    },
+                },
+            }
+        },
+		"request.GetChildNode": {
+            "name": "GetChildNode",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "SettingSystemService"
+            },
+			"description": "@GetChildNode.Summary",
+			"parameters": {
+                "parent": {
+                    "type": "string",
+					"description": "@GetChildNode.parent.desc"
+                },
+                "nodeType": {
+                    "type": "enum.NodeType",
+					"description": "@GetChildNode.nodeType.desc"
+                }
+			},
+            "responses": {
+                "tree": {
+					"type": "struct.NodeList"
+				},
+				"description": "@GetChildNode.responses.desc"
+            },
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+        },
+        "request.SetSettingItem": {
+            "name": "SetSettingItem",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "SettingSystemService"
+            },
+			"description": "@SetSettingItem_Summary",
+            "parameters": {
+                "key": {
+                    "type": "string",
+					"description": "@SetSettingItem_key_desc",
+                },
+                "val": {
+                    "type": "string",
+					"description": "@SetSettingItem_val_desc",
+                }
+            },
+            "responses": {
+                "bool": {
+                    "type": "bool",
+                },
+				"description": "@SetSettingItem_responses_desc"
+            },
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+        },
+		"request.SetSettingItems": {
+            "name": "SetSettingItems",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "SettingSystemService"
+            },
+			"description": "@SetSettingItems_Summary",
+            "parameters": {
+                "keyValues": {
+                    "type": "map<string, string>",
+					"description": "@SetSettingItems_keyValues_desc",
+                }
+            },
+            "responses": {
+                "count": {
+                    "type": "i32",
+                },
+				"description": "@SetSettingItems_responses_desc"
+            },
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+        },
+        "request.RestoreDefault": {
+            "name": "RestoreDefault",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "SettingSystemService"
+            },
+			"description": "@RestoreDefault_Summary",
+            "parameters": {
+                "moduleName": {
+                    "type": "string",
+					"description": "@RestoreDefault_moduleName_desc",
+                },
+				"category": {
+                    "type": "string",
+					"description": "@RestoreDefault_category_desc",
+                }
+            },
+            "responses": {
+                "bool": {
+                    "type": "bool",
+                },
+				"description": "@RestoreDefault_responses_desc"
+            },
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+        },
+		"request.RestoreUserDefault": {
+            "name": "RestoreUserDefault",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "SettingSystemService"
+            },
+			"description": "@RestoreUserDefault.Summary",
+            "parameters": {
+				"userId": {
+                    "type": "string",
+					"description": "@RestoreUserDefault.userId.desc",
+                },
+                "moduleName": {
+                    "type": "string",
+					"description": "@RestoreUserDefault.moduleName.desc",
+                },
+				"category": {
+                    "type": "string",
+					"description": "@RestoreUserDefault.category.desc",
+                }
+            },
+            "responses": {
+                "bool": {
+                    "type": "bool"
+                },
+				"description": "@RestoreUserDefault.responses.desc"
+            },
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+        },
+		"request.UpdateModuleVersion": {
+            "name": "UpdateModuleVersion",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "SettingSystemService"
+            },
+			"description": "@UpdateModuleVersion_Summary",
+            "parameters": {
+                "moduleName": {
+                    "type": "string",
+					"description": "@UpdateModuleVersion_moduleName_desc",
+                }
+            },
+            "responses": {
+                "bool": {
+                    "type": "bool",
+                },
+				"description": "@UpdateModuleVersion_responses_desc"
+            },
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+        },
+		"request.SetUserAppData": {
+            "name": "SetUserAppData",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "SettingSystemService"
+            },
+			"description": "@SetUserAppData.Summary",
+            "parameters": {
+				"userId": {
+                    "type": "string",
+					"description": "@SetUserAppData.userId.desc",
+					"optional": false
+                },
+				"category": {
+                    "type": "string",
+					"description": "@SetUserAppData.category.desc",
+					"optional": false
+                },
+				"settingItems": {
+					"type": "map<string, JSON>",
+					"description": "@SetUserAppData.settingItems.desc",
+					"optional": false
+				}
+            },
+            "responses": {
+                "succeededAmount": {
+                    "type": "i32"
+                },
+				"description": "@SetUserAppData.responses.desc"
+            },
+			"examples": {
+				"csharp": [
+					"@SetUserAppData.example.1"
+				]
+			},
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+        },
+		"request.GetUserAppData": {
+            "name": "GetUserAppData",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "SettingSystemService"
+            },
+			"description": "@GetUserAppData.Summary",
+            "parameters": {
+				"userId": {
+                    "type": "string",
+					"description": "@GetUserAppData.userId.desc",
+					"optional": false
+                },
+				"category": {
+                    "type": "string",
+					"description": "@GetUserAppData.category.desc",
+					"optional": true
+                },
+				"settingKeys": {
+					"type": "list<string>",
+					"description": "@GetUserAppData.settingKeys.desc",
+					"optional": true
+				}
+            },
+            "responses": {
+                "userAppData": {
+					"type": "struct.AppData"
+				},
+				"description": "@GetUserAppData.responses.desc"
+            },
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+        },
+		"request.RemoveUserAppData": {
+            "name": "RemoveUserAppData",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "SettingSystemService"
+            },
+			"description": "@RemoveUserAppData.Summary",
+            "parameters": {
+				"userId": {
+                    "type": "string",
+					"description": "@RemoveUserAppData.userId.desc",
+					"optional": false
+                },
+				"category": {
+                    "type": "string",
+					"description": "@RemoveUserAppData.category.desc",
+					"optional": true
+                },
+				"settingKeys": {
+					"type": "list<string>",
+					"description": "@RemoveUserAppData.settingKeys.desc",
+                    "optional": true
+				}
+            },
+            "responses": {
+                "removedAmount": {
+                    "type": "i32"
+                },
+				"description": "@RemoveUserAppData.responses.desc"
+            },
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+        }
+    }
+}
