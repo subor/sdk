@@ -7,3 +7,5 @@ edit in sdk_source.
 whatever a test.
 
 another test from jade.git to sdk_source.git
+
+try rejoin, #1
