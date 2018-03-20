@@ -1,0 +1,124 @@
+﻿{
+    "revision": "1.0.0.0",
+    "category": {
+        "SDKDataTypes": {
+            "name": "DataTypes",
+            "description": null,
+            "namespaces": {
+                "csharp": "Ruyi.SDK.Http",
+                "cpp": "Ruyi.SDK.Http"
+            }
+        },
+        "SDKMessages": {
+            "name": "Messages",
+            "description": null,
+            "namespaces": {
+                "csharp": "Ruyi.SDK.Http",
+                "cpp": "Ruyi.SDK.Http"
+            }
+        },
+        "SDKServices": {
+            "name": "Service",
+            "description": null,
+            "namespaces": {
+                "csharp": "Ruyi.SDK.Http",
+                "cpp": "Ruyi.SDK.Http"
+            }
+        }
+    },
+    "apis": {
+        "struct.SubscribeRequest": {
+            "name": "SubscribeRequest",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "topic": {
+                    "type": "string",
+                    "description": null,
+                    "fieldId": 1,
+                    "optional": false
+                },
+				"appid": {
+                    "type": "string",
+                    "description": null,
+                    "fieldId": 2,
+                    "optional": false
+                },
+				"msgname": {
+                    "type": "string",
+                    "description": null,
+                    "fieldId": 3,
+                    "optional": false
+                }
+            }
+        },
+        "struct.SubscribeReply": {
+            "name": "SubscribeReply",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "success": {
+                    "type": "bool",
+                    "description": null,
+                    "fieldId": 1,
+                    "optional": false
+                },
+				"topic": {
+                    "type": "string",
+                    "description": null,
+                    "fieldId": 2,
+                    "optional": false
+                },
+				"appid": {
+                    "type": "string",
+                    "description": null,
+                    "fieldId":3,
+                    "optional": false
+                },
+				"msgname": {
+                    "type": "string",
+                    "description": null,
+                    "fieldId": 4,
+                    "optional": false
+                }
+            }
+        },
+        "request.Subscribe": {
+            "name": "Subscribe",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "HttpService"
+            },
+            "description": null,
+            "parameters": {
+                "msg": {
+                    "type": {
+                        "referTo": "struct.SubscribeRequest"
+                    },
+                    "description": null,
+                    "fieldId": 1,
+                    "optional": false
+                }
+            },
+            "responses": {
+                "SubscribeReply": {
+                    "type": {
+                        "referTo": "struct.SubscribeReply"
+                    },
+                    "description": null,
+                    "fieldId": 0,
+                    "optional": false
+                }
+            },
+            "errorCode": null,
+            "examples": null,
+            "oneway": false
+        }
+    }
+}
