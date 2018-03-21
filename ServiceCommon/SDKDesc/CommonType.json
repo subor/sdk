@@ -1,0 +1,383 @@
+﻿{
+    "revision": "1.0.0.0",
+    "category": {
+        "SDKDataTypes": {
+            "name": "DataTypes",
+            "description": null,
+            "namespaces": {
+				"csharp": "Ruyi.SDK.CommonType",
+				"cpp": "Ruyi.SDK.CommonType"
+			}
+        },
+        "SDKMessages": {
+            "name": "Messages",
+            "description": null,
+            "namespaces": {
+				"csharp": "Ruyi.SDK.CommonType",
+				"cpp": "Ruyi.SDK.CommonType"
+			}
+        },
+        "SDKServices": {
+            "name": "Service",
+            "description": null,
+            "namespaces": {
+				"csharp": "Ruyi.SDK.CommonType",
+				"cpp": "Ruyi.SDK.CommonType"
+			}
+        }
+    },
+    "apis": {
+		"struct.ErrorException": {
+            "name": "ErrorException",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": "ExceptionTypes"
+            },
+            "parameters": {
+                "errId": {
+                    "type": "i32"
+                },
+				"errMsg": {
+					"type": "string"
+				}
+            }
+        },
+		"struct.range": {
+            "name": "range",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "parameters": {
+                "minimum": {
+                    "type": "double"
+                },
+                "maximum": {
+                    "type": "double"
+                }
+            }
+        },
+		"struct.InputModifier": {
+            "name": "InputModifier",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+                "DeadZone": {
+                    "type": {
+                        "referTo": "struct.range"
+                    },
+					"optional": true
+                },
+				"Scale": {
+                    "type": "double"
+                },
+            }
+        },
+		"enum.InputCagetory": {
+			"name": "InputCagetory",
+            "parameters": {
+                "RuyiGamePad": 0,
+				"KeyboardMouse": 1,
+				"XBox360": 2,
+            },
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": "EnumTypes"
+            }
+        },
+		"struct.InputIdentifier": {
+            "name": "InputIdentifier",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+                "Device": {
+                    "type": "string"
+                },
+                "Value": {
+                    "type": "string"
+                },
+				"ActivateEvent": {
+					"type": "string",
+					"optional": true
+				},
+				"Modifier": {
+					"type": {
+						"referTo": "struct.InputModifier",
+					},
+					"optional": true
+				}
+            }
+        },
+		"struct.ActionTriggerInfo": {
+            "name": "ActionTriggerInfo",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+				"InputCagetory": {
+					"type": "enum.InputCagetory",
+				},
+                "TriggerConditions": {
+                    "type": {
+						"referTo": "struct.InputIdentifier",
+						"isArray": true
+					},
+                },
+                "AutoTrigger": {
+                    "type": "bool",
+					"optional": true
+                },
+				"TriggerInterval": {
+					"type": "i32",
+					"optional": true
+				}
+            }
+        },
+		"struct.InputActionInfo": {
+            "name": "InputActionInfo",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+				"ActionName": {
+                    "type": "string"
+                },
+                "TriggerInfo": {
+					"type": "struct.ActionTriggerInfo"
+				}
+            }
+        },
+		"struct.notification": {
+            "name": "notification",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "parameters": {
+                "title": {
+                    "type": "string",
+                },
+                "detail": {
+                    "type": "string",
+                },
+                "option": {
+                    "type": "string[]",
+                }
+            }
+        },
+		"enum.ePlatform": {
+			"name": "ePlatform",
+            "parameters": {
+                "None": 0,
+                "PC": 1,
+                "Console": 2,
+                "All": 3
+            },
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": "EnumTypes"
+            }
+        },
+		"enum.eUIType": {
+			"name": "eUIType",
+            "parameters": {
+                "None": 0,
+                "Toggle": 1,
+				"Text": 2,
+				"Slider": 3,
+                "CheckList": 4,
+                "OptionList": 5,
+				"DateTime": 6,
+				"TextInput": 7
+            },
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": "EnumTypes"
+            }
+        },
+		"struct.dataListItem": {
+            "name": "dataListItem",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+				"elementType": {
+					"type": "string"
+				},
+                "values": {
+                    "type": "string[]",
+                },
+                "removeNotification": {
+                    "type": {
+                        "referTo": "struct.notification"
+                    },
+                }
+            }
+        },
+		"struct.activeDependency": {
+            "name": "activeDependency",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "parameters": {
+                "name": {
+                    "type": "string",
+                },
+                "condition": {
+                    "type": "string",
+                }
+            }
+        },
+        "struct.SettingItem": {
+            "name": "SettingItem",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "parameters": {
+                "id": {
+                    "type": "string"
+                },
+                "display": {
+                    "type": "string"
+                },
+                "dataType": {
+                    "type": "string"
+                },
+                "dataValue": {
+                    "type": "string"
+                },
+                "dataList": {
+                    "type": {
+                        "referTo": "struct.dataListItem"
+                    },
+                    "optional": true
+                },
+                "platform": {
+                    "type": {
+                        "referTo": "enum.ePlatform"
+                    },
+                    "optional": true
+                },
+                "summary": {
+                    "type": "string",
+                    "optional": true
+                },
+                "description": {
+                    "type": "string",
+                    "optional": true
+                },
+                "UIType": {
+                    "type": "enum.eUIType",
+                    "optional": true
+                },
+                "devModeOnly": {
+                    "type": "bool",
+                    "optional": true
+                },
+                "internalOnly": {
+                    "type": "bool",
+                    "optional": true
+                },
+                "readOnly": {
+                    "type": "bool",
+                    "optional": true
+                },
+                "isValid": {
+                    "type": "bool",
+                },
+                "isActive": {
+                    "type": "bool",
+                },
+                "validation": {
+                    "type": "string",
+                    "optional": true
+                },
+                "activeDependencies": {
+                    "type": {
+                        "referTo": "struct.activeDependency",
+                        "isArray": true
+                    },
+                    "optional": true
+                },
+				"ActionName": {
+                    "type": "string"
+                },
+				"ActionObject": {
+                    "type": "string"
+                },
+				"ActionMethodName": {
+                    "type": "string"
+                },
+            }
+        },
+		"struct.SettingCategory": {
+            "name": "SettingCategory",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "parameters": {
+                "id": {
+                    "type": "string"
+                },
+                "display": {
+                    "type": "string"
+                },
+                "summary": {
+                    "type": "string",
+                    "optional": true
+                },
+                "description": {
+                    "type": "string",
+                    "optional": true
+                },
+                "sortingPriority": {
+                    "type": "i32"
+                },
+                "isSystemCategory": {
+                    "type": "bool"
+                },
+                "items": {
+                    "type": "map<string, i32>"
+                },
+				"enable": {
+					"type": "bool"
+				},
+				"showInUI": {
+					"type": "bool"
+				}
+            }
+        },
+		"struct.ModuleSetting": {
+            "name": "ModuleSetting",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "parameters": {
+				"name": {
+					"type": "string"
+				},
+                "version": {
+                    "type": "string"
+                },
+                "settings": {
+                    "type": {
+                        "referTo": "struct.SettingItem",
+                        "isArray": true
+                    }
+                },
+				"categories": {
+                    "type": {
+                        "referTo": "struct.SettingCategory",
+                        "isArray": true
+                    }
+                },
+            }
+        },
+    }
+}

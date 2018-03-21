@@ -1,0 +1,82 @@
+﻿{
+    "revision": "1.0.0.0",
+    "category": {
+        "SDKDataTypes": {
+            "name": "DataTypes",
+            "description": null,
+            "namespaces": {
+				"csharp": "Ruyi.SDK.StorageLayer",
+				"cpp": "Ruyi.SDK.StorageLayer"
+			}
+        },
+        "SDKMessages": {
+            "name": "Messages",
+            "description": null,
+            "namespaces": {
+				"csharp": "Ruyi.SDK.StorageLayer",
+				"cpp": "Ruyi.SDK.StorageLayer"
+			}
+        },
+        "SDKServices": {
+            "name": "Service",
+            "description": null,
+            "namespaces": {
+				"csharp": "Ruyi.SDK.StorageLayer",
+				"cpp": "Ruyi.SDK.StorageLayer"
+			}
+        }
+    },
+    "apis": {
+		"struct.GetLocalPathResult": {
+            "name": "GetLocalPathResult",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "result": {
+                    "type": "bool",
+                    "description": null,
+                    "fieldId": 1,
+                    "optional": false
+                },
+				"path": {
+                    "type": "string",
+                    "description": null,
+                    "fieldId": 2,
+                    "optional": false
+                }
+            }
+        },
+        "request.GetLocalPath": {
+            "name": "GetLocalPath",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "StorageLayerService"
+            },
+            "description": null,
+            "parameters": {
+                "msg": {
+                    "type": "string",
+                    "description": null,
+                    "fieldId": 1,
+                    "optional": false
+                }
+            },
+            "responses": {
+                "GetLocalPathResult": {
+                    "type": {
+                        "referTo": "struct.GetLocalPathResult"
+                    },
+                    "description": null,
+                    "fieldId": 0,
+                    "optional": false
+                }
+            },
+            "errorCode": null,
+            "examples": null,
+            "oneway": false
+        }
+    }
+}

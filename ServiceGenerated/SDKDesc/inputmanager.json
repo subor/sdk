@@ -1,0 +1,520 @@
+﻿{
+    "revision": "1.0.0.0",
+    "category": {
+        "SDKDataTypes": {
+            "name": "DataTypes",
+            "description": null,
+            "namespaces": {
+				"csharp": "Ruyi.SDK.InputManager",
+				"cpp": "Ruyi.SDK.InputManager"
+			}
+        },
+        "SDKMessages": {
+            "name": "Messages",
+            "description": null,
+            "namespaces": {
+				"csharp": "Ruyi.SDK.InputManager",
+				"cpp": "Ruyi.SDK.InputManager"
+			}
+        },
+        "SDKServices": {
+            "name": "Service",
+            "description": null,
+            "namespaces": {
+				"csharp": "Ruyi.SDK.InputManager",
+				"cpp": "Ruyi.SDK.InputManager"
+			}
+        }
+    },
+    "apis": {
+        "struct.InputDeviceEventHeader": {
+            "name": "InputDeviceEventHeader",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "headerType": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 1,
+                    "optional": false
+                },
+                "deviceId": {
+                    "type": "string",
+                    "description": null,
+                    "fieldId": 2,
+                    "optional": false
+                },
+                "deviceType": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 3,
+                    "optional": false
+                }
+            }
+        },
+        "struct.InputDeviceConnectionChanged": {
+            "name": "InputDeviceConnectionChanged",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "header": {
+                    "type": {
+                        "referTo": "struct.InputDeviceEventHeader"
+                    },
+                    "description": null,
+                    "fieldId": 1,
+                    "optional": false
+                },
+                "isConnected": {
+                    "type": "bool",
+                    "description": null,
+                    "fieldId": 2,
+                    "optional": false
+                }
+            }
+        },        
+        "struct.InputDeviceStateChangedX360": {
+            "name": "InputDeviceStateChangedX360",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "PacketNumber": {
+                    "type": "i64",
+                    "description": null,
+                    "fieldId": 1,
+                    "optional": false
+                },
+                "LeftThumbDeadZone": {
+                    "type": "i16",
+                    "description": null,
+                    "fieldId": 2,
+                    "optional": false
+                },
+                "RightThumbDeadZone": {
+                    "type": "i16",
+                    "description": null,
+                    "fieldId": 3,
+                    "optional": false
+                },
+                "Buttons": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 4,
+                    "optional": false
+                },
+                "LeftTrigger": {
+                    "type": "i8",
+                    "description": null,
+                    "fieldId": 5,
+                    "optional": false
+                },
+                "RightTrigger": {
+                    "type": "i8",
+                    "description": null,
+                    "fieldId": 6,
+                    "optional": false
+                },
+                "LeftThumbX": {
+                    "type": "i16",
+                    "description": null,
+                    "fieldId": 7,
+                    "optional": false
+                },
+                "LeftThumbY": {
+                    "type": "i16",
+                    "description": null,
+                    "fieldId": 8,
+                    "optional": false
+                },
+                "RightThumbX": {
+                    "type": "i16",
+                    "description": null,
+                    "fieldId": 9,
+                    "optional": false
+                },
+                "RightThumbY": {
+                    "type": "i16",
+                    "description": null,
+                    "fieldId": 10,
+                    "optional": false
+                }
+            }
+        },
+        "struct.InputDeviceStateChangedGamepad": {
+            "name": "InputDeviceStateChangedGamepad",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "RawOffset": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 1,
+                    "optional": false
+                },
+                "Value": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 2,
+                    "optional": false
+                },
+                "Timestamp": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 3,
+                    "optional": false
+                },
+                "Sequence": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 4,
+                    "optional": false
+                },
+                "Offset": {
+                    "type": "i16",
+                    "description": null,
+                    "fieldId": 5,
+                    "optional": false
+                }
+            }
+        },
+        "struct.InputDeviceStateChangedJoystick": {
+            "name": "InputDeviceStateChangedJoystick",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "RawOffset": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 1,
+                    "optional": false
+                },
+                "Value": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 2,
+                    "optional": false
+                },
+                "Timestamp": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 3,
+                    "optional": false
+                },
+                "Sequence": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 4,
+                    "optional": false
+                },
+                "Offset": {
+                    "type": "i16",
+                    "description": null,
+                    "fieldId": 5,
+                    "optional": false
+                }
+            }
+        },
+        "struct.InputDeviceStateChangedKeyboard": {
+            "name": "InputDeviceStateChangedKeyboard",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "RawOffset": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 1,
+                    "optional": false
+                },
+                "Value": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 2,
+                    "optional": false
+                },
+                "Timestamp": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 3,
+                    "optional": false
+                },
+                "Sequence": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 4,
+                    "optional": false
+                },
+                "Key": {
+                    "type": "i8",
+                    "description": null,
+                    "fieldId": 5,
+                    "optional": false
+                },
+                "IsPressed": {
+                    "type": "bool",
+                    "description": null,
+                    "fieldId": 6,
+                    "optional": false
+                },
+                "IsReleased": {
+                    "type": "bool",
+                    "description": null,
+                    "fieldId": 7,
+                    "optional": false
+                }
+            }
+        },
+        "struct.InputDeviceStateChangedMouse": {
+            "name": "InputDeviceStateChangedMouse",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "RawOffset": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 1,
+                    "optional": false
+                },
+                "Value": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 2,
+                    "optional": false
+                },
+                "Timestamp": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 3,
+                    "optional": false
+                },
+                "Sequence": {
+                    "type": "i32",
+                    "description": null,
+                    "fieldId": 4,
+                    "optional": false
+                },
+                "Offset": {
+                    "type": "i8",
+                    "description": null,
+                    "fieldId": 5,
+                    "optional": false
+                },
+                "IsButton": {
+                    "type": "bool",
+                    "description": null,
+                    "fieldId": 6,
+                    "optional": false
+                }
+            }
+        },
+		"struct.InputActionTriggered": {
+            "name": "InputActionTriggered",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+				"deviceId": {
+                    "type": "string",
+					"description": "@InputActionTriggered_deviceId_desc"
+                },
+                "name": {
+                    "type": "string",
+					"description": "@InputActionTriggered_name_desc"
+                },
+				"timestamp": {
+                    "type": "i64",
+					"description": "@InputActionTriggered_timestamp_desc"
+                },
+				"events": {
+					"type": {
+						"referTo": "struct.RuyiInputEvent",
+						"isArray": true
+					},
+					"description": "@InputActionTriggered_analogChanges_desc"
+				}
+            }
+        },
+        "struct.RuyiInputEvent": {
+            "name": "RuyiInputEvent",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "EventId": {
+                    "type": "i64"
+                },
+                "DeviceType": {
+                    "type": "byte",
+                    "description": "refer to GlobalInputDefine.enum.RuyiInputDeviceType"
+                },
+                "Key": {
+                    "type": "i32",
+                    "description":"refer to GlobalInputDefine.enum.RuyiControllerKey. Todo: refer to other enums in GlobalInputDefine depends on DeviceType"
+                },
+                "NewValue": {
+                    "type": "byte"
+                },
+                "LastValue": {
+                    "type": "byte"
+                },
+            }
+        },
+        "struct.RuyiInputStateChanged": {
+            "name": "RuyiInputStateChanged",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "keyPressEvent": {
+                    "type": {
+                        "referTo": "struct.RuyiInputEvent",
+                        "isArray": true
+                    }
+                },
+                "analogEvent": {
+                    "type": {
+                        "referTo": "struct.RuyiInputEvent",
+                        "isArray": true
+                    }
+                },
+            }
+        },
+		"struct.InputDeviceStateChangedRuyiController": {
+            "name": "InputDeviceStateChangedRuyiController",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "PacketId": {
+                    "type": "i64"
+                },
+				"ChannelId": {
+                    "type": "i32"
+                },
+				"UID": {
+                    "type": "string"
+                },
+				"KeyPress": {
+                    "type": "i64"
+                },
+				"AnalogL2": {
+                    "type": "i8"
+                },
+				"AnalogR2": {
+                    "type": "i8"
+                },
+				"AnalogLeftJoyX": {
+                    "type": "i8"
+                },
+				"AnalogLeftJoyY": {
+                    "type": "i8"
+                },				
+				"AnalogRightJoyX": {
+                    "type": "i8"
+                },
+				"AnalogRightJoyY": {
+                    "type": "i8"
+                },
+				"Changed": {
+					"type": {
+						"referTo": "struct.RuyiInputStateChanged"
+					}
+				}
+            }
+        },
+		"struct.InputDeviceStateChanged": {
+            "name": "InputDeviceStateChanged",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": null,
+            "parameters": {
+                "header": {
+                    "type": {
+                        "referTo": "struct.InputDeviceEventHeader"
+                    },
+                    "description": null,
+                    "fieldId": 1,
+                    "optional": false
+                },
+                "x360": {
+                    "type": {
+                        "referTo": "struct.InputDeviceStateChangedX360"
+                    },
+                    "description": null,
+                    "fieldId": 2,
+                    "optional": false
+                },
+                "dgamepad": {
+                    "type": {
+                        "referTo": "struct.InputDeviceStateChangedGamepad"
+                    },
+                    "description": null,
+                    "fieldId": 3,
+                    "optional": false
+                },
+                "djoystick": {
+                    "type": {
+                        "referTo": "struct.InputDeviceStateChangedJoystick"
+                    },
+                    "description": null,
+                    "fieldId": 4,
+                    "optional": false
+                },
+                "dkeyboard": {
+                    "type": {
+                        "referTo": "struct.InputDeviceStateChangedKeyboard"
+                    },
+                    "description": null,
+                    "fieldId": 5,
+                    "optional": false
+                },
+                "dmouse": {
+                    "type": {
+                        "referTo": "struct.InputDeviceStateChangedMouse"
+                    },
+                    "description": null,
+                    "fieldId": 6,
+                    "optional": false
+                },
+				"ruyicontroller": {
+                    "type": {
+                        "referTo": "struct.InputDeviceStateChangedRuyiController"
+                    },
+                    "description": null,
+                    "fieldId": 7,
+                    "optional": false
+                }
+            }
+        }
+    }
+}

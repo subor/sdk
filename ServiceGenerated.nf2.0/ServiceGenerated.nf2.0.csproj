@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{28CF6630-ABBD-43F5-8F2D-A74449E86CD1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ServiceGenerated.nf2._0</RootNamespace>
+    <AssemblyName>ServiceGenerated</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\AutoJoinStrategy.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\BrainCloudService.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\FileUploadFailedResult.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\FileUploadSuccessResult.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\FriendPlatform.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\Role.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\RotationType.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\SocialLeaderboardType.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\SortOrder.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ActionTriggerInfo.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\activeDependency.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\dataListItem.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ePlatform.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ErrorException.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\eUIType.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\InputActionInfo.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\InputCagetory.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\InputIdentifier.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\InputModifier.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ModuleSetting.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\notification.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\range.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingCategory.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingItem.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\Constants\BraincloudServerInfo.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\Constants\ConstantsSDKDataTypes.Constants.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorCode.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorInfos.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorsSDKDataTypes.Constants.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\Gamepad.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\GamepadButtonFlags.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\GamepadFunctionKey.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\GlobalInputDefineSDKDataTypes.Constants.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\JoystickOffset.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\Key.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\MouseOffset.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\RuyiActionActivateEvent.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\RuyiControllerKey.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\RuyiInputDeviceType.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\RuyiInputStateGamepad.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\RuyiInputStateJoystick.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\RuyiInputStateKeyboard.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\RuyiInputStateMouse.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\RuyiInputStateRuyiController.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\RuyiInputStateXB360.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\Http\HttpService.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\Http\SubscribeReply.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\Http\SubscribeRequest.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\InputActionTriggered.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\InputDeviceConnectionChanged.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\InputDeviceEventHeader.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\InputDeviceStateChanged.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\InputDeviceStateChangedGamepad.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\InputDeviceStateChangedJoystick.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\InputDeviceStateChangedKeyboard.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\InputDeviceStateChangedMouse.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\InputDeviceStateChangedRuyiController.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\InputDeviceStateChangedX360.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\RuyiInputEvent.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\RuyiInputStateChanged.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\LocalizationService\LanguageChangedMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\LocalizationService\LocalizationService.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\MediaService.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\Message.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\PauseMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\PlayMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\Progress.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\StopMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\PublisherSubscriber\PubSubSDKDataTypes.Constants.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\PublisherSubscriber\ServiceLaunchEvent.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\PublisherSubscriber\ServiceLaunchEventType.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SDKValidator\ValidatorService.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\AppData.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\AppDataCollection.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\AppDataRecord.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\CategoryNode.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\NodeList.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\NodeType.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\SettingSearchResult.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\SettingSystemService.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\SettingTree.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\StorageLayer\GetLocalPathResult.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\StorageLayer\StorageLayerService.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\InputActionEvent.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\UserEvent.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\UserGender.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\UserInfo_Public.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\UserServExternal.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\externals\thrift0.10.0\Thrift.csproj">
+      <Project>{499eb63c-d74c-47e8-ae48-a2fc94538e9d}</Project>
+      <Name>Thrift</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\BuildCommon.targets" />
+</Project>

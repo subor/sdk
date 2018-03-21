@@ -1,0 +1,147 @@
+﻿{
+    "version": "1.0.0.1",
+	"include": [
+		"ServiceCommon/SDKDesc/CommonType"
+	],
+    "category": {
+        "SDKDataTypes": {
+            "name": "DataTypes",
+            "namespaces": {
+                "csharp": "Ruyi.SDK.UserServiceExternal",
+                "cpp": "Ruyi.SDK.UserServiceExternal"
+            }
+        },
+        "SDKMessages": {
+            "name": "Messages",
+            "namespaces": {
+                "csharp": "Ruyi.SDK.UserServiceExternal",
+                "cpp": "Ruyi.SDK.UserServiceExternal"
+            }
+        },
+        "SDKServices": {
+            "name": "Service",
+            "namespaces": {
+                "csharp": "Ruyi.SDK.UserServiceExternal",
+                "cpp": "Ruyi.SDK.UserServiceExternal"
+            }
+        }
+    },
+    "apis": {		
+		"struct.InputActionEvent": {
+            "name": "InputActionEvent",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "description": "@InputActionEvent_summary",
+            "parameters": {
+				"userId": {
+                    "type": "string",
+					"description": "@InputActionEvent_deviceId_desc"
+                },
+                "action": {
+                    "type": "string",
+					"description": "@InputActionEvent_action_desc"
+                },
+				"timestamp": {
+                    "type": "i64",
+					"description": "@InputActionEvent_timestamp_desc"
+                }
+            }
+        },
+		"struct.UserEvent": {
+            "name": "UserEvent",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "description": "@UserEvent_summary",
+            "parameters": {
+				"userId": {
+                    "type": "string",
+					"description": "@UserEvent_userId_desc"
+                },
+                "action": {
+                    "type": "string",
+					"description": "@UserEvent_action_desc"
+                },
+				"jsonData": {
+                    "type": "JSON",
+					"description": "@UserEvent_parameters_desc"
+                }
+            }
+        },
+		"enum.UserGender": {
+            "parameters": {
+                "Unknown": {
+					"value": 0,
+					"description": "@UserGender_Unknown"
+				},
+                "Male": {
+					"value": 1,
+					"description": "@UserGender_Male"
+				},
+				"Female": {
+					"value": 2,
+					"description": "@UserGender_Female"
+				},
+            },
+            "name": "UserGender",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": "EnumTypes"
+            }
+        },
+		"struct.UserInfo_Public": {
+            "name": "UserInfo_Public",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+                "userId": {
+                    "type": "string",
+					"description": "@UserInfo_Public_userId_desc"
+                },
+				"nickname": {
+                    "type": "string",
+					"description": "@UserInfo_Public_nickname_desc"
+                },
+				"portrait": {
+                    "type": "string",
+					"description": "@UserInfo_Public_portrait_desc"
+                },
+				"gender": {
+                    "type": "enum.UserGender",
+					"description": "@UserInfo_Public_gender_desc"
+                },
+            }
+        },
+		"request.GetPlayingUserInfo": {
+            "name": "GetPlayingUserInfo",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "UserServExternal"
+            },
+			"description": "@GetPlayingUserInfo_Summary",
+            "parameters": {
+				"appId": {
+                    "type": "string",
+					"description": "@GetPlayingUserInfo_appId_desc"
+                },
+                "userId": {
+                    "type": "string",
+					"description": "@GetPlayingUserInfo_userId_desc"
+                },
+            },
+            "responses": {
+                "userInfo": {
+                    "type": "struct.UserInfo_Public"
+                },
+				"description": "@GetPlayingUserInfo_responses_desc",
+            },
+            "exceptions": [
+                {
+                    "referTo": "CommonType.struct.ErrorException"
+                }
+            ]
+		},
+    }
+}

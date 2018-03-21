@@ -1,0 +1,53 @@
+﻿{
+    "revision": "1.0.0.0",
+    "category": {
+        "SDKDataTypes": {
+            "name": "DataTypes",
+            "ignoredInDoc":true,
+            "namespaces": {
+				"csharp": "Ruyi.SDK.SDKValidator",
+				"cpp": "Ruyi.SDK.SDKValidator"
+			}
+        },
+        "SDKMessages": {
+            "name": "Messages",
+            "ignoredInDoc":true,
+            "namespaces": {
+				"csharp": "Ruyi.SDK.SDKValidator",
+				"cpp": "Ruyi.SDK.SDKValidator"
+			}
+        },
+        "SDKServices": {
+            "name": "Service",
+            "ignoredInDoc":true,
+            "namespaces": {
+				"csharp": "Ruyi.SDK.SDKValidator",
+				"cpp": "Ruyi.SDK.SDKValidator"
+			}
+        }
+    },
+    "apis": {
+        "request.ValidateSDK": {
+            "name": "ValidateSDK",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "ValidatorService"
+            },
+            "parameters": {
+                "version": {
+                    "type": "string",
+                    "fieldId": 1,
+                    "optional": false
+                }
+            },
+            "responses": {
+                "string": {
+                    "type": "string",
+                    "fieldId": 0,
+                    "optional": false
+                }
+            },
+            "oneway": false
+        }
+    }
+}
