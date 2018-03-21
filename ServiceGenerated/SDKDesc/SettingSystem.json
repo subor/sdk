@@ -59,11 +59,11 @@
             "parameters": {
                 "id": {
                     "type": "string",
-					"description": "@AppDataRecord.id.desc"
+					"description": "@AppDataRecord_id_desc"
                 },
 				"value": {
                     "type": "JSON",
-					"description": "@AppDataRecord.value.desc"
+					"description": "@AppDataRecord_value_desc"
                 },
             }
         },
@@ -75,14 +75,14 @@
             "parameters": {
                 "id": {
                     "type": "string",
-					"description": "@AppDataCollection.id.desc"
+					"description": "@AppDataCollection_id_desc"
                 },
 				"records": {
                     "type": {
 						"referTo": "struct.AppDataRecord",
 						"isArray": true
 					},
-					"description": "@AppDataCollection.records.desc"
+					"description": "@AppDataCollection_records_desc"
                 },
             }
         },
@@ -94,14 +94,14 @@
             "parameters": {
                 "appId": {
                     "type": "string",
-					"description": "@AppData.appId.desc"
+					"description": "@AppData_appId_desc"
                 },
 				"data": {
 					"type": {
 						"referTo": "struct.AppDataCollection",
 						"isArray": true
 					},
-					"description": "@AppData.data.desc"
+					"description": "@AppData_data_desc"
                 },
             }
         },
@@ -292,22 +292,22 @@
                 "type": "SDKServices",
                 "typeName": "SettingSystemService"
             },
-			"description": "@GetChildNode.Summary",
+			"description": "@GetChildNode_Summary",
 			"parameters": {
                 "parent": {
                     "type": "string",
-					"description": "@GetChildNode.parent.desc"
+					"description": "@GetChildNode_parent_desc"
                 },
                 "nodeType": {
                     "type": "enum.NodeType",
-					"description": "@GetChildNode.nodeType.desc"
+					"description": "@GetChildNode_nodeType_desc"
                 }
 			},
             "responses": {
                 "tree": {
 					"type": "struct.NodeList"
 				},
-				"description": "@GetChildNode.responses.desc"
+				"description": "@GetChildNode_responses_desc"
             },
             "exceptions": [
                 {
@@ -404,26 +404,26 @@
                 "type": "SDKServices",
                 "typeName": "SettingSystemService"
             },
-			"description": "@RestoreUserDefault.Summary",
+			"description": "@RestoreUserDefault_Summary",
             "parameters": {
 				"userId": {
                     "type": "string",
-					"description": "@RestoreUserDefault.userId.desc",
+					"description": "@RestoreUserDefault_userId_desc",
                 },
                 "moduleName": {
                     "type": "string",
-					"description": "@RestoreUserDefault.moduleName.desc",
+					"description": "@RestoreUserDefault_moduleName_desc",
                 },
 				"category": {
                     "type": "string",
-					"description": "@RestoreUserDefault.category.desc",
+					"description": "@RestoreUserDefault_category_desc",
                 }
             },
             "responses": {
                 "bool": {
                     "type": "bool"
                 },
-				"description": "@RestoreUserDefault.responses.desc"
+				"description": "@RestoreUserDefault_responses_desc"
             },
             "exceptions": [
                 {
@@ -462,21 +462,21 @@
                 "type": "SDKServices",
                 "typeName": "SettingSystemService"
             },
-			"description": "@SetUserAppData.Summary",
+			"description": "@SetUserAppData_Summary",
             "parameters": {
 				"userId": {
                     "type": "string",
-					"description": "@SetUserAppData.userId.desc",
+					"description": "@SetUserAppData_userId_desc",
 					"optional": false
                 },
 				"category": {
                     "type": "string",
-					"description": "@SetUserAppData.category.desc",
+					"description": "@SetUserAppData_category_desc",
 					"optional": false
                 },
 				"settingItems": {
 					"type": "map<string, JSON>",
-					"description": "@SetUserAppData.settingItems.desc",
+					"description": "@SetUserAppData_settingItems_desc",
 					"optional": false
 				}
             },
@@ -484,11 +484,11 @@
                 "succeededAmount": {
                     "type": "i32"
                 },
-				"description": "@SetUserAppData.responses.desc"
+				"description": "@SetUserAppData_responses_desc"
             },
 			"examples": {
 				"csharp": [
-					"@SetUserAppData.example.1"
+					"@SetUserAppData_example_1"
 				]
 			},
             "exceptions": [
@@ -503,21 +503,21 @@
                 "type": "SDKServices",
                 "typeName": "SettingSystemService"
             },
-			"description": "@GetUserAppData.Summary",
+			"description": "@GetUserAppData_Summary",
             "parameters": {
 				"userId": {
                     "type": "string",
-					"description": "@GetUserAppData.userId.desc",
+					"description": "@GetUserAppData_userId_desc",
 					"optional": false
                 },
 				"category": {
                     "type": "string",
-					"description": "@GetUserAppData.category.desc",
+					"description": "@GetUserAppData_category_desc",
 					"optional": true
                 },
 				"settingKeys": {
 					"type": "list<string>",
-					"description": "@GetUserAppData.settingKeys.desc",
+					"description": "@GetUserAppData_settingKeys_desc",
 					"optional": true
 				}
             },
@@ -525,7 +525,7 @@
                 "userAppData": {
 					"type": "struct.AppData"
 				},
-				"description": "@GetUserAppData.responses.desc"
+				"description": "@GetUserAppData_responses_desc"
             },
             "exceptions": [
                 {
@@ -539,21 +539,21 @@
                 "type": "SDKServices",
                 "typeName": "SettingSystemService"
             },
-			"description": "@RemoveUserAppData.Summary",
+			"description": "@RemoveUserAppData_Summary",
             "parameters": {
 				"userId": {
                     "type": "string",
-					"description": "@RemoveUserAppData.userId.desc",
+					"description": "@RemoveUserAppData_userId_desc",
 					"optional": false
                 },
 				"category": {
                     "type": "string",
-					"description": "@RemoveUserAppData.category.desc",
+					"description": "@RemoveUserAppData_category_desc",
 					"optional": true
                 },
 				"settingKeys": {
 					"type": "list<string>",
-					"description": "@RemoveUserAppData.settingKeys.desc",
+					"description": "@RemoveUserAppData_settingKeys_desc",
                     "optional": true
 				}
             },
@@ -561,7 +561,7 @@
                 "removedAmount": {
                     "type": "i32"
                 },
-				"description": "@RemoveUserAppData.responses.desc"
+				"description": "@RemoveUserAppData_responses_desc"
             },
             "exceptions": [
                 {

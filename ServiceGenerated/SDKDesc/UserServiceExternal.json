@@ -32,19 +32,19 @@
             "category": {
                 "type": "SDKDataTypes"
             },
-            "description": "@InputActionEvent.summary",
+            "description": "@InputActionEvent_summary",
             "parameters": {
 				"userId": {
                     "type": "string",
-					"description": "@InputActionEvent.deviceId.desc"
+					"description": "@InputActionEvent_deviceId_desc"
                 },
                 "action": {
                     "type": "string",
-					"description": "@InputActionEvent.action.desc"
+					"description": "@InputActionEvent_action_desc"
                 },
 				"timestamp": {
                     "type": "i64",
-					"description": "@InputActionEvent.timestamp.desc"
+					"description": "@InputActionEvent_timestamp_desc"
                 }
             }
         },
@@ -53,19 +53,19 @@
             "category": {
                 "type": "SDKDataTypes"
             },
-            "description": "@UserEvent.summary",
+            "description": "@UserEvent_summary",
             "parameters": {
 				"userId": {
                     "type": "string",
-					"description": "@UserEvent.userId.desc"
+					"description": "@UserEvent_userId_desc"
                 },
                 "action": {
                     "type": "string",
-					"description": "@UserEvent.action.desc"
+					"description": "@UserEvent_action_desc"
                 },
 				"jsonData": {
                     "type": "JSON",
-					"description": "@UserEvent.parameters.desc"
+					"description": "@UserEvent_parameters_desc"
                 }
             }
         },
@@ -73,15 +73,15 @@
             "parameters": {
                 "Unknown": {
 					"value": 0,
-					"description": "@UserGender.Unknown"
+					"description": "@UserGender_Unknown"
 				},
                 "Male": {
 					"value": 1,
-					"description": "@UserGender.Male"
+					"description": "@UserGender_Male"
 				},
 				"Female": {
 					"value": 2,
-					"description": "@UserGender.Female"
+					"description": "@UserGender_Female"
 				},
             },
             "name": "UserGender",
@@ -98,19 +98,19 @@
             "parameters": {
                 "userId": {
                     "type": "string",
-					"description": "@UserInfo_Public.userId.desc"
+					"description": "@UserInfo_Public_userId_desc"
                 },
 				"nickname": {
                     "type": "string",
-					"description": "@UserInfo_Public.nickname.desc"
+					"description": "@UserInfo_Public_nickname_desc"
                 },
 				"portrait": {
                     "type": "string",
-					"description": "@UserInfo_Public.portrait.desc"
+					"description": "@UserInfo_Public_portrait_desc"
                 },
 				"gender": {
                     "type": "enum.UserGender",
-					"description": "@UserInfo_Public.gender.desc"
+					"description": "@UserInfo_Public_gender_desc"
                 },
             }
         },
@@ -120,22 +120,22 @@
                 "type": "SDKServices",
                 "typeName": "UserServExternal"
             },
-			"description": "@GetPlayingUserInfo.Summary",
+			"description": "@GetPlayingUserInfo_Summary",
             "parameters": {
 				"appId": {
                     "type": "string",
-					"description": "@GetPlayingUserInfo.appId.desc"
+					"description": "@GetPlayingUserInfo_appId_desc"
                 },
                 "userId": {
                     "type": "string",
-					"description": "@GetPlayingUserInfo.userId.desc"
+					"description": "@GetPlayingUserInfo_userId_desc"
                 },
             },
             "responses": {
                 "userInfo": {
                     "type": "struct.UserInfo_Public"
                 },
-				"description": "@GetPlayingUserInfo.responses.desc",
+				"description": "@GetPlayingUserInfo_responses_desc",
             },
             "exceptions": [
                 {

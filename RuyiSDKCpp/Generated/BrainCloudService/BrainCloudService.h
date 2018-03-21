@@ -21,300 +21,3515 @@ namespace Ruyi { namespace SDK { namespace BrainCloudApi {
 class BrainCloudServiceIf {
  public:
   virtual ~BrainCloudServiceIf() {}
+
+  /**
+   * Creates an instance of an asynchronous match.
+   * 
+   * @param jsonOpponentIds JSON string identifying the opponent platform and id for this match.
+   * 
+   * Platforms are identified as:
+   * BC - a brainCloud profile id
+   * FB - a Facebook id
+   * 
+   * An exmaple of this string would be:
+   * [
+   *     {
+   *         "platform": "BC",
+   *         "id": "some-braincloud-profile"
+   *     },
+   *     {
+   *         "platform": "FB",
+   *         "id": "some-facebook-id"
+   *     }
+   * ]
+   * 
+   * @param pushNotificationMessage Optional push notification message to send to the other party.
+   * Refer to the Push Notification functions for the syntax required.
+   * 
+   * @param clientIndex
+   */
   virtual void AsyncMatch_CreateMatch(std::string& _return, const std::string& jsonOpponentIds, const std::string& pushNotificationMessage, const int32_t clientIndex) = 0;
+
+  /**
+   * Creates an instance of an asynchronous match with an initial turn.
+   * 
+   * @param jsonOpponentIds JSON string identifying the opponent platform and id for this match.
+   * 
+   * Platforms are identified as:
+   * BC - a brainCloud profile id
+   * FB - a Facebook id
+   * 
+   * An exmaple of this string would be:
+   * [
+   *     {
+   *         "platform": "BC",
+   *         "id": "some-braincloud-profile"
+   *     },
+   *     {
+   *         "platform": "FB",
+   *         "id": "some-facebook-id"
+   *     }
+   * ]
+   * 
+   * @param jsonMatchState JSON string blob provided by the caller
+   * 
+   * @param pushNotificationMessage Optional push notification message to send to the other party.
+   * Refer to the Push Notification functions for the syntax required.
+   * 
+   * @param nextPlayer Optionally, force the next player player to be a specific player
+   * 
+   * @param jsonSummary Optional JSON string defining what the other player will see as a summary of the game when listing their games
+   * 
+   * @param clientIndex
+   */
   virtual void AsyncMatch_CreateMatchWithInitialTurn(std::string& _return, const std::string& jsonOpponentIds, const std::string& jsonMatchState, const std::string& pushNotificationMessage, const std::string& nextPlayer, const std::string& jsonSummary, const int32_t clientIndex) = 0;
+
+  /**
+   * Submits a turn for the given match.
+   * 
+   * @param ownerId Match owner identfier
+   * 
+   * @param matchId Match identifier
+   * 
+   * @param version Game state version to ensure turns are submitted once and in order
+   * 
+   * @param jsonMatchState JSON string blob provided by the caller
+   * 
+   * @param pushNotificationMessage Optional push notification message to send to the other party.
+   * Refer to the Push Notification functions for the syntax required.
+   * 
+   * @param nextPlayer Optionally, force the next player player to be a specific player
+   * 
+   * @param jsonSummary Optional JSON string that other players will see as a summary of the game when listing their games
+   * 
+   * @param jsonStatistics Optional JSON string blob provided by the caller
+   * 
+   * @param clientIndex
+   */
   virtual void AsyncMatch_SubmitTurn(std::string& _return, const std::string& ownerId, const std::string& matchId, const int64_t version, const std::string& jsonMatchState, const std::string& pushNotificationMessage, const std::string& nextPlayer, const std::string& jsonSummary, const std::string& jsonStatistics, const int32_t clientIndex) = 0;
+
+  /**
+   * Allows the current player (only) to update Summary data without having to submit a whole turn.
+   * 
+   * @param ownerId Match owner identfier
+   * 
+   * @param matchId Match identifier
+   * 
+   * @param version Game state version to ensure turns are submitted once and in order
+   * 
+   * @param jsonSummary JSON string provided by the caller that other players will see as a summary of the game when listing their games
+   * 
+   * @param clientIndex
+   */
   virtual void AsyncMatch_UpdateMatchSummaryData(std::string& _return, const std::string& ownerId, const std::string& matchId, const int64_t version, const std::string& jsonSummary, const int32_t clientIndex) = 0;
+
+  /**
+   * Marks the given match as complete.
+   * 
+   * @param ownerId Match owner identifier
+   * 
+   * @param matchId Match identifier
+   * 
+   * @param clientIndex
+   */
   virtual void AsyncMatch_CompleteMatch(std::string& _return, const std::string& ownerId, const std::string& matchId, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the current state of the given match.
+   * 
+   * @param ownerId Match owner identifier
+   * 
+   * @param matchId Match identifier
+   * 
+   * @param clientIndex
+   */
   virtual void AsyncMatch_ReadMatch(std::string& _return, const std::string& ownerId, const std::string& matchId, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the match history of the given match.
+   * 
+   * @param ownerId Match owner identifier
+   * 
+   * @param matchId Match identifier
+   * 
+   * @param clientIndex
+   */
   virtual void AsyncMatch_ReadMatchHistory(std::string& _return, const std::string& ownerId, const std::string& matchId, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns all matches that are NOT in a COMPLETE state for which the player is involved.
+   * 
+   * @param clientIndex
+   */
   virtual void AsyncMatch_FindMatches(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns all matches that are in a COMPLETE state for which the player is involved.
+   * 
+   * @param clientIndex
+   */
   virtual void AsyncMatch_FindCompleteMatches(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Marks the given match as abandoned.
+   * 
+   * @param ownerId Match owner identifier
+   * 
+   * @param matchId Match identifier
+   * 
+   * @param clientIndex
+   */
   virtual void AsyncMatch_AbandonMatch(std::string& _return, const std::string& ownerId, const std::string& matchId, const int32_t clientIndex) = 0;
+
+  /**
+   * Removes the match and match history from the server. DEBUG ONLY, in production it is recommended
+   * the user leave it as completed.
+   * 
+   * @param ownerId Match owner identifier
+   * 
+   * @param matchId Match identifier
+   * 
+   * @param clientIndex
+   */
   virtual void AsyncMatch_DeleteMatch(std::string& _return, const std::string& ownerId, const std::string& matchId, const int32_t clientIndex) = 0;
+
+  /**
+   * Used to create the anonymous installation id for the brainCloud profile.
+   * 
+   * @param clientIndex
+   */
   virtual void Authentication_GenerateAnonymousId(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Initialize - initializes the identity service with a saved
+   * anonymous installation id and most recently used profile id
+   * 
+   * @param profileId The id of the profile id that was most recently used by the app (on this device)
+   * 
+   * @param anonymousId The anonymous installation id that was generated for this device
+   * 
+   * @param clientIndex
+   */
   virtual void Authentication_Initialize(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) = 0;
+
+  /**
+   * Used to clear the saved profile id - to use in cases when the user is
+   * attempting to switch to a different app profile.
+   * 
+   * @param clientIndex
+   */
   virtual void Authentication_ClearSavedProfileID(const int32_t clientIndex) = 0;
+
+  /**
+   * Authenticate a user anonymously with brainCloud - used for apps that don't want to bother
+   * the user to login, or for users who are sensitive to their privacy
+   * 
+   * @param forceCreate Should a new profile be created if it does not exist?
+   * 
+   * @param clientIndex
+   */
   virtual void Authentication_AuthenticateAnonymous(std::string& _return, const bool forceCreate, const int32_t clientIndex) = 0;
+
+  /**
+   * Authenticate the user with a custom Email and Password.  Note that the client app
+   * is responsible for collecting (and storing) the e-mail and potentially password
+   * (for convenience) in the client data.  For the greatest security,
+   * force the user to re-enter their password at each login.
+   * (Or at least give them that option).
+   * 
+   * @param email The e-mail address of the user
+   * 
+   * @param password The password of the user
+   * 
+   * @param forceCreate Should a new profile be created for this user if the account does not exist?
+   * 
+   * @param clientIndex
+   */
   virtual void Authentication_AuthenticateEmailPassword(std::string& _return, const std::string& email, const std::string& password, const bool forceCreate, const int32_t clientIndex) = 0;
+
+  /**
+   * Authenticate the user using a userId and password (without any validation on the userId).
+   * Similar to AuthenticateEmailPassword - except that that method has additional features to
+   * allow for e-mail validation, password resets, etc.
+   * 
+   * @param userId
+   * @param password The password of the user
+   * 
+   * @param forceCreate Should a new profile be created for this user if the account does not exist?
+   * 
+   * @param clientIndex
+   */
   virtual void Authentication_AuthenticateUniversal(std::string& _return, const std::string& userId, const std::string& password, const bool forceCreate, const int32_t clientIndex) = 0;
+
+  /**
+   * Authenticate the user via cloud code (which in turn validates the supplied credentials against an external system).
+   * This allows the developer to extend brainCloud authentication to support other backend authentication systems.
+   * 
+   * @param userId The user id
+   * 
+   * @param token The user token (password etc)
+   * 
+   * @param externalAuthName The name of the cloud script to call for external authentication
+   * 
+   * @param forceCreate Should a new profile be created for this user if the account does not exist?
+   * 
+   * @param clientIndex
+   */
   virtual void Authentication_AuthenticateExternal(std::string& _return, const std::string& userId, const std::string& token, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex) = 0;
+
+  /**
+   * Reset Email password - Sends a password reset email to the specified address
+   * 
+   * @param externalId The email address to send the reset email to.
+   * 
+   * @param clientIndex
+   */
   virtual void Authentication_ResetEmailPassword(std::string& _return, const std::string& externalId, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the sessionId or empty string if no session present.
+   * 
+   * @param clientIndex
+   */
   virtual void Client_GetSessionId(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns true if the user is currently authenticated.
+   * If a session time out or session invalidation is returned from executing a
+   * sever API call, this flag will reset back to false.
+   * 
+   * @param clientIndex
+   */
   virtual bool Client_IsAuthenticated(const int32_t clientIndex) = 0;
+
+  /**
+   * Returns true if brainCloud has been initialized.
+   * 
+   * @param clientIndex
+   */
   virtual bool Client_IsInitialized(const int32_t clientIndex) = 0;
+
+  /**
+   * Method initializes the BrainCloudClient.
+   * 
+   * @param secretKey The secret key for your app
+   * 
+   * @param appId
+   * @param appVersion The app version
+   * 
+   * @param clientIndex
+   */
   virtual void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) = 0;
+
+  /**
+   * Method initializes the BrainCloudClient.
+   * 
+   * @param serverURL The URL to the brainCloud server
+   * 
+   * @param secretKey The secret key for your app
+   * 
+   * @param appId The app id
+   * 
+   * @param appVersion The app version
+   * 
+   * @param clientIndex
+   */
   virtual void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) = 0;
+
+  /**
+   * Initialize the identity aspects of brainCloud.
+   * 
+   * @param profileId The profile id
+   * 
+   * @param anonymousId The anonymous id
+   * 
+   * @param clientIndex
+   */
   virtual void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) = 0;
+
+  /**
+   * Update method needs to be called regularly in order
+   * to process incoming and outgoing messages.
+   * 
+   * @param clientIndex
+   */
   virtual void Client_Update(const int32_t clientIndex) = 0;
+
+  /**
+   * Enable logging of brainCloud transactions (comms etc)
+   * 
+   * @param enable True if logging is to be enabled
+   * 
+   * @param clientIndex
+   */
   virtual void Client_EnableLogging(const bool enable, const int32_t clientIndex) = 0;
+
+  /**
+   * Resets all messages and calls to the server
+   * 
+   * @param clientIndex
+   */
   virtual void Client_ResetCommunication(const int32_t clientIndex) = 0;
+
+  /**
+   * Sets the packet timeouts using a list of integers that
+   * represent timeout values for each packet retry. The
+   * first item in the list represents the timeout for the first packet
+   * attempt, the second for the second packet attempt, and so on.
+   * 
+   * The number of entries in this array determines how many packet
+   * retries will occur.
+   * 
+   * By default, the packet timeout array is {10, 10, 10}
+   * 
+   * Note that this method does not change the timeout for authentication
+   * packets (use SetAuthenticationPacketTimeout method).
+   * 
+   * @param timeouts An array of packet timeouts.
+   * 
+   * @param clientIndex
+   */
   virtual void Client_SetPacketTimeouts(const std::vector<int32_t> & timeouts, const int32_t clientIndex) = 0;
+
+  /**
+   * Sets the packet timeouts back to default.
+   * 
+   * @param clientIndex
+   */
   virtual void Client_SetPacketTimeoutsToDefault(const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the list of packet timeouts.
+   * 
+   * @param clientIndex
+   */
   virtual void Client_GetPacketTimeouts(std::vector<int32_t> & _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Sets the authentication packet timeout which is tracked separately
+   * from all other packets. Note that authentication packets are never
+   * retried and so this value represents the total time a client would
+   * wait to receive a reply to an authentication API call. By default
+   * this timeout is set to 15 seconds.
+   * 
+   * @param timeoutSecs
+   * @param clientIndex
+   */
   virtual void Client_SetAuthenticationPacketTimeout(const int32_t timeoutSecs, const int32_t clientIndex) = 0;
+
+  /**
+   * Gets the authentication packet timeout which is tracked separately
+   * from all other packets. Note that authentication packets are never
+   * retried and so this value represents the total time a client would
+   * wait to receive a reply to an authentication API call. By default
+   * this timeout is set to 15 seconds.
+   * 
+   * @param clientIndex
+   */
   virtual int32_t Client_GetAuthenticationPacketTimeout(const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the low transfer rate timeout in secs
+   * 
+   * @param clientIndex
+   */
   virtual int32_t Client_GetUploadLowTransferRateTimeout(const int32_t clientIndex) = 0;
+
+  /**
+   * Sets the timeout in seconds of a low speed upload
+   * (i.e. transfer rate which is underneath the low transfer rate threshold).
+   * By default this is set to 120 secs.Setting this value to 0 will
+   * turn off the timeout. Note that this timeout method
+   * does not work on Unity mobile platforms.
+   * 
+   * @param timeoutSecs
+   * @param clientIndex
+   */
   virtual void Client_SetUploadLowTransferRateTimeout(const int32_t timeoutSecs, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the low transfer rate threshold in bytes/sec
+   * 
+   * @param clientIndex
+   */
   virtual int32_t Client_GetUploadLowTransferRateThreshold(const int32_t clientIndex) = 0;
+
+  /**
+   * Sets the low transfer rate threshold of an upload in bytes/sec.
+   * If the transfer rate dips below the given threshold longer
+   * than the specified timeout, the transfer will fail.
+   * By default this is set to 50 bytes/sec. Note that this timeout method
+   * does not work on Unity mobile platforms.
+   * 
+   * @param bytesPerSec The low transfer rate threshold in bytes/sec
+   * 
+   * @param clientIndex
+   */
   virtual void Client_SetUploadLowTransferRateThreshold(const int32_t bytesPerSec, const int32_t clientIndex) = 0;
+
+  /**
+   * Enables the timeout message caching which is disabled by default.
+   * Once enabled, if a client side timeout is encountered
+   * (i.e. brainCloud server is unreachable presumably due to the client
+   * network being down) the SDK will do the following:
+   * 
+   * 1 - cache the currently queued messages to brainCloud
+   * 2 - call the network error callback
+   * 3 - then expect the app to call either:
+   *     a) RetryCachedMessages() to retry sending to brainCloud
+   *     b) FlushCachedMessages() to dump all messages in the queue.
+   * 
+   * Between steps 2 and 3, the app can prompt the user to retry connecting
+   * to brainCloud to determine whether to follow path 3a or 3b.
+   * 
+   * Note that if path 3a is followed, and another timeout is encountered,
+   * the process will begin all over again from step 1.
+   * 
+   * WARNING - the brainCloud SDK will cache *all* API calls sent
+   * when a timeout is encountered if this mechanism is enabled.
+   * This effectively freezes all communication with brainCloud.
+   * Apps must call either RetryCachedMessages() or FlushCachedMessages()
+   * for the brainCloud SDK to resume sending messages.
+   * ResetCommunication() will also clear the message cache.
+   * 
+   * @param enabled True if message should be cached on timeout
+   * 
+   * @param clientIndex
+   */
   virtual void Client_EnableNetworkErrorMessageCaching(const bool enabled, const int32_t clientIndex) = 0;
+
+  /**
+   * Attempts to resend any cached messages. If no messages are in the cache,
+   * this method does nothing.
+   * 
+   * @param clientIndex
+   */
   virtual void Client_RetryCachedMessages(const int32_t clientIndex) = 0;
+
+  /**
+   * Flushes the cached messages to resume API call processing. This will dump
+   * all of the cached messages in the queue.
+   * 
+   * @param sendApiErrorCallbacks If set to true API error callbacks will
+   * be called for every cached message with statusCode CLIENT_NETWORK_ERROR and reasonCode CLIENT_NETWORK_ERROR_TIMEOUT.
+   * 
+   * @param clientIndex
+   */
   virtual void Client_FlushCachedMessages(const bool sendApiErrorCallbacks, const int32_t clientIndex) = 0;
+
+  /**
+   * Inserts a marker which will tell the brainCloud comms layer
+   * to close the message bundle off at this point. Any messages queued
+   * before this method was called will likely be bundled together in
+   * the next send to the server.
+   * 
+   * To ensure that only a single message is sent to the server you would
+   * do something like this:
+   * 
+   * InsertEndOfMessageBundleMarker()
+   * SomeApiCall()
+   * InsertEndOfMessageBundleMarker()
+   * 
+   * @param clientIndex
+   */
   virtual void Client_InsertEndOfMessageBundleMarker(const int32_t clientIndex) = 0;
+
+  /**
+   * Sets the country code sent to brainCloud when a user authenticates.
+   * Will override any auto detected country.
+   * 
+   * @param countryCode ISO 3166-1 two-letter country code
+   * 
+   * @param clientIndex
+   */
   virtual void Client_OverrideCountryCode(const std::string& countryCode, const int32_t clientIndex) = 0;
+
+  /**
+   * Sets the language code sent to brainCloud when a user authenticates.
+   * If the language is set to a non-ISO 639-1 standard value the game default will be used instead.
+   * Will override any auto detected language.
+   * 
+   * @param languageCode ISO 639-1 two-letter language code
+   * 
+   * @param clientIndex
+   */
   virtual void Client_OverrideLanguageCode(const std::string& languageCode, const int32_t clientIndex) = 0;
+
+  /**
+   * Creates custom data stream page event
+   * 
+   * @param eventName The name of the event
+   * 
+   * @param jsonEventProperties The properties of the event
+   * 
+   * @param clientIndex
+   */
   virtual void DataStream_CustomPageEvent(std::string& _return, const std::string& eventName, const std::string& jsonEventProperties, const int32_t clientIndex) = 0;
+
+  /**
+   * Creates custom data stream screen event
+   * 
+   * @param eventName The name of the event
+   * 
+   * @param jsonEventProperties The properties of the event
+   * 
+   * @param clientIndex
+   */
   virtual void DataStream_CustomScreenEvent(std::string& _return, const std::string& eventName, const std::string& jsonEventProperties, const int32_t clientIndex) = 0;
+
+  /**
+   * Creates custom data stream track event
+   * 
+   * @param eventName The name of the event
+   * 
+   * @param jsonEventProperties The properties of the event
+   * 
+   * @param clientIndex
+   */
   virtual void DataStream_CustomTrackEvent(std::string& _return, const std::string& eventName, const std::string& jsonEventProperties, const int32_t clientIndex) = 0;
+
+  /**
+   * Method creates a new entity on the server.
+   * 
+   * @param entityType The entity type as defined by the user
+   * 
+   * @param jsonEntityData The entity's data as a json string
+   * 
+   * @param jsonEntityAcl The entity's access control list as json. A null acl implies default
+   * permissions which make the entity readable/writeable by only the user.
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_CreateEntity(std::string& _return, const std::string& entityType, const std::string& jsonEntityData, const std::string& jsonEntityAcl, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns all user entities that match the given type.
+   * 
+   * @param entityType The entity type to search for
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_GetEntitiesByType(std::string& _return, const std::string& entityType, const int32_t clientIndex) = 0;
+
+  /**
+   * Method updates a new entity on the server. This operation results in the entity
+   * data being completely replaced by the passed in JSON string.
+   * 
+   * @param entityId The id of the entity to update
+   * 
+   * @param entityType The entity type as defined by the user
+   * 
+   * @param jsonEntityData The entity's data as a json string.
+   * 
+   * @param jsonEntityAcl The entity's access control list as json. A null acl implies default
+   * permissions which make the entity readable/writeable by only the user.
+   * 
+   * @param version Current version of the entity. If the version of the
+   * entity on the server does not match the version passed in, the
+   * server operation will fail. Use -1 to skip version checking.
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_UpdateEntity(std::string& _return, const std::string& entityId, const std::string& entityType, const std::string& jsonEntityData, const std::string& jsonEntityAcl, const int32_t version, const int32_t clientIndex) = 0;
+
+  /**
+   * Method updates a shared entity owned by another user. This operation results in the entity
+   * data being completely replaced by the passed in JSON string.
+   * 
+   * @param entityId The id of the entity to update
+   * 
+   * @param targetProfileId The id of the entity's owner
+   * 
+   * @param entityType The entity type as defined by the user
+   * 
+   * @param jsonEntityData The entity's data as a json string.
+   * 
+   * @param version Current version of the entity. If the version of the
+   * entity on the server does not match the version passed in, the
+   * server operation will fail. Use -1 to skip version checking.
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_UpdateSharedEntity(std::string& _return, const std::string& entityId, const std::string& targetProfileId, const std::string& entityType, const std::string& jsonEntityData, const int32_t version, const int32_t clientIndex) = 0;
+
+  /**
+   * Method deletes the given entity on the server.
+   * 
+   * @param entityId The id of the entity to update
+   * 
+   * @param version Current version of the entity. If the version of the
+   * entity on the server does not match the version passed in, the
+   * server operation will fail. Use -1 to skip version checking.
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_DeleteEntity(std::string& _return, const std::string& entityId, const int32_t version, const int32_t clientIndex) = 0;
+
+  /**
+   * Method updates a singleton entity on the server. This operation results in the entity
+   * data being completely replaced by the passed in JSON string. If the entity doesn't exist it is created.
+   * 
+   * @param entityType The entity type as defined by the user
+   * 
+   * @param jsonEntityData The entity's data as a json string.
+   * 
+   * @param jsonEntityAcl The entity's access control list as json. A null acl implies default
+   * 
+   * @param version Current version of the entity. If the version of the
+   * entity on the server does not match the version passed in, the
+   * server operation will fail. Use -1 to skip version checking.
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_UpdateSingleton(std::string& _return, const std::string& entityType, const std::string& jsonEntityData, const std::string& jsonEntityAcl, const int32_t version, const int32_t clientIndex) = 0;
+
+  /**
+   * Method deletes the given singleton on the server.
+   * 
+   * @param entityType The entity type as defined by the user
+   * 
+   * @param version Current version of the entity. If the version of the
+   * entity on the server does not match the version passed in, the
+   * server operation will fail. Use -1 to skip version checking.
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_DeleteSingleton(std::string& _return, const std::string& entityType, const int32_t version, const int32_t clientIndex) = 0;
+
+  /**
+   * Method to get a specific entity.
+   * 
+   * @param entityId The id of the entity
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_GetEntity(std::string& _return, const std::string& entityId, const int32_t clientIndex) = 0;
+
+  /**
+   * Method retrieves a singleton entity on the server. If the entity doesn't exist, null is returned.
+   * 
+   * @param entityType The entity type as defined by the user
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_GetSingleton(std::string& _return, const std::string& entityType, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns a shared entity for the given profile and entity ID.
+   * An entity is shared if its ACL allows for the currently logged
+   * in user to read the data.
+   * 
+   * @param profileId The the profile ID of the user who owns the entity
+   * 
+   * @param entityId The ID of the entity that will be retrieved
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_GetSharedEntityForProfileId(std::string& _return, const std::string& profileId, const std::string& entityId, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns all shared entities for the given profile id.
+   * An entity is shared if its ACL allows for the currently logged
+   * in user to read the data.
+   * 
+   * @param profileId The profile id to retrieve shared entities for
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_GetSharedEntitiesForProfileId(std::string& _return, const std::string& profileId, const int32_t clientIndex) = 0;
+
+  /**
+   * Method gets list of entities from the server base on type and/or where clause
+   * 
+   * @param whereJson Mongo style query string
+   * 
+   * @param orderByJson Sort order
+   * 
+   * @param maxReturn The maximum number of entities to return
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_GetList(std::string& _return, const std::string& whereJson, const std::string& orderByJson, const int32_t maxReturn, const int32_t clientIndex) = 0;
+
+  /**
+   * Method gets list of shared entities for the specified user based on type and/or where clause
+   * 
+   * @param profileId The profile ID to retrieve shared entities for
+   * 
+   * @param whereJson Mongo style query string
+   * 
+   * @param orderByJson Sort order
+   * 
+   * @param maxReturn The maximum number of entities to return
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_GetSharedEntitiesListForProfileId(std::string& _return, const std::string& profileId, const std::string& whereJson, const std::string& orderByJson, const int32_t maxReturn, const int32_t clientIndex) = 0;
+
+  /**
+   * Method gets a count of entities based on the where clause
+   * 
+   * @param whereJson Mongo style query string
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_GetListCount(std::string& _return, const std::string& whereJson, const int32_t clientIndex) = 0;
+
+  /**
+   * Method uses a paging system to iterate through user entities.
+   * After retrieving a page of entities with this method,
+   * use GetPageOffset() to retrieve previous or next pages.
+   * 
+   * @param jsonContext The json context for the page request.
+   * See the portal appendix documentation for format
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_GetPage(std::string& _return, const std::string& jsonContext, const int32_t clientIndex) = 0;
+
+  /**
+   * Method to retrieve previous or next pages after having called
+   * the GetPage method.
+   * 
+   * @param context The context string returned from the server from a previous call
+   * to GetPage() or GetPageOffset()
+   * 
+   * @param pageOffset The positive or negative page offset to fetch. Uses the last page
+   * retrieved using the context string to determine a starting point.
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_GetPageOffset(std::string& _return, const std::string& context, const int32_t pageOffset, const int32_t clientIndex) = 0;
+
+  /**
+   * Partial increment of entity data field items. Partial set of items incremented as specified.
+   * 
+   * @param entityId The entity to increment
+   * 
+   * @param jsonData The subset of data to increment
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_IncrementUserEntityData(std::string& _return, const std::string& entityId, const std::string& jsonData, const int32_t clientIndex) = 0;
+
+  /**
+   * Partial increment of shared entity data field items. Partial set of items incremented as specified.
+   * 
+   * @param entityId The entity to increment
+   * 
+   * @param targetProfileId Profile ID of the entity owner
+   * 
+   * @param jsonData The subset of data to increment
+   * 
+   * @param clientIndex
+   */
   virtual void Entity_IncrementSharedUserEntityData(std::string& _return, const std::string& entityId, const std::string& targetProfileId, const std::string& jsonData, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends an event to the designated profile id with the attached json data.
+   * Any events that have been sent to a user will show up in their
+   * incoming event mailbox. If the recordLocally flag is set to true,
+   * a copy of this event (with the exact same event id) will be stored
+   * in the sending user's "sent" event mailbox.
+   * 
+   * @param toProfileId The id of the user who is being sent the event
+   * 
+   * @param eventType The user-defined type of the event.
+   * 
+   * @param jsonEventData The user-defined data for this event encoded in JSON.
+   * 
+   * @param clientIndex
+   */
   virtual void Event_SendEvent(std::string& _return, const std::string& toProfileId, const std::string& eventType, const std::string& jsonEventData, const int32_t clientIndex) = 0;
+
+  /**
+   * Updates an event in the user's incoming event mailbox.
+   * 
+   * @param evId The event id
+   * 
+   * @param jsonEventData The user-defined data for this event encoded in JSON.
+   * 
+   * @param clientIndex
+   */
   virtual void Event_UpdateIncomingEventData(std::string& _return, const std::string& evId, const std::string& jsonEventData, const int32_t clientIndex) = 0;
+
+  /**
+   * Delete an event out of the user's incoming mailbox.
+   * 
+   * @param evId The event id
+   * 
+   * @param clientIndex
+   */
   virtual void Event_DeleteIncomingEvent(std::string& _return, const std::string& evId, const int32_t clientIndex) = 0;
+
+  /**
+   * Get the events currently queued for the user.
+   * 
+   * @param clientIndex
+   */
   virtual void Event_GetEvents(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Prepares a user file upload. On success the file will begin uploading
+   * to the brainCloud server.To be informed of success/failure of the upload
+   * register an IFileUploadCallback with the BrainCloudClient class.
+   * 
+   * @param cloudPath The desired cloud path of the file
+   * 
+   * @param cloudFilename The desired cloud fileName of the file
+   * 
+   * @param shareable True if the file is shareable
+   * 
+   * @param replaceIfExists Whether to replace file if it exists
+   * 
+   * @param localPath The path and fileName of the local file
+   * 
+   * @param clientIndex
+   */
   virtual void File_UploadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool shareable, const bool replaceIfExists, const std::string& localPath, const int32_t clientIndex) = 0;
+
+  /**
+   * Method cancels an upload. If an IFileUploadCallback has been registered with the BrainCloudClient class,
+   * the fileUploadFailed callback method will be called once the upload has been canceled.
+   * NOTE: The upload will still continue in the background on versions of Unity before 5.3
+   * and on Unity mobile platforms.
+   * 
+   * @param uploadId Upload ID of the file to cancel
+   * 
+   * @param clientIndex
+   */
   virtual void File_CancelUpload(const std::string& uploadId, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the progress of the given upload from 0.0 to 1.0 or -1 if upload not found.
+   * NOTE: This will always return 1 on Unity mobile platforms.
+   * 
+   * @param uploadId The id of the upload
+   * 
+   * @param clientIndex
+   */
   virtual double File_GetUploadProgress(const std::string& uploadId, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the number of bytes uploaded or -1 if upload not found.
+   * NOTE: This will always return the total bytes to transfer on Unity mobile platforms.
+   * 
+   * @param uploadId The id of the upload
+   * 
+   * @param clientIndex
+   */
   virtual int64_t File_GetUploadBytesTransferred(const std::string& uploadId, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the total number of bytes that will be uploaded or -1 if upload not found.
+   * 
+   * @param uploadId The id of the upload
+   * 
+   * @param clientIndex
+   */
   virtual int64_t File_GetUploadTotalBytesToTransfer(const std::string& uploadId, const int32_t clientIndex) = 0;
+
+  /**
+   * List all user files
+   * 
+   * @param clientIndex
+   */
   virtual void File_ListUserFiles_SFO(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * List user files from the given cloud path
+   * 
+   * @param cloudPath File path
+   * 
+   * @param recurse Whether to recurse down the path
+   * 
+   * @param clientIndex
+   */
   virtual void File_ListUserFiles_SNSFO(std::string& _return, const std::string& cloudPath, const bool recurse, const int32_t clientIndex) = 0;
+
+  /**
+   * Deletes a single user file.
+   * 
+   * @param cloudPath File path
+   * 
+   * @param cloudFileName
+   * @param clientIndex
+   */
   virtual void File_DeleteUserFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFileName, const int32_t clientIndex) = 0;
+
+  /**
+   * Delete multiple user files
+   * 
+   * @param cloudPath File path
+   * 
+   * @param recurse Whether to recurse down the path
+   * 
+   * @param clientIndex
+   */
   virtual void File_DeleteUserFiles(std::string& _return, const std::string& cloudPath, const bool recurse, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the CDN URL for a file object.
+   * 
+   * @param cloudPath File path
+   * 
+   * @param cloudFilename Name of file
+   * 
+   * @param clientIndex
+   */
   virtual void File_GetCDNUrl(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieves profile information for the partial matches of the specified text.
+   * 
+   * @param searchText Universal ID text on which to search.
+   * 
+   * @param maxResults Maximum number of results to return.
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_FindUserByUniversalId(std::string& _return, const std::string& searchText, const int32_t maxResults, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieves profile information of the specified user.
+   * 
+   * @param externalId External id of the user to find
+   * 
+   * @param authenticationType The authentication type used for the user's ID
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_GetProfileInfoForCredential(std::string& _return, const std::string& externalId, const std::string& authenticationType, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieves profile information for the specified external auth user.
+   * 
+   * @param externalId External id of the friend to find
+   * 
+   * @param externalAuthType The external authentication type used for this friend's external id
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_GetProfileInfoForExternalAuthId(std::string& _return, const std::string& externalId, const std::string& externalAuthType, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieves the external ID for the specified user profile ID on the specified social platform.
+   * 
+   * @param profileId Profile (user) ID.
+   * 
+   * @param authenticationType Associated authentication type.
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_GetExternalIdForProfileId(std::string& _return, const std::string& profileId, const std::string& authenticationType, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns a particular entity of a particular friend.
+   * 
+   * @param entityId Id of entity to retrieve.
+   * 
+   * @param friendId Profile Id of friend who owns entity.
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_ReadFriendEntity(std::string& _return, const std::string& entityId, const std::string& friendId, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns entities of all friends based on type and/or subtype.
+   * 
+   * @param entityType Types of entities to retrieve.
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_ReadFriendsEntities(std::string& _return, const std::string& entityType, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns user state of a particular friend.
+   * 
+   * @param friendId Profile Id of friend to retrieve user state for.
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_ReadFriendUserState(std::string& _return, const std::string& friendId, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns user state of a particular user.
+   * 
+   * @param profileId Profile Id of user to retrieve player state for.
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_GetSummaryDataForProfileId(std::string& _return, const std::string& profileId, const int32_t clientIndex) = 0;
+
+  /**
+   * Finds a list of users matching the search text by performing an exact
+   * search of all user names.
+   * 
+   * @param searchText The string to search for.
+   * 
+   * @param maxResults Maximum number of results to return.
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_FindUsersByExactName(std::string& _return, const std::string& searchText, const int32_t maxResults, const int32_t clientIndex) = 0;
+
+  /**
+   * Finds a list of users matching the search text by performing a substring
+   * search of all user names.
+   * 
+   * @param searchText The substring to search for. Minimum length of 3 characters.
+   * 
+   * @param maxResults Maximum number of results to return.
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_FindUsersBySubstrName(std::string& _return, const std::string& searchText, const int32_t maxResults, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieves a list of user and friend platform information for all friends of the current user.
+   * 
+   * @param friendPlatform Friend platform to query.
+   * 
+   * @param includeSummaryData True if including summary data; false otherwise.
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_ListFriends(std::string& _return, const  ::Ruyi::SDK::BrainCloudApi::FriendPlatform::type friendPlatform, const bool includeSummaryData, const int32_t clientIndex) = 0;
+
+  /**
+   * Links the current user and the specified users as brainCloud friends.
+   * 
+   * @param profileIds Collection of profile IDs.
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_AddFriends(std::string& _return, const std::vector<std::string> & profileIds, const int32_t clientIndex) = 0;
+
+  /**
+   * Unlinks the current user and the specified users as brainCloud friends.
+   * 
+   * @param profileIds Collection of profile IDs.
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_RemoveFriends(std::string& _return, const std::vector<std::string> & profileIds, const int32_t clientIndex) = 0;
+
+  /**
+   * Get users online status
+   * 
+   * @param profileIds Collection of profile IDs.
+   * 
+   * @param clientIndex
+   */
   virtual void Friend_GetUsersOnlineStatus(std::string& _return, const std::vector<std::string> & profileIds, const int32_t clientIndex) = 0;
+
+  /**
+   * Method retrieves all gamification data for the player.
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadAllGamification(std::string& _return, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method retrieves all milestones defined for the game.
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadMilestones(std::string& _return, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Read all of the achievements defined for the game.
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadAchievements(std::string& _return, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns all defined xp levels and any rewards associated
+   * with those xp levels.
+   * 
+   * @param clientIndex
+   */
   virtual void Gamification_ReadXpLevelsMetaData(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Method retrives the list of achieved achievements.
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadAchievedAchievements(std::string& _return, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method retrieves the list of completed milestones.
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadCompletedMilestones(std::string& _return, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method retrieves the list of in progress milestones
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadInProgressMilestones(std::string& _return, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method retrieves milestones of the given category.
+   * 
+   * @param category The milestone category
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadMilestonesByCategory(std::string& _return, const std::string& category, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method will award the achievements specified. On success, this will
+   * call AwardThirdPartyAchievement to hook into the client-side Achievement
+   * service (ie GameCentre, Facebook etc).
+   * 
+   * @param achievementIds A collection of achievement ids to award
+   * 
+   * @param clientIndex
+   */
   virtual void Gamification_AwardAchievements(std::string& _return, const std::vector<std::string> & achievementIds, const int32_t clientIndex) = 0;
+
+  /**
+   * Method retrieves all of the quests defined for the game.
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadQuests(std::string& _return, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns all completed quests.
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadCompletedQuests(std::string& _return, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns all in progress quests.
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadInProgressQuests(std::string& _return, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns all quests that haven't been started.
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadNotStartedQuests(std::string& _return, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns all quests with status.
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadQuestsWithStatus(std::string& _return, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns all quests with a basic percentage.
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadQuestsWithBasicPercentage(std::string& _return, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns all quests with a complex percentage.
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadQuestsWithComplexPercentage(std::string& _return, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns all quests for the given category.
+   * 
+   * @param category The quest category
+   * 
+   * @param includeMetaData
+   * @param clientIndex
+   */
   virtual void Gamification_ReadQuestsByCategory(std::string& _return, const std::string& category, const bool includeMetaData, const int32_t clientIndex) = 0;
+
+  /**
+   * Sets the specified milestones' statuses to LOCKED.
+   * 
+   * @param milestoneIds List of milestones to reset
+   * 
+   * @param clientIndex
+   */
   virtual void Gamification_ResetMilestones(std::string& _return, const std::vector<std::string> & milestoneIds, const int32_t clientIndex) = 0;
+
+  /**
+   * Method reads all the global properties of the game
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalApp_ReadProperties(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Method creates a new entity on the server.
+   * 
+   * @param entityType The entity type as defined by the user
+   * 
+   * @param timeToLive Sets expiry time for entity in milliseconds if > 0
+   * 
+   * @param jsonEntityAcl The entity's access control list as json. A null acl implies default
+   * 
+   * @param jsonEntityData The entity's data as a json string
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_CreateEntity(std::string& _return, const std::string& entityType, const int64_t timeToLive, const std::string& jsonEntityAcl, const std::string& jsonEntityData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method creates a new entity on the server with an indexed id.
+   * 
+   * @param entityType The entity type as defined by the user
+   * 
+   * @param indexedId A secondary ID that will be indexed
+   * 
+   * @param timeToLive Sets expiry time for entity in milliseconds if > 0
+   * 
+   * @param jsonEntityAcl The entity's access control list as json. A null acl implies default
+   * 
+   * @param jsonEntityData The entity's data as a json string
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_CreateEntityWithIndexedId(std::string& _return, const std::string& entityType, const std::string& indexedId, const int64_t timeToLive, const std::string& jsonEntityAcl, const std::string& jsonEntityData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method updates an existing entity on the server.
+   * 
+   * @param entityId The entity ID
+   * 
+   * @param version The version of the entity to update
+   * 
+   * @param jsonEntityData The entity's data as a json string
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_UpdateEntity(std::string& _return, const std::string& entityId, const int32_t version, const std::string& jsonEntityData, const int32_t clientIndex) = 0;
+
+  /**
+   * Method updates an existing entity's Acl on the server.
+   * 
+   * @param entityId The entity ID
+   * 
+   * @param version The version of the entity to update
+   * 
+   * @param jsonEntityAcl The entity's access control list as json.
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_UpdateEntityAcl(std::string& _return, const std::string& entityId, const int32_t version, const std::string& jsonEntityAcl, const int32_t clientIndex) = 0;
+
+  /**
+   * Method updates an existing entity's time to live on the server.
+   * 
+   * @param entityId The entity ID
+   * 
+   * @param version The version of the entity to update
+   * 
+   * @param timeToLive Sets expiry time for entity in milliseconds if > 0
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_UpdateEntityTimeToLive(std::string& _return, const std::string& entityId, const int32_t version, const int64_t timeToLive, const int32_t clientIndex) = 0;
+
+  /**
+   * Method deletes an existing entity on the server.
+   * 
+   * @param entityId The entity ID
+   * 
+   * @param version The version of the entity to delete
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_DeleteEntity(std::string& _return, const std::string& entityId, const int32_t version, const int32_t clientIndex) = 0;
+
+  /**
+   * Method reads an existing entity from the server.
+   * 
+   * @param entityId The entity ID
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_ReadEntity(std::string& _return, const std::string& entityId, const int32_t clientIndex) = 0;
+
+  /**
+   * Method gets list of entities from the server base on type and/or where clause
+   * 
+   * @param whereJson Mongo style query string
+   * 
+   * @param orderByJson Sort order
+   * 
+   * @param maxReturn The maximum number of entities to return
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_GetList(std::string& _return, const std::string& whereJson, const std::string& orderByJson, const int32_t maxReturn, const int32_t clientIndex) = 0;
+
+  /**
+   * Method gets list of entities from the server base on indexed id
+   * 
+   * @param entityIndexedId The entity indexed Id
+   * 
+   * @param maxReturn The maximum number of entities to return
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_GetListByIndexedId(std::string& _return, const std::string& entityIndexedId, const int32_t maxReturn, const int32_t clientIndex) = 0;
+
+  /**
+   * Method gets a count of entities based on the where clause
+   * 
+   * @param whereJson Mongo style query string
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_GetListCount(std::string& _return, const std::string& whereJson, const int32_t clientIndex) = 0;
+
+  /**
+   * Method uses a paging system to iterate through Global Entities.
+   * After retrieving a page of Global Entities with this method,
+   * use GetPageOffset() to retrieve previous or next pages.
+   * 
+   * @param jsonContext The json context for the page request.
+   * See the portal appendix documentation for format
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_GetPage(std::string& _return, const std::string& jsonContext, const int32_t clientIndex) = 0;
+
+  /**
+   * Method to retrieve previous or next pages after having called
+   * the GetPage method.
+   * 
+   * @param context The context string returned from the server from a previous call
+   * to GetPage() or GetPageOffset()
+   * 
+   * @param pageOffset The positive or negative page offset to fetch. Uses the last page
+   * retrieved using the context string to determine a starting point.
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_GetPageOffset(std::string& _return, const std::string& context, const int32_t pageOffset, const int32_t clientIndex) = 0;
+
+  /**
+   * Partial increment of global entity data field items. Partial set of items incremented as specified.
+   * 
+   * @param entityId The entity to increment
+   * 
+   * @param jsonData The subset of data to increment
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_IncrementGlobalEntityData(std::string& _return, const std::string& entityId, const std::string& jsonData, const int32_t clientIndex) = 0;
+
+  /**
+   * Gets a list of up to randomCount randomly selected entities from the server based on the where condition and specified maximum return count.
+   * 
+   * @param whereJson
+   * @param maxReturn The maximum number of entities to return
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_GetRandomEntitiesMatching(std::string& _return, const std::string& whereJson, const int32_t maxReturn, const int32_t clientIndex) = 0;
+
+  /**
+   * Method updates an existing entity's Owner and Acl on the server.
+   * 
+   * @param entityId The entity ID
+   * 
+   * @param version The version of the entity
+   * 
+   * @param ownerId The owner ID
+   * 
+   * @param acl The entity's access control list
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_UpdateEntityOwnerAndAcl(std::string& _return, const std::string& entityId, const int64_t version, const std::string& ownerId, const  ::Ruyi::SDK::BrainCloudApi::JSON& acl, const int32_t clientIndex) = 0;
+
+  /**
+   * Method clears the owner id of an existing entity and sets the Acl on the server.
+   * 
+   * @param entityId The entity ID
+   * 
+   * @param version The version of the entity
+   * 
+   * @param acl The entity's access control list
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalEntity_MakeSystemEntity(std::string& _return, const std::string& entityId, const int64_t version, const  ::Ruyi::SDK::BrainCloudApi::JSON& acl, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns all of the global statistics.
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalStatistics_ReadAllGlobalStats(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Reads a subset of global statistics as defined by the input JSON.
+   * 
+   * @param globalStats A list containing the statistics to read
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalStatistics_ReadGlobalStatsSubset(std::string& _return, const std::vector<std::string> & globalStats, const int32_t clientIndex) = 0;
+
+  /**
+   * Method retrieves the global statistics for the given category.
+   * 
+   * @param category The global statistics category
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalStatistics_ReadGlobalStatsForCategory(std::string& _return, const std::string& category, const int32_t clientIndex) = 0;
+
+  /**
+   * Atomically increment (or decrement) global statistics.
+   * Global statistics are defined through the brainCloud portal.
+   * 
+   * @param jsonData The JSON encoded data to be sent to the server as follows:
+   * {
+   *   stat1: 10,
+   *   stat2: -5.5,
+   * }
+   * would increment stat1 by 10 and decrement stat2 by 5.5.
+   * For the full statistics grammer see the api.braincloudservers.com site.
+   * There are many more complex operations supported such as:
+   * {
+   *   stat1:INC_TO_LIMIT#9#30
+   * }
+   * which increments stat1 by 9 up to a limit of 30.
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalStatistics_IncrementGlobalStats(std::string& _return, const std::string& jsonData, const int32_t clientIndex) = 0;
+
+  /**
+   * Apply statistics grammar to a partial set of statistics.
+   * 
+   * @param statisticsData Example data to be passed to method:
+   * {
+   *     "DEAD_CATS": "RESET",
+   *     "LIVES_LEFT": "SET#9",
+   *     "MICE_KILLED": "INC#2",
+   *     "DOG_SCARE_BONUS_POINTS": "INC#10",
+   *     "TREES_CLIMBED": 1
+   * }
+   * 
+   * @param clientIndex
+   */
   virtual void GlobalStatistics_ProcessStatistics(std::string& _return, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & statisticsData, const int32_t clientIndex) = 0;
+
+  /**
+   * Accept an outstanding invitation to join the group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_AcceptGroupInvitation(std::string& _return, const std::string& groupId, const int32_t clientIndex) = 0;
+
+  /**
+   * Add a member to the group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param profileId Profile ID of the member being added.
+   * 
+   * @param role Role of the member being added.
+   * 
+   * @param jsonAttributes Attributes of the member being added.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_AddGroupMember(std::string& _return, const std::string& groupId, const std::string& profileId, const  ::Ruyi::SDK::BrainCloudApi::Role::type role, const std::string& jsonAttributes, const int32_t clientIndex) = 0;
+
+  /**
+   * Approve an outstanding request to join the group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param profileId Profile ID of the invitation being deleted.
+   * 
+   * @param role Role of the member being invited.
+   * 
+   * @param jsonAttributes Attributes of the member being invited.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_ApproveGroupJoinRequest(std::string& _return, const std::string& groupId, const std::string& profileId, const  ::Ruyi::SDK::BrainCloudApi::Role::type role, const std::string& jsonAttributes, const int32_t clientIndex) = 0;
+
+  /**
+   * Automatically join an open group that matches the search criteria and has space available.
+   * 
+   * @param groupType Name of the associated group type.
+   * 
+   * @param autoJoinStrategy Selection strategy to employ when there are multiple matches
+   * 
+   * @param dataQueryJson Query parameters (optional)
+   * 
+   * @param clientIndex
+   */
   virtual void Group_AutoJoinGroup(std::string& _return, const std::string& groupType, const  ::Ruyi::SDK::BrainCloudApi::AutoJoinStrategy::type autoJoinStrategy, const std::string& dataQueryJson, const int32_t clientIndex) = 0;
+
+  /**
+   * Cancel an outstanding invitation to the group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param profileId Profile ID of the invitation being deleted.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_CancelGroupInvitation(std::string& _return, const std::string& groupId, const std::string& profileId, const int32_t clientIndex) = 0;
+
+  /**
+   * Create a group.
+   * 
+   * @param name Name of the group.
+   * 
+   * @param groupType Name of the type of group.
+   * 
+   * @param isOpenGroup true if group is open; false if closed.
+   * 
+   * @param acl The group's access control list. A null ACL implies default.
+   * 
+   * @param jsonData Custom application data.
+   * 
+   * @param jsonOwnerAttributes Attributes for the group owner (current user).
+   * 
+   * @param jsonDefaultMemberAttributes Default attributes for group members.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_CreateGroup(std::string& _return, const std::string& name, const std::string& groupType, const bool isOpenGroup, const  ::Ruyi::SDK::BrainCloudApi::JSON& acl, const std::string& jsonData, const std::string& jsonOwnerAttributes, const std::string& jsonDefaultMemberAttributes, const int32_t clientIndex) = 0;
+
+  /**
+   * Create a group entity.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param entityType
+   * @param isOwnedByGroupMember true if entity is owned by a member; false if owned by the entire group.
+   * 
+   * @param acl Access control list for the group entity.
+   * 
+   * @param jsonData Custom application data.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_CreateGroupEntity(std::string& _return, const std::string& groupId, const std::string& entityType, const bool isOwnedByGroupMember, const  ::Ruyi::SDK::BrainCloudApi::JSON& acl, const std::string& jsonData, const int32_t clientIndex) = 0;
+
+  /**
+   * Delete a group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param version Current version of the group
+   * 
+   * @param clientIndex
+   */
   virtual void Group_DeleteGroup(std::string& _return, const std::string& groupId, const int64_t version, const int32_t clientIndex) = 0;
+
+  /**
+   * Delete a group entity.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param entityId ID of the entity.
+   * 
+   * @param version The current version of the group entity (for concurrency checking).
+   * 
+   * @param clientIndex
+   */
   virtual void Group_DeleteGroupEntity(std::string& _return, const std::string& groupId, const std::string& entityId, const int64_t version, const int32_t clientIndex) = 0;
+
+  /**
+   * Read information on groups to which the current user belongs.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_GetMyGroups(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Increment elements for the group's data field.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param jsonData Partial data map with incremental values.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_IncrementGroupData(std::string& _return, const std::string& groupId, const std::string& jsonData, const int32_t clientIndex) = 0;
+
+  /**
+   * Increment elements for the group entity's data field.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param entityId ID of the entity.
+   * 
+   * @param jsonData Partial data map with incremental values.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_IncrementGroupEntityData(std::string& _return, const std::string& groupId, const std::string& entityId, const std::string& jsonData, const int32_t clientIndex) = 0;
+
+  /**
+   * Invite a member to the group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param profileId Profile ID of the member being invited.
+   * 
+   * @param role Role of the member being invited.
+   * 
+   * @param jsonAttributes Attributes of the member being invited.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_InviteGroupMember(std::string& _return, const std::string& groupId, const std::string& profileId, const  ::Ruyi::SDK::BrainCloudApi::Role::type role, const std::string& jsonAttributes, const int32_t clientIndex) = 0;
+
+  /**
+   * Join an open group or request to join a closed group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_JoinGroup(std::string& _return, const std::string& groupId, const int32_t clientIndex) = 0;
+
+  /**
+   * Leave a group in which the user is a member.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_LeaveGroup(std::string& _return, const std::string& groupId, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieve a page of group summary information based on the specified context.
+   * 
+   * @param jsonContext Query context.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_ListGroupsPage(std::string& _return, const std::string& jsonContext, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieve a page of group summary information based on the encoded context
+   * and specified page offset.
+   * 
+   * @param context Encoded reference query context.
+   * 
+   * @param pageOffset Number of pages by which to offset the query.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_ListGroupsPageByOffset(std::string& _return, const std::string& context, const int32_t pageOffset, const int32_t clientIndex) = 0;
+
+  /**
+   * Read information on groups to which the specified user belongs.  Access is subject to restrictions.
+   * 
+   * @param profileId User to read groups for
+   * 
+   * @param clientIndex
+   */
   virtual void Group_ListGroupsWithMember(std::string& _return, const std::string& profileId, const int32_t clientIndex) = 0;
+
+  /**
+   * Read the specified group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_ReadGroup(std::string& _return, const std::string& groupId, const int32_t clientIndex) = 0;
+
+  /**
+   * Read the data of the specified group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_ReadGroupData(std::string& _return, const std::string& groupId, const int32_t clientIndex) = 0;
+
+  /**
+   * Read a page of group entity information.
+   * 
+   * @param jsonContext Query context.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_ReadGroupEntitiesPage(std::string& _return, const std::string& jsonContext, const int32_t clientIndex) = 0;
+
+  /**
+   * Read a page of group entity information.
+   * 
+   * @param encodedContext Encoded reference query context.
+   * 
+   * @param pageOffset Number of pages by which to offset the query.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_ReadGroupEntitiesPageByOffset(std::string& _return, const std::string& encodedContext, const int32_t pageOffset, const int32_t clientIndex) = 0;
+
+  /**
+   * Read the specified group entity.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param entityId ID of the entity.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_ReadGroupEntity(std::string& _return, const std::string& groupId, const std::string& entityId, const int32_t clientIndex) = 0;
+
+  /**
+   * Read the members of the group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_ReadGroupMembers(std::string& _return, const std::string& groupId, const int32_t clientIndex) = 0;
+
+  /**
+   * Reject an outstanding invitation to join the group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_RejectGroupInvitation(std::string& _return, const std::string& groupId, const int32_t clientIndex) = 0;
+
+  /**
+   * Reject an outstanding request to join the group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param profileId Profile ID of the invitation being deleted.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_RejectGroupJoinRequest(std::string& _return, const std::string& groupId, const std::string& profileId, const int32_t clientIndex) = 0;
+
+  /**
+   * Remove a member from the group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param profileId Profile ID of the member being deleted.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_RemoveGroupMember(std::string& _return, const std::string& groupId, const std::string& profileId, const int32_t clientIndex) = 0;
+
+  /**
+   * Updates a group's data.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param version Version to verify.
+   * 
+   * @param jsonData Data to apply.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_UpdateGroupData(std::string& _return, const std::string& groupId, const int64_t version, const std::string& jsonData, const int32_t clientIndex) = 0;
+
+  /**
+   * Update a group entity.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param entityId ID of the entity.
+   * 
+   * @param version The current version of the group entity (for concurrency checking).
+   * 
+   * @param jsonData Custom application data.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_UpdateGroupEntityData(std::string& _return, const std::string& groupId, const std::string& entityId, const int64_t version, const std::string& jsonData, const int32_t clientIndex) = 0;
+
+  /**
+   * Update a member of the group.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param profileId Profile ID of the member being updated.
+   * 
+   * @param role Role of the member being updated (optional).
+   * 
+   * @param jsonAttributes Attributes of the member being updated (optional).
+   * 
+   * @param clientIndex
+   */
   virtual void Group_UpdateGroupMember(std::string& _return, const std::string& groupId, const std::string& profileId, const  ::Ruyi::SDK::BrainCloudApi::Role::type role, const std::string& jsonAttributes, const int32_t clientIndex) = 0;
+
+  /**
+   * Updates a group's name.
+   * 
+   * @param groupId ID of the group.
+   * 
+   * @param name Name to apply.
+   * 
+   * @param clientIndex
+   */
   virtual void Group_UpdateGroupName(std::string& _return, const std::string& groupId, const std::string& name, const int32_t clientIndex) = 0;
+
+  /**
+   * Attach a Email and Password identity to the current profile.
+   * 
+   * @param email The user's e-mail address
+   * 
+   * @param password The user's password
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_AttachEmailIdentity(std::string& _return, const std::string& email, const std::string& password, const int32_t clientIndex) = 0;
+
+  /**
+   * Merge the profile associated with the provided e=mail with the current profile.
+   * 
+   * @param email The user's e-mail address
+   * 
+   * @param password The user's password
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_MergeEmailIdentity(std::string& _return, const std::string& email, const std::string& password, const int32_t clientIndex) = 0;
+
+  /**
+   * Detach the e-mail identity from the current profile
+   * 
+   * @param email The user's e-mail address
+   * 
+   * @param continueAnon Proceed even if the profile will revert to anonymous?
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_DetachEmailIdentity(std::string& _return, const std::string& email, const bool continueAnon, const int32_t clientIndex) = 0;
+
+  /**
+   * Attach a Universal (userId + password) identity to the current profile.
+   * 
+   * @param userId The user's userId
+   * 
+   * @param password The user's password
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_AttachUniversalIdentity(std::string& _return, const std::string& userId, const std::string& password, const int32_t clientIndex) = 0;
+
+  /**
+   * Merge the profile associated with the provided e=mail with the current profile.
+   * 
+   * @param userId The user's userId
+   * 
+   * @param password The user's password
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_MergeUniversalIdentity(std::string& _return, const std::string& userId, const std::string& password, const int32_t clientIndex) = 0;
+
+  /**
+   * Detach the universal identity from the current profile
+   * 
+   * @param userId The user's userId
+   * 
+   * @param continueAnon Proceed even if the profile will revert to anonymous?
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_DetachUniversalIdentity(std::string& _return, const std::string& userId, const bool continueAnon, const int32_t clientIndex) = 0;
+
+  /**
+   * Switch to a Child Profile
+   * 
+   * @param childProfileId The profileId of the child profile to switch to
+   * If null and forceCreate is true a new profile will be created
+   * 
+   * @param childAppId The appId of the child game to switch to
+   * 
+   * @param forceCreate Should a new profile be created if it does not exist?
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_SwitchToChildProfile(std::string& _return, const std::string& childProfileId, const std::string& childAppId, const bool forceCreate, const int32_t clientIndex) = 0;
+
+  /**
+   * Switches to the child profile of an app when only one profile exists
+   * If multiple profiles exist this returns an error
+   * 
+   * @param childAppId The App ID of the child game to switch to
+   * 
+   * @param forceCreate Should a new profile be created if one does not exist?
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_SwitchToSingletonChildProfile(std::string& _return, const std::string& childAppId, const bool forceCreate, const int32_t clientIndex) = 0;
+
+  /**
+   * Attach a new identity to a parent app
+   * 
+   * @param externalId User ID
+   * 
+   * @param authenticationToken Password or client side token
+   * 
+   * @param authenticationType Type of authentication
+   * 
+   * @param externalAuthName Optional - if using AuthenticationType of external
+   * 
+   * @param forceCreate If the profile does not exist, should it be created?
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_AttachParentWithIdentity(std::string& _return, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex) = 0;
+
+  /**
+   * Switch to a Parent Profile
+   * 
+   * @param parentLevelName The level of the parent to switch to
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_SwitchToParentProfile(std::string& _return, const std::string& parentLevelName, const int32_t clientIndex) = 0;
+
+  /**
+   * Detaches parent from this user's profile
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_DetachParent(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns a list of all child profiles in child Apps
+   * 
+   * @param includeSummaryData Whether to return the summary friend data along with this call
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_GetChildProfiles(std::string& _return, const bool includeSummaryData, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieve list of identities
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_GetIdentities(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieve list of expired identities
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_GetExpiredIdentities(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Refreshes an identity for this user
+   * 
+   * @param externalId User ID
+   * 
+   * @param authenticationToken Password or client side token
+   * 
+   * @param authenticationType Type of authentication
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_RefreshIdentity(std::string& _return, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const int32_t clientIndex) = 0;
+
+  /**
+   * Attaches a peer identity to this user's profile
+   * 
+   * @param peer Name of the peer to connect to
+   * 
+   * @param externalId User ID
+   * 
+   * @param authenticationToken Password or client side token
+   * 
+   * @param authenticationType Type of authentication
+   * 
+   * @param externalAuthName Optional - if using AuthenticationType of external
+   * 
+   * @param forceCreate If the profile does not exist, should it be created?
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_AttachPeerProfile(std::string& _return, const std::string& peer, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex) = 0;
+
+  /**
+   * Detaches a peer identity from this user's profile
+   * 
+   * @param peer Name of the peer to connect to
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_DetachPeer(std::string& _return, const std::string& peer, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieves a list of attached peer profiles
+   * 
+   * @param clientIndex
+   */
   virtual void Identity_GetPeerProfiles(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends a simple text email to the specified user
+   * 
+   * @param profileId
+   * @param subject The email subject
+   * 
+   * @param body The email body
+   * 
+   * @param clientIndex
+   */
   virtual void Mail_SendBasicEmail(std::string& _return, const std::string& profileId, const std::string& subject, const std::string& body, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends an advanced email to the specified user
+   * 
+   * @param profileId
+   * @param jsonServiceParams Parameters to send to the email service. See the documentation for
+   * a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+   * 
+   * @param clientIndex
+   */
   virtual void Mail_SendAdvancedEmail(std::string& _return, const std::string& profileId, const std::string& jsonServiceParams, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends an advanced email to the specified email address
+   * 
+   * @param emailAddress The address to send the email to
+   * 
+   * @param jsonServiceParams Parameters to send to the email service. See the documentation for
+   * a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+   * 
+   * @param clientIndex
+   */
   virtual void Mail_SendAdvancedEmailByAddress(std::string& _return, const std::string& emailAddress, const std::string& jsonServiceParams, const int32_t clientIndex) = 0;
+
+  /**
+   * Read match making record
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_Read(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Sets player rating
+   * 
+   * @param playerRating The new player rating.
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_SetPlayerRating(std::string& _return, const int64_t playerRating, const int32_t clientIndex) = 0;
+
+  /**
+   * Resets player rating
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_ResetPlayerRating(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Increments player rating
+   * 
+   * @param increment The increment amount
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_IncrementPlayerRating(std::string& _return, const int64_t increment, const int32_t clientIndex) = 0;
+
+  /**
+   * Decrements player rating
+   * 
+   * @param decrement The decrement amount
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_DecrementPlayerRating(std::string& _return, const int64_t decrement, const int32_t clientIndex) = 0;
+
+  /**
+   * Turns shield on
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_TurnShieldOn(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Turns shield on for the specified number of minutes
+   * 
+   * @param minutes Number of minutes to turn the shield on for
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_TurnShieldOnFor(std::string& _return, const int32_t minutes, const int32_t clientIndex) = 0;
+
+  /**
+   * Turns shield off
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_TurnShieldOff(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Increases the shield on time by specified number of minutes
+   * 
+   * @param minutes Number of minutes to increase the shield time for
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_IncrementShieldOnFor(std::string& _return, const int32_t minutes, const int32_t clientIndex) = 0;
+
+  /**
+   * Gets the shield expiry for the given player id. Passing in a null player id
+   * will return the shield expiry for the current player. The value returned is
+   * the time in UTC millis when the shield will expire.
+   * 
+   * @param playerId The player id or use null to retrieve for the current player
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_GetShieldExpiry(std::string& _return, const std::string& playerId, const int32_t clientIndex) = 0;
+
+  /**
+   * Finds matchmaking enabled players
+   * 
+   * @param rangeDelta The range delta
+   * 
+   * @param numMatches The maximum number of matches to return
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_FindPlayers(std::string& _return, const int64_t rangeDelta, const int64_t numMatches, const int32_t clientIndex) = 0;
+
+  /**
+   * Finds matchmaking enabled players with additional attributes
+   * 
+   * @param rangeDelta The range delta
+   * 
+   * @param numMatches The maximum number of matches to return
+   * 
+   * @param jsonAttributes Attributes match criteria
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_FindPlayersWithAttributes(std::string& _return, const int64_t rangeDelta, const int64_t numMatches, const std::string& jsonAttributes, const int32_t clientIndex) = 0;
+
+  /**
+   * Finds matchmaking enabled players using a cloud code filter
+   * 
+   * @param rangeDelta The range delta
+   * 
+   * @param numMatches The maximum number of matches to return
+   * 
+   * @param jsonExtraParms Parameters to pass to the CloudCode filter script
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_FindPlayersUsingFilter(std::string& _return, const int64_t rangeDelta, const int64_t numMatches, const std::string& jsonExtraParms, const int32_t clientIndex) = 0;
+
+  /**
+   * Finds matchmaking enabled players using a cloud code filter
+   * and additional attributes
+   * 
+   * @param rangeDelta The range delta
+   * 
+   * @param numMatches The maximum number of matches to return
+   * 
+   * @param jsonAttributes Attributes match criteria
+   * 
+   * @param jsonExtraParms Parameters to pass to the CloudCode filter script
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_FindPlayersWithAttributesUsingFilter(std::string& _return, const int64_t rangeDelta, const int64_t numMatches, const std::string& jsonAttributes, const std::string& jsonExtraParms, const int32_t clientIndex) = 0;
+
+  /**
+   * Enables Match Making for the Player
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_EnableMatchMaking(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Disables Match Making for the Player
+   * 
+   * @param clientIndex
+   */
   virtual void MatchMaking_DisableMatchMaking(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Starts a match
+   * 
+   * @param otherPlayerId The player to start a match with
+   * 
+   * @param rangeDelta The range delta used for the initial match search
+   * 
+   * @param clientIndex
+   */
   virtual void OneWayMatch_StartMatch(std::string& _return, const std::string& otherPlayerId, const int64_t rangeDelta, const int32_t clientIndex) = 0;
+
+  /**
+   * Cancels a match
+   * 
+   * @param playbackStreamId The playback stream id returned in the start match
+   * 
+   * @param clientIndex
+   */
   virtual void OneWayMatch_CancelMatch(std::string& _return, const std::string& playbackStreamId, const int32_t clientIndex) = 0;
+
+  /**
+   * Completes a match
+   * 
+   * @param playbackStreamId The playback stream id returned in the initial start match
+   * 
+   * @param clientIndex
+   */
   virtual void OneWayMatch_CompleteMatch(std::string& _return, const std::string& playbackStreamId, const int32_t clientIndex) = 0;
+
+  /**
+   * Starts a stream
+   * 
+   * @param targetPlayerId The player to start a stream with
+   * 
+   * @param includeSharedData Whether to include shared data in the stream
+   * 
+   * @param clientIndex
+   */
   virtual void PlaybackStream_StartStream(std::string& _return, const std::string& targetPlayerId, const bool includeSharedData, const int32_t clientIndex) = 0;
+
+  /**
+   * Reads a stream
+   * 
+   * @param playbackStreamId Identifies the stream to read
+   * 
+   * @param clientIndex
+   */
   virtual void PlaybackStream_ReadStream(std::string& _return, const std::string& playbackStreamId, const int32_t clientIndex) = 0;
+
+  /**
+   * Ends a stream
+   * 
+   * @param playbackStreamId Identifies the stream to read
+   * 
+   * @param clientIndex
+   */
   virtual void PlaybackStream_EndStream(std::string& _return, const std::string& playbackStreamId, const int32_t clientIndex) = 0;
+
+  /**
+   * Deletes a stream
+   * 
+   * @param playbackStreamId Identifies the stream to read
+   * 
+   * @param clientIndex
+   */
   virtual void PlaybackStream_DeleteStream(std::string& _return, const std::string& playbackStreamId, const int32_t clientIndex) = 0;
+
+  /**
+   * Adds a stream event
+   * 
+   * @param playbackStreamId Identifies the stream to read
+   * 
+   * @param eventData Describes the event
+   * 
+   * @param summary Current summary data as of this event
+   * 
+   * @param clientIndex
+   */
   virtual void PlaybackStream_AddEvent(std::string& _return, const std::string& playbackStreamId, const std::string& eventData, const std::string& summary, const int32_t clientIndex) = 0;
+
+  /**
+   * Gets recent streams for initiating player
+   * 
+   * @param initiatingPlayerId The player that started the stream
+   * 
+   * @param maxNumStreams The player that started the stream
+   * 
+   * @param clientIndex
+   */
   virtual void PlaybackStream_GetRecentStreamsForInitiatingPlayer(std::string& _return, const std::string& initiatingPlayerId, const int32_t maxNumStreams, const int32_t clientIndex) = 0;
+
+  /**
+   * Gets recent streams for target player
+   * 
+   * @param targetPlayerId The player that started the stream
+   * 
+   * @param maxNumStreams The player that started the stream
+   * 
+   * @param clientIndex
+   */
   virtual void PlaybackStream_GetRecentStreamsForTargetPlayer(std::string& _return, const std::string& targetPlayerId, const int32_t maxNumStreams, const int32_t clientIndex) = 0;
+
+  /**
+   * Read the state of the currently logged in user.
+   * This method returns a JSON object describing most of the
+   * player's data: entities, statistics, level, currency.
+   * Apps will typically call this method after authenticating to get an
+   * up-to-date view of the user's data.
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerState_ReadUserState(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Completely deletes the user record and all data fully owned
+   * by the user. After calling this method, the user will need
+   * to re-authenticate and create a new profile.
+   * This is mostly used for debugging/qa.
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerState_DeleteUser(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * This method will delete *most* data for the currently logged in user.
+   * Data which is not deleted includes: currency, credentials, and
+   * purchase transactions. ResetUser is different from DeleteUser in that
+   * the player record will continue to exist after the reset (so the user
+   * does not need to re-authenticate).
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerState_ResetUser(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Logs user out of server.
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerState_Logout(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Sets the user name.
+   * 
+   * @param userName The name of the user
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerState_UpdateUserName(std::string& _return, const std::string& userName, const int32_t clientIndex) = 0;
+
+  /**
+   * Updates the "friend summary data" associated with the logged in user.
+   * Some operations will return this summary data. For instance the social
+   * leaderboards will return the player's score in the leaderboard along
+   * with the friend summary data. Generally this data is used to provide
+   * a quick overview of the player without requiring a separate API call
+   * to read their public stats or entity data.
+   * 
+   * @param jsonSummaryData A JSON string defining the summary data.
+   * For example:
+   * {
+   *   "xp":123,
+   *   "level":12,
+   *   "highScore":45123
+   * }
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerState_UpdateSummaryFriendData(std::string& _return, const std::string& jsonSummaryData, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieve the user's attributes.
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerState_GetAttributes(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Update user's attributes.
+   * 
+   * @param jsonAttributes Single layer json string that is a set of key-value pairs
+   * 
+   * @param wipeExisting Whether to wipe existing attributes prior to update.
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerState_UpdateAttributes(std::string& _return, const std::string& jsonAttributes, const bool wipeExisting, const int32_t clientIndex) = 0;
+
+  /**
+   * Remove user's attributes.
+   * 
+   * @param attributeNames List of attribute names.
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerState_RemoveAttributes(std::string& _return, const std::vector<std::string> & attributeNames, const int32_t clientIndex) = 0;
+
+  /**
+   * Updates player's picture URL.
+   * 
+   * @param pictureUrl URL to apply.
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerState_UpdateUserPictureUrl(std::string& _return, const std::string& pictureUrl, const int32_t clientIndex) = 0;
+
+  /**
+   * Update the user's contact email.
+   * Note this is unrelated to email authentication.
+   * 
+   * @param contactEmail Updated email
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerState_UpdateContactEmail(std::string& _return, const std::string& contactEmail, const int32_t clientIndex) = 0;
+
+  /**
+   * Read all available user statistics.
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerStatistics_ReadAllUserStats(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Reads a subset of user statistics as defined by the input JSON.
+   * 
+   * @param playerStats
+   * @param clientIndex
+   */
   virtual void PlayerStatistics_ReadUserStatsSubset(std::string& _return, const std::vector<std::string> & playerStats, const int32_t clientIndex) = 0;
+
+  /**
+   * Method retrieves the user statistics for the given category.
+   * 
+   * @param category The user statistics category
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerStatistics_ReadUserStatsForCategory(std::string& _return, const std::string& category, const int32_t clientIndex) = 0;
+
+  /**
+   * Reset all of the statistics for this user back to their initial value.
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerStatistics_ResetAllUserStats(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Atomically increment (or decrement) user statistics.
+   * Any rewards that are triggered from user statistic increments
+   * will be considered. User statistics are defined through the brainCloud portal.
+   * Note also that the "xpCapped" property is returned (true/false depending on whether
+   * the xp cap is turned on and whether the user has hit it).
+   * 
+   * @param jsonData The JSON encoded data to be sent to the server as follows:
+   * {
+   *   stat1: 10,
+   *   stat2: -5.5,
+   * }
+   * would increment stat1 by 10 and decrement stat2 by 5.5.
+   * For the full statistics grammer see the api.braincloudservers.com site.
+   * There are many more complex operations supported such as:
+   * {
+   *   stat1:INC_TO_LIMIT#9#30
+   * }
+   * which increments stat1 by 9 up to a limit of 30.
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerStatistics_IncrementUserStats_SSFO(std::string& _return, const std::string& jsonData, const int32_t clientIndex) = 0;
+
+  /**
+   * Atomically increment (or decrement) user statistics.
+   * Any rewards that are triggered from user statistic increments
+   * will be considered. User statistics are defined through the brainCloud portal.
+   * Note also that the "xpCapped" property is returned (true/false depending on whether
+   * the xp cap is turned on and whether the user has hit it).
+   * 
+   * @param dictData Stats name and their increments:
+   * {
+   *  {"stat1", 10},
+   *  {"stat1", -5}
+   * }
+   * 
+   * would increment stat1 by 10 and decrement stat2 by 5.
+   * For the full statistics grammer see the api.braincloudservers.com site.
+   * There are many more complex operations supported such as:
+   * {
+   *   stat1:INC_TO_LIMIT#9#30
+   * }
+   * which increments stat1 by 9 up to a limit of 30.
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerStatistics_IncrementUserStats_DSFO(std::string& _return, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & dictData, const int32_t clientIndex) = 0;
+
+  /**
+   * Apply statistics grammar to a partial set of statistics.
+   * 
+   * @param statisticsData Example data to be passed to method:
+   * {
+   *     "DEAD_CATS": "RESET",
+   *     "LIVES_LEFT": "SET#9",
+   *     "MICE_KILLED": "INC#2",
+   *     "DOG_SCARE_BONUS_POINTS": "INC#10",
+   *     "TREES_CLIMBED": 1
+   * }
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerStatistics_ProcessStatistics(std::string& _return, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & statisticsData, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns JSON representing the next experience level for the user.
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerStatistics_GetNextExperienceLevel(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Increments the user's experience. If the user goes up a level,
+   * the new level details will be returned along with a list of rewards.
+   * 
+   * @param xpValue The amount to increase the user's experience by
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerStatistics_IncrementExperiencePoints(std::string& _return, const int32_t xpValue, const int32_t clientIndex) = 0;
+
+  /**
+   * Sets the user's experience to an absolute value. Note that this
+   * is simply a set and will not reward the user if their level changes
+   * as a result.
+   * 
+   * @param xpValue The amount to set the the player's experience to
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerStatistics_SetExperiencePoints(std::string& _return, const int32_t xpValue, const int32_t clientIndex) = 0;
+
+  /**
+   * Trigger an event server side that will increase the user statistics.
+   * This may cause one or more awards to be sent back to the user -
+   * could be achievements, experience, etc. Achievements will be sent by this
+   * client library to the appropriate awards service (Apple Game Center, etc).
+   * 
+   * This mechanism supercedes the PlayerStatisticsService API methods, since
+   * PlayerStatisticsService API method only update the raw statistics without
+   * triggering the rewards.
+   * 
+   * @param eventName
+   * @param eventMultiplier
+   * @param clientIndex
+   */
   virtual void PlayerStatisticsEvent_TriggerStatsEvent(std::string& _return, const std::string& eventName, const int32_t eventMultiplier, const int32_t clientIndex) = 0;
+
+  /**
+   * See documentation for TriggerStatsEvent for more
+   * documentation.
+   * 
+   * @param jsonData jsonData
+   * [
+   *   {
+   *     "eventName": "event1",
+   *     "eventMultiplier": 1
+   *   },
+   *   {
+   *     "eventName": "event2",
+   *     "eventMultiplier": 1
+   *   }
+   * ]
+   * 
+   * @param clientIndex
+   */
   virtual void PlayerStatisticsEvent_TriggerStatsEvents(std::string& _return, const std::string& jsonData, const int32_t clientIndex) = 0;
+
+  /**
+   * Gets the player's currency for the given currency type
+   * or all currency types if null passed in.
+   * 
+   * @param currencyType The currency type to retrieve or null
+   * if all currency types are being requested.
+   * 
+   * @param clientIndex
+   */
   virtual void Product_GetCurrency(std::string& _return, const std::string& currencyType, const int32_t clientIndex) = 0;
+
+  /**
+   * Method gets the active sales inventory for the passed-in
+   * currency type.
+   * 
+   * @param platform The store platform. Valid stores are:
+   * - itunes
+   * - facebook
+   * - appworld
+   * - steam
+   * - windows
+   * - windowsPhone
+   * - googlePlay
+   * 
+   * @param userCurrency The currency to retrieve the sales
+   * inventory for. This is only used for Steam and Facebook stores.
+   * 
+   * @param clientIndex
+   */
   virtual void Product_GetSalesInventory(std::string& _return, const std::string& platform, const std::string& userCurrency, const int32_t clientIndex) = 0;
+
+  /**
+   * Method gets the active sales inventory for the passed-in
+   * currency type and category.
+   * 
+   * @param platform The store platform. Valid stores are:
+   * - itunes
+   * - facebook
+   * - appworld
+   * - steam
+   * - windows
+   * - windowsPhone
+   * - googlePlay
+   * 
+   * @param userCurrency The currency to retrieve the sales
+   * inventory for. This is only used for Steam and Facebook stores.
+   * 
+   * @param category The product category
+   * 
+   * @param clientIndex
+   */
   virtual void Product_GetSalesInventoryByCategory(std::string& _return, const std::string& platform, const std::string& userCurrency, const std::string& category, const int32_t clientIndex) = 0;
+
+  /**
+   * Verify Microsoft Receipt. On success, the player will be awarded the
+   * associated currencies.
+   * 
+   * @param receipt Receipt XML
+   * 
+   * @param clientIndex
+   */
   virtual void Product_VerifyMicrosoftReceipt(std::string& _return, const std::string& receipt, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the eligible promotions for the player.
+   * 
+   * @param clientIndex
+   */
   virtual void Product_GetEligiblePromotions(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Verify ITunes Receipt. On success, the player will be awarded the
+   * associated currencies.
+   * 
+   * @param base64EncReceiptData Base64 encoded receipt data
+   * 
+   * @param clientIndex
+   */
   virtual void Product_VerifyItunesReceipt(std::string& _return, const std::string& base64EncReceiptData, const int32_t clientIndex) = 0;
+
+  /**
+   * Checks supplied text for profanity.
+   * 
+   * @param text The text to check
+   * 
+   * @param languages Optional comma delimited list of two character language codes
+   * 
+   * @param flagEmail Optional processing of email addresses
+   * 
+   * @param flagPhone Optional processing of phone numbers
+   * 
+   * @param flagUrls Optional processing of urls
+   * 
+   * @param clientIndex
+   */
   virtual void Profanity_ProfanityCheck(std::string& _return, const std::string& text, const std::string& languages, const bool flagEmail, const bool flagPhone, const bool flagUrls, const int32_t clientIndex) = 0;
+
+  /**
+   * Replaces the characters of profanity text with a passed character(s).
+   * 
+   * @param text The text to check
+   * 
+   * @param replaceSymbol The text to replace individual characters of profanity text with
+   * 
+   * @param languages Optional comma delimited list of two character language codes
+   * 
+   * @param flagEmail Optional processing of email addresses
+   * 
+   * @param flagPhone Optional processing of phone numbers
+   * 
+   * @param flagUrls Optional processing of urls
+   * 
+   * @param clientIndex
+   */
   virtual void Profanity_ProfanityReplaceText(std::string& _return, const std::string& text, const std::string& replaceSymbol, const std::string& languages, const bool flagEmail, const bool flagPhone, const bool flagUrls, const int32_t clientIndex) = 0;
+
+  /**
+   * Checks supplied text for profanity and returns a list of bad wors.
+   * 
+   * @param text The text to check
+   * 
+   * @param languages Optional comma delimited list of two character language codes
+   * 
+   * @param flagEmail Optional processing of email addresses
+   * 
+   * @param flagPhone Optional processing of phone numbers
+   * 
+   * @param flagUrls Optional processing of urls
+   * 
+   * @param clientIndex
+   */
   virtual void Profanity_ProfanityIdentifyBadWords(std::string& _return, const std::string& text, const std::string& languages, const bool flagEmail, const bool flagPhone, const bool flagUrls, const int32_t clientIndex) = 0;
+
+  /**
+   * Deregisters all device tokens currently registered to the user.
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_DeregisterAllPushNotificationDeviceTokens(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Deregisters the given device token from the server to disable this device
+   * from receiving push notifications.
+   * 
+   * @param platform The device platform being registered.
+   * 
+   * @param token The platform-dependant device token needed for push notifications.
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_DeregisterPushNotificationDeviceToken(std::string& _return, const std::string& platform, const std::string& token, const int32_t clientIndex) = 0;
+
+  /**
+   * Registers the given device token with the server to enable this device
+   * to receive push notifications.
+   * 
+   * @param platform
+   * @param token The platform-dependant device token needed for push notifications.
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_RegisterPushNotificationDeviceToken(std::string& _return, const std::string& platform, const std::string& token, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends a simple push notification based on the passed in message.
+   * NOTE: It is possible to send a push notification to oneself.
+   * 
+   * @param toProfileId The braincloud profileId of the user to receive the notification
+   * 
+   * @param message Text of the push notification
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_SendSimplePushNotification(std::string& _return, const std::string& toProfileId, const std::string& message, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends a notification to a user based on a brainCloud portal configured notification template.
+   * NOTE: It is possible to send a push notification to oneself.
+   * 
+   * @param toProfileId The braincloud profileId of the user to receive the notification
+   * 
+   * @param notificationTemplateId Id of the notification template
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_SendRichPushNotification(std::string& _return, const std::string& toProfileId, const int32_t notificationTemplateId, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends a notification to a user based on a brainCloud portal configured notification template.
+   * Includes JSON defining the substitution params to use with the template.
+   * See the Portal documentation for more info.
+   * NOTE: It is possible to send a push notification to oneself.
+   * 
+   * @param toProfileId The braincloud profileId of the user to receive the notification
+   * 
+   * @param notificationTemplateId Id of the notification template
+   * 
+   * @param substitutionJson JSON defining the substitution params to use with the template
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_SendRichPushNotificationWithParams(std::string& _return, const std::string& toProfileId, const int32_t notificationTemplateId, const std::string& substitutionJson, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
+   * Includes JSON defining the substitution params to use with the template.
+   * See the Portal documentation for more info.
+   * 
+   * @param groupId Target group
+   * 
+   * @param notificationTemplateId Id of the notification template
+   * 
+   * @param substitutionsJson JSON defining the substitution params to use with the template
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_SendTemplatedPushNotificationToGroup(std::string& _return, const std::string& groupId, const int32_t notificationTemplateId, const std::string& substitutionsJson, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
+   * Includes JSON defining the substitution params to use with the template.
+   * See the Portal documentation for more info.
+   * 
+   * @param groupId Target group
+   * 
+   * @param alertContentJson Body and title of alert
+   * 
+   * @param customDataJson Optional custom data
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_SendNormalizedPushNotificationToGroup(std::string& _return, const std::string& groupId, const std::string& alertContentJson, const std::string& customDataJson, const int32_t clientIndex) = 0;
+
+  /**
+   * Schedules raw notifications based on user local time.
+   * 
+   * @param profileId The profileId of the user to receive the notification
+   * 
+   * @param fcmContent Valid Fcm data content
+   * 
+   * @param iosContent Valid ios data content
+   * 
+   * @param facebookContent Facebook template string
+   * 
+   * @param startTime Start time of sending the push notification
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_ScheduleRawPushNotificationUTC(std::string& _return, const std::string& profileId, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t startTime, const int32_t clientIndex) = 0;
+
+  /**
+   * Schedules raw notifications based on user local time.
+   * 
+   * @param profileId The profileId of the user to receive the notification
+   * 
+   * @param fcmContent Valid Fcm data content
+   * 
+   * @param iosContent Valid ios data content
+   * 
+   * @param facebookContent Facebook template string
+   * 
+   * @param minutesFromNow Minutes from now to send the push notification
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_ScheduleRawPushNotificationMinutes(std::string& _return, const std::string& profileId, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t minutesFromNow, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends a raw push notification to a target user.
+   * 
+   * @param toProfileId The profileId of the user to receive the notification
+   * 
+   * @param fcmContent Valid Fcm data content
+   * 
+   * @param iosContent Valid ios data content
+   * 
+   * @param facebookContent Facebook template string
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_SendRawPushNotification(std::string& _return, const std::string& toProfileId, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends a raw push notification to a target list of users.
+   * 
+   * @param profileIds Collection of profile IDs to send the notification to
+   * 
+   * @param fcmContent Valid Fcm data content
+   * 
+   * @param iosContent Valid ios data content
+   * 
+   * @param facebookContent Facebook template string
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_SendRawPushNotificationBatch(std::string& _return, const std::vector<std::string> & profileIds, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends a raw push notification to a target group.
+   * 
+   * @param groupId Target group
+   * 
+   * @param fcmContent Valid Fcm data content
+   * 
+   * @param iosContent Valid ios data content
+   * 
+   * @param facebookContent Facebook template string
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_SendRawPushNotificationToGroup(std::string& _return, const std::string& groupId, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t clientIndex) = 0;
+
+  /**
+   * Schedules a normalized push notification to a user
+   * 
+   * @param profileId The profileId of the user to receive the notification
+   * 
+   * @param alertContentJson Body and title of alert
+   * 
+   * @param customDataJson Optional custom data
+   * 
+   * @param startTime Start time of sending the push notification
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_ScheduleNormalizedPushNotificationUTC(std::string& _return, const std::string& profileId, const std::string& alertContentJson, const std::string& customDataJson, const int32_t startTime, const int32_t clientIndex) = 0;
+
+  /**
+   * Schedules a normalized push notification to a user
+   * 
+   * @param profileId The profileId of the user to receive the notification
+   * 
+   * @param alertContentJson Body and title of alert
+   * 
+   * @param customDataJson Optional custom data
+   * 
+   * @param minutesFromNow Minutes from now to send the push notification
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_ScheduleNormalizedPushNotificationMinutes(std::string& _return, const std::string& profileId, const std::string& alertContentJson, const std::string& customDataJson, const int32_t minutesFromNow, const int32_t clientIndex) = 0;
+
+  /**
+   * Schedules a rich push notification to a user
+   * 
+   * @param profileId The profileId of the user to receive the notification
+   * 
+   * @param notificationTemplateId Body and title of alert
+   * 
+   * @param substitutionsJson Optional custom data
+   * 
+   * @param startTime Start time of sending the push notification
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_ScheduleRichPushNotificationUTC(std::string& _return, const std::string& profileId, const int32_t notificationTemplateId, const std::string& substitutionsJson, const int32_t startTime, const int32_t clientIndex) = 0;
+
+  /**
+   * Schedules a rich push notification to a user
+   * 
+   * @param profileId The profileId of the user to receive the notification
+   * 
+   * @param notificationTemplateId Body and title of alert
+   * 
+   * @param substitutionsJson Optional custom data
+   * 
+   * @param minutesFromNow Minutes from now to send the push notification
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_ScheduleRichPushNotificationMinutes(std::string& _return, const std::string& profileId, const int32_t notificationTemplateId, const std::string& substitutionsJson, const int32_t minutesFromNow, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends a notification to a user consisting of alert content and custom data.
+   * 
+   * @param toProfileId The profileId of the user to receive the notification
+   * 
+   * @param alertContentJson Body and title of alert
+   * 
+   * @param customDataJson Optional custom data
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_SendNormalizedPushNotification(std::string& _return, const std::string& toProfileId, const std::string& alertContentJson, const std::string& customDataJson, const int32_t clientIndex) = 0;
+
+  /**
+   * Sends a notification to multiple users consisting of alert content and custom data.
+   * 
+   * @param profileIds Collection of profile IDs to send the notification to
+   * 
+   * @param alertContentJson Body and title of alert
+   * 
+   * @param customDataJson Optional custom data
+   * 
+   * @param clientIndex
+   */
   virtual void PushNotification_SendNormalizedPushNotificationBatch(std::string& _return, const std::vector<std::string> & profileIds, const std::string& alertContentJson, const std::string& customDataJson, const int32_t clientIndex) = 0;
+
+  /**
+   * Executes a script on the server.
+   * 
+   * @param scriptName The name of the script to be run
+   * 
+   * @param jsonScriptData Data to be sent to the script in json format
+   * 
+   * @param clientIndex
+   */
   virtual void Script_RunScript(std::string& _return, const std::string& scriptName, const std::string& jsonScriptData, const int32_t clientIndex) = 0;
+
+  /**
+   * Allows cloud script executions to be scheduled
+   * 
+   * @param scriptName Name of script
+   * 
+   * @param jsonScriptData JSON bundle to pass to script
+   * 
+   * @param startDateInUTC The start date as a DateTime object
+   * 
+   * @param clientIndex
+   */
   virtual void Script_ScheduleRunScriptUTC(std::string& _return, const std::string& scriptName, const std::string& jsonScriptData, const  ::Ruyi::SDK::BrainCloudApi::date startDateInUTC, const int32_t clientIndex) = 0;
+
+  /**
+   * Allows cloud script executions to be scheduled
+   * 
+   * @param scriptName Name of script
+   * 
+   * @param jsonScriptData JSON bundle to pass to script
+   * 
+   * @param minutesFromNow Number of minutes from now to run script
+   * 
+   * @param clientIndex
+   */
   virtual void Script_ScheduleRunScriptMinutes(std::string& _return, const std::string& scriptName, const std::string& jsonScriptData, const int64_t minutesFromNow, const int32_t clientIndex) = 0;
+
+  /**
+   * Run a cloud script in a parent app
+   * 
+   * @param scriptName Name of script
+   * 
+   * @param jsonScriptData JSON bundle to pass to script
+   * 
+   * @param parentLevel The level name of the parent to run the script from
+   * 
+   * @param clientIndex
+   */
   virtual void Script_RunParentScript(std::string& _return, const std::string& scriptName, const std::string& jsonScriptData, const std::string& parentLevel, const int32_t clientIndex) = 0;
+
+  /**
+   * Cancels a scheduled cloud code script
+   * 
+   * @param jobId ID of script job to cancel
+   * 
+   * @param clientIndex
+   */
   virtual void Script_CancelScheduledScript(std::string& _return, const std::string& jobId, const int32_t clientIndex) = 0;
+
+  /**
+   * Runs a script from the context of a peer
+   * 
+   * @param scriptName The name of the script to run
+   * 
+   * @param jsonScriptData JSON data to pass into the script
+   * 
+   * @param peer Identifies the peer
+   * 
+   * @param clientIndex
+   */
   virtual void Script_RunPeerScript(std::string& _return, const std::string& scriptName, const std::string& jsonScriptData, const std::string& peer, const int32_t clientIndex) = 0;
+
+  /**
+   * Runs a script asynchronously from the context of a peer
+   * This operation does not wait for the script to complete before returning
+   * 
+   * @param scriptName The name of the script to run
+   * 
+   * @param jsonScriptData JSON data to pass into the script
+   * 
+   * @param peer Identifies the peer
+   * 
+   * @param clientIndex
+   */
   virtual void Script_RunPeerScriptAsynch(std::string& _return, const std::string& scriptName, const std::string& jsonScriptData, const std::string& peer, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns the social leaderboard. A player's social leaderboard is
+   * comprised of players who are recognized as being your friend.
+   * For now, this applies solely to Facebook connected players who are
+   * friends with the logged in player (who also must be Facebook connected).
+   * In the future this will expand to other identification means (such as
+   * Game Centre, Google circles etc).
+   * 
+   * Leaderboards entries contain the player's score and optionally, some user-defined
+   * data associated with the score. The currently logged in player will also
+   * be returned in the social leaderboard.
+   * 
+   * Note: If no friends have played the game, the bestScore, createdAt, updatedAt
+   * will contain NULL.
+   * 
+   * @param leaderboardId The id of the leaderboard to retrieve
+   * 
+   * @param replaceName If true, the currently logged in player's name will be replaced
+   * by the string "You".
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_GetSocialLeaderboard(std::string& _return, const std::string& leaderboardId, const bool replaceName, const int32_t clientIndex) = 0;
+
+  /**
+   * Reads multiple social leaderboards.
+   * 
+   * @param leaderboardIds Array of leaderboard id strings
+   * 
+   * @param leaderboardResultCount Maximum count of entries to return for each leaderboard.
+   * 
+   * @param replaceName If true, the currently logged in player's name will be replaced
+   * by the string "You".
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_GetMultiSocialLeaderboard(std::string& _return, const std::vector<std::string> & leaderboardIds, const int32_t leaderboardResultCount, const bool replaceName, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns a page of global leaderboard results.
+   * 
+   * Leaderboards entries contain the player's score and optionally, some user-defined
+   * data associated with the score.
+   * 
+   * Note: This method allows the client to retrieve pages from within the global leaderboard list
+   * 
+   * @param leaderboardId The id of the leaderboard to retrieve.
+   * 
+   * @param sort Sort key Sort order of page.
+   * 
+   * @param startIndex The index at which to start the page.
+   * 
+   * @param endIndex The index at which to end the page.
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_GetGlobalLeaderboardPage(std::string& _return, const std::string& leaderboardId, const  ::Ruyi::SDK::BrainCloudApi::SortOrder::type sort, const int32_t startIndex, const int32_t endIndex, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns a page of global leaderboard results. By using a non-current version id,
+   * the user can retrieve a historical leaderboard. See GetGlobalLeaderboardVersions method
+   * to retrieve the version id.
+   * 
+   * @param leaderboardId The id of the leaderboard to retrieve.
+   * 
+   * @param sort Sort key Sort order of page.
+   * 
+   * @param startIndex The index at which to start the page.
+   * 
+   * @param endIndex The index at which to end the page.
+   * 
+   * @param versionId The historical version to retrieve.
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_GetGlobalLeaderboardPageByVersion(std::string& _return, const std::string& leaderboardId, const  ::Ruyi::SDK::BrainCloudApi::SortOrder::type sort, const int32_t startIndex, const int32_t endIndex, const int32_t versionId, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns a view of global leaderboard results that centers on the current player.
+   * 
+   * Leaderboards entries contain the player's score and optionally, some user-defined
+   * data associated with the score.
+   * 
+   * @param leaderboardId The id of the leaderboard to retrieve.
+   * 
+   * @param sort Sort key Sort order of page.
+   * 
+   * @param beforeCount The count of number of players before the current player to include.
+   * 
+   * @param afterCount The count of number of players after the current player to include.
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_GetGlobalLeaderboardView(std::string& _return, const std::string& leaderboardId, const  ::Ruyi::SDK::BrainCloudApi::SortOrder::type sort, const int32_t beforeCount, const int32_t afterCount, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns a view of global leaderboard results that centers on the current player.
+   * By using a non-current version id, the user can retrieve a historical leaderboard.
+   * See GetGlobalLeaderboardVersions method to retrieve the version id.
+   * 
+   * @param leaderboardId The id of the leaderboard to retrieve.
+   * 
+   * @param sort Sort key Sort order of page.
+   * 
+   * @param beforeCount The count of number of players before the current player to include.
+   * 
+   * @param afterCount The count of number of players after the current player to include.
+   * 
+   * @param versionId The historial version to retrieve. Use -1 for current leaderboard.
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_GetGlobalLeaderboardViewByVersion(std::string& _return, const std::string& leaderboardId, const  ::Ruyi::SDK::BrainCloudApi::SortOrder::type sort, const int32_t beforeCount, const int32_t afterCount, const int32_t versionId, const int32_t clientIndex) = 0;
+
+  /**
+   * Gets the global leaderboard versions.
+   * 
+   * @param leaderboardId In_leaderboard identifier.
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_GetGlobalLeaderboardVersions(std::string& _return, const std::string& leaderboardId, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieve the social leaderboard for a group.
+   * 
+   * @param leaderboardId The leaderboard to read
+   * 
+   * @param groupId The group ID
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_GetGroupSocialLeaderboard(std::string& _return, const std::string& leaderboardId, const std::string& groupId, const int32_t clientIndex) = 0;
+
+  /**
+   * Post the players score to the given social leaderboard.
+   * You can optionally send a user-defined json string of data
+   * with the posted score. This string could include information
+   * relevant to the posted score.
+   * 
+   * Note that the behaviour of posting a score can be modified in
+   * the brainCloud portal. By default, the server will only keep
+   * the player's best score.
+   * 
+   * @param leaderboardId The leaderboard to post to
+   * 
+   * @param score The score to post
+   * 
+   * @param jsonData
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_PostScoreToLeaderboard(std::string& _return, const std::string& leaderboardId, const int64_t score, const std::string& jsonData, const int32_t clientIndex) = 0;
+
+  /**
+   * Removes a player's score from the leaderboard
+   * 
+   * @param leaderboardId The ID of the leaderboard
+   * 
+   * @param versionId The version of the leaderboard
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_RemovePlayerScore(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) = 0;
+
+  /**
+   * Post the players score to the given social leaderboard.
+   * Pass leaderboard config data to dynamically create if necessary.
+   * You can optionally send a user-defined json string of data
+   * with the posted score. This string could include information
+   * relevant to the posted score.
+   * 
+   * @param leaderboardId The leaderboard to post to
+   * 
+   * @param score The score to post
+   * 
+   * @param jsonData
+   * @param leaderboardType leaderboard type
+   * 
+   * @param rotationType Type of rotation
+   * 
+   * @param rotationReset Date to reset the leaderboard UTC
+   * 
+   * @param retainedCount How many rotations to keep
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_PostScoreToDynamicLeaderboard(std::string& _return, const std::string& leaderboardId, const int64_t score, const std::string& jsonData, const  ::Ruyi::SDK::BrainCloudApi::SocialLeaderboardType::type leaderboardType, const  ::Ruyi::SDK::BrainCloudApi::RotationType::type rotationType, const  ::Ruyi::SDK::BrainCloudApi::date rotationReset, const int32_t retainedCount, const int32_t clientIndex) = 0;
+
+  /**
+   * Post the players score to the given social leaderboard with a rotation type of DAYS.
+   * Pass leaderboard config data to dynamically create if necessary.
+   * You can optionally send a user-defined json string of data
+   * with the posted score. This string could include information
+   * relevant to the posted score.
+   * 
+   * @param leaderboardId The leaderboard to post to
+   * 
+   * @param score The score to post
+   * 
+   * @param jsonData
+   * @param leaderboardType leaderboard type
+   * 
+   * @param rotationReset Date to reset the leaderboard UTC
+   * 
+   * @param retainedCount How many rotations to keep
+   * 
+   * @param numDaysToRotate How many days between each rotation
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_PostScoreToDynamicLeaderboardDays(std::string& _return, const std::string& leaderboardId, const int64_t score, const std::string& jsonData, const  ::Ruyi::SDK::BrainCloudApi::SocialLeaderboardType::type leaderboardType, const  ::Ruyi::SDK::BrainCloudApi::date rotationReset, const int32_t retainedCount, const int32_t numDaysToRotate, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieve the social leaderboard for a list of players.
+   * 
+   * @param leaderboardId The ID of the leaderboard
+   * 
+   * @param profileIds The IDs of the players
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_GetPlayersSocialLeaderboard(std::string& _return, const std::string& leaderboardId, const std::vector<std::string> & profileIds, const int32_t clientIndex) = 0;
+
+  /**
+   * Retrieve a list of all leaderboards
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_ListLeaderboards(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Gets the number of entries in a global leaderboard
+   * 
+   * @param leaderboardId The ID of the leaderboard
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_GetGlobalLeaderboardEntryCount(std::string& _return, const std::string& leaderboardId, const int32_t clientIndex) = 0;
+
+  /**
+   * Gets the number of entries in a global leaderboard
+   * 
+   * @param leaderboardId The ID of the leaderboard
+   * 
+   * @param versionId The version of the leaderboard
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_GetGlobalLeaderboardEntryCountByVersion(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) = 0;
+
+  /**
+   * Gets a player's score from a leaderboard
+   * 
+   * @param leaderboardId The ID of the leaderboard
+   * 
+   * @param versionId The version of the leaderboard. Use -1 for current.
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_GetPlayerScore(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) = 0;
+
+  /**
+   * Gets a player's score from multiple leaderboards
+   * 
+   * @param leaderboardIds A collection of leaderboardIds to retrieve scores from
+   * 
+   * @param clientIndex
+   */
   virtual void SocialLeaderboard_GetPlayerScoresFromLeaderboards(std::string& _return, const std::vector<std::string> & leaderboardIds, const int32_t clientIndex) = 0;
+
+  /**
+   * Method returns the server time in UTC. This is in UNIX millis time format.
+   * For instance 1396378241893 represents 2014-04-01 2:50:41.893 in GMT-4.
+   * 
+   * @param clientIndex
+   */
   virtual void Time_ReadServerTime(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Processes any outstanding rewards for the given player
+   * 
+   * @param leaderboardId The leaderboard for the tournament
+   * 
+   * @param versionId Version of the tournament to claim rewards for.
+   * Use -1 for the latest version.
+   * 
+   * @param clientIndex
+   */
   virtual void Tournament_ClaimTournamentReward(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) = 0;
+
+  /**
+   * Get tournament status associated with a leaderboard
+   * 
+   * @param leaderboardId The leaderboard for the tournament
+   * 
+   * @param versionId Version of the tournament. Use -1 for the latest version.
+   * 
+   * @param clientIndex
+   */
   virtual void Tournament_GetTournamentStatus(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) = 0;
+
+  /**
+   * Join the specified tournament.
+   * Any entry fees will be automatically collected.
+   * 
+   * @param leaderboardId The leaderboard for the tournament
+   * 
+   * @param tournamentCode Tournament to join
+   * 
+   * @param initialScore The initial score for players first joining a tournament
+   * Usually 0, unless leaderboard is LOW_VALUE
+   * 
+   * @param clientIndex
+   */
   virtual void Tournament_JoinTournament(std::string& _return, const std::string& leaderboardId, const std::string& tournamentCode, const int64_t initialScore, const int32_t clientIndex) = 0;
+
+  /**
+   * Removes player's score from tournament leaderboard
+   * 
+   * @param leaderboardId The leaderboard for the tournament
+   * 
+   * @param clientIndex
+   */
   virtual void Tournament_LeaveTournament(std::string& _return, const std::string& leaderboardId, const int32_t clientIndex) = 0;
+
+  /**
+   * Post the users score to the leaderboard
+   * 
+   * @param leaderboardId The leaderboard for the tournament
+   * 
+   * @param score The score to post
+   * 
+   * @param jsonData Optional data attached to the leaderboard entry
+   * 
+   * @param roundStartedTime Time the user started the match resulting in the score
+   * being posted.
+   * 
+   * @param clientIndex
+   */
   virtual void Tournament_PostTournamentScore(std::string& _return, const std::string& leaderboardId, const int64_t score, const std::string& jsonData, const  ::Ruyi::SDK::BrainCloudApi::date roundStartedTime, const int32_t clientIndex) = 0;
+
+  /**
+   * Post the users score to the leaderboard and returns the results
+   * 
+   * @param leaderboardId The leaderboard for the tournament
+   * 
+   * @param score The score to post
+   * 
+   * @param jsonData Optional data attached to the leaderboard entry
+   * 
+   * @param roundStartedTime Time the user started the match resulting in the score
+   * being posted.
+   * 
+   * @param sort Sort key Sort order of page.
+   * 
+   * @param beforeCount The count of number of players before the current player to include.
+   * 
+   * @param afterCount The count of number of players after the current player to include.
+   * 
+   * @param initialScore The initial score for players first joining a tournament
+   * Usually 0, unless leaderboard is LOW_VALUE
+   * 
+   * @param clientIndex
+   */
   virtual void Tournament_PostTournamentScoreWithResults(std::string& _return, const std::string& leaderboardId, const int64_t score, const std::string& jsonData, const  ::Ruyi::SDK::BrainCloudApi::date roundStartedTime, const  ::Ruyi::SDK::BrainCloudApi::SortOrder::type sort, const int32_t beforeCount, const int32_t afterCount, const int64_t initialScore, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the user's expected reward based on the current scores
+   * 
+   * @param leaderboardId The leaderboard for the tournament
+   * 
+   * @param clientIndex
+   */
   virtual void Tournament_ViewCurrentReward(std::string& _return, const std::string& leaderboardId, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the user's reward from a finished tournament
+   * 
+   * @param leaderboardId The leaderboard for the tournament
+   * 
+   * @param versionId Version of the tournament. Use -1 for the latest version.
+   * 
+   * @param clientIndex
+   */
   virtual void Tournament_ViewReward(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareScreenshot(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;

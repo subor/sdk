@@ -3,7 +3,7 @@
     "category": {
         "SDKDataTypes": {
             "name": "DataTypes",
-            "description": "@PublisherSubscriber.SDKDataTypes",
+            "description": "@PublisherSubscriber_SDKDataTypes",
             "namespaces": {
 				"csharp": {
 					"value": "Ruyi.SDK.PublisherSubscriber",
@@ -24,7 +24,7 @@
         },
         "SDKServices": {
             "name": "Service",
-            "description": "@PublisherSubscriber.SDKServices",
+            "description": "@PublisherSubscriber_SDKServices",
             "namespaces": {
 				"csharp": "Ruyi.SDK.PublisherSubscriber",
 				"cpp": "Ruyi.SDK.PublisherSubscriber"
@@ -56,15 +56,15 @@
             "parameters": {
                 "LowPowerStartOver": {
 					"value": 0,
-					"description": "@ServiceLaunchEventType.LowPowerStartOver"
+					"description": "@ServiceLaunchEventType_LowPowerStartOver"
 				},
                 "HighPowerStartOver": {
 					"value": 1,
-					"description": "@ServiceLaunchEventType.HighPowerStartOver"
+					"description": "@ServiceLaunchEventType_HighPowerStartOver"
 				},
                 "BackToLowerPowerOver": {
 					"value": 2,
-					"description": "@ServiceLaunchEventType.BackToLowerPowerOver"
+					"description": "@ServiceLaunchEventType_BackToLowerPowerOver"
 				}
             },
             "name": "ServiceLaunchEventType",
@@ -72,7 +72,7 @@
                 "type": "SDKDataTypes",
                 "typeName": "EnumTypes"
             },
-            "description": "@PublisherSubscriber.ServiceLaunchEventType"
+            "description": "@PublisherSubscriber_ServiceLaunchEventType"
         },
         "struct.ServiceLaunchEvent": {
             "name": "ServiceLaunchEvent",
@@ -80,17 +80,17 @@
                 "type": "SDKDataTypes",
                 "typeName": null
             },
-            "description": "@PublisherSubscriber.ServiceLaunchEvent",
+            "description": "@PublisherSubscriber_ServiceLaunchEvent",
             "parameters": {
                 "EventType": {
                     "type": "i32",
-                    "description": "@PublisherSubscriber.ServiceLaunchEvent.EventType",
+                    "description": "@PublisherSubscriber_ServiceLaunchEvent_EventType",
                     "fieldId": 1,
                     "optional": false
                 },
                 "LastServiceID": {
                     "type": "string",
-                    "description": "@PublisherSubscriber.ServiceLaunchEvent.LastServiceID",
+                    "description": "@PublisherSubscriber_ServiceLaunchEvent_LastServiceID",
                     "fieldId": 2,
                     "optional": false
                 }

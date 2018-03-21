@@ -337,22 +337,22 @@
             "parameters": {
 				"deviceId": {
                     "type": "string",
-					"description": "@InputActionTriggered.deviceId.desc"
+					"description": "@InputActionTriggered_deviceId_desc"
                 },
                 "name": {
                     "type": "string",
-					"description": "@InputActionTriggered.name.desc"
+					"description": "@InputActionTriggered_name_desc"
                 },
 				"timestamp": {
                     "type": "i64",
-					"description": "@InputActionTriggered.timestamp.desc"
+					"description": "@InputActionTriggered_timestamp_desc"
                 },
 				"events": {
 					"type": {
 						"referTo": "struct.RuyiInputEvent",
 						"isArray": true
 					},
-					"description": "@InputActionTriggered.analogChanges.desc"
+					"description": "@InputActionTriggered_analogChanges_desc"
 				}
             }
         },

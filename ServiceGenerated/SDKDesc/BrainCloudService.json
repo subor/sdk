@@ -47,7 +47,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -98,7 +98,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -164,7 +164,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -210,7 +210,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -246,7 +246,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -282,7 +282,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -318,7 +318,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -344,7 +344,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -370,7 +370,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -406,7 +406,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -442,7 +442,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -468,7 +468,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -504,7 +504,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -523,7 +523,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -547,7 +547,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -588,7 +588,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -629,7 +629,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -670,7 +670,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -706,7 +706,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -747,7 +747,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -788,7 +788,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -834,7 +834,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -875,7 +875,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -921,7 +921,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -952,7 +952,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -978,7 +978,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1004,7 +1004,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1029,7 +1029,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1069,7 +1069,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1108,7 +1108,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1137,7 +1137,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1156,7 +1156,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1180,7 +1180,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1199,7 +1199,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1223,7 +1223,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1242,7 +1242,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1261,7 +1261,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1291,7 +1291,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1310,7 +1310,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1335,7 +1335,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1365,7 +1365,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1384,7 +1384,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1414,7 +1414,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1438,7 +1438,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1457,7 +1457,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1481,7 +1481,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1500,7 +1500,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1524,7 +1524,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1548,7 +1548,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -1577,7 +1577,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1613,7 +1613,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1649,7 +1649,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1690,7 +1690,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1721,7 +1721,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1772,7 +1772,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1823,7 +1823,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1859,7 +1859,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1905,7 +1905,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1941,7 +1941,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -1972,7 +1972,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2003,7 +2003,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2039,7 +2039,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2070,7 +2070,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2111,7 +2111,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2157,7 +2157,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2188,7 +2188,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2219,7 +2219,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2255,7 +2255,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2291,7 +2291,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2332,7 +2332,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2373,7 +2373,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2409,7 +2409,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2440,7 +2440,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2466,7 +2466,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2517,7 +2517,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2548,7 +2548,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {},
@@ -2572,7 +2572,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2602,7 +2602,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2632,7 +2632,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2657,7 +2657,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2693,7 +2693,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2729,7 +2729,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2765,7 +2765,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2801,7 +2801,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2837,7 +2837,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2873,7 +2873,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2909,7 +2909,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2945,7 +2945,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -2981,7 +2981,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3012,7 +3012,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3043,7 +3043,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3074,7 +3074,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3110,7 +3110,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3146,7 +3146,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3195,7 +3195,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3226,7 +3226,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3257,7 +3257,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3288,7 +3288,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3319,7 +3319,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3350,7 +3350,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3381,7 +3381,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3407,7 +3407,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3438,7 +3438,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3469,7 +3469,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3500,7 +3500,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3536,7 +3536,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3567,7 +3567,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3598,7 +3598,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3629,7 +3629,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3660,7 +3660,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3691,7 +3691,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3722,7 +3722,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3753,7 +3753,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3784,7 +3784,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3820,7 +3820,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3851,7 +3851,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3877,7 +3877,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3923,7 +3923,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -3974,7 +3974,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4015,7 +4015,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4056,7 +4056,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4097,7 +4097,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4133,7 +4133,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4164,7 +4164,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4205,7 +4205,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4241,7 +4241,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4272,7 +4272,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4303,7 +4303,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4339,7 +4339,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4375,7 +4375,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4411,7 +4411,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4457,7 +4457,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4498,7 +4498,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4524,7 +4524,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4555,7 +4555,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4586,7 +4586,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4617,7 +4617,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4648,7 +4648,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4679,7 +4679,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4739,7 +4739,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4785,7 +4785,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4838,7 +4838,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4874,7 +4874,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4935,7 +4935,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -4986,7 +4986,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5022,7 +5022,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5063,7 +5063,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5089,7 +5089,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5125,7 +5125,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5166,7 +5166,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5212,7 +5212,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5243,7 +5243,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5274,7 +5274,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5305,7 +5305,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5341,7 +5341,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5372,7 +5372,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5403,7 +5403,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5434,7 +5434,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5465,7 +5465,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5501,7 +5501,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5537,7 +5537,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5568,7 +5568,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5599,7 +5599,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5635,7 +5635,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5671,7 +5671,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5712,7 +5712,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5758,7 +5758,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5804,7 +5804,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5840,7 +5840,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5876,7 +5876,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5912,7 +5912,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5948,7 +5948,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -5979,7 +5979,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6010,7 +6010,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6046,7 +6046,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6082,7 +6082,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6118,7 +6118,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6154,7 +6154,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6190,7 +6190,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6226,7 +6226,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6262,7 +6262,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6298,7 +6298,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6334,7 +6334,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6370,7 +6370,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6406,7 +6406,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6442,7 +6442,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6478,7 +6478,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6519,7 +6519,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6560,7 +6560,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6596,7 +6596,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6632,7 +6632,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6668,7 +6668,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6704,7 +6704,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6745,7 +6745,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6781,7 +6781,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6832,7 +6832,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6863,7 +6863,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6889,7 +6889,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6920,7 +6920,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6946,7 +6946,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -6972,7 +6972,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7013,7 +7013,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7069,7 +7069,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7100,7 +7100,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7126,7 +7126,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7167,7 +7167,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7203,7 +7203,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7239,7 +7239,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7265,7 +7265,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7296,7 +7296,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7322,7 +7322,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7353,7 +7353,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7384,7 +7384,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7410,7 +7410,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7441,7 +7441,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7467,7 +7467,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7498,7 +7498,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7529,7 +7529,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7565,7 +7565,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7606,7 +7606,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7647,7 +7647,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7693,7 +7693,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7719,7 +7719,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7745,7 +7745,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7781,7 +7781,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7812,7 +7812,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7843,7 +7843,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7879,7 +7879,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7910,7 +7910,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7941,7 +7941,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -7972,7 +7972,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8013,7 +8013,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8049,7 +8049,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8085,7 +8085,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8111,7 +8111,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8137,7 +8137,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8163,7 +8163,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8189,7 +8189,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8220,7 +8220,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8251,7 +8251,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8277,7 +8277,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8313,7 +8313,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8344,7 +8344,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8375,7 +8375,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8406,7 +8406,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8432,7 +8432,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8463,7 +8463,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8494,7 +8494,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8520,7 +8520,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8551,7 +8551,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8582,7 +8582,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8613,7 +8613,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8639,7 +8639,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8670,7 +8670,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8701,7 +8701,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8737,7 +8737,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8768,7 +8768,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8799,7 +8799,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8835,7 +8835,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8876,7 +8876,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8912,7 +8912,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8943,7 +8943,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -8974,7 +8974,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9000,7 +9000,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9031,7 +9031,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9062,7 +9062,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9103,7 +9103,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9154,7 +9154,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9210,7 +9210,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9261,7 +9261,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9287,7 +9287,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9323,7 +9323,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9359,7 +9359,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9395,7 +9395,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9431,7 +9431,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9472,7 +9472,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9513,7 +9513,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9554,7 +9554,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9605,7 +9605,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9656,7 +9656,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9702,7 +9702,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9748,7 +9748,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9794,7 +9794,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9840,7 +9840,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9886,7 +9886,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9932,7 +9932,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -9978,7 +9978,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10019,7 +10019,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10060,7 +10060,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10101,7 +10101,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10132,7 +10132,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10168,7 +10168,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10199,7 +10199,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10230,7 +10230,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10266,7 +10266,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10307,7 +10307,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10348,7 +10348,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10389,7 +10389,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10420,7 +10420,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10461,7 +10461,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10502,7 +10502,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10538,7 +10538,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10579,7 +10579,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10637,7 +10637,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10688,7 +10688,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10734,7 +10734,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10785,7 +10785,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10816,7 +10816,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10852,7 +10852,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10893,7 +10893,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -10929,7 +10929,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11019,7 +11019,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11080,7 +11080,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11116,7 +11116,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11142,7 +11142,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11173,7 +11173,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11209,7 +11209,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11245,7 +11245,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11276,7 +11276,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11302,7 +11302,7 @@
             "parameters": {
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11338,7 +11338,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11374,7 +11374,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11415,7 +11415,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11446,7 +11446,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11492,7 +11492,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11558,7 +11558,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11589,7 +11589,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11625,7 +11625,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11676,7 +11676,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11727,7 +11727,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11778,7 +11778,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11829,7 +11829,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11880,7 +11880,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11931,7 +11931,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -11982,7 +11982,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12018,7 +12018,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12059,7 +12059,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12095,7 +12095,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12136,7 +12136,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12177,7 +12177,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12218,7 +12218,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12259,7 +12259,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12290,7 +12290,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12321,7 +12321,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12352,7 +12352,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12383,7 +12383,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12414,7 +12414,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12445,7 +12445,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12476,7 +12476,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12507,7 +12507,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12538,7 +12538,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12569,7 +12569,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12605,7 +12605,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12656,7 +12656,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12707,7 +12707,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12758,7 +12758,7 @@
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12814,23 +12814,23 @@
                 "type": "SDKServices",
                 "typeName": "BrainCloudService"
             },
-            "description": "@BrainCloud.DownloadFile.desc",
+            "description": "@BrainCloud_DownloadFile_desc",
             "parameters": {
                 "cloudPath": {
                     "type": "string",
-                    "description": "@BrainCloudFile.cloudPath"
+                    "description": "@BrainCloudFile_cloudPath"
                 },
                 "cloudFilename": {
                     "type": "string",
-                    "description": "@BrainCloudFile.cloudFilename"
+                    "description": "@BrainCloudFile_cloudFilename"
                 },
                 "replaceIfExists": {
                     "type": "bool",
-                    "description": "@BrainCloudFile.replaceIfExists"
+                    "description": "@BrainCloudFile_replaceIfExists"
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12847,19 +12847,19 @@
                 "type": "SDKServices",
                 "typeName": "BrainCloudService"
             },
-            "description": "@BrainCloud.GetDownloadInfo.desc",
+            "description": "@BrainCloud_GetDownloadInfo_desc",
             "parameters": {
                 "cloudPath": {
                     "type": "string",
-                    "description": "@BrainCloudFile.cloudPath"
+                    "description": "@BrainCloudFile_cloudPath"
                 },
                 "cloudFilename": {
                     "type": "string",
-                    "description": "@BrainCloudFile.cloudFileName"
+                    "description": "@BrainCloudFile_cloudFileName"
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
@@ -12876,19 +12876,19 @@
                 "type": "SDKServices",
                 "typeName": "BrainCloudService"
             },
-            "description": "@BrainCloud.CancelDownload.desc",
+            "description": "@BrainCloud_CancelDownload_desc",
             "parameters": {
                 "cloudPath": {
                     "type": "string",
-                    "description": "@BrainCloudFile.cloudPath"
+                    "description": "@BrainCloudFile_cloudPath"
                 },
                 "cloudFilename": {
                     "type": "string",
-                    "description": "@BrainCloudFile.cloudFileName"
+                    "description": "@BrainCloudFile_cloudFileName"
                 },
                 "clientIndex": {
                     "type": "i32",
-                    "description": "@BrainCloud.clientIndex.desc"
+                    "description": "@BrainCloud_clientIndex_desc"
                 }
             },
             "responses": {
