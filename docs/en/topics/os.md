@@ -8,7 +8,7 @@ Essentially, it is Windows 10:
 * With security features of Windows 10 Enterprise (i.e. [AppLocker](https://docs.microsoft.com/en-us/windows/security/threat-protection/applocker/applocker-overview), [BitLocker](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview), and [Device Guard](https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/device-guard-deployment-guide))
 * Without Microsoft Edge, Store, Cortana, and apps like Mail, Calendar, etc.
 
-Together with our configuration, drivers, and shell it is __Ruyi OS__.  A standard Windows Desktop environment is available in [PC mode](pc_mode.md).
+Together with our configuration, drivers, and shell it is __Ruyi OS__.  A standard Windows Desktop environment is available via [PC mode](pc_mode.md).
 
 ## Version
 
@@ -32,6 +32,8 @@ v0.5_20180208
 ## Installation
 
 ![](/docs/img/warning.png) Flash the correct BIOS version __before__ installing the corresponding OS version (see [BIOS](bios.md)).
+
+The OS is always installed to the [primary drive](harddrive.md).
 
 Installation should take 20-40 minutes.
 

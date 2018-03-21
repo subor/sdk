@@ -20,7 +20,7 @@
 
 1. What about peripherals, display/audio ports, etc.?
 
-    USB, HDMI, S/PDIF, ethernet/RJ45, WIFi, bluetooth.  [Details](topics/hardware.md)
+    USB, HDMI, S/PDIF, ethernet, wifi, bluetooth.  [Details](topics/hardware.md)
 
 ## Software/SDK
 

@@ -59,6 +59,8 @@ Available BIOS v0.13 and later:
 1. Download the [latest BIOS zip file](https://bitbucket.org/playruyi/support/src/master/files/bios/)
 1. Extract the zip file and locate \Winflash\ folder
 1. Run DA22XXXX.exe to flash BIOS
+    - BIOS 0.16 and later: machine will freeze for a few minutes and become responsive when ready.  Restart machine if it doesn't automatically.
+    - BIOS 0.13 to 0.15: a GUI window will appear
 
 __Flash with EFI shell__
 
