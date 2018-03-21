@@ -138,6 +138,11 @@ namespace Layer0
             }
         }
 
+        void Log(string message, RuyiLogger.LogLevel level)
+        {
+            RuyiLogger.Logger.Log(message, level: level, category: RuyiLogger.MessageCategory.Subscriber);
+        }
+
         bool Receive()
         {
             try
@@ -172,32 +177,19 @@ namespace Layer0
                 if (e is TargetInvocationException)
                 {
                     var ee = e as TargetInvocationException;
-                    RuyiLogger.Logger.Log(new RuyiLogger.LoggerMessage()
-                    {
-                        level = RuyiLogger.LogLevel.Warn,
-                        category = RuyiLogger.MessageCategory.Subscriber,
-                        message = $"subscribe invoke exception: {(ee).InnerException.Message} \n {ee.InnerException.StackTrace}",
-                    });
+                    Log($"subscribe invoke exception: {(ee).InnerException.Message} \n {ee.InnerException.StackTrace}", RuyiLogger.LogLevel.Warn);
                     return true;
                 }
                 if (e is TerminatingException)
                 {
-                    RuyiLogger.Logger.Log(new RuyiLogger.LoggerMessage()
-                    {
-                        level = RuyiLogger.LogLevel.Info,
-                        category = RuyiLogger.MessageCategory.Subscriber,
-                        message = $"subscribe client ternimated: {e.Message}",
-                    });
+                    Log($"subscribe client ternimated: {e.Message}", RuyiLogger.LogLevel.Info);
                     return false;
                 }
                 else
                 {
-                    RuyiLogger.Logger.Log(new RuyiLogger.LoggerMessage()
-                    {
-                        level = disposing ? RuyiLogger.LogLevel.Info : RuyiLogger.LogLevel.Error,
-                        category = RuyiLogger.MessageCategory.Subscriber,
-                        message = disposing ? $"disposing exception: {e.Message}" : $"subscribe client receive exception: {e.Message} \n {e.StackTrace}",
-                    });
+                    Log(disposing ? $"disposing exception: {e.Message}" : $"subscribe client receive exception: {e.Message} \n {e.StackTrace}",
+                        disposing ? RuyiLogger.LogLevel.Info : RuyiLogger.LogLevel.Error
+                        );
                     return false;
                 }
             }
@@ -220,21 +212,11 @@ namespace Layer0
                     {
                         if (e is TerminatingException)
                         {
-                            RuyiLogger.Logger.Log(new RuyiLogger.LoggerMessage()
-                            {
-                                level = RuyiLogger.LogLevel.Info,
-                                category = RuyiLogger.MessageCategory.Subscriber,
-                                message = $"subscribe client terminated: { e.Message }",
-                            });
+                            Log($"subscribe client terminated: { e.Message }", RuyiLogger.LogLevel.Info);
                         }
                         else
                         {
-                            RuyiLogger.Logger.Log(new RuyiLogger.LoggerMessage()
-                            {
-                                level = RuyiLogger.LogLevel.Error,
-                                category = RuyiLogger.MessageCategory.Subscriber,
-                                message = $"subscribe client terminated: { e.Message }",
-                            });
+                            Log($"subscribe client terminated: { e.Message }", RuyiLogger.LogLevel.Error);
                         }
                     }
                 }

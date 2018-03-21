@@ -35,7 +35,7 @@ namespace RuyiLogger
 
         public bool Match(LoggerMessage lm)
         {
-            if (ValidLevels == null || ValidLevels.Contains(lm.level))
+            if (ValidLevels == null || ValidLevels.Contains(lm.Level))
                 return true;
 
             return false;
@@ -77,7 +77,7 @@ namespace RuyiLogger
 
         public bool Match(LoggerMessage lm)
         {
-            if (ValidCategaries == null || ValidCategaries.Contains(lm.category))
+            if (ValidCategaries == null || ValidCategaries.Contains(lm.Category))
                 return true;
 
             return false;
@@ -98,9 +98,9 @@ namespace RuyiLogger
 
         public bool Match(LoggerMessage lm)
         {
-            if (lm.category == MessageCategory.Publisher
-                || (lm.category == MessageCategory.Request && (ValidServices == null || ValidServices.ExistTailFor(lm.MsgTarget)))
-                || (lm.category == MessageCategory.Reply && (ValidServices == null || ValidServices.ExistTailFor(lm.MsgSource))))
+            if (lm.Category == MessageCategory.Publisher
+                || (lm.Category == MessageCategory.Request && (ValidServices == null || ValidServices.ExistTailFor(lm.MsgTarget)))
+                || (lm.Category == MessageCategory.Reply && (ValidServices == null || ValidServices.ExistTailFor(lm.MsgSource))))
                 return true;
 
             return false;
@@ -124,8 +124,8 @@ namespace RuyiLogger
             if (ValidTopic == null || string.IsNullOrEmpty(lm.Topic))
                 return true;
 
-            if ((lm.category == MessageCategory.Request || lm.category == MessageCategory.Reply || lm.category == MessageCategory.Framework)
-                || ((lm.category == MessageCategory.Publisher || lm.category == MessageCategory.Subscriber)
+            if ((lm.Category == MessageCategory.Request || lm.Category == MessageCategory.Reply || lm.Category == MessageCategory.Framework)
+                || ((lm.Category == MessageCategory.Publisher || lm.Category == MessageCategory.Subscriber)
                 && (ValidTopic.ExistTailFor(lm.Topic))))
                 return true;
 
@@ -196,7 +196,7 @@ namespace RuyiLogger
     {
         public bool Filter(LoggerMessage lm)
         {
-            return lm.category == MessageCategory.TRC;
+            return lm.Category == MessageCategory.TRC;
         }
 
         public void SetLogLevel(LogLevel lv)
