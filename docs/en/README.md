@@ -62,4 +62,5 @@ __Advanced:__
 __Advanced:__
 
 * [Optimization](topics/optimization.md)
+* [AMD GPU Services (AGS)](topics/amd_gpu_services.md)
 

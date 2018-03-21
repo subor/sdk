@@ -32,6 +32,7 @@ __Comments__
 
 - Use [Vulkan API](https://www.khronos.org/vulkan/)
 - Use FP16.  Vega's __Rapid Packed Math__ can _double_ throughput over single-precision float ([source](https://www.anandtech.com/show/11143/amd-launch-ryzen-52-more-ipc-eight-cores-for-under-330-preorder-today-on-sale-march-2nd))
+- Take a look at [AMD GPU Services (AGS)](amd_gpu_services.md)
 
 ## Resources
 

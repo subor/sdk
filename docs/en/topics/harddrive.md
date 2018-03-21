@@ -13,7 +13,7 @@ Later Ruyi devkits shipped with a 128 GB SSD and 1 TB HDD.
 
 This exposes the two internal drive bays:
 
-* The drive in the middle is the _primary_ drive and __must__ be present as Ruyi always boots from this drive.
+* The drive in the center of the device is the _primary_ drive and __must__ be present as Ruyi always boots from this drive.
 * The other drive is the _secondary_ drive and is optional.
 
 4. When finished, replace hard drive cover by gently pushing it back into place
