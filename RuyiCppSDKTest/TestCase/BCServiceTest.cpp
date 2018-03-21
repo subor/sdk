@@ -914,7 +914,7 @@ void BCServiceTest::BCS_File_UploadFile()
 
 	// get the layer0
 	string currentFolder = GetLocalCurrentDirectory();
-	string localPath = currentFolder + "..\\..\\..\\Resources\\Configs\\SystemSetting\\SystemSetting.cfg";
+	string localPath = currentFolder + "..\\..\\..\\..\\Commons\\Resources\\Configs\\SystemSetting\\SystemSetting.cfg";
 	struct stat buffer;
 	Assert::AreEqual(stat(localPath.c_str(), &buffer), 0);
 

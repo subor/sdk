@@ -75,7 +75,7 @@ SettingSystemTest::~SettingSystemTest()
 //order(10)
 void SettingSystemTest::SettingSys_SimulateAppAInstalled() 
 {
-	string appaConfig = testDirectory + "..\\..\\..\\Resources\\Configs\\AppA.cfg";
+	string appaConfig = testDirectory + "..\\..\\..\\..\\Commons\\Resources\\Configs\\AppA.cfg";
 	string targetFile;
 	
 	StorageLayer::GetLocalPathResult result;
