@@ -8,11 +8,11 @@ namespace Layer0
         {
             LoggerMessage lm = new LoggerMessage
             {
-                category = MessageCategory.TRC,
+                Category = MessageCategory.TRC,
                 MsgSource = source,
-                level = LogLevel.Debug,
+                Level = LogLevel.Debug,
                 Topic = source,
-                message = msg
+                Message = msg
             };
 
             Logger.Log(lm);

@@ -42,15 +42,15 @@ namespace RuyiLogger
 
         public void Log(LoggerMessage msg)
         {
-            if (msg.level == LogLevel.Debug)
+            if (msg.Level == LogLevel.Debug)
                 logger.Debug(msg);
-            if (msg.level == LogLevel.Info)
+            if (msg.Level == LogLevel.Info)
                 logger.Info(msg);
-            if (msg.level == LogLevel.Warn)
+            if (msg.Level == LogLevel.Warn)
                 logger.Warn(msg);
-            if (msg.level == LogLevel.Error)
+            if (msg.Level == LogLevel.Error)
                 logger.Error(msg);
-            if (msg.level == LogLevel.Fatal)
+            if (msg.Level == LogLevel.Fatal)
                 logger.Fatal(msg);
         }
     }
@@ -67,11 +67,11 @@ namespace RuyiLogger
             writer.WriteEndElement();
 
             writer.WriteStartElement("Level");
-            writer.WriteString(msg.Level);
+            writer.WriteString(msg.Level.ToString());
             writer.WriteEndElement();
 
             writer.WriteStartElement("Category");
-            writer.WriteString(msg.Category);
+            writer.WriteString(msg.Category.ToString());
             writer.WriteEndElement();
 
             writer.WriteStartElement("Source");
