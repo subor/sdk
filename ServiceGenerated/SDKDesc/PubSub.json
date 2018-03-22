@@ -1,0 +1,100 @@
+﻿{
+    "version": "1.0.0.0",
+    "category": {
+        "SDKDataTypes": {
+            "name": "DataTypes",
+            "description": "@PublisherSubscriber_SDKDataTypes",
+            "namespaces": {
+				"csharp": {
+					"value": "Ruyi.SDK.PublisherSubscriber",
+					"description": "@SDKDataTypes_csharp_desc"
+				},
+				"cpp": {
+					"value": "Ruyi.SDK.PublisherSubscriber",
+					"description": "@SDKDataTypes_cpp_desc"
+				}
+			}
+        },
+        "SDKMessages": {
+            "name": "Messages",
+            "namespaces": {
+				"csharp": "Ruyi.SDK.PublisherSubscriber",
+				"cpp": "Ruyi.SDK.PublisherSubscriber"
+			}
+        },
+        "SDKServices": {
+            "name": "Service",
+            "description": "@PublisherSubscriber_SDKServices",
+            "namespaces": {
+				"csharp": "Ruyi.SDK.PublisherSubscriber",
+				"cpp": "Ruyi.SDK.PublisherSubscriber"
+			}
+        }
+    },
+    "apis": {
+        "const.layer0_service_channel": {
+            "name": "layer0_service_channel",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": "ConstTypes"
+            },
+            "type": "string",
+            "parameters": "layer0/service",
+			"description": "@layer0_service_channel_desc"
+        },
+        "const.service_input_channel": {
+            "name": "service_input_channel",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": "ConstTypes"
+            },
+            "type": "string",
+            "parameters": "service/input",
+			"description": "@service_input_channel_desc"
+        },
+        "enum.ServiceLaunchEventType": {
+            "parameters": {
+                "LowPowerStartOver": {
+					"value": 0,
+					"description": "@ServiceLaunchEventType_LowPowerStartOver"
+				},
+                "HighPowerStartOver": {
+					"value": 1,
+					"description": "@ServiceLaunchEventType_HighPowerStartOver"
+				},
+                "BackToLowerPowerOver": {
+					"value": 2,
+					"description": "@ServiceLaunchEventType_BackToLowerPowerOver"
+				}
+            },
+            "name": "ServiceLaunchEventType",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": "EnumTypes"
+            },
+            "description": "@PublisherSubscriber_ServiceLaunchEventType"
+        },
+        "struct.ServiceLaunchEvent": {
+            "name": "ServiceLaunchEvent",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "description": "@PublisherSubscriber_ServiceLaunchEvent",
+            "parameters": {
+                "EventType": {
+                    "type": "i32",
+                    "description": "@PublisherSubscriber_ServiceLaunchEvent_EventType",
+                    "fieldId": 1,
+                    "optional": false
+                },
+                "LastServiceID": {
+                    "type": "string",
+                    "description": "@PublisherSubscriber_ServiceLaunchEvent_LastServiceID",
+                    "fieldId": 2,
+                    "optional": false
+                }
+            }
+        }
+    }
+}
