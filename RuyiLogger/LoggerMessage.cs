@@ -49,24 +49,15 @@ namespace RuyiLogger
         /// </summary>
         public string MsgTarget { get; set; }
         public string Message { get; set; }
+        /// <summary>
+        /// C# type of the message, could use it for reflection purposes
+        /// </summary>
+        public string MsgType { get; set; }
         public DateTime Date { get; set; }
 
         public LoggerMessage()
         {
             Date = DateTime.Now;
-        }
-
-        public string ShownMessage
-        {
-            get
-            {
-                if (Category == MessageCategory.Publisher || Category == MessageCategory.Request || Category == MessageCategory.Reply)
-                {
-                    byte[] bts = Convert.FromBase64String(Message);
-                    return Encoding.UTF8.GetString(bts);
-                }
-                return Message;
-            }
         }
 
         /// <summary>
@@ -76,6 +67,17 @@ namespace RuyiLogger
         {
             get { return MsgTarget; }
             set { MsgTarget = value; }
+        }
+
+        public LoggerMessage(LoggerMessage lm)
+        {
+            Level = lm.Level;
+            Category = lm.Category;
+            MsgSource = lm.MsgSource;
+            MsgTarget = lm.MsgTarget;
+            Message = lm.Message;
+            MsgType = lm.MsgType;
+            Date = lm.Date;
         }
 
         override public string ToString()
