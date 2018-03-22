@@ -49,10 +49,10 @@ namespace RuyiLogger
                 case LogLevel.Debug: logger.Debug(msg); break;
                 case LogLevel.Info: logger.Info(msg); break;
                 case LogLevel.Warn: logger.Warn(msg); break;
-                case LogLevel.Error: logger.Error(msg); break;
                 case LogLevel.Fatal: logger.Fatal(msg); break;
+                case LogLevel.Error:
                 default:
-                    // OOPS
+                    logger.Error(msg);
                     break;
             }
         }

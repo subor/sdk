@@ -210,14 +210,8 @@ namespace Layer0
                     }
                     catch (Exception e)
                     {
-                        if (e is TerminatingException)
-                        {
-                            Log($"subscribe client terminated: { e.Message }", RuyiLogger.LogLevel.Info);
-                        }
-                        else
-                        {
-                            Log($"subscribe client terminated: { e.Message }", RuyiLogger.LogLevel.Error);
-                        }
+                        var level = e is TerminatingException ? RuyiLogger.LogLevel.Info : RuyiLogger.LogLevel.Error;
+                        Log($"subscribe client terminated: { e.Message }", level);
                     }
                 }
                 socket.Dispose();
