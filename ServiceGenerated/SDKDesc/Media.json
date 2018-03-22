@@ -1,0 +1,156 @@
+﻿{
+    "version": "1.0.0.1",
+	"includes" : [
+		"ErrorHanding.json"
+	],
+    "category": {
+        "SDKDataTypes": {
+            "name": "DataTypes",
+            "namespaces": {
+                "csharp": "Ruyi.SDK.MediaService",
+				"cpp" : "Ruyi.SDK.MediaService"
+            }
+        },
+        "SDKMessages": {
+            "name": "Messages",
+            "namespaces": {
+                "csharp": "Ruyi.SDK.MediaService",
+				"cpp" : "Ruyi.SDK.MediaService"
+            }
+        },
+        "SDKServices": {
+            "name": "Service",
+            "namespaces": {
+                "csharp": "Ruyi.SDK.MediaService",
+				"cpp" : "Ruyi.SDK.MediaService"
+            }
+        }
+    },
+    "apis": {
+        "_comment": [
+            "AudioPlayer",
+            "#############################################################"
+        ],
+
+        "struct.PlayMsg": {
+            "name": "PlayMsg",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "parameters": {
+                "url": {
+                    "type": "string",
+                    "fieldId": 1
+                }
+            }
+        },
+        "struct.PauseMsg": {
+            "name": "PauseMsg",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "parameters": {
+                "url": {
+                    "type": "string",
+                    "fieldId": 1
+                }
+            }
+        },
+        "struct.StopMsg": {
+            "name": "StopMsg",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "parameters": {
+                "url": {
+                    "type": "string",
+                    "fieldId": 1
+                }
+            }
+        },
+        "_comment": [
+            "FileWatcher",
+            "#############################################################"
+        ],
+        "struct.AddPathMsg": {
+            "name": "AddPathMsg",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+                "path": {
+                    "type": "string",
+                    "fieldId": 1
+                },
+                "pattern": {
+                    "type": "string",
+                    "fieldId": 2,
+                    "optional": true
+                }
+            }
+        },
+        "union.Message": {
+            "name": "Message",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": "UnionTypes"
+            },
+            "parameters": {
+                "Play": {
+                    "type": {"referTo": "struct.PlayMsg"}
+                },
+                "Pause": {
+                    "type": {"referTo": "struct.PauseMsg"}
+                },
+                "Stop": {
+                    "type": {"referTo": "struct.StopMsg"}
+                },
+                "AddPath": {
+                    "type": {"referTo": "struct.AddPathMsg"}
+                }
+            }
+        },
+		"request.RunCommand": {
+            "name": "RunCommand",
+            "category": {
+                "type": "SDKServices",
+                "typeName": "MediaService"
+            },
+            "parameters": {
+				"message": {
+                    "type": {"referTo": "union.Message"},
+                    "fieldId": 1
+                }
+			},
+            "responses": {
+                "status": {
+                    "type": "int"
+                }
+            }
+        },
+        "struct.Progress": {
+            "name": "Progress",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": null
+            },
+            "parameters": {
+                "url": {
+                    "type": "string",
+                    "fieldId": 1
+                },
+                "CurrentTime": {
+                    "type": "double",
+                    "fieldId": 2
+                },
+                "TotalTime": {
+                    "type": "double",
+                    "fieldId": 3
+                }
+            }
+        }
+    }
+}
