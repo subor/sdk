@@ -22,15 +22,11 @@ namespace Ruyi.SDK.MediaService
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class StopMsg : TBase
+  public partial class MediaFile : TBase
   {
-    private MediaTask _name;
+    private string _name;
 
-    /// <summary>
-    /// 
-    /// <seealso cref="MediaTask"/>
-    /// </summary>
-    public MediaTask Name
+    public string Name
     {
       get
       {
@@ -52,7 +48,7 @@ namespace Ruyi.SDK.MediaService
       public bool name;
     }
 
-    public StopMsg() {
+    public MediaFile() {
     }
 
     public void Read (TProtocol iprot)
@@ -71,8 +67,8 @@ namespace Ruyi.SDK.MediaService
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                Name = (MediaTask)iprot.ReadI32();
+              if (field.Type == TType.String) {
+                Name = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -95,15 +91,15 @@ namespace Ruyi.SDK.MediaService
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("StopMsg");
+        TStruct struc = new TStruct("MediaFile");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (__isset.name) {
+        if (Name != null && __isset.name) {
           field.Name = "name";
-          field.Type = TType.I32;
+          field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32((int)Name);
+          oprot.WriteString(Name);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -116,9 +112,9 @@ namespace Ruyi.SDK.MediaService
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("StopMsg(");
+      StringBuilder __sb = new StringBuilder("MediaFile(");
       bool __first = true;
-      if (__isset.name) {
+      if (Name != null && __isset.name) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("Name: ");

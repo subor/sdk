@@ -22,24 +22,38 @@ namespace Ruyi.SDK.MediaService
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class StopMsg : TBase
+  public partial class MediaFileEvent : TBase
   {
-    private MediaTask _name;
+    private MediaFile _file;
+    private MediaFileEventTypes _event;
 
-    /// <summary>
-    /// 
-    /// <seealso cref="MediaTask"/>
-    /// </summary>
-    public MediaTask Name
+    public MediaFile File
     {
       get
       {
-        return _name;
+        return _file;
       }
       set
       {
-        __isset.name = true;
-        this._name = value;
+        __isset.file = true;
+        this._file = value;
+      }
+    }
+
+    /// <summary>
+    /// 
+    /// <seealso cref="MediaFileEventTypes"/>
+    /// </summary>
+    public MediaFileEventTypes Event
+    {
+      get
+      {
+        return _event;
+      }
+      set
+      {
+        __isset.@event = true;
+        this._event = value;
       }
     }
 
@@ -49,10 +63,11 @@ namespace Ruyi.SDK.MediaService
     [Serializable]
     #endif
     public struct Isset {
-      public bool name;
+      public bool file;
+      public bool @event;
     }
 
-    public StopMsg() {
+    public MediaFileEvent() {
     }
 
     public void Read (TProtocol iprot)
@@ -71,8 +86,16 @@ namespace Ruyi.SDK.MediaService
           switch (field.ID)
           {
             case 1:
+              if (field.Type == TType.Struct) {
+                File = new MediaFile();
+                File.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
               if (field.Type == TType.I32) {
-                Name = (MediaTask)iprot.ReadI32();
+                Event = (MediaFileEventTypes)iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -95,15 +118,23 @@ namespace Ruyi.SDK.MediaService
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("StopMsg");
+        TStruct struc = new TStruct("MediaFileEvent");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (__isset.name) {
-          field.Name = "name";
-          field.Type = TType.I32;
+        if (File != null && __isset.file) {
+          field.Name = "file";
+          field.Type = TType.Struct;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32((int)Name);
+          File.Write(oprot);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.@event) {
+          field.Name = "event";
+          field.Type = TType.I32;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32((int)Event);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -116,13 +147,19 @@ namespace Ruyi.SDK.MediaService
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("StopMsg(");
+      StringBuilder __sb = new StringBuilder("MediaFileEvent(");
       bool __first = true;
-      if (__isset.name) {
+      if (File != null && __isset.file) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Name: ");
-        __sb.Append(Name);
+        __sb.Append("File: ");
+        __sb.Append(File== null ? "<null>" : File.ToString());
+      }
+      if (__isset.@event) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Event: ");
+        __sb.Append(Event);
       }
       __sb.Append(")");
       return __sb.ToString();

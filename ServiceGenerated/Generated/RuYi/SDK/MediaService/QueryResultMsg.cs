@@ -22,24 +22,20 @@ namespace Ruyi.SDK.MediaService
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class StopMsg : TBase
+  public partial class QueryResultMsg : TBase
   {
-    private MediaTask _name;
+    private List<MediaFile> _files;
 
-    /// <summary>
-    /// 
-    /// <seealso cref="MediaTask"/>
-    /// </summary>
-    public MediaTask Name
+    public List<MediaFile> Files
     {
       get
       {
-        return _name;
+        return _files;
       }
       set
       {
-        __isset.name = true;
-        this._name = value;
+        __isset.files = true;
+        this._files = value;
       }
     }
 
@@ -49,10 +45,10 @@ namespace Ruyi.SDK.MediaService
     [Serializable]
     #endif
     public struct Isset {
-      public bool name;
+      public bool files;
     }
 
-    public StopMsg() {
+    public QueryResultMsg() {
     }
 
     public void Read (TProtocol iprot)
@@ -71,8 +67,19 @@ namespace Ruyi.SDK.MediaService
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                Name = (MediaTask)iprot.ReadI32();
+              if (field.Type == TType.List) {
+                {
+                  Files = new List<MediaFile>();
+                  TList _list0 = iprot.ReadListBegin();
+                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
+                  {
+                    MediaFile _elem2;
+                    _elem2 = new MediaFile();
+                    _elem2.Read(iprot);
+                    Files.Add(_elem2);
+                  }
+                  iprot.ReadListEnd();
+                }
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -95,15 +102,22 @@ namespace Ruyi.SDK.MediaService
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("StopMsg");
+        TStruct struc = new TStruct("QueryResultMsg");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (__isset.name) {
-          field.Name = "name";
-          field.Type = TType.I32;
+        if (Files != null && __isset.files) {
+          field.Name = "files";
+          field.Type = TType.List;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32((int)Name);
+          {
+            oprot.WriteListBegin(new TList(TType.Struct, Files.Count));
+            foreach (MediaFile _iter3 in Files)
+            {
+              _iter3.Write(oprot);
+            }
+            oprot.WriteListEnd();
+          }
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -116,13 +130,13 @@ namespace Ruyi.SDK.MediaService
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("StopMsg(");
+      StringBuilder __sb = new StringBuilder("QueryResultMsg(");
       bool __first = true;
-      if (__isset.name) {
+      if (Files != null && __isset.files) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Name: ");
-        __sb.Append(Name);
+        __sb.Append("Files: ");
+        __sb.Append(Files);
       }
       __sb.Append(")");
       return __sb.ToString();

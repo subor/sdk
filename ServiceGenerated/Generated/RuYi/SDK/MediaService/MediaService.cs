@@ -20,16 +20,16 @@ namespace Ruyi.SDK.MediaService
 {
   public partial class MediaService {
     public interface ISync {
-      int RunCommand(Ruyi.SDK.MediaService.Message message);
+      int SendMsg(Ruyi.SDK.MediaService.RequestMsg request);
     }
 
     public interface IAsync {
-      Task<int> RunCommandAsync(Ruyi.SDK.MediaService.Message message);
+      Task<int> SendMsgAsync(Ruyi.SDK.MediaService.RequestMsg request);
     }
 
     public interface Iface : ISync, IAsync {
-      IAsyncResult Begin_RunCommand(AsyncCallback callback, object state, Ruyi.SDK.MediaService.Message message);
-      int End_RunCommand(IAsyncResult asyncResult);
+      IAsyncResult Begin_SendMsg(AsyncCallback callback, object state, Ruyi.SDK.MediaService.RequestMsg request);
+      int End_SendMsg(IAsyncResult asyncResult);
     }
 
     public class Client : IDisposable, Iface {
@@ -89,44 +89,44 @@ namespace Ruyi.SDK.MediaService
 
 
       
-      public IAsyncResult Begin_RunCommand(AsyncCallback callback, object state, Ruyi.SDK.MediaService.Message message)
+      public IAsyncResult Begin_SendMsg(AsyncCallback callback, object state, Ruyi.SDK.MediaService.RequestMsg request)
       {
-        return send_RunCommand(callback, state, message);
+        return send_SendMsg(callback, state, request);
       }
 
-      public int End_RunCommand(IAsyncResult asyncResult)
+      public int End_SendMsg(IAsyncResult asyncResult)
       {
         oprot_.Transport.EndFlush(asyncResult);
-        return recv_RunCommand();
+        return recv_SendMsg();
       }
 
-      public async Task<int> RunCommandAsync(Ruyi.SDK.MediaService.Message message)
+      public async Task<int> SendMsgAsync(Ruyi.SDK.MediaService.RequestMsg request)
       {
         int retval;
         retval = await Task.Run(() =>
         {
-          return RunCommand(message);
+          return SendMsg(request);
         });
         return retval;
       }
 
-      public int RunCommand(Ruyi.SDK.MediaService.Message message)
+      public int SendMsg(Ruyi.SDK.MediaService.RequestMsg request)
       {
-        var asyncResult = Begin_RunCommand(null, null, message);
-        return End_RunCommand(asyncResult);
+        var asyncResult = Begin_SendMsg(null, null, request);
+        return End_SendMsg(asyncResult);
 
       }
-      public IAsyncResult send_RunCommand(AsyncCallback callback, object state, Ruyi.SDK.MediaService.Message message)
+      public IAsyncResult send_SendMsg(AsyncCallback callback, object state, Ruyi.SDK.MediaService.RequestMsg request)
       {
-        oprot_.WriteMessageBegin(new TMessage("RunCommand", TMessageType.Call, seqid_));
-        RunCommand_args args = new RunCommand_args();
-        args.Message = message;
+        oprot_.WriteMessageBegin(new TMessage("SendMsg", TMessageType.Call, seqid_));
+        SendMsg_args args = new SendMsg_args();
+        args.Request = request;
         args.Write(oprot_);
         oprot_.WriteMessageEnd();
         return oprot_.Transport.BeginFlush(callback, state);
       }
 
-      public int recv_RunCommand()
+      public int recv_SendMsg()
       {
         TMessage msg = iprot_.ReadMessageBegin();
         if (msg.Type == TMessageType.Exception) {
@@ -134,13 +134,13 @@ namespace Ruyi.SDK.MediaService
           iprot_.ReadMessageEnd();
           throw x;
         }
-        RunCommand_result result = new RunCommand_result();
+        SendMsg_result result = new SendMsg_result();
         result.Read(iprot_);
         iprot_.ReadMessageEnd();
         if (result.__isset.success) {
           return result.Success;
         }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "RunCommand failed: unknown result");
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SendMsg failed: unknown result");
       }
 
     }
@@ -148,7 +148,7 @@ namespace Ruyi.SDK.MediaService
       public AsyncProcessor(IAsync iface)
       {
         iface_ = iface;
-        processMap_["RunCommand"] = RunCommand_ProcessAsync;
+        processMap_["SendMsg"] = SendMsg_ProcessAsync;
       }
 
       protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -181,16 +181,16 @@ namespace Ruyi.SDK.MediaService
         return true;
       }
 
-      public async Task RunCommand_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task SendMsg_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
       {
-        RunCommand_args args = new RunCommand_args();
+        SendMsg_args args = new SendMsg_args();
         args.Read(iprot);
         iprot.ReadMessageEnd();
-        RunCommand_result result = new RunCommand_result();
+        SendMsg_result result = new SendMsg_result();
         try
         {
-          result.Success = await iface_.RunCommandAsync(args.Message);
-          oprot.WriteMessageBegin(new TMessage("RunCommand", TMessageType.Reply, seqid)); 
+          result.Success = await iface_.SendMsgAsync(args.Request);
+          oprot.WriteMessageBegin(new TMessage("SendMsg", TMessageType.Reply, seqid)); 
           result.Write(oprot);
         }
         catch (TTransportException)
@@ -202,7 +202,7 @@ namespace Ruyi.SDK.MediaService
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
           TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("RunCommand", TMessageType.Exception, seqid));
+          oprot.WriteMessageBegin(new TMessage("SendMsg", TMessageType.Exception, seqid));
           x.Write(oprot);
         }
         oprot.WriteMessageEnd();
@@ -215,7 +215,7 @@ namespace Ruyi.SDK.MediaService
       public Processor(ISync iface)
       {
         iface_ = iface;
-        processMap_["RunCommand"] = RunCommand_Process;
+        processMap_["SendMsg"] = SendMsg_Process;
       }
 
       protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -248,16 +248,16 @@ namespace Ruyi.SDK.MediaService
         return true;
       }
 
-      public void RunCommand_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      public void SendMsg_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
-        RunCommand_args args = new RunCommand_args();
+        SendMsg_args args = new SendMsg_args();
         args.Read(iprot);
         iprot.ReadMessageEnd();
-        RunCommand_result result = new RunCommand_result();
+        SendMsg_result result = new SendMsg_result();
         try
         {
-          result.Success = iface_.RunCommand(args.Message);
-          oprot.WriteMessageBegin(new TMessage("RunCommand", TMessageType.Reply, seqid)); 
+          result.Success = iface_.SendMsg(args.Request);
+          oprot.WriteMessageBegin(new TMessage("SendMsg", TMessageType.Reply, seqid)); 
           result.Write(oprot);
         }
         catch (TTransportException)
@@ -269,7 +269,7 @@ namespace Ruyi.SDK.MediaService
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
           TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("RunCommand", TMessageType.Exception, seqid));
+          oprot.WriteMessageBegin(new TMessage("SendMsg", TMessageType.Exception, seqid));
           x.Write(oprot);
         }
         oprot.WriteMessageEnd();
@@ -282,20 +282,20 @@ namespace Ruyi.SDK.MediaService
     #if !SILVERLIGHT
     [Serializable]
     #endif
-    public partial class RunCommand_args : TBase
+    public partial class SendMsg_args : TBase
     {
-      private Ruyi.SDK.MediaService.Message _message;
+      private Ruyi.SDK.MediaService.RequestMsg _request;
 
-      public Ruyi.SDK.MediaService.Message Message
+      public Ruyi.SDK.MediaService.RequestMsg Request
       {
         get
         {
-          return _message;
+          return _request;
         }
         set
         {
-          __isset.message = true;
-          this._message = value;
+          __isset.request = true;
+          this._request = value;
         }
       }
 
@@ -305,10 +305,10 @@ namespace Ruyi.SDK.MediaService
       [Serializable]
       #endif
       public struct Isset {
-        public bool message;
+        public bool request;
       }
 
-      public RunCommand_args() {
+      public SendMsg_args() {
       }
 
       public void Read (TProtocol iprot)
@@ -328,7 +328,7 @@ namespace Ruyi.SDK.MediaService
             {
               case 1:
                 if (field.Type == TType.Struct) {
-                  Message = Ruyi.SDK.MediaService.Message.Read(iprot);
+                  Request = Ruyi.SDK.MediaService.RequestMsg.Read(iprot);
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }
@@ -351,15 +351,15 @@ namespace Ruyi.SDK.MediaService
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("RunCommand_args");
+          TStruct struc = new TStruct("SendMsg_args");
           oprot.WriteStructBegin(struc);
           TField field = new TField();
-          if (Message != null && __isset.message) {
-            field.Name = "message";
+          if (Request != null && __isset.request) {
+            field.Name = "request";
             field.Type = TType.Struct;
             field.ID = 1;
             oprot.WriteFieldBegin(field);
-            Message.Write(oprot);
+            Request.Write(oprot);
             oprot.WriteFieldEnd();
           }
           oprot.WriteFieldStop();
@@ -372,13 +372,13 @@ namespace Ruyi.SDK.MediaService
       }
 
       public override string ToString() {
-        StringBuilder __sb = new StringBuilder("RunCommand_args(");
+        StringBuilder __sb = new StringBuilder("SendMsg_args(");
         bool __first = true;
-        if (Message != null && __isset.message) {
+        if (Request != null && __isset.request) {
           if(!__first) { __sb.Append(", "); }
           __first = false;
-          __sb.Append("Message: ");
-          __sb.Append(Message== null ? "<null>" : Message.ToString());
+          __sb.Append("Request: ");
+          __sb.Append(Request== null ? "<null>" : Request.ToString());
         }
         __sb.Append(")");
         return __sb.ToString();
@@ -390,7 +390,7 @@ namespace Ruyi.SDK.MediaService
     #if !SILVERLIGHT
     [Serializable]
     #endif
-    public partial class RunCommand_result : TBase
+    public partial class SendMsg_result : TBase
     {
       private int _success;
 
@@ -416,7 +416,7 @@ namespace Ruyi.SDK.MediaService
         public bool success;
       }
 
-      public RunCommand_result() {
+      public SendMsg_result() {
       }
 
       public void Read (TProtocol iprot)
@@ -459,7 +459,7 @@ namespace Ruyi.SDK.MediaService
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("RunCommand_result");
+          TStruct struc = new TStruct("SendMsg_result");
           oprot.WriteStructBegin(struc);
           TField field = new TField();
 
@@ -481,7 +481,7 @@ namespace Ruyi.SDK.MediaService
       }
 
       public override string ToString() {
-        StringBuilder __sb = new StringBuilder("RunCommand_result(");
+        StringBuilder __sb = new StringBuilder("SendMsg_result(");
         bool __first = true;
         if (__isset.success) {
           if(!__first) { __sb.Append(", "); }

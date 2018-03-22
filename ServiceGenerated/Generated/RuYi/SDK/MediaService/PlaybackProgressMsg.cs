@@ -22,7 +22,7 @@ namespace Ruyi.SDK.MediaService
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class Progress : TBase
+  public partial class PlaybackProgressMsg : TBase
   {
     private string _url;
     private double _CurrentTime;
@@ -78,7 +78,7 @@ namespace Ruyi.SDK.MediaService
       public bool TotalTime;
     }
 
-    public Progress() {
+    public PlaybackProgressMsg() {
     }
 
     public void Read (TProtocol iprot)
@@ -135,7 +135,7 @@ namespace Ruyi.SDK.MediaService
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("Progress");
+        TStruct struc = new TStruct("PlaybackProgressMsg");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
         if (Url != null && __isset.url) {
@@ -172,7 +172,7 @@ namespace Ruyi.SDK.MediaService
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("Progress(");
+      StringBuilder __sb = new StringBuilder("PlaybackProgressMsg(");
       bool __first = true;
       if (Url != null && __isset.url) {
         if(!__first) { __sb.Append(", "); }

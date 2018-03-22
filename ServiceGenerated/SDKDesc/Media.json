@@ -27,6 +27,34 @@
         }
     },
     "apis": {
+        "enum.MediaTask": {
+            "parameters": {
+                "None":     { "value": 0 },
+                "Playback": { "value": 1 },
+                "Query":    { "value": 2 }
+            },
+            "name": "MediaTask",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": "EnumTypes"
+            }
+        },
+
+        "enum.MediaFileEventTypes":{
+            "parameters":{
+                "Created": {"value": 1},
+                "Deleted": {"value": 2},
+                "Changed": {"value": 4},
+                "Renamed": {"value": 8}
+            },
+            "name": "MediaFileEventTypes",
+            "category": {
+                "type": "SDKDataTypes",
+                "typeName": "EnumTypes"
+            },
+            "description": "See System.IO.WatcherChangeTypes"
+        },
+
         "_comment": [
             "AudioPlayer",
             "#############################################################"
@@ -65,8 +93,8 @@
                 "typeName": null
             },
             "parameters": {
-                "url": {
-                    "type": "string",
+                "name": {
+                    "type": {"referTo": "enum.MediaTask"},
                     "fieldId": 1
                 }
             }
@@ -92,8 +120,20 @@
                 }
             }
         },
-        "union.Message": {
-            "name": "Message",
+        "struct.QueryMsg":{
+            "name": "QueryMsg",
+            "category": {
+                "type": "SDKDataTypes"
+            },
+            "parameters": {
+                "path": {
+                    "type": "string",
+                    "fieldId": 1
+                }
+            }
+        },
+        "union.RequestMsg": {
+            "name": "RequestMsg",
             "category": {
                 "type": "SDKDataTypes",
                 "typeName": "UnionTypes"
@@ -110,18 +150,21 @@
                 },
                 "AddPath": {
                     "type": {"referTo": "struct.AddPathMsg"}
+                },
+                "Query": {
+                    "type": {"referTo": "struct.QueryMsg"}
                 }
             }
         },
-		"request.RunCommand": {
-            "name": "RunCommand",
+		"request.SendMsg": {
+            "name": "SendMsg",
             "category": {
                 "type": "SDKServices",
                 "typeName": "MediaService"
             },
             "parameters": {
-				"message": {
-                    "type": {"referTo": "union.Message"},
+				"request": {
+                    "type": {"referTo": "union.RequestMsg"},
                     "fieldId": 1
                 }
 			},
@@ -131,8 +174,37 @@
                 }
             }
         },
-        "struct.Progress": {
-            "name": "Progress",
+        "struct.MediaFile":{
+            "name": "MediaFile",
+            "category":{
+                "type": "SDKDataTypes"
+            },
+            "parameters":{
+                "name": {
+                    "type": "string",
+                    "fieldId": 1
+                }
+            }
+        },
+
+        "_comment": [
+            "Published messages",
+            "#############################################################"
+        ],
+        "struct.QueryResultMsg":{
+            "name": "QueryResultMsg",
+            "category":{
+                "type": "SDKDataTypes"
+            },
+            "parameters":{
+                "files": {
+                    "type": "list<struct.MediaFile>",
+                    "fieldId": 1
+                }
+            }
+        },
+        "struct.PlaybackProgressMsg": {
+            "name": "PlaybackProgressMsg",
             "category": {
                 "type": "SDKDataTypes",
                 "typeName": null
@@ -149,6 +221,24 @@
                 "TotalTime": {
                     "type": "double",
                     "fieldId": 3
+                }
+            }
+        },
+        "struct.MediaFileEvent":{
+            "name": "MediaFileEvent",
+            "category":{
+                "type": "SDKDataTypes"
+            },
+            "parameters":{
+                "file": {
+                    "type": {"referTo": "struct.MediaFile"},
+                    "fieldId": 1
+                },
+                "event": {
+                    "type":{
+                        "referTo": "enum.MediaFileEventTypes"
+                    },
+                    "fieldId": 2
                 }
             }
         }

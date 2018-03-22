@@ -22,24 +22,20 @@ namespace Ruyi.SDK.MediaService
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class StopMsg : TBase
+  public partial class QueryMsg : TBase
   {
-    private MediaTask _name;
+    private string _path;
 
-    /// <summary>
-    /// 
-    /// <seealso cref="MediaTask"/>
-    /// </summary>
-    public MediaTask Name
+    public string Path
     {
       get
       {
-        return _name;
+        return _path;
       }
       set
       {
-        __isset.name = true;
-        this._name = value;
+        __isset.path = true;
+        this._path = value;
       }
     }
 
@@ -49,10 +45,10 @@ namespace Ruyi.SDK.MediaService
     [Serializable]
     #endif
     public struct Isset {
-      public bool name;
+      public bool path;
     }
 
-    public StopMsg() {
+    public QueryMsg() {
     }
 
     public void Read (TProtocol iprot)
@@ -71,8 +67,8 @@ namespace Ruyi.SDK.MediaService
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                Name = (MediaTask)iprot.ReadI32();
+              if (field.Type == TType.String) {
+                Path = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -95,15 +91,15 @@ namespace Ruyi.SDK.MediaService
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("StopMsg");
+        TStruct struc = new TStruct("QueryMsg");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (__isset.name) {
-          field.Name = "name";
-          field.Type = TType.I32;
+        if (Path != null && __isset.path) {
+          field.Name = "path";
+          field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32((int)Name);
+          oprot.WriteString(Path);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -116,13 +112,13 @@ namespace Ruyi.SDK.MediaService
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("StopMsg(");
+      StringBuilder __sb = new StringBuilder("QueryMsg(");
       bool __first = true;
-      if (__isset.name) {
+      if (Path != null && __isset.path) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Name: ");
-        __sb.Append(Name);
+        __sb.Append("Path: ");
+        __sb.Append(Path);
       }
       __sb.Append(")");
       return __sb.ToString();

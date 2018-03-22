@@ -18,15 +18,15 @@ using Thrift.Transport;
 
 namespace Ruyi.SDK.MediaService
 {
-  public abstract partial class Message : TAbstractBase {
+  public abstract partial class RequestMsg : TAbstractBase {
     public abstract void Write(TProtocol protocol);
     public readonly bool Isset;
     public abstract object Data { get; }
-    protected Message(bool isset) {
+    protected RequestMsg(bool isset) {
       Isset = isset;
     }
 
-    public class ___undefined : Message {
+    public class ___undefined : RequestMsg {
       public override object Data { get { return null; } }
       public ___undefined() : base(false) {}
 
@@ -36,7 +36,7 @@ namespace Ruyi.SDK.MediaService
 
     }
 
-    public class Play : Message {
+    public class Play : RequestMsg {
       private PlayMsg _data;
       public override object Data { get { return _data; } }
       public Play(PlayMsg data) : base(true) {
@@ -46,7 +46,7 @@ namespace Ruyi.SDK.MediaService
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("Message");
+          TStruct struc = new TStruct("RequestMsg");
           oprot.WriteStructBegin(struc);
           TField field = new TField();
           field.Name = "Play";
@@ -65,7 +65,7 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
-    public class Pause : Message {
+    public class Pause : RequestMsg {
       private PauseMsg _data;
       public override object Data { get { return _data; } }
       public Pause(PauseMsg data) : base(true) {
@@ -75,7 +75,7 @@ namespace Ruyi.SDK.MediaService
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("Message");
+          TStruct struc = new TStruct("RequestMsg");
           oprot.WriteStructBegin(struc);
           TField field = new TField();
           field.Name = "Pause";
@@ -94,7 +94,7 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
-    public class Stop : Message {
+    public class Stop : RequestMsg {
       private StopMsg _data;
       public override object Data { get { return _data; } }
       public Stop(StopMsg data) : base(true) {
@@ -104,7 +104,7 @@ namespace Ruyi.SDK.MediaService
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("Message");
+          TStruct struc = new TStruct("RequestMsg");
           oprot.WriteStructBegin(struc);
           TField field = new TField();
           field.Name = "Stop";
@@ -123,7 +123,7 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
-    public class AddPath : Message {
+    public class AddPath : RequestMsg {
       private AddPathMsg _data;
       public override object Data { get { return _data; } }
       public AddPath(AddPathMsg data) : base(true) {
@@ -133,7 +133,7 @@ namespace Ruyi.SDK.MediaService
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("Message");
+          TStruct struc = new TStruct("RequestMsg");
           oprot.WriteStructBegin(struc);
           TField field = new TField();
           field.Name = "AddPath";
@@ -152,12 +152,41 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
-    public static Message Read(TProtocol iprot)
+    public class Query : RequestMsg {
+      private QueryMsg _data;
+      public override object Data { get { return _data; } }
+      public Query(QueryMsg data) : base(true) {
+        this._data = data;
+      }
+      public override void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("RequestMsg");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          field.Name = "Query";
+          field.Type = TType.Struct;
+          field.ID = 5;
+          oprot.WriteFieldBegin(field);
+          _data.Write(oprot);
+          oprot.WriteFieldEnd();
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+      }
+    }
+
+    public static RequestMsg Read(TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
-        Message retval;
+        RequestMsg retval;
         iprot.ReadStructBegin();
         TField field = iprot.ReadFieldBegin();
         if (field.Type == TType.Stop)
@@ -208,6 +237,17 @@ namespace Ruyi.SDK.MediaService
                 temp = new AddPathMsg();
                 temp.Read(iprot);
                 retval = new AddPath(temp);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+                retval = new ___undefined();
+              }
+              break;
+            case 5:
+              if (field.Type == TType.Struct) {
+                QueryMsg temp;
+                temp = new QueryMsg();
+                temp.Read(iprot);
+                retval = new Query(temp);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
                 retval = new ___undefined();
