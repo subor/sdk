@@ -19,300 +19,2249 @@ namespace Ruyi.SDK.BrainCloudApi
 {
   public partial class BrainCloudService {
     public interface ISync {
+      /// <summary>
+      /// Creates an instance of an asynchronous match.
+      /// </summary>
+      /// <param name="jsonOpponentIds">JSON string identifying the opponent platform and id for this match.Platforms are identified as:BC - a brainCloud profile idFB - a Facebook idAn exmaple of this string would be:[    {        "platform": "BC",        "id": "some-braincloud-profile"    },    {        "platform": "FB",        "id": "some-facebook-id"    }]</param>
+      /// <param name="pushNotificationMessage">Optional push notification message to send to the other party.Refer to the Push Notification functions for the syntax required.</param>
+      /// <param name="clientIndex"></param>
       string AsyncMatch_CreateMatch(string jsonOpponentIds, string pushNotificationMessage, int clientIndex);
+      /// <summary>
+      /// Creates an instance of an asynchronous match with an initial turn.
+      /// </summary>
+      /// <param name="jsonOpponentIds">JSON string identifying the opponent platform and id for this match.Platforms are identified as:BC - a brainCloud profile idFB - a Facebook idAn exmaple of this string would be:[    {        "platform": "BC",        "id": "some-braincloud-profile"    },    {        "platform": "FB",        "id": "some-facebook-id"    }]</param>
+      /// <param name="jsonMatchState">JSON string blob provided by the caller</param>
+      /// <param name="pushNotificationMessage">Optional push notification message to send to the other party.Refer to the Push Notification functions for the syntax required.</param>
+      /// <param name="nextPlayer">Optionally, force the next player player to be a specific player</param>
+      /// <param name="jsonSummary">Optional JSON string defining what the other player will see as a summary of the game when listing their games</param>
+      /// <param name="clientIndex"></param>
       string AsyncMatch_CreateMatchWithInitialTurn(string jsonOpponentIds, string jsonMatchState, string pushNotificationMessage, string nextPlayer, string jsonSummary, int clientIndex);
+      /// <summary>
+      /// Submits a turn for the given match.
+      /// </summary>
+      /// <param name="ownerId">Match owner identfier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="version">Game state version to ensure turns are submitted once and in order</param>
+      /// <param name="jsonMatchState">JSON string blob provided by the caller</param>
+      /// <param name="pushNotificationMessage">Optional push notification message to send to the other party.Refer to the Push Notification functions for the syntax required.</param>
+      /// <param name="nextPlayer">Optionally, force the next player player to be a specific player</param>
+      /// <param name="jsonSummary">Optional JSON string that other players will see as a summary of the game when listing their games</param>
+      /// <param name="jsonStatistics">Optional JSON string blob provided by the caller</param>
+      /// <param name="clientIndex"></param>
       string AsyncMatch_SubmitTurn(string ownerId, string matchId, long version, string jsonMatchState, string pushNotificationMessage, string nextPlayer, string jsonSummary, string jsonStatistics, int clientIndex);
+      /// <summary>
+      /// Allows the current player (only) to update Summary data without having to submit a whole turn.
+      /// </summary>
+      /// <param name="ownerId">Match owner identfier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="version">Game state version to ensure turns are submitted once and in order</param>
+      /// <param name="jsonSummary">JSON string provided by the caller that other players will see as a summary of the game when listing their games</param>
+      /// <param name="clientIndex"></param>
       string AsyncMatch_UpdateMatchSummaryData(string ownerId, string matchId, long version, string jsonSummary, int clientIndex);
+      /// <summary>
+      /// Marks the given match as complete.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       string AsyncMatch_CompleteMatch(string ownerId, string matchId, int clientIndex);
+      /// <summary>
+      /// Returns the current state of the given match.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       string AsyncMatch_ReadMatch(string ownerId, string matchId, int clientIndex);
+      /// <summary>
+      /// Returns the match history of the given match.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       string AsyncMatch_ReadMatchHistory(string ownerId, string matchId, int clientIndex);
+      /// <summary>
+      /// Returns all matches that are NOT in a COMPLETE state for which the player is involved.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string AsyncMatch_FindMatches(int clientIndex);
+      /// <summary>
+      /// Returns all matches that are in a COMPLETE state for which the player is involved.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string AsyncMatch_FindCompleteMatches(int clientIndex);
+      /// <summary>
+      /// Marks the given match as abandoned.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       string AsyncMatch_AbandonMatch(string ownerId, string matchId, int clientIndex);
+      /// <summary>
+      /// Removes the match and match history from the server. DEBUG ONLY, in production it is recommended
+      /// the user leave it as completed.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       string AsyncMatch_DeleteMatch(string ownerId, string matchId, int clientIndex);
+      /// <summary>
+      /// Used to create the anonymous installation id for the brainCloud profile.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string Authentication_GenerateAnonymousId(int clientIndex);
+      /// <summary>
+      /// Initialize - initializes the identity service with a saved
+      /// anonymous installation id and most recently used profile id
+      /// </summary>
+      /// <param name="profileId">The id of the profile id that was most recently used by the app (on this device)</param>
+      /// <param name="anonymousId">The anonymous installation id that was generated for this device</param>
+      /// <param name="clientIndex"></param>
       void Authentication_Initialize(string profileId, string anonymousId, int clientIndex);
+      /// <summary>
+      /// Used to clear the saved profile id - to use in cases when the user is
+      /// attempting to switch to a different app profile.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       void Authentication_ClearSavedProfileID(int clientIndex);
+      /// <summary>
+      /// Authenticate a user anonymously with brainCloud - used for apps that don't want to bother
+      /// the user to login, or for users who are sensitive to their privacy
+      /// </summary>
+      /// <param name="forceCreate">Should a new profile be created if it does not exist?</param>
+      /// <param name="clientIndex"></param>
       string Authentication_AuthenticateAnonymous(bool forceCreate, int clientIndex);
+      /// <summary>
+      /// Authenticate the user with a custom Email and Password.  Note that the client app
+      /// is responsible for collecting (and storing) the e-mail and potentially password
+      /// (for convenience) in the client data.  For the greatest security,
+      /// force the user to re-enter their password at each login.
+      /// (Or at least give them that option).
+      /// </summary>
+      /// <param name="email">The e-mail address of the user</param>
+      /// <param name="password">The password of the user</param>
+      /// <param name="forceCreate">Should a new profile be created for this user if the account does not exist?</param>
+      /// <param name="clientIndex"></param>
       string Authentication_AuthenticateEmailPassword(string email, string password, bool forceCreate, int clientIndex);
+      /// <summary>
+      /// Authenticate the user using a userId and password (without any validation on the userId).
+      /// Similar to AuthenticateEmailPassword - except that that method has additional features to
+      /// allow for e-mail validation, password resets, etc.
+      /// </summary>
+      /// <param name="userId"></param>
+      /// <param name="password">The password of the user</param>
+      /// <param name="forceCreate">Should a new profile be created for this user if the account does not exist?</param>
+      /// <param name="clientIndex"></param>
       string Authentication_AuthenticateUniversal(string userId, string password, bool forceCreate, int clientIndex);
+      /// <summary>
+      /// Authenticate the user via cloud code (which in turn validates the supplied credentials against an external system).
+      /// This allows the developer to extend brainCloud authentication to support other backend authentication systems.
+      /// </summary>
+      /// <param name="userId">The user id</param>
+      /// <param name="token">The user token (password etc)</param>
+      /// <param name="externalAuthName">The name of the cloud script to call for external authentication</param>
+      /// <param name="forceCreate">Should a new profile be created for this user if the account does not exist?</param>
+      /// <param name="clientIndex"></param>
       string Authentication_AuthenticateExternal(string userId, string token, string externalAuthName, bool forceCreate, int clientIndex);
+      /// <summary>
+      /// Reset Email password - Sends a password reset email to the specified address
+      /// </summary>
+      /// <param name="externalId">The email address to send the reset email to.</param>
+      /// <param name="clientIndex"></param>
       string Authentication_ResetEmailPassword(string externalId, int clientIndex);
+      /// <summary>
+      /// Returns the sessionId or empty string if no session present.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string Client_GetSessionId(int clientIndex);
+      /// <summary>
+      /// Returns true if the user is currently authenticated.
+      /// If a session time out or session invalidation is returned from executing a
+      /// sever API call, this flag will reset back to false.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       bool Client_IsAuthenticated(int clientIndex);
+      /// <summary>
+      /// Returns true if brainCloud has been initialized.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       bool Client_IsInitialized(int clientIndex);
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId"></param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
       void Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex);
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="serverURL">The URL to the brainCloud server</param>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId">The app id</param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
       void Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex);
+      /// <summary>
+      /// Initialize the identity aspects of brainCloud.
+      /// </summary>
+      /// <param name="profileId">The profile id</param>
+      /// <param name="anonymousId">The anonymous id</param>
+      /// <param name="clientIndex"></param>
       void Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex);
+      /// <summary>
+      /// Update method needs to be called regularly in order
+      /// to process incoming and outgoing messages.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       void Client_Update(int clientIndex);
+      /// <summary>
+      /// Enable logging of brainCloud transactions (comms etc)
+      /// </summary>
+      /// <param name="enable">True if logging is to be enabled</param>
+      /// <param name="clientIndex"></param>
       void Client_EnableLogging(bool enable, int clientIndex);
+      /// <summary>
+      /// Resets all messages and calls to the server
+      /// </summary>
+      /// <param name="clientIndex"></param>
       void Client_ResetCommunication(int clientIndex);
+      /// <summary>
+      /// Sets the packet timeouts using a list of integers that
+      /// represent timeout values for each packet retry. The
+      /// first item in the list represents the timeout for the first packet
+      /// attempt, the second for the second packet attempt, and so on.
+      /// 
+      /// The number of entries in this array determines how many packet
+      /// retries will occur.
+      /// 
+      /// By default, the packet timeout array is {10, 10, 10}
+      /// 
+      /// Note that this method does not change the timeout for authentication
+      /// packets (use SetAuthenticationPacketTimeout method).
+      /// </summary>
+      /// <param name="timeouts">An array of packet timeouts.</param>
+      /// <param name="clientIndex"></param>
       void Client_SetPacketTimeouts(List<int> timeouts, int clientIndex);
+      /// <summary>
+      /// Sets the packet timeouts back to default.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       void Client_SetPacketTimeoutsToDefault(int clientIndex);
+      /// <summary>
+      /// Returns the list of packet timeouts.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       List<int> Client_GetPacketTimeouts(int clientIndex);
+      /// <summary>
+      /// Sets the authentication packet timeout which is tracked separately
+      /// from all other packets. Note that authentication packets are never
+      /// retried and so this value represents the total time a client would
+      /// wait to receive a reply to an authentication API call. By default
+      /// this timeout is set to 15 seconds.
+      /// </summary>
+      /// <param name="timeoutSecs"></param>
+      /// <param name="clientIndex"></param>
       void Client_SetAuthenticationPacketTimeout(int timeoutSecs, int clientIndex);
+      /// <summary>
+      /// Gets the authentication packet timeout which is tracked separately
+      /// from all other packets. Note that authentication packets are never
+      /// retried and so this value represents the total time a client would
+      /// wait to receive a reply to an authentication API call. By default
+      /// this timeout is set to 15 seconds.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       int Client_GetAuthenticationPacketTimeout(int clientIndex);
+      /// <summary>
+      /// Returns the low transfer rate timeout in secs
+      /// </summary>
+      /// <param name="clientIndex"></param>
       int Client_GetUploadLowTransferRateTimeout(int clientIndex);
+      /// <summary>
+      /// Sets the timeout in seconds of a low speed upload
+      /// (i.e. transfer rate which is underneath the low transfer rate threshold).
+      /// By default this is set to 120 secs.Setting this value to 0 will
+      /// turn off the timeout. Note that this timeout method
+      /// does not work on Unity mobile platforms.
+      /// </summary>
+      /// <param name="timeoutSecs"></param>
+      /// <param name="clientIndex"></param>
       void Client_SetUploadLowTransferRateTimeout(int timeoutSecs, int clientIndex);
+      /// <summary>
+      /// Returns the low transfer rate threshold in bytes/sec
+      /// </summary>
+      /// <param name="clientIndex"></param>
       int Client_GetUploadLowTransferRateThreshold(int clientIndex);
+      /// <summary>
+      /// Sets the low transfer rate threshold of an upload in bytes/sec.
+      /// If the transfer rate dips below the given threshold longer
+      /// than the specified timeout, the transfer will fail.
+      /// By default this is set to 50 bytes/sec. Note that this timeout method
+      /// does not work on Unity mobile platforms.
+      /// </summary>
+      /// <param name="bytesPerSec">The low transfer rate threshold in bytes/sec</param>
+      /// <param name="clientIndex"></param>
       void Client_SetUploadLowTransferRateThreshold(int bytesPerSec, int clientIndex);
+      /// <summary>
+      /// Enables the timeout message caching which is disabled by default.
+      /// Once enabled, if a client side timeout is encountered
+      /// (i.e. brainCloud server is unreachable presumably due to the client
+      /// network being down) the SDK will do the following:
+      /// 
+      /// 1 - cache the currently queued messages to brainCloud
+      /// 2 - call the network error callback
+      /// 3 - then expect the app to call either:
+      ///     a) RetryCachedMessages() to retry sending to brainCloud
+      ///     b) FlushCachedMessages() to dump all messages in the queue.
+      /// 
+      /// Between steps 2 and 3, the app can prompt the user to retry connecting
+      /// to brainCloud to determine whether to follow path 3a or 3b.
+      /// 
+      /// Note that if path 3a is followed, and another timeout is encountered,
+      /// the process will begin all over again from step 1.
+      /// 
+      /// WARNING - the brainCloud SDK will cache *all* API calls sent
+      /// when a timeout is encountered if this mechanism is enabled.
+      /// This effectively freezes all communication with brainCloud.
+      /// Apps must call either RetryCachedMessages() or FlushCachedMessages()
+      /// for the brainCloud SDK to resume sending messages.
+      /// ResetCommunication() will also clear the message cache.
+      /// </summary>
+      /// <param name="enabled">True if message should be cached on timeout</param>
+      /// <param name="clientIndex"></param>
       void Client_EnableNetworkErrorMessageCaching(bool enabled, int clientIndex);
+      /// <summary>
+      /// Attempts to resend any cached messages. If no messages are in the cache,
+      /// this method does nothing.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       void Client_RetryCachedMessages(int clientIndex);
+      /// <summary>
+      /// Flushes the cached messages to resume API call processing. This will dump
+      /// all of the cached messages in the queue.
+      /// </summary>
+      /// <param name="sendApiErrorCallbacks">If set to true API error callbacks willbe called for every cached message with statusCode CLIENT_NETWORK_ERROR and reasonCode CLIENT_NETWORK_ERROR_TIMEOUT.</param>
+      /// <param name="clientIndex"></param>
       void Client_FlushCachedMessages(bool sendApiErrorCallbacks, int clientIndex);
+      /// <summary>
+      /// Inserts a marker which will tell the brainCloud comms layer
+      /// to close the message bundle off at this point. Any messages queued
+      /// before this method was called will likely be bundled together in
+      /// the next send to the server.
+      /// 
+      /// To ensure that only a single message is sent to the server you would
+      /// do something like this:
+      /// 
+      /// InsertEndOfMessageBundleMarker()
+      /// SomeApiCall()
+      /// InsertEndOfMessageBundleMarker()
+      /// </summary>
+      /// <param name="clientIndex"></param>
       void Client_InsertEndOfMessageBundleMarker(int clientIndex);
+      /// <summary>
+      /// Sets the country code sent to brainCloud when a user authenticates.
+      /// Will override any auto detected country.
+      /// </summary>
+      /// <param name="countryCode">ISO 3166-1 two-letter country code</param>
+      /// <param name="clientIndex"></param>
       void Client_OverrideCountryCode(string countryCode, int clientIndex);
+      /// <summary>
+      /// Sets the language code sent to brainCloud when a user authenticates.
+      /// If the language is set to a non-ISO 639-1 standard value the game default will be used instead.
+      /// Will override any auto detected language.
+      /// </summary>
+      /// <param name="languageCode">ISO 639-1 two-letter language code</param>
+      /// <param name="clientIndex"></param>
       void Client_OverrideLanguageCode(string languageCode, int clientIndex);
+      /// <summary>
+      /// Creates custom data stream page event
+      /// </summary>
+      /// <param name="eventName">The name of the event</param>
+      /// <param name="jsonEventProperties">The properties of the event</param>
+      /// <param name="clientIndex"></param>
       string DataStream_CustomPageEvent(string eventName, string jsonEventProperties, int clientIndex);
+      /// <summary>
+      /// Creates custom data stream screen event
+      /// </summary>
+      /// <param name="eventName">The name of the event</param>
+      /// <param name="jsonEventProperties">The properties of the event</param>
+      /// <param name="clientIndex"></param>
       string DataStream_CustomScreenEvent(string eventName, string jsonEventProperties, int clientIndex);
+      /// <summary>
+      /// Creates custom data stream track event
+      /// </summary>
+      /// <param name="eventName">The name of the event</param>
+      /// <param name="jsonEventProperties">The properties of the event</param>
+      /// <param name="clientIndex"></param>
       string DataStream_CustomTrackEvent(string eventName, string jsonEventProperties, int clientIndex);
+      /// <summary>
+      /// Method creates a new entity on the server.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="jsonEntityData">The entity's data as a json string</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies defaultpermissions which make the entity readable/writeable by only the user.</param>
+      /// <param name="clientIndex"></param>
       string Entity_CreateEntity(string entityType, string jsonEntityData, string jsonEntityAcl, int clientIndex);
+      /// <summary>
+      /// Method returns all user entities that match the given type.
+      /// </summary>
+      /// <param name="entityType">The entity type to search for</param>
+      /// <param name="clientIndex"></param>
       string Entity_GetEntitiesByType(string entityType, int clientIndex);
+      /// <summary>
+      /// Method updates a new entity on the server. This operation results in the entity
+      /// data being completely replaced by the passed in JSON string.
+      /// </summary>
+      /// <param name="entityId">The id of the entity to update</param>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="jsonEntityData">The entity's data as a json string.</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies defaultpermissions which make the entity readable/writeable by only the user.</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       string Entity_UpdateEntity(string entityId, string entityType, string jsonEntityData, string jsonEntityAcl, int version, int clientIndex);
+      /// <summary>
+      /// Method updates a shared entity owned by another user. This operation results in the entity
+      /// data being completely replaced by the passed in JSON string.
+      /// </summary>
+      /// <param name="entityId">The id of the entity to update</param>
+      /// <param name="targetProfileId">The id of the entity's owner</param>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="jsonEntityData">The entity's data as a json string.</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       string Entity_UpdateSharedEntity(string entityId, string targetProfileId, string entityType, string jsonEntityData, int version, int clientIndex);
+      /// <summary>
+      /// Method deletes the given entity on the server.
+      /// </summary>
+      /// <param name="entityId">The id of the entity to update</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       string Entity_DeleteEntity(string entityId, int version, int clientIndex);
+      /// <summary>
+      /// Method updates a singleton entity on the server. This operation results in the entity
+      /// data being completely replaced by the passed in JSON string. If the entity doesn't exist it is created.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="jsonEntityData">The entity's data as a json string.</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies default</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       string Entity_UpdateSingleton(string entityType, string jsonEntityData, string jsonEntityAcl, int version, int clientIndex);
+      /// <summary>
+      /// Method deletes the given singleton on the server.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       string Entity_DeleteSingleton(string entityType, int version, int clientIndex);
+      /// <summary>
+      /// Method to get a specific entity.
+      /// </summary>
+      /// <param name="entityId">The id of the entity</param>
+      /// <param name="clientIndex"></param>
       string Entity_GetEntity(string entityId, int clientIndex);
+      /// <summary>
+      /// Method retrieves a singleton entity on the server. If the entity doesn't exist, null is returned.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="clientIndex"></param>
       string Entity_GetSingleton(string entityType, int clientIndex);
+      /// <summary>
+      /// Method returns a shared entity for the given profile and entity ID.
+      /// An entity is shared if its ACL allows for the currently logged
+      /// in user to read the data.
+      /// </summary>
+      /// <param name="profileId">The the profile ID of the user who owns the entity</param>
+      /// <param name="entityId">The ID of the entity that will be retrieved</param>
+      /// <param name="clientIndex"></param>
       string Entity_GetSharedEntityForProfileId(string profileId, string entityId, int clientIndex);
+      /// <summary>
+      /// Method returns all shared entities for the given profile id.
+      /// An entity is shared if its ACL allows for the currently logged
+      /// in user to read the data.
+      /// </summary>
+      /// <param name="profileId">The profile id to retrieve shared entities for</param>
+      /// <param name="clientIndex"></param>
       string Entity_GetSharedEntitiesForProfileId(string profileId, int clientIndex);
+      /// <summary>
+      /// Method gets list of entities from the server base on type and/or where clause
+      /// </summary>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="orderByJson">Sort order</param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       string Entity_GetList(string whereJson, string orderByJson, int maxReturn, int clientIndex);
+      /// <summary>
+      /// Method gets list of shared entities for the specified user based on type and/or where clause
+      /// </summary>
+      /// <param name="profileId">The profile ID to retrieve shared entities for</param>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="orderByJson">Sort order</param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       string Entity_GetSharedEntitiesListForProfileId(string profileId, string whereJson, string orderByJson, int maxReturn, int clientIndex);
+      /// <summary>
+      /// Method gets a count of entities based on the where clause
+      /// </summary>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="clientIndex"></param>
       string Entity_GetListCount(string whereJson, int clientIndex);
+      /// <summary>
+      /// Method uses a paging system to iterate through user entities.
+      /// After retrieving a page of entities with this method,
+      /// use GetPageOffset() to retrieve previous or next pages.
+      /// </summary>
+      /// <param name="jsonContext">The json context for the page request.See the portal appendix documentation for format</param>
+      /// <param name="clientIndex"></param>
       string Entity_GetPage(string jsonContext, int clientIndex);
+      /// <summary>
+      /// Method to retrieve previous or next pages after having called
+      /// the GetPage method.
+      /// </summary>
+      /// <param name="context">The context string returned from the server from a previous callto GetPage() or GetPageOffset()</param>
+      /// <param name="pageOffset">The positive or negative page offset to fetch. Uses the last pageretrieved using the context string to determine a starting point.</param>
+      /// <param name="clientIndex"></param>
       string Entity_GetPageOffset(string context, int pageOffset, int clientIndex);
+      /// <summary>
+      /// Partial increment of entity data field items. Partial set of items incremented as specified.
+      /// </summary>
+      /// <param name="entityId">The entity to increment</param>
+      /// <param name="jsonData">The subset of data to increment</param>
+      /// <param name="clientIndex"></param>
       string Entity_IncrementUserEntityData(string entityId, string jsonData, int clientIndex);
+      /// <summary>
+      /// Partial increment of shared entity data field items. Partial set of items incremented as specified.
+      /// </summary>
+      /// <param name="entityId">The entity to increment</param>
+      /// <param name="targetProfileId">Profile ID of the entity owner</param>
+      /// <param name="jsonData">The subset of data to increment</param>
+      /// <param name="clientIndex"></param>
       string Entity_IncrementSharedUserEntityData(string entityId, string targetProfileId, string jsonData, int clientIndex);
+      /// <summary>
+      /// Sends an event to the designated profile id with the attached json data.
+      /// Any events that have been sent to a user will show up in their
+      /// incoming event mailbox. If the recordLocally flag is set to true,
+      /// a copy of this event (with the exact same event id) will be stored
+      /// in the sending user's "sent" event mailbox.
+      /// </summary>
+      /// <param name="toProfileId">The id of the user who is being sent the event</param>
+      /// <param name="eventType">The user-defined type of the event.</param>
+      /// <param name="jsonEventData">The user-defined data for this event encoded in JSON.</param>
+      /// <param name="clientIndex"></param>
       string Event_SendEvent(string toProfileId, string eventType, string jsonEventData, int clientIndex);
+      /// <summary>
+      /// Updates an event in the user's incoming event mailbox.
+      /// </summary>
+      /// <param name="evId">The event id</param>
+      /// <param name="jsonEventData">The user-defined data for this event encoded in JSON.</param>
+      /// <param name="clientIndex"></param>
       string Event_UpdateIncomingEventData(string evId, string jsonEventData, int clientIndex);
+      /// <summary>
+      /// Delete an event out of the user's incoming mailbox.
+      /// </summary>
+      /// <param name="evId">The event id</param>
+      /// <param name="clientIndex"></param>
       string Event_DeleteIncomingEvent(string evId, int clientIndex);
+      /// <summary>
+      /// Get the events currently queued for the user.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string Event_GetEvents(int clientIndex);
+      /// <summary>
+      /// Prepares a user file upload. On success the file will begin uploading
+      /// to the brainCloud server.To be informed of success/failure of the upload
+      /// register an IFileUploadCallback with the BrainCloudClient class.
+      /// </summary>
+      /// <param name="cloudPath">The desired cloud path of the file</param>
+      /// <param name="cloudFilename">The desired cloud fileName of the file</param>
+      /// <param name="shareable">True if the file is shareable</param>
+      /// <param name="replaceIfExists">Whether to replace file if it exists</param>
+      /// <param name="localPath">The path and fileName of the local file</param>
+      /// <param name="clientIndex"></param>
       string File_UploadFile(string cloudPath, string cloudFilename, bool shareable, bool replaceIfExists, string localPath, int clientIndex);
+      /// <summary>
+      /// Method cancels an upload. If an IFileUploadCallback has been registered with the BrainCloudClient class,
+      /// the fileUploadFailed callback method will be called once the upload has been canceled.
+      /// NOTE: The upload will still continue in the background on versions of Unity before 5.3
+      /// and on Unity mobile platforms.
+      /// </summary>
+      /// <param name="uploadId">Upload ID of the file to cancel</param>
+      /// <param name="clientIndex"></param>
       void File_CancelUpload(string uploadId, int clientIndex);
+      /// <summary>
+      /// Returns the progress of the given upload from 0.0 to 1.0 or -1 if upload not found.
+      /// NOTE: This will always return 1 on Unity mobile platforms.
+      /// </summary>
+      /// <param name="uploadId">The id of the upload</param>
+      /// <param name="clientIndex"></param>
       double File_GetUploadProgress(string uploadId, int clientIndex);
+      /// <summary>
+      /// Returns the number of bytes uploaded or -1 if upload not found.
+      /// NOTE: This will always return the total bytes to transfer on Unity mobile platforms.
+      /// </summary>
+      /// <param name="uploadId">The id of the upload</param>
+      /// <param name="clientIndex"></param>
       long File_GetUploadBytesTransferred(string uploadId, int clientIndex);
+      /// <summary>
+      /// Returns the total number of bytes that will be uploaded or -1 if upload not found.
+      /// </summary>
+      /// <param name="uploadId">The id of the upload</param>
+      /// <param name="clientIndex"></param>
       long File_GetUploadTotalBytesToTransfer(string uploadId, int clientIndex);
+      /// <summary>
+      /// List all user files
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string File_ListUserFiles_SFO(int clientIndex);
+      /// <summary>
+      /// List user files from the given cloud path
+      /// </summary>
+      /// <param name="cloudPath">File path</param>
+      /// <param name="recurse">Whether to recurse down the path</param>
+      /// <param name="clientIndex"></param>
       string File_ListUserFiles_SNSFO(string cloudPath, bool recurse, int clientIndex);
+      /// <summary>
+      /// Deletes a single user file.
+      /// </summary>
+      /// <param name="cloudPath">File path</param>
+      /// <param name="cloudFileName"></param>
+      /// <param name="clientIndex"></param>
       string File_DeleteUserFile(string cloudPath, string cloudFileName, int clientIndex);
+      /// <summary>
+      /// Delete multiple user files
+      /// </summary>
+      /// <param name="cloudPath">File path</param>
+      /// <param name="recurse">Whether to recurse down the path</param>
+      /// <param name="clientIndex"></param>
       string File_DeleteUserFiles(string cloudPath, bool recurse, int clientIndex);
+      /// <summary>
+      /// Returns the CDN URL for a file object.
+      /// </summary>
+      /// <param name="cloudPath">File path</param>
+      /// <param name="cloudFilename">Name of file</param>
+      /// <param name="clientIndex"></param>
       string File_GetCDNUrl(string cloudPath, string cloudFilename, int clientIndex);
+      /// <summary>
+      /// Retrieves profile information for the partial matches of the specified text.
+      /// </summary>
+      /// <param name="searchText">Universal ID text on which to search.</param>
+      /// <param name="maxResults">Maximum number of results to return.</param>
+      /// <param name="clientIndex"></param>
       string Friend_FindUserByUniversalId(string searchText, int maxResults, int clientIndex);
+      /// <summary>
+      /// Retrieves profile information of the specified user.
+      /// </summary>
+      /// <param name="externalId">External id of the user to find</param>
+      /// <param name="authenticationType">The authentication type used for the user's ID</param>
+      /// <param name="clientIndex"></param>
       string Friend_GetProfileInfoForCredential(string externalId, string authenticationType, int clientIndex);
+      /// <summary>
+      /// Retrieves profile information for the specified external auth user.
+      /// </summary>
+      /// <param name="externalId">External id of the friend to find</param>
+      /// <param name="externalAuthType">The external authentication type used for this friend's external id</param>
+      /// <param name="clientIndex"></param>
       string Friend_GetProfileInfoForExternalAuthId(string externalId, string externalAuthType, int clientIndex);
+      /// <summary>
+      /// Retrieves the external ID for the specified user profile ID on the specified social platform.
+      /// </summary>
+      /// <param name="profileId">Profile (user) ID.</param>
+      /// <param name="authenticationType">Associated authentication type.</param>
+      /// <param name="clientIndex"></param>
       string Friend_GetExternalIdForProfileId(string profileId, string authenticationType, int clientIndex);
+      /// <summary>
+      /// Returns a particular entity of a particular friend.
+      /// </summary>
+      /// <param name="entityId">Id of entity to retrieve.</param>
+      /// <param name="friendId">Profile Id of friend who owns entity.</param>
+      /// <param name="clientIndex"></param>
       string Friend_ReadFriendEntity(string entityId, string friendId, int clientIndex);
+      /// <summary>
+      /// Returns entities of all friends based on type and/or subtype.
+      /// </summary>
+      /// <param name="entityType">Types of entities to retrieve.</param>
+      /// <param name="clientIndex"></param>
       string Friend_ReadFriendsEntities(string entityType, int clientIndex);
+      /// <summary>
+      /// Returns user state of a particular friend.
+      /// </summary>
+      /// <param name="friendId">Profile Id of friend to retrieve user state for.</param>
+      /// <param name="clientIndex"></param>
       string Friend_ReadFriendUserState(string friendId, int clientIndex);
+      /// <summary>
+      /// Returns user state of a particular user.
+      /// </summary>
+      /// <param name="profileId">Profile Id of user to retrieve player state for.</param>
+      /// <param name="clientIndex"></param>
       string Friend_GetSummaryDataForProfileId(string profileId, int clientIndex);
+      /// <summary>
+      /// Finds a list of users matching the search text by performing an exact
+      /// search of all user names.
+      /// </summary>
+      /// <param name="searchText">The string to search for.</param>
+      /// <param name="maxResults">Maximum number of results to return.</param>
+      /// <param name="clientIndex"></param>
       string Friend_FindUsersByExactName(string searchText, int maxResults, int clientIndex);
+      /// <summary>
+      /// Finds a list of users matching the search text by performing a substring
+      /// search of all user names.
+      /// </summary>
+      /// <param name="searchText">The substring to search for. Minimum length of 3 characters.</param>
+      /// <param name="maxResults">Maximum number of results to return.</param>
+      /// <param name="clientIndex"></param>
       string Friend_FindUsersBySubstrName(string searchText, int maxResults, int clientIndex);
+      /// <summary>
+      /// Retrieves a list of user and friend platform information for all friends of the current user.
+      /// </summary>
+      /// <param name="friendPlatform">Friend platform to query.</param>
+      /// <param name="includeSummaryData">True if including summary data; false otherwise.</param>
+      /// <param name="clientIndex"></param>
       string Friend_ListFriends(Ruyi.SDK.BrainCloudApi.FriendPlatform friendPlatform, bool includeSummaryData, int clientIndex);
+      /// <summary>
+      /// Links the current user and the specified users as brainCloud friends.
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs.</param>
+      /// <param name="clientIndex"></param>
       string Friend_AddFriends(List<string> profileIds, int clientIndex);
+      /// <summary>
+      /// Unlinks the current user and the specified users as brainCloud friends.
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs.</param>
+      /// <param name="clientIndex"></param>
       string Friend_RemoveFriends(List<string> profileIds, int clientIndex);
+      /// <summary>
+      /// Get users online status
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs.</param>
+      /// <param name="clientIndex"></param>
       string Friend_GetUsersOnlineStatus(List<string> profileIds, int clientIndex);
+      /// <summary>
+      /// Method retrieves all gamification data for the player.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadAllGamification(bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Method retrieves all milestones defined for the game.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadMilestones(bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Read all of the achievements defined for the game.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadAchievements(bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Method returns all defined xp levels and any rewards associated
+      /// with those xp levels.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadXpLevelsMetaData(int clientIndex);
+      /// <summary>
+      /// Method retrives the list of achieved achievements.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadAchievedAchievements(bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Method retrieves the list of completed milestones.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadCompletedMilestones(bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Method retrieves the list of in progress milestones
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadInProgressMilestones(bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Method retrieves milestones of the given category.
+      /// </summary>
+      /// <param name="category">The milestone category</param>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadMilestonesByCategory(string category, bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Method will award the achievements specified. On success, this will
+      /// call AwardThirdPartyAchievement to hook into the client-side Achievement
+      /// service (ie GameCentre, Facebook etc).
+      /// </summary>
+      /// <param name="achievementIds">A collection of achievement ids to award</param>
+      /// <param name="clientIndex"></param>
       string Gamification_AwardAchievements(List<string> achievementIds, int clientIndex);
+      /// <summary>
+      /// Method retrieves all of the quests defined for the game.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadQuests(bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Method returns all completed quests.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadCompletedQuests(bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Method returns all in progress quests.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadInProgressQuests(bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Method returns all quests that haven't been started.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadNotStartedQuests(bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Method returns all quests with status.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadQuestsWithStatus(bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Method returns all quests with a basic percentage.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadQuestsWithBasicPercentage(bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Method returns all quests with a complex percentage.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadQuestsWithComplexPercentage(bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Method returns all quests for the given category.
+      /// </summary>
+      /// <param name="category">The quest category</param>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       string Gamification_ReadQuestsByCategory(string category, bool includeMetaData, int clientIndex);
+      /// <summary>
+      /// Sets the specified milestones' statuses to LOCKED.
+      /// </summary>
+      /// <param name="milestoneIds">List of milestones to reset</param>
+      /// <param name="clientIndex"></param>
       string Gamification_ResetMilestones(List<string> milestoneIds, int clientIndex);
+      /// <summary>
+      /// Method reads all the global properties of the game
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string GlobalApp_ReadProperties(int clientIndex);
+      /// <summary>
+      /// Method creates a new entity on the server.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="timeToLive">Sets expiry time for entity in milliseconds if > 0</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies default</param>
+      /// <param name="jsonEntityData">The entity's data as a json string</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_CreateEntity(string entityType, long timeToLive, string jsonEntityAcl, string jsonEntityData, int clientIndex);
+      /// <summary>
+      /// Method creates a new entity on the server with an indexed id.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="indexedId">A secondary ID that will be indexed</param>
+      /// <param name="timeToLive">Sets expiry time for entity in milliseconds if > 0</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies default</param>
+      /// <param name="jsonEntityData">The entity's data as a json string</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_CreateEntityWithIndexedId(string entityType, string indexedId, long timeToLive, string jsonEntityAcl, string jsonEntityData, int clientIndex);
+      /// <summary>
+      /// Method updates an existing entity on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity to update</param>
+      /// <param name="jsonEntityData">The entity's data as a json string</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_UpdateEntity(string entityId, int version, string jsonEntityData, int clientIndex);
+      /// <summary>
+      /// Method updates an existing entity's Acl on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity to update</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json.</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_UpdateEntityAcl(string entityId, int version, string jsonEntityAcl, int clientIndex);
+      /// <summary>
+      /// Method updates an existing entity's time to live on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity to update</param>
+      /// <param name="timeToLive">Sets expiry time for entity in milliseconds if > 0</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_UpdateEntityTimeToLive(string entityId, int version, long timeToLive, int clientIndex);
+      /// <summary>
+      /// Method deletes an existing entity on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity to delete</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_DeleteEntity(string entityId, int version, int clientIndex);
+      /// <summary>
+      /// Method reads an existing entity from the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_ReadEntity(string entityId, int clientIndex);
+      /// <summary>
+      /// Method gets list of entities from the server base on type and/or where clause
+      /// </summary>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="orderByJson">Sort order</param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_GetList(string whereJson, string orderByJson, int maxReturn, int clientIndex);
+      /// <summary>
+      /// Method gets list of entities from the server base on indexed id
+      /// </summary>
+      /// <param name="entityIndexedId">The entity indexed Id</param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_GetListByIndexedId(string entityIndexedId, int maxReturn, int clientIndex);
+      /// <summary>
+      /// Method gets a count of entities based on the where clause
+      /// </summary>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_GetListCount(string whereJson, int clientIndex);
+      /// <summary>
+      /// Method uses a paging system to iterate through Global Entities.
+      /// After retrieving a page of Global Entities with this method,
+      /// use GetPageOffset() to retrieve previous or next pages.
+      /// </summary>
+      /// <param name="jsonContext">The json context for the page request.See the portal appendix documentation for format</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_GetPage(string jsonContext, int clientIndex);
+      /// <summary>
+      /// Method to retrieve previous or next pages after having called
+      /// the GetPage method.
+      /// </summary>
+      /// <param name="context">The context string returned from the server from a previous callto GetPage() or GetPageOffset()</param>
+      /// <param name="pageOffset">The positive or negative page offset to fetch. Uses the last pageretrieved using the context string to determine a starting point.</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_GetPageOffset(string context, int pageOffset, int clientIndex);
+      /// <summary>
+      /// Partial increment of global entity data field items. Partial set of items incremented as specified.
+      /// </summary>
+      /// <param name="entityId">The entity to increment</param>
+      /// <param name="jsonData">The subset of data to increment</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_IncrementGlobalEntityData(string entityId, string jsonData, int clientIndex);
+      /// <summary>
+      /// Gets a list of up to randomCount randomly selected entities from the server based on the where condition and specified maximum return count.
+      /// </summary>
+      /// <param name="whereJson"></param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_GetRandomEntitiesMatching(string whereJson, int maxReturn, int clientIndex);
+      /// <summary>
+      /// Method updates an existing entity's Owner and Acl on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity</param>
+      /// <param name="ownerId">The owner ID</param>
+      /// <param name="acl">The entity's access control list</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_UpdateEntityOwnerAndAcl(string entityId, long version, string ownerId, string acl, int clientIndex);
+      /// <summary>
+      /// Method clears the owner id of an existing entity and sets the Acl on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity</param>
+      /// <param name="acl">The entity's access control list</param>
+      /// <param name="clientIndex"></param>
       string GlobalEntity_MakeSystemEntity(string entityId, long version, string acl, int clientIndex);
+      /// <summary>
+      /// Method returns all of the global statistics.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string GlobalStatistics_ReadAllGlobalStats(int clientIndex);
+      /// <summary>
+      /// Reads a subset of global statistics as defined by the input JSON.
+      /// </summary>
+      /// <param name="globalStats">A list containing the statistics to read</param>
+      /// <param name="clientIndex"></param>
       string GlobalStatistics_ReadGlobalStatsSubset(List<string> globalStats, int clientIndex);
+      /// <summary>
+      /// Method retrieves the global statistics for the given category.
+      /// </summary>
+      /// <param name="category">The global statistics category</param>
+      /// <param name="clientIndex"></param>
       string GlobalStatistics_ReadGlobalStatsForCategory(string category, int clientIndex);
+      /// <summary>
+      /// Atomically increment (or decrement) global statistics.
+      /// Global statistics are defined through the brainCloud portal.
+      /// </summary>
+      /// <param name="jsonData">The JSON encoded data to be sent to the server as follows:{  stat1: 10,  stat2: -5.5,}would increment stat1 by 10 and decrement stat2 by 5.5.For the full statistics grammer see the api.braincloudservers.com site.There are many more complex operations supported such as:{  stat1:INC_TO_LIMIT#9#30}which increments stat1 by 9 up to a limit of 30.</param>
+      /// <param name="clientIndex"></param>
       string GlobalStatistics_IncrementGlobalStats(string jsonData, int clientIndex);
+      /// <summary>
+      /// Apply statistics grammar to a partial set of statistics.
+      /// </summary>
+      /// <param name="statisticsData">Example data to be passed to method:{    "DEAD_CATS": "RESET",    "LIVES_LEFT": "SET#9",    "MICE_KILLED": "INC#2",    "DOG_SCARE_BONUS_POINTS": "INC#10",    "TREES_CLIMBED": 1}</param>
+      /// <param name="clientIndex"></param>
       string GlobalStatistics_ProcessStatistics(Dictionary<string, string> statisticsData, int clientIndex);
+      /// <summary>
+      /// Accept an outstanding invitation to join the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       string Group_AcceptGroupInvitation(string groupId, int clientIndex);
+      /// <summary>
+      /// Add a member to the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the member being added.</param>
+      /// <param name="role">Role of the member being added.</param>
+      /// <param name="jsonAttributes">Attributes of the member being added.</param>
+      /// <param name="clientIndex"></param>
       string Group_AddGroupMember(string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex);
+      /// <summary>
+      /// Approve an outstanding request to join the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the invitation being deleted.</param>
+      /// <param name="role">Role of the member being invited.</param>
+      /// <param name="jsonAttributes">Attributes of the member being invited.</param>
+      /// <param name="clientIndex"></param>
       string Group_ApproveGroupJoinRequest(string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex);
+      /// <summary>
+      /// Automatically join an open group that matches the search criteria and has space available.
+      /// </summary>
+      /// <param name="groupType">Name of the associated group type.</param>
+      /// <param name="autoJoinStrategy">Selection strategy to employ when there are multiple matches</param>
+      /// <param name="dataQueryJson">Query parameters (optional)</param>
+      /// <param name="clientIndex"></param>
       string Group_AutoJoinGroup(string groupType, Ruyi.SDK.BrainCloudApi.AutoJoinStrategy autoJoinStrategy, string dataQueryJson, int clientIndex);
+      /// <summary>
+      /// Cancel an outstanding invitation to the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the invitation being deleted.</param>
+      /// <param name="clientIndex"></param>
       string Group_CancelGroupInvitation(string groupId, string profileId, int clientIndex);
+      /// <summary>
+      /// Create a group.
+      /// </summary>
+      /// <param name="name">Name of the group.</param>
+      /// <param name="groupType">Name of the type of group.</param>
+      /// <param name="isOpenGroup">true if group is open; false if closed.</param>
+      /// <param name="acl">The group's access control list. A null ACL implies default.</param>
+      /// <param name="jsonData">Custom application data.</param>
+      /// <param name="jsonOwnerAttributes">Attributes for the group owner (current user).</param>
+      /// <param name="jsonDefaultMemberAttributes">Default attributes for group members.</param>
+      /// <param name="clientIndex"></param>
       string Group_CreateGroup(string name, string groupType, bool isOpenGroup, string acl, string jsonData, string jsonOwnerAttributes, string jsonDefaultMemberAttributes, int clientIndex);
+      /// <summary>
+      /// Create a group entity.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityType"></param>
+      /// <param name="isOwnedByGroupMember">true if entity is owned by a member; false if owned by the entire group.</param>
+      /// <param name="acl">Access control list for the group entity.</param>
+      /// <param name="jsonData">Custom application data.</param>
+      /// <param name="clientIndex"></param>
       string Group_CreateGroupEntity(string groupId, string entityType, bool isOwnedByGroupMember, string acl, string jsonData, int clientIndex);
+      /// <summary>
+      /// Delete a group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="version">Current version of the group</param>
+      /// <param name="clientIndex"></param>
       string Group_DeleteGroup(string groupId, long version, int clientIndex);
+      /// <summary>
+      /// Delete a group entity.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityId">ID of the entity.</param>
+      /// <param name="version">The current version of the group entity (for concurrency checking).</param>
+      /// <param name="clientIndex"></param>
       string Group_DeleteGroupEntity(string groupId, string entityId, long version, int clientIndex);
+      /// <summary>
+      /// Read information on groups to which the current user belongs.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string Group_GetMyGroups(int clientIndex);
+      /// <summary>
+      /// Increment elements for the group's data field.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="jsonData">Partial data map with incremental values.</param>
+      /// <param name="clientIndex"></param>
       string Group_IncrementGroupData(string groupId, string jsonData, int clientIndex);
+      /// <summary>
+      /// Increment elements for the group entity's data field.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityId">ID of the entity.</param>
+      /// <param name="jsonData">Partial data map with incremental values.</param>
+      /// <param name="clientIndex"></param>
       string Group_IncrementGroupEntityData(string groupId, string entityId, string jsonData, int clientIndex);
+      /// <summary>
+      /// Invite a member to the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the member being invited.</param>
+      /// <param name="role">Role of the member being invited.</param>
+      /// <param name="jsonAttributes">Attributes of the member being invited.</param>
+      /// <param name="clientIndex"></param>
       string Group_InviteGroupMember(string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex);
+      /// <summary>
+      /// Join an open group or request to join a closed group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       string Group_JoinGroup(string groupId, int clientIndex);
+      /// <summary>
+      /// Leave a group in which the user is a member.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       string Group_LeaveGroup(string groupId, int clientIndex);
+      /// <summary>
+      /// Retrieve a page of group summary information based on the specified context.
+      /// </summary>
+      /// <param name="jsonContext">Query context.</param>
+      /// <param name="clientIndex"></param>
       string Group_ListGroupsPage(string jsonContext, int clientIndex);
+      /// <summary>
+      /// Retrieve a page of group summary information based on the encoded context
+      /// and specified page offset.
+      /// </summary>
+      /// <param name="context">Encoded reference query context.</param>
+      /// <param name="pageOffset">Number of pages by which to offset the query.</param>
+      /// <param name="clientIndex"></param>
       string Group_ListGroupsPageByOffset(string context, int pageOffset, int clientIndex);
+      /// <summary>
+      /// Read information on groups to which the specified user belongs.  Access is subject to restrictions.
+      /// </summary>
+      /// <param name="profileId">User to read groups for</param>
+      /// <param name="clientIndex"></param>
       string Group_ListGroupsWithMember(string profileId, int clientIndex);
+      /// <summary>
+      /// Read the specified group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       string Group_ReadGroup(string groupId, int clientIndex);
+      /// <summary>
+      /// Read the data of the specified group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       string Group_ReadGroupData(string groupId, int clientIndex);
+      /// <summary>
+      /// Read a page of group entity information.
+      /// </summary>
+      /// <param name="jsonContext">Query context.</param>
+      /// <param name="clientIndex"></param>
       string Group_ReadGroupEntitiesPage(string jsonContext, int clientIndex);
+      /// <summary>
+      /// Read a page of group entity information.
+      /// </summary>
+      /// <param name="encodedContext">Encoded reference query context.</param>
+      /// <param name="pageOffset">Number of pages by which to offset the query.</param>
+      /// <param name="clientIndex"></param>
       string Group_ReadGroupEntitiesPageByOffset(string encodedContext, int pageOffset, int clientIndex);
+      /// <summary>
+      /// Read the specified group entity.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityId">ID of the entity.</param>
+      /// <param name="clientIndex"></param>
       string Group_ReadGroupEntity(string groupId, string entityId, int clientIndex);
+      /// <summary>
+      /// Read the members of the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       string Group_ReadGroupMembers(string groupId, int clientIndex);
+      /// <summary>
+      /// Reject an outstanding invitation to join the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       string Group_RejectGroupInvitation(string groupId, int clientIndex);
+      /// <summary>
+      /// Reject an outstanding request to join the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the invitation being deleted.</param>
+      /// <param name="clientIndex"></param>
       string Group_RejectGroupJoinRequest(string groupId, string profileId, int clientIndex);
+      /// <summary>
+      /// Remove a member from the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the member being deleted.</param>
+      /// <param name="clientIndex"></param>
       string Group_RemoveGroupMember(string groupId, string profileId, int clientIndex);
+      /// <summary>
+      /// Updates a group's data.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="version">Version to verify.</param>
+      /// <param name="jsonData">Data to apply.</param>
+      /// <param name="clientIndex"></param>
       string Group_UpdateGroupData(string groupId, long version, string jsonData, int clientIndex);
+      /// <summary>
+      /// Update a group entity.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityId">ID of the entity.</param>
+      /// <param name="version">The current version of the group entity (for concurrency checking).</param>
+      /// <param name="jsonData">Custom application data.</param>
+      /// <param name="clientIndex"></param>
       string Group_UpdateGroupEntityData(string groupId, string entityId, long version, string jsonData, int clientIndex);
+      /// <summary>
+      /// Update a member of the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the member being updated.</param>
+      /// <param name="role">Role of the member being updated (optional).</param>
+      /// <param name="jsonAttributes">Attributes of the member being updated (optional).</param>
+      /// <param name="clientIndex"></param>
       string Group_UpdateGroupMember(string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex);
+      /// <summary>
+      /// Updates a group's name.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="name">Name to apply.</param>
+      /// <param name="clientIndex"></param>
       string Group_UpdateGroupName(string groupId, string name, int clientIndex);
+      /// <summary>
+      /// Attach a Email and Password identity to the current profile.
+      /// </summary>
+      /// <param name="email">The user's e-mail address</param>
+      /// <param name="password">The user's password</param>
+      /// <param name="clientIndex"></param>
       string Identity_AttachEmailIdentity(string email, string password, int clientIndex);
+      /// <summary>
+      /// Merge the profile associated with the provided e=mail with the current profile.
+      /// </summary>
+      /// <param name="email">The user's e-mail address</param>
+      /// <param name="password">The user's password</param>
+      /// <param name="clientIndex"></param>
       string Identity_MergeEmailIdentity(string email, string password, int clientIndex);
+      /// <summary>
+      /// Detach the e-mail identity from the current profile
+      /// </summary>
+      /// <param name="email">The user's e-mail address</param>
+      /// <param name="continueAnon">Proceed even if the profile will revert to anonymous?</param>
+      /// <param name="clientIndex"></param>
       string Identity_DetachEmailIdentity(string email, bool continueAnon, int clientIndex);
+      /// <summary>
+      /// Attach a Universal (userId + password) identity to the current profile.
+      /// </summary>
+      /// <param name="userId">The user's userId</param>
+      /// <param name="password">The user's password</param>
+      /// <param name="clientIndex"></param>
       string Identity_AttachUniversalIdentity(string userId, string password, int clientIndex);
+      /// <summary>
+      /// Merge the profile associated with the provided e=mail with the current profile.
+      /// </summary>
+      /// <param name="userId">The user's userId</param>
+      /// <param name="password">The user's password</param>
+      /// <param name="clientIndex"></param>
       string Identity_MergeUniversalIdentity(string userId, string password, int clientIndex);
+      /// <summary>
+      /// Detach the universal identity from the current profile
+      /// </summary>
+      /// <param name="userId">The user's userId</param>
+      /// <param name="continueAnon">Proceed even if the profile will revert to anonymous?</param>
+      /// <param name="clientIndex"></param>
       string Identity_DetachUniversalIdentity(string userId, bool continueAnon, int clientIndex);
+      /// <summary>
+      /// Switch to a Child Profile
+      /// </summary>
+      /// <param name="childProfileId">The profileId of the child profile to switch toIf null and forceCreate is true a new profile will be created</param>
+      /// <param name="childAppId">The appId of the child game to switch to</param>
+      /// <param name="forceCreate">Should a new profile be created if it does not exist?</param>
+      /// <param name="clientIndex"></param>
       string Identity_SwitchToChildProfile(string childProfileId, string childAppId, bool forceCreate, int clientIndex);
+      /// <summary>
+      /// Switches to the child profile of an app when only one profile exists
+      /// If multiple profiles exist this returns an error
+      /// </summary>
+      /// <param name="childAppId">The App ID of the child game to switch to</param>
+      /// <param name="forceCreate">Should a new profile be created if one does not exist?</param>
+      /// <param name="clientIndex"></param>
       string Identity_SwitchToSingletonChildProfile(string childAppId, bool forceCreate, int clientIndex);
+      /// <summary>
+      /// Attach a new identity to a parent app
+      /// </summary>
+      /// <param name="externalId">User ID</param>
+      /// <param name="authenticationToken">Password or client side token</param>
+      /// <param name="authenticationType">Type of authentication</param>
+      /// <param name="externalAuthName">Optional - if using AuthenticationType of external</param>
+      /// <param name="forceCreate">If the profile does not exist, should it be created?</param>
+      /// <param name="clientIndex"></param>
       string Identity_AttachParentWithIdentity(string externalId, string authenticationToken, string authenticationType, string externalAuthName, bool forceCreate, int clientIndex);
+      /// <summary>
+      /// Switch to a Parent Profile
+      /// </summary>
+      /// <param name="parentLevelName">The level of the parent to switch to</param>
+      /// <param name="clientIndex"></param>
       string Identity_SwitchToParentProfile(string parentLevelName, int clientIndex);
+      /// <summary>
+      /// Detaches parent from this user's profile
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string Identity_DetachParent(int clientIndex);
+      /// <summary>
+      /// Returns a list of all child profiles in child Apps
+      /// </summary>
+      /// <param name="includeSummaryData">Whether to return the summary friend data along with this call</param>
+      /// <param name="clientIndex"></param>
       string Identity_GetChildProfiles(bool includeSummaryData, int clientIndex);
+      /// <summary>
+      /// Retrieve list of identities
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string Identity_GetIdentities(int clientIndex);
+      /// <summary>
+      /// Retrieve list of expired identities
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string Identity_GetExpiredIdentities(int clientIndex);
+      /// <summary>
+      /// Refreshes an identity for this user
+      /// </summary>
+      /// <param name="externalId">User ID</param>
+      /// <param name="authenticationToken">Password or client side token</param>
+      /// <param name="authenticationType">Type of authentication</param>
+      /// <param name="clientIndex"></param>
       string Identity_RefreshIdentity(string externalId, string authenticationToken, string authenticationType, int clientIndex);
+      /// <summary>
+      /// Attaches a peer identity to this user's profile
+      /// </summary>
+      /// <param name="peer">Name of the peer to connect to</param>
+      /// <param name="externalId">User ID</param>
+      /// <param name="authenticationToken">Password or client side token</param>
+      /// <param name="authenticationType">Type of authentication</param>
+      /// <param name="externalAuthName">Optional - if using AuthenticationType of external</param>
+      /// <param name="forceCreate">If the profile does not exist, should it be created?</param>
+      /// <param name="clientIndex"></param>
       string Identity_AttachPeerProfile(string peer, string externalId, string authenticationToken, string authenticationType, string externalAuthName, bool forceCreate, int clientIndex);
+      /// <summary>
+      /// Detaches a peer identity from this user's profile
+      /// </summary>
+      /// <param name="peer">Name of the peer to connect to</param>
+      /// <param name="clientIndex"></param>
       string Identity_DetachPeer(string peer, int clientIndex);
+      /// <summary>
+      /// Retrieves a list of attached peer profiles
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string Identity_GetPeerProfiles(int clientIndex);
+      /// <summary>
+      /// Sends a simple text email to the specified user
+      /// </summary>
+      /// <param name="profileId"></param>
+      /// <param name="subject">The email subject</param>
+      /// <param name="body">The email body</param>
+      /// <param name="clientIndex"></param>
       string Mail_SendBasicEmail(string profileId, string subject, string body, int clientIndex);
+      /// <summary>
+      /// Sends an advanced email to the specified user
+      /// </summary>
+      /// <param name="profileId"></param>
+      /// <param name="jsonServiceParams">Parameters to send to the email service. See the documentation fora full list. http://getbraincloud.com/apidocs/apiref/#capi-mail</param>
+      /// <param name="clientIndex"></param>
       string Mail_SendAdvancedEmail(string profileId, string jsonServiceParams, int clientIndex);
+      /// <summary>
+      /// Sends an advanced email to the specified email address
+      /// </summary>
+      /// <param name="emailAddress">The address to send the email to</param>
+      /// <param name="jsonServiceParams">Parameters to send to the email service. See the documentation fora full list. http://getbraincloud.com/apidocs/apiref/#capi-mail</param>
+      /// <param name="clientIndex"></param>
       string Mail_SendAdvancedEmailByAddress(string emailAddress, string jsonServiceParams, int clientIndex);
+      /// <summary>
+      /// Read match making record
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string MatchMaking_Read(int clientIndex);
+      /// <summary>
+      /// Sets player rating
+      /// </summary>
+      /// <param name="playerRating">The new player rating.</param>
+      /// <param name="clientIndex"></param>
       string MatchMaking_SetPlayerRating(long playerRating, int clientIndex);
+      /// <summary>
+      /// Resets player rating
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string MatchMaking_ResetPlayerRating(int clientIndex);
+      /// <summary>
+      /// Increments player rating
+      /// </summary>
+      /// <param name="increment">The increment amount</param>
+      /// <param name="clientIndex"></param>
       string MatchMaking_IncrementPlayerRating(long increment, int clientIndex);
+      /// <summary>
+      /// Decrements player rating
+      /// </summary>
+      /// <param name="decrement">The decrement amount</param>
+      /// <param name="clientIndex"></param>
       string MatchMaking_DecrementPlayerRating(long decrement, int clientIndex);
+      /// <summary>
+      /// Turns shield on
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string MatchMaking_TurnShieldOn(int clientIndex);
+      /// <summary>
+      /// Turns shield on for the specified number of minutes
+      /// </summary>
+      /// <param name="minutes">Number of minutes to turn the shield on for</param>
+      /// <param name="clientIndex"></param>
       string MatchMaking_TurnShieldOnFor(int minutes, int clientIndex);
+      /// <summary>
+      /// Turns shield off
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string MatchMaking_TurnShieldOff(int clientIndex);
+      /// <summary>
+      /// Increases the shield on time by specified number of minutes
+      /// </summary>
+      /// <param name="minutes">Number of minutes to increase the shield time for</param>
+      /// <param name="clientIndex"></param>
       string MatchMaking_IncrementShieldOnFor(int minutes, int clientIndex);
+      /// <summary>
+      /// Gets the shield expiry for the given player id. Passing in a null player id
+      /// will return the shield expiry for the current player. The value returned is
+      /// the time in UTC millis when the shield will expire.
+      /// </summary>
+      /// <param name="playerId">The player id or use null to retrieve for the current player</param>
+      /// <param name="clientIndex"></param>
       string MatchMaking_GetShieldExpiry(string playerId, int clientIndex);
+      /// <summary>
+      /// Finds matchmaking enabled players
+      /// </summary>
+      /// <param name="rangeDelta">The range delta</param>
+      /// <param name="numMatches">The maximum number of matches to return</param>
+      /// <param name="clientIndex"></param>
       string MatchMaking_FindPlayers(long rangeDelta, long numMatches, int clientIndex);
+      /// <summary>
+      /// Finds matchmaking enabled players with additional attributes
+      /// </summary>
+      /// <param name="rangeDelta">The range delta</param>
+      /// <param name="numMatches">The maximum number of matches to return</param>
+      /// <param name="jsonAttributes">Attributes match criteria</param>
+      /// <param name="clientIndex"></param>
       string MatchMaking_FindPlayersWithAttributes(long rangeDelta, long numMatches, string jsonAttributes, int clientIndex);
+      /// <summary>
+      /// Finds matchmaking enabled players using a cloud code filter
+      /// </summary>
+      /// <param name="rangeDelta">The range delta</param>
+      /// <param name="numMatches">The maximum number of matches to return</param>
+      /// <param name="jsonExtraParms">Parameters to pass to the CloudCode filter script</param>
+      /// <param name="clientIndex"></param>
       string MatchMaking_FindPlayersUsingFilter(long rangeDelta, long numMatches, string jsonExtraParms, int clientIndex);
+      /// <summary>
+      /// Finds matchmaking enabled players using a cloud code filter
+      /// and additional attributes
+      /// </summary>
+      /// <param name="rangeDelta">The range delta</param>
+      /// <param name="numMatches">The maximum number of matches to return</param>
+      /// <param name="jsonAttributes">Attributes match criteria</param>
+      /// <param name="jsonExtraParms">Parameters to pass to the CloudCode filter script</param>
+      /// <param name="clientIndex"></param>
       string MatchMaking_FindPlayersWithAttributesUsingFilter(long rangeDelta, long numMatches, string jsonAttributes, string jsonExtraParms, int clientIndex);
+      /// <summary>
+      /// Enables Match Making for the Player
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string MatchMaking_EnableMatchMaking(int clientIndex);
+      /// <summary>
+      /// Disables Match Making for the Player
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string MatchMaking_DisableMatchMaking(int clientIndex);
+      /// <summary>
+      /// Starts a match
+      /// </summary>
+      /// <param name="otherPlayerId">The player to start a match with</param>
+      /// <param name="rangeDelta">The range delta used for the initial match search</param>
+      /// <param name="clientIndex"></param>
       string OneWayMatch_StartMatch(string otherPlayerId, long rangeDelta, int clientIndex);
+      /// <summary>
+      /// Cancels a match
+      /// </summary>
+      /// <param name="playbackStreamId">The playback stream id returned in the start match</param>
+      /// <param name="clientIndex"></param>
       string OneWayMatch_CancelMatch(string playbackStreamId, int clientIndex);
+      /// <summary>
+      /// Completes a match
+      /// </summary>
+      /// <param name="playbackStreamId">The playback stream id returned in the initial start match</param>
+      /// <param name="clientIndex"></param>
       string OneWayMatch_CompleteMatch(string playbackStreamId, int clientIndex);
+      /// <summary>
+      /// Starts a stream
+      /// </summary>
+      /// <param name="targetPlayerId">The player to start a stream with</param>
+      /// <param name="includeSharedData">Whether to include shared data in the stream</param>
+      /// <param name="clientIndex"></param>
       string PlaybackStream_StartStream(string targetPlayerId, bool includeSharedData, int clientIndex);
+      /// <summary>
+      /// Reads a stream
+      /// </summary>
+      /// <param name="playbackStreamId">Identifies the stream to read</param>
+      /// <param name="clientIndex"></param>
       string PlaybackStream_ReadStream(string playbackStreamId, int clientIndex);
+      /// <summary>
+      /// Ends a stream
+      /// </summary>
+      /// <param name="playbackStreamId">Identifies the stream to read</param>
+      /// <param name="clientIndex"></param>
       string PlaybackStream_EndStream(string playbackStreamId, int clientIndex);
+      /// <summary>
+      /// Deletes a stream
+      /// </summary>
+      /// <param name="playbackStreamId">Identifies the stream to read</param>
+      /// <param name="clientIndex"></param>
       string PlaybackStream_DeleteStream(string playbackStreamId, int clientIndex);
+      /// <summary>
+      /// Adds a stream event
+      /// </summary>
+      /// <param name="playbackStreamId">Identifies the stream to read</param>
+      /// <param name="eventData">Describes the event</param>
+      /// <param name="summary">Current summary data as of this event</param>
+      /// <param name="clientIndex"></param>
       string PlaybackStream_AddEvent(string playbackStreamId, string eventData, string summary, int clientIndex);
+      /// <summary>
+      /// Gets recent streams for initiating player
+      /// </summary>
+      /// <param name="initiatingPlayerId">The player that started the stream</param>
+      /// <param name="maxNumStreams">The player that started the stream</param>
+      /// <param name="clientIndex"></param>
       string PlaybackStream_GetRecentStreamsForInitiatingPlayer(string initiatingPlayerId, int maxNumStreams, int clientIndex);
+      /// <summary>
+      /// Gets recent streams for target player
+      /// </summary>
+      /// <param name="targetPlayerId">The player that started the stream</param>
+      /// <param name="maxNumStreams">The player that started the stream</param>
+      /// <param name="clientIndex"></param>
       string PlaybackStream_GetRecentStreamsForTargetPlayer(string targetPlayerId, int maxNumStreams, int clientIndex);
+      /// <summary>
+      /// Read the state of the currently logged in user.
+      /// This method returns a JSON object describing most of the
+      /// player's data: entities, statistics, level, currency.
+      /// Apps will typically call this method after authenticating to get an
+      /// up-to-date view of the user's data.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string PlayerState_ReadUserState(int clientIndex);
+      /// <summary>
+      /// Completely deletes the user record and all data fully owned
+      /// by the user. After calling this method, the user will need
+      /// to re-authenticate and create a new profile.
+      /// This is mostly used for debugging/qa.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string PlayerState_DeleteUser(int clientIndex);
+      /// <summary>
+      /// This method will delete *most* data for the currently logged in user.
+      /// Data which is not deleted includes: currency, credentials, and
+      /// purchase transactions. ResetUser is different from DeleteUser in that
+      /// the player record will continue to exist after the reset (so the user
+      /// does not need to re-authenticate).
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string PlayerState_ResetUser(int clientIndex);
+      /// <summary>
+      /// Logs user out of server.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string PlayerState_Logout(int clientIndex);
+      /// <summary>
+      /// Sets the user name.
+      /// </summary>
+      /// <param name="userName">The name of the user</param>
+      /// <param name="clientIndex"></param>
       string PlayerState_UpdateUserName(string userName, int clientIndex);
+      /// <summary>
+      /// Updates the "friend summary data" associated with the logged in user.
+      /// Some operations will return this summary data. For instance the social
+      /// leaderboards will return the player's score in the leaderboard along
+      /// with the friend summary data. Generally this data is used to provide
+      /// a quick overview of the player without requiring a separate API call
+      /// to read their public stats or entity data.
+      /// </summary>
+      /// <param name="jsonSummaryData">A JSON string defining the summary data.For example:{  "xp":123,  "level":12,  "highScore":45123}</param>
+      /// <param name="clientIndex"></param>
       string PlayerState_UpdateSummaryFriendData(string jsonSummaryData, int clientIndex);
+      /// <summary>
+      /// Retrieve the user's attributes.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string PlayerState_GetAttributes(int clientIndex);
+      /// <summary>
+      /// Update user's attributes.
+      /// </summary>
+      /// <param name="jsonAttributes">Single layer json string that is a set of key-value pairs</param>
+      /// <param name="wipeExisting">Whether to wipe existing attributes prior to update.</param>
+      /// <param name="clientIndex"></param>
       string PlayerState_UpdateAttributes(string jsonAttributes, bool wipeExisting, int clientIndex);
+      /// <summary>
+      /// Remove user's attributes.
+      /// </summary>
+      /// <param name="attributeNames">List of attribute names.</param>
+      /// <param name="clientIndex"></param>
       string PlayerState_RemoveAttributes(List<string> attributeNames, int clientIndex);
+      /// <summary>
+      /// Updates player's picture URL.
+      /// </summary>
+      /// <param name="pictureUrl">URL to apply.</param>
+      /// <param name="clientIndex"></param>
       string PlayerState_UpdateUserPictureUrl(string pictureUrl, int clientIndex);
+      /// <summary>
+      /// Update the user's contact email.
+      /// Note this is unrelated to email authentication.
+      /// </summary>
+      /// <param name="contactEmail">Updated email</param>
+      /// <param name="clientIndex"></param>
       string PlayerState_UpdateContactEmail(string contactEmail, int clientIndex);
+      /// <summary>
+      /// Read all available user statistics.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string PlayerStatistics_ReadAllUserStats(int clientIndex);
+      /// <summary>
+      /// Reads a subset of user statistics as defined by the input JSON.
+      /// </summary>
+      /// <param name="playerStats"></param>
+      /// <param name="clientIndex"></param>
       string PlayerStatistics_ReadUserStatsSubset(List<string> playerStats, int clientIndex);
+      /// <summary>
+      /// Method retrieves the user statistics for the given category.
+      /// </summary>
+      /// <param name="category">The user statistics category</param>
+      /// <param name="clientIndex"></param>
       string PlayerStatistics_ReadUserStatsForCategory(string category, int clientIndex);
+      /// <summary>
+      /// Reset all of the statistics for this user back to their initial value.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string PlayerStatistics_ResetAllUserStats(int clientIndex);
+      /// <summary>
+      /// Atomically increment (or decrement) user statistics.
+      /// Any rewards that are triggered from user statistic increments
+      /// will be considered. User statistics are defined through the brainCloud portal.
+      /// Note also that the "xpCapped" property is returned (true/false depending on whether
+      /// the xp cap is turned on and whether the user has hit it).
+      /// </summary>
+      /// <param name="jsonData">The JSON encoded data to be sent to the server as follows:{  stat1: 10,  stat2: -5.5,}would increment stat1 by 10 and decrement stat2 by 5.5.For the full statistics grammer see the api.braincloudservers.com site.There are many more complex operations supported such as:{  stat1:INC_TO_LIMIT#9#30}which increments stat1 by 9 up to a limit of 30.</param>
+      /// <param name="clientIndex"></param>
       string PlayerStatistics_IncrementUserStats_SSFO(string jsonData, int clientIndex);
+      /// <summary>
+      /// Atomically increment (or decrement) user statistics.
+      /// Any rewards that are triggered from user statistic increments
+      /// will be considered. User statistics are defined through the brainCloud portal.
+      /// Note also that the "xpCapped" property is returned (true/false depending on whether
+      /// the xp cap is turned on and whether the user has hit it).
+      /// </summary>
+      /// <param name="dictData">Stats name and their increments:{ {"stat1", 10}, {"stat1", -5}}would increment stat1 by 10 and decrement stat2 by 5.For the full statistics grammer see the api.braincloudservers.com site.There are many more complex operations supported such as:{  stat1:INC_TO_LIMIT#9#30}which increments stat1 by 9 up to a limit of 30.</param>
+      /// <param name="clientIndex"></param>
       string PlayerStatistics_IncrementUserStats_DSFO(Dictionary<string, string> dictData, int clientIndex);
+      /// <summary>
+      /// Apply statistics grammar to a partial set of statistics.
+      /// </summary>
+      /// <param name="statisticsData">Example data to be passed to method:{    "DEAD_CATS": "RESET",    "LIVES_LEFT": "SET#9",    "MICE_KILLED": "INC#2",    "DOG_SCARE_BONUS_POINTS": "INC#10",    "TREES_CLIMBED": 1}</param>
+      /// <param name="clientIndex"></param>
       string PlayerStatistics_ProcessStatistics(Dictionary<string, string> statisticsData, int clientIndex);
+      /// <summary>
+      /// Returns JSON representing the next experience level for the user.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string PlayerStatistics_GetNextExperienceLevel(int clientIndex);
+      /// <summary>
+      /// Increments the user's experience. If the user goes up a level,
+      /// the new level details will be returned along with a list of rewards.
+      /// </summary>
+      /// <param name="xpValue">The amount to increase the user's experience by</param>
+      /// <param name="clientIndex"></param>
       string PlayerStatistics_IncrementExperiencePoints(int xpValue, int clientIndex);
+      /// <summary>
+      /// Sets the user's experience to an absolute value. Note that this
+      /// is simply a set and will not reward the user if their level changes
+      /// as a result.
+      /// </summary>
+      /// <param name="xpValue">The amount to set the the player's experience to</param>
+      /// <param name="clientIndex"></param>
       string PlayerStatistics_SetExperiencePoints(int xpValue, int clientIndex);
+      /// <summary>
+      /// Trigger an event server side that will increase the user statistics.
+      /// This may cause one or more awards to be sent back to the user -
+      /// could be achievements, experience, etc. Achievements will be sent by this
+      /// client library to the appropriate awards service (Apple Game Center, etc).
+      /// 
+      /// This mechanism supercedes the PlayerStatisticsService API methods, since
+      /// PlayerStatisticsService API method only update the raw statistics without
+      /// triggering the rewards.
+      /// </summary>
+      /// <param name="eventName"></param>
+      /// <param name="eventMultiplier"></param>
+      /// <param name="clientIndex"></param>
       string PlayerStatisticsEvent_TriggerStatsEvent(string eventName, int eventMultiplier, int clientIndex);
+      /// <summary>
+      /// See documentation for TriggerStatsEvent for more
+      /// documentation.
+      /// </summary>
+      /// <param name="jsonData">jsonData[  {    "eventName": "event1",    "eventMultiplier": 1  },  {    "eventName": "event2",    "eventMultiplier": 1  }]</param>
+      /// <param name="clientIndex"></param>
       string PlayerStatisticsEvent_TriggerStatsEvents(string jsonData, int clientIndex);
+      /// <summary>
+      /// Gets the player's currency for the given currency type
+      /// or all currency types if null passed in.
+      /// </summary>
+      /// <param name="currencyType">The currency type to retrieve or nullif all currency types are being requested.</param>
+      /// <param name="clientIndex"></param>
       string Product_GetCurrency(string currencyType, int clientIndex);
+      /// <summary>
+      /// Method gets the active sales inventory for the passed-in
+      /// currency type.
+      /// </summary>
+      /// <param name="platform">The store platform. Valid stores are:- itunes- facebook- appworld- steam- windows- windowsPhone- googlePlay</param>
+      /// <param name="userCurrency">The currency to retrieve the salesinventory for. This is only used for Steam and Facebook stores.</param>
+      /// <param name="clientIndex"></param>
       string Product_GetSalesInventory(string platform, string userCurrency, int clientIndex);
+      /// <summary>
+      /// Method gets the active sales inventory for the passed-in
+      /// currency type and category.
+      /// </summary>
+      /// <param name="platform">The store platform. Valid stores are:- itunes- facebook- appworld- steam- windows- windowsPhone- googlePlay</param>
+      /// <param name="userCurrency">The currency to retrieve the salesinventory for. This is only used for Steam and Facebook stores.</param>
+      /// <param name="category">The product category</param>
+      /// <param name="clientIndex"></param>
       string Product_GetSalesInventoryByCategory(string platform, string userCurrency, string category, int clientIndex);
+      /// <summary>
+      /// Verify Microsoft Receipt. On success, the player will be awarded the
+      /// associated currencies.
+      /// </summary>
+      /// <param name="receipt">Receipt XML</param>
+      /// <param name="clientIndex"></param>
       string Product_VerifyMicrosoftReceipt(string receipt, int clientIndex);
+      /// <summary>
+      /// Returns the eligible promotions for the player.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string Product_GetEligiblePromotions(int clientIndex);
+      /// <summary>
+      /// Verify ITunes Receipt. On success, the player will be awarded the
+      /// associated currencies.
+      /// </summary>
+      /// <param name="base64EncReceiptData">Base64 encoded receipt data</param>
+      /// <param name="clientIndex"></param>
       string Product_VerifyItunesReceipt(string base64EncReceiptData, int clientIndex);
+      /// <summary>
+      /// Checks supplied text for profanity.
+      /// </summary>
+      /// <param name="text">The text to check</param>
+      /// <param name="languages">Optional comma delimited list of two character language codes</param>
+      /// <param name="flagEmail">Optional processing of email addresses</param>
+      /// <param name="flagPhone">Optional processing of phone numbers</param>
+      /// <param name="flagUrls">Optional processing of urls</param>
+      /// <param name="clientIndex"></param>
       string Profanity_ProfanityCheck(string text, string languages, bool flagEmail, bool flagPhone, bool flagUrls, int clientIndex);
+      /// <summary>
+      /// Replaces the characters of profanity text with a passed character(s).
+      /// </summary>
+      /// <param name="text">The text to check</param>
+      /// <param name="replaceSymbol">The text to replace individual characters of profanity text with</param>
+      /// <param name="languages">Optional comma delimited list of two character language codes</param>
+      /// <param name="flagEmail">Optional processing of email addresses</param>
+      /// <param name="flagPhone">Optional processing of phone numbers</param>
+      /// <param name="flagUrls">Optional processing of urls</param>
+      /// <param name="clientIndex"></param>
       string Profanity_ProfanityReplaceText(string text, string replaceSymbol, string languages, bool flagEmail, bool flagPhone, bool flagUrls, int clientIndex);
+      /// <summary>
+      /// Checks supplied text for profanity and returns a list of bad wors.
+      /// </summary>
+      /// <param name="text">The text to check</param>
+      /// <param name="languages">Optional comma delimited list of two character language codes</param>
+      /// <param name="flagEmail">Optional processing of email addresses</param>
+      /// <param name="flagPhone">Optional processing of phone numbers</param>
+      /// <param name="flagUrls">Optional processing of urls</param>
+      /// <param name="clientIndex"></param>
       string Profanity_ProfanityIdentifyBadWords(string text, string languages, bool flagEmail, bool flagPhone, bool flagUrls, int clientIndex);
+      /// <summary>
+      /// Deregisters all device tokens currently registered to the user.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string PushNotification_DeregisterAllPushNotificationDeviceTokens(int clientIndex);
+      /// <summary>
+      /// Deregisters the given device token from the server to disable this device
+      /// from receiving push notifications.
+      /// </summary>
+      /// <param name="platform">The device platform being registered.</param>
+      /// <param name="token">The platform-dependant device token needed for push notifications.</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_DeregisterPushNotificationDeviceToken(string platform, string token, int clientIndex);
+      /// <summary>
+      /// Registers the given device token with the server to enable this device
+      /// to receive push notifications.
+      /// </summary>
+      /// <param name="platform"></param>
+      /// <param name="token">The platform-dependant device token needed for push notifications.</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_RegisterPushNotificationDeviceToken(string platform, string token, int clientIndex);
+      /// <summary>
+      /// Sends a simple push notification based on the passed in message.
+      /// NOTE: It is possible to send a push notification to oneself.
+      /// </summary>
+      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
+      /// <param name="message">Text of the push notification</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_SendSimplePushNotification(string toProfileId, string message, int clientIndex);
+      /// <summary>
+      /// Sends a notification to a user based on a brainCloud portal configured notification template.
+      /// NOTE: It is possible to send a push notification to oneself.
+      /// </summary>
+      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
+      /// <param name="notificationTemplateId">Id of the notification template</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_SendRichPushNotification(string toProfileId, int notificationTemplateId, int clientIndex);
+      /// <summary>
+      /// Sends a notification to a user based on a brainCloud portal configured notification template.
+      /// Includes JSON defining the substitution params to use with the template.
+      /// See the Portal documentation for more info.
+      /// NOTE: It is possible to send a push notification to oneself.
+      /// </summary>
+      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
+      /// <param name="notificationTemplateId">Id of the notification template</param>
+      /// <param name="substitutionJson">JSON defining the substitution params to use with the template</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_SendRichPushNotificationWithParams(string toProfileId, int notificationTemplateId, string substitutionJson, int clientIndex);
+      /// <summary>
+      /// Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
+      /// Includes JSON defining the substitution params to use with the template.
+      /// See the Portal documentation for more info.
+      /// </summary>
+      /// <param name="groupId">Target group</param>
+      /// <param name="notificationTemplateId">Id of the notification template</param>
+      /// <param name="substitutionsJson">JSON defining the substitution params to use with the template</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_SendTemplatedPushNotificationToGroup(string groupId, int notificationTemplateId, string substitutionsJson, int clientIndex);
+      /// <summary>
+      /// Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
+      /// Includes JSON defining the substitution params to use with the template.
+      /// See the Portal documentation for more info.
+      /// </summary>
+      /// <param name="groupId">Target group</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_SendNormalizedPushNotificationToGroup(string groupId, string alertContentJson, string customDataJson, int clientIndex);
+      /// <summary>
+      /// Schedules raw notifications based on user local time.
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="startTime">Start time of sending the push notification</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_ScheduleRawPushNotificationUTC(string profileId, string fcmContent, string iosContent, string facebookContent, int startTime, int clientIndex);
+      /// <summary>
+      /// Schedules raw notifications based on user local time.
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_ScheduleRawPushNotificationMinutes(string profileId, string fcmContent, string iosContent, string facebookContent, int minutesFromNow, int clientIndex);
+      /// <summary>
+      /// Sends a raw push notification to a target user.
+      /// </summary>
+      /// <param name="toProfileId">The profileId of the user to receive the notification</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_SendRawPushNotification(string toProfileId, string fcmContent, string iosContent, string facebookContent, int clientIndex);
+      /// <summary>
+      /// Sends a raw push notification to a target list of users.
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs to send the notification to</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_SendRawPushNotificationBatch(List<string> profileIds, string fcmContent, string iosContent, string facebookContent, int clientIndex);
+      /// <summary>
+      /// Sends a raw push notification to a target group.
+      /// </summary>
+      /// <param name="groupId">Target group</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_SendRawPushNotificationToGroup(string groupId, string fcmContent, string iosContent, string facebookContent, int clientIndex);
+      /// <summary>
+      /// Schedules a normalized push notification to a user
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="startTime">Start time of sending the push notification</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_ScheduleNormalizedPushNotificationUTC(string profileId, string alertContentJson, string customDataJson, int startTime, int clientIndex);
+      /// <summary>
+      /// Schedules a normalized push notification to a user
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_ScheduleNormalizedPushNotificationMinutes(string profileId, string alertContentJson, string customDataJson, int minutesFromNow, int clientIndex);
+      /// <summary>
+      /// Schedules a rich push notification to a user
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="notificationTemplateId">Body and title of alert</param>
+      /// <param name="substitutionsJson">Optional custom data</param>
+      /// <param name="startTime">Start time of sending the push notification</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_ScheduleRichPushNotificationUTC(string profileId, int notificationTemplateId, string substitutionsJson, int startTime, int clientIndex);
+      /// <summary>
+      /// Schedules a rich push notification to a user
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="notificationTemplateId">Body and title of alert</param>
+      /// <param name="substitutionsJson">Optional custom data</param>
+      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_ScheduleRichPushNotificationMinutes(string profileId, int notificationTemplateId, string substitutionsJson, int minutesFromNow, int clientIndex);
+      /// <summary>
+      /// Sends a notification to a user consisting of alert content and custom data.
+      /// </summary>
+      /// <param name="toProfileId">The profileId of the user to receive the notification</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_SendNormalizedPushNotification(string toProfileId, string alertContentJson, string customDataJson, int clientIndex);
+      /// <summary>
+      /// Sends a notification to multiple users consisting of alert content and custom data.
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs to send the notification to</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="clientIndex"></param>
       string PushNotification_SendNormalizedPushNotificationBatch(List<string> profileIds, string alertContentJson, string customDataJson, int clientIndex);
+      /// <summary>
+      /// Executes a script on the server.
+      /// </summary>
+      /// <param name="scriptName">The name of the script to be run</param>
+      /// <param name="jsonScriptData">Data to be sent to the script in json format</param>
+      /// <param name="clientIndex"></param>
       string Script_RunScript(string scriptName, string jsonScriptData, int clientIndex);
+      /// <summary>
+      /// Allows cloud script executions to be scheduled
+      /// </summary>
+      /// <param name="scriptName">Name of script</param>
+      /// <param name="jsonScriptData">JSON bundle to pass to script</param>
+      /// <param name="startDateInUTC">The start date as a DateTime object</param>
+      /// <param name="clientIndex"></param>
       string Script_ScheduleRunScriptUTC(string scriptName, string jsonScriptData, long startDateInUTC, int clientIndex);
+      /// <summary>
+      /// Allows cloud script executions to be scheduled
+      /// </summary>
+      /// <param name="scriptName">Name of script</param>
+      /// <param name="jsonScriptData">JSON bundle to pass to script</param>
+      /// <param name="minutesFromNow">Number of minutes from now to run script</param>
+      /// <param name="clientIndex"></param>
       string Script_ScheduleRunScriptMinutes(string scriptName, string jsonScriptData, long minutesFromNow, int clientIndex);
+      /// <summary>
+      /// Run a cloud script in a parent app
+      /// </summary>
+      /// <param name="scriptName">Name of script</param>
+      /// <param name="jsonScriptData">JSON bundle to pass to script</param>
+      /// <param name="parentLevel">The level name of the parent to run the script from</param>
+      /// <param name="clientIndex"></param>
       string Script_RunParentScript(string scriptName, string jsonScriptData, string parentLevel, int clientIndex);
+      /// <summary>
+      /// Cancels a scheduled cloud code script
+      /// </summary>
+      /// <param name="jobId">ID of script job to cancel</param>
+      /// <param name="clientIndex"></param>
       string Script_CancelScheduledScript(string jobId, int clientIndex);
+      /// <summary>
+      /// Runs a script from the context of a peer
+      /// </summary>
+      /// <param name="scriptName">The name of the script to run</param>
+      /// <param name="jsonScriptData">JSON data to pass into the script</param>
+      /// <param name="peer">Identifies the peer</param>
+      /// <param name="clientIndex"></param>
       string Script_RunPeerScript(string scriptName, string jsonScriptData, string peer, int clientIndex);
+      /// <summary>
+      /// Runs a script asynchronously from the context of a peer
+      /// This operation does not wait for the script to complete before returning
+      /// </summary>
+      /// <param name="scriptName">The name of the script to run</param>
+      /// <param name="jsonScriptData">JSON data to pass into the script</param>
+      /// <param name="peer">Identifies the peer</param>
+      /// <param name="clientIndex"></param>
       string Script_RunPeerScriptAsynch(string scriptName, string jsonScriptData, string peer, int clientIndex);
+      /// <summary>
+      /// Method returns the social leaderboard. A player's social leaderboard is
+      /// comprised of players who are recognized as being your friend.
+      /// For now, this applies solely to Facebook connected players who are
+      /// friends with the logged in player (who also must be Facebook connected).
+      /// In the future this will expand to other identification means (such as
+      /// Game Centre, Google circles etc).
+      /// 
+      /// Leaderboards entries contain the player's score and optionally, some user-defined
+      /// data associated with the score. The currently logged in player will also
+      /// be returned in the social leaderboard.
+      /// 
+      /// Note: If no friends have played the game, the bestScore, createdAt, updatedAt
+      /// will contain NULL.
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve</param>
+      /// <param name="replaceName">If true, the currently logged in player's name will be replacedby the string "You".</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_GetSocialLeaderboard(string leaderboardId, bool replaceName, int clientIndex);
+      /// <summary>
+      /// Reads multiple social leaderboards.
+      /// </summary>
+      /// <param name="leaderboardIds">Array of leaderboard id strings</param>
+      /// <param name="leaderboardResultCount">Maximum count of entries to return for each leaderboard.</param>
+      /// <param name="replaceName">If true, the currently logged in player's name will be replacedby the string "You".</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_GetMultiSocialLeaderboard(List<string> leaderboardIds, int leaderboardResultCount, bool replaceName, int clientIndex);
+      /// <summary>
+      /// Method returns a page of global leaderboard results.
+      /// 
+      /// Leaderboards entries contain the player's score and optionally, some user-defined
+      /// data associated with the score.
+      /// 
+      /// Note: This method allows the client to retrieve pages from within the global leaderboard list
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="startIndex">The index at which to start the page.</param>
+      /// <param name="endIndex">The index at which to end the page.</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_GetGlobalLeaderboardPage(string leaderboardId, Ruyi.SDK.BrainCloudApi.SortOrder sort, int startIndex, int endIndex, int clientIndex);
+      /// <summary>
+      /// Method returns a page of global leaderboard results. By using a non-current version id,
+      /// the user can retrieve a historical leaderboard. See GetGlobalLeaderboardVersions method
+      /// to retrieve the version id.
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="startIndex">The index at which to start the page.</param>
+      /// <param name="endIndex">The index at which to end the page.</param>
+      /// <param name="versionId">The historical version to retrieve.</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_GetGlobalLeaderboardPageByVersion(string leaderboardId, Ruyi.SDK.BrainCloudApi.SortOrder sort, int startIndex, int endIndex, int versionId, int clientIndex);
+      /// <summary>
+      /// Method returns a view of global leaderboard results that centers on the current player.
+      /// 
+      /// Leaderboards entries contain the player's score and optionally, some user-defined
+      /// data associated with the score.
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="beforeCount">The count of number of players before the current player to include.</param>
+      /// <param name="afterCount">The count of number of players after the current player to include.</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_GetGlobalLeaderboardView(string leaderboardId, Ruyi.SDK.BrainCloudApi.SortOrder sort, int beforeCount, int afterCount, int clientIndex);
+      /// <summary>
+      /// Method returns a view of global leaderboard results that centers on the current player.
+      /// By using a non-current version id, the user can retrieve a historical leaderboard.
+      /// See GetGlobalLeaderboardVersions method to retrieve the version id.
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="beforeCount">The count of number of players before the current player to include.</param>
+      /// <param name="afterCount">The count of number of players after the current player to include.</param>
+      /// <param name="versionId">The historial version to retrieve. Use -1 for current leaderboard.</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_GetGlobalLeaderboardViewByVersion(string leaderboardId, Ruyi.SDK.BrainCloudApi.SortOrder sort, int beforeCount, int afterCount, int versionId, int clientIndex);
+      /// <summary>
+      /// Gets the global leaderboard versions.
+      /// </summary>
+      /// <param name="leaderboardId">In_leaderboard identifier.</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_GetGlobalLeaderboardVersions(string leaderboardId, int clientIndex);
+      /// <summary>
+      /// Retrieve the social leaderboard for a group.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard to read</param>
+      /// <param name="groupId">The group ID</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_GetGroupSocialLeaderboard(string leaderboardId, string groupId, int clientIndex);
+      /// <summary>
+      /// Post the players score to the given social leaderboard.
+      /// You can optionally send a user-defined json string of data
+      /// with the posted score. This string could include information
+      /// relevant to the posted score.
+      /// 
+      /// Note that the behaviour of posting a score can be modified in
+      /// the brainCloud portal. By default, the server will only keep
+      /// the player's best score.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard to post to</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData"></param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_PostScoreToLeaderboard(string leaderboardId, long score, string jsonData, int clientIndex);
+      /// <summary>
+      /// Removes a player's score from the leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="versionId">The version of the leaderboard</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_RemovePlayerScore(string leaderboardId, int versionId, int clientIndex);
+      /// <summary>
+      /// Post the players score to the given social leaderboard.
+      /// Pass leaderboard config data to dynamically create if necessary.
+      /// You can optionally send a user-defined json string of data
+      /// with the posted score. This string could include information
+      /// relevant to the posted score.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard to post to</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData"></param>
+      /// <param name="leaderboardType">leaderboard type</param>
+      /// <param name="rotationType">Type of rotation</param>
+      /// <param name="rotationReset">Date to reset the leaderboard UTC</param>
+      /// <param name="retainedCount">How many rotations to keep</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_PostScoreToDynamicLeaderboard(string leaderboardId, long score, string jsonData, Ruyi.SDK.BrainCloudApi.SocialLeaderboardType leaderboardType, Ruyi.SDK.BrainCloudApi.RotationType rotationType, long rotationReset, int retainedCount, int clientIndex);
+      /// <summary>
+      /// Post the players score to the given social leaderboard with a rotation type of DAYS.
+      /// Pass leaderboard config data to dynamically create if necessary.
+      /// You can optionally send a user-defined json string of data
+      /// with the posted score. This string could include information
+      /// relevant to the posted score.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard to post to</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData"></param>
+      /// <param name="leaderboardType">leaderboard type</param>
+      /// <param name="rotationReset">Date to reset the leaderboard UTC</param>
+      /// <param name="retainedCount">How many rotations to keep</param>
+      /// <param name="numDaysToRotate">How many days between each rotation</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_PostScoreToDynamicLeaderboardDays(string leaderboardId, long score, string jsonData, Ruyi.SDK.BrainCloudApi.SocialLeaderboardType leaderboardType, long rotationReset, int retainedCount, int numDaysToRotate, int clientIndex);
+      /// <summary>
+      /// Retrieve the social leaderboard for a list of players.
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="profileIds">The IDs of the players</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_GetPlayersSocialLeaderboard(string leaderboardId, List<string> profileIds, int clientIndex);
+      /// <summary>
+      /// Retrieve a list of all leaderboards
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_ListLeaderboards(int clientIndex);
+      /// <summary>
+      /// Gets the number of entries in a global leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_GetGlobalLeaderboardEntryCount(string leaderboardId, int clientIndex);
+      /// <summary>
+      /// Gets the number of entries in a global leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="versionId">The version of the leaderboard</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_GetGlobalLeaderboardEntryCountByVersion(string leaderboardId, int versionId, int clientIndex);
+      /// <summary>
+      /// Gets a player's score from a leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="versionId">The version of the leaderboard. Use -1 for current.</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_GetPlayerScore(string leaderboardId, int versionId, int clientIndex);
+      /// <summary>
+      /// Gets a player's score from multiple leaderboards
+      /// </summary>
+      /// <param name="leaderboardIds">A collection of leaderboardIds to retrieve scores from</param>
+      /// <param name="clientIndex"></param>
       string SocialLeaderboard_GetPlayerScoresFromLeaderboards(List<string> leaderboardIds, int clientIndex);
+      /// <summary>
+      /// Method returns the server time in UTC. This is in UNIX millis time format.
+      /// For instance 1396378241893 represents 2014-04-01 2:50:41.893 in GMT-4.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       string Time_ReadServerTime(int clientIndex);
+      /// <summary>
+      /// Processes any outstanding rewards for the given player
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="versionId">Version of the tournament to claim rewards for.Use -1 for the latest version.</param>
+      /// <param name="clientIndex"></param>
       string Tournament_ClaimTournamentReward(string leaderboardId, int versionId, int clientIndex);
+      /// <summary>
+      /// Get tournament status associated with a leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="versionId">Version of the tournament. Use -1 for the latest version.</param>
+      /// <param name="clientIndex"></param>
       string Tournament_GetTournamentStatus(string leaderboardId, int versionId, int clientIndex);
+      /// <summary>
+      /// Join the specified tournament.
+      /// Any entry fees will be automatically collected.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="tournamentCode">Tournament to join</param>
+      /// <param name="initialScore">The initial score for players first joining a tournamentUsually 0, unless leaderboard is LOW_VALUE</param>
+      /// <param name="clientIndex"></param>
       string Tournament_JoinTournament(string leaderboardId, string tournamentCode, long initialScore, int clientIndex);
+      /// <summary>
+      /// Removes player's score from tournament leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="clientIndex"></param>
       string Tournament_LeaveTournament(string leaderboardId, int clientIndex);
+      /// <summary>
+      /// Post the users score to the leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData">Optional data attached to the leaderboard entry</param>
+      /// <param name="roundStartedTime">Time the user started the match resulting in the scorebeing posted.</param>
+      /// <param name="clientIndex"></param>
       string Tournament_PostTournamentScore(string leaderboardId, long score, string jsonData, long roundStartedTime, int clientIndex);
+      /// <summary>
+      /// Post the users score to the leaderboard and returns the results
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData">Optional data attached to the leaderboard entry</param>
+      /// <param name="roundStartedTime">Time the user started the match resulting in the scorebeing posted.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="beforeCount">The count of number of players before the current player to include.</param>
+      /// <param name="afterCount">The count of number of players after the current player to include.</param>
+      /// <param name="initialScore">The initial score for players first joining a tournamentUsually 0, unless leaderboard is LOW_VALUE</param>
+      /// <param name="clientIndex"></param>
       string Tournament_PostTournamentScoreWithResults(string leaderboardId, long score, string jsonData, long roundStartedTime, Ruyi.SDK.BrainCloudApi.SortOrder sort, int beforeCount, int afterCount, long initialScore, int clientIndex);
+      /// <summary>
+      /// Returns the user's expected reward based on the current scores
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="clientIndex"></param>
       string Tournament_ViewCurrentReward(string leaderboardId, int clientIndex);
+      /// <summary>
+      /// Returns the user's reward from a finished tournament
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="versionId">Version of the tournament. Use -1 for the latest version.</param>
+      /// <param name="clientIndex"></param>
       string Tournament_ViewReward(string leaderboardId, int versionId, int clientIndex);
       string SocialFeed_ShareVideo(int timestamp, string resource, List<string> tagged, List<string> show, List<string> block, int clientIndex);
       string SocialFeed_ShareScreenshot(int timestamp, string resource, List<string> tagged, List<string> show, List<string> block, int clientIndex);
@@ -348,1182 +2297,3131 @@ namespace Ruyi.SDK.BrainCloudApi
     }
 
     public interface Iface : ISync {
+      /// <summary>
+      /// Creates an instance of an asynchronous match.
+      /// </summary>
+      /// <param name="jsonOpponentIds">JSON string identifying the opponent platform and id for this match.Platforms are identified as:BC - a brainCloud profile idFB - a Facebook idAn exmaple of this string would be:[    {        "platform": "BC",        "id": "some-braincloud-profile"    },    {        "platform": "FB",        "id": "some-facebook-id"    }]</param>
+      /// <param name="pushNotificationMessage">Optional push notification message to send to the other party.Refer to the Push Notification functions for the syntax required.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_AsyncMatch_CreateMatch(AsyncCallback callback, object state, string jsonOpponentIds, string pushNotificationMessage, int clientIndex);
       string End_AsyncMatch_CreateMatch(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Creates an instance of an asynchronous match with an initial turn.
+      /// </summary>
+      /// <param name="jsonOpponentIds">JSON string identifying the opponent platform and id for this match.Platforms are identified as:BC - a brainCloud profile idFB - a Facebook idAn exmaple of this string would be:[    {        "platform": "BC",        "id": "some-braincloud-profile"    },    {        "platform": "FB",        "id": "some-facebook-id"    }]</param>
+      /// <param name="jsonMatchState">JSON string blob provided by the caller</param>
+      /// <param name="pushNotificationMessage">Optional push notification message to send to the other party.Refer to the Push Notification functions for the syntax required.</param>
+      /// <param name="nextPlayer">Optionally, force the next player player to be a specific player</param>
+      /// <param name="jsonSummary">Optional JSON string defining what the other player will see as a summary of the game when listing their games</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_AsyncMatch_CreateMatchWithInitialTurn(AsyncCallback callback, object state, string jsonOpponentIds, string jsonMatchState, string pushNotificationMessage, string nextPlayer, string jsonSummary, int clientIndex);
       string End_AsyncMatch_CreateMatchWithInitialTurn(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Submits a turn for the given match.
+      /// </summary>
+      /// <param name="ownerId">Match owner identfier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="version">Game state version to ensure turns are submitted once and in order</param>
+      /// <param name="jsonMatchState">JSON string blob provided by the caller</param>
+      /// <param name="pushNotificationMessage">Optional push notification message to send to the other party.Refer to the Push Notification functions for the syntax required.</param>
+      /// <param name="nextPlayer">Optionally, force the next player player to be a specific player</param>
+      /// <param name="jsonSummary">Optional JSON string that other players will see as a summary of the game when listing their games</param>
+      /// <param name="jsonStatistics">Optional JSON string blob provided by the caller</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_AsyncMatch_SubmitTurn(AsyncCallback callback, object state, string ownerId, string matchId, long version, string jsonMatchState, string pushNotificationMessage, string nextPlayer, string jsonSummary, string jsonStatistics, int clientIndex);
       string End_AsyncMatch_SubmitTurn(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Allows the current player (only) to update Summary data without having to submit a whole turn.
+      /// </summary>
+      /// <param name="ownerId">Match owner identfier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="version">Game state version to ensure turns are submitted once and in order</param>
+      /// <param name="jsonSummary">JSON string provided by the caller that other players will see as a summary of the game when listing their games</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_AsyncMatch_UpdateMatchSummaryData(AsyncCallback callback, object state, string ownerId, string matchId, long version, string jsonSummary, int clientIndex);
       string End_AsyncMatch_UpdateMatchSummaryData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Marks the given match as complete.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_AsyncMatch_CompleteMatch(AsyncCallback callback, object state, string ownerId, string matchId, int clientIndex);
       string End_AsyncMatch_CompleteMatch(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns the current state of the given match.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_AsyncMatch_ReadMatch(AsyncCallback callback, object state, string ownerId, string matchId, int clientIndex);
       string End_AsyncMatch_ReadMatch(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns the match history of the given match.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_AsyncMatch_ReadMatchHistory(AsyncCallback callback, object state, string ownerId, string matchId, int clientIndex);
       string End_AsyncMatch_ReadMatchHistory(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns all matches that are NOT in a COMPLETE state for which the player is involved.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_AsyncMatch_FindMatches(AsyncCallback callback, object state, int clientIndex);
       string End_AsyncMatch_FindMatches(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns all matches that are in a COMPLETE state for which the player is involved.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_AsyncMatch_FindCompleteMatches(AsyncCallback callback, object state, int clientIndex);
       string End_AsyncMatch_FindCompleteMatches(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Marks the given match as abandoned.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_AsyncMatch_AbandonMatch(AsyncCallback callback, object state, string ownerId, string matchId, int clientIndex);
       string End_AsyncMatch_AbandonMatch(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Removes the match and match history from the server. DEBUG ONLY, in production it is recommended
+      /// the user leave it as completed.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_AsyncMatch_DeleteMatch(AsyncCallback callback, object state, string ownerId, string matchId, int clientIndex);
       string End_AsyncMatch_DeleteMatch(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Used to create the anonymous installation id for the brainCloud profile.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Authentication_GenerateAnonymousId(AsyncCallback callback, object state, int clientIndex);
       string End_Authentication_GenerateAnonymousId(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Initialize - initializes the identity service with a saved
+      /// anonymous installation id and most recently used profile id
+      /// </summary>
+      /// <param name="profileId">The id of the profile id that was most recently used by the app (on this device)</param>
+      /// <param name="anonymousId">The anonymous installation id that was generated for this device</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Authentication_Initialize(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex);
       void End_Authentication_Initialize(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Used to clear the saved profile id - to use in cases when the user is
+      /// attempting to switch to a different app profile.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Authentication_ClearSavedProfileID(AsyncCallback callback, object state, int clientIndex);
       void End_Authentication_ClearSavedProfileID(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Authenticate a user anonymously with brainCloud - used for apps that don't want to bother
+      /// the user to login, or for users who are sensitive to their privacy
+      /// </summary>
+      /// <param name="forceCreate">Should a new profile be created if it does not exist?</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Authentication_AuthenticateAnonymous(AsyncCallback callback, object state, bool forceCreate, int clientIndex);
       string End_Authentication_AuthenticateAnonymous(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Authenticate the user with a custom Email and Password.  Note that the client app
+      /// is responsible for collecting (and storing) the e-mail and potentially password
+      /// (for convenience) in the client data.  For the greatest security,
+      /// force the user to re-enter their password at each login.
+      /// (Or at least give them that option).
+      /// </summary>
+      /// <param name="email">The e-mail address of the user</param>
+      /// <param name="password">The password of the user</param>
+      /// <param name="forceCreate">Should a new profile be created for this user if the account does not exist?</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Authentication_AuthenticateEmailPassword(AsyncCallback callback, object state, string email, string password, bool forceCreate, int clientIndex);
       string End_Authentication_AuthenticateEmailPassword(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Authenticate the user using a userId and password (without any validation on the userId).
+      /// Similar to AuthenticateEmailPassword - except that that method has additional features to
+      /// allow for e-mail validation, password resets, etc.
+      /// </summary>
+      /// <param name="userId"></param>
+      /// <param name="password">The password of the user</param>
+      /// <param name="forceCreate">Should a new profile be created for this user if the account does not exist?</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Authentication_AuthenticateUniversal(AsyncCallback callback, object state, string userId, string password, bool forceCreate, int clientIndex);
       string End_Authentication_AuthenticateUniversal(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Authenticate the user via cloud code (which in turn validates the supplied credentials against an external system).
+      /// This allows the developer to extend brainCloud authentication to support other backend authentication systems.
+      /// </summary>
+      /// <param name="userId">The user id</param>
+      /// <param name="token">The user token (password etc)</param>
+      /// <param name="externalAuthName">The name of the cloud script to call for external authentication</param>
+      /// <param name="forceCreate">Should a new profile be created for this user if the account does not exist?</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Authentication_AuthenticateExternal(AsyncCallback callback, object state, string userId, string token, string externalAuthName, bool forceCreate, int clientIndex);
       string End_Authentication_AuthenticateExternal(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Reset Email password - Sends a password reset email to the specified address
+      /// </summary>
+      /// <param name="externalId">The email address to send the reset email to.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Authentication_ResetEmailPassword(AsyncCallback callback, object state, string externalId, int clientIndex);
       string End_Authentication_ResetEmailPassword(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns the sessionId or empty string if no session present.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_GetSessionId(AsyncCallback callback, object state, int clientIndex);
       string End_Client_GetSessionId(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns true if the user is currently authenticated.
+      /// If a session time out or session invalidation is returned from executing a
+      /// sever API call, this flag will reset back to false.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_IsAuthenticated(AsyncCallback callback, object state, int clientIndex);
       bool End_Client_IsAuthenticated(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns true if brainCloud has been initialized.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex);
       bool End_Client_IsInitialized(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId"></param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex);
       void End_Client_Initialize_SSS(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="serverURL">The URL to the brainCloud server</param>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId">The app id</param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex);
       void End_Client_Initialize_SSSS(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Initialize the identity aspects of brainCloud.
+      /// </summary>
+      /// <param name="profileId">The profile id</param>
+      /// <param name="anonymousId">The anonymous id</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_InitializeIdentity(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex);
       void End_Client_InitializeIdentity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Update method needs to be called regularly in order
+      /// to process incoming and outgoing messages.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_Update(AsyncCallback callback, object state, int clientIndex);
       void End_Client_Update(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Enable logging of brainCloud transactions (comms etc)
+      /// </summary>
+      /// <param name="enable">True if logging is to be enabled</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_EnableLogging(AsyncCallback callback, object state, bool enable, int clientIndex);
       void End_Client_EnableLogging(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Resets all messages and calls to the server
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_ResetCommunication(AsyncCallback callback, object state, int clientIndex);
       void End_Client_ResetCommunication(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sets the packet timeouts using a list of integers that
+      /// represent timeout values for each packet retry. The
+      /// first item in the list represents the timeout for the first packet
+      /// attempt, the second for the second packet attempt, and so on.
+      /// 
+      /// The number of entries in this array determines how many packet
+      /// retries will occur.
+      /// 
+      /// By default, the packet timeout array is {10, 10, 10}
+      /// 
+      /// Note that this method does not change the timeout for authentication
+      /// packets (use SetAuthenticationPacketTimeout method).
+      /// </summary>
+      /// <param name="timeouts">An array of packet timeouts.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_SetPacketTimeouts(AsyncCallback callback, object state, List<int> timeouts, int clientIndex);
       void End_Client_SetPacketTimeouts(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sets the packet timeouts back to default.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_SetPacketTimeoutsToDefault(AsyncCallback callback, object state, int clientIndex);
       void End_Client_SetPacketTimeoutsToDefault(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns the list of packet timeouts.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_GetPacketTimeouts(AsyncCallback callback, object state, int clientIndex);
       List<int> End_Client_GetPacketTimeouts(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sets the authentication packet timeout which is tracked separately
+      /// from all other packets. Note that authentication packets are never
+      /// retried and so this value represents the total time a client would
+      /// wait to receive a reply to an authentication API call. By default
+      /// this timeout is set to 15 seconds.
+      /// </summary>
+      /// <param name="timeoutSecs"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_SetAuthenticationPacketTimeout(AsyncCallback callback, object state, int timeoutSecs, int clientIndex);
       void End_Client_SetAuthenticationPacketTimeout(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Gets the authentication packet timeout which is tracked separately
+      /// from all other packets. Note that authentication packets are never
+      /// retried and so this value represents the total time a client would
+      /// wait to receive a reply to an authentication API call. By default
+      /// this timeout is set to 15 seconds.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_GetAuthenticationPacketTimeout(AsyncCallback callback, object state, int clientIndex);
       int End_Client_GetAuthenticationPacketTimeout(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns the low transfer rate timeout in secs
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_GetUploadLowTransferRateTimeout(AsyncCallback callback, object state, int clientIndex);
       int End_Client_GetUploadLowTransferRateTimeout(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sets the timeout in seconds of a low speed upload
+      /// (i.e. transfer rate which is underneath the low transfer rate threshold).
+      /// By default this is set to 120 secs.Setting this value to 0 will
+      /// turn off the timeout. Note that this timeout method
+      /// does not work on Unity mobile platforms.
+      /// </summary>
+      /// <param name="timeoutSecs"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_SetUploadLowTransferRateTimeout(AsyncCallback callback, object state, int timeoutSecs, int clientIndex);
       void End_Client_SetUploadLowTransferRateTimeout(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns the low transfer rate threshold in bytes/sec
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_GetUploadLowTransferRateThreshold(AsyncCallback callback, object state, int clientIndex);
       int End_Client_GetUploadLowTransferRateThreshold(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sets the low transfer rate threshold of an upload in bytes/sec.
+      /// If the transfer rate dips below the given threshold longer
+      /// than the specified timeout, the transfer will fail.
+      /// By default this is set to 50 bytes/sec. Note that this timeout method
+      /// does not work on Unity mobile platforms.
+      /// </summary>
+      /// <param name="bytesPerSec">The low transfer rate threshold in bytes/sec</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_SetUploadLowTransferRateThreshold(AsyncCallback callback, object state, int bytesPerSec, int clientIndex);
       void End_Client_SetUploadLowTransferRateThreshold(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Enables the timeout message caching which is disabled by default.
+      /// Once enabled, if a client side timeout is encountered
+      /// (i.e. brainCloud server is unreachable presumably due to the client
+      /// network being down) the SDK will do the following:
+      /// 
+      /// 1 - cache the currently queued messages to brainCloud
+      /// 2 - call the network error callback
+      /// 3 - then expect the app to call either:
+      ///     a) RetryCachedMessages() to retry sending to brainCloud
+      ///     b) FlushCachedMessages() to dump all messages in the queue.
+      /// 
+      /// Between steps 2 and 3, the app can prompt the user to retry connecting
+      /// to brainCloud to determine whether to follow path 3a or 3b.
+      /// 
+      /// Note that if path 3a is followed, and another timeout is encountered,
+      /// the process will begin all over again from step 1.
+      /// 
+      /// WARNING - the brainCloud SDK will cache *all* API calls sent
+      /// when a timeout is encountered if this mechanism is enabled.
+      /// This effectively freezes all communication with brainCloud.
+      /// Apps must call either RetryCachedMessages() or FlushCachedMessages()
+      /// for the brainCloud SDK to resume sending messages.
+      /// ResetCommunication() will also clear the message cache.
+      /// </summary>
+      /// <param name="enabled">True if message should be cached on timeout</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_EnableNetworkErrorMessageCaching(AsyncCallback callback, object state, bool enabled, int clientIndex);
       void End_Client_EnableNetworkErrorMessageCaching(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Attempts to resend any cached messages. If no messages are in the cache,
+      /// this method does nothing.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_RetryCachedMessages(AsyncCallback callback, object state, int clientIndex);
       void End_Client_RetryCachedMessages(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Flushes the cached messages to resume API call processing. This will dump
+      /// all of the cached messages in the queue.
+      /// </summary>
+      /// <param name="sendApiErrorCallbacks">If set to true API error callbacks willbe called for every cached message with statusCode CLIENT_NETWORK_ERROR and reasonCode CLIENT_NETWORK_ERROR_TIMEOUT.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_FlushCachedMessages(AsyncCallback callback, object state, bool sendApiErrorCallbacks, int clientIndex);
       void End_Client_FlushCachedMessages(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Inserts a marker which will tell the brainCloud comms layer
+      /// to close the message bundle off at this point. Any messages queued
+      /// before this method was called will likely be bundled together in
+      /// the next send to the server.
+      /// 
+      /// To ensure that only a single message is sent to the server you would
+      /// do something like this:
+      /// 
+      /// InsertEndOfMessageBundleMarker()
+      /// SomeApiCall()
+      /// InsertEndOfMessageBundleMarker()
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_InsertEndOfMessageBundleMarker(AsyncCallback callback, object state, int clientIndex);
       void End_Client_InsertEndOfMessageBundleMarker(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sets the country code sent to brainCloud when a user authenticates.
+      /// Will override any auto detected country.
+      /// </summary>
+      /// <param name="countryCode">ISO 3166-1 two-letter country code</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_OverrideCountryCode(AsyncCallback callback, object state, string countryCode, int clientIndex);
       void End_Client_OverrideCountryCode(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sets the language code sent to brainCloud when a user authenticates.
+      /// If the language is set to a non-ISO 639-1 standard value the game default will be used instead.
+      /// Will override any auto detected language.
+      /// </summary>
+      /// <param name="languageCode">ISO 639-1 two-letter language code</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_OverrideLanguageCode(AsyncCallback callback, object state, string languageCode, int clientIndex);
       void End_Client_OverrideLanguageCode(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Creates custom data stream page event
+      /// </summary>
+      /// <param name="eventName">The name of the event</param>
+      /// <param name="jsonEventProperties">The properties of the event</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_DataStream_CustomPageEvent(AsyncCallback callback, object state, string eventName, string jsonEventProperties, int clientIndex);
       string End_DataStream_CustomPageEvent(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Creates custom data stream screen event
+      /// </summary>
+      /// <param name="eventName">The name of the event</param>
+      /// <param name="jsonEventProperties">The properties of the event</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_DataStream_CustomScreenEvent(AsyncCallback callback, object state, string eventName, string jsonEventProperties, int clientIndex);
       string End_DataStream_CustomScreenEvent(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Creates custom data stream track event
+      /// </summary>
+      /// <param name="eventName">The name of the event</param>
+      /// <param name="jsonEventProperties">The properties of the event</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_DataStream_CustomTrackEvent(AsyncCallback callback, object state, string eventName, string jsonEventProperties, int clientIndex);
       string End_DataStream_CustomTrackEvent(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method creates a new entity on the server.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="jsonEntityData">The entity's data as a json string</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies defaultpermissions which make the entity readable/writeable by only the user.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_CreateEntity(AsyncCallback callback, object state, string entityType, string jsonEntityData, string jsonEntityAcl, int clientIndex);
       string End_Entity_CreateEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns all user entities that match the given type.
+      /// </summary>
+      /// <param name="entityType">The entity type to search for</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_GetEntitiesByType(AsyncCallback callback, object state, string entityType, int clientIndex);
       string End_Entity_GetEntitiesByType(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method updates a new entity on the server. This operation results in the entity
+      /// data being completely replaced by the passed in JSON string.
+      /// </summary>
+      /// <param name="entityId">The id of the entity to update</param>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="jsonEntityData">The entity's data as a json string.</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies defaultpermissions which make the entity readable/writeable by only the user.</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_UpdateEntity(AsyncCallback callback, object state, string entityId, string entityType, string jsonEntityData, string jsonEntityAcl, int version, int clientIndex);
       string End_Entity_UpdateEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method updates a shared entity owned by another user. This operation results in the entity
+      /// data being completely replaced by the passed in JSON string.
+      /// </summary>
+      /// <param name="entityId">The id of the entity to update</param>
+      /// <param name="targetProfileId">The id of the entity's owner</param>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="jsonEntityData">The entity's data as a json string.</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_UpdateSharedEntity(AsyncCallback callback, object state, string entityId, string targetProfileId, string entityType, string jsonEntityData, int version, int clientIndex);
       string End_Entity_UpdateSharedEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method deletes the given entity on the server.
+      /// </summary>
+      /// <param name="entityId">The id of the entity to update</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_DeleteEntity(AsyncCallback callback, object state, string entityId, int version, int clientIndex);
       string End_Entity_DeleteEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method updates a singleton entity on the server. This operation results in the entity
+      /// data being completely replaced by the passed in JSON string. If the entity doesn't exist it is created.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="jsonEntityData">The entity's data as a json string.</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies default</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_UpdateSingleton(AsyncCallback callback, object state, string entityType, string jsonEntityData, string jsonEntityAcl, int version, int clientIndex);
       string End_Entity_UpdateSingleton(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method deletes the given singleton on the server.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_DeleteSingleton(AsyncCallback callback, object state, string entityType, int version, int clientIndex);
       string End_Entity_DeleteSingleton(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method to get a specific entity.
+      /// </summary>
+      /// <param name="entityId">The id of the entity</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_GetEntity(AsyncCallback callback, object state, string entityId, int clientIndex);
       string End_Entity_GetEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method retrieves a singleton entity on the server. If the entity doesn't exist, null is returned.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_GetSingleton(AsyncCallback callback, object state, string entityType, int clientIndex);
       string End_Entity_GetSingleton(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns a shared entity for the given profile and entity ID.
+      /// An entity is shared if its ACL allows for the currently logged
+      /// in user to read the data.
+      /// </summary>
+      /// <param name="profileId">The the profile ID of the user who owns the entity</param>
+      /// <param name="entityId">The ID of the entity that will be retrieved</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_GetSharedEntityForProfileId(AsyncCallback callback, object state, string profileId, string entityId, int clientIndex);
       string End_Entity_GetSharedEntityForProfileId(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns all shared entities for the given profile id.
+      /// An entity is shared if its ACL allows for the currently logged
+      /// in user to read the data.
+      /// </summary>
+      /// <param name="profileId">The profile id to retrieve shared entities for</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_GetSharedEntitiesForProfileId(AsyncCallback callback, object state, string profileId, int clientIndex);
       string End_Entity_GetSharedEntitiesForProfileId(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method gets list of entities from the server base on type and/or where clause
+      /// </summary>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="orderByJson">Sort order</param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_GetList(AsyncCallback callback, object state, string whereJson, string orderByJson, int maxReturn, int clientIndex);
       string End_Entity_GetList(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method gets list of shared entities for the specified user based on type and/or where clause
+      /// </summary>
+      /// <param name="profileId">The profile ID to retrieve shared entities for</param>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="orderByJson">Sort order</param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_GetSharedEntitiesListForProfileId(AsyncCallback callback, object state, string profileId, string whereJson, string orderByJson, int maxReturn, int clientIndex);
       string End_Entity_GetSharedEntitiesListForProfileId(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method gets a count of entities based on the where clause
+      /// </summary>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_GetListCount(AsyncCallback callback, object state, string whereJson, int clientIndex);
       string End_Entity_GetListCount(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method uses a paging system to iterate through user entities.
+      /// After retrieving a page of entities with this method,
+      /// use GetPageOffset() to retrieve previous or next pages.
+      /// </summary>
+      /// <param name="jsonContext">The json context for the page request.See the portal appendix documentation for format</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_GetPage(AsyncCallback callback, object state, string jsonContext, int clientIndex);
       string End_Entity_GetPage(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method to retrieve previous or next pages after having called
+      /// the GetPage method.
+      /// </summary>
+      /// <param name="context">The context string returned from the server from a previous callto GetPage() or GetPageOffset()</param>
+      /// <param name="pageOffset">The positive or negative page offset to fetch. Uses the last pageretrieved using the context string to determine a starting point.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_GetPageOffset(AsyncCallback callback, object state, string context, int pageOffset, int clientIndex);
       string End_Entity_GetPageOffset(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Partial increment of entity data field items. Partial set of items incremented as specified.
+      /// </summary>
+      /// <param name="entityId">The entity to increment</param>
+      /// <param name="jsonData">The subset of data to increment</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_IncrementUserEntityData(AsyncCallback callback, object state, string entityId, string jsonData, int clientIndex);
       string End_Entity_IncrementUserEntityData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Partial increment of shared entity data field items. Partial set of items incremented as specified.
+      /// </summary>
+      /// <param name="entityId">The entity to increment</param>
+      /// <param name="targetProfileId">Profile ID of the entity owner</param>
+      /// <param name="jsonData">The subset of data to increment</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Entity_IncrementSharedUserEntityData(AsyncCallback callback, object state, string entityId, string targetProfileId, string jsonData, int clientIndex);
       string End_Entity_IncrementSharedUserEntityData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends an event to the designated profile id with the attached json data.
+      /// Any events that have been sent to a user will show up in their
+      /// incoming event mailbox. If the recordLocally flag is set to true,
+      /// a copy of this event (with the exact same event id) will be stored
+      /// in the sending user's "sent" event mailbox.
+      /// </summary>
+      /// <param name="toProfileId">The id of the user who is being sent the event</param>
+      /// <param name="eventType">The user-defined type of the event.</param>
+      /// <param name="jsonEventData">The user-defined data for this event encoded in JSON.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Event_SendEvent(AsyncCallback callback, object state, string toProfileId, string eventType, string jsonEventData, int clientIndex);
       string End_Event_SendEvent(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Updates an event in the user's incoming event mailbox.
+      /// </summary>
+      /// <param name="evId">The event id</param>
+      /// <param name="jsonEventData">The user-defined data for this event encoded in JSON.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Event_UpdateIncomingEventData(AsyncCallback callback, object state, string evId, string jsonEventData, int clientIndex);
       string End_Event_UpdateIncomingEventData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Delete an event out of the user's incoming mailbox.
+      /// </summary>
+      /// <param name="evId">The event id</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Event_DeleteIncomingEvent(AsyncCallback callback, object state, string evId, int clientIndex);
       string End_Event_DeleteIncomingEvent(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Get the events currently queued for the user.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Event_GetEvents(AsyncCallback callback, object state, int clientIndex);
       string End_Event_GetEvents(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Prepares a user file upload. On success the file will begin uploading
+      /// to the brainCloud server.To be informed of success/failure of the upload
+      /// register an IFileUploadCallback with the BrainCloudClient class.
+      /// </summary>
+      /// <param name="cloudPath">The desired cloud path of the file</param>
+      /// <param name="cloudFilename">The desired cloud fileName of the file</param>
+      /// <param name="shareable">True if the file is shareable</param>
+      /// <param name="replaceIfExists">Whether to replace file if it exists</param>
+      /// <param name="localPath">The path and fileName of the local file</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_File_UploadFile(AsyncCallback callback, object state, string cloudPath, string cloudFilename, bool shareable, bool replaceIfExists, string localPath, int clientIndex);
       string End_File_UploadFile(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method cancels an upload. If an IFileUploadCallback has been registered with the BrainCloudClient class,
+      /// the fileUploadFailed callback method will be called once the upload has been canceled.
+      /// NOTE: The upload will still continue in the background on versions of Unity before 5.3
+      /// and on Unity mobile platforms.
+      /// </summary>
+      /// <param name="uploadId">Upload ID of the file to cancel</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_File_CancelUpload(AsyncCallback callback, object state, string uploadId, int clientIndex);
       void End_File_CancelUpload(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns the progress of the given upload from 0.0 to 1.0 or -1 if upload not found.
+      /// NOTE: This will always return 1 on Unity mobile platforms.
+      /// </summary>
+      /// <param name="uploadId">The id of the upload</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_File_GetUploadProgress(AsyncCallback callback, object state, string uploadId, int clientIndex);
       double End_File_GetUploadProgress(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns the number of bytes uploaded or -1 if upload not found.
+      /// NOTE: This will always return the total bytes to transfer on Unity mobile platforms.
+      /// </summary>
+      /// <param name="uploadId">The id of the upload</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_File_GetUploadBytesTransferred(AsyncCallback callback, object state, string uploadId, int clientIndex);
       long End_File_GetUploadBytesTransferred(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns the total number of bytes that will be uploaded or -1 if upload not found.
+      /// </summary>
+      /// <param name="uploadId">The id of the upload</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_File_GetUploadTotalBytesToTransfer(AsyncCallback callback, object state, string uploadId, int clientIndex);
       long End_File_GetUploadTotalBytesToTransfer(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// List all user files
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_File_ListUserFiles_SFO(AsyncCallback callback, object state, int clientIndex);
       string End_File_ListUserFiles_SFO(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// List user files from the given cloud path
+      /// </summary>
+      /// <param name="cloudPath">File path</param>
+      /// <param name="recurse">Whether to recurse down the path</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_File_ListUserFiles_SNSFO(AsyncCallback callback, object state, string cloudPath, bool recurse, int clientIndex);
       string End_File_ListUserFiles_SNSFO(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Deletes a single user file.
+      /// </summary>
+      /// <param name="cloudPath">File path</param>
+      /// <param name="cloudFileName"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_File_DeleteUserFile(AsyncCallback callback, object state, string cloudPath, string cloudFileName, int clientIndex);
       string End_File_DeleteUserFile(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Delete multiple user files
+      /// </summary>
+      /// <param name="cloudPath">File path</param>
+      /// <param name="recurse">Whether to recurse down the path</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_File_DeleteUserFiles(AsyncCallback callback, object state, string cloudPath, bool recurse, int clientIndex);
       string End_File_DeleteUserFiles(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns the CDN URL for a file object.
+      /// </summary>
+      /// <param name="cloudPath">File path</param>
+      /// <param name="cloudFilename">Name of file</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_File_GetCDNUrl(AsyncCallback callback, object state, string cloudPath, string cloudFilename, int clientIndex);
       string End_File_GetCDNUrl(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieves profile information for the partial matches of the specified text.
+      /// </summary>
+      /// <param name="searchText">Universal ID text on which to search.</param>
+      /// <param name="maxResults">Maximum number of results to return.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_FindUserByUniversalId(AsyncCallback callback, object state, string searchText, int maxResults, int clientIndex);
       string End_Friend_FindUserByUniversalId(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieves profile information of the specified user.
+      /// </summary>
+      /// <param name="externalId">External id of the user to find</param>
+      /// <param name="authenticationType">The authentication type used for the user's ID</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_GetProfileInfoForCredential(AsyncCallback callback, object state, string externalId, string authenticationType, int clientIndex);
       string End_Friend_GetProfileInfoForCredential(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieves profile information for the specified external auth user.
+      /// </summary>
+      /// <param name="externalId">External id of the friend to find</param>
+      /// <param name="externalAuthType">The external authentication type used for this friend's external id</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_GetProfileInfoForExternalAuthId(AsyncCallback callback, object state, string externalId, string externalAuthType, int clientIndex);
       string End_Friend_GetProfileInfoForExternalAuthId(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieves the external ID for the specified user profile ID on the specified social platform.
+      /// </summary>
+      /// <param name="profileId">Profile (user) ID.</param>
+      /// <param name="authenticationType">Associated authentication type.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_GetExternalIdForProfileId(AsyncCallback callback, object state, string profileId, string authenticationType, int clientIndex);
       string End_Friend_GetExternalIdForProfileId(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns a particular entity of a particular friend.
+      /// </summary>
+      /// <param name="entityId">Id of entity to retrieve.</param>
+      /// <param name="friendId">Profile Id of friend who owns entity.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_ReadFriendEntity(AsyncCallback callback, object state, string entityId, string friendId, int clientIndex);
       string End_Friend_ReadFriendEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns entities of all friends based on type and/or subtype.
+      /// </summary>
+      /// <param name="entityType">Types of entities to retrieve.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_ReadFriendsEntities(AsyncCallback callback, object state, string entityType, int clientIndex);
       string End_Friend_ReadFriendsEntities(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns user state of a particular friend.
+      /// </summary>
+      /// <param name="friendId">Profile Id of friend to retrieve user state for.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_ReadFriendUserState(AsyncCallback callback, object state, string friendId, int clientIndex);
       string End_Friend_ReadFriendUserState(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns user state of a particular user.
+      /// </summary>
+      /// <param name="profileId">Profile Id of user to retrieve player state for.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_GetSummaryDataForProfileId(AsyncCallback callback, object state, string profileId, int clientIndex);
       string End_Friend_GetSummaryDataForProfileId(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Finds a list of users matching the search text by performing an exact
+      /// search of all user names.
+      /// </summary>
+      /// <param name="searchText">The string to search for.</param>
+      /// <param name="maxResults">Maximum number of results to return.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_FindUsersByExactName(AsyncCallback callback, object state, string searchText, int maxResults, int clientIndex);
       string End_Friend_FindUsersByExactName(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Finds a list of users matching the search text by performing a substring
+      /// search of all user names.
+      /// </summary>
+      /// <param name="searchText">The substring to search for. Minimum length of 3 characters.</param>
+      /// <param name="maxResults">Maximum number of results to return.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_FindUsersBySubstrName(AsyncCallback callback, object state, string searchText, int maxResults, int clientIndex);
       string End_Friend_FindUsersBySubstrName(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieves a list of user and friend platform information for all friends of the current user.
+      /// </summary>
+      /// <param name="friendPlatform">Friend platform to query.</param>
+      /// <param name="includeSummaryData">True if including summary data; false otherwise.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_ListFriends(AsyncCallback callback, object state, Ruyi.SDK.BrainCloudApi.FriendPlatform friendPlatform, bool includeSummaryData, int clientIndex);
       string End_Friend_ListFriends(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Links the current user and the specified users as brainCloud friends.
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_AddFriends(AsyncCallback callback, object state, List<string> profileIds, int clientIndex);
       string End_Friend_AddFriends(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Unlinks the current user and the specified users as brainCloud friends.
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_RemoveFriends(AsyncCallback callback, object state, List<string> profileIds, int clientIndex);
       string End_Friend_RemoveFriends(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Get users online status
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_GetUsersOnlineStatus(AsyncCallback callback, object state, List<string> profileIds, int clientIndex);
       string End_Friend_GetUsersOnlineStatus(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method retrieves all gamification data for the player.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadAllGamification(AsyncCallback callback, object state, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadAllGamification(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method retrieves all milestones defined for the game.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadMilestones(AsyncCallback callback, object state, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadMilestones(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Read all of the achievements defined for the game.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadAchievements(AsyncCallback callback, object state, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadAchievements(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns all defined xp levels and any rewards associated
+      /// with those xp levels.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadXpLevelsMetaData(AsyncCallback callback, object state, int clientIndex);
       string End_Gamification_ReadXpLevelsMetaData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method retrives the list of achieved achievements.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadAchievedAchievements(AsyncCallback callback, object state, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadAchievedAchievements(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method retrieves the list of completed milestones.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadCompletedMilestones(AsyncCallback callback, object state, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadCompletedMilestones(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method retrieves the list of in progress milestones
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadInProgressMilestones(AsyncCallback callback, object state, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadInProgressMilestones(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method retrieves milestones of the given category.
+      /// </summary>
+      /// <param name="category">The milestone category</param>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadMilestonesByCategory(AsyncCallback callback, object state, string category, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadMilestonesByCategory(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method will award the achievements specified. On success, this will
+      /// call AwardThirdPartyAchievement to hook into the client-side Achievement
+      /// service (ie GameCentre, Facebook etc).
+      /// </summary>
+      /// <param name="achievementIds">A collection of achievement ids to award</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_AwardAchievements(AsyncCallback callback, object state, List<string> achievementIds, int clientIndex);
       string End_Gamification_AwardAchievements(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method retrieves all of the quests defined for the game.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadQuests(AsyncCallback callback, object state, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadQuests(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns all completed quests.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadCompletedQuests(AsyncCallback callback, object state, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadCompletedQuests(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns all in progress quests.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadInProgressQuests(AsyncCallback callback, object state, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadInProgressQuests(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns all quests that haven't been started.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadNotStartedQuests(AsyncCallback callback, object state, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadNotStartedQuests(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns all quests with status.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadQuestsWithStatus(AsyncCallback callback, object state, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadQuestsWithStatus(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns all quests with a basic percentage.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadQuestsWithBasicPercentage(AsyncCallback callback, object state, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadQuestsWithBasicPercentage(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns all quests with a complex percentage.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadQuestsWithComplexPercentage(AsyncCallback callback, object state, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadQuestsWithComplexPercentage(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns all quests for the given category.
+      /// </summary>
+      /// <param name="category">The quest category</param>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ReadQuestsByCategory(AsyncCallback callback, object state, string category, bool includeMetaData, int clientIndex);
       string End_Gamification_ReadQuestsByCategory(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sets the specified milestones' statuses to LOCKED.
+      /// </summary>
+      /// <param name="milestoneIds">List of milestones to reset</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Gamification_ResetMilestones(AsyncCallback callback, object state, List<string> milestoneIds, int clientIndex);
       string End_Gamification_ResetMilestones(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method reads all the global properties of the game
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalApp_ReadProperties(AsyncCallback callback, object state, int clientIndex);
       string End_GlobalApp_ReadProperties(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method creates a new entity on the server.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="timeToLive">Sets expiry time for entity in milliseconds if > 0</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies default</param>
+      /// <param name="jsonEntityData">The entity's data as a json string</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_CreateEntity(AsyncCallback callback, object state, string entityType, long timeToLive, string jsonEntityAcl, string jsonEntityData, int clientIndex);
       string End_GlobalEntity_CreateEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method creates a new entity on the server with an indexed id.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="indexedId">A secondary ID that will be indexed</param>
+      /// <param name="timeToLive">Sets expiry time for entity in milliseconds if > 0</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies default</param>
+      /// <param name="jsonEntityData">The entity's data as a json string</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_CreateEntityWithIndexedId(AsyncCallback callback, object state, string entityType, string indexedId, long timeToLive, string jsonEntityAcl, string jsonEntityData, int clientIndex);
       string End_GlobalEntity_CreateEntityWithIndexedId(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method updates an existing entity on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity to update</param>
+      /// <param name="jsonEntityData">The entity's data as a json string</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_UpdateEntity(AsyncCallback callback, object state, string entityId, int version, string jsonEntityData, int clientIndex);
       string End_GlobalEntity_UpdateEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method updates an existing entity's Acl on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity to update</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_UpdateEntityAcl(AsyncCallback callback, object state, string entityId, int version, string jsonEntityAcl, int clientIndex);
       string End_GlobalEntity_UpdateEntityAcl(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method updates an existing entity's time to live on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity to update</param>
+      /// <param name="timeToLive">Sets expiry time for entity in milliseconds if > 0</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_UpdateEntityTimeToLive(AsyncCallback callback, object state, string entityId, int version, long timeToLive, int clientIndex);
       string End_GlobalEntity_UpdateEntityTimeToLive(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method deletes an existing entity on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity to delete</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_DeleteEntity(AsyncCallback callback, object state, string entityId, int version, int clientIndex);
       string End_GlobalEntity_DeleteEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method reads an existing entity from the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_ReadEntity(AsyncCallback callback, object state, string entityId, int clientIndex);
       string End_GlobalEntity_ReadEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method gets list of entities from the server base on type and/or where clause
+      /// </summary>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="orderByJson">Sort order</param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_GetList(AsyncCallback callback, object state, string whereJson, string orderByJson, int maxReturn, int clientIndex);
       string End_GlobalEntity_GetList(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method gets list of entities from the server base on indexed id
+      /// </summary>
+      /// <param name="entityIndexedId">The entity indexed Id</param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_GetListByIndexedId(AsyncCallback callback, object state, string entityIndexedId, int maxReturn, int clientIndex);
       string End_GlobalEntity_GetListByIndexedId(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method gets a count of entities based on the where clause
+      /// </summary>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_GetListCount(AsyncCallback callback, object state, string whereJson, int clientIndex);
       string End_GlobalEntity_GetListCount(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method uses a paging system to iterate through Global Entities.
+      /// After retrieving a page of Global Entities with this method,
+      /// use GetPageOffset() to retrieve previous or next pages.
+      /// </summary>
+      /// <param name="jsonContext">The json context for the page request.See the portal appendix documentation for format</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_GetPage(AsyncCallback callback, object state, string jsonContext, int clientIndex);
       string End_GlobalEntity_GetPage(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method to retrieve previous or next pages after having called
+      /// the GetPage method.
+      /// </summary>
+      /// <param name="context">The context string returned from the server from a previous callto GetPage() or GetPageOffset()</param>
+      /// <param name="pageOffset">The positive or negative page offset to fetch. Uses the last pageretrieved using the context string to determine a starting point.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_GetPageOffset(AsyncCallback callback, object state, string context, int pageOffset, int clientIndex);
       string End_GlobalEntity_GetPageOffset(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Partial increment of global entity data field items. Partial set of items incremented as specified.
+      /// </summary>
+      /// <param name="entityId">The entity to increment</param>
+      /// <param name="jsonData">The subset of data to increment</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_IncrementGlobalEntityData(AsyncCallback callback, object state, string entityId, string jsonData, int clientIndex);
       string End_GlobalEntity_IncrementGlobalEntityData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Gets a list of up to randomCount randomly selected entities from the server based on the where condition and specified maximum return count.
+      /// </summary>
+      /// <param name="whereJson"></param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_GetRandomEntitiesMatching(AsyncCallback callback, object state, string whereJson, int maxReturn, int clientIndex);
       string End_GlobalEntity_GetRandomEntitiesMatching(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method updates an existing entity's Owner and Acl on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity</param>
+      /// <param name="ownerId">The owner ID</param>
+      /// <param name="acl">The entity's access control list</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_UpdateEntityOwnerAndAcl(AsyncCallback callback, object state, string entityId, long version, string ownerId, string acl, int clientIndex);
       string End_GlobalEntity_UpdateEntityOwnerAndAcl(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method clears the owner id of an existing entity and sets the Acl on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity</param>
+      /// <param name="acl">The entity's access control list</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalEntity_MakeSystemEntity(AsyncCallback callback, object state, string entityId, long version, string acl, int clientIndex);
       string End_GlobalEntity_MakeSystemEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns all of the global statistics.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalStatistics_ReadAllGlobalStats(AsyncCallback callback, object state, int clientIndex);
       string End_GlobalStatistics_ReadAllGlobalStats(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Reads a subset of global statistics as defined by the input JSON.
+      /// </summary>
+      /// <param name="globalStats">A list containing the statistics to read</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalStatistics_ReadGlobalStatsSubset(AsyncCallback callback, object state, List<string> globalStats, int clientIndex);
       string End_GlobalStatistics_ReadGlobalStatsSubset(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method retrieves the global statistics for the given category.
+      /// </summary>
+      /// <param name="category">The global statistics category</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalStatistics_ReadGlobalStatsForCategory(AsyncCallback callback, object state, string category, int clientIndex);
       string End_GlobalStatistics_ReadGlobalStatsForCategory(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Atomically increment (or decrement) global statistics.
+      /// Global statistics are defined through the brainCloud portal.
+      /// </summary>
+      /// <param name="jsonData">The JSON encoded data to be sent to the server as follows:{  stat1: 10,  stat2: -5.5,}would increment stat1 by 10 and decrement stat2 by 5.5.For the full statistics grammer see the api.braincloudservers.com site.There are many more complex operations supported such as:{  stat1:INC_TO_LIMIT#9#30}which increments stat1 by 9 up to a limit of 30.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalStatistics_IncrementGlobalStats(AsyncCallback callback, object state, string jsonData, int clientIndex);
       string End_GlobalStatistics_IncrementGlobalStats(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Apply statistics grammar to a partial set of statistics.
+      /// </summary>
+      /// <param name="statisticsData">Example data to be passed to method:{    "DEAD_CATS": "RESET",    "LIVES_LEFT": "SET#9",    "MICE_KILLED": "INC#2",    "DOG_SCARE_BONUS_POINTS": "INC#10",    "TREES_CLIMBED": 1}</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_GlobalStatistics_ProcessStatistics(AsyncCallback callback, object state, Dictionary<string, string> statisticsData, int clientIndex);
       string End_GlobalStatistics_ProcessStatistics(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Accept an outstanding invitation to join the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_AcceptGroupInvitation(AsyncCallback callback, object state, string groupId, int clientIndex);
       string End_Group_AcceptGroupInvitation(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Add a member to the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the member being added.</param>
+      /// <param name="role">Role of the member being added.</param>
+      /// <param name="jsonAttributes">Attributes of the member being added.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_AddGroupMember(AsyncCallback callback, object state, string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex);
       string End_Group_AddGroupMember(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Approve an outstanding request to join the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the invitation being deleted.</param>
+      /// <param name="role">Role of the member being invited.</param>
+      /// <param name="jsonAttributes">Attributes of the member being invited.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_ApproveGroupJoinRequest(AsyncCallback callback, object state, string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex);
       string End_Group_ApproveGroupJoinRequest(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Automatically join an open group that matches the search criteria and has space available.
+      /// </summary>
+      /// <param name="groupType">Name of the associated group type.</param>
+      /// <param name="autoJoinStrategy">Selection strategy to employ when there are multiple matches</param>
+      /// <param name="dataQueryJson">Query parameters (optional)</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_AutoJoinGroup(AsyncCallback callback, object state, string groupType, Ruyi.SDK.BrainCloudApi.AutoJoinStrategy autoJoinStrategy, string dataQueryJson, int clientIndex);
       string End_Group_AutoJoinGroup(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Cancel an outstanding invitation to the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the invitation being deleted.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_CancelGroupInvitation(AsyncCallback callback, object state, string groupId, string profileId, int clientIndex);
       string End_Group_CancelGroupInvitation(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Create a group.
+      /// </summary>
+      /// <param name="name">Name of the group.</param>
+      /// <param name="groupType">Name of the type of group.</param>
+      /// <param name="isOpenGroup">true if group is open; false if closed.</param>
+      /// <param name="acl">The group's access control list. A null ACL implies default.</param>
+      /// <param name="jsonData">Custom application data.</param>
+      /// <param name="jsonOwnerAttributes">Attributes for the group owner (current user).</param>
+      /// <param name="jsonDefaultMemberAttributes">Default attributes for group members.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_CreateGroup(AsyncCallback callback, object state, string name, string groupType, bool isOpenGroup, string acl, string jsonData, string jsonOwnerAttributes, string jsonDefaultMemberAttributes, int clientIndex);
       string End_Group_CreateGroup(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Create a group entity.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityType"></param>
+      /// <param name="isOwnedByGroupMember">true if entity is owned by a member; false if owned by the entire group.</param>
+      /// <param name="acl">Access control list for the group entity.</param>
+      /// <param name="jsonData">Custom application data.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_CreateGroupEntity(AsyncCallback callback, object state, string groupId, string entityType, bool isOwnedByGroupMember, string acl, string jsonData, int clientIndex);
       string End_Group_CreateGroupEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Delete a group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="version">Current version of the group</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_DeleteGroup(AsyncCallback callback, object state, string groupId, long version, int clientIndex);
       string End_Group_DeleteGroup(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Delete a group entity.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityId">ID of the entity.</param>
+      /// <param name="version">The current version of the group entity (for concurrency checking).</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_DeleteGroupEntity(AsyncCallback callback, object state, string groupId, string entityId, long version, int clientIndex);
       string End_Group_DeleteGroupEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Read information on groups to which the current user belongs.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_GetMyGroups(AsyncCallback callback, object state, int clientIndex);
       string End_Group_GetMyGroups(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Increment elements for the group's data field.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="jsonData">Partial data map with incremental values.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_IncrementGroupData(AsyncCallback callback, object state, string groupId, string jsonData, int clientIndex);
       string End_Group_IncrementGroupData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Increment elements for the group entity's data field.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityId">ID of the entity.</param>
+      /// <param name="jsonData">Partial data map with incremental values.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_IncrementGroupEntityData(AsyncCallback callback, object state, string groupId, string entityId, string jsonData, int clientIndex);
       string End_Group_IncrementGroupEntityData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Invite a member to the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the member being invited.</param>
+      /// <param name="role">Role of the member being invited.</param>
+      /// <param name="jsonAttributes">Attributes of the member being invited.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_InviteGroupMember(AsyncCallback callback, object state, string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex);
       string End_Group_InviteGroupMember(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Join an open group or request to join a closed group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_JoinGroup(AsyncCallback callback, object state, string groupId, int clientIndex);
       string End_Group_JoinGroup(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Leave a group in which the user is a member.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_LeaveGroup(AsyncCallback callback, object state, string groupId, int clientIndex);
       string End_Group_LeaveGroup(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieve a page of group summary information based on the specified context.
+      /// </summary>
+      /// <param name="jsonContext">Query context.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_ListGroupsPage(AsyncCallback callback, object state, string jsonContext, int clientIndex);
       string End_Group_ListGroupsPage(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieve a page of group summary information based on the encoded context
+      /// and specified page offset.
+      /// </summary>
+      /// <param name="context">Encoded reference query context.</param>
+      /// <param name="pageOffset">Number of pages by which to offset the query.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_ListGroupsPageByOffset(AsyncCallback callback, object state, string context, int pageOffset, int clientIndex);
       string End_Group_ListGroupsPageByOffset(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Read information on groups to which the specified user belongs.  Access is subject to restrictions.
+      /// </summary>
+      /// <param name="profileId">User to read groups for</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_ListGroupsWithMember(AsyncCallback callback, object state, string profileId, int clientIndex);
       string End_Group_ListGroupsWithMember(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Read the specified group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_ReadGroup(AsyncCallback callback, object state, string groupId, int clientIndex);
       string End_Group_ReadGroup(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Read the data of the specified group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_ReadGroupData(AsyncCallback callback, object state, string groupId, int clientIndex);
       string End_Group_ReadGroupData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Read a page of group entity information.
+      /// </summary>
+      /// <param name="jsonContext">Query context.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_ReadGroupEntitiesPage(AsyncCallback callback, object state, string jsonContext, int clientIndex);
       string End_Group_ReadGroupEntitiesPage(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Read a page of group entity information.
+      /// </summary>
+      /// <param name="encodedContext">Encoded reference query context.</param>
+      /// <param name="pageOffset">Number of pages by which to offset the query.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_ReadGroupEntitiesPageByOffset(AsyncCallback callback, object state, string encodedContext, int pageOffset, int clientIndex);
       string End_Group_ReadGroupEntitiesPageByOffset(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Read the specified group entity.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityId">ID of the entity.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_ReadGroupEntity(AsyncCallback callback, object state, string groupId, string entityId, int clientIndex);
       string End_Group_ReadGroupEntity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Read the members of the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_ReadGroupMembers(AsyncCallback callback, object state, string groupId, int clientIndex);
       string End_Group_ReadGroupMembers(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Reject an outstanding invitation to join the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_RejectGroupInvitation(AsyncCallback callback, object state, string groupId, int clientIndex);
       string End_Group_RejectGroupInvitation(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Reject an outstanding request to join the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the invitation being deleted.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_RejectGroupJoinRequest(AsyncCallback callback, object state, string groupId, string profileId, int clientIndex);
       string End_Group_RejectGroupJoinRequest(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Remove a member from the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the member being deleted.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_RemoveGroupMember(AsyncCallback callback, object state, string groupId, string profileId, int clientIndex);
       string End_Group_RemoveGroupMember(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Updates a group's data.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="version">Version to verify.</param>
+      /// <param name="jsonData">Data to apply.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_UpdateGroupData(AsyncCallback callback, object state, string groupId, long version, string jsonData, int clientIndex);
       string End_Group_UpdateGroupData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Update a group entity.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityId">ID of the entity.</param>
+      /// <param name="version">The current version of the group entity (for concurrency checking).</param>
+      /// <param name="jsonData">Custom application data.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_UpdateGroupEntityData(AsyncCallback callback, object state, string groupId, string entityId, long version, string jsonData, int clientIndex);
       string End_Group_UpdateGroupEntityData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Update a member of the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the member being updated.</param>
+      /// <param name="role">Role of the member being updated (optional).</param>
+      /// <param name="jsonAttributes">Attributes of the member being updated (optional).</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_UpdateGroupMember(AsyncCallback callback, object state, string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex);
       string End_Group_UpdateGroupMember(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Updates a group's name.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="name">Name to apply.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_UpdateGroupName(AsyncCallback callback, object state, string groupId, string name, int clientIndex);
       string End_Group_UpdateGroupName(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Attach a Email and Password identity to the current profile.
+      /// </summary>
+      /// <param name="email">The user's e-mail address</param>
+      /// <param name="password">The user's password</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_AttachEmailIdentity(AsyncCallback callback, object state, string email, string password, int clientIndex);
       string End_Identity_AttachEmailIdentity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Merge the profile associated with the provided e=mail with the current profile.
+      /// </summary>
+      /// <param name="email">The user's e-mail address</param>
+      /// <param name="password">The user's password</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_MergeEmailIdentity(AsyncCallback callback, object state, string email, string password, int clientIndex);
       string End_Identity_MergeEmailIdentity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Detach the e-mail identity from the current profile
+      /// </summary>
+      /// <param name="email">The user's e-mail address</param>
+      /// <param name="continueAnon">Proceed even if the profile will revert to anonymous?</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_DetachEmailIdentity(AsyncCallback callback, object state, string email, bool continueAnon, int clientIndex);
       string End_Identity_DetachEmailIdentity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Attach a Universal (userId + password) identity to the current profile.
+      /// </summary>
+      /// <param name="userId">The user's userId</param>
+      /// <param name="password">The user's password</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_AttachUniversalIdentity(AsyncCallback callback, object state, string userId, string password, int clientIndex);
       string End_Identity_AttachUniversalIdentity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Merge the profile associated with the provided e=mail with the current profile.
+      /// </summary>
+      /// <param name="userId">The user's userId</param>
+      /// <param name="password">The user's password</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_MergeUniversalIdentity(AsyncCallback callback, object state, string userId, string password, int clientIndex);
       string End_Identity_MergeUniversalIdentity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Detach the universal identity from the current profile
+      /// </summary>
+      /// <param name="userId">The user's userId</param>
+      /// <param name="continueAnon">Proceed even if the profile will revert to anonymous?</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_DetachUniversalIdentity(AsyncCallback callback, object state, string userId, bool continueAnon, int clientIndex);
       string End_Identity_DetachUniversalIdentity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Switch to a Child Profile
+      /// </summary>
+      /// <param name="childProfileId">The profileId of the child profile to switch toIf null and forceCreate is true a new profile will be created</param>
+      /// <param name="childAppId">The appId of the child game to switch to</param>
+      /// <param name="forceCreate">Should a new profile be created if it does not exist?</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_SwitchToChildProfile(AsyncCallback callback, object state, string childProfileId, string childAppId, bool forceCreate, int clientIndex);
       string End_Identity_SwitchToChildProfile(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Switches to the child profile of an app when only one profile exists
+      /// If multiple profiles exist this returns an error
+      /// </summary>
+      /// <param name="childAppId">The App ID of the child game to switch to</param>
+      /// <param name="forceCreate">Should a new profile be created if one does not exist?</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_SwitchToSingletonChildProfile(AsyncCallback callback, object state, string childAppId, bool forceCreate, int clientIndex);
       string End_Identity_SwitchToSingletonChildProfile(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Attach a new identity to a parent app
+      /// </summary>
+      /// <param name="externalId">User ID</param>
+      /// <param name="authenticationToken">Password or client side token</param>
+      /// <param name="authenticationType">Type of authentication</param>
+      /// <param name="externalAuthName">Optional - if using AuthenticationType of external</param>
+      /// <param name="forceCreate">If the profile does not exist, should it be created?</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_AttachParentWithIdentity(AsyncCallback callback, object state, string externalId, string authenticationToken, string authenticationType, string externalAuthName, bool forceCreate, int clientIndex);
       string End_Identity_AttachParentWithIdentity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Switch to a Parent Profile
+      /// </summary>
+      /// <param name="parentLevelName">The level of the parent to switch to</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_SwitchToParentProfile(AsyncCallback callback, object state, string parentLevelName, int clientIndex);
       string End_Identity_SwitchToParentProfile(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Detaches parent from this user's profile
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_DetachParent(AsyncCallback callback, object state, int clientIndex);
       string End_Identity_DetachParent(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns a list of all child profiles in child Apps
+      /// </summary>
+      /// <param name="includeSummaryData">Whether to return the summary friend data along with this call</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_GetChildProfiles(AsyncCallback callback, object state, bool includeSummaryData, int clientIndex);
       string End_Identity_GetChildProfiles(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieve list of identities
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_GetIdentities(AsyncCallback callback, object state, int clientIndex);
       string End_Identity_GetIdentities(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieve list of expired identities
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_GetExpiredIdentities(AsyncCallback callback, object state, int clientIndex);
       string End_Identity_GetExpiredIdentities(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Refreshes an identity for this user
+      /// </summary>
+      /// <param name="externalId">User ID</param>
+      /// <param name="authenticationToken">Password or client side token</param>
+      /// <param name="authenticationType">Type of authentication</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_RefreshIdentity(AsyncCallback callback, object state, string externalId, string authenticationToken, string authenticationType, int clientIndex);
       string End_Identity_RefreshIdentity(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Attaches a peer identity to this user's profile
+      /// </summary>
+      /// <param name="peer">Name of the peer to connect to</param>
+      /// <param name="externalId">User ID</param>
+      /// <param name="authenticationToken">Password or client side token</param>
+      /// <param name="authenticationType">Type of authentication</param>
+      /// <param name="externalAuthName">Optional - if using AuthenticationType of external</param>
+      /// <param name="forceCreate">If the profile does not exist, should it be created?</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_AttachPeerProfile(AsyncCallback callback, object state, string peer, string externalId, string authenticationToken, string authenticationType, string externalAuthName, bool forceCreate, int clientIndex);
       string End_Identity_AttachPeerProfile(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Detaches a peer identity from this user's profile
+      /// </summary>
+      /// <param name="peer">Name of the peer to connect to</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_DetachPeer(AsyncCallback callback, object state, string peer, int clientIndex);
       string End_Identity_DetachPeer(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieves a list of attached peer profiles
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_GetPeerProfiles(AsyncCallback callback, object state, int clientIndex);
       string End_Identity_GetPeerProfiles(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends a simple text email to the specified user
+      /// </summary>
+      /// <param name="profileId"></param>
+      /// <param name="subject">The email subject</param>
+      /// <param name="body">The email body</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Mail_SendBasicEmail(AsyncCallback callback, object state, string profileId, string subject, string body, int clientIndex);
       string End_Mail_SendBasicEmail(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends an advanced email to the specified user
+      /// </summary>
+      /// <param name="profileId"></param>
+      /// <param name="jsonServiceParams">Parameters to send to the email service. See the documentation fora full list. http://getbraincloud.com/apidocs/apiref/#capi-mail</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Mail_SendAdvancedEmail(AsyncCallback callback, object state, string profileId, string jsonServiceParams, int clientIndex);
       string End_Mail_SendAdvancedEmail(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends an advanced email to the specified email address
+      /// </summary>
+      /// <param name="emailAddress">The address to send the email to</param>
+      /// <param name="jsonServiceParams">Parameters to send to the email service. See the documentation fora full list. http://getbraincloud.com/apidocs/apiref/#capi-mail</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Mail_SendAdvancedEmailByAddress(AsyncCallback callback, object state, string emailAddress, string jsonServiceParams, int clientIndex);
       string End_Mail_SendAdvancedEmailByAddress(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Read match making record
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_Read(AsyncCallback callback, object state, int clientIndex);
       string End_MatchMaking_Read(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sets player rating
+      /// </summary>
+      /// <param name="playerRating">The new player rating.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_SetPlayerRating(AsyncCallback callback, object state, long playerRating, int clientIndex);
       string End_MatchMaking_SetPlayerRating(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Resets player rating
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_ResetPlayerRating(AsyncCallback callback, object state, int clientIndex);
       string End_MatchMaking_ResetPlayerRating(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Increments player rating
+      /// </summary>
+      /// <param name="increment">The increment amount</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_IncrementPlayerRating(AsyncCallback callback, object state, long increment, int clientIndex);
       string End_MatchMaking_IncrementPlayerRating(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Decrements player rating
+      /// </summary>
+      /// <param name="decrement">The decrement amount</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_DecrementPlayerRating(AsyncCallback callback, object state, long decrement, int clientIndex);
       string End_MatchMaking_DecrementPlayerRating(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Turns shield on
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_TurnShieldOn(AsyncCallback callback, object state, int clientIndex);
       string End_MatchMaking_TurnShieldOn(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Turns shield on for the specified number of minutes
+      /// </summary>
+      /// <param name="minutes">Number of minutes to turn the shield on for</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_TurnShieldOnFor(AsyncCallback callback, object state, int minutes, int clientIndex);
       string End_MatchMaking_TurnShieldOnFor(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Turns shield off
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_TurnShieldOff(AsyncCallback callback, object state, int clientIndex);
       string End_MatchMaking_TurnShieldOff(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Increases the shield on time by specified number of minutes
+      /// </summary>
+      /// <param name="minutes">Number of minutes to increase the shield time for</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_IncrementShieldOnFor(AsyncCallback callback, object state, int minutes, int clientIndex);
       string End_MatchMaking_IncrementShieldOnFor(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Gets the shield expiry for the given player id. Passing in a null player id
+      /// will return the shield expiry for the current player. The value returned is
+      /// the time in UTC millis when the shield will expire.
+      /// </summary>
+      /// <param name="playerId">The player id or use null to retrieve for the current player</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_GetShieldExpiry(AsyncCallback callback, object state, string playerId, int clientIndex);
       string End_MatchMaking_GetShieldExpiry(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Finds matchmaking enabled players
+      /// </summary>
+      /// <param name="rangeDelta">The range delta</param>
+      /// <param name="numMatches">The maximum number of matches to return</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_FindPlayers(AsyncCallback callback, object state, long rangeDelta, long numMatches, int clientIndex);
       string End_MatchMaking_FindPlayers(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Finds matchmaking enabled players with additional attributes
+      /// </summary>
+      /// <param name="rangeDelta">The range delta</param>
+      /// <param name="numMatches">The maximum number of matches to return</param>
+      /// <param name="jsonAttributes">Attributes match criteria</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_FindPlayersWithAttributes(AsyncCallback callback, object state, long rangeDelta, long numMatches, string jsonAttributes, int clientIndex);
       string End_MatchMaking_FindPlayersWithAttributes(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Finds matchmaking enabled players using a cloud code filter
+      /// </summary>
+      /// <param name="rangeDelta">The range delta</param>
+      /// <param name="numMatches">The maximum number of matches to return</param>
+      /// <param name="jsonExtraParms">Parameters to pass to the CloudCode filter script</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_FindPlayersUsingFilter(AsyncCallback callback, object state, long rangeDelta, long numMatches, string jsonExtraParms, int clientIndex);
       string End_MatchMaking_FindPlayersUsingFilter(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Finds matchmaking enabled players using a cloud code filter
+      /// and additional attributes
+      /// </summary>
+      /// <param name="rangeDelta">The range delta</param>
+      /// <param name="numMatches">The maximum number of matches to return</param>
+      /// <param name="jsonAttributes">Attributes match criteria</param>
+      /// <param name="jsonExtraParms">Parameters to pass to the CloudCode filter script</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_FindPlayersWithAttributesUsingFilter(AsyncCallback callback, object state, long rangeDelta, long numMatches, string jsonAttributes, string jsonExtraParms, int clientIndex);
       string End_MatchMaking_FindPlayersWithAttributesUsingFilter(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Enables Match Making for the Player
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_EnableMatchMaking(AsyncCallback callback, object state, int clientIndex);
       string End_MatchMaking_EnableMatchMaking(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Disables Match Making for the Player
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_MatchMaking_DisableMatchMaking(AsyncCallback callback, object state, int clientIndex);
       string End_MatchMaking_DisableMatchMaking(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Starts a match
+      /// </summary>
+      /// <param name="otherPlayerId">The player to start a match with</param>
+      /// <param name="rangeDelta">The range delta used for the initial match search</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_OneWayMatch_StartMatch(AsyncCallback callback, object state, string otherPlayerId, long rangeDelta, int clientIndex);
       string End_OneWayMatch_StartMatch(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Cancels a match
+      /// </summary>
+      /// <param name="playbackStreamId">The playback stream id returned in the start match</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_OneWayMatch_CancelMatch(AsyncCallback callback, object state, string playbackStreamId, int clientIndex);
       string End_OneWayMatch_CancelMatch(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Completes a match
+      /// </summary>
+      /// <param name="playbackStreamId">The playback stream id returned in the initial start match</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_OneWayMatch_CompleteMatch(AsyncCallback callback, object state, string playbackStreamId, int clientIndex);
       string End_OneWayMatch_CompleteMatch(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Starts a stream
+      /// </summary>
+      /// <param name="targetPlayerId">The player to start a stream with</param>
+      /// <param name="includeSharedData">Whether to include shared data in the stream</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlaybackStream_StartStream(AsyncCallback callback, object state, string targetPlayerId, bool includeSharedData, int clientIndex);
       string End_PlaybackStream_StartStream(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Reads a stream
+      /// </summary>
+      /// <param name="playbackStreamId">Identifies the stream to read</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlaybackStream_ReadStream(AsyncCallback callback, object state, string playbackStreamId, int clientIndex);
       string End_PlaybackStream_ReadStream(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Ends a stream
+      /// </summary>
+      /// <param name="playbackStreamId">Identifies the stream to read</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlaybackStream_EndStream(AsyncCallback callback, object state, string playbackStreamId, int clientIndex);
       string End_PlaybackStream_EndStream(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Deletes a stream
+      /// </summary>
+      /// <param name="playbackStreamId">Identifies the stream to read</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlaybackStream_DeleteStream(AsyncCallback callback, object state, string playbackStreamId, int clientIndex);
       string End_PlaybackStream_DeleteStream(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Adds a stream event
+      /// </summary>
+      /// <param name="playbackStreamId">Identifies the stream to read</param>
+      /// <param name="eventData">Describes the event</param>
+      /// <param name="summary">Current summary data as of this event</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlaybackStream_AddEvent(AsyncCallback callback, object state, string playbackStreamId, string eventData, string summary, int clientIndex);
       string End_PlaybackStream_AddEvent(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Gets recent streams for initiating player
+      /// </summary>
+      /// <param name="initiatingPlayerId">The player that started the stream</param>
+      /// <param name="maxNumStreams">The player that started the stream</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlaybackStream_GetRecentStreamsForInitiatingPlayer(AsyncCallback callback, object state, string initiatingPlayerId, int maxNumStreams, int clientIndex);
       string End_PlaybackStream_GetRecentStreamsForInitiatingPlayer(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Gets recent streams for target player
+      /// </summary>
+      /// <param name="targetPlayerId">The player that started the stream</param>
+      /// <param name="maxNumStreams">The player that started the stream</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlaybackStream_GetRecentStreamsForTargetPlayer(AsyncCallback callback, object state, string targetPlayerId, int maxNumStreams, int clientIndex);
       string End_PlaybackStream_GetRecentStreamsForTargetPlayer(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Read the state of the currently logged in user.
+      /// This method returns a JSON object describing most of the
+      /// player's data: entities, statistics, level, currency.
+      /// Apps will typically call this method after authenticating to get an
+      /// up-to-date view of the user's data.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerState_ReadUserState(AsyncCallback callback, object state, int clientIndex);
       string End_PlayerState_ReadUserState(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Completely deletes the user record and all data fully owned
+      /// by the user. After calling this method, the user will need
+      /// to re-authenticate and create a new profile.
+      /// This is mostly used for debugging/qa.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerState_DeleteUser(AsyncCallback callback, object state, int clientIndex);
       string End_PlayerState_DeleteUser(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// This method will delete *most* data for the currently logged in user.
+      /// Data which is not deleted includes: currency, credentials, and
+      /// purchase transactions. ResetUser is different from DeleteUser in that
+      /// the player record will continue to exist after the reset (so the user
+      /// does not need to re-authenticate).
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerState_ResetUser(AsyncCallback callback, object state, int clientIndex);
       string End_PlayerState_ResetUser(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Logs user out of server.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerState_Logout(AsyncCallback callback, object state, int clientIndex);
       string End_PlayerState_Logout(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sets the user name.
+      /// </summary>
+      /// <param name="userName">The name of the user</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerState_UpdateUserName(AsyncCallback callback, object state, string userName, int clientIndex);
       string End_PlayerState_UpdateUserName(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Updates the "friend summary data" associated with the logged in user.
+      /// Some operations will return this summary data. For instance the social
+      /// leaderboards will return the player's score in the leaderboard along
+      /// with the friend summary data. Generally this data is used to provide
+      /// a quick overview of the player without requiring a separate API call
+      /// to read their public stats or entity data.
+      /// </summary>
+      /// <param name="jsonSummaryData">A JSON string defining the summary data.For example:{  "xp":123,  "level":12,  "highScore":45123}</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerState_UpdateSummaryFriendData(AsyncCallback callback, object state, string jsonSummaryData, int clientIndex);
       string End_PlayerState_UpdateSummaryFriendData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieve the user's attributes.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerState_GetAttributes(AsyncCallback callback, object state, int clientIndex);
       string End_PlayerState_GetAttributes(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Update user's attributes.
+      /// </summary>
+      /// <param name="jsonAttributes">Single layer json string that is a set of key-value pairs</param>
+      /// <param name="wipeExisting">Whether to wipe existing attributes prior to update.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerState_UpdateAttributes(AsyncCallback callback, object state, string jsonAttributes, bool wipeExisting, int clientIndex);
       string End_PlayerState_UpdateAttributes(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Remove user's attributes.
+      /// </summary>
+      /// <param name="attributeNames">List of attribute names.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerState_RemoveAttributes(AsyncCallback callback, object state, List<string> attributeNames, int clientIndex);
       string End_PlayerState_RemoveAttributes(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Updates player's picture URL.
+      /// </summary>
+      /// <param name="pictureUrl">URL to apply.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerState_UpdateUserPictureUrl(AsyncCallback callback, object state, string pictureUrl, int clientIndex);
       string End_PlayerState_UpdateUserPictureUrl(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Update the user's contact email.
+      /// Note this is unrelated to email authentication.
+      /// </summary>
+      /// <param name="contactEmail">Updated email</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerState_UpdateContactEmail(AsyncCallback callback, object state, string contactEmail, int clientIndex);
       string End_PlayerState_UpdateContactEmail(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Read all available user statistics.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerStatistics_ReadAllUserStats(AsyncCallback callback, object state, int clientIndex);
       string End_PlayerStatistics_ReadAllUserStats(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Reads a subset of user statistics as defined by the input JSON.
+      /// </summary>
+      /// <param name="playerStats"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerStatistics_ReadUserStatsSubset(AsyncCallback callback, object state, List<string> playerStats, int clientIndex);
       string End_PlayerStatistics_ReadUserStatsSubset(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method retrieves the user statistics for the given category.
+      /// </summary>
+      /// <param name="category">The user statistics category</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerStatistics_ReadUserStatsForCategory(AsyncCallback callback, object state, string category, int clientIndex);
       string End_PlayerStatistics_ReadUserStatsForCategory(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Reset all of the statistics for this user back to their initial value.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerStatistics_ResetAllUserStats(AsyncCallback callback, object state, int clientIndex);
       string End_PlayerStatistics_ResetAllUserStats(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Atomically increment (or decrement) user statistics.
+      /// Any rewards that are triggered from user statistic increments
+      /// will be considered. User statistics are defined through the brainCloud portal.
+      /// Note also that the "xpCapped" property is returned (true/false depending on whether
+      /// the xp cap is turned on and whether the user has hit it).
+      /// </summary>
+      /// <param name="jsonData">The JSON encoded data to be sent to the server as follows:{  stat1: 10,  stat2: -5.5,}would increment stat1 by 10 and decrement stat2 by 5.5.For the full statistics grammer see the api.braincloudservers.com site.There are many more complex operations supported such as:{  stat1:INC_TO_LIMIT#9#30}which increments stat1 by 9 up to a limit of 30.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerStatistics_IncrementUserStats_SSFO(AsyncCallback callback, object state, string jsonData, int clientIndex);
       string End_PlayerStatistics_IncrementUserStats_SSFO(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Atomically increment (or decrement) user statistics.
+      /// Any rewards that are triggered from user statistic increments
+      /// will be considered. User statistics are defined through the brainCloud portal.
+      /// Note also that the "xpCapped" property is returned (true/false depending on whether
+      /// the xp cap is turned on and whether the user has hit it).
+      /// </summary>
+      /// <param name="dictData">Stats name and their increments:{ {"stat1", 10}, {"stat1", -5}}would increment stat1 by 10 and decrement stat2 by 5.For the full statistics grammer see the api.braincloudservers.com site.There are many more complex operations supported such as:{  stat1:INC_TO_LIMIT#9#30}which increments stat1 by 9 up to a limit of 30.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerStatistics_IncrementUserStats_DSFO(AsyncCallback callback, object state, Dictionary<string, string> dictData, int clientIndex);
       string End_PlayerStatistics_IncrementUserStats_DSFO(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Apply statistics grammar to a partial set of statistics.
+      /// </summary>
+      /// <param name="statisticsData">Example data to be passed to method:{    "DEAD_CATS": "RESET",    "LIVES_LEFT": "SET#9",    "MICE_KILLED": "INC#2",    "DOG_SCARE_BONUS_POINTS": "INC#10",    "TREES_CLIMBED": 1}</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerStatistics_ProcessStatistics(AsyncCallback callback, object state, Dictionary<string, string> statisticsData, int clientIndex);
       string End_PlayerStatistics_ProcessStatistics(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns JSON representing the next experience level for the user.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerStatistics_GetNextExperienceLevel(AsyncCallback callback, object state, int clientIndex);
       string End_PlayerStatistics_GetNextExperienceLevel(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Increments the user's experience. If the user goes up a level,
+      /// the new level details will be returned along with a list of rewards.
+      /// </summary>
+      /// <param name="xpValue">The amount to increase the user's experience by</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerStatistics_IncrementExperiencePoints(AsyncCallback callback, object state, int xpValue, int clientIndex);
       string End_PlayerStatistics_IncrementExperiencePoints(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sets the user's experience to an absolute value. Note that this
+      /// is simply a set and will not reward the user if their level changes
+      /// as a result.
+      /// </summary>
+      /// <param name="xpValue">The amount to set the the player's experience to</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerStatistics_SetExperiencePoints(AsyncCallback callback, object state, int xpValue, int clientIndex);
       string End_PlayerStatistics_SetExperiencePoints(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Trigger an event server side that will increase the user statistics.
+      /// This may cause one or more awards to be sent back to the user -
+      /// could be achievements, experience, etc. Achievements will be sent by this
+      /// client library to the appropriate awards service (Apple Game Center, etc).
+      /// 
+      /// This mechanism supercedes the PlayerStatisticsService API methods, since
+      /// PlayerStatisticsService API method only update the raw statistics without
+      /// triggering the rewards.
+      /// </summary>
+      /// <param name="eventName"></param>
+      /// <param name="eventMultiplier"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerStatisticsEvent_TriggerStatsEvent(AsyncCallback callback, object state, string eventName, int eventMultiplier, int clientIndex);
       string End_PlayerStatisticsEvent_TriggerStatsEvent(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// See documentation for TriggerStatsEvent for more
+      /// documentation.
+      /// </summary>
+      /// <param name="jsonData">jsonData[  {    "eventName": "event1",    "eventMultiplier": 1  },  {    "eventName": "event2",    "eventMultiplier": 1  }]</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PlayerStatisticsEvent_TriggerStatsEvents(AsyncCallback callback, object state, string jsonData, int clientIndex);
       string End_PlayerStatisticsEvent_TriggerStatsEvents(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Gets the player's currency for the given currency type
+      /// or all currency types if null passed in.
+      /// </summary>
+      /// <param name="currencyType">The currency type to retrieve or nullif all currency types are being requested.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Product_GetCurrency(AsyncCallback callback, object state, string currencyType, int clientIndex);
       string End_Product_GetCurrency(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method gets the active sales inventory for the passed-in
+      /// currency type.
+      /// </summary>
+      /// <param name="platform">The store platform. Valid stores are:- itunes- facebook- appworld- steam- windows- windowsPhone- googlePlay</param>
+      /// <param name="userCurrency">The currency to retrieve the salesinventory for. This is only used for Steam and Facebook stores.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Product_GetSalesInventory(AsyncCallback callback, object state, string platform, string userCurrency, int clientIndex);
       string End_Product_GetSalesInventory(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method gets the active sales inventory for the passed-in
+      /// currency type and category.
+      /// </summary>
+      /// <param name="platform">The store platform. Valid stores are:- itunes- facebook- appworld- steam- windows- windowsPhone- googlePlay</param>
+      /// <param name="userCurrency">The currency to retrieve the salesinventory for. This is only used for Steam and Facebook stores.</param>
+      /// <param name="category">The product category</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Product_GetSalesInventoryByCategory(AsyncCallback callback, object state, string platform, string userCurrency, string category, int clientIndex);
       string End_Product_GetSalesInventoryByCategory(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Verify Microsoft Receipt. On success, the player will be awarded the
+      /// associated currencies.
+      /// </summary>
+      /// <param name="receipt">Receipt XML</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Product_VerifyMicrosoftReceipt(AsyncCallback callback, object state, string receipt, int clientIndex);
       string End_Product_VerifyMicrosoftReceipt(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns the eligible promotions for the player.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Product_GetEligiblePromotions(AsyncCallback callback, object state, int clientIndex);
       string End_Product_GetEligiblePromotions(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Verify ITunes Receipt. On success, the player will be awarded the
+      /// associated currencies.
+      /// </summary>
+      /// <param name="base64EncReceiptData">Base64 encoded receipt data</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Product_VerifyItunesReceipt(AsyncCallback callback, object state, string base64EncReceiptData, int clientIndex);
       string End_Product_VerifyItunesReceipt(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Checks supplied text for profanity.
+      /// </summary>
+      /// <param name="text">The text to check</param>
+      /// <param name="languages">Optional comma delimited list of two character language codes</param>
+      /// <param name="flagEmail">Optional processing of email addresses</param>
+      /// <param name="flagPhone">Optional processing of phone numbers</param>
+      /// <param name="flagUrls">Optional processing of urls</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Profanity_ProfanityCheck(AsyncCallback callback, object state, string text, string languages, bool flagEmail, bool flagPhone, bool flagUrls, int clientIndex);
       string End_Profanity_ProfanityCheck(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Replaces the characters of profanity text with a passed character(s).
+      /// </summary>
+      /// <param name="text">The text to check</param>
+      /// <param name="replaceSymbol">The text to replace individual characters of profanity text with</param>
+      /// <param name="languages">Optional comma delimited list of two character language codes</param>
+      /// <param name="flagEmail">Optional processing of email addresses</param>
+      /// <param name="flagPhone">Optional processing of phone numbers</param>
+      /// <param name="flagUrls">Optional processing of urls</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Profanity_ProfanityReplaceText(AsyncCallback callback, object state, string text, string replaceSymbol, string languages, bool flagEmail, bool flagPhone, bool flagUrls, int clientIndex);
       string End_Profanity_ProfanityReplaceText(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Checks supplied text for profanity and returns a list of bad wors.
+      /// </summary>
+      /// <param name="text">The text to check</param>
+      /// <param name="languages">Optional comma delimited list of two character language codes</param>
+      /// <param name="flagEmail">Optional processing of email addresses</param>
+      /// <param name="flagPhone">Optional processing of phone numbers</param>
+      /// <param name="flagUrls">Optional processing of urls</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Profanity_ProfanityIdentifyBadWords(AsyncCallback callback, object state, string text, string languages, bool flagEmail, bool flagPhone, bool flagUrls, int clientIndex);
       string End_Profanity_ProfanityIdentifyBadWords(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Deregisters all device tokens currently registered to the user.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_DeregisterAllPushNotificationDeviceTokens(AsyncCallback callback, object state, int clientIndex);
       string End_PushNotification_DeregisterAllPushNotificationDeviceTokens(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Deregisters the given device token from the server to disable this device
+      /// from receiving push notifications.
+      /// </summary>
+      /// <param name="platform">The device platform being registered.</param>
+      /// <param name="token">The platform-dependant device token needed for push notifications.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_DeregisterPushNotificationDeviceToken(AsyncCallback callback, object state, string platform, string token, int clientIndex);
       string End_PushNotification_DeregisterPushNotificationDeviceToken(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Registers the given device token with the server to enable this device
+      /// to receive push notifications.
+      /// </summary>
+      /// <param name="platform"></param>
+      /// <param name="token">The platform-dependant device token needed for push notifications.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_RegisterPushNotificationDeviceToken(AsyncCallback callback, object state, string platform, string token, int clientIndex);
       string End_PushNotification_RegisterPushNotificationDeviceToken(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends a simple push notification based on the passed in message.
+      /// NOTE: It is possible to send a push notification to oneself.
+      /// </summary>
+      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
+      /// <param name="message">Text of the push notification</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendSimplePushNotification(AsyncCallback callback, object state, string toProfileId, string message, int clientIndex);
       string End_PushNotification_SendSimplePushNotification(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends a notification to a user based on a brainCloud portal configured notification template.
+      /// NOTE: It is possible to send a push notification to oneself.
+      /// </summary>
+      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
+      /// <param name="notificationTemplateId">Id of the notification template</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendRichPushNotification(AsyncCallback callback, object state, string toProfileId, int notificationTemplateId, int clientIndex);
       string End_PushNotification_SendRichPushNotification(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends a notification to a user based on a brainCloud portal configured notification template.
+      /// Includes JSON defining the substitution params to use with the template.
+      /// See the Portal documentation for more info.
+      /// NOTE: It is possible to send a push notification to oneself.
+      /// </summary>
+      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
+      /// <param name="notificationTemplateId">Id of the notification template</param>
+      /// <param name="substitutionJson">JSON defining the substitution params to use with the template</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendRichPushNotificationWithParams(AsyncCallback callback, object state, string toProfileId, int notificationTemplateId, string substitutionJson, int clientIndex);
       string End_PushNotification_SendRichPushNotificationWithParams(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
+      /// Includes JSON defining the substitution params to use with the template.
+      /// See the Portal documentation for more info.
+      /// </summary>
+      /// <param name="groupId">Target group</param>
+      /// <param name="notificationTemplateId">Id of the notification template</param>
+      /// <param name="substitutionsJson">JSON defining the substitution params to use with the template</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendTemplatedPushNotificationToGroup(AsyncCallback callback, object state, string groupId, int notificationTemplateId, string substitutionsJson, int clientIndex);
       string End_PushNotification_SendTemplatedPushNotificationToGroup(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
+      /// Includes JSON defining the substitution params to use with the template.
+      /// See the Portal documentation for more info.
+      /// </summary>
+      /// <param name="groupId">Target group</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendNormalizedPushNotificationToGroup(AsyncCallback callback, object state, string groupId, string alertContentJson, string customDataJson, int clientIndex);
       string End_PushNotification_SendNormalizedPushNotificationToGroup(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Schedules raw notifications based on user local time.
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="startTime">Start time of sending the push notification</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_ScheduleRawPushNotificationUTC(AsyncCallback callback, object state, string profileId, string fcmContent, string iosContent, string facebookContent, int startTime, int clientIndex);
       string End_PushNotification_ScheduleRawPushNotificationUTC(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Schedules raw notifications based on user local time.
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_ScheduleRawPushNotificationMinutes(AsyncCallback callback, object state, string profileId, string fcmContent, string iosContent, string facebookContent, int minutesFromNow, int clientIndex);
       string End_PushNotification_ScheduleRawPushNotificationMinutes(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends a raw push notification to a target user.
+      /// </summary>
+      /// <param name="toProfileId">The profileId of the user to receive the notification</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendRawPushNotification(AsyncCallback callback, object state, string toProfileId, string fcmContent, string iosContent, string facebookContent, int clientIndex);
       string End_PushNotification_SendRawPushNotification(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends a raw push notification to a target list of users.
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs to send the notification to</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendRawPushNotificationBatch(AsyncCallback callback, object state, List<string> profileIds, string fcmContent, string iosContent, string facebookContent, int clientIndex);
       string End_PushNotification_SendRawPushNotificationBatch(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends a raw push notification to a target group.
+      /// </summary>
+      /// <param name="groupId">Target group</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendRawPushNotificationToGroup(AsyncCallback callback, object state, string groupId, string fcmContent, string iosContent, string facebookContent, int clientIndex);
       string End_PushNotification_SendRawPushNotificationToGroup(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Schedules a normalized push notification to a user
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="startTime">Start time of sending the push notification</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_ScheduleNormalizedPushNotificationUTC(AsyncCallback callback, object state, string profileId, string alertContentJson, string customDataJson, int startTime, int clientIndex);
       string End_PushNotification_ScheduleNormalizedPushNotificationUTC(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Schedules a normalized push notification to a user
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_ScheduleNormalizedPushNotificationMinutes(AsyncCallback callback, object state, string profileId, string alertContentJson, string customDataJson, int minutesFromNow, int clientIndex);
       string End_PushNotification_ScheduleNormalizedPushNotificationMinutes(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Schedules a rich push notification to a user
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="notificationTemplateId">Body and title of alert</param>
+      /// <param name="substitutionsJson">Optional custom data</param>
+      /// <param name="startTime">Start time of sending the push notification</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_ScheduleRichPushNotificationUTC(AsyncCallback callback, object state, string profileId, int notificationTemplateId, string substitutionsJson, int startTime, int clientIndex);
       string End_PushNotification_ScheduleRichPushNotificationUTC(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Schedules a rich push notification to a user
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="notificationTemplateId">Body and title of alert</param>
+      /// <param name="substitutionsJson">Optional custom data</param>
+      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_ScheduleRichPushNotificationMinutes(AsyncCallback callback, object state, string profileId, int notificationTemplateId, string substitutionsJson, int minutesFromNow, int clientIndex);
       string End_PushNotification_ScheduleRichPushNotificationMinutes(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends a notification to a user consisting of alert content and custom data.
+      /// </summary>
+      /// <param name="toProfileId">The profileId of the user to receive the notification</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendNormalizedPushNotification(AsyncCallback callback, object state, string toProfileId, string alertContentJson, string customDataJson, int clientIndex);
       string End_PushNotification_SendNormalizedPushNotification(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Sends a notification to multiple users consisting of alert content and custom data.
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs to send the notification to</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendNormalizedPushNotificationBatch(AsyncCallback callback, object state, List<string> profileIds, string alertContentJson, string customDataJson, int clientIndex);
       string End_PushNotification_SendNormalizedPushNotificationBatch(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Executes a script on the server.
+      /// </summary>
+      /// <param name="scriptName">The name of the script to be run</param>
+      /// <param name="jsonScriptData">Data to be sent to the script in json format</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Script_RunScript(AsyncCallback callback, object state, string scriptName, string jsonScriptData, int clientIndex);
       string End_Script_RunScript(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Allows cloud script executions to be scheduled
+      /// </summary>
+      /// <param name="scriptName">Name of script</param>
+      /// <param name="jsonScriptData">JSON bundle to pass to script</param>
+      /// <param name="startDateInUTC">The start date as a DateTime object</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Script_ScheduleRunScriptUTC(AsyncCallback callback, object state, string scriptName, string jsonScriptData, long startDateInUTC, int clientIndex);
       string End_Script_ScheduleRunScriptUTC(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Allows cloud script executions to be scheduled
+      /// </summary>
+      /// <param name="scriptName">Name of script</param>
+      /// <param name="jsonScriptData">JSON bundle to pass to script</param>
+      /// <param name="minutesFromNow">Number of minutes from now to run script</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Script_ScheduleRunScriptMinutes(AsyncCallback callback, object state, string scriptName, string jsonScriptData, long minutesFromNow, int clientIndex);
       string End_Script_ScheduleRunScriptMinutes(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Run a cloud script in a parent app
+      /// </summary>
+      /// <param name="scriptName">Name of script</param>
+      /// <param name="jsonScriptData">JSON bundle to pass to script</param>
+      /// <param name="parentLevel">The level name of the parent to run the script from</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Script_RunParentScript(AsyncCallback callback, object state, string scriptName, string jsonScriptData, string parentLevel, int clientIndex);
       string End_Script_RunParentScript(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Cancels a scheduled cloud code script
+      /// </summary>
+      /// <param name="jobId">ID of script job to cancel</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Script_CancelScheduledScript(AsyncCallback callback, object state, string jobId, int clientIndex);
       string End_Script_CancelScheduledScript(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Runs a script from the context of a peer
+      /// </summary>
+      /// <param name="scriptName">The name of the script to run</param>
+      /// <param name="jsonScriptData">JSON data to pass into the script</param>
+      /// <param name="peer">Identifies the peer</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Script_RunPeerScript(AsyncCallback callback, object state, string scriptName, string jsonScriptData, string peer, int clientIndex);
       string End_Script_RunPeerScript(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Runs a script asynchronously from the context of a peer
+      /// This operation does not wait for the script to complete before returning
+      /// </summary>
+      /// <param name="scriptName">The name of the script to run</param>
+      /// <param name="jsonScriptData">JSON data to pass into the script</param>
+      /// <param name="peer">Identifies the peer</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Script_RunPeerScriptAsynch(AsyncCallback callback, object state, string scriptName, string jsonScriptData, string peer, int clientIndex);
       string End_Script_RunPeerScriptAsynch(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns the social leaderboard. A player's social leaderboard is
+      /// comprised of players who are recognized as being your friend.
+      /// For now, this applies solely to Facebook connected players who are
+      /// friends with the logged in player (who also must be Facebook connected).
+      /// In the future this will expand to other identification means (such as
+      /// Game Centre, Google circles etc).
+      /// 
+      /// Leaderboards entries contain the player's score and optionally, some user-defined
+      /// data associated with the score. The currently logged in player will also
+      /// be returned in the social leaderboard.
+      /// 
+      /// Note: If no friends have played the game, the bestScore, createdAt, updatedAt
+      /// will contain NULL.
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve</param>
+      /// <param name="replaceName">If true, the currently logged in player's name will be replacedby the string "You".</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_GetSocialLeaderboard(AsyncCallback callback, object state, string leaderboardId, bool replaceName, int clientIndex);
       string End_SocialLeaderboard_GetSocialLeaderboard(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Reads multiple social leaderboards.
+      /// </summary>
+      /// <param name="leaderboardIds">Array of leaderboard id strings</param>
+      /// <param name="leaderboardResultCount">Maximum count of entries to return for each leaderboard.</param>
+      /// <param name="replaceName">If true, the currently logged in player's name will be replacedby the string "You".</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_GetMultiSocialLeaderboard(AsyncCallback callback, object state, List<string> leaderboardIds, int leaderboardResultCount, bool replaceName, int clientIndex);
       string End_SocialLeaderboard_GetMultiSocialLeaderboard(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns a page of global leaderboard results.
+      /// 
+      /// Leaderboards entries contain the player's score and optionally, some user-defined
+      /// data associated with the score.
+      /// 
+      /// Note: This method allows the client to retrieve pages from within the global leaderboard list
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="startIndex">The index at which to start the page.</param>
+      /// <param name="endIndex">The index at which to end the page.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_GetGlobalLeaderboardPage(AsyncCallback callback, object state, string leaderboardId, Ruyi.SDK.BrainCloudApi.SortOrder sort, int startIndex, int endIndex, int clientIndex);
       string End_SocialLeaderboard_GetGlobalLeaderboardPage(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns a page of global leaderboard results. By using a non-current version id,
+      /// the user can retrieve a historical leaderboard. See GetGlobalLeaderboardVersions method
+      /// to retrieve the version id.
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="startIndex">The index at which to start the page.</param>
+      /// <param name="endIndex">The index at which to end the page.</param>
+      /// <param name="versionId">The historical version to retrieve.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_GetGlobalLeaderboardPageByVersion(AsyncCallback callback, object state, string leaderboardId, Ruyi.SDK.BrainCloudApi.SortOrder sort, int startIndex, int endIndex, int versionId, int clientIndex);
       string End_SocialLeaderboard_GetGlobalLeaderboardPageByVersion(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns a view of global leaderboard results that centers on the current player.
+      /// 
+      /// Leaderboards entries contain the player's score and optionally, some user-defined
+      /// data associated with the score.
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="beforeCount">The count of number of players before the current player to include.</param>
+      /// <param name="afterCount">The count of number of players after the current player to include.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_GetGlobalLeaderboardView(AsyncCallback callback, object state, string leaderboardId, Ruyi.SDK.BrainCloudApi.SortOrder sort, int beforeCount, int afterCount, int clientIndex);
       string End_SocialLeaderboard_GetGlobalLeaderboardView(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns a view of global leaderboard results that centers on the current player.
+      /// By using a non-current version id, the user can retrieve a historical leaderboard.
+      /// See GetGlobalLeaderboardVersions method to retrieve the version id.
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="beforeCount">The count of number of players before the current player to include.</param>
+      /// <param name="afterCount">The count of number of players after the current player to include.</param>
+      /// <param name="versionId">The historial version to retrieve. Use -1 for current leaderboard.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_GetGlobalLeaderboardViewByVersion(AsyncCallback callback, object state, string leaderboardId, Ruyi.SDK.BrainCloudApi.SortOrder sort, int beforeCount, int afterCount, int versionId, int clientIndex);
       string End_SocialLeaderboard_GetGlobalLeaderboardViewByVersion(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Gets the global leaderboard versions.
+      /// </summary>
+      /// <param name="leaderboardId">In_leaderboard identifier.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_GetGlobalLeaderboardVersions(AsyncCallback callback, object state, string leaderboardId, int clientIndex);
       string End_SocialLeaderboard_GetGlobalLeaderboardVersions(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieve the social leaderboard for a group.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard to read</param>
+      /// <param name="groupId">The group ID</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_GetGroupSocialLeaderboard(AsyncCallback callback, object state, string leaderboardId, string groupId, int clientIndex);
       string End_SocialLeaderboard_GetGroupSocialLeaderboard(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Post the players score to the given social leaderboard.
+      /// You can optionally send a user-defined json string of data
+      /// with the posted score. This string could include information
+      /// relevant to the posted score.
+      /// 
+      /// Note that the behaviour of posting a score can be modified in
+      /// the brainCloud portal. By default, the server will only keep
+      /// the player's best score.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard to post to</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData"></param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_PostScoreToLeaderboard(AsyncCallback callback, object state, string leaderboardId, long score, string jsonData, int clientIndex);
       string End_SocialLeaderboard_PostScoreToLeaderboard(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Removes a player's score from the leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="versionId">The version of the leaderboard</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_RemovePlayerScore(AsyncCallback callback, object state, string leaderboardId, int versionId, int clientIndex);
       string End_SocialLeaderboard_RemovePlayerScore(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Post the players score to the given social leaderboard.
+      /// Pass leaderboard config data to dynamically create if necessary.
+      /// You can optionally send a user-defined json string of data
+      /// with the posted score. This string could include information
+      /// relevant to the posted score.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard to post to</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData"></param>
+      /// <param name="leaderboardType">leaderboard type</param>
+      /// <param name="rotationType">Type of rotation</param>
+      /// <param name="rotationReset">Date to reset the leaderboard UTC</param>
+      /// <param name="retainedCount">How many rotations to keep</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_PostScoreToDynamicLeaderboard(AsyncCallback callback, object state, string leaderboardId, long score, string jsonData, Ruyi.SDK.BrainCloudApi.SocialLeaderboardType leaderboardType, Ruyi.SDK.BrainCloudApi.RotationType rotationType, long rotationReset, int retainedCount, int clientIndex);
       string End_SocialLeaderboard_PostScoreToDynamicLeaderboard(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Post the players score to the given social leaderboard with a rotation type of DAYS.
+      /// Pass leaderboard config data to dynamically create if necessary.
+      /// You can optionally send a user-defined json string of data
+      /// with the posted score. This string could include information
+      /// relevant to the posted score.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard to post to</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData"></param>
+      /// <param name="leaderboardType">leaderboard type</param>
+      /// <param name="rotationReset">Date to reset the leaderboard UTC</param>
+      /// <param name="retainedCount">How many rotations to keep</param>
+      /// <param name="numDaysToRotate">How many days between each rotation</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_PostScoreToDynamicLeaderboardDays(AsyncCallback callback, object state, string leaderboardId, long score, string jsonData, Ruyi.SDK.BrainCloudApi.SocialLeaderboardType leaderboardType, long rotationReset, int retainedCount, int numDaysToRotate, int clientIndex);
       string End_SocialLeaderboard_PostScoreToDynamicLeaderboardDays(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieve the social leaderboard for a list of players.
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="profileIds">The IDs of the players</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_GetPlayersSocialLeaderboard(AsyncCallback callback, object state, string leaderboardId, List<string> profileIds, int clientIndex);
       string End_SocialLeaderboard_GetPlayersSocialLeaderboard(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Retrieve a list of all leaderboards
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_ListLeaderboards(AsyncCallback callback, object state, int clientIndex);
       string End_SocialLeaderboard_ListLeaderboards(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Gets the number of entries in a global leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_GetGlobalLeaderboardEntryCount(AsyncCallback callback, object state, string leaderboardId, int clientIndex);
       string End_SocialLeaderboard_GetGlobalLeaderboardEntryCount(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Gets the number of entries in a global leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="versionId">The version of the leaderboard</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_GetGlobalLeaderboardEntryCountByVersion(AsyncCallback callback, object state, string leaderboardId, int versionId, int clientIndex);
       string End_SocialLeaderboard_GetGlobalLeaderboardEntryCountByVersion(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Gets a player's score from a leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="versionId">The version of the leaderboard. Use -1 for current.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_GetPlayerScore(AsyncCallback callback, object state, string leaderboardId, int versionId, int clientIndex);
       string End_SocialLeaderboard_GetPlayerScore(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Gets a player's score from multiple leaderboards
+      /// </summary>
+      /// <param name="leaderboardIds">A collection of leaderboardIds to retrieve scores from</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_SocialLeaderboard_GetPlayerScoresFromLeaderboards(AsyncCallback callback, object state, List<string> leaderboardIds, int clientIndex);
       string End_SocialLeaderboard_GetPlayerScoresFromLeaderboards(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Method returns the server time in UTC. This is in UNIX millis time format.
+      /// For instance 1396378241893 represents 2014-04-01 2:50:41.893 in GMT-4.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Time_ReadServerTime(AsyncCallback callback, object state, int clientIndex);
       string End_Time_ReadServerTime(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Processes any outstanding rewards for the given player
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="versionId">Version of the tournament to claim rewards for.Use -1 for the latest version.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Tournament_ClaimTournamentReward(AsyncCallback callback, object state, string leaderboardId, int versionId, int clientIndex);
       string End_Tournament_ClaimTournamentReward(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Get tournament status associated with a leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="versionId">Version of the tournament. Use -1 for the latest version.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Tournament_GetTournamentStatus(AsyncCallback callback, object state, string leaderboardId, int versionId, int clientIndex);
       string End_Tournament_GetTournamentStatus(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Join the specified tournament.
+      /// Any entry fees will be automatically collected.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="tournamentCode">Tournament to join</param>
+      /// <param name="initialScore">The initial score for players first joining a tournamentUsually 0, unless leaderboard is LOW_VALUE</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Tournament_JoinTournament(AsyncCallback callback, object state, string leaderboardId, string tournamentCode, long initialScore, int clientIndex);
       string End_Tournament_JoinTournament(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Removes player's score from tournament leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Tournament_LeaveTournament(AsyncCallback callback, object state, string leaderboardId, int clientIndex);
       string End_Tournament_LeaveTournament(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Post the users score to the leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData">Optional data attached to the leaderboard entry</param>
+      /// <param name="roundStartedTime">Time the user started the match resulting in the scorebeing posted.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Tournament_PostTournamentScore(AsyncCallback callback, object state, string leaderboardId, long score, string jsonData, long roundStartedTime, int clientIndex);
       string End_Tournament_PostTournamentScore(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Post the users score to the leaderboard and returns the results
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData">Optional data attached to the leaderboard entry</param>
+      /// <param name="roundStartedTime">Time the user started the match resulting in the scorebeing posted.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="beforeCount">The count of number of players before the current player to include.</param>
+      /// <param name="afterCount">The count of number of players after the current player to include.</param>
+      /// <param name="initialScore">The initial score for players first joining a tournamentUsually 0, unless leaderboard is LOW_VALUE</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Tournament_PostTournamentScoreWithResults(AsyncCallback callback, object state, string leaderboardId, long score, string jsonData, long roundStartedTime, Ruyi.SDK.BrainCloudApi.SortOrder sort, int beforeCount, int afterCount, long initialScore, int clientIndex);
       string End_Tournament_PostTournamentScoreWithResults(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns the user's expected reward based on the current scores
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Tournament_ViewCurrentReward(AsyncCallback callback, object state, string leaderboardId, int clientIndex);
       string End_Tournament_ViewCurrentReward(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Returns the user's reward from a finished tournament
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="versionId">Version of the tournament. Use -1 for the latest version.</param>
+      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Tournament_ViewReward(AsyncCallback callback, object state, string leaderboardId, int versionId, int clientIndex);
       string End_Tournament_ViewReward(IAsyncResult asyncResult);
@@ -1725,6 +5623,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Creates an instance of an asynchronous match.
+      /// </summary>
+      /// <param name="jsonOpponentIds">JSON string identifying the opponent platform and id for this match.Platforms are identified as:BC - a brainCloud profile idFB - a Facebook idAn exmaple of this string would be:[    {        "platform": "BC",        "id": "some-braincloud-profile"    },    {        "platform": "FB",        "id": "some-facebook-id"    }]</param>
+      /// <param name="pushNotificationMessage">Optional push notification message to send to the other party.Refer to the Push Notification functions for the syntax required.</param>
+      /// <param name="clientIndex"></param>
       public string AsyncMatch_CreateMatch(string jsonOpponentIds, string pushNotificationMessage, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -1789,6 +5693,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Creates an instance of an asynchronous match with an initial turn.
+      /// </summary>
+      /// <param name="jsonOpponentIds">JSON string identifying the opponent platform and id for this match.Platforms are identified as:BC - a brainCloud profile idFB - a Facebook idAn exmaple of this string would be:[    {        "platform": "BC",        "id": "some-braincloud-profile"    },    {        "platform": "FB",        "id": "some-facebook-id"    }]</param>
+      /// <param name="jsonMatchState">JSON string blob provided by the caller</param>
+      /// <param name="pushNotificationMessage">Optional push notification message to send to the other party.Refer to the Push Notification functions for the syntax required.</param>
+      /// <param name="nextPlayer">Optionally, force the next player player to be a specific player</param>
+      /// <param name="jsonSummary">Optional JSON string defining what the other player will see as a summary of the game when listing their games</param>
+      /// <param name="clientIndex"></param>
       public string AsyncMatch_CreateMatchWithInitialTurn(string jsonOpponentIds, string jsonMatchState, string pushNotificationMessage, string nextPlayer, string jsonSummary, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -1856,6 +5769,18 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Submits a turn for the given match.
+      /// </summary>
+      /// <param name="ownerId">Match owner identfier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="version">Game state version to ensure turns are submitted once and in order</param>
+      /// <param name="jsonMatchState">JSON string blob provided by the caller</param>
+      /// <param name="pushNotificationMessage">Optional push notification message to send to the other party.Refer to the Push Notification functions for the syntax required.</param>
+      /// <param name="nextPlayer">Optionally, force the next player player to be a specific player</param>
+      /// <param name="jsonSummary">Optional JSON string that other players will see as a summary of the game when listing their games</param>
+      /// <param name="jsonStatistics">Optional JSON string blob provided by the caller</param>
+      /// <param name="clientIndex"></param>
       public string AsyncMatch_SubmitTurn(string ownerId, string matchId, long version, string jsonMatchState, string pushNotificationMessage, string nextPlayer, string jsonSummary, string jsonStatistics, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -1926,6 +5851,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Allows the current player (only) to update Summary data without having to submit a whole turn.
+      /// </summary>
+      /// <param name="ownerId">Match owner identfier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="version">Game state version to ensure turns are submitted once and in order</param>
+      /// <param name="jsonSummary">JSON string provided by the caller that other players will see as a summary of the game when listing their games</param>
+      /// <param name="clientIndex"></param>
       public string AsyncMatch_UpdateMatchSummaryData(string ownerId, string matchId, long version, string jsonSummary, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -1992,6 +5925,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Marks the given match as complete.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       public string AsyncMatch_CompleteMatch(string ownerId, string matchId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2056,6 +5995,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns the current state of the given match.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       public string AsyncMatch_ReadMatch(string ownerId, string matchId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2120,6 +6065,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns the match history of the given match.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       public string AsyncMatch_ReadMatchHistory(string ownerId, string matchId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2184,6 +6135,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns all matches that are NOT in a COMPLETE state for which the player is involved.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string AsyncMatch_FindMatches(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2246,6 +6201,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns all matches that are in a COMPLETE state for which the player is involved.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string AsyncMatch_FindCompleteMatches(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2308,6 +6267,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Marks the given match as abandoned.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       public string AsyncMatch_AbandonMatch(string ownerId, string matchId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2372,6 +6337,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Removes the match and match history from the server. DEBUG ONLY, in production it is recommended
+      /// the user leave it as completed.
+      /// </summary>
+      /// <param name="ownerId">Match owner identifier</param>
+      /// <param name="matchId">Match identifier</param>
+      /// <param name="clientIndex"></param>
       public string AsyncMatch_DeleteMatch(string ownerId, string matchId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2436,6 +6408,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Used to create the anonymous installation id for the brainCloud profile.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string Authentication_GenerateAnonymousId(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2498,6 +6474,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Initialize - initializes the identity service with a saved
+      /// anonymous installation id and most recently used profile id
+      /// </summary>
+      /// <param name="profileId">The id of the profile id that was most recently used by the app (on this device)</param>
+      /// <param name="anonymousId">The anonymous installation id that was generated for this device</param>
+      /// <param name="clientIndex"></param>
       public void Authentication_Initialize(string profileId, string anonymousId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2559,6 +6542,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Used to clear the saved profile id - to use in cases when the user is
+      /// attempting to switch to a different app profile.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public void Authentication_ClearSavedProfileID(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2618,6 +6606,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Authenticate a user anonymously with brainCloud - used for apps that don't want to bother
+      /// the user to login, or for users who are sensitive to their privacy
+      /// </summary>
+      /// <param name="forceCreate">Should a new profile be created if it does not exist?</param>
+      /// <param name="clientIndex"></param>
       public string Authentication_AuthenticateAnonymous(bool forceCreate, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2681,6 +6675,17 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Authenticate the user with a custom Email and Password.  Note that the client app
+      /// is responsible for collecting (and storing) the e-mail and potentially password
+      /// (for convenience) in the client data.  For the greatest security,
+      /// force the user to re-enter their password at each login.
+      /// (Or at least give them that option).
+      /// </summary>
+      /// <param name="email">The e-mail address of the user</param>
+      /// <param name="password">The password of the user</param>
+      /// <param name="forceCreate">Should a new profile be created for this user if the account does not exist?</param>
+      /// <param name="clientIndex"></param>
       public string Authentication_AuthenticateEmailPassword(string email, string password, bool forceCreate, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2746,6 +6751,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Authenticate the user using a userId and password (without any validation on the userId).
+      /// Similar to AuthenticateEmailPassword - except that that method has additional features to
+      /// allow for e-mail validation, password resets, etc.
+      /// </summary>
+      /// <param name="userId"></param>
+      /// <param name="password">The password of the user</param>
+      /// <param name="forceCreate">Should a new profile be created for this user if the account does not exist?</param>
+      /// <param name="clientIndex"></param>
       public string Authentication_AuthenticateUniversal(string userId, string password, bool forceCreate, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2811,6 +6825,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Authenticate the user via cloud code (which in turn validates the supplied credentials against an external system).
+      /// This allows the developer to extend brainCloud authentication to support other backend authentication systems.
+      /// </summary>
+      /// <param name="userId">The user id</param>
+      /// <param name="token">The user token (password etc)</param>
+      /// <param name="externalAuthName">The name of the cloud script to call for external authentication</param>
+      /// <param name="forceCreate">Should a new profile be created for this user if the account does not exist?</param>
+      /// <param name="clientIndex"></param>
       public string Authentication_AuthenticateExternal(string userId, string token, string externalAuthName, bool forceCreate, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2877,6 +6900,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Reset Email password - Sends a password reset email to the specified address
+      /// </summary>
+      /// <param name="externalId">The email address to send the reset email to.</param>
+      /// <param name="clientIndex"></param>
       public string Authentication_ResetEmailPassword(string externalId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -2940,6 +6968,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns the sessionId or empty string if no session present.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string Client_GetSessionId(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3002,6 +7034,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns true if the user is currently authenticated.
+      /// If a session time out or session invalidation is returned from executing a
+      /// sever API call, this flag will reset back to false.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public bool Client_IsAuthenticated(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3064,6 +7102,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns true if brainCloud has been initialized.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public bool Client_IsInitialized(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3126,6 +7168,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId"></param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
       public void Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3188,6 +7237,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="serverURL">The URL to the brainCloud server</param>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId">The app id</param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
       public void Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3251,6 +7308,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Initialize the identity aspects of brainCloud.
+      /// </summary>
+      /// <param name="profileId">The profile id</param>
+      /// <param name="anonymousId">The anonymous id</param>
+      /// <param name="clientIndex"></param>
       public void Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3312,6 +7375,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Update method needs to be called regularly in order
+      /// to process incoming and outgoing messages.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public void Client_Update(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3371,6 +7439,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Enable logging of brainCloud transactions (comms etc)
+      /// </summary>
+      /// <param name="enable">True if logging is to be enabled</param>
+      /// <param name="clientIndex"></param>
       public void Client_EnableLogging(bool enable, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3431,6 +7504,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Resets all messages and calls to the server
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public void Client_ResetCommunication(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3490,6 +7567,22 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sets the packet timeouts using a list of integers that
+      /// represent timeout values for each packet retry. The
+      /// first item in the list represents the timeout for the first packet
+      /// attempt, the second for the second packet attempt, and so on.
+      /// 
+      /// The number of entries in this array determines how many packet
+      /// retries will occur.
+      /// 
+      /// By default, the packet timeout array is {10, 10, 10}
+      /// 
+      /// Note that this method does not change the timeout for authentication
+      /// packets (use SetAuthenticationPacketTimeout method).
+      /// </summary>
+      /// <param name="timeouts">An array of packet timeouts.</param>
+      /// <param name="clientIndex"></param>
       public void Client_SetPacketTimeouts(List<int> timeouts, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3550,6 +7643,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sets the packet timeouts back to default.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public void Client_SetPacketTimeoutsToDefault(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3609,6 +7706,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns the list of packet timeouts.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public List<int> Client_GetPacketTimeouts(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3671,6 +7772,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sets the authentication packet timeout which is tracked separately
+      /// from all other packets. Note that authentication packets are never
+      /// retried and so this value represents the total time a client would
+      /// wait to receive a reply to an authentication API call. By default
+      /// this timeout is set to 15 seconds.
+      /// </summary>
+      /// <param name="timeoutSecs"></param>
+      /// <param name="clientIndex"></param>
       public void Client_SetAuthenticationPacketTimeout(int timeoutSecs, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3731,6 +7841,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Gets the authentication packet timeout which is tracked separately
+      /// from all other packets. Note that authentication packets are never
+      /// retried and so this value represents the total time a client would
+      /// wait to receive a reply to an authentication API call. By default
+      /// this timeout is set to 15 seconds.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public int Client_GetAuthenticationPacketTimeout(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3793,6 +7911,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns the low transfer rate timeout in secs
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public int Client_GetUploadLowTransferRateTimeout(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3855,6 +7977,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sets the timeout in seconds of a low speed upload
+      /// (i.e. transfer rate which is underneath the low transfer rate threshold).
+      /// By default this is set to 120 secs.Setting this value to 0 will
+      /// turn off the timeout. Note that this timeout method
+      /// does not work on Unity mobile platforms.
+      /// </summary>
+      /// <param name="timeoutSecs"></param>
+      /// <param name="clientIndex"></param>
       public void Client_SetUploadLowTransferRateTimeout(int timeoutSecs, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3915,6 +8046,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns the low transfer rate threshold in bytes/sec
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public int Client_GetUploadLowTransferRateThreshold(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -3977,6 +8112,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sets the low transfer rate threshold of an upload in bytes/sec.
+      /// If the transfer rate dips below the given threshold longer
+      /// than the specified timeout, the transfer will fail.
+      /// By default this is set to 50 bytes/sec. Note that this timeout method
+      /// does not work on Unity mobile platforms.
+      /// </summary>
+      /// <param name="bytesPerSec">The low transfer rate threshold in bytes/sec</param>
+      /// <param name="clientIndex"></param>
       public void Client_SetUploadLowTransferRateThreshold(int bytesPerSec, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4037,6 +8181,33 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Enables the timeout message caching which is disabled by default.
+      /// Once enabled, if a client side timeout is encountered
+      /// (i.e. brainCloud server is unreachable presumably due to the client
+      /// network being down) the SDK will do the following:
+      /// 
+      /// 1 - cache the currently queued messages to brainCloud
+      /// 2 - call the network error callback
+      /// 3 - then expect the app to call either:
+      ///     a) RetryCachedMessages() to retry sending to brainCloud
+      ///     b) FlushCachedMessages() to dump all messages in the queue.
+      /// 
+      /// Between steps 2 and 3, the app can prompt the user to retry connecting
+      /// to brainCloud to determine whether to follow path 3a or 3b.
+      /// 
+      /// Note that if path 3a is followed, and another timeout is encountered,
+      /// the process will begin all over again from step 1.
+      /// 
+      /// WARNING - the brainCloud SDK will cache *all* API calls sent
+      /// when a timeout is encountered if this mechanism is enabled.
+      /// This effectively freezes all communication with brainCloud.
+      /// Apps must call either RetryCachedMessages() or FlushCachedMessages()
+      /// for the brainCloud SDK to resume sending messages.
+      /// ResetCommunication() will also clear the message cache.
+      /// </summary>
+      /// <param name="enabled">True if message should be cached on timeout</param>
+      /// <param name="clientIndex"></param>
       public void Client_EnableNetworkErrorMessageCaching(bool enabled, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4097,6 +8268,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Attempts to resend any cached messages. If no messages are in the cache,
+      /// this method does nothing.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public void Client_RetryCachedMessages(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4156,6 +8332,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Flushes the cached messages to resume API call processing. This will dump
+      /// all of the cached messages in the queue.
+      /// </summary>
+      /// <param name="sendApiErrorCallbacks">If set to true API error callbacks willbe called for every cached message with statusCode CLIENT_NETWORK_ERROR and reasonCode CLIENT_NETWORK_ERROR_TIMEOUT.</param>
+      /// <param name="clientIndex"></param>
       public void Client_FlushCachedMessages(bool sendApiErrorCallbacks, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4216,6 +8398,20 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Inserts a marker which will tell the brainCloud comms layer
+      /// to close the message bundle off at this point. Any messages queued
+      /// before this method was called will likely be bundled together in
+      /// the next send to the server.
+      /// 
+      /// To ensure that only a single message is sent to the server you would
+      /// do something like this:
+      /// 
+      /// InsertEndOfMessageBundleMarker()
+      /// SomeApiCall()
+      /// InsertEndOfMessageBundleMarker()
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public void Client_InsertEndOfMessageBundleMarker(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4275,6 +8471,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sets the country code sent to brainCloud when a user authenticates.
+      /// Will override any auto detected country.
+      /// </summary>
+      /// <param name="countryCode">ISO 3166-1 two-letter country code</param>
+      /// <param name="clientIndex"></param>
       public void Client_OverrideCountryCode(string countryCode, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4335,6 +8537,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sets the language code sent to brainCloud when a user authenticates.
+      /// If the language is set to a non-ISO 639-1 standard value the game default will be used instead.
+      /// Will override any auto detected language.
+      /// </summary>
+      /// <param name="languageCode">ISO 639-1 two-letter language code</param>
+      /// <param name="clientIndex"></param>
       public void Client_OverrideLanguageCode(string languageCode, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4395,6 +8604,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Creates custom data stream page event
+      /// </summary>
+      /// <param name="eventName">The name of the event</param>
+      /// <param name="jsonEventProperties">The properties of the event</param>
+      /// <param name="clientIndex"></param>
       public string DataStream_CustomPageEvent(string eventName, string jsonEventProperties, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4459,6 +8674,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Creates custom data stream screen event
+      /// </summary>
+      /// <param name="eventName">The name of the event</param>
+      /// <param name="jsonEventProperties">The properties of the event</param>
+      /// <param name="clientIndex"></param>
       public string DataStream_CustomScreenEvent(string eventName, string jsonEventProperties, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4523,6 +8744,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Creates custom data stream track event
+      /// </summary>
+      /// <param name="eventName">The name of the event</param>
+      /// <param name="jsonEventProperties">The properties of the event</param>
+      /// <param name="clientIndex"></param>
       public string DataStream_CustomTrackEvent(string eventName, string jsonEventProperties, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4587,6 +8814,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method creates a new entity on the server.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="jsonEntityData">The entity's data as a json string</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies defaultpermissions which make the entity readable/writeable by only the user.</param>
+      /// <param name="clientIndex"></param>
       public string Entity_CreateEntity(string entityType, string jsonEntityData, string jsonEntityAcl, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4652,6 +8886,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns all user entities that match the given type.
+      /// </summary>
+      /// <param name="entityType">The entity type to search for</param>
+      /// <param name="clientIndex"></param>
       public string Entity_GetEntitiesByType(string entityType, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4715,6 +8954,16 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method updates a new entity on the server. This operation results in the entity
+      /// data being completely replaced by the passed in JSON string.
+      /// </summary>
+      /// <param name="entityId">The id of the entity to update</param>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="jsonEntityData">The entity's data as a json string.</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies defaultpermissions which make the entity readable/writeable by only the user.</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       public string Entity_UpdateEntity(string entityId, string entityType, string jsonEntityData, string jsonEntityAcl, int version, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4782,6 +9031,16 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method updates a shared entity owned by another user. This operation results in the entity
+      /// data being completely replaced by the passed in JSON string.
+      /// </summary>
+      /// <param name="entityId">The id of the entity to update</param>
+      /// <param name="targetProfileId">The id of the entity's owner</param>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="jsonEntityData">The entity's data as a json string.</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       public string Entity_UpdateSharedEntity(string entityId, string targetProfileId, string entityType, string jsonEntityData, int version, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4849,6 +9108,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method deletes the given entity on the server.
+      /// </summary>
+      /// <param name="entityId">The id of the entity to update</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       public string Entity_DeleteEntity(string entityId, int version, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4913,6 +9178,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method updates a singleton entity on the server. This operation results in the entity
+      /// data being completely replaced by the passed in JSON string. If the entity doesn't exist it is created.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="jsonEntityData">The entity's data as a json string.</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies default</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       public string Entity_UpdateSingleton(string entityType, string jsonEntityData, string jsonEntityAcl, int version, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -4979,6 +9253,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method deletes the given singleton on the server.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="version">Current version of the entity. If the version of theentity on the server does not match the version passed in, theserver operation will fail. Use -1 to skip version checking.</param>
+      /// <param name="clientIndex"></param>
       public string Entity_DeleteSingleton(string entityType, int version, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5043,6 +9323,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method to get a specific entity.
+      /// </summary>
+      /// <param name="entityId">The id of the entity</param>
+      /// <param name="clientIndex"></param>
       public string Entity_GetEntity(string entityId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5106,6 +9391,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method retrieves a singleton entity on the server. If the entity doesn't exist, null is returned.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="clientIndex"></param>
       public string Entity_GetSingleton(string entityType, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5169,6 +9459,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns a shared entity for the given profile and entity ID.
+      /// An entity is shared if its ACL allows for the currently logged
+      /// in user to read the data.
+      /// </summary>
+      /// <param name="profileId">The the profile ID of the user who owns the entity</param>
+      /// <param name="entityId">The ID of the entity that will be retrieved</param>
+      /// <param name="clientIndex"></param>
       public string Entity_GetSharedEntityForProfileId(string profileId, string entityId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5233,6 +9531,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns all shared entities for the given profile id.
+      /// An entity is shared if its ACL allows for the currently logged
+      /// in user to read the data.
+      /// </summary>
+      /// <param name="profileId">The profile id to retrieve shared entities for</param>
+      /// <param name="clientIndex"></param>
       public string Entity_GetSharedEntitiesForProfileId(string profileId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5296,6 +9601,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method gets list of entities from the server base on type and/or where clause
+      /// </summary>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="orderByJson">Sort order</param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       public string Entity_GetList(string whereJson, string orderByJson, int maxReturn, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5361,6 +9673,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method gets list of shared entities for the specified user based on type and/or where clause
+      /// </summary>
+      /// <param name="profileId">The profile ID to retrieve shared entities for</param>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="orderByJson">Sort order</param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       public string Entity_GetSharedEntitiesListForProfileId(string profileId, string whereJson, string orderByJson, int maxReturn, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5427,6 +9747,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method gets a count of entities based on the where clause
+      /// </summary>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="clientIndex"></param>
       public string Entity_GetListCount(string whereJson, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5490,6 +9815,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method uses a paging system to iterate through user entities.
+      /// After retrieving a page of entities with this method,
+      /// use GetPageOffset() to retrieve previous or next pages.
+      /// </summary>
+      /// <param name="jsonContext">The json context for the page request.See the portal appendix documentation for format</param>
+      /// <param name="clientIndex"></param>
       public string Entity_GetPage(string jsonContext, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5553,6 +9885,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method to retrieve previous or next pages after having called
+      /// the GetPage method.
+      /// </summary>
+      /// <param name="context">The context string returned from the server from a previous callto GetPage() or GetPageOffset()</param>
+      /// <param name="pageOffset">The positive or negative page offset to fetch. Uses the last pageretrieved using the context string to determine a starting point.</param>
+      /// <param name="clientIndex"></param>
       public string Entity_GetPageOffset(string context, int pageOffset, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5617,6 +9956,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Partial increment of entity data field items. Partial set of items incremented as specified.
+      /// </summary>
+      /// <param name="entityId">The entity to increment</param>
+      /// <param name="jsonData">The subset of data to increment</param>
+      /// <param name="clientIndex"></param>
       public string Entity_IncrementUserEntityData(string entityId, string jsonData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5681,6 +10026,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Partial increment of shared entity data field items. Partial set of items incremented as specified.
+      /// </summary>
+      /// <param name="entityId">The entity to increment</param>
+      /// <param name="targetProfileId">Profile ID of the entity owner</param>
+      /// <param name="jsonData">The subset of data to increment</param>
+      /// <param name="clientIndex"></param>
       public string Entity_IncrementSharedUserEntityData(string entityId, string targetProfileId, string jsonData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5746,6 +10098,17 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends an event to the designated profile id with the attached json data.
+      /// Any events that have been sent to a user will show up in their
+      /// incoming event mailbox. If the recordLocally flag is set to true,
+      /// a copy of this event (with the exact same event id) will be stored
+      /// in the sending user's "sent" event mailbox.
+      /// </summary>
+      /// <param name="toProfileId">The id of the user who is being sent the event</param>
+      /// <param name="eventType">The user-defined type of the event.</param>
+      /// <param name="jsonEventData">The user-defined data for this event encoded in JSON.</param>
+      /// <param name="clientIndex"></param>
       public string Event_SendEvent(string toProfileId, string eventType, string jsonEventData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5811,6 +10174,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Updates an event in the user's incoming event mailbox.
+      /// </summary>
+      /// <param name="evId">The event id</param>
+      /// <param name="jsonEventData">The user-defined data for this event encoded in JSON.</param>
+      /// <param name="clientIndex"></param>
       public string Event_UpdateIncomingEventData(string evId, string jsonEventData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5875,6 +10244,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Delete an event out of the user's incoming mailbox.
+      /// </summary>
+      /// <param name="evId">The event id</param>
+      /// <param name="clientIndex"></param>
       public string Event_DeleteIncomingEvent(string evId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -5938,6 +10312,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Get the events currently queued for the user.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string Event_GetEvents(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6000,6 +10378,17 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Prepares a user file upload. On success the file will begin uploading
+      /// to the brainCloud server.To be informed of success/failure of the upload
+      /// register an IFileUploadCallback with the BrainCloudClient class.
+      /// </summary>
+      /// <param name="cloudPath">The desired cloud path of the file</param>
+      /// <param name="cloudFilename">The desired cloud fileName of the file</param>
+      /// <param name="shareable">True if the file is shareable</param>
+      /// <param name="replaceIfExists">Whether to replace file if it exists</param>
+      /// <param name="localPath">The path and fileName of the local file</param>
+      /// <param name="clientIndex"></param>
       public string File_UploadFile(string cloudPath, string cloudFilename, bool shareable, bool replaceIfExists, string localPath, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6067,6 +10456,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method cancels an upload. If an IFileUploadCallback has been registered with the BrainCloudClient class,
+      /// the fileUploadFailed callback method will be called once the upload has been canceled.
+      /// NOTE: The upload will still continue in the background on versions of Unity before 5.3
+      /// and on Unity mobile platforms.
+      /// </summary>
+      /// <param name="uploadId">Upload ID of the file to cancel</param>
+      /// <param name="clientIndex"></param>
       public void File_CancelUpload(string uploadId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6127,6 +10524,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns the progress of the given upload from 0.0 to 1.0 or -1 if upload not found.
+      /// NOTE: This will always return 1 on Unity mobile platforms.
+      /// </summary>
+      /// <param name="uploadId">The id of the upload</param>
+      /// <param name="clientIndex"></param>
       public double File_GetUploadProgress(string uploadId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6190,6 +10593,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns the number of bytes uploaded or -1 if upload not found.
+      /// NOTE: This will always return the total bytes to transfer on Unity mobile platforms.
+      /// </summary>
+      /// <param name="uploadId">The id of the upload</param>
+      /// <param name="clientIndex"></param>
       public long File_GetUploadBytesTransferred(string uploadId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6253,6 +10662,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns the total number of bytes that will be uploaded or -1 if upload not found.
+      /// </summary>
+      /// <param name="uploadId">The id of the upload</param>
+      /// <param name="clientIndex"></param>
       public long File_GetUploadTotalBytesToTransfer(string uploadId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6316,6 +10730,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// List all user files
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string File_ListUserFiles_SFO(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6378,6 +10796,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// List user files from the given cloud path
+      /// </summary>
+      /// <param name="cloudPath">File path</param>
+      /// <param name="recurse">Whether to recurse down the path</param>
+      /// <param name="clientIndex"></param>
       public string File_ListUserFiles_SNSFO(string cloudPath, bool recurse, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6442,6 +10866,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Deletes a single user file.
+      /// </summary>
+      /// <param name="cloudPath">File path</param>
+      /// <param name="cloudFileName"></param>
+      /// <param name="clientIndex"></param>
       public string File_DeleteUserFile(string cloudPath, string cloudFileName, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6506,6 +10936,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Delete multiple user files
+      /// </summary>
+      /// <param name="cloudPath">File path</param>
+      /// <param name="recurse">Whether to recurse down the path</param>
+      /// <param name="clientIndex"></param>
       public string File_DeleteUserFiles(string cloudPath, bool recurse, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6570,6 +11006,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns the CDN URL for a file object.
+      /// </summary>
+      /// <param name="cloudPath">File path</param>
+      /// <param name="cloudFilename">Name of file</param>
+      /// <param name="clientIndex"></param>
       public string File_GetCDNUrl(string cloudPath, string cloudFilename, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6634,6 +11076,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieves profile information for the partial matches of the specified text.
+      /// </summary>
+      /// <param name="searchText">Universal ID text on which to search.</param>
+      /// <param name="maxResults">Maximum number of results to return.</param>
+      /// <param name="clientIndex"></param>
       public string Friend_FindUserByUniversalId(string searchText, int maxResults, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6698,6 +11146,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieves profile information of the specified user.
+      /// </summary>
+      /// <param name="externalId">External id of the user to find</param>
+      /// <param name="authenticationType">The authentication type used for the user's ID</param>
+      /// <param name="clientIndex"></param>
       public string Friend_GetProfileInfoForCredential(string externalId, string authenticationType, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6762,6 +11216,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieves profile information for the specified external auth user.
+      /// </summary>
+      /// <param name="externalId">External id of the friend to find</param>
+      /// <param name="externalAuthType">The external authentication type used for this friend's external id</param>
+      /// <param name="clientIndex"></param>
       public string Friend_GetProfileInfoForExternalAuthId(string externalId, string externalAuthType, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6826,6 +11286,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieves the external ID for the specified user profile ID on the specified social platform.
+      /// </summary>
+      /// <param name="profileId">Profile (user) ID.</param>
+      /// <param name="authenticationType">Associated authentication type.</param>
+      /// <param name="clientIndex"></param>
       public string Friend_GetExternalIdForProfileId(string profileId, string authenticationType, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6890,6 +11356,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns a particular entity of a particular friend.
+      /// </summary>
+      /// <param name="entityId">Id of entity to retrieve.</param>
+      /// <param name="friendId">Profile Id of friend who owns entity.</param>
+      /// <param name="clientIndex"></param>
       public string Friend_ReadFriendEntity(string entityId, string friendId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -6954,6 +11426,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns entities of all friends based on type and/or subtype.
+      /// </summary>
+      /// <param name="entityType">Types of entities to retrieve.</param>
+      /// <param name="clientIndex"></param>
       public string Friend_ReadFriendsEntities(string entityType, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7017,6 +11494,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns user state of a particular friend.
+      /// </summary>
+      /// <param name="friendId">Profile Id of friend to retrieve user state for.</param>
+      /// <param name="clientIndex"></param>
       public string Friend_ReadFriendUserState(string friendId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7080,6 +11562,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns user state of a particular user.
+      /// </summary>
+      /// <param name="profileId">Profile Id of user to retrieve player state for.</param>
+      /// <param name="clientIndex"></param>
       public string Friend_GetSummaryDataForProfileId(string profileId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7143,6 +11630,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Finds a list of users matching the search text by performing an exact
+      /// search of all user names.
+      /// </summary>
+      /// <param name="searchText">The string to search for.</param>
+      /// <param name="maxResults">Maximum number of results to return.</param>
+      /// <param name="clientIndex"></param>
       public string Friend_FindUsersByExactName(string searchText, int maxResults, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7207,6 +11701,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Finds a list of users matching the search text by performing a substring
+      /// search of all user names.
+      /// </summary>
+      /// <param name="searchText">The substring to search for. Minimum length of 3 characters.</param>
+      /// <param name="maxResults">Maximum number of results to return.</param>
+      /// <param name="clientIndex"></param>
       public string Friend_FindUsersBySubstrName(string searchText, int maxResults, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7271,6 +11772,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieves a list of user and friend platform information for all friends of the current user.
+      /// </summary>
+      /// <param name="friendPlatform">Friend platform to query.</param>
+      /// <param name="includeSummaryData">True if including summary data; false otherwise.</param>
+      /// <param name="clientIndex"></param>
       public string Friend_ListFriends(Ruyi.SDK.BrainCloudApi.FriendPlatform friendPlatform, bool includeSummaryData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7335,6 +11842,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Links the current user and the specified users as brainCloud friends.
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs.</param>
+      /// <param name="clientIndex"></param>
       public string Friend_AddFriends(List<string> profileIds, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7398,6 +11910,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Unlinks the current user and the specified users as brainCloud friends.
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs.</param>
+      /// <param name="clientIndex"></param>
       public string Friend_RemoveFriends(List<string> profileIds, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7461,6 +11978,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Get users online status
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs.</param>
+      /// <param name="clientIndex"></param>
       public string Friend_GetUsersOnlineStatus(List<string> profileIds, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7524,6 +12046,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method retrieves all gamification data for the player.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadAllGamification(bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7587,6 +12114,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method retrieves all milestones defined for the game.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadMilestones(bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7650,6 +12182,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Read all of the achievements defined for the game.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadAchievements(bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7713,6 +12250,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns all defined xp levels and any rewards associated
+      /// with those xp levels.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadXpLevelsMetaData(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7775,6 +12317,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method retrives the list of achieved achievements.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadAchievedAchievements(bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7838,6 +12385,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method retrieves the list of completed milestones.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadCompletedMilestones(bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7901,6 +12453,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method retrieves the list of in progress milestones
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadInProgressMilestones(bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7964,6 +12521,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method retrieves milestones of the given category.
+      /// </summary>
+      /// <param name="category">The milestone category</param>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadMilestonesByCategory(string category, bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8028,6 +12591,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method will award the achievements specified. On success, this will
+      /// call AwardThirdPartyAchievement to hook into the client-side Achievement
+      /// service (ie GameCentre, Facebook etc).
+      /// </summary>
+      /// <param name="achievementIds">A collection of achievement ids to award</param>
+      /// <param name="clientIndex"></param>
       public string Gamification_AwardAchievements(List<string> achievementIds, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8091,6 +12661,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method retrieves all of the quests defined for the game.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadQuests(bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8154,6 +12729,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns all completed quests.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadCompletedQuests(bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8217,6 +12797,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns all in progress quests.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadInProgressQuests(bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8280,6 +12865,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns all quests that haven't been started.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadNotStartedQuests(bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8343,6 +12933,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns all quests with status.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadQuestsWithStatus(bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8406,6 +13001,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns all quests with a basic percentage.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadQuestsWithBasicPercentage(bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8469,6 +13069,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns all quests with a complex percentage.
+      /// </summary>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadQuestsWithComplexPercentage(bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8532,6 +13137,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns all quests for the given category.
+      /// </summary>
+      /// <param name="category">The quest category</param>
+      /// <param name="includeMetaData"></param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ReadQuestsByCategory(string category, bool includeMetaData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8596,6 +13207,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sets the specified milestones' statuses to LOCKED.
+      /// </summary>
+      /// <param name="milestoneIds">List of milestones to reset</param>
+      /// <param name="clientIndex"></param>
       public string Gamification_ResetMilestones(List<string> milestoneIds, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8659,6 +13275,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method reads all the global properties of the game
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string GlobalApp_ReadProperties(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8721,6 +13341,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method creates a new entity on the server.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="timeToLive">Sets expiry time for entity in milliseconds if > 0</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies default</param>
+      /// <param name="jsonEntityData">The entity's data as a json string</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_CreateEntity(string entityType, long timeToLive, string jsonEntityAcl, string jsonEntityData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8787,6 +13415,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method creates a new entity on the server with an indexed id.
+      /// </summary>
+      /// <param name="entityType">The entity type as defined by the user</param>
+      /// <param name="indexedId">A secondary ID that will be indexed</param>
+      /// <param name="timeToLive">Sets expiry time for entity in milliseconds if > 0</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json. A null acl implies default</param>
+      /// <param name="jsonEntityData">The entity's data as a json string</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_CreateEntityWithIndexedId(string entityType, string indexedId, long timeToLive, string jsonEntityAcl, string jsonEntityData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8854,6 +13491,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method updates an existing entity on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity to update</param>
+      /// <param name="jsonEntityData">The entity's data as a json string</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_UpdateEntity(string entityId, int version, string jsonEntityData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8919,6 +13563,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method updates an existing entity's Acl on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity to update</param>
+      /// <param name="jsonEntityAcl">The entity's access control list as json.</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_UpdateEntityAcl(string entityId, int version, string jsonEntityAcl, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8984,6 +13635,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method updates an existing entity's time to live on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity to update</param>
+      /// <param name="timeToLive">Sets expiry time for entity in milliseconds if > 0</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_UpdateEntityTimeToLive(string entityId, int version, long timeToLive, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9049,6 +13707,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method deletes an existing entity on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity to delete</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_DeleteEntity(string entityId, int version, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9113,6 +13777,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method reads an existing entity from the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_ReadEntity(string entityId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9176,6 +13845,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method gets list of entities from the server base on type and/or where clause
+      /// </summary>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="orderByJson">Sort order</param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_GetList(string whereJson, string orderByJson, int maxReturn, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9241,6 +13917,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method gets list of entities from the server base on indexed id
+      /// </summary>
+      /// <param name="entityIndexedId">The entity indexed Id</param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_GetListByIndexedId(string entityIndexedId, int maxReturn, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9305,6 +13987,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method gets a count of entities based on the where clause
+      /// </summary>
+      /// <param name="whereJson">Mongo style query string</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_GetListCount(string whereJson, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9368,6 +14055,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method uses a paging system to iterate through Global Entities.
+      /// After retrieving a page of Global Entities with this method,
+      /// use GetPageOffset() to retrieve previous or next pages.
+      /// </summary>
+      /// <param name="jsonContext">The json context for the page request.See the portal appendix documentation for format</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_GetPage(string jsonContext, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9431,6 +14125,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method to retrieve previous or next pages after having called
+      /// the GetPage method.
+      /// </summary>
+      /// <param name="context">The context string returned from the server from a previous callto GetPage() or GetPageOffset()</param>
+      /// <param name="pageOffset">The positive or negative page offset to fetch. Uses the last pageretrieved using the context string to determine a starting point.</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_GetPageOffset(string context, int pageOffset, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9495,6 +14196,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Partial increment of global entity data field items. Partial set of items incremented as specified.
+      /// </summary>
+      /// <param name="entityId">The entity to increment</param>
+      /// <param name="jsonData">The subset of data to increment</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_IncrementGlobalEntityData(string entityId, string jsonData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9559,6 +14266,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Gets a list of up to randomCount randomly selected entities from the server based on the where condition and specified maximum return count.
+      /// </summary>
+      /// <param name="whereJson"></param>
+      /// <param name="maxReturn">The maximum number of entities to return</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_GetRandomEntitiesMatching(string whereJson, int maxReturn, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9623,6 +14336,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method updates an existing entity's Owner and Acl on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity</param>
+      /// <param name="ownerId">The owner ID</param>
+      /// <param name="acl">The entity's access control list</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_UpdateEntityOwnerAndAcl(string entityId, long version, string ownerId, string acl, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9689,6 +14410,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method clears the owner id of an existing entity and sets the Acl on the server.
+      /// </summary>
+      /// <param name="entityId">The entity ID</param>
+      /// <param name="version">The version of the entity</param>
+      /// <param name="acl">The entity's access control list</param>
+      /// <param name="clientIndex"></param>
       public string GlobalEntity_MakeSystemEntity(string entityId, long version, string acl, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9754,6 +14482,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns all of the global statistics.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string GlobalStatistics_ReadAllGlobalStats(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9816,6 +14548,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Reads a subset of global statistics as defined by the input JSON.
+      /// </summary>
+      /// <param name="globalStats">A list containing the statistics to read</param>
+      /// <param name="clientIndex"></param>
       public string GlobalStatistics_ReadGlobalStatsSubset(List<string> globalStats, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9879,6 +14616,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method retrieves the global statistics for the given category.
+      /// </summary>
+      /// <param name="category">The global statistics category</param>
+      /// <param name="clientIndex"></param>
       public string GlobalStatistics_ReadGlobalStatsForCategory(string category, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -9942,6 +14684,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Atomically increment (or decrement) global statistics.
+      /// Global statistics are defined through the brainCloud portal.
+      /// </summary>
+      /// <param name="jsonData">The JSON encoded data to be sent to the server as follows:{  stat1: 10,  stat2: -5.5,}would increment stat1 by 10 and decrement stat2 by 5.5.For the full statistics grammer see the api.braincloudservers.com site.There are many more complex operations supported such as:{  stat1:INC_TO_LIMIT#9#30}which increments stat1 by 9 up to a limit of 30.</param>
+      /// <param name="clientIndex"></param>
       public string GlobalStatistics_IncrementGlobalStats(string jsonData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10005,6 +14753,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Apply statistics grammar to a partial set of statistics.
+      /// </summary>
+      /// <param name="statisticsData">Example data to be passed to method:{    "DEAD_CATS": "RESET",    "LIVES_LEFT": "SET#9",    "MICE_KILLED": "INC#2",    "DOG_SCARE_BONUS_POINTS": "INC#10",    "TREES_CLIMBED": 1}</param>
+      /// <param name="clientIndex"></param>
       public string GlobalStatistics_ProcessStatistics(Dictionary<string, string> statisticsData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10068,6 +14821,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Accept an outstanding invitation to join the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       public string Group_AcceptGroupInvitation(string groupId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10131,6 +14889,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Add a member to the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the member being added.</param>
+      /// <param name="role">Role of the member being added.</param>
+      /// <param name="jsonAttributes">Attributes of the member being added.</param>
+      /// <param name="clientIndex"></param>
       public string Group_AddGroupMember(string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10197,6 +14963,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Approve an outstanding request to join the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the invitation being deleted.</param>
+      /// <param name="role">Role of the member being invited.</param>
+      /// <param name="jsonAttributes">Attributes of the member being invited.</param>
+      /// <param name="clientIndex"></param>
       public string Group_ApproveGroupJoinRequest(string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10263,6 +15037,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Automatically join an open group that matches the search criteria and has space available.
+      /// </summary>
+      /// <param name="groupType">Name of the associated group type.</param>
+      /// <param name="autoJoinStrategy">Selection strategy to employ when there are multiple matches</param>
+      /// <param name="dataQueryJson">Query parameters (optional)</param>
+      /// <param name="clientIndex"></param>
       public string Group_AutoJoinGroup(string groupType, Ruyi.SDK.BrainCloudApi.AutoJoinStrategy autoJoinStrategy, string dataQueryJson, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10328,6 +15109,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Cancel an outstanding invitation to the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the invitation being deleted.</param>
+      /// <param name="clientIndex"></param>
       public string Group_CancelGroupInvitation(string groupId, string profileId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10392,6 +15179,17 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Create a group.
+      /// </summary>
+      /// <param name="name">Name of the group.</param>
+      /// <param name="groupType">Name of the type of group.</param>
+      /// <param name="isOpenGroup">true if group is open; false if closed.</param>
+      /// <param name="acl">The group's access control list. A null ACL implies default.</param>
+      /// <param name="jsonData">Custom application data.</param>
+      /// <param name="jsonOwnerAttributes">Attributes for the group owner (current user).</param>
+      /// <param name="jsonDefaultMemberAttributes">Default attributes for group members.</param>
+      /// <param name="clientIndex"></param>
       public string Group_CreateGroup(string name, string groupType, bool isOpenGroup, string acl, string jsonData, string jsonOwnerAttributes, string jsonDefaultMemberAttributes, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10461,6 +15259,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Create a group entity.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityType"></param>
+      /// <param name="isOwnedByGroupMember">true if entity is owned by a member; false if owned by the entire group.</param>
+      /// <param name="acl">Access control list for the group entity.</param>
+      /// <param name="jsonData">Custom application data.</param>
+      /// <param name="clientIndex"></param>
       public string Group_CreateGroupEntity(string groupId, string entityType, bool isOwnedByGroupMember, string acl, string jsonData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10528,6 +15335,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Delete a group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="version">Current version of the group</param>
+      /// <param name="clientIndex"></param>
       public string Group_DeleteGroup(string groupId, long version, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10592,6 +15405,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Delete a group entity.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityId">ID of the entity.</param>
+      /// <param name="version">The current version of the group entity (for concurrency checking).</param>
+      /// <param name="clientIndex"></param>
       public string Group_DeleteGroupEntity(string groupId, string entityId, long version, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10657,6 +15477,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Read information on groups to which the current user belongs.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string Group_GetMyGroups(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10719,6 +15543,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Increment elements for the group's data field.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="jsonData">Partial data map with incremental values.</param>
+      /// <param name="clientIndex"></param>
       public string Group_IncrementGroupData(string groupId, string jsonData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10783,6 +15613,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Increment elements for the group entity's data field.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityId">ID of the entity.</param>
+      /// <param name="jsonData">Partial data map with incremental values.</param>
+      /// <param name="clientIndex"></param>
       public string Group_IncrementGroupEntityData(string groupId, string entityId, string jsonData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10848,6 +15685,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Invite a member to the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the member being invited.</param>
+      /// <param name="role">Role of the member being invited.</param>
+      /// <param name="jsonAttributes">Attributes of the member being invited.</param>
+      /// <param name="clientIndex"></param>
       public string Group_InviteGroupMember(string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10914,6 +15759,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Join an open group or request to join a closed group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       public string Group_JoinGroup(string groupId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -10977,6 +15827,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Leave a group in which the user is a member.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       public string Group_LeaveGroup(string groupId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11040,6 +15895,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieve a page of group summary information based on the specified context.
+      /// </summary>
+      /// <param name="jsonContext">Query context.</param>
+      /// <param name="clientIndex"></param>
       public string Group_ListGroupsPage(string jsonContext, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11103,6 +15963,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieve a page of group summary information based on the encoded context
+      /// and specified page offset.
+      /// </summary>
+      /// <param name="context">Encoded reference query context.</param>
+      /// <param name="pageOffset">Number of pages by which to offset the query.</param>
+      /// <param name="clientIndex"></param>
       public string Group_ListGroupsPageByOffset(string context, int pageOffset, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11167,6 +16034,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Read information on groups to which the specified user belongs.  Access is subject to restrictions.
+      /// </summary>
+      /// <param name="profileId">User to read groups for</param>
+      /// <param name="clientIndex"></param>
       public string Group_ListGroupsWithMember(string profileId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11230,6 +16102,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Read the specified group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       public string Group_ReadGroup(string groupId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11293,6 +16170,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Read the data of the specified group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       public string Group_ReadGroupData(string groupId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11356,6 +16238,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Read a page of group entity information.
+      /// </summary>
+      /// <param name="jsonContext">Query context.</param>
+      /// <param name="clientIndex"></param>
       public string Group_ReadGroupEntitiesPage(string jsonContext, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11419,6 +16306,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Read a page of group entity information.
+      /// </summary>
+      /// <param name="encodedContext">Encoded reference query context.</param>
+      /// <param name="pageOffset">Number of pages by which to offset the query.</param>
+      /// <param name="clientIndex"></param>
       public string Group_ReadGroupEntitiesPageByOffset(string encodedContext, int pageOffset, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11483,6 +16376,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Read the specified group entity.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityId">ID of the entity.</param>
+      /// <param name="clientIndex"></param>
       public string Group_ReadGroupEntity(string groupId, string entityId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11547,6 +16446,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Read the members of the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       public string Group_ReadGroupMembers(string groupId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11610,6 +16514,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Reject an outstanding invitation to join the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="clientIndex"></param>
       public string Group_RejectGroupInvitation(string groupId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11673,6 +16582,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Reject an outstanding request to join the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the invitation being deleted.</param>
+      /// <param name="clientIndex"></param>
       public string Group_RejectGroupJoinRequest(string groupId, string profileId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11737,6 +16652,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Remove a member from the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the member being deleted.</param>
+      /// <param name="clientIndex"></param>
       public string Group_RemoveGroupMember(string groupId, string profileId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11801,6 +16722,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Updates a group's data.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="version">Version to verify.</param>
+      /// <param name="jsonData">Data to apply.</param>
+      /// <param name="clientIndex"></param>
       public string Group_UpdateGroupData(string groupId, long version, string jsonData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11866,6 +16794,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Update a group entity.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="entityId">ID of the entity.</param>
+      /// <param name="version">The current version of the group entity (for concurrency checking).</param>
+      /// <param name="jsonData">Custom application data.</param>
+      /// <param name="clientIndex"></param>
       public string Group_UpdateGroupEntityData(string groupId, string entityId, long version, string jsonData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11932,6 +16868,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Update a member of the group.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="profileId">Profile ID of the member being updated.</param>
+      /// <param name="role">Role of the member being updated (optional).</param>
+      /// <param name="jsonAttributes">Attributes of the member being updated (optional).</param>
+      /// <param name="clientIndex"></param>
       public string Group_UpdateGroupMember(string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -11998,6 +16942,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Updates a group's name.
+      /// </summary>
+      /// <param name="groupId">ID of the group.</param>
+      /// <param name="name">Name to apply.</param>
+      /// <param name="clientIndex"></param>
       public string Group_UpdateGroupName(string groupId, string name, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12062,6 +17012,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Attach a Email and Password identity to the current profile.
+      /// </summary>
+      /// <param name="email">The user's e-mail address</param>
+      /// <param name="password">The user's password</param>
+      /// <param name="clientIndex"></param>
       public string Identity_AttachEmailIdentity(string email, string password, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12126,6 +17082,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Merge the profile associated with the provided e=mail with the current profile.
+      /// </summary>
+      /// <param name="email">The user's e-mail address</param>
+      /// <param name="password">The user's password</param>
+      /// <param name="clientIndex"></param>
       public string Identity_MergeEmailIdentity(string email, string password, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12190,6 +17152,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Detach the e-mail identity from the current profile
+      /// </summary>
+      /// <param name="email">The user's e-mail address</param>
+      /// <param name="continueAnon">Proceed even if the profile will revert to anonymous?</param>
+      /// <param name="clientIndex"></param>
       public string Identity_DetachEmailIdentity(string email, bool continueAnon, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12254,6 +17222,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Attach a Universal (userId + password) identity to the current profile.
+      /// </summary>
+      /// <param name="userId">The user's userId</param>
+      /// <param name="password">The user's password</param>
+      /// <param name="clientIndex"></param>
       public string Identity_AttachUniversalIdentity(string userId, string password, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12318,6 +17292,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Merge the profile associated with the provided e=mail with the current profile.
+      /// </summary>
+      /// <param name="userId">The user's userId</param>
+      /// <param name="password">The user's password</param>
+      /// <param name="clientIndex"></param>
       public string Identity_MergeUniversalIdentity(string userId, string password, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12382,6 +17362,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Detach the universal identity from the current profile
+      /// </summary>
+      /// <param name="userId">The user's userId</param>
+      /// <param name="continueAnon">Proceed even if the profile will revert to anonymous?</param>
+      /// <param name="clientIndex"></param>
       public string Identity_DetachUniversalIdentity(string userId, bool continueAnon, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12446,6 +17432,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Switch to a Child Profile
+      /// </summary>
+      /// <param name="childProfileId">The profileId of the child profile to switch toIf null and forceCreate is true a new profile will be created</param>
+      /// <param name="childAppId">The appId of the child game to switch to</param>
+      /// <param name="forceCreate">Should a new profile be created if it does not exist?</param>
+      /// <param name="clientIndex"></param>
       public string Identity_SwitchToChildProfile(string childProfileId, string childAppId, bool forceCreate, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12511,6 +17504,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Switches to the child profile of an app when only one profile exists
+      /// If multiple profiles exist this returns an error
+      /// </summary>
+      /// <param name="childAppId">The App ID of the child game to switch to</param>
+      /// <param name="forceCreate">Should a new profile be created if one does not exist?</param>
+      /// <param name="clientIndex"></param>
       public string Identity_SwitchToSingletonChildProfile(string childAppId, bool forceCreate, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12575,6 +17575,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Attach a new identity to a parent app
+      /// </summary>
+      /// <param name="externalId">User ID</param>
+      /// <param name="authenticationToken">Password or client side token</param>
+      /// <param name="authenticationType">Type of authentication</param>
+      /// <param name="externalAuthName">Optional - if using AuthenticationType of external</param>
+      /// <param name="forceCreate">If the profile does not exist, should it be created?</param>
+      /// <param name="clientIndex"></param>
       public string Identity_AttachParentWithIdentity(string externalId, string authenticationToken, string authenticationType, string externalAuthName, bool forceCreate, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12642,6 +17651,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Switch to a Parent Profile
+      /// </summary>
+      /// <param name="parentLevelName">The level of the parent to switch to</param>
+      /// <param name="clientIndex"></param>
       public string Identity_SwitchToParentProfile(string parentLevelName, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12705,6 +17719,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Detaches parent from this user's profile
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string Identity_DetachParent(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12767,6 +17785,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns a list of all child profiles in child Apps
+      /// </summary>
+      /// <param name="includeSummaryData">Whether to return the summary friend data along with this call</param>
+      /// <param name="clientIndex"></param>
       public string Identity_GetChildProfiles(bool includeSummaryData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12830,6 +17853,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieve list of identities
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string Identity_GetIdentities(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12892,6 +17919,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieve list of expired identities
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string Identity_GetExpiredIdentities(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -12954,6 +17985,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Refreshes an identity for this user
+      /// </summary>
+      /// <param name="externalId">User ID</param>
+      /// <param name="authenticationToken">Password or client side token</param>
+      /// <param name="authenticationType">Type of authentication</param>
+      /// <param name="clientIndex"></param>
       public string Identity_RefreshIdentity(string externalId, string authenticationToken, string authenticationType, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13019,6 +18057,16 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Attaches a peer identity to this user's profile
+      /// </summary>
+      /// <param name="peer">Name of the peer to connect to</param>
+      /// <param name="externalId">User ID</param>
+      /// <param name="authenticationToken">Password or client side token</param>
+      /// <param name="authenticationType">Type of authentication</param>
+      /// <param name="externalAuthName">Optional - if using AuthenticationType of external</param>
+      /// <param name="forceCreate">If the profile does not exist, should it be created?</param>
+      /// <param name="clientIndex"></param>
       public string Identity_AttachPeerProfile(string peer, string externalId, string authenticationToken, string authenticationType, string externalAuthName, bool forceCreate, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13087,6 +18135,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Detaches a peer identity from this user's profile
+      /// </summary>
+      /// <param name="peer">Name of the peer to connect to</param>
+      /// <param name="clientIndex"></param>
       public string Identity_DetachPeer(string peer, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13150,6 +18203,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieves a list of attached peer profiles
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string Identity_GetPeerProfiles(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13212,6 +18269,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends a simple text email to the specified user
+      /// </summary>
+      /// <param name="profileId"></param>
+      /// <param name="subject">The email subject</param>
+      /// <param name="body">The email body</param>
+      /// <param name="clientIndex"></param>
       public string Mail_SendBasicEmail(string profileId, string subject, string body, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13277,6 +18341,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends an advanced email to the specified user
+      /// </summary>
+      /// <param name="profileId"></param>
+      /// <param name="jsonServiceParams">Parameters to send to the email service. See the documentation fora full list. http://getbraincloud.com/apidocs/apiref/#capi-mail</param>
+      /// <param name="clientIndex"></param>
       public string Mail_SendAdvancedEmail(string profileId, string jsonServiceParams, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13341,6 +18411,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends an advanced email to the specified email address
+      /// </summary>
+      /// <param name="emailAddress">The address to send the email to</param>
+      /// <param name="jsonServiceParams">Parameters to send to the email service. See the documentation fora full list. http://getbraincloud.com/apidocs/apiref/#capi-mail</param>
+      /// <param name="clientIndex"></param>
       public string Mail_SendAdvancedEmailByAddress(string emailAddress, string jsonServiceParams, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13405,6 +18481,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Read match making record
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_Read(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13467,6 +18547,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sets player rating
+      /// </summary>
+      /// <param name="playerRating">The new player rating.</param>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_SetPlayerRating(long playerRating, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13530,6 +18615,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Resets player rating
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_ResetPlayerRating(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13592,6 +18681,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Increments player rating
+      /// </summary>
+      /// <param name="increment">The increment amount</param>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_IncrementPlayerRating(long increment, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13655,6 +18749,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Decrements player rating
+      /// </summary>
+      /// <param name="decrement">The decrement amount</param>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_DecrementPlayerRating(long decrement, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13718,6 +18817,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Turns shield on
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_TurnShieldOn(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13780,6 +18883,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Turns shield on for the specified number of minutes
+      /// </summary>
+      /// <param name="minutes">Number of minutes to turn the shield on for</param>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_TurnShieldOnFor(int minutes, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13843,6 +18951,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Turns shield off
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_TurnShieldOff(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13905,6 +19017,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Increases the shield on time by specified number of minutes
+      /// </summary>
+      /// <param name="minutes">Number of minutes to increase the shield time for</param>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_IncrementShieldOnFor(int minutes, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -13968,6 +19085,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Gets the shield expiry for the given player id. Passing in a null player id
+      /// will return the shield expiry for the current player. The value returned is
+      /// the time in UTC millis when the shield will expire.
+      /// </summary>
+      /// <param name="playerId">The player id or use null to retrieve for the current player</param>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_GetShieldExpiry(string playerId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14031,6 +19155,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Finds matchmaking enabled players
+      /// </summary>
+      /// <param name="rangeDelta">The range delta</param>
+      /// <param name="numMatches">The maximum number of matches to return</param>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_FindPlayers(long rangeDelta, long numMatches, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14095,6 +19225,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Finds matchmaking enabled players with additional attributes
+      /// </summary>
+      /// <param name="rangeDelta">The range delta</param>
+      /// <param name="numMatches">The maximum number of matches to return</param>
+      /// <param name="jsonAttributes">Attributes match criteria</param>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_FindPlayersWithAttributes(long rangeDelta, long numMatches, string jsonAttributes, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14160,6 +19297,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Finds matchmaking enabled players using a cloud code filter
+      /// </summary>
+      /// <param name="rangeDelta">The range delta</param>
+      /// <param name="numMatches">The maximum number of matches to return</param>
+      /// <param name="jsonExtraParms">Parameters to pass to the CloudCode filter script</param>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_FindPlayersUsingFilter(long rangeDelta, long numMatches, string jsonExtraParms, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14225,6 +19369,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Finds matchmaking enabled players using a cloud code filter
+      /// and additional attributes
+      /// </summary>
+      /// <param name="rangeDelta">The range delta</param>
+      /// <param name="numMatches">The maximum number of matches to return</param>
+      /// <param name="jsonAttributes">Attributes match criteria</param>
+      /// <param name="jsonExtraParms">Parameters to pass to the CloudCode filter script</param>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_FindPlayersWithAttributesUsingFilter(long rangeDelta, long numMatches, string jsonAttributes, string jsonExtraParms, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14291,6 +19444,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Enables Match Making for the Player
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_EnableMatchMaking(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14353,6 +19510,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Disables Match Making for the Player
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string MatchMaking_DisableMatchMaking(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14415,6 +19576,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Starts a match
+      /// </summary>
+      /// <param name="otherPlayerId">The player to start a match with</param>
+      /// <param name="rangeDelta">The range delta used for the initial match search</param>
+      /// <param name="clientIndex"></param>
       public string OneWayMatch_StartMatch(string otherPlayerId, long rangeDelta, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14479,6 +19646,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Cancels a match
+      /// </summary>
+      /// <param name="playbackStreamId">The playback stream id returned in the start match</param>
+      /// <param name="clientIndex"></param>
       public string OneWayMatch_CancelMatch(string playbackStreamId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14542,6 +19714,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Completes a match
+      /// </summary>
+      /// <param name="playbackStreamId">The playback stream id returned in the initial start match</param>
+      /// <param name="clientIndex"></param>
       public string OneWayMatch_CompleteMatch(string playbackStreamId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14605,6 +19782,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Starts a stream
+      /// </summary>
+      /// <param name="targetPlayerId">The player to start a stream with</param>
+      /// <param name="includeSharedData">Whether to include shared data in the stream</param>
+      /// <param name="clientIndex"></param>
       public string PlaybackStream_StartStream(string targetPlayerId, bool includeSharedData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14669,6 +19852,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Reads a stream
+      /// </summary>
+      /// <param name="playbackStreamId">Identifies the stream to read</param>
+      /// <param name="clientIndex"></param>
       public string PlaybackStream_ReadStream(string playbackStreamId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14732,6 +19920,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Ends a stream
+      /// </summary>
+      /// <param name="playbackStreamId">Identifies the stream to read</param>
+      /// <param name="clientIndex"></param>
       public string PlaybackStream_EndStream(string playbackStreamId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14795,6 +19988,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Deletes a stream
+      /// </summary>
+      /// <param name="playbackStreamId">Identifies the stream to read</param>
+      /// <param name="clientIndex"></param>
       public string PlaybackStream_DeleteStream(string playbackStreamId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14858,6 +20056,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Adds a stream event
+      /// </summary>
+      /// <param name="playbackStreamId">Identifies the stream to read</param>
+      /// <param name="eventData">Describes the event</param>
+      /// <param name="summary">Current summary data as of this event</param>
+      /// <param name="clientIndex"></param>
       public string PlaybackStream_AddEvent(string playbackStreamId, string eventData, string summary, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14923,6 +20128,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Gets recent streams for initiating player
+      /// </summary>
+      /// <param name="initiatingPlayerId">The player that started the stream</param>
+      /// <param name="maxNumStreams">The player that started the stream</param>
+      /// <param name="clientIndex"></param>
       public string PlaybackStream_GetRecentStreamsForInitiatingPlayer(string initiatingPlayerId, int maxNumStreams, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14987,6 +20198,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Gets recent streams for target player
+      /// </summary>
+      /// <param name="targetPlayerId">The player that started the stream</param>
+      /// <param name="maxNumStreams">The player that started the stream</param>
+      /// <param name="clientIndex"></param>
       public string PlaybackStream_GetRecentStreamsForTargetPlayer(string targetPlayerId, int maxNumStreams, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15051,6 +20268,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Read the state of the currently logged in user.
+      /// This method returns a JSON object describing most of the
+      /// player's data: entities, statistics, level, currency.
+      /// Apps will typically call this method after authenticating to get an
+      /// up-to-date view of the user's data.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string PlayerState_ReadUserState(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15113,6 +20338,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Completely deletes the user record and all data fully owned
+      /// by the user. After calling this method, the user will need
+      /// to re-authenticate and create a new profile.
+      /// This is mostly used for debugging/qa.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string PlayerState_DeleteUser(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15175,6 +20407,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// This method will delete *most* data for the currently logged in user.
+      /// Data which is not deleted includes: currency, credentials, and
+      /// purchase transactions. ResetUser is different from DeleteUser in that
+      /// the player record will continue to exist after the reset (so the user
+      /// does not need to re-authenticate).
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string PlayerState_ResetUser(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15237,6 +20477,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Logs user out of server.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string PlayerState_Logout(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15299,6 +20543,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sets the user name.
+      /// </summary>
+      /// <param name="userName">The name of the user</param>
+      /// <param name="clientIndex"></param>
       public string PlayerState_UpdateUserName(string userName, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15362,6 +20611,16 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Updates the "friend summary data" associated with the logged in user.
+      /// Some operations will return this summary data. For instance the social
+      /// leaderboards will return the player's score in the leaderboard along
+      /// with the friend summary data. Generally this data is used to provide
+      /// a quick overview of the player without requiring a separate API call
+      /// to read their public stats or entity data.
+      /// </summary>
+      /// <param name="jsonSummaryData">A JSON string defining the summary data.For example:{  "xp":123,  "level":12,  "highScore":45123}</param>
+      /// <param name="clientIndex"></param>
       public string PlayerState_UpdateSummaryFriendData(string jsonSummaryData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15425,6 +20684,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieve the user's attributes.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string PlayerState_GetAttributes(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15487,6 +20750,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Update user's attributes.
+      /// </summary>
+      /// <param name="jsonAttributes">Single layer json string that is a set of key-value pairs</param>
+      /// <param name="wipeExisting">Whether to wipe existing attributes prior to update.</param>
+      /// <param name="clientIndex"></param>
       public string PlayerState_UpdateAttributes(string jsonAttributes, bool wipeExisting, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15551,6 +20820,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Remove user's attributes.
+      /// </summary>
+      /// <param name="attributeNames">List of attribute names.</param>
+      /// <param name="clientIndex"></param>
       public string PlayerState_RemoveAttributes(List<string> attributeNames, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15614,6 +20888,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Updates player's picture URL.
+      /// </summary>
+      /// <param name="pictureUrl">URL to apply.</param>
+      /// <param name="clientIndex"></param>
       public string PlayerState_UpdateUserPictureUrl(string pictureUrl, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15677,6 +20956,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Update the user's contact email.
+      /// Note this is unrelated to email authentication.
+      /// </summary>
+      /// <param name="contactEmail">Updated email</param>
+      /// <param name="clientIndex"></param>
       public string PlayerState_UpdateContactEmail(string contactEmail, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15740,6 +21025,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Read all available user statistics.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string PlayerStatistics_ReadAllUserStats(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15802,6 +21091,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Reads a subset of user statistics as defined by the input JSON.
+      /// </summary>
+      /// <param name="playerStats"></param>
+      /// <param name="clientIndex"></param>
       public string PlayerStatistics_ReadUserStatsSubset(List<string> playerStats, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15865,6 +21159,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method retrieves the user statistics for the given category.
+      /// </summary>
+      /// <param name="category">The user statistics category</param>
+      /// <param name="clientIndex"></param>
       public string PlayerStatistics_ReadUserStatsForCategory(string category, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15928,6 +21227,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Reset all of the statistics for this user back to their initial value.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string PlayerStatistics_ResetAllUserStats(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15990,6 +21293,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Atomically increment (or decrement) user statistics.
+      /// Any rewards that are triggered from user statistic increments
+      /// will be considered. User statistics are defined through the brainCloud portal.
+      /// Note also that the "xpCapped" property is returned (true/false depending on whether
+      /// the xp cap is turned on and whether the user has hit it).
+      /// </summary>
+      /// <param name="jsonData">The JSON encoded data to be sent to the server as follows:{  stat1: 10,  stat2: -5.5,}would increment stat1 by 10 and decrement stat2 by 5.5.For the full statistics grammer see the api.braincloudservers.com site.There are many more complex operations supported such as:{  stat1:INC_TO_LIMIT#9#30}which increments stat1 by 9 up to a limit of 30.</param>
+      /// <param name="clientIndex"></param>
       public string PlayerStatistics_IncrementUserStats_SSFO(string jsonData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16053,6 +21365,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Atomically increment (or decrement) user statistics.
+      /// Any rewards that are triggered from user statistic increments
+      /// will be considered. User statistics are defined through the brainCloud portal.
+      /// Note also that the "xpCapped" property is returned (true/false depending on whether
+      /// the xp cap is turned on and whether the user has hit it).
+      /// </summary>
+      /// <param name="dictData">Stats name and their increments:{ {"stat1", 10}, {"stat1", -5}}would increment stat1 by 10 and decrement stat2 by 5.For the full statistics grammer see the api.braincloudservers.com site.There are many more complex operations supported such as:{  stat1:INC_TO_LIMIT#9#30}which increments stat1 by 9 up to a limit of 30.</param>
+      /// <param name="clientIndex"></param>
       public string PlayerStatistics_IncrementUserStats_DSFO(Dictionary<string, string> dictData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16116,6 +21437,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Apply statistics grammar to a partial set of statistics.
+      /// </summary>
+      /// <param name="statisticsData">Example data to be passed to method:{    "DEAD_CATS": "RESET",    "LIVES_LEFT": "SET#9",    "MICE_KILLED": "INC#2",    "DOG_SCARE_BONUS_POINTS": "INC#10",    "TREES_CLIMBED": 1}</param>
+      /// <param name="clientIndex"></param>
       public string PlayerStatistics_ProcessStatistics(Dictionary<string, string> statisticsData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16179,6 +21505,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns JSON representing the next experience level for the user.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string PlayerStatistics_GetNextExperienceLevel(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16241,6 +21571,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Increments the user's experience. If the user goes up a level,
+      /// the new level details will be returned along with a list of rewards.
+      /// </summary>
+      /// <param name="xpValue">The amount to increase the user's experience by</param>
+      /// <param name="clientIndex"></param>
       public string PlayerStatistics_IncrementExperiencePoints(int xpValue, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16304,6 +21640,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sets the user's experience to an absolute value. Note that this
+      /// is simply a set and will not reward the user if their level changes
+      /// as a result.
+      /// </summary>
+      /// <param name="xpValue">The amount to set the the player's experience to</param>
+      /// <param name="clientIndex"></param>
       public string PlayerStatistics_SetExperiencePoints(int xpValue, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16367,6 +21710,19 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Trigger an event server side that will increase the user statistics.
+      /// This may cause one or more awards to be sent back to the user -
+      /// could be achievements, experience, etc. Achievements will be sent by this
+      /// client library to the appropriate awards service (Apple Game Center, etc).
+      /// 
+      /// This mechanism supercedes the PlayerStatisticsService API methods, since
+      /// PlayerStatisticsService API method only update the raw statistics without
+      /// triggering the rewards.
+      /// </summary>
+      /// <param name="eventName"></param>
+      /// <param name="eventMultiplier"></param>
+      /// <param name="clientIndex"></param>
       public string PlayerStatisticsEvent_TriggerStatsEvent(string eventName, int eventMultiplier, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16431,6 +21787,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// See documentation for TriggerStatsEvent for more
+      /// documentation.
+      /// </summary>
+      /// <param name="jsonData">jsonData[  {    "eventName": "event1",    "eventMultiplier": 1  },  {    "eventName": "event2",    "eventMultiplier": 1  }]</param>
+      /// <param name="clientIndex"></param>
       public string PlayerStatisticsEvent_TriggerStatsEvents(string jsonData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16494,6 +21856,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Gets the player's currency for the given currency type
+      /// or all currency types if null passed in.
+      /// </summary>
+      /// <param name="currencyType">The currency type to retrieve or nullif all currency types are being requested.</param>
+      /// <param name="clientIndex"></param>
       public string Product_GetCurrency(string currencyType, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16557,6 +21925,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method gets the active sales inventory for the passed-in
+      /// currency type.
+      /// </summary>
+      /// <param name="platform">The store platform. Valid stores are:- itunes- facebook- appworld- steam- windows- windowsPhone- googlePlay</param>
+      /// <param name="userCurrency">The currency to retrieve the salesinventory for. This is only used for Steam and Facebook stores.</param>
+      /// <param name="clientIndex"></param>
       public string Product_GetSalesInventory(string platform, string userCurrency, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16621,6 +21996,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method gets the active sales inventory for the passed-in
+      /// currency type and category.
+      /// </summary>
+      /// <param name="platform">The store platform. Valid stores are:- itunes- facebook- appworld- steam- windows- windowsPhone- googlePlay</param>
+      /// <param name="userCurrency">The currency to retrieve the salesinventory for. This is only used for Steam and Facebook stores.</param>
+      /// <param name="category">The product category</param>
+      /// <param name="clientIndex"></param>
       public string Product_GetSalesInventoryByCategory(string platform, string userCurrency, string category, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16686,6 +22069,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Verify Microsoft Receipt. On success, the player will be awarded the
+      /// associated currencies.
+      /// </summary>
+      /// <param name="receipt">Receipt XML</param>
+      /// <param name="clientIndex"></param>
       public string Product_VerifyMicrosoftReceipt(string receipt, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16749,6 +22138,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns the eligible promotions for the player.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string Product_GetEligiblePromotions(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16811,6 +22204,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Verify ITunes Receipt. On success, the player will be awarded the
+      /// associated currencies.
+      /// </summary>
+      /// <param name="base64EncReceiptData">Base64 encoded receipt data</param>
+      /// <param name="clientIndex"></param>
       public string Product_VerifyItunesReceipt(string base64EncReceiptData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16874,6 +22273,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Checks supplied text for profanity.
+      /// </summary>
+      /// <param name="text">The text to check</param>
+      /// <param name="languages">Optional comma delimited list of two character language codes</param>
+      /// <param name="flagEmail">Optional processing of email addresses</param>
+      /// <param name="flagPhone">Optional processing of phone numbers</param>
+      /// <param name="flagUrls">Optional processing of urls</param>
+      /// <param name="clientIndex"></param>
       public string Profanity_ProfanityCheck(string text, string languages, bool flagEmail, bool flagPhone, bool flagUrls, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16941,6 +22349,16 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Replaces the characters of profanity text with a passed character(s).
+      /// </summary>
+      /// <param name="text">The text to check</param>
+      /// <param name="replaceSymbol">The text to replace individual characters of profanity text with</param>
+      /// <param name="languages">Optional comma delimited list of two character language codes</param>
+      /// <param name="flagEmail">Optional processing of email addresses</param>
+      /// <param name="flagPhone">Optional processing of phone numbers</param>
+      /// <param name="flagUrls">Optional processing of urls</param>
+      /// <param name="clientIndex"></param>
       public string Profanity_ProfanityReplaceText(string text, string replaceSymbol, string languages, bool flagEmail, bool flagPhone, bool flagUrls, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17009,6 +22427,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Checks supplied text for profanity and returns a list of bad wors.
+      /// </summary>
+      /// <param name="text">The text to check</param>
+      /// <param name="languages">Optional comma delimited list of two character language codes</param>
+      /// <param name="flagEmail">Optional processing of email addresses</param>
+      /// <param name="flagPhone">Optional processing of phone numbers</param>
+      /// <param name="flagUrls">Optional processing of urls</param>
+      /// <param name="clientIndex"></param>
       public string Profanity_ProfanityIdentifyBadWords(string text, string languages, bool flagEmail, bool flagPhone, bool flagUrls, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17076,6 +22503,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Deregisters all device tokens currently registered to the user.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string PushNotification_DeregisterAllPushNotificationDeviceTokens(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17138,6 +22569,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Deregisters the given device token from the server to disable this device
+      /// from receiving push notifications.
+      /// </summary>
+      /// <param name="platform">The device platform being registered.</param>
+      /// <param name="token">The platform-dependant device token needed for push notifications.</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_DeregisterPushNotificationDeviceToken(string platform, string token, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17202,6 +22640,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Registers the given device token with the server to enable this device
+      /// to receive push notifications.
+      /// </summary>
+      /// <param name="platform"></param>
+      /// <param name="token">The platform-dependant device token needed for push notifications.</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_RegisterPushNotificationDeviceToken(string platform, string token, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17266,6 +22711,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends a simple push notification based on the passed in message.
+      /// NOTE: It is possible to send a push notification to oneself.
+      /// </summary>
+      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
+      /// <param name="message">Text of the push notification</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_SendSimplePushNotification(string toProfileId, string message, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17330,6 +22782,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends a notification to a user based on a brainCloud portal configured notification template.
+      /// NOTE: It is possible to send a push notification to oneself.
+      /// </summary>
+      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
+      /// <param name="notificationTemplateId">Id of the notification template</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_SendRichPushNotification(string toProfileId, int notificationTemplateId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17394,6 +22853,16 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends a notification to a user based on a brainCloud portal configured notification template.
+      /// Includes JSON defining the substitution params to use with the template.
+      /// See the Portal documentation for more info.
+      /// NOTE: It is possible to send a push notification to oneself.
+      /// </summary>
+      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
+      /// <param name="notificationTemplateId">Id of the notification template</param>
+      /// <param name="substitutionJson">JSON defining the substitution params to use with the template</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_SendRichPushNotificationWithParams(string toProfileId, int notificationTemplateId, string substitutionJson, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17459,6 +22928,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
+      /// Includes JSON defining the substitution params to use with the template.
+      /// See the Portal documentation for more info.
+      /// </summary>
+      /// <param name="groupId">Target group</param>
+      /// <param name="notificationTemplateId">Id of the notification template</param>
+      /// <param name="substitutionsJson">JSON defining the substitution params to use with the template</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_SendTemplatedPushNotificationToGroup(string groupId, int notificationTemplateId, string substitutionsJson, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17524,6 +23002,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
+      /// Includes JSON defining the substitution params to use with the template.
+      /// See the Portal documentation for more info.
+      /// </summary>
+      /// <param name="groupId">Target group</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_SendNormalizedPushNotificationToGroup(string groupId, string alertContentJson, string customDataJson, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17589,6 +23076,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Schedules raw notifications based on user local time.
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="startTime">Start time of sending the push notification</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_ScheduleRawPushNotificationUTC(string profileId, string fcmContent, string iosContent, string facebookContent, int startTime, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17656,6 +23152,15 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Schedules raw notifications based on user local time.
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_ScheduleRawPushNotificationMinutes(string profileId, string fcmContent, string iosContent, string facebookContent, int minutesFromNow, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17723,6 +23228,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends a raw push notification to a target user.
+      /// </summary>
+      /// <param name="toProfileId">The profileId of the user to receive the notification</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_SendRawPushNotification(string toProfileId, string fcmContent, string iosContent, string facebookContent, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17789,6 +23302,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends a raw push notification to a target list of users.
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs to send the notification to</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_SendRawPushNotificationBatch(List<string> profileIds, string fcmContent, string iosContent, string facebookContent, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17855,6 +23376,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends a raw push notification to a target group.
+      /// </summary>
+      /// <param name="groupId">Target group</param>
+      /// <param name="fcmContent">Valid Fcm data content</param>
+      /// <param name="iosContent">Valid ios data content</param>
+      /// <param name="facebookContent">Facebook template string</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_SendRawPushNotificationToGroup(string groupId, string fcmContent, string iosContent, string facebookContent, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17921,6 +23450,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Schedules a normalized push notification to a user
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="startTime">Start time of sending the push notification</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_ScheduleNormalizedPushNotificationUTC(string profileId, string alertContentJson, string customDataJson, int startTime, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17987,6 +23524,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Schedules a normalized push notification to a user
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_ScheduleNormalizedPushNotificationMinutes(string profileId, string alertContentJson, string customDataJson, int minutesFromNow, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18053,6 +23598,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Schedules a rich push notification to a user
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="notificationTemplateId">Body and title of alert</param>
+      /// <param name="substitutionsJson">Optional custom data</param>
+      /// <param name="startTime">Start time of sending the push notification</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_ScheduleRichPushNotificationUTC(string profileId, int notificationTemplateId, string substitutionsJson, int startTime, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18119,6 +23672,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Schedules a rich push notification to a user
+      /// </summary>
+      /// <param name="profileId">The profileId of the user to receive the notification</param>
+      /// <param name="notificationTemplateId">Body and title of alert</param>
+      /// <param name="substitutionsJson">Optional custom data</param>
+      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_ScheduleRichPushNotificationMinutes(string profileId, int notificationTemplateId, string substitutionsJson, int minutesFromNow, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18185,6 +23746,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends a notification to a user consisting of alert content and custom data.
+      /// </summary>
+      /// <param name="toProfileId">The profileId of the user to receive the notification</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_SendNormalizedPushNotification(string toProfileId, string alertContentJson, string customDataJson, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18250,6 +23818,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Sends a notification to multiple users consisting of alert content and custom data.
+      /// </summary>
+      /// <param name="profileIds">Collection of profile IDs to send the notification to</param>
+      /// <param name="alertContentJson">Body and title of alert</param>
+      /// <param name="customDataJson">Optional custom data</param>
+      /// <param name="clientIndex"></param>
       public string PushNotification_SendNormalizedPushNotificationBatch(List<string> profileIds, string alertContentJson, string customDataJson, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18315,6 +23890,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Executes a script on the server.
+      /// </summary>
+      /// <param name="scriptName">The name of the script to be run</param>
+      /// <param name="jsonScriptData">Data to be sent to the script in json format</param>
+      /// <param name="clientIndex"></param>
       public string Script_RunScript(string scriptName, string jsonScriptData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18379,6 +23960,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Allows cloud script executions to be scheduled
+      /// </summary>
+      /// <param name="scriptName">Name of script</param>
+      /// <param name="jsonScriptData">JSON bundle to pass to script</param>
+      /// <param name="startDateInUTC">The start date as a DateTime object</param>
+      /// <param name="clientIndex"></param>
       public string Script_ScheduleRunScriptUTC(string scriptName, string jsonScriptData, long startDateInUTC, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18444,6 +24032,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Allows cloud script executions to be scheduled
+      /// </summary>
+      /// <param name="scriptName">Name of script</param>
+      /// <param name="jsonScriptData">JSON bundle to pass to script</param>
+      /// <param name="minutesFromNow">Number of minutes from now to run script</param>
+      /// <param name="clientIndex"></param>
       public string Script_ScheduleRunScriptMinutes(string scriptName, string jsonScriptData, long minutesFromNow, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18509,6 +24104,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Run a cloud script in a parent app
+      /// </summary>
+      /// <param name="scriptName">Name of script</param>
+      /// <param name="jsonScriptData">JSON bundle to pass to script</param>
+      /// <param name="parentLevel">The level name of the parent to run the script from</param>
+      /// <param name="clientIndex"></param>
       public string Script_RunParentScript(string scriptName, string jsonScriptData, string parentLevel, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18574,6 +24176,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Cancels a scheduled cloud code script
+      /// </summary>
+      /// <param name="jobId">ID of script job to cancel</param>
+      /// <param name="clientIndex"></param>
       public string Script_CancelScheduledScript(string jobId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18637,6 +24244,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Runs a script from the context of a peer
+      /// </summary>
+      /// <param name="scriptName">The name of the script to run</param>
+      /// <param name="jsonScriptData">JSON data to pass into the script</param>
+      /// <param name="peer">Identifies the peer</param>
+      /// <param name="clientIndex"></param>
       public string Script_RunPeerScript(string scriptName, string jsonScriptData, string peer, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18702,6 +24316,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Runs a script asynchronously from the context of a peer
+      /// This operation does not wait for the script to complete before returning
+      /// </summary>
+      /// <param name="scriptName">The name of the script to run</param>
+      /// <param name="jsonScriptData">JSON data to pass into the script</param>
+      /// <param name="peer">Identifies the peer</param>
+      /// <param name="clientIndex"></param>
       public string Script_RunPeerScriptAsynch(string scriptName, string jsonScriptData, string peer, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18767,6 +24389,24 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns the social leaderboard. A player's social leaderboard is
+      /// comprised of players who are recognized as being your friend.
+      /// For now, this applies solely to Facebook connected players who are
+      /// friends with the logged in player (who also must be Facebook connected).
+      /// In the future this will expand to other identification means (such as
+      /// Game Centre, Google circles etc).
+      /// 
+      /// Leaderboards entries contain the player's score and optionally, some user-defined
+      /// data associated with the score. The currently logged in player will also
+      /// be returned in the social leaderboard.
+      /// 
+      /// Note: If no friends have played the game, the bestScore, createdAt, updatedAt
+      /// will contain NULL.
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve</param>
+      /// <param name="replaceName">If true, the currently logged in player's name will be replacedby the string "You".</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_GetSocialLeaderboard(string leaderboardId, bool replaceName, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18831,6 +24471,13 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Reads multiple social leaderboards.
+      /// </summary>
+      /// <param name="leaderboardIds">Array of leaderboard id strings</param>
+      /// <param name="leaderboardResultCount">Maximum count of entries to return for each leaderboard.</param>
+      /// <param name="replaceName">If true, the currently logged in player's name will be replacedby the string "You".</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_GetMultiSocialLeaderboard(List<string> leaderboardIds, int leaderboardResultCount, bool replaceName, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18896,6 +24543,19 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns a page of global leaderboard results.
+      /// 
+      /// Leaderboards entries contain the player's score and optionally, some user-defined
+      /// data associated with the score.
+      /// 
+      /// Note: This method allows the client to retrieve pages from within the global leaderboard list
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="startIndex">The index at which to start the page.</param>
+      /// <param name="endIndex">The index at which to end the page.</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_GetGlobalLeaderboardPage(string leaderboardId, Ruyi.SDK.BrainCloudApi.SortOrder sort, int startIndex, int endIndex, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18962,6 +24622,17 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns a page of global leaderboard results. By using a non-current version id,
+      /// the user can retrieve a historical leaderboard. See GetGlobalLeaderboardVersions method
+      /// to retrieve the version id.
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="startIndex">The index at which to start the page.</param>
+      /// <param name="endIndex">The index at which to end the page.</param>
+      /// <param name="versionId">The historical version to retrieve.</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_GetGlobalLeaderboardPageByVersion(string leaderboardId, Ruyi.SDK.BrainCloudApi.SortOrder sort, int startIndex, int endIndex, int versionId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19029,6 +24700,17 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns a view of global leaderboard results that centers on the current player.
+      /// 
+      /// Leaderboards entries contain the player's score and optionally, some user-defined
+      /// data associated with the score.
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="beforeCount">The count of number of players before the current player to include.</param>
+      /// <param name="afterCount">The count of number of players after the current player to include.</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_GetGlobalLeaderboardView(string leaderboardId, Ruyi.SDK.BrainCloudApi.SortOrder sort, int beforeCount, int afterCount, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19095,6 +24777,17 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns a view of global leaderboard results that centers on the current player.
+      /// By using a non-current version id, the user can retrieve a historical leaderboard.
+      /// See GetGlobalLeaderboardVersions method to retrieve the version id.
+      /// </summary>
+      /// <param name="leaderboardId">The id of the leaderboard to retrieve.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="beforeCount">The count of number of players before the current player to include.</param>
+      /// <param name="afterCount">The count of number of players after the current player to include.</param>
+      /// <param name="versionId">The historial version to retrieve. Use -1 for current leaderboard.</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_GetGlobalLeaderboardViewByVersion(string leaderboardId, Ruyi.SDK.BrainCloudApi.SortOrder sort, int beforeCount, int afterCount, int versionId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19162,6 +24855,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Gets the global leaderboard versions.
+      /// </summary>
+      /// <param name="leaderboardId">In_leaderboard identifier.</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_GetGlobalLeaderboardVersions(string leaderboardId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19225,6 +24923,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieve the social leaderboard for a group.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard to read</param>
+      /// <param name="groupId">The group ID</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_GetGroupSocialLeaderboard(string leaderboardId, string groupId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19289,6 +24993,20 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Post the players score to the given social leaderboard.
+      /// You can optionally send a user-defined json string of data
+      /// with the posted score. This string could include information
+      /// relevant to the posted score.
+      /// 
+      /// Note that the behaviour of posting a score can be modified in
+      /// the brainCloud portal. By default, the server will only keep
+      /// the player's best score.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard to post to</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData"></param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_PostScoreToLeaderboard(string leaderboardId, long score, string jsonData, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19354,6 +25072,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Removes a player's score from the leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="versionId">The version of the leaderboard</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_RemovePlayerScore(string leaderboardId, int versionId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19418,6 +25142,21 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Post the players score to the given social leaderboard.
+      /// Pass leaderboard config data to dynamically create if necessary.
+      /// You can optionally send a user-defined json string of data
+      /// with the posted score. This string could include information
+      /// relevant to the posted score.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard to post to</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData"></param>
+      /// <param name="leaderboardType">leaderboard type</param>
+      /// <param name="rotationType">Type of rotation</param>
+      /// <param name="rotationReset">Date to reset the leaderboard UTC</param>
+      /// <param name="retainedCount">How many rotations to keep</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_PostScoreToDynamicLeaderboard(string leaderboardId, long score, string jsonData, Ruyi.SDK.BrainCloudApi.SocialLeaderboardType leaderboardType, Ruyi.SDK.BrainCloudApi.RotationType rotationType, long rotationReset, int retainedCount, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19487,6 +25226,21 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Post the players score to the given social leaderboard with a rotation type of DAYS.
+      /// Pass leaderboard config data to dynamically create if necessary.
+      /// You can optionally send a user-defined json string of data
+      /// with the posted score. This string could include information
+      /// relevant to the posted score.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard to post to</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData"></param>
+      /// <param name="leaderboardType">leaderboard type</param>
+      /// <param name="rotationReset">Date to reset the leaderboard UTC</param>
+      /// <param name="retainedCount">How many rotations to keep</param>
+      /// <param name="numDaysToRotate">How many days between each rotation</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_PostScoreToDynamicLeaderboardDays(string leaderboardId, long score, string jsonData, Ruyi.SDK.BrainCloudApi.SocialLeaderboardType leaderboardType, long rotationReset, int retainedCount, int numDaysToRotate, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19556,6 +25310,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieve the social leaderboard for a list of players.
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="profileIds">The IDs of the players</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_GetPlayersSocialLeaderboard(string leaderboardId, List<string> profileIds, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19620,6 +25380,10 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Retrieve a list of all leaderboards
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_ListLeaderboards(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19682,6 +25446,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Gets the number of entries in a global leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_GetGlobalLeaderboardEntryCount(string leaderboardId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19745,6 +25514,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Gets the number of entries in a global leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="versionId">The version of the leaderboard</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_GetGlobalLeaderboardEntryCountByVersion(string leaderboardId, int versionId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19809,6 +25584,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Gets a player's score from a leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The ID of the leaderboard</param>
+      /// <param name="versionId">The version of the leaderboard. Use -1 for current.</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_GetPlayerScore(string leaderboardId, int versionId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19873,6 +25654,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Gets a player's score from multiple leaderboards
+      /// </summary>
+      /// <param name="leaderboardIds">A collection of leaderboardIds to retrieve scores from</param>
+      /// <param name="clientIndex"></param>
       public string SocialLeaderboard_GetPlayerScoresFromLeaderboards(List<string> leaderboardIds, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19936,6 +25722,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Method returns the server time in UTC. This is in UNIX millis time format.
+      /// For instance 1396378241893 represents 2014-04-01 2:50:41.893 in GMT-4.
+      /// </summary>
+      /// <param name="clientIndex"></param>
       public string Time_ReadServerTime(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -19998,6 +25789,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Processes any outstanding rewards for the given player
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="versionId">Version of the tournament to claim rewards for.Use -1 for the latest version.</param>
+      /// <param name="clientIndex"></param>
       public string Tournament_ClaimTournamentReward(string leaderboardId, int versionId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -20062,6 +25859,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Get tournament status associated with a leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="versionId">Version of the tournament. Use -1 for the latest version.</param>
+      /// <param name="clientIndex"></param>
       public string Tournament_GetTournamentStatus(string leaderboardId, int versionId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -20126,6 +25929,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Join the specified tournament.
+      /// Any entry fees will be automatically collected.
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="tournamentCode">Tournament to join</param>
+      /// <param name="initialScore">The initial score for players first joining a tournamentUsually 0, unless leaderboard is LOW_VALUE</param>
+      /// <param name="clientIndex"></param>
       public string Tournament_JoinTournament(string leaderboardId, string tournamentCode, long initialScore, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -20191,6 +26002,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Removes player's score from tournament leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="clientIndex"></param>
       public string Tournament_LeaveTournament(string leaderboardId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -20254,6 +26070,14 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Post the users score to the leaderboard
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData">Optional data attached to the leaderboard entry</param>
+      /// <param name="roundStartedTime">Time the user started the match resulting in the scorebeing posted.</param>
+      /// <param name="clientIndex"></param>
       public string Tournament_PostTournamentScore(string leaderboardId, long score, string jsonData, long roundStartedTime, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -20320,6 +26144,18 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Post the users score to the leaderboard and returns the results
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="score">The score to post</param>
+      /// <param name="jsonData">Optional data attached to the leaderboard entry</param>
+      /// <param name="roundStartedTime">Time the user started the match resulting in the scorebeing posted.</param>
+      /// <param name="sort">Sort key Sort order of page.</param>
+      /// <param name="beforeCount">The count of number of players before the current player to include.</param>
+      /// <param name="afterCount">The count of number of players after the current player to include.</param>
+      /// <param name="initialScore">The initial score for players first joining a tournamentUsually 0, unless leaderboard is LOW_VALUE</param>
+      /// <param name="clientIndex"></param>
       public string Tournament_PostTournamentScoreWithResults(string leaderboardId, long score, string jsonData, long roundStartedTime, Ruyi.SDK.BrainCloudApi.SortOrder sort, int beforeCount, int afterCount, long initialScore, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -20390,6 +26226,11 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns the user's expected reward based on the current scores
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="clientIndex"></param>
       public string Tournament_ViewCurrentReward(string leaderboardId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -20453,6 +26294,12 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
+      /// <summary>
+      /// Returns the user's reward from a finished tournament
+      /// </summary>
+      /// <param name="leaderboardId">The leaderboard for the tournament</param>
+      /// <param name="versionId">Version of the tournament. Use -1 for the latest version.</param>
+      /// <param name="clientIndex"></param>
       public string Tournament_ViewReward(string leaderboardId, int versionId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -32015,6 +37862,25 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _pushNotificationMessage;
       private int _clientIndex;
 
+      /// <summary>
+      /// JSON string identifying the opponent platform and id for this match.
+      /// 
+      /// Platforms are identified as:
+      /// BC - a brainCloud profile id
+      /// FB - a Facebook id
+      /// 
+      /// An exmaple of this string would be:
+      /// [
+      ///     {
+      ///         "platform": "BC",
+      ///         "id": "some-braincloud-profile"
+      ///     },
+      ///     {
+      ///         "platform": "FB",
+      ///         "id": "some-facebook-id"
+      ///     }
+      /// ]
+      /// </summary>
       public string JsonOpponentIds
       {
         get
@@ -32028,6 +37894,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional push notification message to send to the other party.
+      /// Refer to the Push Notification functions for the syntax required.
+      /// </summary>
       public string PushNotificationMessage
       {
         get
@@ -32309,6 +38179,25 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonSummary;
       private int _clientIndex;
 
+      /// <summary>
+      /// JSON string identifying the opponent platform and id for this match.
+      /// 
+      /// Platforms are identified as:
+      /// BC - a brainCloud profile id
+      /// FB - a Facebook id
+      /// 
+      /// An exmaple of this string would be:
+      /// [
+      ///     {
+      ///         "platform": "BC",
+      ///         "id": "some-braincloud-profile"
+      ///     },
+      ///     {
+      ///         "platform": "FB",
+      ///         "id": "some-facebook-id"
+      ///     }
+      /// ]
+      /// </summary>
       public string JsonOpponentIds
       {
         get
@@ -32322,6 +38211,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// JSON string blob provided by the caller
+      /// </summary>
       public string JsonMatchState
       {
         get
@@ -32335,6 +38227,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional push notification message to send to the other party.
+      /// Refer to the Push Notification functions for the syntax required.
+      /// </summary>
       public string PushNotificationMessage
       {
         get
@@ -32348,6 +38244,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optionally, force the next player player to be a specific player
+      /// </summary>
       public string NextPlayer
       {
         get
@@ -32361,6 +38260,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional JSON string defining what the other player will see as a summary of the game when listing their games
+      /// </summary>
       public string JsonSummary
       {
         get
@@ -32711,6 +38613,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonStatistics;
       private int _clientIndex;
 
+      /// <summary>
+      /// Match owner identfier
+      /// </summary>
       public string OwnerId
       {
         get
@@ -32724,6 +38629,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Match identifier
+      /// </summary>
       public string MatchId
       {
         get
@@ -32737,6 +38645,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Game state version to ensure turns are submitted once and in order
+      /// </summary>
       public long Version
       {
         get
@@ -32750,6 +38661,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// JSON string blob provided by the caller
+      /// </summary>
       public string JsonMatchState
       {
         get
@@ -32763,6 +38677,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional push notification message to send to the other party.
+      /// Refer to the Push Notification functions for the syntax required.
+      /// </summary>
       public string PushNotificationMessage
       {
         get
@@ -32776,6 +38694,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optionally, force the next player player to be a specific player
+      /// </summary>
       public string NextPlayer
       {
         get
@@ -32789,6 +38710,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional JSON string that other players will see as a summary of the game when listing their games
+      /// </summary>
       public string JsonSummary
       {
         get
@@ -32802,6 +38726,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional JSON string blob provided by the caller
+      /// </summary>
       public string JsonStatistics
       {
         get
@@ -33214,6 +39141,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonSummary;
       private int _clientIndex;
 
+      /// <summary>
+      /// Match owner identfier
+      /// </summary>
       public string OwnerId
       {
         get
@@ -33227,6 +39157,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Match identifier
+      /// </summary>
       public string MatchId
       {
         get
@@ -33240,6 +39173,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Game state version to ensure turns are submitted once and in order
+      /// </summary>
       public long Version
       {
         get
@@ -33253,6 +39189,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// JSON string provided by the caller that other players will see as a summary of the game when listing their games
+      /// </summary>
       public string JsonSummary
       {
         get
@@ -33575,6 +39514,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _matchId;
       private int _clientIndex;
 
+      /// <summary>
+      /// Match owner identifier
+      /// </summary>
       public string OwnerId
       {
         get
@@ -33588,6 +39530,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Match identifier
+      /// </summary>
       public string MatchId
       {
         get
@@ -33866,6 +39811,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _matchId;
       private int _clientIndex;
 
+      /// <summary>
+      /// Match owner identifier
+      /// </summary>
       public string OwnerId
       {
         get
@@ -33879,6 +39827,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Match identifier
+      /// </summary>
       public string MatchId
       {
         get
@@ -34157,6 +40108,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _matchId;
       private int _clientIndex;
 
+      /// <summary>
+      /// Match owner identifier
+      /// </summary>
       public string OwnerId
       {
         get
@@ -34170,6 +40124,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Match identifier
+      /// </summary>
       public string MatchId
       {
         get
@@ -34886,6 +40843,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _matchId;
       private int _clientIndex;
 
+      /// <summary>
+      /// Match owner identifier
+      /// </summary>
       public string OwnerId
       {
         get
@@ -34899,6 +40859,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Match identifier
+      /// </summary>
       public string MatchId
       {
         get
@@ -35177,6 +41140,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _matchId;
       private int _clientIndex;
 
+      /// <summary>
+      /// Match owner identifier
+      /// </summary>
       public string OwnerId
       {
         get
@@ -35190,6 +41156,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Match identifier
+      /// </summary>
       public string MatchId
       {
         get
@@ -35687,6 +41656,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _anonymousId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the profile id that was most recently used by the app (on this device)
+      /// </summary>
       public string ProfileId
       {
         get
@@ -35700,6 +41672,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The anonymous installation id that was generated for this device
+      /// </summary>
       public string AnonymousId
       {
         get
@@ -36100,6 +42075,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _forceCreate;
       private int _clientIndex;
 
+      /// <summary>
+      /// Should a new profile be created if it does not exist?
+      /// </summary>
       public bool ForceCreate
       {
         get
@@ -36357,6 +42335,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _forceCreate;
       private int _clientIndex;
 
+      /// <summary>
+      /// The e-mail address of the user
+      /// </summary>
       public string Email
       {
         get
@@ -36370,6 +42351,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The password of the user
+      /// </summary>
       public string Password
       {
         get
@@ -36383,6 +42367,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Should a new profile be created for this user if the account does not exist?
+      /// </summary>
       public bool ForceCreate
       {
         get
@@ -36697,6 +42684,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The password of the user
+      /// </summary>
       public string Password
       {
         get
@@ -36710,6 +42700,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Should a new profile be created for this user if the account does not exist?
+      /// </summary>
       public bool ForceCreate
       {
         get
@@ -37012,6 +43005,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _forceCreate;
       private int _clientIndex;
 
+      /// <summary>
+      /// The user id
+      /// </summary>
       public string UserId
       {
         get
@@ -37025,6 +43021,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The user token (password etc)
+      /// </summary>
       public string Token
       {
         get
@@ -37038,6 +43037,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The name of the cloud script to call for external authentication
+      /// </summary>
       public string ExternalAuthName
       {
         get
@@ -37051,6 +43053,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Should a new profile be created for this user if the account does not exist?
+      /// </summary>
       public bool ForceCreate
       {
         get
@@ -37372,6 +43377,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _externalId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The email address to send the reset email to.
+      /// </summary>
       public string ExternalId
       {
         get
@@ -38282,6 +44290,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _appVersion;
       private int _clientIndex;
 
+      /// <summary>
+      /// The secret key for your app
+      /// </summary>
       public string SecretKey
       {
         get
@@ -38308,6 +44319,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The app version
+      /// </summary>
       public string AppVersion
       {
         get
@@ -38562,6 +44576,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _appVersion;
       private int _clientIndex;
 
+      /// <summary>
+      /// The URL to the brainCloud server
+      /// </summary>
       public string ServerURL
       {
         get
@@ -38575,6 +44592,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The secret key for your app
+      /// </summary>
       public string SecretKey
       {
         get
@@ -38588,6 +44608,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The app id
+      /// </summary>
       public string AppId
       {
         get
@@ -38601,6 +44624,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The app version
+      /// </summary>
       public string AppVersion
       {
         get
@@ -38875,6 +44901,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _anonymousId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The profile id
+      /// </summary>
       public string ProfileId
       {
         get
@@ -38888,6 +44917,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The anonymous id
+      /// </summary>
       public string AnonymousId
       {
         get
@@ -39288,6 +45320,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _enable;
       private int _clientIndex;
 
+      /// <summary>
+      /// True if logging is to be enabled
+      /// </summary>
       public bool Enable
       {
         get
@@ -39666,6 +45701,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private List<int> _timeouts;
       private int _clientIndex;
 
+      /// <summary>
+      /// An array of packet timeouts.
+      /// </summary>
       public List<int> Timeouts
       {
         get
@@ -41362,6 +47400,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _bytesPerSec;
       private int _clientIndex;
 
+      /// <summary>
+      /// The low transfer rate threshold in bytes/sec
+      /// </summary>
       public int BytesPerSec
       {
         get
@@ -41569,6 +47610,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _enabled;
       private int _clientIndex;
 
+      /// <summary>
+      /// True if message should be cached on timeout
+      /// </summary>
       public bool Enabled
       {
         get
@@ -41947,6 +47991,10 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _sendApiErrorCallbacks;
       private int _clientIndex;
 
+      /// <summary>
+      /// If set to true API error callbacks will
+      /// be called for every cached message with statusCode CLIENT_NETWORK_ERROR and reasonCode CLIENT_NETWORK_ERROR_TIMEOUT.
+      /// </summary>
       public bool SendApiErrorCallbacks
       {
         get
@@ -42325,6 +48373,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _countryCode;
       private int _clientIndex;
 
+      /// <summary>
+      /// ISO 3166-1 two-letter country code
+      /// </summary>
       public string CountryCode
       {
         get
@@ -42532,6 +48583,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _languageCode;
       private int _clientIndex;
 
+      /// <summary>
+      /// ISO 639-1 two-letter language code
+      /// </summary>
       public string LanguageCode
       {
         get
@@ -42740,6 +48794,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonEventProperties;
       private int _clientIndex;
 
+      /// <summary>
+      /// The name of the event
+      /// </summary>
       public string EventName
       {
         get
@@ -42753,6 +48810,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The properties of the event
+      /// </summary>
       public string JsonEventProperties
       {
         get
@@ -43031,6 +49091,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonEventProperties;
       private int _clientIndex;
 
+      /// <summary>
+      /// The name of the event
+      /// </summary>
       public string EventName
       {
         get
@@ -43044,6 +49107,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The properties of the event
+      /// </summary>
       public string JsonEventProperties
       {
         get
@@ -43322,6 +49388,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonEventProperties;
       private int _clientIndex;
 
+      /// <summary>
+      /// The name of the event
+      /// </summary>
       public string EventName
       {
         get
@@ -43335,6 +49404,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The properties of the event
+      /// </summary>
       public string JsonEventProperties
       {
         get
@@ -43614,6 +49686,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonEntityAcl;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity type as defined by the user
+      /// </summary>
       public string EntityType
       {
         get
@@ -43627,6 +49702,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's data as a json string
+      /// </summary>
       public string JsonEntityData
       {
         get
@@ -43640,6 +49718,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's access control list as json. A null acl implies default
+      /// permissions which make the entity readable/writeable by only the user.
+      /// </summary>
       public string JsonEntityAcl
       {
         get
@@ -43939,6 +50021,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _entityType;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity type to search for
+      /// </summary>
       public string EntityType
       {
         get
@@ -44198,6 +50283,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _version;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the entity to update
+      /// </summary>
       public string EntityId
       {
         get
@@ -44211,6 +50299,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity type as defined by the user
+      /// </summary>
       public string EntityType
       {
         get
@@ -44224,6 +50315,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's data as a json string.
+      /// </summary>
       public string JsonEntityData
       {
         get
@@ -44237,6 +50331,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's access control list as json. A null acl implies default
+      /// permissions which make the entity readable/writeable by only the user.
+      /// </summary>
       public string JsonEntityAcl
       {
         get
@@ -44250,6 +50348,11 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Current version of the entity. If the version of the
+      /// entity on the server does not match the version passed in, the
+      /// server operation will fail. Use -1 to skip version checking.
+      /// </summary>
       public int Version
       {
         get
@@ -44597,6 +50700,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _version;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the entity to update
+      /// </summary>
       public string EntityId
       {
         get
@@ -44610,6 +50716,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The id of the entity's owner
+      /// </summary>
       public string TargetProfileId
       {
         get
@@ -44623,6 +50732,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity type as defined by the user
+      /// </summary>
       public string EntityType
       {
         get
@@ -44636,6 +50748,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's data as a json string.
+      /// </summary>
       public string JsonEntityData
       {
         get
@@ -44649,6 +50764,11 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Current version of the entity. If the version of the
+      /// entity on the server does not match the version passed in, the
+      /// server operation will fail. Use -1 to skip version checking.
+      /// </summary>
       public int Version
       {
         get
@@ -44993,6 +51113,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _version;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the entity to update
+      /// </summary>
       public string EntityId
       {
         get
@@ -45006,6 +51129,11 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Current version of the entity. If the version of the
+      /// entity on the server does not match the version passed in, the
+      /// server operation will fail. Use -1 to skip version checking.
+      /// </summary>
       public int Version
       {
         get
@@ -45286,6 +51414,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _version;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity type as defined by the user
+      /// </summary>
       public string EntityType
       {
         get
@@ -45299,6 +51430,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's data as a json string.
+      /// </summary>
       public string JsonEntityData
       {
         get
@@ -45312,6 +51446,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's access control list as json. A null acl implies default
+      /// </summary>
       public string JsonEntityAcl
       {
         get
@@ -45325,6 +51462,11 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Current version of the entity. If the version of the
+      /// entity on the server does not match the version passed in, the
+      /// server operation will fail. Use -1 to skip version checking.
+      /// </summary>
       public int Version
       {
         get
@@ -45647,6 +51789,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _version;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity type as defined by the user
+      /// </summary>
       public string EntityType
       {
         get
@@ -45660,6 +51805,11 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Current version of the entity. If the version of the
+      /// entity on the server does not match the version passed in, the
+      /// server operation will fail. Use -1 to skip version checking.
+      /// </summary>
       public int Version
       {
         get
@@ -45937,6 +52087,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _entityId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the entity
+      /// </summary>
       public string EntityId
       {
         get
@@ -46192,6 +52345,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _entityType;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity type as defined by the user
+      /// </summary>
       public string EntityType
       {
         get
@@ -46448,6 +52604,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _entityId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The the profile ID of the user who owns the entity
+      /// </summary>
       public string ProfileId
       {
         get
@@ -46461,6 +52620,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The ID of the entity that will be retrieved
+      /// </summary>
       public string EntityId
       {
         get
@@ -46738,6 +52900,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _profileId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The profile id to retrieve shared entities for
+      /// </summary>
       public string ProfileId
       {
         get
@@ -46995,6 +53160,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _maxReturn;
       private int _clientIndex;
 
+      /// <summary>
+      /// Mongo style query string
+      /// </summary>
       public string WhereJson
       {
         get
@@ -47008,6 +53176,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Sort order
+      /// </summary>
       public string OrderByJson
       {
         get
@@ -47021,6 +53192,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The maximum number of entities to return
+      /// </summary>
       public int MaxReturn
       {
         get
@@ -47323,6 +53497,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _maxReturn;
       private int _clientIndex;
 
+      /// <summary>
+      /// The profile ID to retrieve shared entities for
+      /// </summary>
       public string ProfileId
       {
         get
@@ -47336,6 +53513,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Mongo style query string
+      /// </summary>
       public string WhereJson
       {
         get
@@ -47349,6 +53529,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Sort order
+      /// </summary>
       public string OrderByJson
       {
         get
@@ -47362,6 +53545,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The maximum number of entities to return
+      /// </summary>
       public int MaxReturn
       {
         get
@@ -47683,6 +53869,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _whereJson;
       private int _clientIndex;
 
+      /// <summary>
+      /// Mongo style query string
+      /// </summary>
       public string WhereJson
       {
         get
@@ -47938,6 +54127,10 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonContext;
       private int _clientIndex;
 
+      /// <summary>
+      /// The json context for the page request.
+      /// See the portal appendix documentation for format
+      /// </summary>
       public string JsonContext
       {
         get
@@ -48194,6 +54387,10 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _pageOffset;
       private int _clientIndex;
 
+      /// <summary>
+      /// The context string returned from the server from a previous call
+      /// to GetPage() or GetPageOffset()
+      /// </summary>
       public string Context
       {
         get
@@ -48207,6 +54404,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The positive or negative page offset to fetch. Uses the last page
+      /// retrieved using the context string to determine a starting point.
+      /// </summary>
       public int PageOffset
       {
         get
@@ -48485,6 +54686,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity to increment
+      /// </summary>
       public string EntityId
       {
         get
@@ -48498,6 +54702,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The subset of data to increment
+      /// </summary>
       public string JsonData
       {
         get
@@ -48777,6 +54984,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity to increment
+      /// </summary>
       public string EntityId
       {
         get
@@ -48790,6 +55000,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Profile ID of the entity owner
+      /// </summary>
       public string TargetProfileId
       {
         get
@@ -48803,6 +55016,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The subset of data to increment
+      /// </summary>
       public string JsonData
       {
         get
@@ -49104,6 +55320,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonEventData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the user who is being sent the event
+      /// </summary>
       public string ToProfileId
       {
         get
@@ -49117,6 +55336,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The user-defined type of the event.
+      /// </summary>
       public string EventType
       {
         get
@@ -49130,6 +55352,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The user-defined data for this event encoded in JSON.
+      /// </summary>
       public string JsonEventData
       {
         get
@@ -49430,6 +55655,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonEventData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The event id
+      /// </summary>
       public string EvId
       {
         get
@@ -49443,6 +55671,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The user-defined data for this event encoded in JSON.
+      /// </summary>
       public string JsonEventData
       {
         get
@@ -49720,6 +55951,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _evId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The event id
+      /// </summary>
       public string EvId
       {
         get
@@ -50198,6 +56432,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _localPath;
       private int _clientIndex;
 
+      /// <summary>
+      /// The desired cloud path of the file
+      /// </summary>
       public string CloudPath
       {
         get
@@ -50211,6 +56448,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The desired cloud fileName of the file
+      /// </summary>
       public string CloudFilename
       {
         get
@@ -50224,6 +56464,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// True if the file is shareable
+      /// </summary>
       public bool Shareable
       {
         get
@@ -50237,6 +56480,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Whether to replace file if it exists
+      /// </summary>
       public bool ReplaceIfExists
       {
         get
@@ -50250,6 +56496,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The path and fileName of the local file
+      /// </summary>
       public string LocalPath
       {
         get
@@ -50593,6 +56842,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _uploadId;
       private int _clientIndex;
 
+      /// <summary>
+      /// Upload ID of the file to cancel
+      /// </summary>
       public string UploadId
       {
         get
@@ -50800,6 +57052,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _uploadId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the upload
+      /// </summary>
       public string UploadId
       {
         get
@@ -51053,6 +57308,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _uploadId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the upload
+      /// </summary>
       public string UploadId
       {
         get
@@ -51306,6 +57564,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _uploadId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the upload
+      /// </summary>
       public string UploadId
       {
         get
@@ -51779,6 +58040,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _recurse;
       private int _clientIndex;
 
+      /// <summary>
+      /// File path
+      /// </summary>
       public string CloudPath
       {
         get
@@ -51792,6 +58056,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Whether to recurse down the path
+      /// </summary>
       public bool Recurse
       {
         get
@@ -52070,6 +58337,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _cloudFileName;
       private int _clientIndex;
 
+      /// <summary>
+      /// File path
+      /// </summary>
       public string CloudPath
       {
         get
@@ -52361,6 +58631,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _recurse;
       private int _clientIndex;
 
+      /// <summary>
+      /// File path
+      /// </summary>
       public string CloudPath
       {
         get
@@ -52374,6 +58647,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Whether to recurse down the path
+      /// </summary>
       public bool Recurse
       {
         get
@@ -52652,6 +58928,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _cloudFilename;
       private int _clientIndex;
 
+      /// <summary>
+      /// File path
+      /// </summary>
       public string CloudPath
       {
         get
@@ -52665,6 +58944,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Name of file
+      /// </summary>
       public string CloudFilename
       {
         get
@@ -52943,6 +59225,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _maxResults;
       private int _clientIndex;
 
+      /// <summary>
+      /// Universal ID text on which to search.
+      /// </summary>
       public string SearchText
       {
         get
@@ -52956,6 +59241,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Maximum number of results to return.
+      /// </summary>
       public int MaxResults
       {
         get
@@ -53234,6 +59522,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _authenticationType;
       private int _clientIndex;
 
+      /// <summary>
+      /// External id of the user to find
+      /// </summary>
       public string ExternalId
       {
         get
@@ -53247,6 +59538,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The authentication type used for the user's ID
+      /// </summary>
       public string AuthenticationType
       {
         get
@@ -53525,6 +59819,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _externalAuthType;
       private int _clientIndex;
 
+      /// <summary>
+      /// External id of the friend to find
+      /// </summary>
       public string ExternalId
       {
         get
@@ -53538,6 +59835,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The external authentication type used for this friend's external id
+      /// </summary>
       public string ExternalAuthType
       {
         get
@@ -53816,6 +60116,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _authenticationType;
       private int _clientIndex;
 
+      /// <summary>
+      /// Profile (user) ID.
+      /// </summary>
       public string ProfileId
       {
         get
@@ -53829,6 +60132,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Associated authentication type.
+      /// </summary>
       public string AuthenticationType
       {
         get
@@ -54107,6 +60413,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _friendId;
       private int _clientIndex;
 
+      /// <summary>
+      /// Id of entity to retrieve.
+      /// </summary>
       public string EntityId
       {
         get
@@ -54120,6 +60429,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Profile Id of friend who owns entity.
+      /// </summary>
       public string FriendId
       {
         get
@@ -54397,6 +60709,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _entityType;
       private int _clientIndex;
 
+      /// <summary>
+      /// Types of entities to retrieve.
+      /// </summary>
       public string EntityType
       {
         get
@@ -54652,6 +60967,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _friendId;
       private int _clientIndex;
 
+      /// <summary>
+      /// Profile Id of friend to retrieve user state for.
+      /// </summary>
       public string FriendId
       {
         get
@@ -54907,6 +61225,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _profileId;
       private int _clientIndex;
 
+      /// <summary>
+      /// Profile Id of user to retrieve player state for.
+      /// </summary>
       public string ProfileId
       {
         get
@@ -55163,6 +61484,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _maxResults;
       private int _clientIndex;
 
+      /// <summary>
+      /// The string to search for.
+      /// </summary>
       public string SearchText
       {
         get
@@ -55176,6 +61500,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Maximum number of results to return.
+      /// </summary>
       public int MaxResults
       {
         get
@@ -55454,6 +61781,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _maxResults;
       private int _clientIndex;
 
+      /// <summary>
+      /// The substring to search for. Minimum length of 3 characters.
+      /// </summary>
       public string SearchText
       {
         get
@@ -55467,6 +61797,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Maximum number of results to return.
+      /// </summary>
       public int MaxResults
       {
         get
@@ -55746,6 +62079,7 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _clientIndex;
 
       /// <summary>
+      /// Friend platform to query.
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.FriendPlatform"/>
       /// </summary>
@@ -55762,6 +62096,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// True if including summary data; false otherwise.
+      /// </summary>
       public bool IncludeSummaryData
       {
         get
@@ -56039,6 +62376,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private List<string> _profileIds;
       private int _clientIndex;
 
+      /// <summary>
+      /// Collection of profile IDs.
+      /// </summary>
       public List<string> ProfileIds
       {
         get
@@ -56311,6 +62651,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private List<string> _profileIds;
       private int _clientIndex;
 
+      /// <summary>
+      /// Collection of profile IDs.
+      /// </summary>
       public List<string> ProfileIds
       {
         get
@@ -56583,6 +62926,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private List<string> _profileIds;
       private int _clientIndex;
 
+      /// <summary>
+      /// Collection of profile IDs.
+      /// </summary>
       public List<string> ProfileIds
       {
         get
@@ -58605,6 +64951,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _includeMetaData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The milestone category
+      /// </summary>
       public string Category
       {
         get
@@ -58895,6 +65244,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private List<string> _achievementIds;
       private int _clientIndex;
 
+      /// <summary>
+      /// A collection of achievement ids to award
+      /// </summary>
       public List<string> AchievementIds
       {
         get
@@ -60953,6 +67305,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _includeMetaData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The quest category
+      /// </summary>
       public string Category
       {
         get
@@ -61243,6 +67598,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private List<string> _milestoneIds;
       private int _clientIndex;
 
+      /// <summary>
+      /// List of milestones to reset
+      /// </summary>
       public List<string> MilestoneIds
       {
         get
@@ -61737,6 +68095,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonEntityData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity type as defined by the user
+      /// </summary>
       public string EntityType
       {
         get
@@ -61750,6 +68111,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Sets expiry time for entity in milliseconds if > 0
+      /// </summary>
       public long TimeToLive
       {
         get
@@ -61763,6 +68127,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's access control list as json. A null acl implies default
+      /// </summary>
       public string JsonEntityAcl
       {
         get
@@ -61776,6 +68143,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's data as a json string
+      /// </summary>
       public string JsonEntityData
       {
         get
@@ -62101,6 +68471,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonEntityData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity type as defined by the user
+      /// </summary>
       public string EntityType
       {
         get
@@ -62114,6 +68487,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// A secondary ID that will be indexed
+      /// </summary>
       public string IndexedId
       {
         get
@@ -62127,6 +68503,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Sets expiry time for entity in milliseconds if > 0
+      /// </summary>
       public long TimeToLive
       {
         get
@@ -62140,6 +68519,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's access control list as json. A null acl implies default
+      /// </summary>
       public string JsonEntityAcl
       {
         get
@@ -62153,6 +68535,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's data as a json string
+      /// </summary>
       public string JsonEntityData
       {
         get
@@ -62498,6 +68883,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonEntityData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity ID
+      /// </summary>
       public string EntityId
       {
         get
@@ -62511,6 +68899,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The version of the entity to update
+      /// </summary>
       public int Version
       {
         get
@@ -62524,6 +68915,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's data as a json string
+      /// </summary>
       public string JsonEntityData
       {
         get
@@ -62825,6 +69219,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonEntityAcl;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity ID
+      /// </summary>
       public string EntityId
       {
         get
@@ -62838,6 +69235,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The version of the entity to update
+      /// </summary>
       public int Version
       {
         get
@@ -62851,6 +69251,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's access control list as json.
+      /// </summary>
       public string JsonEntityAcl
       {
         get
@@ -63152,6 +69555,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private long _timeToLive;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity ID
+      /// </summary>
       public string EntityId
       {
         get
@@ -63165,6 +69571,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The version of the entity to update
+      /// </summary>
       public int Version
       {
         get
@@ -63178,6 +69587,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Sets expiry time for entity in milliseconds if > 0
+      /// </summary>
       public long TimeToLive
       {
         get
@@ -63478,6 +69890,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _version;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity ID
+      /// </summary>
       public string EntityId
       {
         get
@@ -63491,6 +69906,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The version of the entity to delete
+      /// </summary>
       public int Version
       {
         get
@@ -63768,6 +70186,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _entityId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity ID
+      /// </summary>
       public string EntityId
       {
         get
@@ -64025,6 +70446,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _maxReturn;
       private int _clientIndex;
 
+      /// <summary>
+      /// Mongo style query string
+      /// </summary>
       public string WhereJson
       {
         get
@@ -64038,6 +70462,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Sort order
+      /// </summary>
       public string OrderByJson
       {
         get
@@ -64051,6 +70478,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The maximum number of entities to return
+      /// </summary>
       public int MaxReturn
       {
         get
@@ -64351,6 +70781,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _maxReturn;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity indexed Id
+      /// </summary>
       public string EntityIndexedId
       {
         get
@@ -64364,6 +70797,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The maximum number of entities to return
+      /// </summary>
       public int MaxReturn
       {
         get
@@ -64641,6 +71077,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _whereJson;
       private int _clientIndex;
 
+      /// <summary>
+      /// Mongo style query string
+      /// </summary>
       public string WhereJson
       {
         get
@@ -64896,6 +71335,10 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonContext;
       private int _clientIndex;
 
+      /// <summary>
+      /// The json context for the page request.
+      /// See the portal appendix documentation for format
+      /// </summary>
       public string JsonContext
       {
         get
@@ -65152,6 +71595,10 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _pageOffset;
       private int _clientIndex;
 
+      /// <summary>
+      /// The context string returned from the server from a previous call
+      /// to GetPage() or GetPageOffset()
+      /// </summary>
       public string Context
       {
         get
@@ -65165,6 +71612,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The positive or negative page offset to fetch. Uses the last page
+      /// retrieved using the context string to determine a starting point.
+      /// </summary>
       public int PageOffset
       {
         get
@@ -65443,6 +71894,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity to increment
+      /// </summary>
       public string EntityId
       {
         get
@@ -65456,6 +71910,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The subset of data to increment
+      /// </summary>
       public string JsonData
       {
         get
@@ -65747,6 +72204,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The maximum number of entities to return
+      /// </summary>
       public int MaxReturn
       {
         get
@@ -66027,6 +72487,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _acl;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity ID
+      /// </summary>
       public string EntityId
       {
         get
@@ -66040,6 +72503,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The version of the entity
+      /// </summary>
       public long Version
       {
         get
@@ -66053,6 +72519,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The owner ID
+      /// </summary>
       public string OwnerId
       {
         get
@@ -66066,6 +72535,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's access control list
+      /// </summary>
       public string Acl
       {
         get
@@ -66389,6 +72861,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _acl;
       private int _clientIndex;
 
+      /// <summary>
+      /// The entity ID
+      /// </summary>
       public string EntityId
       {
         get
@@ -66402,6 +72877,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The version of the entity
+      /// </summary>
       public long Version
       {
         get
@@ -66415,6 +72893,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The entity's access control list
+      /// </summary>
       public string Acl
       {
         get
@@ -66933,6 +73414,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private List<string> _globalStats;
       private int _clientIndex;
 
+      /// <summary>
+      /// A list containing the statistics to read
+      /// </summary>
       public List<string> GlobalStats
       {
         get
@@ -67205,6 +73689,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _category;
       private int _clientIndex;
 
+      /// <summary>
+      /// The global statistics category
+      /// </summary>
       public string Category
       {
         get
@@ -67460,6 +73947,20 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The JSON encoded data to be sent to the server as follows:
+      /// {
+      ///   stat1: 10,
+      ///   stat2: -5.5,
+      /// }
+      /// would increment stat1 by 10 and decrement stat2 by 5.5.
+      /// For the full statistics grammer see the api.braincloudservers.com site.
+      /// There are many more complex operations supported such as:
+      /// {
+      ///   stat1:INC_TO_LIMIT#9#30
+      /// }
+      /// which increments stat1 by 9 up to a limit of 30.
+      /// </summary>
       public string JsonData
       {
         get
@@ -67715,6 +74216,16 @@ namespace Ruyi.SDK.BrainCloudApi
       private Dictionary<string, string> _statisticsData;
       private int _clientIndex;
 
+      /// <summary>
+      /// Example data to be passed to method:
+      /// {
+      ///     "DEAD_CATS": "RESET",
+      ///     "LIVES_LEFT": "SET#9",
+      ///     "MICE_KILLED": "INC#2",
+      ///     "DOG_SCARE_BONUS_POINTS": "INC#10",
+      ///     "TREES_CLIMBED": 1
+      /// }
+      /// </summary>
       public Dictionary<string, string> StatisticsData
       {
         get
@@ -67990,6 +74501,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _groupId;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -68248,6 +74762,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonAttributes;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -68261,6 +74778,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Profile ID of the member being added.
+      /// </summary>
       public string ProfileId
       {
         get
@@ -68275,6 +74795,7 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
+      /// Role of the member being added.
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.Role"/>
       /// </summary>
@@ -68291,6 +74812,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Attributes of the member being added.
+      /// </summary>
       public string JsonAttributes
       {
         get
@@ -68615,6 +75139,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonAttributes;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -68628,6 +75155,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Profile ID of the invitation being deleted.
+      /// </summary>
       public string ProfileId
       {
         get
@@ -68642,6 +75172,7 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
+      /// Role of the member being invited.
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.Role"/>
       /// </summary>
@@ -68658,6 +75189,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Attributes of the member being invited.
+      /// </summary>
       public string JsonAttributes
       {
         get
@@ -68981,6 +75515,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _dataQueryJson;
       private int _clientIndex;
 
+      /// <summary>
+      /// Name of the associated group type.
+      /// </summary>
       public string GroupType
       {
         get
@@ -68995,6 +75532,7 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
+      /// Selection strategy to employ when there are multiple matches
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.AutoJoinStrategy"/>
       /// </summary>
@@ -69011,6 +75549,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Query parameters (optional)
+      /// </summary>
       public string DataQueryJson
       {
         get
@@ -69311,6 +75852,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _profileId;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -69324,6 +75868,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Profile ID of the invitation being deleted.
+      /// </summary>
       public string ProfileId
       {
         get
@@ -69607,6 +76154,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonDefaultMemberAttributes;
       private int _clientIndex;
 
+      /// <summary>
+      /// Name of the group.
+      /// </summary>
       public string Name
       {
         get
@@ -69620,6 +76170,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Name of the type of group.
+      /// </summary>
       public string GroupType
       {
         get
@@ -69633,6 +76186,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// true if group is open; false if closed.
+      /// </summary>
       public bool IsOpenGroup
       {
         get
@@ -69646,6 +76202,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The group's access control list. A null ACL implies default.
+      /// </summary>
       public string Acl
       {
         get
@@ -69659,6 +76218,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Custom application data.
+      /// </summary>
       public string JsonData
       {
         get
@@ -69672,6 +76234,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Attributes for the group owner (current user).
+      /// </summary>
       public string JsonOwnerAttributes
       {
         get
@@ -69685,6 +76250,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Default attributes for group members.
+      /// </summary>
       public string JsonDefaultMemberAttributes
       {
         get
@@ -70076,6 +76644,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonData;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -70102,6 +76673,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// true if entity is owned by a member; false if owned by the entire group.
+      /// </summary>
       public bool IsOwnedByGroupMember
       {
         get
@@ -70115,6 +76689,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Access control list for the group entity.
+      /// </summary>
       public string Acl
       {
         get
@@ -70128,6 +76705,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Custom application data.
+      /// </summary>
       public string JsonData
       {
         get
@@ -70472,6 +77052,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private long _version;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -70485,6 +77068,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Current version of the group
+      /// </summary>
       public long Version
       {
         get
@@ -70764,6 +77350,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private long _version;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -70777,6 +77366,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// ID of the entity.
+      /// </summary>
       public string EntityId
       {
         get
@@ -70790,6 +77382,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The current version of the group entity (for concurrency checking).
+      /// </summary>
       public long Version
       {
         get
@@ -71309,6 +77904,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonData;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -71322,6 +77920,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Partial data map with incremental values.
+      /// </summary>
       public string JsonData
       {
         get
@@ -71601,6 +78202,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonData;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -71614,6 +78218,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// ID of the entity.
+      /// </summary>
       public string EntityId
       {
         get
@@ -71627,6 +78234,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Partial data map with incremental values.
+      /// </summary>
       public string JsonData
       {
         get
@@ -71929,6 +78539,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonAttributes;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -71942,6 +78555,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Profile ID of the member being invited.
+      /// </summary>
       public string ProfileId
       {
         get
@@ -71956,6 +78572,7 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
+      /// Role of the member being invited.
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.Role"/>
       /// </summary>
@@ -71972,6 +78589,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Attributes of the member being invited.
+      /// </summary>
       public string JsonAttributes
       {
         get
@@ -72293,6 +78913,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _groupId;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -72548,6 +79171,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _groupId;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -72803,6 +79429,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonContext;
       private int _clientIndex;
 
+      /// <summary>
+      /// Query context.
+      /// </summary>
       public string JsonContext
       {
         get
@@ -73059,6 +79688,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _pageOffset;
       private int _clientIndex;
 
+      /// <summary>
+      /// Encoded reference query context.
+      /// </summary>
       public string Context
       {
         get
@@ -73072,6 +79704,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Number of pages by which to offset the query.
+      /// </summary>
       public int PageOffset
       {
         get
@@ -73349,6 +79984,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _profileId;
       private int _clientIndex;
 
+      /// <summary>
+      /// User to read groups for
+      /// </summary>
       public string ProfileId
       {
         get
@@ -73604,6 +80242,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _groupId;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -73859,6 +80500,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _groupId;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -74114,6 +80758,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonContext;
       private int _clientIndex;
 
+      /// <summary>
+      /// Query context.
+      /// </summary>
       public string JsonContext
       {
         get
@@ -74370,6 +81017,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _pageOffset;
       private int _clientIndex;
 
+      /// <summary>
+      /// Encoded reference query context.
+      /// </summary>
       public string EncodedContext
       {
         get
@@ -74383,6 +81033,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Number of pages by which to offset the query.
+      /// </summary>
       public int PageOffset
       {
         get
@@ -74661,6 +81314,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _entityId;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -74674,6 +81330,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// ID of the entity.
+      /// </summary>
       public string EntityId
       {
         get
@@ -74951,6 +81610,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _groupId;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -75206,6 +81868,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _groupId;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -75462,6 +82127,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _profileId;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -75475,6 +82143,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Profile ID of the invitation being deleted.
+      /// </summary>
       public string ProfileId
       {
         get
@@ -75753,6 +82424,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _profileId;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -75766,6 +82440,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Profile ID of the member being deleted.
+      /// </summary>
       public string ProfileId
       {
         get
@@ -76045,6 +82722,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonData;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -76058,6 +82738,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Version to verify.
+      /// </summary>
       public long Version
       {
         get
@@ -76071,6 +82754,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Data to apply.
+      /// </summary>
       public string JsonData
       {
         get
@@ -76373,6 +83059,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonData;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -76386,6 +83075,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// ID of the entity.
+      /// </summary>
       public string EntityId
       {
         get
@@ -76399,6 +83091,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The current version of the group entity (for concurrency checking).
+      /// </summary>
       public long Version
       {
         get
@@ -76412,6 +83107,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Custom application data.
+      /// </summary>
       public string JsonData
       {
         get
@@ -76736,6 +83434,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonAttributes;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -76749,6 +83450,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Profile ID of the member being updated.
+      /// </summary>
       public string ProfileId
       {
         get
@@ -76763,6 +83467,7 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
+      /// Role of the member being updated (optional).
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.Role"/>
       /// </summary>
@@ -76779,6 +83484,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Attributes of the member being updated (optional).
+      /// </summary>
       public string JsonAttributes
       {
         get
@@ -77101,6 +83809,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _name;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of the group.
+      /// </summary>
       public string GroupId
       {
         get
@@ -77114,6 +83825,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Name to apply.
+      /// </summary>
       public string Name
       {
         get
@@ -77392,6 +84106,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _password;
       private int _clientIndex;
 
+      /// <summary>
+      /// The user's e-mail address
+      /// </summary>
       public string Email
       {
         get
@@ -77405,6 +84122,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The user's password
+      /// </summary>
       public string Password
       {
         get
@@ -77683,6 +84403,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _password;
       private int _clientIndex;
 
+      /// <summary>
+      /// The user's e-mail address
+      /// </summary>
       public string Email
       {
         get
@@ -77696,6 +84419,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The user's password
+      /// </summary>
       public string Password
       {
         get
@@ -77974,6 +84700,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _continueAnon;
       private int _clientIndex;
 
+      /// <summary>
+      /// The user's e-mail address
+      /// </summary>
       public string Email
       {
         get
@@ -77987,6 +84716,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Proceed even if the profile will revert to anonymous?
+      /// </summary>
       public bool ContinueAnon
       {
         get
@@ -78265,6 +84997,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _password;
       private int _clientIndex;
 
+      /// <summary>
+      /// The user's userId
+      /// </summary>
       public string UserId
       {
         get
@@ -78278,6 +85013,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The user's password
+      /// </summary>
       public string Password
       {
         get
@@ -78556,6 +85294,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _password;
       private int _clientIndex;
 
+      /// <summary>
+      /// The user's userId
+      /// </summary>
       public string UserId
       {
         get
@@ -78569,6 +85310,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The user's password
+      /// </summary>
       public string Password
       {
         get
@@ -78847,6 +85591,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _continueAnon;
       private int _clientIndex;
 
+      /// <summary>
+      /// The user's userId
+      /// </summary>
       public string UserId
       {
         get
@@ -78860,6 +85607,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Proceed even if the profile will revert to anonymous?
+      /// </summary>
       public bool ContinueAnon
       {
         get
@@ -79139,6 +85889,10 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _forceCreate;
       private int _clientIndex;
 
+      /// <summary>
+      /// The profileId of the child profile to switch to
+      /// If null and forceCreate is true a new profile will be created
+      /// </summary>
       public string ChildProfileId
       {
         get
@@ -79152,6 +85906,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The appId of the child game to switch to
+      /// </summary>
       public string ChildAppId
       {
         get
@@ -79165,6 +85922,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Should a new profile be created if it does not exist?
+      /// </summary>
       public bool ForceCreate
       {
         get
@@ -79465,6 +86225,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _forceCreate;
       private int _clientIndex;
 
+      /// <summary>
+      /// The App ID of the child game to switch to
+      /// </summary>
       public string ChildAppId
       {
         get
@@ -79478,6 +86241,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Should a new profile be created if one does not exist?
+      /// </summary>
       public bool ForceCreate
       {
         get
@@ -79759,6 +86525,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _forceCreate;
       private int _clientIndex;
 
+      /// <summary>
+      /// User ID
+      /// </summary>
       public string ExternalId
       {
         get
@@ -79772,6 +86541,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Password or client side token
+      /// </summary>
       public string AuthenticationToken
       {
         get
@@ -79785,6 +86557,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Type of authentication
+      /// </summary>
       public string AuthenticationType
       {
         get
@@ -79798,6 +86573,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional - if using AuthenticationType of external
+      /// </summary>
       public string ExternalAuthName
       {
         get
@@ -79811,6 +86589,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// If the profile does not exist, should it be created?
+      /// </summary>
       public bool ForceCreate
       {
         get
@@ -80154,6 +86935,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _parentLevelName;
       private int _clientIndex;
 
+      /// <summary>
+      /// The level of the parent to switch to
+      /// </summary>
       public string ParentLevelName
       {
         get
@@ -80628,6 +87412,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _includeSummaryData;
       private int _clientIndex;
 
+      /// <summary>
+      /// Whether to return the summary friend data along with this call
+      /// </summary>
       public bool IncludeSummaryData
       {
         get
@@ -81323,6 +88110,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _authenticationType;
       private int _clientIndex;
 
+      /// <summary>
+      /// User ID
+      /// </summary>
       public string ExternalId
       {
         get
@@ -81336,6 +88126,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Password or client side token
+      /// </summary>
       public string AuthenticationToken
       {
         get
@@ -81349,6 +88142,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Type of authentication
+      /// </summary>
       public string AuthenticationType
       {
         get
@@ -81653,6 +88449,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _forceCreate;
       private int _clientIndex;
 
+      /// <summary>
+      /// Name of the peer to connect to
+      /// </summary>
       public string Peer
       {
         get
@@ -81666,6 +88465,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// User ID
+      /// </summary>
       public string ExternalId
       {
         get
@@ -81679,6 +88481,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Password or client side token
+      /// </summary>
       public string AuthenticationToken
       {
         get
@@ -81692,6 +88497,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Type of authentication
+      /// </summary>
       public string AuthenticationType
       {
         get
@@ -81705,6 +88513,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional - if using AuthenticationType of external
+      /// </summary>
       public string ExternalAuthName
       {
         get
@@ -81718,6 +88529,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// If the profile does not exist, should it be created?
+      /// </summary>
       public bool ForceCreate
       {
         get
@@ -82083,6 +88897,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _peer;
       private int _clientIndex;
 
+      /// <summary>
+      /// Name of the peer to connect to
+      /// </summary>
       public string Peer
       {
         get
@@ -82572,6 +89389,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The email subject
+      /// </summary>
       public string Subject
       {
         get
@@ -82585,6 +89405,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The email body
+      /// </summary>
       public string Body
       {
         get
@@ -82898,6 +89721,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Parameters to send to the email service. See the documentation for
+      /// a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+      /// </summary>
       public string JsonServiceParams
       {
         get
@@ -83176,6 +90003,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonServiceParams;
       private int _clientIndex;
 
+      /// <summary>
+      /// The address to send the email to
+      /// </summary>
       public string EmailAddress
       {
         get
@@ -83189,6 +90019,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Parameters to send to the email service. See the documentation for
+      /// a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+      /// </summary>
       public string JsonServiceParams
       {
         get
@@ -83685,6 +90519,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private long _playerRating;
       private int _clientIndex;
 
+      /// <summary>
+      /// The new player rating.
+      /// </summary>
       public long PlayerRating
       {
         get
@@ -84159,6 +90996,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private long _increment;
       private int _clientIndex;
 
+      /// <summary>
+      /// The increment amount
+      /// </summary>
       public long Increment
       {
         get
@@ -84414,6 +91254,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private long _decrement;
       private int _clientIndex;
 
+      /// <summary>
+      /// The decrement amount
+      /// </summary>
       public long Decrement
       {
         get
@@ -84888,6 +91731,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _minutes;
       private int _clientIndex;
 
+      /// <summary>
+      /// Number of minutes to turn the shield on for
+      /// </summary>
       public int Minutes
       {
         get
@@ -85362,6 +92208,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _minutes;
       private int _clientIndex;
 
+      /// <summary>
+      /// Number of minutes to increase the shield time for
+      /// </summary>
       public int Minutes
       {
         get
@@ -85617,6 +92466,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _playerId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The player id or use null to retrieve for the current player
+      /// </summary>
       public string PlayerId
       {
         get
@@ -85873,6 +92725,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private long _numMatches;
       private int _clientIndex;
 
+      /// <summary>
+      /// The range delta
+      /// </summary>
       public long RangeDelta
       {
         get
@@ -85886,6 +92741,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The maximum number of matches to return
+      /// </summary>
       public long NumMatches
       {
         get
@@ -86165,6 +93023,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonAttributes;
       private int _clientIndex;
 
+      /// <summary>
+      /// The range delta
+      /// </summary>
       public long RangeDelta
       {
         get
@@ -86178,6 +93039,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The maximum number of matches to return
+      /// </summary>
       public long NumMatches
       {
         get
@@ -86191,6 +93055,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Attributes match criteria
+      /// </summary>
       public string JsonAttributes
       {
         get
@@ -86492,6 +93359,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonExtraParms;
       private int _clientIndex;
 
+      /// <summary>
+      /// The range delta
+      /// </summary>
       public long RangeDelta
       {
         get
@@ -86505,6 +93375,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The maximum number of matches to return
+      /// </summary>
       public long NumMatches
       {
         get
@@ -86518,6 +93391,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Parameters to pass to the CloudCode filter script
+      /// </summary>
       public string JsonExtraParms
       {
         get
@@ -86820,6 +93696,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonExtraParms;
       private int _clientIndex;
 
+      /// <summary>
+      /// The range delta
+      /// </summary>
       public long RangeDelta
       {
         get
@@ -86833,6 +93712,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The maximum number of matches to return
+      /// </summary>
       public long NumMatches
       {
         get
@@ -86846,6 +93728,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Attributes match criteria
+      /// </summary>
       public string JsonAttributes
       {
         get
@@ -86859,6 +93744,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Parameters to pass to the CloudCode filter script
+      /// </summary>
       public string JsonExtraParms
       {
         get
@@ -87619,6 +94507,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private long _rangeDelta;
       private int _clientIndex;
 
+      /// <summary>
+      /// The player to start a match with
+      /// </summary>
       public string OtherPlayerId
       {
         get
@@ -87632,6 +94523,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The range delta used for the initial match search
+      /// </summary>
       public long RangeDelta
       {
         get
@@ -87909,6 +94803,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _playbackStreamId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The playback stream id returned in the start match
+      /// </summary>
       public string PlaybackStreamId
       {
         get
@@ -88164,6 +95061,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _playbackStreamId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The playback stream id returned in the initial start match
+      /// </summary>
       public string PlaybackStreamId
       {
         get
@@ -88420,6 +95320,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _includeSharedData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The player to start a stream with
+      /// </summary>
       public string TargetPlayerId
       {
         get
@@ -88433,6 +95336,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Whether to include shared data in the stream
+      /// </summary>
       public bool IncludeSharedData
       {
         get
@@ -88710,6 +95616,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _playbackStreamId;
       private int _clientIndex;
 
+      /// <summary>
+      /// Identifies the stream to read
+      /// </summary>
       public string PlaybackStreamId
       {
         get
@@ -88965,6 +95874,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _playbackStreamId;
       private int _clientIndex;
 
+      /// <summary>
+      /// Identifies the stream to read
+      /// </summary>
       public string PlaybackStreamId
       {
         get
@@ -89220,6 +96132,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _playbackStreamId;
       private int _clientIndex;
 
+      /// <summary>
+      /// Identifies the stream to read
+      /// </summary>
       public string PlaybackStreamId
       {
         get
@@ -89477,6 +96392,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _summary;
       private int _clientIndex;
 
+      /// <summary>
+      /// Identifies the stream to read
+      /// </summary>
       public string PlaybackStreamId
       {
         get
@@ -89490,6 +96408,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Describes the event
+      /// </summary>
       public string EventData
       {
         get
@@ -89503,6 +96424,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Current summary data as of this event
+      /// </summary>
       public string Summary
       {
         get
@@ -89803,6 +96727,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _maxNumStreams;
       private int _clientIndex;
 
+      /// <summary>
+      /// The player that started the stream
+      /// </summary>
       public string InitiatingPlayerId
       {
         get
@@ -89816,6 +96743,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The player that started the stream
+      /// </summary>
       public int MaxNumStreams
       {
         get
@@ -90094,6 +97024,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _maxNumStreams;
       private int _clientIndex;
 
+      /// <summary>
+      /// The player that started the stream
+      /// </summary>
       public string TargetPlayerId
       {
         get
@@ -90107,6 +97040,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The player that started the stream
+      /// </summary>
       public int MaxNumStreams
       {
         get
@@ -91260,6 +98196,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _userName;
       private int _clientIndex;
 
+      /// <summary>
+      /// The name of the user
+      /// </summary>
       public string UserName
       {
         get
@@ -91515,6 +98454,15 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonSummaryData;
       private int _clientIndex;
 
+      /// <summary>
+      /// A JSON string defining the summary data.
+      /// For example:
+      /// {
+      ///   "xp":123,
+      ///   "level":12,
+      ///   "highScore":45123
+      /// }
+      /// </summary>
       public string JsonSummaryData
       {
         get
@@ -91990,6 +98938,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _wipeExisting;
       private int _clientIndex;
 
+      /// <summary>
+      /// Single layer json string that is a set of key-value pairs
+      /// </summary>
       public string JsonAttributes
       {
         get
@@ -92003,6 +98954,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Whether to wipe existing attributes prior to update.
+      /// </summary>
       public bool WipeExisting
       {
         get
@@ -92280,6 +99234,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private List<string> _attributeNames;
       private int _clientIndex;
 
+      /// <summary>
+      /// List of attribute names.
+      /// </summary>
       public List<string> AttributeNames
       {
         get
@@ -92552,6 +99509,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _pictureUrl;
       private int _clientIndex;
 
+      /// <summary>
+      /// URL to apply.
+      /// </summary>
       public string PictureUrl
       {
         get
@@ -92807,6 +99767,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _contactEmail;
       private int _clientIndex;
 
+      /// <summary>
+      /// Updated email
+      /// </summary>
       public string ContactEmail
       {
         get
@@ -93553,6 +100516,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _category;
       private int _clientIndex;
 
+      /// <summary>
+      /// The user statistics category
+      /// </summary>
       public string Category
       {
         get
@@ -94027,6 +100993,20 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The JSON encoded data to be sent to the server as follows:
+      /// {
+      ///   stat1: 10,
+      ///   stat2: -5.5,
+      /// }
+      /// would increment stat1 by 10 and decrement stat2 by 5.5.
+      /// For the full statistics grammer see the api.braincloudservers.com site.
+      /// There are many more complex operations supported such as:
+      /// {
+      ///   stat1:INC_TO_LIMIT#9#30
+      /// }
+      /// which increments stat1 by 9 up to a limit of 30.
+      /// </summary>
       public string JsonData
       {
         get
@@ -94282,6 +101262,21 @@ namespace Ruyi.SDK.BrainCloudApi
       private Dictionary<string, string> _dictData;
       private int _clientIndex;
 
+      /// <summary>
+      /// Stats name and their increments:
+      /// {
+      ///  {"stat1", 10},
+      ///  {"stat1", -5}
+      /// }
+      /// 
+      /// would increment stat1 by 10 and decrement stat2 by 5.
+      /// For the full statistics grammer see the api.braincloudservers.com site.
+      /// There are many more complex operations supported such as:
+      /// {
+      ///   stat1:INC_TO_LIMIT#9#30
+      /// }
+      /// which increments stat1 by 9 up to a limit of 30.
+      /// </summary>
       public Dictionary<string, string> DictData
       {
         get
@@ -94557,6 +101552,16 @@ namespace Ruyi.SDK.BrainCloudApi
       private Dictionary<string, string> _statisticsData;
       private int _clientIndex;
 
+      /// <summary>
+      /// Example data to be passed to method:
+      /// {
+      ///     "DEAD_CATS": "RESET",
+      ///     "LIVES_LEFT": "SET#9",
+      ///     "MICE_KILLED": "INC#2",
+      ///     "DOG_SCARE_BONUS_POINTS": "INC#10",
+      ///     "TREES_CLIMBED": 1
+      /// }
+      /// </summary>
       public Dictionary<string, string> StatisticsData
       {
         get
@@ -95051,6 +102056,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _xpValue;
       private int _clientIndex;
 
+      /// <summary>
+      /// The amount to increase the user's experience by
+      /// </summary>
       public int XpValue
       {
         get
@@ -95306,6 +102314,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _xpValue;
       private int _clientIndex;
 
+      /// <summary>
+      /// The amount to set the the player's experience to
+      /// </summary>
       public int XpValue
       {
         get
@@ -95852,6 +102863,19 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonData;
       private int _clientIndex;
 
+      /// <summary>
+      /// jsonData
+      /// [
+      ///   {
+      ///     "eventName": "event1",
+      ///     "eventMultiplier": 1
+      ///   },
+      ///   {
+      ///     "eventName": "event2",
+      ///     "eventMultiplier": 1
+      ///   }
+      /// ]
+      /// </summary>
       public string JsonData
       {
         get
@@ -96107,6 +103131,10 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _currencyType;
       private int _clientIndex;
 
+      /// <summary>
+      /// The currency type to retrieve or null
+      /// if all currency types are being requested.
+      /// </summary>
       public string CurrencyType
       {
         get
@@ -96363,6 +103391,16 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _userCurrency;
       private int _clientIndex;
 
+      /// <summary>
+      /// The store platform. Valid stores are:
+      /// - itunes
+      /// - facebook
+      /// - appworld
+      /// - steam
+      /// - windows
+      /// - windowsPhone
+      /// - googlePlay
+      /// </summary>
       public string Platform
       {
         get
@@ -96376,6 +103414,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The currency to retrieve the sales
+      /// inventory for. This is only used for Steam and Facebook stores.
+      /// </summary>
       public string UserCurrency
       {
         get
@@ -96655,6 +103697,16 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _category;
       private int _clientIndex;
 
+      /// <summary>
+      /// The store platform. Valid stores are:
+      /// - itunes
+      /// - facebook
+      /// - appworld
+      /// - steam
+      /// - windows
+      /// - windowsPhone
+      /// - googlePlay
+      /// </summary>
       public string Platform
       {
         get
@@ -96668,6 +103720,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The currency to retrieve the sales
+      /// inventory for. This is only used for Steam and Facebook stores.
+      /// </summary>
       public string UserCurrency
       {
         get
@@ -96681,6 +103737,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The product category
+      /// </summary>
       public string Category
       {
         get
@@ -96980,6 +104039,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _receipt;
       private int _clientIndex;
 
+      /// <summary>
+      /// Receipt XML
+      /// </summary>
       public string Receipt
       {
         get
@@ -97454,6 +104516,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _base64EncReceiptData;
       private int _clientIndex;
 
+      /// <summary>
+      /// Base64 encoded receipt data
+      /// </summary>
       public string Base64EncReceiptData
       {
         get
@@ -97713,6 +104778,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _flagUrls;
       private int _clientIndex;
 
+      /// <summary>
+      /// The text to check
+      /// </summary>
       public string Text
       {
         get
@@ -97726,6 +104794,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional comma delimited list of two character language codes
+      /// </summary>
       public string Languages
       {
         get
@@ -97739,6 +104810,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional processing of email addresses
+      /// </summary>
       public bool FlagEmail
       {
         get
@@ -97752,6 +104826,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional processing of phone numbers
+      /// </summary>
       public bool FlagPhone
       {
         get
@@ -97765,6 +104842,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional processing of urls
+      /// </summary>
       public bool FlagUrls
       {
         get
@@ -98113,6 +105193,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _flagUrls;
       private int _clientIndex;
 
+      /// <summary>
+      /// The text to check
+      /// </summary>
       public string Text
       {
         get
@@ -98126,6 +105209,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The text to replace individual characters of profanity text with
+      /// </summary>
       public string ReplaceSymbol
       {
         get
@@ -98139,6 +105225,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional comma delimited list of two character language codes
+      /// </summary>
       public string Languages
       {
         get
@@ -98152,6 +105241,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional processing of email addresses
+      /// </summary>
       public bool FlagEmail
       {
         get
@@ -98165,6 +105257,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional processing of phone numbers
+      /// </summary>
       public bool FlagPhone
       {
         get
@@ -98178,6 +105273,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional processing of urls
+      /// </summary>
       public bool FlagUrls
       {
         get
@@ -98547,6 +105645,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _flagUrls;
       private int _clientIndex;
 
+      /// <summary>
+      /// The text to check
+      /// </summary>
       public string Text
       {
         get
@@ -98560,6 +105661,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional comma delimited list of two character language codes
+      /// </summary>
       public string Languages
       {
         get
@@ -98573,6 +105677,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional processing of email addresses
+      /// </summary>
       public bool FlagEmail
       {
         get
@@ -98586,6 +105693,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional processing of phone numbers
+      /// </summary>
       public bool FlagPhone
       {
         get
@@ -98599,6 +105709,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional processing of urls
+      /// </summary>
       public bool FlagUrls
       {
         get
@@ -99162,6 +106275,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _token;
       private int _clientIndex;
 
+      /// <summary>
+      /// The device platform being registered.
+      /// </summary>
       public string Platform
       {
         get
@@ -99175,6 +106291,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The platform-dependant device token needed for push notifications.
+      /// </summary>
       public string Token
       {
         get
@@ -99466,6 +106585,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The platform-dependant device token needed for push notifications.
+      /// </summary>
       public string Token
       {
         get
@@ -99744,6 +106866,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _message;
       private int _clientIndex;
 
+      /// <summary>
+      /// The braincloud profileId of the user to receive the notification
+      /// </summary>
       public string ToProfileId
       {
         get
@@ -99757,6 +106882,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Text of the push notification
+      /// </summary>
       public string Message
       {
         get
@@ -100035,6 +107163,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _notificationTemplateId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The braincloud profileId of the user to receive the notification
+      /// </summary>
       public string ToProfileId
       {
         get
@@ -100048,6 +107179,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Id of the notification template
+      /// </summary>
       public int NotificationTemplateId
       {
         get
@@ -100327,6 +107461,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _substitutionJson;
       private int _clientIndex;
 
+      /// <summary>
+      /// The braincloud profileId of the user to receive the notification
+      /// </summary>
       public string ToProfileId
       {
         get
@@ -100340,6 +107477,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Id of the notification template
+      /// </summary>
       public int NotificationTemplateId
       {
         get
@@ -100353,6 +107493,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// JSON defining the substitution params to use with the template
+      /// </summary>
       public string SubstitutionJson
       {
         get
@@ -100654,6 +107797,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _substitutionsJson;
       private int _clientIndex;
 
+      /// <summary>
+      /// Target group
+      /// </summary>
       public string GroupId
       {
         get
@@ -100667,6 +107813,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Id of the notification template
+      /// </summary>
       public int NotificationTemplateId
       {
         get
@@ -100680,6 +107829,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// JSON defining the substitution params to use with the template
+      /// </summary>
       public string SubstitutionsJson
       {
         get
@@ -100981,6 +108133,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _customDataJson;
       private int _clientIndex;
 
+      /// <summary>
+      /// Target group
+      /// </summary>
       public string GroupId
       {
         get
@@ -100994,6 +108149,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Body and title of alert
+      /// </summary>
       public string AlertContentJson
       {
         get
@@ -101007,6 +108165,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional custom data
+      /// </summary>
       public string CustomDataJson
       {
         get
@@ -101310,6 +108471,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _startTime;
       private int _clientIndex;
 
+      /// <summary>
+      /// The profileId of the user to receive the notification
+      /// </summary>
       public string ProfileId
       {
         get
@@ -101323,6 +108487,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Valid Fcm data content
+      /// </summary>
       public string FcmContent
       {
         get
@@ -101336,6 +108503,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Valid ios data content
+      /// </summary>
       public string IosContent
       {
         get
@@ -101349,6 +108519,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Facebook template string
+      /// </summary>
       public string FacebookContent
       {
         get
@@ -101362,6 +108535,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Start time of sending the push notification
+      /// </summary>
       public int StartTime
       {
         get
@@ -101709,6 +108885,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _minutesFromNow;
       private int _clientIndex;
 
+      /// <summary>
+      /// The profileId of the user to receive the notification
+      /// </summary>
       public string ProfileId
       {
         get
@@ -101722,6 +108901,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Valid Fcm data content
+      /// </summary>
       public string FcmContent
       {
         get
@@ -101735,6 +108917,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Valid ios data content
+      /// </summary>
       public string IosContent
       {
         get
@@ -101748,6 +108933,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Facebook template string
+      /// </summary>
       public string FacebookContent
       {
         get
@@ -101761,6 +108949,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Minutes from now to send the push notification
+      /// </summary>
       public int MinutesFromNow
       {
         get
@@ -102107,6 +109298,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _facebookContent;
       private int _clientIndex;
 
+      /// <summary>
+      /// The profileId of the user to receive the notification
+      /// </summary>
       public string ToProfileId
       {
         get
@@ -102120,6 +109314,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Valid Fcm data content
+      /// </summary>
       public string FcmContent
       {
         get
@@ -102133,6 +109330,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Valid ios data content
+      /// </summary>
       public string IosContent
       {
         get
@@ -102146,6 +109346,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Facebook template string
+      /// </summary>
       public string FacebookContent
       {
         get
@@ -102470,6 +109673,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _facebookContent;
       private int _clientIndex;
 
+      /// <summary>
+      /// Collection of profile IDs to send the notification to
+      /// </summary>
       public List<string> ProfileIds
       {
         get
@@ -102483,6 +109689,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Valid Fcm data content
+      /// </summary>
       public string FcmContent
       {
         get
@@ -102496,6 +109705,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Valid ios data content
+      /// </summary>
       public string IosContent
       {
         get
@@ -102509,6 +109721,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Facebook template string
+      /// </summary>
       public string FacebookContent
       {
         get
@@ -102850,6 +110065,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _facebookContent;
       private int _clientIndex;
 
+      /// <summary>
+      /// Target group
+      /// </summary>
       public string GroupId
       {
         get
@@ -102863,6 +110081,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Valid Fcm data content
+      /// </summary>
       public string FcmContent
       {
         get
@@ -102876,6 +110097,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Valid ios data content
+      /// </summary>
       public string IosContent
       {
         get
@@ -102889,6 +110113,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Facebook template string
+      /// </summary>
       public string FacebookContent
       {
         get
@@ -103213,6 +110440,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _startTime;
       private int _clientIndex;
 
+      /// <summary>
+      /// The profileId of the user to receive the notification
+      /// </summary>
       public string ProfileId
       {
         get
@@ -103226,6 +110456,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Body and title of alert
+      /// </summary>
       public string AlertContentJson
       {
         get
@@ -103239,6 +110472,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional custom data
+      /// </summary>
       public string CustomDataJson
       {
         get
@@ -103252,6 +110488,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Start time of sending the push notification
+      /// </summary>
       public int StartTime
       {
         get
@@ -103576,6 +110815,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _minutesFromNow;
       private int _clientIndex;
 
+      /// <summary>
+      /// The profileId of the user to receive the notification
+      /// </summary>
       public string ProfileId
       {
         get
@@ -103589,6 +110831,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Body and title of alert
+      /// </summary>
       public string AlertContentJson
       {
         get
@@ -103602,6 +110847,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional custom data
+      /// </summary>
       public string CustomDataJson
       {
         get
@@ -103615,6 +110863,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Minutes from now to send the push notification
+      /// </summary>
       public int MinutesFromNow
       {
         get
@@ -103939,6 +111190,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _startTime;
       private int _clientIndex;
 
+      /// <summary>
+      /// The profileId of the user to receive the notification
+      /// </summary>
       public string ProfileId
       {
         get
@@ -103952,6 +111206,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Body and title of alert
+      /// </summary>
       public int NotificationTemplateId
       {
         get
@@ -103965,6 +111222,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional custom data
+      /// </summary>
       public string SubstitutionsJson
       {
         get
@@ -103978,6 +111238,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Start time of sending the push notification
+      /// </summary>
       public int StartTime
       {
         get
@@ -104302,6 +111565,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _minutesFromNow;
       private int _clientIndex;
 
+      /// <summary>
+      /// The profileId of the user to receive the notification
+      /// </summary>
       public string ProfileId
       {
         get
@@ -104315,6 +111581,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Body and title of alert
+      /// </summary>
       public int NotificationTemplateId
       {
         get
@@ -104328,6 +111597,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional custom data
+      /// </summary>
       public string SubstitutionsJson
       {
         get
@@ -104341,6 +111613,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Minutes from now to send the push notification
+      /// </summary>
       public int MinutesFromNow
       {
         get
@@ -104664,6 +111939,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _customDataJson;
       private int _clientIndex;
 
+      /// <summary>
+      /// The profileId of the user to receive the notification
+      /// </summary>
       public string ToProfileId
       {
         get
@@ -104677,6 +111955,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Body and title of alert
+      /// </summary>
       public string AlertContentJson
       {
         get
@@ -104690,6 +111971,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional custom data
+      /// </summary>
       public string CustomDataJson
       {
         get
@@ -104991,6 +112275,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _customDataJson;
       private int _clientIndex;
 
+      /// <summary>
+      /// Collection of profile IDs to send the notification to
+      /// </summary>
       public List<string> ProfileIds
       {
         get
@@ -105004,6 +112291,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Body and title of alert
+      /// </summary>
       public string AlertContentJson
       {
         get
@@ -105017,6 +112307,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional custom data
+      /// </summary>
       public string CustomDataJson
       {
         get
@@ -105334,6 +112627,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonScriptData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The name of the script to be run
+      /// </summary>
       public string ScriptName
       {
         get
@@ -105347,6 +112643,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Data to be sent to the script in json format
+      /// </summary>
       public string JsonScriptData
       {
         get
@@ -105626,6 +112925,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private long _startDateInUTC;
       private int _clientIndex;
 
+      /// <summary>
+      /// Name of script
+      /// </summary>
       public string ScriptName
       {
         get
@@ -105639,6 +112941,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// JSON bundle to pass to script
+      /// </summary>
       public string JsonScriptData
       {
         get
@@ -105652,6 +112957,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The start date as a DateTime object
+      /// </summary>
       public long StartDateInUTC
       {
         get
@@ -105953,6 +113261,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private long _minutesFromNow;
       private int _clientIndex;
 
+      /// <summary>
+      /// Name of script
+      /// </summary>
       public string ScriptName
       {
         get
@@ -105966,6 +113277,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// JSON bundle to pass to script
+      /// </summary>
       public string JsonScriptData
       {
         get
@@ -105979,6 +113293,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Number of minutes from now to run script
+      /// </summary>
       public long MinutesFromNow
       {
         get
@@ -106280,6 +113597,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _parentLevel;
       private int _clientIndex;
 
+      /// <summary>
+      /// Name of script
+      /// </summary>
       public string ScriptName
       {
         get
@@ -106293,6 +113613,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// JSON bundle to pass to script
+      /// </summary>
       public string JsonScriptData
       {
         get
@@ -106306,6 +113629,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The level name of the parent to run the script from
+      /// </summary>
       public string ParentLevel
       {
         get
@@ -106605,6 +113931,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jobId;
       private int _clientIndex;
 
+      /// <summary>
+      /// ID of script job to cancel
+      /// </summary>
       public string JobId
       {
         get
@@ -106862,6 +114191,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _peer;
       private int _clientIndex;
 
+      /// <summary>
+      /// The name of the script to run
+      /// </summary>
       public string ScriptName
       {
         get
@@ -106875,6 +114207,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// JSON data to pass into the script
+      /// </summary>
       public string JsonScriptData
       {
         get
@@ -106888,6 +114223,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Identifies the peer
+      /// </summary>
       public string Peer
       {
         get
@@ -107189,6 +114527,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _peer;
       private int _clientIndex;
 
+      /// <summary>
+      /// The name of the script to run
+      /// </summary>
       public string ScriptName
       {
         get
@@ -107202,6 +114543,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// JSON data to pass into the script
+      /// </summary>
       public string JsonScriptData
       {
         get
@@ -107215,6 +114559,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Identifies the peer
+      /// </summary>
       public string Peer
       {
         get
@@ -107515,6 +114862,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _replaceName;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the leaderboard to retrieve
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -107528,6 +114878,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// If true, the currently logged in player's name will be replaced
+      /// by the string "You".
+      /// </summary>
       public bool ReplaceName
       {
         get
@@ -107807,6 +115161,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _replaceName;
       private int _clientIndex;
 
+      /// <summary>
+      /// Array of leaderboard id strings
+      /// </summary>
       public List<string> LeaderboardIds
       {
         get
@@ -107820,6 +115177,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Maximum count of entries to return for each leaderboard.
+      /// </summary>
       public int LeaderboardResultCount
       {
         get
@@ -107833,6 +115193,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// If true, the currently logged in player's name will be replaced
+      /// by the string "You".
+      /// </summary>
       public bool ReplaceName
       {
         get
@@ -108152,6 +115516,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _endIndex;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the leaderboard to retrieve.
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -108166,6 +115533,7 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
+      /// Sort key Sort order of page.
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.SortOrder"/>
       /// </summary>
@@ -108182,6 +115550,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The index at which to start the page.
+      /// </summary>
       public int StartIndex
       {
         get
@@ -108195,6 +115566,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The index at which to end the page.
+      /// </summary>
       public int EndIndex
       {
         get
@@ -108520,6 +115894,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _versionId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the leaderboard to retrieve.
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -108534,6 +115911,7 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
+      /// Sort key Sort order of page.
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.SortOrder"/>
       /// </summary>
@@ -108550,6 +115928,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The index at which to start the page.
+      /// </summary>
       public int StartIndex
       {
         get
@@ -108563,6 +115944,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The index at which to end the page.
+      /// </summary>
       public int EndIndex
       {
         get
@@ -108576,6 +115960,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The historical version to retrieve.
+      /// </summary>
       public int VersionId
       {
         get
@@ -108922,6 +116309,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _afterCount;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the leaderboard to retrieve.
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -108936,6 +116326,7 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
+      /// Sort key Sort order of page.
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.SortOrder"/>
       /// </summary>
@@ -108952,6 +116343,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The count of number of players before the current player to include.
+      /// </summary>
       public int BeforeCount
       {
         get
@@ -108965,6 +116359,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The count of number of players after the current player to include.
+      /// </summary>
       public int AfterCount
       {
         get
@@ -109290,6 +116687,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _versionId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The id of the leaderboard to retrieve.
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -109304,6 +116704,7 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
+      /// Sort key Sort order of page.
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.SortOrder"/>
       /// </summary>
@@ -109320,6 +116721,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The count of number of players before the current player to include.
+      /// </summary>
       public int BeforeCount
       {
         get
@@ -109333,6 +116737,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The count of number of players after the current player to include.
+      /// </summary>
       public int AfterCount
       {
         get
@@ -109346,6 +116753,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The historial version to retrieve. Use -1 for current leaderboard.
+      /// </summary>
       public int VersionId
       {
         get
@@ -109689,6 +117099,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _leaderboardId;
       private int _clientIndex;
 
+      /// <summary>
+      /// In_leaderboard identifier.
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -109945,6 +117358,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _groupId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The leaderboard to read
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -109958,6 +117374,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The group ID
+      /// </summary>
       public string GroupId
       {
         get
@@ -110237,6 +117656,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonData;
       private int _clientIndex;
 
+      /// <summary>
+      /// The leaderboard to post to
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -110250,6 +117672,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The score to post
+      /// </summary>
       public long Score
       {
         get
@@ -110563,6 +117988,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _versionId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The ID of the leaderboard
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -110576,6 +118004,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The version of the leaderboard
+      /// </summary>
       public int VersionId
       {
         get
@@ -110859,6 +118290,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _retainedCount;
       private int _clientIndex;
 
+      /// <summary>
+      /// The leaderboard to post to
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -110872,6 +118306,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The score to post
+      /// </summary>
       public long Score
       {
         get
@@ -110899,6 +118336,7 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
+      /// leaderboard type
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.SocialLeaderboardType"/>
       /// </summary>
@@ -110916,6 +118354,7 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
+      /// Type of rotation
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.RotationType"/>
       /// </summary>
@@ -110932,6 +118371,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Date to reset the leaderboard UTC
+      /// </summary>
       public long RotationReset
       {
         get
@@ -110945,6 +118387,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// How many rotations to keep
+      /// </summary>
       public int RetainedCount
       {
         get
@@ -111338,6 +118783,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _numDaysToRotate;
       private int _clientIndex;
 
+      /// <summary>
+      /// The leaderboard to post to
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -111351,6 +118799,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The score to post
+      /// </summary>
       public long Score
       {
         get
@@ -111378,6 +118829,7 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
+      /// leaderboard type
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.SocialLeaderboardType"/>
       /// </summary>
@@ -111394,6 +118846,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Date to reset the leaderboard UTC
+      /// </summary>
       public long RotationReset
       {
         get
@@ -111407,6 +118862,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// How many rotations to keep
+      /// </summary>
       public int RetainedCount
       {
         get
@@ -111420,6 +118878,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// How many days between each rotation
+      /// </summary>
       public int NumDaysToRotate
       {
         get
@@ -111808,6 +119269,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private List<string> _profileIds;
       private int _clientIndex;
 
+      /// <summary>
+      /// The ID of the leaderboard
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -111821,6 +119285,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The IDs of the players
+      /// </summary>
       public List<string> ProfileIds
       {
         get
@@ -112334,6 +119801,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _leaderboardId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The ID of the leaderboard
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -112590,6 +120060,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _versionId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The ID of the leaderboard
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -112603,6 +120076,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The version of the leaderboard
+      /// </summary>
       public int VersionId
       {
         get
@@ -112881,6 +120357,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _versionId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The ID of the leaderboard
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -112894,6 +120373,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The version of the leaderboard. Use -1 for current.
+      /// </summary>
       public int VersionId
       {
         get
@@ -113171,6 +120653,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private List<string> _leaderboardIds;
       private int _clientIndex;
 
+      /// <summary>
+      /// A collection of leaderboardIds to retrieve scores from
+      /// </summary>
       public List<string> LeaderboardIds
       {
         get
@@ -113663,6 +121148,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _versionId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The leaderboard for the tournament
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -113676,6 +121164,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Version of the tournament to claim rewards for.
+      /// Use -1 for the latest version.
+      /// </summary>
       public int VersionId
       {
         get
@@ -113954,6 +121446,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _versionId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The leaderboard for the tournament
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -113967,6 +121462,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Version of the tournament. Use -1 for the latest version.
+      /// </summary>
       public int VersionId
       {
         get
@@ -114246,6 +121744,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private long _initialScore;
       private int _clientIndex;
 
+      /// <summary>
+      /// The leaderboard for the tournament
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -114259,6 +121760,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Tournament to join
+      /// </summary>
       public string TournamentCode
       {
         get
@@ -114272,6 +121776,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The initial score for players first joining a tournament
+      /// Usually 0, unless leaderboard is LOW_VALUE
+      /// </summary>
       public long InitialScore
       {
         get
@@ -114571,6 +122079,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _leaderboardId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The leaderboard for the tournament
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -114829,6 +122340,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private long _roundStartedTime;
       private int _clientIndex;
 
+      /// <summary>
+      /// The leaderboard for the tournament
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -114842,6 +122356,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The score to post
+      /// </summary>
       public long Score
       {
         get
@@ -114855,6 +122372,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional data attached to the leaderboard entry
+      /// </summary>
       public string JsonData
       {
         get
@@ -114868,6 +122388,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Time the user started the match resulting in the score
+      /// being posted.
+      /// </summary>
       public long RoundStartedTime
       {
         get
@@ -115196,6 +122720,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private long _initialScore;
       private int _clientIndex;
 
+      /// <summary>
+      /// The leaderboard for the tournament
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -115209,6 +122736,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The score to post
+      /// </summary>
       public long Score
       {
         get
@@ -115222,6 +122752,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Optional data attached to the leaderboard entry
+      /// </summary>
       public string JsonData
       {
         get
@@ -115235,6 +122768,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Time the user started the match resulting in the score
+      /// being posted.
+      /// </summary>
       public long RoundStartedTime
       {
         get
@@ -115249,6 +122786,7 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
+      /// Sort key Sort order of page.
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.SortOrder"/>
       /// </summary>
@@ -115265,6 +122803,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The count of number of players before the current player to include.
+      /// </summary>
       public int BeforeCount
       {
         get
@@ -115278,6 +122819,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The count of number of players after the current player to include.
+      /// </summary>
       public int AfterCount
       {
         get
@@ -115291,6 +122835,10 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// The initial score for players first joining a tournament
+      /// Usually 0, unless leaderboard is LOW_VALUE
+      /// </summary>
       public long InitialScore
       {
         get
@@ -115700,6 +123248,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _leaderboardId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The leaderboard for the tournament
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -115956,6 +123507,9 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _versionId;
       private int _clientIndex;
 
+      /// <summary>
+      /// The leaderboard for the tournament
+      /// </summary>
       public string LeaderboardId
       {
         get
@@ -115969,6 +123523,9 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
+      /// <summary>
+      /// Version of the tournament. Use -1 for the latest version.
+      /// </summary>
       public int VersionId
       {
         get
