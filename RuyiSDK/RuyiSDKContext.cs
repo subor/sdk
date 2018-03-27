@@ -45,7 +45,7 @@
         /// <summary>
         /// Specify which SDK features should be enabled.  Default is all features enabled.
         /// </summary>
-        public RuyiSDK.Features EnabledFeatures { get; set; } = RuyiSDK.Features.All;
+        public RuyiSDK.SDKFeatures EnabledFeatures { get; set; } = RuyiSDK.SDKFeatures.All;
 
         /// <summary>
         /// Port to connect to for low-latency messages.  Leave as zero to use default.

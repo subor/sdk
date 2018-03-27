@@ -24,7 +24,7 @@ namespace Ruyi
         /// Flags specifying which SDK features to initialize
         /// </summary>
         [Flags]
-        public enum Features
+        public enum SDKFeatures
         {
             /// <summary>
             /// No SDK features
@@ -60,9 +60,14 @@ namespace Ruyi
             Media = 1 << 6,
 
             /// <summary>
+            /// Initialize subscriber for publisher/subscriber messaging
+            /// </summary>
+            Subscriber = 1 << 16,
+
+            /// <summary>
             /// Most important SDK features (key layer0 services)
             /// </summary>
-            Basic = Online | Settings | Users | Input,
+            Basic = Online | Settings | Users | Input | Subscriber,
 
             /// <summary>
             /// All SDK features
@@ -175,18 +180,21 @@ namespace Ruyi
                 return false;
 
             // init subscriber
-            var pubout = ConstantsSDKDataTypesConstants.layer0_publisher_out_uri.SetAddress(context.RemoteAddress);
-            Subscriber = SubscribeClient.CreateInstance(pubout);
+            if (IsFeatureEnabled(SDKFeatures.Subscriber))
+            {
+                var pubout = ConstantsSDKDataTypesConstants.layer0_publisher_out_uri.SetAddress(context.RemoteAddress);
+                Subscriber = SubscribeClient.CreateInstance(pubout);
+            }
 
             // init storage layer
-            if (IsFeatureEnabled(Features.Storage))
+            if (IsFeatureEnabled(SDKFeatures.Storage))
             {
                 var stoProtocol = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.STORAGELAYER.ServiceID());
                 Storage = new StorageLayerService.Client(stoProtocol);
             }
 
             // init braincloud service
-            if (IsFeatureEnabled(Features.Online))
+            if (IsFeatureEnabled(SDKFeatures.Online))
             {
                 var bcProtocol = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.BCSERVICE.ServiceID());
                 RuyiNetService = new RuyiNetClient(bcProtocol, Storage);
@@ -194,21 +202,21 @@ namespace Ruyi
             }
 
             // init setting system
-            if (IsFeatureEnabled(Features.Settings))
+            if (IsFeatureEnabled(SDKFeatures.Settings))
             {
                 var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.L0SETTINGSYSTEM_EXTERNAL.ServiceID());
                 SettingSys = new Ruyi.SDK.SettingSystem.Api.SettingSystemService.Client(proto);
             }
 
             // init L10N
-            if (IsFeatureEnabled(Features.L10N))
+            if (IsFeatureEnabled(SDKFeatures.L10N))
             {
                 var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.L10NSERVICE.ServiceID());
                 L10NService = new LocalizationService.Client(proto);
             }
 
             // user manager
-            if (IsFeatureEnabled(Features.Users))
+            if (IsFeatureEnabled(SDKFeatures.Users))
             {
                 var proto = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.USER_SERVICE_EXTERNAL.ServiceID());
                 UserService = new UserServExternal.Client(proto);
@@ -221,7 +229,7 @@ namespace Ruyi
             //    InputMgr = new InputMgrExternal.Client(proto);
             //}
 
-            if (IsFeatureEnabled(Features.Media))
+            if (IsFeatureEnabled(SDKFeatures.Media))
             {
                 var proto = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.MEDIA.ServiceID());
                 Media = new MediaService.Client(proto);
@@ -230,9 +238,9 @@ namespace Ruyi
             return true;
         }
 
-        bool IsFeatureEnabled(Features fea)
+        bool IsFeatureEnabled(SDKFeatures fea)
         {
-            return ((int)context.EnabledFeatures & (int)fea) != 0;
+            return context.EnabledFeatures.HasFlag(fea);
         }
 
         bool ValidateVersion()
