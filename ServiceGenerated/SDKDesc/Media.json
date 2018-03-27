@@ -63,8 +63,7 @@
         "struct.PlayMsg": {
             "name": "PlayMsg",
             "category": {
-                "type": "SDKDataTypes",
-                "typeName": null
+                "type": "SDKDataTypes"
             },
             "parameters": {
                 "url": {
@@ -76,8 +75,7 @@
         "struct.PauseMsg": {
             "name": "PauseMsg",
             "category": {
-                "type": "SDKDataTypes",
-                "typeName": null
+                "type": "SDKDataTypes"
             },
             "parameters": {
                 "url": {
@@ -90,7 +88,6 @@
             "name": "StopMsg",
             "category": {
                 "type": "SDKDataTypes",
-                "typeName": null
             },
             "parameters": {
                 "name": {
@@ -169,9 +166,10 @@
                 }
 			},
             "responses": {
-                "status": {
+                "httpstatuscode": {
                     "type": "int"
-                }
+                },
+                "description": "@Media_SendMsg_Responses"
             }
         },
         "struct.MediaFile":{
