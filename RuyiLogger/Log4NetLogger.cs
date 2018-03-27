@@ -27,31 +27,34 @@ namespace RuyiLogger
                 return;
 
             logLevel = lv;
-            if (lv == LogLevel.Debug)
-                repo.Root.Level = Level.Debug;
-            if (lv == LogLevel.Info)
-                repo.Root.Level = Level.Info;
-            if (lv == LogLevel.Warn)
-                repo.Root.Level = Level.Warn;
-            if (lv == LogLevel.Error)
-                repo.Root.Level = Level.Error;
-            if (lv == LogLevel.Fatal)
-                repo.Root.Level = Level.Fatal;
+            switch (lv)
+            {
+                case LogLevel.Debug: repo.Root.Level = Level.Debug; break;
+                case LogLevel.Info: repo.Root.Level = Level.Info; break;
+                case LogLevel.Warn: repo.Root.Level = Level.Warn; break;
+                case LogLevel.Error: repo.Root.Level = Level.Error; break;
+                case LogLevel.Fatal: repo.Root.Level = Level.Fatal; break;
+                default:
+                    // OOPS
+                    break;
+            }
+            
             repo.RaiseConfigurationChanged(EventArgs.Empty);
         }
 
         public void Log(LoggerMessage msg)
         {
-            if (msg.Level == LogLevel.Debug)
-                logger.Debug(msg);
-            if (msg.Level == LogLevel.Info)
-                logger.Info(msg);
-            if (msg.Level == LogLevel.Warn)
-                logger.Warn(msg);
-            if (msg.Level == LogLevel.Error)
-                logger.Error(msg);
-            if (msg.Level == LogLevel.Fatal)
-                logger.Fatal(msg);
+            switch (msg.Level)
+            {
+                case LogLevel.Debug: logger.Debug(msg); break;
+                case LogLevel.Info: logger.Info(msg); break;
+                case LogLevel.Warn: logger.Warn(msg); break;
+                case LogLevel.Fatal: logger.Fatal(msg); break;
+                case LogLevel.Error:
+                default:
+                    logger.Error(msg);
+                    break;
+            }
         }
     }
 

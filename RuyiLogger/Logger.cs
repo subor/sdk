@@ -60,5 +60,16 @@ namespace RuyiLogger
                 ruyiLoggers[i].Log(msg);
         }
 
+        static public void Log(string message, LogLevel level = LogLevel.Debug, MessageCategory category = MessageCategory.Unknown, string source = null, string topic = null)
+        {
+            Log(new LoggerMessage
+            {
+                Level = level,
+                Category = category,
+                MsgSource = source,
+                Topic = topic,
+                Message = message,
+            });
+        }
     }
 }
