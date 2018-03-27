@@ -40,9 +40,9 @@ namespace Layer0
                     {
                         Logger.Log(new LoggerMessage()
                         {
-                            level = LogLevel.Warn,
-                            message = "connection error, try to reconnect",
-                            category = MessageCategory.Framework,
+                            Level = LogLevel.Warn,
+                            Message = "connection error, try to reconnect",
+                            Category = MessageCategory.Framework,
                         });
                         needReconnect = true;
                     }
@@ -54,9 +54,9 @@ namespace Layer0
                     {
                         Logger.Log(new LoggerMessage()
                         {
-                            level = LogLevel.Error,
-                            message = $"Connection Error, after tried for {ConnectRetryTimesMax} times to reconnect, give up",
-                            category = MessageCategory.Framework,
+                            Level = LogLevel.Error,
+                            Message = $"Connection Error, after tried for {ConnectRetryTimesMax} times to reconnect, give up",
+                            Category = MessageCategory.Framework,
                         });
 
                         // reset retry times, so we can actually retry to connect at next send.
@@ -79,9 +79,9 @@ namespace Layer0
                     {
                         Logger.Log(new LoggerMessage()
                         {
-                            level = LogLevel.Error,
-                            message = e.Message,
-                            category = MessageCategory.Framework,
+                            Level = LogLevel.Error,
+                            Message = e.Message,
+                            Category = MessageCategory.Framework,
                         });
                     }
                 }

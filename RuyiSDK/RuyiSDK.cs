@@ -246,9 +246,9 @@ namespace Ruyi
             {
                 Logger.Log(new LoggerMessage()
                 {
-                    level = LogLevel.Fatal,
+                    Level = LogLevel.Fatal,
                     MsgSource = "SDK",
-                    message = $"SDK version {ver} != ruyi version: {valid}"
+                    Message = $"SDK version {ver} != ruyi version: {valid}"
                 });
                 return false;
             }
@@ -256,18 +256,18 @@ namespace Ruyi
             {
                 Logger.Log(new LoggerMessage()
                 {
-                    level = LogLevel.Warn,
+                    Level = LogLevel.Warn,
                     MsgSource = "SDK",
-                    message = $"SDK version {ver} != ruyi version: {valid}",
+                    Message = $"SDK version {ver} != ruyi version: {valid}",
                 });
             }
             else
             {
                 Logger.Log(new LoggerMessage()
                 {
-                    level = LogLevel.Info,
+                    Level = LogLevel.Info,
                     MsgSource = "SDK",
-                    message = "SDK version validated.",
+                    Message = "SDK version validated.",
                 });
             }
 

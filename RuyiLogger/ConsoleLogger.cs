@@ -25,7 +25,7 @@ namespace RuyiLogger
             else if (logLevelStr == silent)
                 return false;
 
-            return (int)msg.level >= (int)logLevel;
+            return (int)msg.Level >= (int)logLevel;
         }
 
         public void SetLogLevel(string lvl)
