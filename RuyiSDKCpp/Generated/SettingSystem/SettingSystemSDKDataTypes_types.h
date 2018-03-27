@@ -16,6 +16,7 @@
 #include <thrift/transport/TTransport.h>
 
 #include <thrift/cxxfunctional.h>
+#include "CommonTypeSDKDataTypes_types.h"
 
 
 namespace Ruyi { namespace SDK { namespace SettingSystem { namespace Api {
@@ -282,13 +283,13 @@ class SettingSearchResult : public virtual ::apache::thrift::TBase {
 
   virtual ~SettingSearchResult() throw();
   std::string Version;
-  std::vector<CommonTypeSDKDataTypes.SettingItem>  SettingItems;
+  std::vector< ::Ruyi::SDK::CommonType::SettingItem>  SettingItems;
 
   _SettingSearchResult__isset __isset;
 
   void __set_Version(const std::string& val);
 
-  void __set_SettingItems(const std::vector<CommonTypeSDKDataTypes.SettingItem> & val);
+  void __set_SettingItems(const std::vector< ::Ruyi::SDK::CommonType::SettingItem> & val);
 
   bool operator == (const SettingSearchResult & rhs) const
   {
@@ -317,3 +318,117 @@ inline std::ostream& operator<<(std::ostream& out, const SettingSearchResult& ob
   obj.printTo(out);
   return out;
 }
+
+typedef struct _SettingTree__isset {
+  _SettingTree__isset() : CateNode(false), SettingCategories(false), SettingItems(false) {}
+  bool CateNode :1;
+  bool SettingCategories :1;
+  bool SettingItems :1;
+} _SettingTree__isset;
+
+class SettingTree : public virtual ::apache::thrift::TBase {
+ public:
+
+  SettingTree(const SettingTree&);
+  SettingTree& operator=(const SettingTree&);
+  SettingTree() {
+  }
+
+  virtual ~SettingTree() throw();
+  CategoryNode CateNode;
+  std::map<std::string,  ::Ruyi::SDK::CommonType::SettingCategory>  SettingCategories;
+  std::map<std::string,  ::Ruyi::SDK::CommonType::SettingItem>  SettingItems;
+
+  _SettingTree__isset __isset;
+
+  void __set_CateNode(const CategoryNode& val);
+
+  void __set_SettingCategories(const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingCategory> & val);
+
+  void __set_SettingItems(const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingItem> & val);
+
+  bool operator == (const SettingTree & rhs) const
+  {
+    if (!(CateNode == rhs.CateNode))
+      return false;
+    if (!(SettingCategories == rhs.SettingCategories))
+      return false;
+    if (!(SettingItems == rhs.SettingItems))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingTree &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingTree & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(SettingTree &a, SettingTree &b);
+
+inline std::ostream& operator<<(std::ostream& out, const SettingTree& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _NodeList__isset {
+  _NodeList__isset() : SettingCategories(false), SettingItems(false) {}
+  bool SettingCategories :1;
+  bool SettingItems :1;
+} _NodeList__isset;
+
+class NodeList : public virtual ::apache::thrift::TBase {
+ public:
+
+  NodeList(const NodeList&);
+  NodeList& operator=(const NodeList&);
+  NodeList() {
+  }
+
+  virtual ~NodeList() throw();
+  std::vector< ::Ruyi::SDK::CommonType::SettingCategory>  SettingCategories;
+  std::vector< ::Ruyi::SDK::CommonType::SettingItem>  SettingItems;
+
+  _NodeList__isset __isset;
+
+  void __set_SettingCategories(const std::vector< ::Ruyi::SDK::CommonType::SettingCategory> & val);
+
+  void __set_SettingItems(const std::vector< ::Ruyi::SDK::CommonType::SettingItem> & val);
+
+  bool operator == (const NodeList & rhs) const
+  {
+    if (!(SettingCategories == rhs.SettingCategories))
+      return false;
+    if (!(SettingItems == rhs.SettingItems))
+      return false;
+    return true;
+  }
+  bool operator != (const NodeList &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const NodeList & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(NodeList &a, NodeList &b);
+
+inline std::ostream& operator<<(std::ostream& out, const NodeList& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+}}}} // namespace
+
+#endif
