@@ -4,13 +4,20 @@ namespace RuyiLogger
 {
     public enum MessageCategory
     {
+        Unknown = 0,
         Request,
         Reply,
         Publisher,
         Subscriber,
-        Framework,      // message comes from the running framework aka layer0
+        /// <summary>
+        /// Message comes from the running framework aka layer0
+        /// </summary>
+        Framework,
         Layer0 = Framework,
-        TRC,            // TRC message
+        /// <summary>
+        /// TRC message
+        /// </summary>
+        TRC,
         MainClient
     }
 
@@ -26,62 +33,40 @@ namespace RuyiLogger
     public class LoggerMessage
     {
         /// <summary>
-        /// used by both MsgTarget & Topic
+        /// The log level
         /// </summary>
-        protected string channel;              // target service or topic, according to the eventType
-
+        public LogLevel Level { get; set; } = LogLevel.Debug;
         /// <summary>
-        /// log time
+        /// The message category
         /// </summary>
-        public DateTime Date { get; set; }
-        
+        public MessageCategory Category { get; set; } = MessageCategory.Unknown;
         /// <summary>
-        /// the c# type of the message, could use it for reflection purpose
+        /// Where the message comes from
         /// </summary>
-        public string MsgType { get; set; } = "";
-        
+        public string MsgSource { get; set; }
         /// <summary>
-        /// where the message comes from
+        /// Target service or topic, according to the eventType
         /// </summary>
-        public string MsgSource { get; set; } = "";
-        
-        /// <summary>
-        /// belongs to which category
-        /// </summary>
-        public MessageCategory Category { get; set; }
-        
-        /// <summary>
-        /// the level
-        /// </summary>
-        public LogLevel Level { get; set; }
-
-        /// <summary>
-        /// where the message goes
-        /// </summary>
-        public string MsgTarget
-        {
-            get { return channel; }
-            set { channel = value; }
-        }
-
-        /// <summary>
-        /// the topic, will use the same segment with MsgTarget
-        /// </summary>
-        public string Topic
-        {
-            get { return channel; }
-            set { channel = value; }
-        }
-
-        /// <summary>
-        /// the message
-        /// </summary>
+        public string MsgTarget { get; set; }
         public string Message { get; set; }
+        /// <summary>
+        /// C# type of the message, could use it for reflection purposes
+        /// </summary>
+        public string MsgType { get; set; }
+        public DateTime Date { get; set; }
 
         public LoggerMessage()
         {
             Date = DateTime.Now;
-            Level = LogLevel.Debug;
+        }
+
+        /// <summary>
+        /// Alias for MsgTarget
+        /// </summary>
+        public string Topic
+        {
+            get { return MsgTarget; }
+            set { MsgTarget = value; }
         }
 
         public LoggerMessage(LoggerMessage lm)
@@ -89,15 +74,15 @@ namespace RuyiLogger
             Level = lm.Level;
             Category = lm.Category;
             MsgSource = lm.MsgSource;
-            MsgType = lm.MsgType;
-            channel = lm.channel;
+            MsgTarget = lm.MsgTarget;
             Message = lm.Message;
+            MsgType = lm.MsgType;
             Date = lm.Date;
         }
 
         override public string ToString()
         {
-            return $"[{Category,10}]\t[{MsgSource,10}]\t[{channel,10}]\t{Message}";
+            return $"[{Category,10}]\t[{MsgSource,10}]\t[{MsgTarget,10}]\t{Message}";
         }
 
         public string ToPluginString()
