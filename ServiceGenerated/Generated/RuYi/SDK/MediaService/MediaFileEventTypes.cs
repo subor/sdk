@@ -12,6 +12,7 @@ namespace Ruyi.SDK.MediaService
   /// </summary>
   public enum MediaFileEventTypes
   {
+    None = 0,
     Created = 1,
     Deleted = 2,
     Changed = 4,

@@ -26,6 +26,7 @@ namespace Ruyi.SDK.MediaService
   {
     private MediaFile _file;
     private MediaFileEventTypes _event;
+    private string _oldname;
 
     public MediaFile File
     {
@@ -57,6 +58,19 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
+    public string Oldname
+    {
+      get
+      {
+        return _oldname;
+      }
+      set
+      {
+        __isset.oldname = true;
+        this._oldname = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -65,6 +79,7 @@ namespace Ruyi.SDK.MediaService
     public struct Isset {
       public bool file;
       public bool @event;
+      public bool oldname;
     }
 
     public MediaFileEvent() {
@@ -96,6 +111,13 @@ namespace Ruyi.SDK.MediaService
             case 2:
               if (field.Type == TType.I32) {
                 Event = (MediaFileEventTypes)iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.String) {
+                Oldname = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -137,6 +159,14 @@ namespace Ruyi.SDK.MediaService
           oprot.WriteI32((int)Event);
           oprot.WriteFieldEnd();
         }
+        if (Oldname != null && __isset.oldname) {
+          field.Name = "oldname";
+          field.Type = TType.String;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Oldname);
+          oprot.WriteFieldEnd();
+        }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
@@ -160,6 +190,12 @@ namespace Ruyi.SDK.MediaService
         __first = false;
         __sb.Append("Event: ");
         __sb.Append(Event);
+      }
+      if (Oldname != null && __isset.oldname) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Oldname: ");
+        __sb.Append(Oldname);
       }
       __sb.Append(")");
       return __sb.ToString();

@@ -60,6 +60,7 @@ namespace Layer0
 
                     PublisherLogger.Info("... Subscriber Stopped");
                 });
+                receivingThread.Name = "Subscriber";
                 receivingThread.Start();
             }
         }
