@@ -60,6 +60,9 @@ namespace RuyiLogger
                 ruyiLoggers[i].Log(msg);
         }
 
+        /// <summary>
+        /// <see cref="Log(LoggerMessage)"/>
+        /// </summary>
         static public void Log(string message, LogLevel level = LogLevel.Debug, MessageCategory category = MessageCategory.Unknown, string source = null, string topic = null)
         {
             Log(new LoggerMessage
@@ -70,6 +73,24 @@ namespace RuyiLogger
                 Topic = topic,
                 Message = message,
             });
+        }
+
+        /// <summary>
+        /// Version of <see cref="Log(string, LogLevel, MessageCategory, string, string)"/> that only executes in DEBUG builds.  Will be ignored by compiler in non-debug builds.
+        /// </summary>
+        [System.Diagnostics.Conditional("DEBUG")]
+        static public void Debug(string message, LogLevel level = LogLevel.Debug, MessageCategory category = MessageCategory.Unknown, string source = null, string topic = null)
+        {
+#if DEBUG
+            Log(new LoggerMessage
+            {
+                Level = level,
+                Category = category,
+                MsgSource = source,
+                Topic = topic,
+                Message = message,
+            });
+#endif
         }
     }
 }
