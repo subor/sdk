@@ -132,18 +132,6 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("RemoveUserAppData\n");
   }
 
-  /**
-   * Notify layer0 that a setting item has specific event
-   * 
-   * @param key The item's ID
-   * 
-   * @param contents Optional. The arguments of the notification. In json string format
-   */
-  bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents) {
-    // Your implementation goes here
-    printf("SettingItemNotify\n");
-  }
-
 };
 
 int main(int argc, char **argv) {
