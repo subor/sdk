@@ -25,6 +25,7 @@ namespace Ruyi.SDK.MediaService
   public partial class QueryMsg : TBase
   {
     private string _path;
+    private string _pattern;
 
     public string Path
     {
@@ -39,6 +40,19 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
+    public string Pattern
+    {
+      get
+      {
+        return _pattern;
+      }
+      set
+      {
+        __isset.pattern = true;
+        this._pattern = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -46,6 +60,7 @@ namespace Ruyi.SDK.MediaService
     #endif
     public struct Isset {
       public bool path;
+      public bool pattern;
     }
 
     public QueryMsg() {
@@ -69,6 +84,13 @@ namespace Ruyi.SDK.MediaService
             case 1:
               if (field.Type == TType.String) {
                 Path = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.String) {
+                Pattern = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -102,6 +124,14 @@ namespace Ruyi.SDK.MediaService
           oprot.WriteString(Path);
           oprot.WriteFieldEnd();
         }
+        if (Pattern != null && __isset.pattern) {
+          field.Name = "pattern";
+          field.Type = TType.String;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Pattern);
+          oprot.WriteFieldEnd();
+        }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
@@ -119,6 +149,12 @@ namespace Ruyi.SDK.MediaService
         __first = false;
         __sb.Append("Path: ");
         __sb.Append(Path);
+      }
+      if (Pattern != null && __isset.pattern) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Pattern: ");
+        __sb.Append(Pattern);
       }
       __sb.Append(")");
       return __sb.ToString();

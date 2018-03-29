@@ -26,6 +26,9 @@ namespace Ruyi.SDK.MediaService
   {
     private List<MediaFile> _files;
 
+    /// <summary>
+    /// Query results.  If empty it means query has completed.
+    /// </summary>
     public List<MediaFile> Files
     {
       get
