@@ -30,6 +30,7 @@ void MessageCreator::Initialize()
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.SettingSearchResult", Ruyi::SDK::SettingSystem::Api::SettingSearchResult);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.SettingTree", Ruyi::SDK::SettingSystem::Api::SettingTree);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.NodeList", Ruyi::SDK::SettingSystem::Api::NodeList);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.SettingItemNotification", Ruyi::SDK::SettingSystem::Api::SettingItemNotification);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.GlobalInputDefine.Gamepad", Ruyi::SDK::GlobalInputDefine::Gamepad);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.GlobalInputDefine.RuyiInputStateXB360", Ruyi::SDK::GlobalInputDefine::RuyiInputStateXB360);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.GlobalInputDefine.RuyiInputStateKeyboard", Ruyi::SDK::GlobalInputDefine::RuyiInputStateKeyboard);

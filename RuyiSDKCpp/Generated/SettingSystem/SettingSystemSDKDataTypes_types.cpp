@@ -995,4 +995,110 @@ void NodeList::printTo(std::ostream& out) const {
   out << ")";
 }
 
+
+SettingItemNotification::~SettingItemNotification() throw() {
+}
+
+
+void SettingItemNotification::__set_key(const std::string& val) {
+  this->key = val;
+}
+
+void SettingItemNotification::__set_contents(const JSON& val) {
+  this->contents = val;
+}
+
+uint32_t SettingItemNotification::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->key);
+          this->__isset.key = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->contents);
+          this->__isset.contents = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingItemNotification::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingItemNotification");
+
+  xfer += oprot->writeFieldBegin("key", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->key);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("contents", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->contents);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(SettingItemNotification &a, SettingItemNotification &b) {
+  using ::std::swap;
+  swap(a.key, b.key);
+  swap(a.contents, b.contents);
+  swap(a.__isset, b.__isset);
+}
+
+SettingItemNotification::SettingItemNotification(const SettingItemNotification& other66) {
+  key = other66.key;
+  contents = other66.contents;
+  __isset = other66.__isset;
+}
+SettingItemNotification& SettingItemNotification::operator=(const SettingItemNotification& other67) {
+  key = other67.key;
+  contents = other67.contents;
+  __isset = other67.__isset;
+  return *this;
+}
+void SettingItemNotification::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "SettingItemNotification(";
+  out << "key=" << to_string(key);
+  out << ", " << "contents=" << to_string(contents);
+  out << ")";
+}
+
 }}}} // namespace

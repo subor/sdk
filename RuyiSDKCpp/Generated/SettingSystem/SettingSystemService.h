@@ -87,6 +87,15 @@ class SettingSystemServiceIf {
   virtual int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & settingItems) = 0;
   virtual void GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) = 0;
   virtual int32_t RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) = 0;
+
+  /**
+   * Notify layer0 that a setting item has specific event
+   * 
+   * @param key The item's ID
+   * 
+   * @param contents Optional. The arguments of the notification. In json string format
+   */
+  virtual bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents) = 0;
 };
 
 class SettingSystemServiceIfFactory {
@@ -160,6 +169,10 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
   }
   int32_t RemoveUserAppData(const std::string& /* userId */, const std::string& /* category */, const std::vector<std::string> & /* settingKeys */) {
     int32_t _return = 0;
+    return _return;
+  }
+  bool SettingItemNotify(const std::string& /* key */, const  ::Ruyi::SDK::SettingSystem::Api::JSON& /* contents */) {
+    bool _return = false;
     return _return;
   }
 };
@@ -1692,6 +1705,125 @@ class SettingSystemService_RemoveUserAppData_presult {
 
 };
 
+typedef struct _SettingSystemService_SettingItemNotify_args__isset {
+  _SettingSystemService_SettingItemNotify_args__isset() : key(false), contents(false) {}
+  bool key :1;
+  bool contents :1;
+} _SettingSystemService_SettingItemNotify_args__isset;
+
+class SettingSystemService_SettingItemNotify_args {
+ public:
+
+  SettingSystemService_SettingItemNotify_args(const SettingSystemService_SettingItemNotify_args&);
+  SettingSystemService_SettingItemNotify_args& operator=(const SettingSystemService_SettingItemNotify_args&);
+  SettingSystemService_SettingItemNotify_args() : key(), contents() {
+  }
+
+  virtual ~SettingSystemService_SettingItemNotify_args() throw();
+  std::string key;
+   ::Ruyi::SDK::SettingSystem::Api::JSON contents;
+
+  _SettingSystemService_SettingItemNotify_args__isset __isset;
+
+  void __set_key(const std::string& val);
+
+  void __set_contents(const  ::Ruyi::SDK::SettingSystem::Api::JSON& val);
+
+  bool operator == (const SettingSystemService_SettingItemNotify_args & rhs) const
+  {
+    if (!(key == rhs.key))
+      return false;
+    if (!(contents == rhs.contents))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_SettingItemNotify_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_SettingItemNotify_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_SettingItemNotify_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_SettingItemNotify_pargs() throw();
+  const std::string* key;
+  const  ::Ruyi::SDK::SettingSystem::Api::JSON* contents;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_SettingItemNotify_result__isset {
+  _SettingSystemService_SettingItemNotify_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_SettingItemNotify_result__isset;
+
+class SettingSystemService_SettingItemNotify_result {
+ public:
+
+  SettingSystemService_SettingItemNotify_result(const SettingSystemService_SettingItemNotify_result&);
+  SettingSystemService_SettingItemNotify_result& operator=(const SettingSystemService_SettingItemNotify_result&);
+  SettingSystemService_SettingItemNotify_result() : success(0) {
+  }
+
+  virtual ~SettingSystemService_SettingItemNotify_result() throw();
+  bool success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_SettingItemNotify_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_SettingItemNotify_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_SettingItemNotify_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_SettingItemNotify_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_SettingItemNotify_presult__isset {
+  _SettingSystemService_SettingItemNotify_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_SettingItemNotify_presult__isset;
+
+class SettingSystemService_SettingItemNotify_presult {
+ public:
+
+
+  virtual ~SettingSystemService_SettingItemNotify_presult() throw();
+  bool* success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_SettingItemNotify_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
  public:
   SettingSystemServiceClient(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) {
@@ -1756,6 +1888,9 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   int32_t RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
   void send_RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
   int32_t recv_RemoveUserAppData();
+  bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
+  void send_SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
+  bool recv_SettingItemNotify();
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -1784,6 +1919,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
   void process_SetUserAppData(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetUserAppData(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_RemoveUserAppData(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_SettingItemNotify(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   SettingSystemServiceProcessor(boost::shared_ptr<SettingSystemServiceIf> iface) :
     iface_(iface) {
@@ -1800,6 +1936,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
     processMap_["SetUserAppData"] = &SettingSystemServiceProcessor::process_SetUserAppData;
     processMap_["GetUserAppData"] = &SettingSystemServiceProcessor::process_GetUserAppData;
     processMap_["RemoveUserAppData"] = &SettingSystemServiceProcessor::process_RemoveUserAppData;
+    processMap_["SettingItemNotify"] = &SettingSystemServiceProcessor::process_SettingItemNotify;
   }
 
   virtual ~SettingSystemServiceProcessor() {}
@@ -1951,6 +2088,15 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return ifaces_[i]->RemoveUserAppData(userId, category, settingKeys);
   }
 
+  bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->SettingItemNotify(key, contents);
+    }
+    return ifaces_[i]->SettingItemNotify(key, contents);
+  }
+
 };
 
 // The 'concurrent' client is a thread safe client that correctly handles
@@ -2020,6 +2166,9 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   int32_t RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
   int32_t send_RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
   int32_t recv_RemoveUserAppData(const int32_t seqid);
+  bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
+  int32_t send_SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
+  bool recv_SettingItemNotify(const int32_t seqid);
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;

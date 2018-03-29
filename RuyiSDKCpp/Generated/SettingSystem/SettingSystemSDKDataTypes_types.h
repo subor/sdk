@@ -47,6 +47,8 @@ class SettingTree;
 
 class NodeList;
 
+class SettingItemNotification;
+
 typedef struct _CategoryNode__isset {
   _CategoryNode__isset() : id(false), categoryId(false), sortingPriority(false), children(false) {}
   bool id :1;
@@ -424,6 +426,58 @@ class NodeList : public virtual ::apache::thrift::TBase {
 void swap(NodeList &a, NodeList &b);
 
 inline std::ostream& operator<<(std::ostream& out, const NodeList& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _SettingItemNotification__isset {
+  _SettingItemNotification__isset() : key(false), contents(true) {}
+  bool key :1;
+  bool contents :1;
+} _SettingItemNotification__isset;
+
+class SettingItemNotification : public virtual ::apache::thrift::TBase {
+ public:
+
+  SettingItemNotification(const SettingItemNotification&);
+  SettingItemNotification& operator=(const SettingItemNotification&);
+  SettingItemNotification() : key(), contents("{}") {
+  }
+
+  virtual ~SettingItemNotification() throw();
+  std::string key;
+  JSON contents;
+
+  _SettingItemNotification__isset __isset;
+
+  void __set_key(const std::string& val);
+
+  void __set_contents(const JSON& val);
+
+  bool operator == (const SettingItemNotification & rhs) const
+  {
+    if (!(key == rhs.key))
+      return false;
+    if (!(contents == rhs.contents))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingItemNotification &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingItemNotification & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(SettingItemNotification &a, SettingItemNotification &b);
+
+inline std::ostream& operator<<(std::ostream& out, const SettingItemNotification& obj)
 {
   obj.printTo(out);
   return out;
