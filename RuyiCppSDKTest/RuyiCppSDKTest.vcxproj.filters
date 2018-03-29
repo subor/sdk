@@ -45,6 +45,9 @@
     <ClInclude Include="TestCase\L10NServiceTest.h">
       <Filter>Source Files\TestCase</Filter>
     </ClInclude>
+    <ClInclude Include="TestCase\RuyiNetTest.h">
+      <Filter>Source Files\TestCase</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestCase\Layer0Test.cpp">
@@ -81,6 +84,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BrainCloudTester.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCase\RuyiNetTest.cpp">
+      <Filter>Source Files\TestCase</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNetTester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

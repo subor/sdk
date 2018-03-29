@@ -45,11 +45,10 @@ RuyiSDK::RuyiSDK()
 	: Storage(NULL)
 	, Subscriber(NULL)
 	, SettingSys(NULL)
-	, BCService(NULL)
 	, UserService(NULL)
 	, context(NULL)
 	, validator(NULL)
-	//, RuyiNet(NULL)
+	, RuyiNet(NULL)
 {
 }
 
@@ -65,9 +64,6 @@ RuyiSDK::~RuyiSDK()
 	delete SettingSys;
 	SettingSys = NULL;
 
-	delete BCService;
-	BCService = NULL;
-
 	delete UserService;
 	UserService = NULL;
 
@@ -77,8 +73,8 @@ RuyiSDK::~RuyiSDK()
 	delete validator;
 	validator = NULL;
 
-	//delete RuyiNet;
-	//RuyiNet = NULL;
+	delete RuyiNet;
+	RuyiNet = NULL;
 
 	if (sharedLowTrans != NULL)
 		sharedLowTrans->close();
@@ -119,10 +115,6 @@ bool RuyiSDK::Init()
 	boost::shared_ptr<TMultiplexedProtocol> stoProtocol = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedHighProto, "SER_STORAGELAYER"));
 	Storage = new SDK::StorageLayer::StorageLayerServiceClient(stoProtocol);
 
-	// init brain cloud service
-	boost::shared_ptr<TMultiplexedProtocol> bcProtocal = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedHighProto, "SER_BCSERVICE"));
-	BCService = new SDK::BrainCloudApi::BrainCloudServiceClient(bcProtocal);
-
 	// init setting system
 	boost::shared_ptr<TMultiplexedProtocol> proto = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedLowProto, "SER_L0SETTINGSYSTEM_EXTERNAL"));
 	SettingSys = new SDK::SettingSystem::Api::SettingSystemServiceClient(proto);
@@ -134,11 +126,12 @@ bool RuyiSDK::Init()
 	// init user service 
 	boost::shared_ptr<TMultiplexedProtocol> userProtocol = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedHighProto, "SER_USER_SERVICE_EXTERNAL"));
 	UserService = new SDK::UserServiceExternal::UserServExternalClient(userProtocol);
-	return true;
 
 	// init Ruyi Net
-	//boost::shared_ptr<TMultiplexedProtocol> ruyiNetClientProtocol = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedHighProto, "SER_BCSERVICE"));
-	//RuyiNet = new Ruyi::RuyiNetClient(ruyiNetClientProtocol);
+	boost::shared_ptr<TMultiplexedProtocol> ruyiNetClientProtocol = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedHighProto, "SER_BCSERVICE"));
+	RuyiNet = new Ruyi::RuyiNetClient(ruyiNetClientProtocol);
+
+	return true;
 }
 
 bool RuyiSDK::ValidateVersion()

@@ -1,6 +1,11 @@
 #include "BCServiceTest.h"
 #include <windows.h>
 
+#include "boost/container/detail/json.hpp"
+#include "RuyiNet/Response/RuyiNetGetProfileResponse.h"
+
+using namespace Ruyi;
+
 bool _bFileUploadFinished;
 void OnFileUploadSuccess(string topic, apache::thrift::TBase* item)
 {
@@ -914,7 +919,7 @@ void BCServiceTest::BCS_File_UploadFile()
 
 	// get the layer0
 	string currentFolder = GetLocalCurrentDirectory();
-	string localPath = currentFolder + "..\\..\\..\\..\\Commons\\Resources\\Configs\\SystemSetting\\SystemSetting.cfg";
+	string localPath = currentFolder + "..\\..\\..\\Resources\\Configs\\SystemSetting\\SystemSetting.cfg";
 	struct stat buffer;
 	Assert::AreEqual(stat(localPath.c_str(), &buffer), 0);
 
@@ -1837,7 +1842,6 @@ void BCServiceTest::BCS_GlobalEntity_DeleteEntities()
 }
 #pragma endregion
 
-
 #pragma region GlobalStatistics
 //order(860)
 void BCServiceTest::BCS_GlobalStatistics_IncrementGlobalStats() 
@@ -1919,6 +1923,223 @@ void BCServiceTest::BCS_GlobalStatistics_ReadGlobalStatsSubset()
 
 #pragma endregion
 
+#pragma region Example
+struct SwitchToChildProfileResponse
+{
+	struct Data
+	{
+		std::string parentProfileId;
+		std::string playerName;
+		//bool newUser; //no param in return json
+	};
+
+	Data data;
+	int status;
+
+	void parseJson(nlohmann::json& j)
+	{
+		status = j["status"];
+		if (!j["data"].is_null()) 
+		{
+			data.parentProfileId = j["data"]["parentProfileId"];
+			data.playerName = j["data"]["playerName"];
+		}
+	}
+};
+
+void BCServiceTest::BCS_GetLoginedUserProfile() 
+{
+	string ret;
+
+	ruyiSDK->BCService->Authentication_ClearSavedProfileID(0);
+	ruyiSDK->BCService->Authentication_AuthenticateEmailPassword(ret, "godenzzm", "111", true, 0);
+
+	Logger::WriteMessage(("Login return json:" + ret + "\n").c_str());
+
+	for (int i = 0; i < 4; ++i) 
+	{
+		ruyiSDK->BCService->Identity_SwitchToSingletonChildProfile(ret, "11499", true, i);
+		Logger::WriteMessage(("Identity_SwitchToSingletonChildProfile return json:" + ret + "\n").c_str());
+
+		auto retJson1 = nlohmann::json::parse(ret);
+		SwitchToChildProfileResponse childProfile;
+		childProfile.parseJson(retJson1);
+
+		if (200 != childProfile.status)
+		{ 
+			Logger::WriteMessage(("SwitchToChildProfileResponse status:" + to_string(childProfile.status) + "\n").c_str());
+			continue;
+		}
+
+		Logger::WriteMessage(("SwitchToChildProfileResponse childProfile:" + childProfile.data.parentProfileId + "\n").c_str());
+
+		std::string payloadString = "{\"profileId\":\"" + childProfile.data.parentProfileId + "\"}";
+
+		ruyiSDK->BCService->Script_RunParentScript(ret, "GetProfile", payloadString, "RUYI", i);
+		Logger::WriteMessage(("GetProfile return json:" + ret + "\n").c_str());
+
+		auto retJson = nlohmann::json::parse(ret);
+
+		int status = retJson["status"];
+
+		if (200 != status)
+		{
+			Logger::WriteMessage(("Script_RunParentScript status:" + to_string(status) + "\n").c_str());
+			continue;
+		}
+
+		string profileId = retJson["data"]["response"]["profileId"];
+		//string tmp = retJson.dump();
+		Logger::WriteMessage(("GetProfile profileId:" + profileId + " status:" + to_string(status) + "\n").c_str());
+
+		RuyiNetGetProfileResponse data;
+		data.parseJson(retJson);
+		//data.status = retJson.at("status").get<int>();
+		//data.data = retJson.at("data").get<RuyiNetGetProfileResponse::Data>();
+		//data = retJson.get<RuyiNetGetProfileResponse>();
+		Logger::WriteMessage(("profileId:" + data.data.response.profileId + "\n").c_str());
+		Logger::WriteMessage(("profileName:" + data.data.response.profileName + "\n").c_str());
+		Logger::WriteMessage(("email:" + data.data.response.email + "\n").c_str());
+		Logger::WriteMessage(("success:" + to_string(data.data.success) + "\n").c_str());
+		Logger::WriteMessage(("status:" + to_string(data.status) + "\n").c_str());
+	}
+}
+
+void BCServiceTest::BCS_PostScoreToLeaderboard()
+{
+	string appId = "11499_Shooter";
+	int score = 100;
+	string tmp = "({\"leaderboardId\":\"" + appId + "\",\"score\":" + to_string(score) + "})";
+	/*
+	nlohmann::json payloadJson =
+	R"({
+		"leaderboardId":"11499_Shooter",
+		"score":100
+	})"_json;
+	*/
+	nlohmann::json payloadJson;
+	payloadJson["leaderboardId"] = "11499_Shooter";
+	payloadJson["score"] = 100;
+
+	//std::string payloadData = "{\"leaderboardId\":\"11499_Shooter\", \"score\":150}";
+	std::string payloadStr = payloadJson.dump();
+	Logger::WriteMessage(("PostScoreToLeaderboard payloadStr:" + payloadStr + "\n").c_str());
+
+	std::string ret;
+	ruyiSDK->BCService->Script_RunParentScript(ret, "PostScoreToLeaderboard", payloadStr, "RUYI", 0);
+
+	Logger::WriteMessage(("PostScoreToLeaderboard return json:" + ret + "\n").c_str());
+}
+
+void BCServiceTest::BCS_GetLeadboardPage()
+{
+	/*
+	nlohmann::json payloadJson =
+	R"({
+		"leaderboardId":"11499_Shooter",
+		"sort":"HIGH_TO_LOW",
+		"startIndex":"0",
+		"endIndex":"10"
+	})"_json;
+
+	//std::string payloadData = "{\"leaderboardId\":\"11499_Shooter\", \"sort\":\"LOW_TO_HIGH\", \"startIndex\":0, \"endIndex\":10}";
+	std::string payloadStr = payloadJson.dump();
+
+	Logger::WriteMessage(("payloadData:" + payloadStr + "\n").c_str());
+	*/
+
+	nlohmann::json payloadJson;
+
+	std::string leaderboardId = "11499_Shooter";
+
+	payloadJson["leaderboardId"] = leaderboardId;
+	payloadJson["replaceName"] = "DSDSSS";
+
+	string payloadStr = payloadJson.dump();
+
+	std::string ret;
+	
+	//ruyiSDK->BCService->Script_RunParentScript(ret, "GetGlobalLeaderboardPage", payloadStr, "RUYI", 0);
+	ruyiSDK->BCService->Script_RunParentScript(ret, "GetSocialLeaderboard", payloadStr, "RUYI", 0);
+
+	Logger::WriteMessage(("BCS_GetLeadboardPage return json:" + ret + "\n").c_str());
+}
+
+//test how nlohmann::json parser works
+void BCServiceTest::BCS_JsonTest()
+{
+	auto j2 = R"({
+					"leaderboardId" : "11499_Shooter",
+					"score" : 100
+				})"_json;
+	std::string str = j2.dump();
+	//string str = json;
+	Logger::WriteMessage(("BCS_JsonTest:" + str + "\n").c_str());
+
+	string jsonStr = "{\"data\":{\"response\":{\"server_time\":1520991855472,\"friends\":[{\"playerId\":\"12334444\",\"name\":\"aaa\",\"pictureUrl\":null,\"summaryFriendData\":null,\"externalData\":{\"brainCloud\":{}}},{\"playerId\":\"554444444\",\"name\":\"bbbb\",\"pictureUrl\":null,\"summaryFriendData\":null,\"externalData\":{\"brainCloud\":{}}}]},\"success\":true},\"status\":200}";
+	Logger::WriteMessage(("BCS_JsonTest jsonStr:" + jsonStr + "\n").c_str());
+
+	nlohmann::json json1 = nlohmann::json::parse(jsonStr);
+
+	if (!json1["data"].is_null())
+	{
+		Logger::WriteMessage("abccc\n");
+		if (!json1["data"]["response"].is_null())
+		{
+			Logger::WriteMessage("defffff\n");
+			if (!json1["data"]["response"]["friends"].is_null())
+			{
+				Logger::WriteMessage("gggeeee\n");
+				nlohmann::json friendsJson1 = json1["data"]["response"]["friends"];
+				if (friendsJson1.is_array())
+				{
+					Logger::WriteMessage("hhhhhaaaaa\n");
+
+					for(auto friendJson : friendsJson1)
+					{
+						Logger::WriteMessage("llllllllllll\n");
+
+						if (!friendJson["playerId"].is_null())
+						{
+							string playerId = friendJson["playerId"];
+							Logger::WriteMessage(("json1 friend playerId:" + playerId + "\n").c_str());
+						}
+						if (!friendJson["name"].is_null()) 
+						{
+							string name = friendJson["name"];
+							Logger::WriteMessage(("json1 friend name:" + name + "\n").c_str());
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+void BCServiceTest::BCS_FriendRelatedScript()
+{
+	//string ret;
+
+	//ruyiSDK->BCService->Authentication_ClearSavedProfileID(0);
+	//ruyiSDK->BCService->Authentication_AuthenticateEmailPassword(ret, "godenzzm", "111", true, 0);
+
+	//Logger::WriteMessage(("Login return json:" + ret + "\n").c_str());
+
+	nlohmann::json jsonScript;
+	
+	std::string response;
+	ruyiSDK->BCService->Script_RunParentScript(response, "ListFriends", jsonScript.dump(), "RUYI", 0);
+	//nlohmann::json payloadJson;
+	//payloadJson["profileId"] = "aaaaaa";
+	//payloadJson["profileId"] = "578d507b-9c90-4b3a-aada-72c60a8b1e23";
+	//ruyiSDK->BCService->Script_RunParentScript(response, "RemoveFriend", payloadJson.dump(), "RUYI", 0);
+
+	Logger::WriteMessage(("BCS_FriendListByScript response:" + response + "\n").c_str());
+}
+
+#pragma endregion
+
+#pragma endregion
 
 string BCServiceTest::LoginTestUser(string user, string pass, bool bRelogin) 
 {
