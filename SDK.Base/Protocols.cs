@@ -20,6 +20,11 @@ namespace Layer0
         {
         }
 
+        void Log(string message, LogLevel level)
+        {
+            Logger.Log(message, category: MessageCategory.Framework, level: level);
+        }
+
         // begin to write the message, see if we need to create a new transport
         public override void WriteMessageBegin(TMessage message)
         {
@@ -38,12 +43,7 @@ namespace Layer0
                     }
                     catch (Exception)
                     {
-                        Logger.Log(new LoggerMessage()
-                        {
-                            Level = LogLevel.Warn,
-                            Message = "connection error, try to reconnect",
-                            Category = MessageCategory.Framework,
-                        });
+                        Log("connection error, try to reconnect", LogLevel.Warn);
                         needReconnect = true;
                     }
                 }
@@ -52,12 +52,7 @@ namespace Layer0
                 {
                     if (connectRetryTimes <= 0)
                     {
-                        Logger.Log(new LoggerMessage()
-                        {
-                            Level = LogLevel.Error,
-                            Message = $"Connection Error, after tried for {ConnectRetryTimesMax} times to reconnect, give up",
-                            Category = MessageCategory.Framework,
-                        });
+                        Log($"Connection Error, after tried for {ConnectRetryTimesMax} times to reconnect, give up", LogLevel.Error);
 
                         // reset retry times, so we can actually retry to connect at next send.
                         connectRetryTimes = ConnectRetryTimesMax;
@@ -77,12 +72,7 @@ namespace Layer0
                     }
                     catch (Exception e)         // reconnect exception, retry agian.
                     {
-                        Logger.Log(new LoggerMessage()
-                        {
-                            Level = LogLevel.Error,
-                            Message = e.Message,
-                            Category = MessageCategory.Framework,
-                        });
+                        Log(e.Message, LogLevel.Error);
                     }
                 }
                 else
