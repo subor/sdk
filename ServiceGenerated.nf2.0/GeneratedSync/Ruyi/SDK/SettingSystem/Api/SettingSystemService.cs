@@ -67,6 +67,12 @@ namespace Ruyi.SDK.SettingSystem.Api
       int SetUserAppData(string userId, string category, Dictionary<string, string> settingItems);
       Ruyi.SDK.SettingSystem.Api.AppData GetUserAppData(string userId, string category, List<string> settingKeys);
       int RemoveUserAppData(string userId, string category, List<string> settingKeys);
+      /// <summary>
+      /// Notify layer0 that a setting item has specific event
+      /// </summary>
+      /// <param name="key">The item's ID</param>
+      /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
+      bool SettingItemNotify(string key, string contents);
     }
 
     public interface Iface : ISync {
@@ -156,6 +162,15 @@ namespace Ruyi.SDK.SettingSystem.Api
       #if SILVERLIGHT
       IAsyncResult Begin_RemoveUserAppData(AsyncCallback callback, object state, string userId, string category, List<string> settingKeys);
       int End_RemoveUserAppData(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Notify layer0 that a setting item has specific event
+      /// </summary>
+      /// <param name="key">The item's ID</param>
+      /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_SettingItemNotify(AsyncCallback callback, object state, string key, string contents);
+      bool End_SettingItemNotify(IAsyncResult asyncResult);
       #endif
     }
 
@@ -1106,6 +1121,77 @@ namespace Ruyi.SDK.SettingSystem.Api
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "RemoveUserAppData failed: unknown result");
       }
 
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_SettingItemNotify(AsyncCallback callback, object state, string key, string contents)
+      {
+        return send_SettingItemNotify(callback, state, key, contents);
+      }
+
+      public bool End_SettingItemNotify(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_SettingItemNotify();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Notify layer0 that a setting item has specific event
+      /// </summary>
+      /// <param name="key">The item's ID</param>
+      /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
+      public bool SettingItemNotify(string key, string contents)
+      {
+        #if !SILVERLIGHT
+        send_SettingItemNotify(key, contents);
+        return recv_SettingItemNotify();
+
+        #else
+        var asyncResult = Begin_SettingItemNotify(null, null, key, contents);
+        return End_SettingItemNotify(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_SettingItemNotify(AsyncCallback callback, object state, string key, string contents)
+      #else
+      public void send_SettingItemNotify(string key, string contents)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("SettingItemNotify", TMessageType.Call, seqid_));
+        SettingItemNotify_args args = new SettingItemNotify_args();
+        args.Key = key;
+        args.Contents = contents;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public bool recv_SettingItemNotify()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        SettingItemNotify_result result = new SettingItemNotify_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        if (result.__isset.error1) {
+          throw result.Error1;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SettingItemNotify failed: unknown result");
+      }
+
     }
     public class Processor : TProcessor {
       public Processor(ISync iface)
@@ -1124,6 +1210,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         processMap_["SetUserAppData"] = SetUserAppData_Process;
         processMap_["GetUserAppData"] = GetUserAppData_Process;
         processMap_["RemoveUserAppData"] = RemoveUserAppData_Process;
+        processMap_["SettingItemNotify"] = SettingItemNotify_Process;
       }
 
       protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -1605,6 +1692,41 @@ namespace Ruyi.SDK.SettingSystem.Api
           Console.Error.WriteLine(ex.ToString());
           TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
           oprot.WriteMessageBegin(new TMessage("RemoveUserAppData", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void SettingItemNotify_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        SettingItemNotify_args args = new SettingItemNotify_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        SettingItemNotify_result result = new SettingItemNotify_result();
+        try
+        {
+          try
+          {
+            result.Success = iface_.SettingItemNotify(args.Key, args.Contents);
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          oprot.WriteMessageBegin(new TMessage("SettingItemNotify", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("SettingItemNotify", TMessageType.Exception, seqid));
           x.Write(oprot);
         }
         oprot.WriteMessageEnd();
@@ -5458,6 +5580,303 @@ namespace Ruyi.SDK.SettingSystem.Api
 
       public override string ToString() {
         StringBuilder __sb = new StringBuilder("RemoveUserAppData_result(");
+        bool __first = true;
+        if (__isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        if (Error1 != null && __isset.error1) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Error1: ");
+          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class SettingItemNotify_args : TBase
+    {
+      private string _key;
+      private string _contents;
+
+      /// <summary>
+      /// The item's ID
+      /// </summary>
+      public string Key
+      {
+        get
+        {
+          return _key;
+        }
+        set
+        {
+          __isset.key = true;
+          this._key = value;
+        }
+      }
+
+      /// <summary>
+      /// Optional. The arguments of the notification. In json string format
+      /// </summary>
+      public string Contents
+      {
+        get
+        {
+          return _contents;
+        }
+        set
+        {
+          __isset.contents = true;
+          this._contents = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool key;
+        public bool contents;
+      }
+
+      public SettingItemNotify_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  Key = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String) {
+                  Contents = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("SettingItemNotify_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (Key != null && __isset.key) {
+            field.Name = "key";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Key);
+            oprot.WriteFieldEnd();
+          }
+          if (Contents != null && __isset.contents) {
+            field.Name = "contents";
+            field.Type = TType.String;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Contents);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("SettingItemNotify_args(");
+        bool __first = true;
+        if (Key != null && __isset.key) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Key: ");
+          __sb.Append(Key);
+        }
+        if (Contents != null && __isset.contents) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Contents: ");
+          __sb.Append(Contents);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class SettingItemNotify_result : TBase
+    {
+      private bool _success;
+      private Ruyi.SDK.CommonType.ErrorException _error1;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+      public Ruyi.SDK.CommonType.ErrorException Error1
+      {
+        get
+        {
+          return _error1;
+        }
+        set
+        {
+          __isset.error1 = true;
+          this._error1 = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+        public bool error1;
+      }
+
+      public SettingItemNotify_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool) {
+                  Success = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 1:
+                if (field.Type == TType.Struct) {
+                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1.Read(iprot);
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("SettingItemNotify_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(Success);
+            oprot.WriteFieldEnd();
+          } else if (this.__isset.error1) {
+            if (Error1 != null) {
+              field.Name = "Error1";
+              field.Type = TType.Struct;
+              field.ID = 1;
+              oprot.WriteFieldBegin(field);
+              Error1.Write(oprot);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("SettingItemNotify_result(");
         bool __first = true;
         if (__isset.success) {
           if(!__first) { __sb.Append(", "); }
