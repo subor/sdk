@@ -10,17 +10,19 @@
     - 256 GB/s bandwidth
     - 2 GB reserved for GPU
 - Ports/peripherals
-    - 4x USB 3.0
+    - 4x USB 3.0 (back), 2x USB 2.0 (front)
     - 2x HDMI 2.0
     - Wifi/802.11ac
     - 100Mbit ethernet
     - Bluetooth
-    - 2x 3.5mm audio input/output
+    - 2x 3.5mm audio (input/output)
+    - S/PDIF
 
-## Software
+## Software Compatibility
 
 __Graphics APIs__
-- Vulkan
+
+- Vulkan 1.0.1
 - DirectX 9/10/11/__12__
 - OpenGL 4.5
     - 4.6 support is partial

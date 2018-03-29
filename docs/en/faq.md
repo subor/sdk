@@ -12,7 +12,7 @@
 
 1. The devkit I received has a single Toshiba HDD with wretched performance, is that final?
 
-    No, HDD performance issues with first batch of devkits are known issue and later systems will not have that HDD.
+    No, HDD performance problems with first batch of devkits are a known issue which later hardware revisions will correct.
 
 1. Input device (gamepad/keyboard/mouse)?
 
@@ -20,7 +20,7 @@
 
 1. What about peripherals, display/audio ports, etc.?
 
-    USB, HDMI, S/PDIF, ethernet, wifi, bluetooth.  [Details](topics/hardware.md)
+    USB, HDMI, ethernet, wifi, bluetooth, S/PDIF.  [Details](topics/hardware.md)
 
 ## Software/SDK
 
@@ -30,7 +30,7 @@
 
 1. What graphics APIs are supported?
 
-    Vulkan, OpenGL, and DirectX.  Basically, anything you can use on Windows 10.  [Details](topics/hardware.md)
+    Vulkan, OpenGL, and DirectX (9-12).  Basically, anything you can use on Windows 10.  [Details](topics/hardware.md)
 
 1. What programming languages are supported?
 
@@ -48,6 +48,11 @@
 
     Yes.  If it works on AMD hardware and Windows 10 RS1, it probably works on Ruyi.
 
+1. How do I get started?
+
+    - Take a look at the [tutorials](https://bitbucket.org/playruyi/docs/src/master/docs/en/tutorials/)
+    - Try [profiling](https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/optimization.md) your game on the hardware
+
 1. My question isn't answered here, I need help, what do I do?
 
     There's [more documentation](README.md), [forums](http://dev.playruyi.com/forum/), and [dev support](https://bitbucket.org/playruyi/support) (including [tickets](https://bitbucket.org/playruyi/support/issues?status=new&status=open)).
@@ -56,7 +61,7 @@
 
 1. What features will be available?
 
-    We plan to eventually have feature list similar to Xbox Live, PSN, Steam, GoG, etc.
+    We plan to eventually have a feature list similar to Xbox Live, PSN, Steam, GoG, etc.
 
 1. Can you be more specific?
 
@@ -80,7 +85,7 @@
 
 1. What about government censorship for China?
 
-    For early titles that will be handled offline/manually by content team.
+    For early titles that will be handled offline/manually by our content/publishing team.
 
 
 
