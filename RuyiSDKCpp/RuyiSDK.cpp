@@ -49,6 +49,7 @@ RuyiSDK::RuyiSDK()
 	, context(NULL)
 	, validator(NULL)
 	, RuyiNet(NULL)
+	, BCService(NULL)
 {
 }
 
@@ -75,6 +76,9 @@ RuyiSDK::~RuyiSDK()
 
 	delete RuyiNet;
 	RuyiNet = NULL;
+
+	delete BCService;
+	BCService = NULL;
 
 	if (sharedLowTrans != NULL)
 		sharedLowTrans->close();
@@ -130,7 +134,11 @@ bool RuyiSDK::Init()
 	// init Ruyi Net
 	boost::shared_ptr<TMultiplexedProtocol> ruyiNetClientProtocol = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedHighProto, "SER_BCSERVICE"));
 	RuyiNet = new Ruyi::RuyiNetClient(ruyiNetClientProtocol);
-
+	
+	// init brain cloud service
+	boost::shared_ptr<TMultiplexedProtocol> bcProtocal = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedHighProto, "SER_BCSERVICE"));
+	BCService = new SDK::BrainCloudApi::BrainCloudServiceClient(bcProtocal);
+	
 	return true;
 }
 

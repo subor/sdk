@@ -128,6 +128,9 @@ namespace Ruyi
 		/// </summary>
 		Ruyi::RuyiNetClient* RuyiNet;
 
+		__declspec(deprecated("Use RuyiNet instead, BCService is deprecated and will be removed in future release"))
+		SDK::BrainCloudApi::BrainCloudServiceClient* BCService;
+
 	private:
 		RuyiSDK();
 
