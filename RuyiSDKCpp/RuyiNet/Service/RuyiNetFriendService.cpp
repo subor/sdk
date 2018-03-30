@@ -3,61 +3,98 @@
 namespace Ruyi
 {
 	RuyiNetFriendService::RuyiNetFriendService(RuyiNetClient * client)
-			: RuyiNetService(client)
+		: RuyiNetService(client)
 	{}
 
-	void RuyiNetFriendService::AddFriend(int index, const RuyiString & profileId,
-		const RuyiNetTask<json>::CallbackType & callback)
+	void RuyiNetFriendService::AddFriend(int index, const std::string& profileId, RuyiNetAddRemoveFriendResponse& response)
 	{
-		EnqueueTask<json>([&index, &profileId, this]() -> std::string
+		try
 		{
-			json payload = { "profileId", ToString(profileId) };
-			return RunParentScript(index, "AddFriend", payload);
-		}, callback);
+			nlohmann::json payloadJson;
+
+			payloadJson["profileId"] = profileId;
+
+			std::string responseStr = RunParentScript(index, "AddFriend", payloadJson);
+			nlohmann::json retJson = nlohmann::json::parse(responseStr);
+			response.parseJson(retJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
 	}
 
-	void RuyiNetFriendService::RemoveFriend(int index, const RuyiString & profileId,
-		const RuyiNetTask<json>::CallbackType & callback)
+	void RuyiNetFriendService::RemoveFriend(int index, const std::string& profileId, RuyiNetAddRemoveFriendResponse& response)
 	{
-		EnqueueTask<json>([&index, &profileId, this]() -> std::string
+		try
 		{
-			json payload = { "profileId", ToString(profileId) };
-			return RunParentScript(index, "RemoveFriend", payload);
-		}, callback);
+			nlohmann::json payloadJson;
+			payloadJson["profileId"] = profileId;
+			std::string responseStr = RunParentScript(index, "RemoveFriend", payloadJson);
+			nlohmann::json retJson = nlohmann::json::parse(responseStr);
+			response.parseJson(retJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
 	}
 
-	void RuyiNetFriendService::ListFriends(int index, const RuyiNetTask<json>::CallbackType & callback)
+	void RuyiNetFriendService::ListFriends(int index, RuyiNetFriendListResponse& response)
 	{
-		EnqueueTask<json>([&index, this]() -> std::string
+		try
 		{
-			json payload = {};
-			return RunParentScript(index, "ListFriends", payload);
-		}, callback);
+			nlohmann::json payloadJson;
+			std::string strResponse = RunParentScript(index, "ListFriends", payloadJson);
+			nlohmann::json retJson = nlohmann::json::parse(strResponse);
+			response.parseJson(retJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
 	}
 
-	void RuyiNetFriendService::GetProfile(int index, const RuyiString & profileId,
-		const RuyiNetTask<json>::CallbackType & callback)
+	void RuyiNetFriendService::GetProfile(int index, const std::string & profileId, RuyiNetGetProfileResponse& response)
 	{
-		EnqueueTask<json>([&index, &profileId, this]() -> std::string
+		try
 		{
-			json payload = { "profileId", ToString(profileId) };
-			return RunParentScript(index, "GetProfile", payload);
-		}, callback);
+			nlohmann::json payloadJson;
+			payloadJson["profileId"] = profileId;
+			std::string strResponse = RunParentScript(index, "GetProfile", payloadJson);
+			nlohmann::json retJson = nlohmann::json::parse(strResponse);
+			response.parseJson(retJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
 	}
-
-	void RuyiNetFriendService::GetProfiles(int index, const std::list<RuyiString> & profileIds,
-		const RuyiNetTask<json>::CallbackType & callback)
+	
+	void RuyiNetFriendService::GetProfiles(int index, const std::list<std::string>& profileIds, RuyiNetGetProfilesResponse& response)
 	{
-		EnqueueTask<json>([&index, &profileIds, this]() -> std::string
+		try
 		{
-			std::list<std::string> mbsProfileIds;
-			for (auto i : profileIds)
-			{
-				mbsProfileIds.push_back(ToString(i));
-			}
-
-			json payload = { "profileIds", mbsProfileIds };
-			return RunParentScript(index, "GetProfiles", payload);
-		}, callback);
+			nlohmann::json payloadJson;
+			
+			payloadJson["profileId"] = profileIds;
+			std::string strResponse = RunParentScript(index, "GetProfiles", payloadJson);
+			nlohmann::json retJson = nlohmann::json::parse(strResponse);
+			response.parseJson(retJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
 	}
 }

@@ -50,9 +50,6 @@
     <Filter Include="Sources\RuyiNet\Service">
       <UniqueIdentifier>{463ff2fc-b4c8-4075-a623-d8364185a6d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sources\RuyiNet\Task">
-      <UniqueIdentifier>{925bd6d4-905c-42a5-8015-9c95206139ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Generated\CommonType">
       <UniqueIdentifier>{776c8dbb-1613-4255-a6f7-895f0bc7b711}</UniqueIdentifier>
     </Filter>
@@ -196,9 +193,6 @@
     <ClCompile Include="RuyiNet\RuyiNetClient.cpp">
       <Filter>Sources\RuyiNet</Filter>
     </ClCompile>
-    <ClCompile Include="RuyiNet\Task\RuyiNetTaskQueue.cpp">
-      <Filter>Sources\RuyiNet\Task</Filter>
-    </ClCompile>
     <ClCompile Include="RuyiNet\Service\RuyiNetCloudService.cpp">
       <Filter>Sources\RuyiNet\Service</Filter>
     </ClCompile>
@@ -208,56 +202,17 @@
     <ClCompile Include="RuyiNet\Service\RuyiNetLeaderboardService.cpp">
       <Filter>Sources\RuyiNet\Service</Filter>
     </ClCompile>
-    <ClCompile Include="RuyiNet\Service\RuyiNetMatchmakingService.cpp">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClCompile>
     <ClCompile Include="RuyiNet\Service\RuyiNetService.cpp">
       <Filter>Sources\RuyiNet\Service</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Response\RuyiNetFindPlayersResponse.cpp">
-      <Filter>Sources\RuyiNet\Response</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Response\RuyiNetGetPartyInfoResponse.cpp">
-      <Filter>Sources\RuyiNet\Response</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Response\RuyiNetGetProfileResponse.cpp">
-      <Filter>Sources\RuyiNet\Response</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Response\RuyiNetLeaderboardResponse.cpp">
-      <Filter>Sources\RuyiNet\Response</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Response\RuyiNetListUserFilesResponse.cpp">
-      <Filter>Sources\RuyiNet\Response</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Response\RuyiNetProfile.cpp">
-      <Filter>Sources\RuyiNet\Response</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Response\RuyiNetSocialLeaderboardResponse.cpp">
-      <Filter>Sources\RuyiNet\Response</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Response\RuyiNetSummaryFriendData.cpp">
-      <Filter>Sources\RuyiNet\Response</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Response\RuyiNetGetProfilesResponse.cpp">
-      <Filter>Sources\RuyiNet\Response</Filter>
     </ClCompile>
     <ClCompile Include="RuyiNet\Service\RuyiNetPartyService.cpp">
       <Filter>Sources\RuyiNet\Service</Filter>
     </ClCompile>
-    <ClCompile Include="RuyiNet\Response\RuyiNetGetCDNResponse.cpp">
-      <Filter>Sources\RuyiNet\Response</Filter>
-    </ClCompile>
     <ClCompile Include="RuyiNet\Service\RuyiNetProfileService.cpp">
       <Filter>Sources\RuyiNet\Service</Filter>
     </ClCompile>
-    <ClCompile Include="RuyiNet\Response\RuyiNetUploadFileResponse.cpp">
-      <Filter>Sources\RuyiNet\Response</Filter>
-    </ClCompile>
     <ClCompile Include="RuyiNet\Service\RuyiNetUserFileService.cpp">
       <Filter>Sources\RuyiNet\Service</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Response\RuyiNetGetFriendsVideosResponse.cpp">
-      <Filter>Sources\RuyiNet\Response</Filter>
     </ClCompile>
     <ClCompile Include="RuyiNet\Service\RuyiNetVideoService.cpp">
       <Filter>Sources\RuyiNet\Service</Filter>
@@ -273,6 +228,9 @@
     </ClCompile>
     <ClCompile Include="Generated\CommonType\CommonTypeSDKServices_types.cpp">
       <Filter>Generated\CommonType</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetMatchmakingService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -424,18 +382,6 @@
     <ClInclude Include="RuyiNet\RuyiNetException.h">
       <Filter>Sources\RuyiNet</Filter>
     </ClInclude>
-    <ClInclude Include="RuyiNet\Task\RuyiNetPlatformTask.h">
-      <Filter>Sources\RuyiNet\Task</Filter>
-    </ClInclude>
-    <ClInclude Include="RuyiNet\Task\RuyiNetTask.h">
-      <Filter>Sources\RuyiNet\Task</Filter>
-    </ClInclude>
-    <ClInclude Include="RuyiNet\Task\RuyiNetTaskBase.h">
-      <Filter>Sources\RuyiNet\Task</Filter>
-    </ClInclude>
-    <ClInclude Include="RuyiNet\Task\RuyiNetTaskQueue.h">
-      <Filter>Sources\RuyiNet\Task</Filter>
-    </ClInclude>
     <ClInclude Include="RuyiNet\Service\RuyiNetCloudService.h">
       <Filter>Sources\RuyiNet\Service</Filter>
     </ClInclude>
@@ -448,9 +394,6 @@
     <ClInclude Include="RuyiNet\Service\RuyiNetLeaderboardType.h">
       <Filter>Sources\RuyiNet\Service</Filter>
     </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetMatchmakingService.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClInclude>
     <ClInclude Include="RuyiNet\Service\RuyiNetPartyService.h">
       <Filter>Sources\RuyiNet\Service</Filter>
     </ClInclude>
@@ -459,9 +402,6 @@
     </ClInclude>
     <ClInclude Include="RuyiNet\Service\RuyiNetService.h">
       <Filter>Sources\RuyiNet\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="RuyiNet\Response\RuyiNetFindPlayersResponse.h">
-      <Filter>Sources\RuyiNet\Response</Filter>
     </ClInclude>
     <ClInclude Include="RuyiNet\Response\RuyiNetGetPartyInfoResponse.h">
       <Filter>Sources\RuyiNet\Response</Filter>
@@ -516,6 +456,18 @@
     </ClInclude>
     <ClInclude Include="Generated\CommonType\CommonTypeSDKServices_types.h">
       <Filter>Generated\CommonType</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetFriendResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetMatchmakingService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetFindPlayersResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

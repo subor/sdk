@@ -8,7 +8,7 @@
 
 #ifdef _UNICODE
 
-typedef std::wstring RuyiString;
+typedef std::wstring RuyiString; 
 
 inline std::string ToString(const RuyiString & str)
 {
