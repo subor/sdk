@@ -10,7 +10,7 @@ PC mode is similar to Ruyi OS- same version of Windows- but many of the security
 
 It is possible to switch back and forth between Ruyi OS and PC mode.
 
-__As Administrator__ run SwitchOS.cmd (found on Windows Desktop).
+__As Administrator__ run `SwitchOS.cmd` (found on Windows Desktop) and restart.
 
 ## Changing Default Language
 

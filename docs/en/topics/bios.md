@@ -62,11 +62,12 @@ Available BIOS v0.13 and later:
 1. Run DA22XXXX.exe to flash BIOS
 
 Flashing will progress as follows:
+
 | Installed BIOS | BIOS to Flash | Process
 |-|-|-
-| >=0.16 | | Machine will reboot, BIOS install screen will appear, machine will reboot when finished.
-| &lt;=0.15 | >=0.16 | Machine will freeze for a few minutes and become responsive when finished.  Manually restart the machine.
-| &lt;=0.15 | 0.13 to 0.15 | A GUI window will appear
+| 0.16 and up | | Machine will reboot, BIOS install screen will appear, machine will reboot when finished.
+| 0.15 or lower | 0.16 or higher | Machine will freeze for a few minutes and become responsive when finished.  Manually restart the machine.
+| 0.15 or lower | 0.13 to 0.15 | A GUI window will appear
 
 __Flash with EFI shell__
 

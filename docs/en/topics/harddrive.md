@@ -13,8 +13,8 @@ Partitioning scheme between [RuyiOS](os.md) and [PC mode](pc_mode.md):
 
 | Ruyi OS Version | Primary Drive | Secondary Drive
 |-|-|-
-| &lt;= v0.5 | 100% RuyiOS | Not supported
-| >= v0.6 | 50/50 RuyiOS/PC mode | 30/70 RuyiOS/PC mode
+| v0.5 or lower | 100% RuyiOS | Not supported
+| v0.6 or higher | 50/50 RuyiOS/PC mode | 30/70 RuyiOS/PC mode
 
 ## Maintenance
 
