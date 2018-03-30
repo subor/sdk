@@ -15,12 +15,13 @@ In this tutorial we're going to install an example based on [Unity 3D](https://u
     - Get the DLLs from the [downloads list](http://dev.playruyi.com/udownloadslist/SDK) (use RuyiSDK/RuyiSDK.nf2.0.zip with Unity)
     - Place the DLLs in d:\dev\unity_demo\Assets\Plugins\x64
 1. Launch Unity and open the project at `d:\dev\unity_demo`
-1. File -> Build Settings  
+1. __File -> Build Settings__  
 ![](/docs/img/unity_build.png)
-    - Select PC, Mac & Linux Standalone
-    - Target Platform is Windows
-    - Build button
-    - In the file dialog that opens, browse to `d:\dev\unity_demo\SpaceShooter\SpaceShooter\`, for "File name" enter SpaceShooter.exe and click Save button
+    - Select __PC, Mac & Linux Standalone__
+    - _Target Platform_ is `Windows`
+    - _Architecture_ is `x86_64`
+    - Click __Build__ button
+    - In the file dialog that opens, browse to `d:\dev\unity_demo\SpaceShooter\SpaceShooter\`, for "File name" enter SpaceShooter.exe and click __Save__ button
     - Once it completes you should have a `d:\dev\unity_demo\SpaceShooter\SpaceShooter.exe`
 1. Package the sample to create `d:\dev\unity_demo\SpaceShooter.zip`, read [Pack The App](how_to_pack.md) for more details, we will assume the organized folder would be `d:\dev\unity_demo\SpaceShooter`
     `ruyidev.exe apprunner --pack --apppath=d:\dev\unity_demo\SpaceShooter`
