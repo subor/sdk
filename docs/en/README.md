@@ -40,6 +40,7 @@ __Advanced:__
 
 * [Platform Architecture](topics/layer0.md)
 * [Hardware](topics/hardware.md)
+    * [Hard Drive](topics/harddrive.md)
 * [Ruyi OS](topics/os.md)
     * [BIOS](topics/bios.md)
     * [PC mode](topics/pc_mode.md)
@@ -61,4 +62,5 @@ __Advanced:__
 __Advanced:__
 
 * [Optimization](topics/optimization.md)
+* [AMD GPU Services (AGS)](topics/amd_gpu_services.md)
 

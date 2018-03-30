@@ -19,19 +19,24 @@ __Comments__
     - Exceeding either 6 GB of system or 2 GB graphics memory will result in performance penalty.  In general:
         - For 30 FPS: 1080p to 2k on Ultra/Very High settings, or 2k to 4k on High
         - For 60 FPS: 1080p on Ultra, 2k on High
-        - Examples of memory constrained games:  
-            Title | Quality | Resolution | FPS
-            -|-|-|-
-            Rise of the Tomb Raider | High | 4k | 27
-            Rise of the Tomb Raider | Very High | 1080p | 24
-            Shadow of Mordor | High | 4k | 38
-            Shadow of Morder | Ultra | 1080p | 78
-            Shadow of Morder | Ultra | 1440p | 44
+
+## Benchmarks
+
+The following are benchmarks of games with relatively high memory requirements for comparison.
+
+Title | Quality | Resolution | FPS
+-|-|-|-
+Rise of the Tomb Raider | High | 4k | 27
+Rise of the Tomb Raider | Very High | 1080p | 24
+Shadow of Mordor | High | 4k | 38
+Shadow of Morder | Ultra | 1080p | 78
+Shadow of Morder | Ultra | 1440p | 44
 
 ## Optimizations
 
 - Use [Vulkan API](https://www.khronos.org/vulkan/)
 - Use FP16.  Vega's __Rapid Packed Math__ can _double_ throughput over single-precision float ([source](https://www.anandtech.com/show/11143/amd-launch-ryzen-52-more-ipc-eight-cores-for-under-330-preorder-today-on-sale-march-2nd))
+- Take a look at [AMD GPU Services (AGS)](amd_gpu_services.md)
 
 ## Resources
 

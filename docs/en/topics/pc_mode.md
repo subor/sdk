@@ -1,6 +1,6 @@
 # PC Mode
 
-In addition to [Ruyi OS](os.md), Ruyi can be booted to a regular PC desktop.  This is referred to as "PC mode".
+Starting [Ruyi OS](os.md) v0.6, Ruyi can be booted to a regular PC desktop.  This is referred to as "PC mode".
 
 PC mode is similar to Ruyi OS- same version of Windows- but many of the security features have been turned off (Bitlocker, Device Guard Code Integrity, etc.).
 
@@ -8,7 +8,9 @@ PC mode is similar to Ruyi OS- same version of Windows- but many of the security
 
 ## Switching
 
-__As Administrator__ run SwitchOS.cmd (found on Windows Desktop).
+It is possible to switch back and forth between Ruyi OS and PC mode.
+
+__As Administrator__ run `SwitchOS.cmd` (found on Windows Desktop) and restart.
 
 ## Changing Default Language
 

@@ -33,6 +33,7 @@ The BIOS version __must__ match the [Ruyi OS](os.md) version because the BIOS mu
 
 | BIOS Version/Date | Ruyi OS Version | AMD Driver Stack Version/Date
 |-|-|-
+| 0.1x | 0.7 (coming soon) | 0.x.y.z
 | [0.13](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220013.zip) | 0.6 | 0.0.9.0 2018/2/2
 | [0.11](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220011.zip) | 0.5 | 0.0.7.4 2018/1/5
 | [0.10](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220010.zip) 2018/1/15 | 0.4 | 0.0.7.4 2018/1/5
@@ -60,9 +61,17 @@ Available BIOS v0.13 and later:
 1. Extract the zip file and locate \Winflash\ folder
 1. Run DA22XXXX.exe to flash BIOS
 
+Flashing will progress as follows:
+
+| Installed BIOS | BIOS to Flash | Process
+|-|-|-
+| 0.16 and up | | Machine will reboot, BIOS install screen will appear, machine will reboot when finished.
+| 0.15 or lower | 0.16 or higher | Machine will freeze for a few minutes and become responsive when finished.  Manually restart the machine.
+| 0.15 or lower | 0.13 to 0.15 | A GUI window will appear
+
 __Flash with EFI shell__
 
-_We recommend flashing the BIOS under Windows instead of via EFI Shell_
+_This approach is only needed in situations where no OS is installed.  We recommend flashing the BIOS under Windows._
 
 First, create USB flash drive:
 

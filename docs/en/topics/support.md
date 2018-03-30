@@ -5,6 +5,7 @@ Support is available in several forms:
 - [FAQ](../faq.md)
 - [Forums](http://dev.playruyi.com/forum/) for discussion
 - [Support repository](https://bitbucket.org/playruyi/support) for submitting tickets
+- Via email to dev-support@playruyi.com
 
 Other resources:
 

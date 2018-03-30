@@ -37,6 +37,7 @@ Ruyi platform can be installed to a PC.  By default it includes:
 ### Ruyi Client
 
 Ruyi client-side software should be copied from [SDK](sdk.md) to `c:\ruyi`:
+
 - Layer0
 - MainClient
 - OverlayClient
@@ -52,6 +53,6 @@ Visual C++ Redistributable for VS 2010 | [x86](https://www.microsoft.com/en-us/d
 Visual C++ Redistributable for VS 2012 | [x86/x64](https://www.microsoft.com/en-us/download/details.aspx?id=30679) | Needed by some apps/games
 Visual C++ Redistributable for VS 2013 | [x86/x64](https://www.microsoft.com/en-us/download/details.aspx?id=40784) | Needed by main client some apps/games
 Visual C++ Redistributable for VS 2017 | [x86/x64](https://go.microsoft.com/fwlink/?LinkId=746572) | Needed by layer0 and some apps/games.  Also covers VS 2015.
-Vulkan Runtime v1.0.54.0 | x86/x64 | Needed by some apps/games
+Vulkan Runtime v1.0.54.0 | [x86/x64](https://vulkan.lunarg.com/sdk/home) | Needed by some apps/games
 DirectX 9.0c End-User Runtime | [link](https://www.microsoft.com/en-us/download/details.aspx?id=34429) | Needed by some apps/games
 .NET Framework 3.5 | [link](https://www.microsoft.com/en-us/download/details.aspx?id=22) | Needed by some apps/games
