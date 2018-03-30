@@ -6,6 +6,7 @@
 
 #include "json.h"
 #include "BaseUnitTest.h"
+#include "RuyiNet/RuyiNetClient.h"
 
 using namespace Ruyi;
 using namespace Ruyi::SDK;
@@ -115,6 +116,13 @@ public:
 	void BCS_GlobalStatistics_ReadGlobalStatsForCategory(); //order(890)
 	void BCS_GlobalStatistics_ReadGlobalStatsSubset(); //order(900)
 
+	//example
+	void BCS_GetLoginedUserProfile();
+	void BCS_PostScoreToLeaderboard();
+	void BCS_GetLeadboardPage();
+	void BCS_JsonTest();
+	void BCS_FriendRelatedScript();
+	
 private:
 	SubscribeClient* sdkSubscriber;
 
@@ -130,4 +138,6 @@ private:
 	string _entityPageContext;
 
 	string _TestEventId;
+
+	Ruyi::RuyiNetClient* ruyiNetClient;
 };

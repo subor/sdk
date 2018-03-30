@@ -165,6 +165,16 @@ namespace RuyiCppSDKTest
 			pBCServiceTest->BCS_GlobalEntity_DeleteEntities(); //order(850)
 		}
 		
+		//test for single api of some function
+		TEST_METHOD(BCS_EXAMPLE)
+		{
+			pBCServiceTest->BCS_GetLoginedUserProfile();
+			//pBCServiceTest->BCS_PostScoreToLeaderboard();
+			pBCServiceTest->BCS_GetLeadboardPage();
+			//pBCServiceTest->BCS_FriendRelatedScript();
+
+			//pBCServiceTest->BCS_JsonTest();
+		}
 	};
 
 	BCServiceTest* BrainCloudTester::pBCServiceTest;
