@@ -264,18 +264,6 @@
     <ClCompile Include="Generated\UserServiceExternal\UserServiceExternalSDKServices_constants.cpp" />
     <ClCompile Include="Generated\UserServiceExternal\UserServiceExternalSDKServices_types.cpp" />
     <ClCompile Include="PubSub\SubscribeClient.cpp" />
-    <ClCompile Include="RuyiNet\Response\RuyiNetFindPlayersResponse.cpp" />
-    <ClCompile Include="RuyiNet\Response\RuyiNetGetCDNResponse.cpp" />
-    <ClCompile Include="RuyiNet\Response\RuyiNetGetFriendsVideosResponse.cpp" />
-    <ClCompile Include="RuyiNet\Response\RuyiNetGetPartyInfoResponse.cpp" />
-    <ClCompile Include="RuyiNet\Response\RuyiNetGetProfileResponse.cpp" />
-    <ClCompile Include="RuyiNet\Response\RuyiNetGetProfilesResponse.cpp" />
-    <ClCompile Include="RuyiNet\Response\RuyiNetLeaderboardResponse.cpp" />
-    <ClCompile Include="RuyiNet\Response\RuyiNetListUserFilesResponse.cpp" />
-    <ClCompile Include="RuyiNet\Response\RuyiNetProfile.cpp" />
-    <ClCompile Include="RuyiNet\Response\RuyiNetSocialLeaderboardResponse.cpp" />
-    <ClCompile Include="RuyiNet\Response\RuyiNetSummaryFriendData.cpp" />
-    <ClCompile Include="RuyiNet\Response\RuyiNetUploadFileResponse.cpp" />
     <ClCompile Include="RuyiNet\RuyiNetClient.cpp" />
     <ClCompile Include="RuyiNet\Service\RuyiNetCloudService.cpp" />
     <ClCompile Include="RuyiNet\Service\RuyiNetFriendService.cpp" />
@@ -286,7 +274,6 @@
     <ClCompile Include="RuyiNet\Service\RuyiNetService.cpp" />
     <ClCompile Include="RuyiNet\Service\RuyiNetUserFileService.cpp" />
     <ClCompile Include="RuyiNet\Service\RuyiNetVideoService.cpp" />
-    <ClCompile Include="RuyiNet\Task\RuyiNetTaskQueue.cpp" />
     <ClCompile Include="RuyiSDK.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -341,6 +328,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="RuyiNet\Enum.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetFindPlayersResponse.h" />
+    <ClInclude Include="RuyiNet\Response\RuyiNetFriendResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetCDNResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetFriendsVideosResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetPartyInfoResponse.h" />
@@ -349,6 +337,7 @@
     <ClInclude Include="RuyiNet\Response\RuyiNetLeaderboardResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetListUserFilesResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetProfile.h" />
+    <ClInclude Include="RuyiNet\Response\RuyiNetResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetSocialLeaderboardResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetSummaryFriendData.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetUploadFileResponse.h" />
@@ -365,10 +354,6 @@
     <ClInclude Include="RuyiNet\Service\RuyiNetService.h" />
     <ClInclude Include="RuyiNet\Service\RuyiNetUserFileService.h" />
     <ClInclude Include="RuyiNet\Service\RuyiNetVideoService.h" />
-    <ClInclude Include="RuyiNet\Task\RuyiNetPlatformTask.h" />
-    <ClInclude Include="RuyiNet\Task\RuyiNetTask.h" />
-    <ClInclude Include="RuyiNet\Task\RuyiNetTaskBase.h" />
-    <ClInclude Include="RuyiNet\Task\RuyiNetTaskQueue.h" />
     <ClInclude Include="RuyiSDK.h">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>

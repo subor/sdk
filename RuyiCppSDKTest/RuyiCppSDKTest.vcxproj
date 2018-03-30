@@ -173,12 +173,14 @@
     <ClInclude Include="TestCase\InputManagerTest.h" />
     <ClInclude Include="TestCase\L10NServiceTest.h" />
     <ClInclude Include="TestCase\Layer0Test.h" />
+    <ClInclude Include="TestCase\RuyiNetTest.h" />
     <ClInclude Include="TestCase\SettingSystemTest.h" />
     <ClInclude Include="TestCase\StorageLayerTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManagerTester.cpp" />
     <ClCompile Include="L10NTester.cpp" />
+    <ClCompile Include="RuyiNetTester.cpp" />
     <ClCompile Include="SettingSystemTester.cpp" />
     <ClCompile Include="StorageTester.cpp" />
     <ClCompile Include="TestCase\BaseUnitTest.cpp" />
@@ -186,6 +188,7 @@
     <ClCompile Include="TestCase\InputManagerTest.cpp" />
     <ClCompile Include="TestCase\L10NServiceTest.cpp" />
     <ClCompile Include="TestCase\Layer0Test.cpp" />
+    <ClCompile Include="TestCase\RuyiNetTest.cpp" />
     <ClCompile Include="TestCase\SettingSystemTest.cpp" />
     <ClCompile Include="TestCase\StorageLayerTest.cpp" />
     <ClCompile Include="BrainCloudTester.cpp" />
