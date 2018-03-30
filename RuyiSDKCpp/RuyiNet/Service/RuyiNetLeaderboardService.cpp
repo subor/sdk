@@ -6,97 +6,138 @@ namespace Ruyi
 		: RuyiNetService(client)
 	{}
 
-	void RuyiNetLeaderboardService::CreateLeaderboard(int index, const RuyiString & id, RuyiNetLeaderboardType type,
-		RuyiNetRotationType rotationType, const RuyiNetTask<json>::CallbackType & callback)
-	{
-		auto leaderboardId = GetLeaderboardId(id);
-		EnqueueTask<json>([this, &index, &leaderboardId, &type, &rotationType]()->std::string
+	void RuyiNetLeaderboardService::CreateLeaderboard(int index, const std::string& id, RuyiNetLeaderboardType type, RuyiNetRotationType rotationType, RuyiNetResponse& response)
+	{		
+		try
 		{
-			json payload = 
-			{
-				{ "leaderboardId", leaderboardId },
-				{ "type", type._to_string() },
-				{ "rotationType", rotationType._to_string() },
-				{ "versionsToRetain", 1 }
-			};
+			auto leaderboardId = GetLeaderboardId(id);
 
-			return RunParentScript(index, "CreateLeaderboard", payload);
-		}, callback);
+			nlohmann::json payloadJson;
+
+			payloadJson["leaderboardId"] = leaderboardId;
+			payloadJson["type"] = type._to_string();
+			payloadJson["rotationType"] = rotationType._to_string();
+			payloadJson["versionsToRetain"] = 1;
+
+			std::string responseStr = RunParentScript(index, "CreateLeaderboard", payloadJson);
+			nlohmann::json retJson = nlohmann::json::parse(responseStr);
+			response.parseJson(retJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
+	}
+	
+	void RuyiNetLeaderboardService::GetGlobalLeaderboardPage(int index, const std::string& id, SDK::BrainCloudApi::SortOrder::type sort,
+		int startIndex, int endIndex, RuyiNetLeaderboardResponse& response)
+	{
+		try 
+		{
+			auto leaderboardId = GetLeaderboardId(id);
+			auto sortString = (sort == SDK::BrainCloudApi::SortOrder::HIGH_TO_LOW) ? "HIGH_TO_LOW" : "LOW_TO_HIGH";
+
+			nlohmann::json payloadJson;
+
+			payloadJson["leaderboardId"] = leaderboardId;
+			payloadJson["sort"] = sortString;
+			payloadJson["startIndex"] = startIndex;
+			payloadJson["endIndex"] = endIndex;
+
+			std::string responseStr = RunParentScript(index, "GetGlobalLeaderboardPage", payloadJson);
+			nlohmann::json retJson = nlohmann::json::parse(responseStr);
+			response.parseJson(retJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
+	}
+	
+	void RuyiNetLeaderboardService::GetGlobalLeaderboardView(int index, const std::string& id, SDK::BrainCloudApi::SortOrder::type sort,
+		int beforeCount, int afterCount, RuyiNetLeaderboardResponse& response)
+	{
+		try 
+		{
+			auto leaderboardId = GetLeaderboardId(id);
+			auto sortString = (sort == SDK::BrainCloudApi::SortOrder::HIGH_TO_LOW) ? "HIGH_TO_LOW" : "LOW_TO_HIGH";
+
+			nlohmann::json payloadJson;
+
+			payloadJson["leaderboardId"] = leaderboardId;
+			payloadJson["sort"] = sortString;
+			payloadJson["beforeCount"] = beforeCount;
+			payloadJson["afterCount"] = afterCount;
+
+			std::string responseStr = RunParentScript(index, "GetGlobalLeaderboardView", payloadJson);
+			nlohmann::json retJson = nlohmann::json::parse(responseStr);
+			response.parseJson(retJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
+	}
+	
+	void RuyiNetLeaderboardService::GetSocialLeaderboard(int index, const std::string& id, bool replaceName,
+		RuyiNetSocialLeaderboardResponse& response)
+	{
+		try 
+		{
+			auto leaderboardId = GetLeaderboardId(id);
+
+			nlohmann::json payloadJson;
+
+			payloadJson["leaderboardId"] = leaderboardId;
+			payloadJson["replaceName"] = replaceName;
+
+			std::string responseStr = RunParentScript(index, "GetSocialLeaderboard", payloadJson);
+			nlohmann::json retJson = nlohmann::json::parse(responseStr);
+			response.parseJson(retJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
+	}
+	
+	void RuyiNetLeaderboardService::PostScoreToLeaderboard(int index, const std::string& id, int score, RuyiNetResponse& response)
+	{
+		try 
+		{
+			auto leaderboardId = GetLeaderboardId(id);
+			
+			nlohmann::json payloadJson;
+
+			payloadJson["leaderboardId"] = leaderboardId;
+			payloadJson["score"] = score;
+
+			std::string responseStr = RunParentScript(index, "PostScoreToLeaderboard", payloadJson);
+			nlohmann::json retJson = nlohmann::json::parse(responseStr);
+			response.parseJson(retJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
 	}
 
-	void RuyiNetLeaderboardService::GetGlobalLeaderboardPage(int index, const RuyiString & id, SDK::BrainCloudApi::SortOrder::type sort,
-		int startIndex, int endIndex, const RuyiNetTask<RuyiNetLeaderboardResponse>::CallbackType & callback)
+	std::string RuyiNetLeaderboardService::GetLeaderboardId(const std::string& id)
 	{
-		auto leaderboardId = GetLeaderboardId(id);
-		auto sortString = (sort == SDK::BrainCloudApi::SortOrder::HIGH_TO_LOW) ? "HIGH_TO_LOW" : "LOW_TO_HIGH";
-		EnqueueTask<json>([this, &index, &leaderboardId, &sortString, &startIndex, &endIndex]()->std::string
-		{
-			json payload =
-			{
-				{ "leaderboardId", leaderboardId },
-				{ "sort", sortString },
-				{ "startIndex", startIndex },
-				{ "endIndex", endIndex }
-			};
+		//RuyiString result = mClient->GetAppId() + RUYI_STR("_") + id;
+		//return ToString(result);
+		std::string result = mClient->GetAppId() + "_" + id;
 
-			return RunParentScript(index, "GetGlobalLeaderboardPage", payload);
-		}, callback);
-	}
-
-	void RuyiNetLeaderboardService::GetGlobalLeaderboardView(int index, const RuyiString & id, SDK::BrainCloudApi::SortOrder::type sort,
-		int beforeCount, int afterCount, const RuyiNetTask<RuyiNetLeaderboardResponse>::CallbackType & callback)
-	{
-		auto leaderboardId = GetLeaderboardId(id);
-		auto sortString = (sort == SDK::BrainCloudApi::SortOrder::HIGH_TO_LOW) ? "HIGH_TO_LOW" : "LOW_TO_HIGH";
-		EnqueueTask<json>([this, &index, &leaderboardId, &sortString, &beforeCount, &afterCount]()->std::string
-		{
-			json payload =
-			{
-				{ "leaderboardId", leaderboardId },
-				{ "sort", sortString },
-				{ "beforeCount", beforeCount },
-				{ "afterCount", afterCount }
-			};
-
-			return RunParentScript(index, "GetGlobalLeaderboardView", payload);
-		}, callback);
-	}
-
-	void RuyiNetLeaderboardService::GetSocialLeaderboard(int index, const RuyiString & id, bool replaceName,
-		const RuyiNetTask<RuyiNetSocialLeaderboardResponse>::CallbackType & callback)
-	{
-		auto leaderboardId = GetLeaderboardId(id);
-		EnqueueTask<json>([this, &index, &leaderboardId, &replaceName]()->std::string
-		{
-			json payload =
-			{
-				{ "leaderboardId", leaderboardId },
-				{ "replaceName", replaceName }
-			};
-
-			return RunParentScript(index, "GetSocialLeaderboard", payload);
-		}, callback);
-	}
-
-	void RuyiNetLeaderboardService::PostScoreToLeaderboard(int index, const RuyiString & id, int score,
-		const RuyiNetTask<json>::CallbackType & callback)
-	{
-		auto leaderboardId = GetLeaderboardId(id);
-		EnqueueTask<json>([this, &index, &leaderboardId, &score]()->std::string
-		{
-			json payload =
-			{
-				{ "leaderboardId", leaderboardId },
-				{ "score", score }
-			};
-
-			return RunParentScript(index, "PostScoreToLeaderboard", payload);
-		}, callback);
-	}
-
-	std::string RuyiNetLeaderboardService::GetLeaderboardId(const RuyiString & id)
-	{
-		RuyiString result = mClient->GetAppId() + RUYI_STR("_") + id;
-		return ToString(result);
+		return result;
 	}
 }

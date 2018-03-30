@@ -7,10 +7,11 @@ namespace Ruyi
 	{
 	}
 
-	std::string RuyiNetService::RunParentScript(int index, const std::string & scriptName, json payload)
+	std::string RuyiNetService::RunParentScript(int index, const std::string & scriptName, nlohmann::json payload)
 	{
-		std::string response;
-		mClient->GetBCService()->Script_RunParentScript(response, scriptName, payload, "RUYI", index);
+		std::string response = "";
+		std::string jsonScriptData = payload.dump();	
+		mClient->GetBCService()->Script_RunParentScript(response, scriptName, jsonScriptData, "RUYI", index);	
 		return response;
 	}
 }

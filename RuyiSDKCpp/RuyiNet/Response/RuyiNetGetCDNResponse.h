@@ -1,27 +1,60 @@
 #pragma once
 
-#include <string>
-
-#include "boost/container/detail/json.hpp"
-
-using nlohmann::json;
+#include "../RuyiNetClient.h"
 
 namespace Ruyi
 {
+	/// <summary>
+	/// The response from getting a CDN
+	/// </summary>
 	struct RuyiNetGetCDNResponse
 	{
+		/// <summary>
+		/// The response data.
+		/// </summary>
 		struct Data
 		{
+			/// <summary>
+			/// A permanent link to the file.
+			/// </summary>
 			std::string appServerUrl;
+
+			/// <summary>
+			/// A temporary link to the file served via a CDN.
+			/// </summary>
 			std::string cdnUrl;
 		};
 
+		/// <summary>
+		/// The response data.
+		/// </summary>
 		Data data;
+		/// <summary>
+		/// The status of the response.
+		/// </summary>
 		int status;
-	};
 
-	void to_json(json & j, const RuyiNetGetCDNResponse::Data & data);
-	void from_json(const json & j, RuyiNetGetCDNResponse::Data & data);
-	void to_json(json & j, const RuyiNetGetCDNResponse & data);
-	void from_json(const json & j, RuyiNetGetCDNResponse & data);
+		void parseJson(nlohmann::json& j)
+		{
+			if (!j["status"].is_null())
+			{
+				status = j["status"];
+			}
+
+			if (!j["data"].is_null())
+			{
+				nlohmann::json dataJson = j["data"];
+
+				if (!dataJson["appServerUrl"].is_null())
+				{
+					data.appServerUrl = dataJson["appServerUrl"];
+				}
+
+				if (!dataJson["cdnUrl"].is_null())
+				{
+					data.cdnUrl = dataJson["cdnUrl"];
+				}
+			}
+		}
+	};
 }

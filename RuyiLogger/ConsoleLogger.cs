@@ -4,8 +4,8 @@ namespace RuyiLogger
 {
     public class ConsoleLogger : IRuyiLogger
     {
-        string silent = "silent";
-        string verbose = "verbose";
+        const string silent = "silent";
+        const string verbose = "verbose";
 
         string logLevelStr = null;
         LogLevel logLevel = LogLevel.Debug;
