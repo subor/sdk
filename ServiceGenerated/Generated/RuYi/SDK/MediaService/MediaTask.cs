@@ -12,5 +12,6 @@ namespace Ruyi.SDK.MediaService
     None = 0,
     Playback = 1,
     Query = 2,
+    All = 3,
   }
 }

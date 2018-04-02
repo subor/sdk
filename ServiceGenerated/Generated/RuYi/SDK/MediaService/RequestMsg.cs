@@ -152,6 +152,35 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
+    public class RemovePath : RequestMsg {
+      private RemovePathMsg _data;
+      public override object Data { get { return _data; } }
+      public RemovePath(RemovePathMsg data) : base(true) {
+        this._data = data;
+      }
+      public override void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("RequestMsg");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          field.Name = "RemovePath";
+          field.Type = TType.Struct;
+          field.ID = 5;
+          oprot.WriteFieldBegin(field);
+          _data.Write(oprot);
+          oprot.WriteFieldEnd();
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+      }
+    }
+
     public class Query : RequestMsg {
       private QueryMsg _data;
       public override object Data { get { return _data; } }
@@ -167,7 +196,7 @@ namespace Ruyi.SDK.MediaService
           TField field = new TField();
           field.Name = "Query";
           field.Type = TType.Struct;
-          field.ID = 5;
+          field.ID = 6;
           oprot.WriteFieldBegin(field);
           _data.Write(oprot);
           oprot.WriteFieldEnd();
@@ -243,6 +272,17 @@ namespace Ruyi.SDK.MediaService
               }
               break;
             case 5:
+              if (field.Type == TType.Struct) {
+                RemovePathMsg temp;
+                temp = new RemovePathMsg();
+                temp.Read(iprot);
+                retval = new RemovePath(temp);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+                retval = new ___undefined();
+              }
+              break;
+            case 6:
               if (field.Type == TType.Struct) {
                 QueryMsg temp;
                 temp = new QueryMsg();

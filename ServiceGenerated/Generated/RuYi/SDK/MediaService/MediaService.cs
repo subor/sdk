@@ -20,15 +20,15 @@ namespace Ruyi.SDK.MediaService
 {
   public partial class MediaService {
     public interface ISync {
-      int SendMsg(Ruyi.SDK.MediaService.RequestMsg request);
+      int SendMsg(Ruyi.SDK.MediaService.RequestMsg request, bool broadcast);
     }
 
     public interface IAsync {
-      Task<int> SendMsgAsync(Ruyi.SDK.MediaService.RequestMsg request);
+      Task<int> SendMsgAsync(Ruyi.SDK.MediaService.RequestMsg request, bool broadcast);
     }
 
     public interface Iface : ISync, IAsync {
-      IAsyncResult Begin_SendMsg(AsyncCallback callback, object state, Ruyi.SDK.MediaService.RequestMsg request);
+      IAsyncResult Begin_SendMsg(AsyncCallback callback, object state, Ruyi.SDK.MediaService.RequestMsg request, bool broadcast);
       int End_SendMsg(IAsyncResult asyncResult);
     }
 
@@ -89,9 +89,9 @@ namespace Ruyi.SDK.MediaService
 
 
       
-      public IAsyncResult Begin_SendMsg(AsyncCallback callback, object state, Ruyi.SDK.MediaService.RequestMsg request)
+      public IAsyncResult Begin_SendMsg(AsyncCallback callback, object state, Ruyi.SDK.MediaService.RequestMsg request, bool broadcast)
       {
-        return send_SendMsg(callback, state, request);
+        return send_SendMsg(callback, state, request, broadcast);
       }
 
       public int End_SendMsg(IAsyncResult asyncResult)
@@ -100,27 +100,28 @@ namespace Ruyi.SDK.MediaService
         return recv_SendMsg();
       }
 
-      public async Task<int> SendMsgAsync(Ruyi.SDK.MediaService.RequestMsg request)
+      public async Task<int> SendMsgAsync(Ruyi.SDK.MediaService.RequestMsg request, bool broadcast)
       {
         int retval;
         retval = await Task.Run(() =>
         {
-          return SendMsg(request);
+          return SendMsg(request, broadcast);
         });
         return retval;
       }
 
-      public int SendMsg(Ruyi.SDK.MediaService.RequestMsg request)
+      public int SendMsg(Ruyi.SDK.MediaService.RequestMsg request, bool broadcast)
       {
-        var asyncResult = Begin_SendMsg(null, null, request);
+        var asyncResult = Begin_SendMsg(null, null, request, broadcast);
         return End_SendMsg(asyncResult);
 
       }
-      public IAsyncResult send_SendMsg(AsyncCallback callback, object state, Ruyi.SDK.MediaService.RequestMsg request)
+      public IAsyncResult send_SendMsg(AsyncCallback callback, object state, Ruyi.SDK.MediaService.RequestMsg request, bool broadcast)
       {
         oprot_.WriteMessageBegin(new TMessage("SendMsg", TMessageType.Call, seqid_));
         SendMsg_args args = new SendMsg_args();
         args.Request = request;
+        args.Broadcast = broadcast;
         args.Write(oprot_);
         oprot_.WriteMessageEnd();
         return oprot_.Transport.BeginFlush(callback, state);
@@ -189,7 +190,7 @@ namespace Ruyi.SDK.MediaService
         SendMsg_result result = new SendMsg_result();
         try
         {
-          result.Success = await iface_.SendMsgAsync(args.Request);
+          result.Success = await iface_.SendMsgAsync(args.Request, args.Broadcast);
           oprot.WriteMessageBegin(new TMessage("SendMsg", TMessageType.Reply, seqid)); 
           result.Write(oprot);
         }
@@ -256,7 +257,7 @@ namespace Ruyi.SDK.MediaService
         SendMsg_result result = new SendMsg_result();
         try
         {
-          result.Success = iface_.SendMsg(args.Request);
+          result.Success = iface_.SendMsg(args.Request, args.Broadcast);
           oprot.WriteMessageBegin(new TMessage("SendMsg", TMessageType.Reply, seqid)); 
           result.Write(oprot);
         }
@@ -285,6 +286,7 @@ namespace Ruyi.SDK.MediaService
     public partial class SendMsg_args : TBase
     {
       private Ruyi.SDK.MediaService.RequestMsg _request;
+      private bool _broadcast;
 
       public Ruyi.SDK.MediaService.RequestMsg Request
       {
@@ -299,6 +301,19 @@ namespace Ruyi.SDK.MediaService
         }
       }
 
+      public bool Broadcast
+      {
+        get
+        {
+          return _broadcast;
+        }
+        set
+        {
+          __isset.broadcast = true;
+          this._broadcast = value;
+        }
+      }
+
 
       public Isset __isset;
       #if !SILVERLIGHT
@@ -306,6 +321,7 @@ namespace Ruyi.SDK.MediaService
       #endif
       public struct Isset {
         public bool request;
+        public bool broadcast;
       }
 
       public SendMsg_args() {
@@ -329,6 +345,13 @@ namespace Ruyi.SDK.MediaService
               case 1:
                 if (field.Type == TType.Struct) {
                   Request = Ruyi.SDK.MediaService.RequestMsg.Read(iprot);
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.Bool) {
+                  Broadcast = iprot.ReadBool();
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }
@@ -362,6 +385,14 @@ namespace Ruyi.SDK.MediaService
             Request.Write(oprot);
             oprot.WriteFieldEnd();
           }
+          if (__isset.broadcast) {
+            field.Name = "broadcast";
+            field.Type = TType.Bool;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(Broadcast);
+            oprot.WriteFieldEnd();
+          }
           oprot.WriteFieldStop();
           oprot.WriteStructEnd();
         }
@@ -379,6 +410,12 @@ namespace Ruyi.SDK.MediaService
           __first = false;
           __sb.Append("Request: ");
           __sb.Append(Request== null ? "<null>" : Request.ToString());
+        }
+        if (__isset.broadcast) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Broadcast: ");
+          __sb.Append(Broadcast);
         }
         __sb.Append(")");
         return __sb.ToString();
