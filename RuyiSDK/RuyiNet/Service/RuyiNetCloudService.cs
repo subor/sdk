@@ -170,7 +170,7 @@ namespace Ruyi
                 {
                     var path = GetPersistentDataPath(index);
                     path = Path.GetFullPath(path);
-                    backupPath(index, GetCloudLocation(index), path);
+                    BackupPath(index, GetCloudLocation(index), path);
                     if (cleanMode)
                     {
                         var di = new DirectoryInfo(path);
@@ -242,7 +242,7 @@ namespace Ruyi
             }, callback);
         }
 
-        private void backupPath(int index, string cloudPath, string path)
+        private void BackupPath(int index, string cloudPath, string path)
         {
             var subdirectories = Directory.GetDirectories(path);
             foreach (var i in subdirectories)
@@ -254,7 +254,7 @@ namespace Ruyi
                 }
 
                 var newPath = Path.Combine(cloudPath, directoryName);
-                backupPath(index, newPath, i);
+                BackupPath(index, newPath, i);
             }
 
             var files = Directory.GetFiles(path);

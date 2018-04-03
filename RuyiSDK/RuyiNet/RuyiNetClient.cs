@@ -25,10 +25,7 @@ namespace Ruyi
         {
             if (Initialised)
             {
-                if (onInitialised != null)
-                {
-                    onInitialised();
-                }
+                onInitialised?.Invoke();
 
                 return;
             }
@@ -87,10 +84,7 @@ namespace Ruyi
             {
                 Initialised = true;
 
-                if (onInitialised != null)
-                {
-                    onInitialised();
-                }
+                onInitialised?.Invoke();
             });
         }
 
@@ -218,7 +212,7 @@ namespace Ruyi
         /// Returns TRUE while there are tasks in the queue.
         /// </summary>
         public bool IsWorking { get { return mTaskQueue.Work > 0; } }
-
+        
         /// <summary>
         /// Cleanup native resources before destruction.
         /// </summary>

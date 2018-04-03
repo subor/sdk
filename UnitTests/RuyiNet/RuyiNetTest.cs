@@ -49,6 +49,10 @@ namespace UnitTests.RuyiNet
             {
                 mSDK.RuyiNetService.CloudService.BackupData(0, CheckResponseStatus);
             });
+
+            while (mSDK.RuyiNetService.IsWorking) ;
+
+            DisposeRuyiSDK();
         }
 
         [Test]
@@ -60,6 +64,10 @@ namespace UnitTests.RuyiNet
             {
                 mSDK.RuyiNetService.CloudService.RestoreData(0, CheckResponseStatus);
             });
+
+            while (mSDK.RuyiNetService.IsWorking) ;
+
+            DisposeRuyiSDK();
         }
 
         [Test]
@@ -112,6 +120,10 @@ namespace UnitTests.RuyiNet
                     });
                 });
             });
+
+            while (mSDK.RuyiNetService.IsWorking) ;
+
+            DisposeRuyiSDK();
         }
 
         [Test]
@@ -147,6 +159,10 @@ namespace UnitTests.RuyiNet
                     });
                 });
             });
+
+            while (mSDK.RuyiNetService.IsWorking) ;
+
+            DisposeRuyiSDK();
         }
 
         [Test]
@@ -199,6 +215,10 @@ namespace UnitTests.RuyiNet
                     });
                 });
             });
+
+            while (mSDK.RuyiNetService.IsWorking) ;
+
+            DisposeRuyiSDK();
         }
 
         [Test]
@@ -231,6 +251,10 @@ namespace UnitTests.RuyiNet
                     });
                 });
             });
+
+            while (mSDK.RuyiNetService.IsWorking) ;
+
+            DisposeRuyiSDK();
         }
 
         [Test]
@@ -275,6 +299,10 @@ namespace UnitTests.RuyiNet
                     });
                 });
             });
+
+            while (mSDK.RuyiNetService.IsWorking) ;
+
+            DisposeRuyiSDK();
         }
 
         public void RuyNetTest_Telemetry()
@@ -288,8 +316,10 @@ namespace UnitTests.RuyiNet
                 {
                     Assert.IsNotNull(session);
 
-                    var customData = new Dictionary<string, string>();
-                    customData["position"] = "[10, 10]";
+                    var customData = new Dictionary<string, string>
+                    {
+                        ["position"] = "[10, 10]"
+                    };
                     telemetryService.LogTelemetryEvent(0, session.Id, "ATTACK", customData, (RuyiNetResponse logEventResponse) =>
                     {
                         Assert.IsTrue(logEventResponse.status == 200);
@@ -301,6 +331,10 @@ namespace UnitTests.RuyiNet
                     });
                 });
             });
+
+            while (mSDK.RuyiNetService.IsWorking) ;
+
+            DisposeRuyiSDK();
         }
 
         private bool IsRuyiNetAvailable
