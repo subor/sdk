@@ -15,7 +15,7 @@ using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.CommonType
 {
 
   #if !SILVERLIGHT
@@ -24,8 +24,11 @@ namespace Ruyi.SDK.SettingSystem.Api
   public partial class AppDataRecord : TBase
   {
     private string _id;
-    private string _value;
+    private SettingValue _content;
 
+    /// <summary>
+    /// The record ID
+    /// </summary>
     public string Id
     {
       get
@@ -39,16 +42,19 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public string Value
+    /// <summary>
+    /// The record value
+    /// </summary>
+    public SettingValue Content
     {
       get
       {
-        return _value;
+        return _content;
       }
       set
       {
-        __isset.@value = true;
-        this._value = value;
+        __isset.content = true;
+        this._content = value;
       }
     }
 
@@ -59,12 +65,10 @@ namespace Ruyi.SDK.SettingSystem.Api
     #endif
     public struct Isset {
       public bool id;
-      public bool @value;
+      public bool content;
     }
 
     public AppDataRecord() {
-      this._value = "{}";
-      this.__isset.@value = true;
     }
 
     public void Read (TProtocol iprot)
@@ -90,8 +94,9 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 2:
-              if (field.Type == TType.String) {
-                Value = iprot.ReadString();
+              if (field.Type == TType.Struct) {
+                Content = new SettingValue();
+                Content.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -125,12 +130,12 @@ namespace Ruyi.SDK.SettingSystem.Api
           oprot.WriteString(Id);
           oprot.WriteFieldEnd();
         }
-        if (Value != null && __isset.@value) {
-          field.Name = "value";
-          field.Type = TType.String;
+        if (Content != null && __isset.content) {
+          field.Name = "content";
+          field.Type = TType.Struct;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Value);
+          Content.Write(oprot);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -151,11 +156,11 @@ namespace Ruyi.SDK.SettingSystem.Api
         __sb.Append("Id: ");
         __sb.Append(Id);
       }
-      if (Value != null && __isset.@value) {
+      if (Content != null && __isset.content) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Value: ");
-        __sb.Append(Value);
+        __sb.Append("Content: ");
+        __sb.Append(Content== null ? "<null>" : Content.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();

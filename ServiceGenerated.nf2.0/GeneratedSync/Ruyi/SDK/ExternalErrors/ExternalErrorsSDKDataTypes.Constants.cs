@@ -57,8 +57,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp8.Description = "specified user {0} is not playing app {1}";
       EXTERNALERRORLIST.Add(tmp8);
       ExternalErrorInfos tmp9 = new ExternalErrorInfos();
-      tmp9.Description = "user is not found by id {0}";
       tmp9.ErrorCode = ExternalErrorCode.Err_9;
+      tmp9.Description = "user is not found by id {0}";
       EXTERNALERRORLIST.Add(tmp9);
       ExternalErrorInfos tmp10 = new ExternalErrorInfos();
       tmp10.ErrorCode = ExternalErrorCode.Err_10;
@@ -89,8 +89,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp16.Description = "";
       EXTERNALERRORLIST.Add(tmp16);
       ExternalErrorInfos tmp17 = new ExternalErrorInfos();
-      tmp17.ErrorCode = ExternalErrorCode.Err_17;
       tmp17.Description = "";
+      tmp17.ErrorCode = ExternalErrorCode.Err_17;
       EXTERNALERRORLIST.Add(tmp17);
       ExternalErrorInfos tmp18 = new ExternalErrorInfos();
       tmp18.ErrorCode = ExternalErrorCode.Err_18;

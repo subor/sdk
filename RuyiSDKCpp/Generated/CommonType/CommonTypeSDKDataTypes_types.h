@@ -74,11 +74,19 @@ class dataListItem;
 
 class activeDependency;
 
+class SettingValue;
+
 class SettingItem;
 
 class SettingCategory;
 
 class ModuleSetting;
+
+class AppDataRecord;
+
+class AppDataCollection;
+
+class AppData;
 
 typedef struct _ErrorException__isset {
   _ErrorException__isset() : errId(false), errMsg(false) {}
@@ -596,6 +604,58 @@ inline std::ostream& operator<<(std::ostream& out, const activeDependency& obj)
   return out;
 }
 
+typedef struct _SettingValue__isset {
+  _SettingValue__isset() : dataType(false), dataValue(false) {}
+  bool dataType :1;
+  bool dataValue :1;
+} _SettingValue__isset;
+
+class SettingValue : public virtual ::apache::thrift::TBase {
+ public:
+
+  SettingValue(const SettingValue&);
+  SettingValue& operator=(const SettingValue&);
+  SettingValue() : dataType(), dataValue() {
+  }
+
+  virtual ~SettingValue() throw();
+  std::string dataType;
+  std::string dataValue;
+
+  _SettingValue__isset __isset;
+
+  void __set_dataType(const std::string& val);
+
+  void __set_dataValue(const std::string& val);
+
+  bool operator == (const SettingValue & rhs) const
+  {
+    if (!(dataType == rhs.dataType))
+      return false;
+    if (!(dataValue == rhs.dataValue))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingValue &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingValue & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(SettingValue &a, SettingValue &b);
+
+inline std::ostream& operator<<(std::ostream& out, const SettingValue& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
 typedef struct _SettingItem__isset {
   _SettingItem__isset() : id(false), display(false), dataType(false), dataValue(false), dataList(false), platform(false), summary(false), description(false), UIType(false), devModeOnly(false), internalOnly(false), readOnly(false), isValid(false), isActive(false), validation(false), activeDependencies(false), ActionName(false), ActionObject(false), ActionMethodName(false) {}
   bool id :1;
@@ -927,6 +987,162 @@ class ModuleSetting : public virtual ::apache::thrift::TBase {
 void swap(ModuleSetting &a, ModuleSetting &b);
 
 inline std::ostream& operator<<(std::ostream& out, const ModuleSetting& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _AppDataRecord__isset {
+  _AppDataRecord__isset() : id(false), content(false) {}
+  bool id :1;
+  bool content :1;
+} _AppDataRecord__isset;
+
+class AppDataRecord : public virtual ::apache::thrift::TBase {
+ public:
+
+  AppDataRecord(const AppDataRecord&);
+  AppDataRecord& operator=(const AppDataRecord&);
+  AppDataRecord() : id() {
+  }
+
+  virtual ~AppDataRecord() throw();
+  std::string id;
+  SettingValue content;
+
+  _AppDataRecord__isset __isset;
+
+  void __set_id(const std::string& val);
+
+  void __set_content(const SettingValue& val);
+
+  bool operator == (const AppDataRecord & rhs) const
+  {
+    if (!(id == rhs.id))
+      return false;
+    if (!(content == rhs.content))
+      return false;
+    return true;
+  }
+  bool operator != (const AppDataRecord &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AppDataRecord & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(AppDataRecord &a, AppDataRecord &b);
+
+inline std::ostream& operator<<(std::ostream& out, const AppDataRecord& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _AppDataCollection__isset {
+  _AppDataCollection__isset() : category(false), records(false) {}
+  bool category :1;
+  bool records :1;
+} _AppDataCollection__isset;
+
+class AppDataCollection : public virtual ::apache::thrift::TBase {
+ public:
+
+  AppDataCollection(const AppDataCollection&);
+  AppDataCollection& operator=(const AppDataCollection&);
+  AppDataCollection() : category() {
+  }
+
+  virtual ~AppDataCollection() throw();
+  std::string category;
+  std::vector<AppDataRecord>  records;
+
+  _AppDataCollection__isset __isset;
+
+  void __set_category(const std::string& val);
+
+  void __set_records(const std::vector<AppDataRecord> & val);
+
+  bool operator == (const AppDataCollection & rhs) const
+  {
+    if (!(category == rhs.category))
+      return false;
+    if (!(records == rhs.records))
+      return false;
+    return true;
+  }
+  bool operator != (const AppDataCollection &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AppDataCollection & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(AppDataCollection &a, AppDataCollection &b);
+
+inline std::ostream& operator<<(std::ostream& out, const AppDataCollection& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _AppData__isset {
+  _AppData__isset() : appId(false), data(false) {}
+  bool appId :1;
+  bool data :1;
+} _AppData__isset;
+
+class AppData : public virtual ::apache::thrift::TBase {
+ public:
+
+  AppData(const AppData&);
+  AppData& operator=(const AppData&);
+  AppData() : appId() {
+  }
+
+  virtual ~AppData() throw();
+  std::string appId;
+  std::vector<AppDataCollection>  data;
+
+  _AppData__isset __isset;
+
+  void __set_appId(const std::string& val);
+
+  void __set_data(const std::vector<AppDataCollection> & val);
+
+  bool operator == (const AppData & rhs) const
+  {
+    if (!(appId == rhs.appId))
+      return false;
+    if (!(data == rhs.data))
+      return false;
+    return true;
+  }
+  bool operator != (const AppData &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AppData & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(AppData &a, AppData &b);
+
+inline std::ostream& operator<<(std::ostream& out, const AppData& obj)
 {
   obj.printTo(out);
   return out;

@@ -117,12 +117,12 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("UpdateModuleVersion\n");
   }
 
-  int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & settingItems) {
+  int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems) {
     // Your implementation goes here
     printf("SetUserAppData\n");
   }
 
-  void GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) {
+  void GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) {
     // Your implementation goes here
     printf("GetUserAppData\n");
   }

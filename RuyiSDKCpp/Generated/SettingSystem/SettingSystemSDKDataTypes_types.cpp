@@ -192,364 +192,6 @@ void CategoryNode::printTo(std::ostream& out) const {
 }
 
 
-AppDataRecord::~AppDataRecord() throw() {
-}
-
-
-void AppDataRecord::__set_id(const std::string& val) {
-  this->id = val;
-}
-
-void AppDataRecord::__set_value(const JSON& val) {
-  this->value = val;
-}
-
-uint32_t AppDataRecord::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->id);
-          this->__isset.id = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->value);
-          this->__isset.value = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AppDataRecord::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("AppDataRecord");
-
-  xfer += oprot->writeFieldBegin("id", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->id);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("value", ::apache::thrift::protocol::T_STRING, 2);
-  xfer += oprot->writeString(this->value);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-void swap(AppDataRecord &a, AppDataRecord &b) {
-  using ::std::swap;
-  swap(a.id, b.id);
-  swap(a.value, b.value);
-  swap(a.__isset, b.__isset);
-}
-
-AppDataRecord::AppDataRecord(const AppDataRecord& other8) {
-  id = other8.id;
-  value = other8.value;
-  __isset = other8.__isset;
-}
-AppDataRecord& AppDataRecord::operator=(const AppDataRecord& other9) {
-  id = other9.id;
-  value = other9.value;
-  __isset = other9.__isset;
-  return *this;
-}
-void AppDataRecord::printTo(std::ostream& out) const {
-  using ::apache::thrift::to_string;
-  out << "AppDataRecord(";
-  out << "id=" << to_string(id);
-  out << ", " << "value=" << to_string(value);
-  out << ")";
-}
-
-
-AppDataCollection::~AppDataCollection() throw() {
-}
-
-
-void AppDataCollection::__set_id(const std::string& val) {
-  this->id = val;
-}
-
-void AppDataCollection::__set_records(const std::vector<AppDataRecord> & val) {
-  this->records = val;
-}
-
-uint32_t AppDataCollection::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->id);
-          this->__isset.id = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->records.clear();
-            uint32_t _size10;
-            ::apache::thrift::protocol::TType _etype13;
-            xfer += iprot->readListBegin(_etype13, _size10);
-            this->records.resize(_size10);
-            uint32_t _i14;
-            for (_i14 = 0; _i14 < _size10; ++_i14)
-            {
-              xfer += this->records[_i14].read(iprot);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.records = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AppDataCollection::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("AppDataCollection");
-
-  xfer += oprot->writeFieldBegin("id", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->id);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("records", ::apache::thrift::protocol::T_LIST, 2);
-  {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->records.size()));
-    std::vector<AppDataRecord> ::const_iterator _iter15;
-    for (_iter15 = this->records.begin(); _iter15 != this->records.end(); ++_iter15)
-    {
-      xfer += (*_iter15).write(oprot);
-    }
-    xfer += oprot->writeListEnd();
-  }
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-void swap(AppDataCollection &a, AppDataCollection &b) {
-  using ::std::swap;
-  swap(a.id, b.id);
-  swap(a.records, b.records);
-  swap(a.__isset, b.__isset);
-}
-
-AppDataCollection::AppDataCollection(const AppDataCollection& other16) {
-  id = other16.id;
-  records = other16.records;
-  __isset = other16.__isset;
-}
-AppDataCollection& AppDataCollection::operator=(const AppDataCollection& other17) {
-  id = other17.id;
-  records = other17.records;
-  __isset = other17.__isset;
-  return *this;
-}
-void AppDataCollection::printTo(std::ostream& out) const {
-  using ::apache::thrift::to_string;
-  out << "AppDataCollection(";
-  out << "id=" << to_string(id);
-  out << ", " << "records=" << to_string(records);
-  out << ")";
-}
-
-
-AppData::~AppData() throw() {
-}
-
-
-void AppData::__set_appId(const std::string& val) {
-  this->appId = val;
-}
-
-void AppData::__set_data(const std::vector<AppDataCollection> & val) {
-  this->data = val;
-}
-
-uint32_t AppData::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->appId);
-          this->__isset.appId = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->data.clear();
-            uint32_t _size18;
-            ::apache::thrift::protocol::TType _etype21;
-            xfer += iprot->readListBegin(_etype21, _size18);
-            this->data.resize(_size18);
-            uint32_t _i22;
-            for (_i22 = 0; _i22 < _size18; ++_i22)
-            {
-              xfer += this->data[_i22].read(iprot);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.data = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t AppData::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("AppData");
-
-  xfer += oprot->writeFieldBegin("appId", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->appId);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("data", ::apache::thrift::protocol::T_LIST, 2);
-  {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->data.size()));
-    std::vector<AppDataCollection> ::const_iterator _iter23;
-    for (_iter23 = this->data.begin(); _iter23 != this->data.end(); ++_iter23)
-    {
-      xfer += (*_iter23).write(oprot);
-    }
-    xfer += oprot->writeListEnd();
-  }
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-void swap(AppData &a, AppData &b) {
-  using ::std::swap;
-  swap(a.appId, b.appId);
-  swap(a.data, b.data);
-  swap(a.__isset, b.__isset);
-}
-
-AppData::AppData(const AppData& other24) {
-  appId = other24.appId;
-  data = other24.data;
-  __isset = other24.__isset;
-}
-AppData& AppData::operator=(const AppData& other25) {
-  appId = other25.appId;
-  data = other25.data;
-  __isset = other25.__isset;
-  return *this;
-}
-void AppData::printTo(std::ostream& out) const {
-  using ::apache::thrift::to_string;
-  out << "AppData(";
-  out << "appId=" << to_string(appId);
-  out << ", " << "data=" << to_string(data);
-  out << ")";
-}
-
-
 SettingSearchResult::~SettingSearchResult() throw() {
 }
 
@@ -595,14 +237,14 @@ uint32_t SettingSearchResult::read(::apache::thrift::protocol::TProtocol* iprot)
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->SettingItems.clear();
-            uint32_t _size26;
-            ::apache::thrift::protocol::TType _etype29;
-            xfer += iprot->readListBegin(_etype29, _size26);
-            this->SettingItems.resize(_size26);
-            uint32_t _i30;
-            for (_i30 = 0; _i30 < _size26; ++_i30)
+            uint32_t _size8;
+            ::apache::thrift::protocol::TType _etype11;
+            xfer += iprot->readListBegin(_etype11, _size8);
+            this->SettingItems.resize(_size8);
+            uint32_t _i12;
+            for (_i12 = 0; _i12 < _size8; ++_i12)
             {
-              xfer += this->SettingItems[_i30].read(iprot);
+              xfer += this->SettingItems[_i12].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -635,10 +277,10 @@ uint32_t SettingSearchResult::write(::apache::thrift::protocol::TProtocol* oprot
   xfer += oprot->writeFieldBegin("SettingItems", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingItems.size()));
-    std::vector< ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter31;
-    for (_iter31 = this->SettingItems.begin(); _iter31 != this->SettingItems.end(); ++_iter31)
+    std::vector< ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter13;
+    for (_iter13 = this->SettingItems.begin(); _iter13 != this->SettingItems.end(); ++_iter13)
     {
-      xfer += (*_iter31).write(oprot);
+      xfer += (*_iter13).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -656,15 +298,15 @@ void swap(SettingSearchResult &a, SettingSearchResult &b) {
   swap(a.__isset, b.__isset);
 }
 
-SettingSearchResult::SettingSearchResult(const SettingSearchResult& other32) {
-  Version = other32.Version;
-  SettingItems = other32.SettingItems;
-  __isset = other32.__isset;
+SettingSearchResult::SettingSearchResult(const SettingSearchResult& other14) {
+  Version = other14.Version;
+  SettingItems = other14.SettingItems;
+  __isset = other14.__isset;
 }
-SettingSearchResult& SettingSearchResult::operator=(const SettingSearchResult& other33) {
-  Version = other33.Version;
-  SettingItems = other33.SettingItems;
-  __isset = other33.__isset;
+SettingSearchResult& SettingSearchResult::operator=(const SettingSearchResult& other15) {
+  Version = other15.Version;
+  SettingItems = other15.SettingItems;
+  __isset = other15.__isset;
   return *this;
 }
 void SettingSearchResult::printTo(std::ostream& out) const {
@@ -725,17 +367,17 @@ uint32_t SettingTree::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->SettingCategories.clear();
-            uint32_t _size34;
-            ::apache::thrift::protocol::TType _ktype35;
-            ::apache::thrift::protocol::TType _vtype36;
-            xfer += iprot->readMapBegin(_ktype35, _vtype36, _size34);
-            uint32_t _i38;
-            for (_i38 = 0; _i38 < _size34; ++_i38)
+            uint32_t _size16;
+            ::apache::thrift::protocol::TType _ktype17;
+            ::apache::thrift::protocol::TType _vtype18;
+            xfer += iprot->readMapBegin(_ktype17, _vtype18, _size16);
+            uint32_t _i20;
+            for (_i20 = 0; _i20 < _size16; ++_i20)
             {
-              std::string _key39;
-              xfer += iprot->readString(_key39);
-               ::Ruyi::SDK::CommonType::SettingCategory& _val40 = this->SettingCategories[_key39];
-              xfer += _val40.read(iprot);
+              std::string _key21;
+              xfer += iprot->readString(_key21);
+               ::Ruyi::SDK::CommonType::SettingCategory& _val22 = this->SettingCategories[_key21];
+              xfer += _val22.read(iprot);
             }
             xfer += iprot->readMapEnd();
           }
@@ -748,17 +390,17 @@ uint32_t SettingTree::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->SettingItems.clear();
-            uint32_t _size41;
-            ::apache::thrift::protocol::TType _ktype42;
-            ::apache::thrift::protocol::TType _vtype43;
-            xfer += iprot->readMapBegin(_ktype42, _vtype43, _size41);
-            uint32_t _i45;
-            for (_i45 = 0; _i45 < _size41; ++_i45)
+            uint32_t _size23;
+            ::apache::thrift::protocol::TType _ktype24;
+            ::apache::thrift::protocol::TType _vtype25;
+            xfer += iprot->readMapBegin(_ktype24, _vtype25, _size23);
+            uint32_t _i27;
+            for (_i27 = 0; _i27 < _size23; ++_i27)
             {
-              std::string _key46;
-              xfer += iprot->readString(_key46);
-               ::Ruyi::SDK::CommonType::SettingItem& _val47 = this->SettingItems[_key46];
-              xfer += _val47.read(iprot);
+              std::string _key28;
+              xfer += iprot->readString(_key28);
+               ::Ruyi::SDK::CommonType::SettingItem& _val29 = this->SettingItems[_key28];
+              xfer += _val29.read(iprot);
             }
             xfer += iprot->readMapEnd();
           }
@@ -791,11 +433,11 @@ uint32_t SettingTree::write(::apache::thrift::protocol::TProtocol* oprot) const 
   xfer += oprot->writeFieldBegin("SettingCategories", ::apache::thrift::protocol::T_MAP, 2);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingCategories.size()));
-    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingCategory> ::const_iterator _iter48;
-    for (_iter48 = this->SettingCategories.begin(); _iter48 != this->SettingCategories.end(); ++_iter48)
+    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingCategory> ::const_iterator _iter30;
+    for (_iter30 = this->SettingCategories.begin(); _iter30 != this->SettingCategories.end(); ++_iter30)
     {
-      xfer += oprot->writeString(_iter48->first);
-      xfer += _iter48->second.write(oprot);
+      xfer += oprot->writeString(_iter30->first);
+      xfer += _iter30->second.write(oprot);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -804,11 +446,11 @@ uint32_t SettingTree::write(::apache::thrift::protocol::TProtocol* oprot) const 
   xfer += oprot->writeFieldBegin("SettingItems", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingItems.size()));
-    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter49;
-    for (_iter49 = this->SettingItems.begin(); _iter49 != this->SettingItems.end(); ++_iter49)
+    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter31;
+    for (_iter31 = this->SettingItems.begin(); _iter31 != this->SettingItems.end(); ++_iter31)
     {
-      xfer += oprot->writeString(_iter49->first);
-      xfer += _iter49->second.write(oprot);
+      xfer += oprot->writeString(_iter31->first);
+      xfer += _iter31->second.write(oprot);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -827,17 +469,17 @@ void swap(SettingTree &a, SettingTree &b) {
   swap(a.__isset, b.__isset);
 }
 
-SettingTree::SettingTree(const SettingTree& other50) {
-  CateNode = other50.CateNode;
-  SettingCategories = other50.SettingCategories;
-  SettingItems = other50.SettingItems;
-  __isset = other50.__isset;
+SettingTree::SettingTree(const SettingTree& other32) {
+  CateNode = other32.CateNode;
+  SettingCategories = other32.SettingCategories;
+  SettingItems = other32.SettingItems;
+  __isset = other32.__isset;
 }
-SettingTree& SettingTree::operator=(const SettingTree& other51) {
-  CateNode = other51.CateNode;
-  SettingCategories = other51.SettingCategories;
-  SettingItems = other51.SettingItems;
-  __isset = other51.__isset;
+SettingTree& SettingTree::operator=(const SettingTree& other33) {
+  CateNode = other33.CateNode;
+  SettingCategories = other33.SettingCategories;
+  SettingItems = other33.SettingItems;
+  __isset = other33.__isset;
   return *this;
 }
 void SettingTree::printTo(std::ostream& out) const {
@@ -887,14 +529,14 @@ uint32_t NodeList::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->SettingCategories.clear();
-            uint32_t _size52;
-            ::apache::thrift::protocol::TType _etype55;
-            xfer += iprot->readListBegin(_etype55, _size52);
-            this->SettingCategories.resize(_size52);
-            uint32_t _i56;
-            for (_i56 = 0; _i56 < _size52; ++_i56)
+            uint32_t _size34;
+            ::apache::thrift::protocol::TType _etype37;
+            xfer += iprot->readListBegin(_etype37, _size34);
+            this->SettingCategories.resize(_size34);
+            uint32_t _i38;
+            for (_i38 = 0; _i38 < _size34; ++_i38)
             {
-              xfer += this->SettingCategories[_i56].read(iprot);
+              xfer += this->SettingCategories[_i38].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -907,14 +549,14 @@ uint32_t NodeList::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->SettingItems.clear();
-            uint32_t _size57;
-            ::apache::thrift::protocol::TType _etype60;
-            xfer += iprot->readListBegin(_etype60, _size57);
-            this->SettingItems.resize(_size57);
-            uint32_t _i61;
-            for (_i61 = 0; _i61 < _size57; ++_i61)
+            uint32_t _size39;
+            ::apache::thrift::protocol::TType _etype42;
+            xfer += iprot->readListBegin(_etype42, _size39);
+            this->SettingItems.resize(_size39);
+            uint32_t _i43;
+            for (_i43 = 0; _i43 < _size39; ++_i43)
             {
-              xfer += this->SettingItems[_i61].read(iprot);
+              xfer += this->SettingItems[_i43].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -943,10 +585,10 @@ uint32_t NodeList::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += oprot->writeFieldBegin("SettingCategories", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingCategories.size()));
-    std::vector< ::Ruyi::SDK::CommonType::SettingCategory> ::const_iterator _iter62;
-    for (_iter62 = this->SettingCategories.begin(); _iter62 != this->SettingCategories.end(); ++_iter62)
+    std::vector< ::Ruyi::SDK::CommonType::SettingCategory> ::const_iterator _iter44;
+    for (_iter44 = this->SettingCategories.begin(); _iter44 != this->SettingCategories.end(); ++_iter44)
     {
-      xfer += (*_iter62).write(oprot);
+      xfer += (*_iter44).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -955,10 +597,10 @@ uint32_t NodeList::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += oprot->writeFieldBegin("SettingItems", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingItems.size()));
-    std::vector< ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter63;
-    for (_iter63 = this->SettingItems.begin(); _iter63 != this->SettingItems.end(); ++_iter63)
+    std::vector< ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter45;
+    for (_iter45 = this->SettingItems.begin(); _iter45 != this->SettingItems.end(); ++_iter45)
     {
-      xfer += (*_iter63).write(oprot);
+      xfer += (*_iter45).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -976,15 +618,15 @@ void swap(NodeList &a, NodeList &b) {
   swap(a.__isset, b.__isset);
 }
 
-NodeList::NodeList(const NodeList& other64) {
-  SettingCategories = other64.SettingCategories;
-  SettingItems = other64.SettingItems;
-  __isset = other64.__isset;
+NodeList::NodeList(const NodeList& other46) {
+  SettingCategories = other46.SettingCategories;
+  SettingItems = other46.SettingItems;
+  __isset = other46.__isset;
 }
-NodeList& NodeList::operator=(const NodeList& other65) {
-  SettingCategories = other65.SettingCategories;
-  SettingItems = other65.SettingItems;
-  __isset = other65.__isset;
+NodeList& NodeList::operator=(const NodeList& other47) {
+  SettingCategories = other47.SettingCategories;
+  SettingItems = other47.SettingItems;
+  __isset = other47.__isset;
   return *this;
 }
 void NodeList::printTo(std::ostream& out) const {

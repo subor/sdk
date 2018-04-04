@@ -2314,8 +2314,8 @@ uint32_t SettingSystemService_SetUserAppData_args::read(::apache::thrift::protoc
             {
               std::string _key41;
               xfer += iprot->readString(_key41);
-               ::Ruyi::SDK::SettingSystem::Api::JSON& _val42 = this->settingItems[_key41];
-              xfer += iprot->readString(_val42);
+               ::Ruyi::SDK::CommonType::SettingValue& _val42 = this->settingItems[_key41];
+              xfer += _val42.read(iprot);
             }
             xfer += iprot->readMapEnd();
           }
@@ -2351,12 +2351,12 @@ uint32_t SettingSystemService_SetUserAppData_args::write(::apache::thrift::proto
 
   xfer += oprot->writeFieldBegin("settingItems", ::apache::thrift::protocol::T_MAP, 3);
   {
-    xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->settingItems.size()));
-    std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> ::const_iterator _iter43;
+    xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->settingItems.size()));
+    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> ::const_iterator _iter43;
     for (_iter43 = this->settingItems.begin(); _iter43 != this->settingItems.end(); ++_iter43)
     {
       xfer += oprot->writeString(_iter43->first);
-      xfer += oprot->writeString(_iter43->second);
+      xfer += _iter43->second.write(oprot);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -2387,12 +2387,12 @@ uint32_t SettingSystemService_SetUserAppData_pargs::write(::apache::thrift::prot
 
   xfer += oprot->writeFieldBegin("settingItems", ::apache::thrift::protocol::T_MAP, 3);
   {
-    xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->settingItems)).size()));
-    std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> ::const_iterator _iter44;
+    xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>((*(this->settingItems)).size()));
+    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> ::const_iterator _iter44;
     for (_iter44 = (*(this->settingItems)).begin(); _iter44 != (*(this->settingItems)).end(); ++_iter44)
     {
       xfer += oprot->writeString(_iter44->first);
-      xfer += oprot->writeString(_iter44->second);
+      xfer += _iter44->second.write(oprot);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -3903,13 +3903,13 @@ bool SettingSystemServiceClient::recv_UpdateModuleVersion()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "UpdateModuleVersion failed: unknown result");
 }
 
-int32_t SettingSystemServiceClient::SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & settingItems)
+int32_t SettingSystemServiceClient::SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems)
 {
   send_SetUserAppData(userId, category, settingItems);
   return recv_SetUserAppData();
 }
 
-void SettingSystemServiceClient::send_SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & settingItems)
+void SettingSystemServiceClient::send_SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("SetUserAppData", ::apache::thrift::protocol::T_CALL, cseqid);
@@ -3966,7 +3966,7 @@ int32_t SettingSystemServiceClient::recv_SetUserAppData()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "SetUserAppData failed: unknown result");
 }
 
-void SettingSystemServiceClient::GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys)
+void SettingSystemServiceClient::GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys)
 {
   send_GetUserAppData(userId, category, settingKeys);
   recv_GetUserAppData(_return);
@@ -3988,7 +3988,7 @@ void SettingSystemServiceClient::send_GetUserAppData(const std::string& userId, 
   oprot_->getTransport()->flush();
 }
 
-void SettingSystemServiceClient::recv_GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& _return)
+void SettingSystemServiceClient::recv_GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return)
 {
 
   int32_t rseqid = 0;
@@ -5863,13 +5863,13 @@ bool SettingSystemServiceConcurrentClient::recv_UpdateModuleVersion(const int32_
   } // end while(true)
 }
 
-int32_t SettingSystemServiceConcurrentClient::SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & settingItems)
+int32_t SettingSystemServiceConcurrentClient::SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems)
 {
   int32_t seqid = send_SetUserAppData(userId, category, settingItems);
   return recv_SetUserAppData(seqid);
 }
 
-int32_t SettingSystemServiceConcurrentClient::send_SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & settingItems)
+int32_t SettingSystemServiceConcurrentClient::send_SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems)
 {
   int32_t cseqid = this->sync_.generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
@@ -5953,7 +5953,7 @@ int32_t SettingSystemServiceConcurrentClient::recv_SetUserAppData(const int32_t 
   } // end while(true)
 }
 
-void SettingSystemServiceConcurrentClient::GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys)
+void SettingSystemServiceConcurrentClient::GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys)
 {
   int32_t seqid = send_GetUserAppData(userId, category, settingKeys);
   recv_GetUserAppData(_return, seqid);
@@ -5979,7 +5979,7 @@ int32_t SettingSystemServiceConcurrentClient::send_GetUserAppData(const std::str
   return cseqid;
 }
 
-void SettingSystemServiceConcurrentClient::recv_GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& _return, const int32_t seqid)
+void SettingSystemServiceConcurrentClient::recv_GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return, const int32_t seqid)
 {
 
   int32_t rseqid = 0;
