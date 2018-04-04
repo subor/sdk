@@ -74,6 +74,8 @@ class dataListItem;
 
 class activeDependency;
 
+class SettingValue;
+
 class SettingItem;
 
 class SettingCategory;
@@ -85,8 +87,6 @@ class AppDataRecord;
 class AppDataCollection;
 
 class AppData;
-
-class SettingValue;
 
 typedef struct _ErrorException__isset {
   _ErrorException__isset() : errId(false), errMsg(false) {}
@@ -604,6 +604,58 @@ inline std::ostream& operator<<(std::ostream& out, const activeDependency& obj)
   return out;
 }
 
+typedef struct _SettingValue__isset {
+  _SettingValue__isset() : dataType(false), dataValue(false) {}
+  bool dataType :1;
+  bool dataValue :1;
+} _SettingValue__isset;
+
+class SettingValue : public virtual ::apache::thrift::TBase {
+ public:
+
+  SettingValue(const SettingValue&);
+  SettingValue& operator=(const SettingValue&);
+  SettingValue() : dataType(), dataValue() {
+  }
+
+  virtual ~SettingValue() throw();
+  std::string dataType;
+  std::string dataValue;
+
+  _SettingValue__isset __isset;
+
+  void __set_dataType(const std::string& val);
+
+  void __set_dataValue(const std::string& val);
+
+  bool operator == (const SettingValue & rhs) const
+  {
+    if (!(dataType == rhs.dataType))
+      return false;
+    if (!(dataValue == rhs.dataValue))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingValue &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingValue & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(SettingValue &a, SettingValue &b);
+
+inline std::ostream& operator<<(std::ostream& out, const SettingValue& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
 typedef struct _SettingItem__isset {
   _SettingItem__isset() : id(false), display(false), dataType(false), dataValue(false), dataList(false), platform(false), summary(false), description(false), UIType(false), devModeOnly(false), internalOnly(false), readOnly(false), isValid(false), isActive(false), validation(false), activeDependencies(false), ActionName(false), ActionObject(false), ActionMethodName(false) {}
   bool id :1;
@@ -1091,58 +1143,6 @@ class AppData : public virtual ::apache::thrift::TBase {
 void swap(AppData &a, AppData &b);
 
 inline std::ostream& operator<<(std::ostream& out, const AppData& obj)
-{
-  obj.printTo(out);
-  return out;
-}
-
-typedef struct _SettingValue__isset {
-  _SettingValue__isset() : dataType(false), dataValue(false) {}
-  bool dataType :1;
-  bool dataValue :1;
-} _SettingValue__isset;
-
-class SettingValue : public virtual ::apache::thrift::TBase {
- public:
-
-  SettingValue(const SettingValue&);
-  SettingValue& operator=(const SettingValue&);
-  SettingValue() : dataType(), dataValue() {
-  }
-
-  virtual ~SettingValue() throw();
-  std::string dataType;
-  std::string dataValue;
-
-  _SettingValue__isset __isset;
-
-  void __set_dataType(const std::string& val);
-
-  void __set_dataValue(const std::string& val);
-
-  bool operator == (const SettingValue & rhs) const
-  {
-    if (!(dataType == rhs.dataType))
-      return false;
-    if (!(dataValue == rhs.dataValue))
-      return false;
-    return true;
-  }
-  bool operator != (const SettingValue &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const SettingValue & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-  virtual void printTo(std::ostream& out) const;
-};
-
-void swap(SettingValue &a, SettingValue &b);
-
-inline std::ostream& operator<<(std::ostream& out, const SettingValue& obj)
 {
   obj.printTo(out);
   return out;

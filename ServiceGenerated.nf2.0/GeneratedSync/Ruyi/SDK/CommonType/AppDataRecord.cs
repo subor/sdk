@@ -160,7 +160,7 @@ namespace Ruyi.SDK.CommonType
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("Content: ");
-        __sb.Append(Content);
+        __sb.Append(Content== null ? "<null>" : Content.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();

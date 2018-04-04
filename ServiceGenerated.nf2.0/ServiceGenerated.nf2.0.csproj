@@ -47,6 +47,9 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\SortOrder.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ActionTriggerInfo.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\activeDependency.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\AppData.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\AppDataCollection.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\AppDataRecord.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\dataListItem.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ePlatform.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ErrorException.cs" />
@@ -60,6 +63,7 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\range.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingCategory.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingItem.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingValue.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Constants\BraincloudServerInfo.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Constants\ConstantsSDKDataTypes.Constants.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorCode.cs" />
@@ -102,9 +106,6 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\PublisherSubscriber\ServiceLaunchEvent.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\PublisherSubscriber\ServiceLaunchEventType.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SDKValidator\ValidatorService.cs" />
-    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\AppData.cs" />
-    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\AppDataCollection.cs" />
-    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\AppDataRecord.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\CategoryNode.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\NodeList.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\NodeType.cs" />
