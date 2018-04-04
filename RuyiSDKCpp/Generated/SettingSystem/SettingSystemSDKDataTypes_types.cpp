@@ -724,15 +724,15 @@ void swap(SettingItemNotification &a, SettingItemNotification &b) {
   swap(a.__isset, b.__isset);
 }
 
-SettingItemNotification::SettingItemNotification(const SettingItemNotification& other66) {
-  key = other66.key;
-  contents = other66.contents;
-  __isset = other66.__isset;
+SettingItemNotification::SettingItemNotification(const SettingItemNotification& other48) {
+  key = other48.key;
+  contents = other48.contents;
+  __isset = other48.__isset;
 }
-SettingItemNotification& SettingItemNotification::operator=(const SettingItemNotification& other67) {
-  key = other67.key;
-  contents = other67.contents;
-  __isset = other67.__isset;
+SettingItemNotification& SettingItemNotification::operator=(const SettingItemNotification& other49) {
+  key = other49.key;
+  contents = other49.contents;
+  __isset = other49.__isset;
   return *this;
 }
 void SettingItemNotification::printTo(std::ostream& out) const {

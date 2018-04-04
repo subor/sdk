@@ -31,6 +31,8 @@ struct NodeType {
 
 extern const std::map<int, const char*> _NodeType_VALUES_TO_NAMES;
 
+typedef std::string JSON;
+
 class CategoryNode;
 
 class SettingSearchResult;
