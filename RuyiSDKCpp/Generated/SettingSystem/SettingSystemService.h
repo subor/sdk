@@ -84,8 +84,8 @@ class SettingSystemServiceIf {
    * @param moduleName Module of the setting
    */
   virtual bool UpdateModuleVersion(const std::string& moduleName) = 0;
-  virtual int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & settingItems) = 0;
-  virtual void GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) = 0;
+  virtual int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems) = 0;
+  virtual void GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) = 0;
   virtual int32_t RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) = 0;
 };
 
@@ -151,11 +151,11 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
     bool _return = false;
     return _return;
   }
-  int32_t SetUserAppData(const std::string& /* userId */, const std::string& /* category */, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & /* settingItems */) {
+  int32_t SetUserAppData(const std::string& /* userId */, const std::string& /* category */, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & /* settingItems */) {
     int32_t _return = 0;
     return _return;
   }
-  void GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& /* _return */, const std::string& /* userId */, const std::string& /* category */, const std::vector<std::string> & /* settingKeys */) {
+  void GetUserAppData( ::Ruyi::SDK::CommonType::AppData& /* _return */, const std::string& /* userId */, const std::string& /* category */, const std::vector<std::string> & /* settingKeys */) {
     return;
   }
   int32_t RemoveUserAppData(const std::string& /* userId */, const std::string& /* category */, const std::vector<std::string> & /* settingKeys */) {
@@ -1332,7 +1332,7 @@ class SettingSystemService_SetUserAppData_args {
   virtual ~SettingSystemService_SetUserAppData_args() throw();
   std::string userId;
   std::string category;
-  std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON>  settingItems;
+  std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue>  settingItems;
 
   _SettingSystemService_SetUserAppData_args__isset __isset;
 
@@ -1340,7 +1340,7 @@ class SettingSystemService_SetUserAppData_args {
 
   void __set_category(const std::string& val);
 
-  void __set_settingItems(const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & val);
+  void __set_settingItems(const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & val);
 
   bool operator == (const SettingSystemService_SetUserAppData_args & rhs) const
   {
@@ -1371,7 +1371,7 @@ class SettingSystemService_SetUserAppData_pargs {
   virtual ~SettingSystemService_SetUserAppData_pargs() throw();
   const std::string* userId;
   const std::string* category;
-  const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> * settingItems;
+  const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> * settingItems;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -1518,12 +1518,12 @@ class SettingSystemService_GetUserAppData_result {
   }
 
   virtual ~SettingSystemService_GetUserAppData_result() throw();
-   ::Ruyi::SDK::SettingSystem::Api::AppData success;
+   ::Ruyi::SDK::CommonType::AppData success;
    ::Ruyi::SDK::CommonType::ErrorException error1;
 
   _SettingSystemService_GetUserAppData_result__isset __isset;
 
-  void __set_success(const  ::Ruyi::SDK::SettingSystem::Api::AppData& val);
+  void __set_success(const  ::Ruyi::SDK::CommonType::AppData& val);
 
   void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
 
@@ -1557,7 +1557,7 @@ class SettingSystemService_GetUserAppData_presult {
 
 
   virtual ~SettingSystemService_GetUserAppData_presult() throw();
-   ::Ruyi::SDK::SettingSystem::Api::AppData* success;
+   ::Ruyi::SDK::CommonType::AppData* success;
    ::Ruyi::SDK::CommonType::ErrorException error1;
 
   _SettingSystemService_GetUserAppData_presult__isset __isset;
@@ -1747,12 +1747,12 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   bool UpdateModuleVersion(const std::string& moduleName);
   void send_UpdateModuleVersion(const std::string& moduleName);
   bool recv_UpdateModuleVersion();
-  int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & settingItems);
-  void send_SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & settingItems);
+  int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems);
+  void send_SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems);
   int32_t recv_SetUserAppData();
-  void GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
+  void GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
   void send_GetUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
-  void recv_GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& _return);
+  void recv_GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return);
   int32_t RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
   void send_RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
   int32_t recv_RemoveUserAppData();
@@ -1923,7 +1923,7 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return ifaces_[i]->UpdateModuleVersion(moduleName);
   }
 
-  int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & settingItems) {
+  int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
@@ -1932,7 +1932,7 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return ifaces_[i]->SetUserAppData(userId, category, settingItems);
   }
 
-  void GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) {
+  void GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
@@ -2011,12 +2011,12 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   bool UpdateModuleVersion(const std::string& moduleName);
   int32_t send_UpdateModuleVersion(const std::string& moduleName);
   bool recv_UpdateModuleVersion(const int32_t seqid);
-  int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & settingItems);
-  int32_t send_SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & settingItems);
+  int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems);
+  int32_t send_SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems);
   int32_t recv_SetUserAppData(const int32_t seqid);
-  void GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
+  void GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
   int32_t send_GetUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
-  void recv_GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& _return, const int32_t seqid);
+  void recv_GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return, const int32_t seqid);
   int32_t RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
   int32_t send_RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys);
   int32_t recv_RemoveUserAppData(const int32_t seqid);

@@ -65,8 +65,8 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// </summary>
       /// <param name="moduleName">Module of the setting</param>
       bool UpdateModuleVersion(string moduleName);
-      int SetUserAppData(string userId, string category, Dictionary<string, string> settingItems);
-      Ruyi.SDK.SettingSystem.Api.AppData GetUserAppData(string userId, string category, List<string> settingKeys);
+      int SetUserAppData(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems);
+      Ruyi.SDK.CommonType.AppData GetUserAppData(string userId, string category, List<string> settingKeys);
       int RemoveUserAppData(string userId, string category, List<string> settingKeys);
     }
 
@@ -116,8 +116,8 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// </summary>
       /// <param name="moduleName">Module of the setting</param>
       Task<bool> UpdateModuleVersionAsync(string moduleName);
-      Task<int> SetUserAppDataAsync(string userId, string category, Dictionary<string, string> settingItems);
-      Task<Ruyi.SDK.SettingSystem.Api.AppData> GetUserAppDataAsync(string userId, string category, List<string> settingKeys);
+      Task<int> SetUserAppDataAsync(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems);
+      Task<Ruyi.SDK.CommonType.AppData> GetUserAppDataAsync(string userId, string category, List<string> settingKeys);
       Task<int> RemoveUserAppDataAsync(string userId, string category, List<string> settingKeys);
     }
 
@@ -177,10 +177,10 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="moduleName">Module of the setting</param>
       IAsyncResult Begin_UpdateModuleVersion(AsyncCallback callback, object state, string moduleName);
       bool End_UpdateModuleVersion(IAsyncResult asyncResult);
-      IAsyncResult Begin_SetUserAppData(AsyncCallback callback, object state, string userId, string category, Dictionary<string, string> settingItems);
+      IAsyncResult Begin_SetUserAppData(AsyncCallback callback, object state, string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems);
       int End_SetUserAppData(IAsyncResult asyncResult);
       IAsyncResult Begin_GetUserAppData(AsyncCallback callback, object state, string userId, string category, List<string> settingKeys);
-      Ruyi.SDK.SettingSystem.Api.AppData End_GetUserAppData(IAsyncResult asyncResult);
+      Ruyi.SDK.CommonType.AppData End_GetUserAppData(IAsyncResult asyncResult);
       IAsyncResult Begin_RemoveUserAppData(AsyncCallback callback, object state, string userId, string category, List<string> settingKeys);
       int End_RemoveUserAppData(IAsyncResult asyncResult);
     }
@@ -862,7 +862,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
 
       
-      public IAsyncResult Begin_SetUserAppData(AsyncCallback callback, object state, string userId, string category, Dictionary<string, string> settingItems)
+      public IAsyncResult Begin_SetUserAppData(AsyncCallback callback, object state, string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems)
       {
         return send_SetUserAppData(callback, state, userId, category, settingItems);
       }
@@ -873,7 +873,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         return recv_SetUserAppData();
       }
 
-      public async Task<int> SetUserAppDataAsync(string userId, string category, Dictionary<string, string> settingItems)
+      public async Task<int> SetUserAppDataAsync(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems)
       {
         int retval;
         retval = await Task.Run(() =>
@@ -883,13 +883,13 @@ namespace Ruyi.SDK.SettingSystem.Api
         return retval;
       }
 
-      public int SetUserAppData(string userId, string category, Dictionary<string, string> settingItems)
+      public int SetUserAppData(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems)
       {
         var asyncResult = Begin_SetUserAppData(null, null, userId, category, settingItems);
         return End_SetUserAppData(asyncResult);
 
       }
-      public IAsyncResult send_SetUserAppData(AsyncCallback callback, object state, string userId, string category, Dictionary<string, string> settingItems)
+      public IAsyncResult send_SetUserAppData(AsyncCallback callback, object state, string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems)
       {
         oprot_.WriteMessageBegin(new TMessage("SetUserAppData", TMessageType.Call, seqid_));
         SetUserAppData_args args = new SetUserAppData_args();
@@ -927,15 +927,15 @@ namespace Ruyi.SDK.SettingSystem.Api
         return send_GetUserAppData(callback, state, userId, category, settingKeys);
       }
 
-      public Ruyi.SDK.SettingSystem.Api.AppData End_GetUserAppData(IAsyncResult asyncResult)
+      public Ruyi.SDK.CommonType.AppData End_GetUserAppData(IAsyncResult asyncResult)
       {
         oprot_.Transport.EndFlush(asyncResult);
         return recv_GetUserAppData();
       }
 
-      public async Task<Ruyi.SDK.SettingSystem.Api.AppData> GetUserAppDataAsync(string userId, string category, List<string> settingKeys)
+      public async Task<Ruyi.SDK.CommonType.AppData> GetUserAppDataAsync(string userId, string category, List<string> settingKeys)
       {
-        Ruyi.SDK.SettingSystem.Api.AppData retval;
+        Ruyi.SDK.CommonType.AppData retval;
         retval = await Task.Run(() =>
         {
           return GetUserAppData(userId, category, settingKeys);
@@ -943,7 +943,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         return retval;
       }
 
-      public Ruyi.SDK.SettingSystem.Api.AppData GetUserAppData(string userId, string category, List<string> settingKeys)
+      public Ruyi.SDK.CommonType.AppData GetUserAppData(string userId, string category, List<string> settingKeys)
       {
         var asyncResult = Begin_GetUserAppData(null, null, userId, category, settingKeys);
         return End_GetUserAppData(asyncResult);
@@ -961,7 +961,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         return oprot_.Transport.BeginFlush(callback, state);
       }
 
-      public Ruyi.SDK.SettingSystem.Api.AppData recv_GetUserAppData()
+      public Ruyi.SDK.CommonType.AppData recv_GetUserAppData()
       {
         TMessage msg = iprot_.ReadMessageBegin();
         if (msg.Type == TMessageType.Exception) {
@@ -4888,7 +4888,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     {
       private string _userId;
       private string _category;
-      private Dictionary<string, string> _settingItems;
+      private Dictionary<string, Ruyi.SDK.CommonType.SettingValue> _settingItems;
 
       public string UserId
       {
@@ -4916,7 +4916,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Dictionary<string, string> SettingItems
+      public Dictionary<string, Ruyi.SDK.CommonType.SettingValue> SettingItems
       {
         get
         {
@@ -4975,14 +4975,15 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 3:
                 if (field.Type == TType.Map) {
                   {
-                    SettingItems = new Dictionary<string, string>();
+                    SettingItems = new Dictionary<string, Ruyi.SDK.CommonType.SettingValue>();
                     TMap _map14 = iprot.ReadMapBegin();
                     for( int _i15 = 0; _i15 < _map14.Count; ++_i15)
                     {
                       string _key16;
-                      string _val17;
+                      Ruyi.SDK.CommonType.SettingValue _val17;
                       _key16 = iprot.ReadString();
-                      _val17 = iprot.ReadString();
+                      _val17 = new Ruyi.SDK.CommonType.SettingValue();
+                      _val17.Read(iprot);
                       SettingItems[_key16] = _val17;
                     }
                     iprot.ReadMapEnd();
@@ -5034,11 +5035,11 @@ namespace Ruyi.SDK.SettingSystem.Api
             field.ID = 3;
             oprot.WriteFieldBegin(field);
             {
-              oprot.WriteMapBegin(new TMap(TType.String, TType.String, SettingItems.Count));
+              oprot.WriteMapBegin(new TMap(TType.String, TType.Struct, SettingItems.Count));
               foreach (string _iter18 in SettingItems.Keys)
               {
                 oprot.WriteString(_iter18);
-                oprot.WriteString(SettingItems[_iter18]);
+                SettingItems[_iter18].Write(oprot);
               }
               oprot.WriteMapEnd();
             }
@@ -5430,10 +5431,10 @@ namespace Ruyi.SDK.SettingSystem.Api
     #endif
     public partial class GetUserAppData_result : TBase
     {
-      private Ruyi.SDK.SettingSystem.Api.AppData _success;
+      private Ruyi.SDK.CommonType.AppData _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
 
-      public Ruyi.SDK.SettingSystem.Api.AppData Success
+      public Ruyi.SDK.CommonType.AppData Success
       {
         get
         {
@@ -5489,7 +5490,7 @@ namespace Ruyi.SDK.SettingSystem.Api
             {
               case 0:
                 if (field.Type == TType.Struct) {
-                  Success = new Ruyi.SDK.SettingSystem.Api.AppData();
+                  Success = new Ruyi.SDK.CommonType.AppData();
                   Success.Read(iprot);
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);

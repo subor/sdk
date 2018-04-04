@@ -9,46 +9,47 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.CommonType
 {
 
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class AppDataCollection : TBase
+  public partial class SettingValue : TBase
   {
-    private string _id;
-    private List<AppDataRecord> _records;
+    private string _dataType;
+    private string _dataValue;
 
-    public string Id
+    public string DataType
     {
       get
       {
-        return _id;
+        return _dataType;
       }
       set
       {
-        __isset.id = true;
-        this._id = value;
+        __isset.dataType = true;
+        this._dataType = value;
       }
     }
 
-    public List<AppDataRecord> Records
+    public string DataValue
     {
       get
       {
-        return _records;
+        return _dataValue;
       }
       set
       {
-        __isset.records = true;
-        this._records = value;
+        __isset.dataValue = true;
+        this._dataValue = value;
       }
     }
 
@@ -58,11 +59,11 @@ namespace Ruyi.SDK.SettingSystem.Api
     [Serializable]
     #endif
     public struct Isset {
-      public bool id;
-      public bool records;
+      public bool dataType;
+      public bool dataValue;
     }
 
-    public AppDataCollection() {
+    public SettingValue() {
     }
 
     public void Read (TProtocol iprot)
@@ -82,25 +83,14 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             case 1:
               if (field.Type == TType.String) {
-                Id = iprot.ReadString();
+                DataType = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.List) {
-                {
-                  Records = new List<AppDataRecord>();
-                  TList _list4 = iprot.ReadListBegin();
-                  for( int _i5 = 0; _i5 < _list4.Count; ++_i5)
-                  {
-                    AppDataRecord _elem6;
-                    _elem6 = new AppDataRecord();
-                    _elem6.Read(iprot);
-                    Records.Add(_elem6);
-                  }
-                  iprot.ReadListEnd();
-                }
+              if (field.Type == TType.String) {
+                DataValue = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -123,30 +113,23 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("AppDataCollection");
+        TStruct struc = new TStruct("SettingValue");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (Id != null && __isset.id) {
-          field.Name = "id";
+        if (DataType != null && __isset.dataType) {
+          field.Name = "dataType";
           field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Id);
+          oprot.WriteString(DataType);
           oprot.WriteFieldEnd();
         }
-        if (Records != null && __isset.records) {
-          field.Name = "records";
-          field.Type = TType.List;
+        if (DataValue != null && __isset.dataValue) {
+          field.Name = "dataValue";
+          field.Type = TType.String;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          {
-            oprot.WriteListBegin(new TList(TType.Struct, Records.Count));
-            foreach (AppDataRecord _iter7 in Records)
-            {
-              _iter7.Write(oprot);
-            }
-            oprot.WriteListEnd();
-          }
+          oprot.WriteString(DataValue);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -159,19 +142,19 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("AppDataCollection(");
+      StringBuilder __sb = new StringBuilder("SettingValue(");
       bool __first = true;
-      if (Id != null && __isset.id) {
+      if (DataType != null && __isset.dataType) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Id: ");
-        __sb.Append(Id);
+        __sb.Append("DataType: ");
+        __sb.Append(DataType);
       }
-      if (Records != null && __isset.records) {
+      if (DataValue != null && __isset.dataValue) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Records: ");
-        __sb.Append(Records);
+        __sb.Append("DataValue: ");
+        __sb.Append(DataValue);
       }
       __sb.Append(")");
       return __sb.ToString();
