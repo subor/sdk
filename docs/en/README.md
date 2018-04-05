@@ -57,6 +57,7 @@ __Advanced:__
 
 * [Input](topics/input.md)
 * [Overlay](topics/overlay.md)
+    * [DVR](topics/dvr.md)
 * [Low-Power Mode](topics/lpm.md)
 
 __Advanced:__

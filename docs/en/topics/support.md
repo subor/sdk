@@ -32,12 +32,30 @@ Other resources:
 1. If an existing issue cannot be found, click __Create issue__ to create a new ticket  
 ![](/docs/img/support_create_issue.png)
 1. Complete the issue form
+    - __Assignee__- leave this blank
     - __Title__ should be short and descriptive
-    - __Description__ should contain repro steps
+    - __Description__- should contain related information:
+        - Steps to reproduce the issue
+        - [RuyiOS version](os.md#Version)
+        - N.B. you can use [markdown](https://bitbucket.org/tutorials/markdowndemo/overview)
+    - __Kind__- use _bug_ for bugs and use any of the others for suggestions/comments/requests/etc.
+    - __Component__- pick the category that fits best:  
+    ![](/docs/img/support_issue_component.png)
+    - __Version__- SDK version (right-click layer0.exe and check __Details__ tab)
+1. Attach files that may assist us address the issue
+    - Relevant screenshots or videos
+    - Layer0 log file (`layer0.log`)
+    - Main client log file (`MainClient/client.log`)
 1. Click __Create issue__ to submit the issue
 
-## Make a request/suggestion
+## Requests/Suggestions
 
-Similar to [reporting an issue](#Reporting an issue), except for __Kind__ choose _Enhancement_ or _Proposal_.
+Similar to [reporting an issue](support.md#Reporting-an-issue), except for __Kind__ choose _Enhancement_ or _Proposal_.
 
 ![](/docs/img/support_suggestion.png)
+
+### Voting
+
+To show interest, click __Vote for this issue__ in the upper-right of an issue:  
+
+![](/docs/img/support_vote.png)
