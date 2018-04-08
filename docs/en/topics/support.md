@@ -33,7 +33,7 @@ Other resources:
 ![](/docs/img/support_create_issue.png)
 1. Complete the issue form
     - __Assignee__- leave this blank
-    - __Title__ should be short and descriptive
+    - __Title__- should be short and descriptive
     - __Description__- should contain related information:
         - Steps to reproduce the issue
         - [RuyiOS version](os.md#Version)

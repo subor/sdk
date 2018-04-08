@@ -8,6 +8,7 @@ Ruyi's overlay is based off technology licensed from [Evolve](www.evolvehq.com) 
 * __Coming soon:__ [Input](input.md) from devices
 
 ![](/docs/img/warning.png) The following are not (yet) supported:  
+
 * Vulkan and DirectX 12 (__Coming soon__)
 * HDR10 (see [hardware](hardware.md))
 
