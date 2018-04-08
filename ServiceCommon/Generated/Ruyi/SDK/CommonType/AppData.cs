@@ -16,7 +16,7 @@ using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.CommonType
 {
 
   #if !SILVERLIGHT
@@ -27,6 +27,9 @@ namespace Ruyi.SDK.SettingSystem.Api
     private string _appId;
     private List<AppDataCollection> _data;
 
+    /// <summary>
+    /// The App ID
+    /// </summary>
     public string AppId
     {
       get
@@ -40,6 +43,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// The user data of the App. See AppDataCollection
+    /// </summary>
     public List<AppDataCollection> Data
     {
       get
@@ -92,13 +98,13 @@ namespace Ruyi.SDK.SettingSystem.Api
               if (field.Type == TType.List) {
                 {
                   Data = new List<AppDataCollection>();
-                  TList _list8 = iprot.ReadListBegin();
-                  for( int _i9 = 0; _i9 < _list8.Count; ++_i9)
+                  TList _list33 = iprot.ReadListBegin();
+                  for( int _i34 = 0; _i34 < _list33.Count; ++_i34)
                   {
-                    AppDataCollection _elem10;
-                    _elem10 = new AppDataCollection();
-                    _elem10.Read(iprot);
-                    Data.Add(_elem10);
+                    AppDataCollection _elem35;
+                    _elem35 = new AppDataCollection();
+                    _elem35.Read(iprot);
+                    Data.Add(_elem35);
                   }
                   iprot.ReadListEnd();
                 }
@@ -142,9 +148,9 @@ namespace Ruyi.SDK.SettingSystem.Api
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, Data.Count));
-            foreach (AppDataCollection _iter11 in Data)
+            foreach (AppDataCollection _iter36 in Data)
             {
-              _iter11.Write(oprot);
+              _iter36.Write(oprot);
             }
             oprot.WriteListEnd();
           }

@@ -15,40 +15,46 @@ using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.CommonType
 {
 
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class AppDataRecord : TBase
+  public partial class AppData : TBase
   {
-    private string _id;
-    private string _value;
+    private string _appId;
+    private List<AppDataCollection> _data;
 
-    public string Id
+    /// <summary>
+    /// The App ID
+    /// </summary>
+    public string AppId
     {
       get
       {
-        return _id;
+        return _appId;
       }
       set
       {
-        __isset.id = true;
-        this._id = value;
+        __isset.appId = true;
+        this._appId = value;
       }
     }
 
-    public string Value
+    /// <summary>
+    /// The user data of the App. See AppDataCollection
+    /// </summary>
+    public List<AppDataCollection> Data
     {
       get
       {
-        return _value;
+        return _data;
       }
       set
       {
-        __isset.@value = true;
-        this._value = value;
+        __isset.data = true;
+        this._data = value;
       }
     }
 
@@ -58,13 +64,11 @@ namespace Ruyi.SDK.SettingSystem.Api
     [Serializable]
     #endif
     public struct Isset {
-      public bool id;
-      public bool @value;
+      public bool appId;
+      public bool data;
     }
 
-    public AppDataRecord() {
-      this._value = "{}";
-      this.__isset.@value = true;
+    public AppData() {
     }
 
     public void Read (TProtocol iprot)
@@ -84,14 +88,25 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             case 1:
               if (field.Type == TType.String) {
-                Id = iprot.ReadString();
+                AppId = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.String) {
-                Value = iprot.ReadString();
+              if (field.Type == TType.List) {
+                {
+                  Data = new List<AppDataCollection>();
+                  TList _list33 = iprot.ReadListBegin();
+                  for( int _i34 = 0; _i34 < _list33.Count; ++_i34)
+                  {
+                    AppDataCollection _elem35;
+                    _elem35 = new AppDataCollection();
+                    _elem35.Read(iprot);
+                    Data.Add(_elem35);
+                  }
+                  iprot.ReadListEnd();
+                }
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -114,23 +129,30 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("AppDataRecord");
+        TStruct struc = new TStruct("AppData");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (Id != null && __isset.id) {
-          field.Name = "id";
+        if (AppId != null && __isset.appId) {
+          field.Name = "appId";
           field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Id);
+          oprot.WriteString(AppId);
           oprot.WriteFieldEnd();
         }
-        if (Value != null && __isset.@value) {
-          field.Name = "value";
-          field.Type = TType.String;
+        if (Data != null && __isset.data) {
+          field.Name = "data";
+          field.Type = TType.List;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Value);
+          {
+            oprot.WriteListBegin(new TList(TType.Struct, Data.Count));
+            foreach (AppDataCollection _iter36 in Data)
+            {
+              _iter36.Write(oprot);
+            }
+            oprot.WriteListEnd();
+          }
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -143,19 +165,19 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("AppDataRecord(");
+      StringBuilder __sb = new StringBuilder("AppData(");
       bool __first = true;
-      if (Id != null && __isset.id) {
+      if (AppId != null && __isset.appId) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Id: ");
-        __sb.Append(Id);
+        __sb.Append("AppId: ");
+        __sb.Append(AppId);
       }
-      if (Value != null && __isset.@value) {
+      if (Data != null && __isset.data) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Value: ");
-        __sb.Append(Value);
+        __sb.Append("Data: ");
+        __sb.Append(Data);
       }
       __sb.Append(")");
       return __sb.ToString();

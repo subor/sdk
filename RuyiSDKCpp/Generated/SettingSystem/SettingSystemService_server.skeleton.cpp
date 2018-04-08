@@ -117,12 +117,12 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("UpdateModuleVersion\n");
   }
 
-  int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::SettingSystem::Api::JSON> & settingItems) {
+  int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems) {
     // Your implementation goes here
     printf("SetUserAppData\n");
   }
 
-  void GetUserAppData( ::Ruyi::SDK::SettingSystem::Api::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) {
+  void GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) {
     // Your implementation goes here
     printf("GetUserAppData\n");
   }
@@ -130,6 +130,18 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
   int32_t RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) {
     // Your implementation goes here
     printf("RemoveUserAppData\n");
+  }
+
+  /**
+   * Notify layer0 that a setting item has specific event
+   * 
+   * @param key The item's ID
+   * 
+   * @param contents Optional. The arguments of the notification. In json string format
+   */
+  bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents) {
+    // Your implementation goes here
+    printf("SettingItemNotify\n");
   }
 
 };

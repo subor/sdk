@@ -18,37 +18,46 @@ using Thrift.Transport;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// Notification of setting item from layer0
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class SettingSearchResult : TBase
+  public partial class SettingItemNotification : TBase
   {
-    private string _Version;
-    private List<Ruyi.SDK.CommonType.SettingItem> _SettingItems;
+    private string _key;
+    private string _contents;
 
-    public string Version
+    /// <summary>
+    /// The item's ID
+    /// </summary>
+    public string Key
     {
       get
       {
-        return _Version;
+        return _key;
       }
       set
       {
-        __isset.Version = true;
-        this._Version = value;
+        __isset.key = true;
+        this._key = value;
       }
     }
 
-    public List<Ruyi.SDK.CommonType.SettingItem> SettingItems
+    /// <summary>
+    /// Optional. The arguments of the notification. In json string format
+    /// </summary>
+    public string Contents
     {
       get
       {
-        return _SettingItems;
+        return _contents;
       }
       set
       {
-        __isset.SettingItems = true;
-        this._SettingItems = value;
+        __isset.contents = true;
+        this._contents = value;
       }
     }
 
@@ -58,11 +67,13 @@ namespace Ruyi.SDK.SettingSystem.Api
     [Serializable]
     #endif
     public struct Isset {
-      public bool Version;
-      public bool SettingItems;
+      public bool key;
+      public bool contents;
     }
 
-    public SettingSearchResult() {
+    public SettingItemNotification() {
+      this._contents = "{}";
+      this.__isset.contents = true;
     }
 
     public void Read (TProtocol iprot)
@@ -82,25 +93,14 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             case 1:
               if (field.Type == TType.String) {
-                Version = iprot.ReadString();
+                Key = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.List) {
-                {
-                  SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
-                  TList _list4 = iprot.ReadListBegin();
-                  for( int _i5 = 0; _i5 < _list4.Count; ++_i5)
-                  {
-                    Ruyi.SDK.CommonType.SettingItem _elem6;
-                    _elem6 = new Ruyi.SDK.CommonType.SettingItem();
-                    _elem6.Read(iprot);
-                    SettingItems.Add(_elem6);
-                  }
-                  iprot.ReadListEnd();
-                }
+              if (field.Type == TType.String) {
+                Contents = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -123,30 +123,23 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("SettingSearchResult");
+        TStruct struc = new TStruct("SettingItemNotification");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (Version != null && __isset.Version) {
-          field.Name = "Version";
+        if (Key != null && __isset.key) {
+          field.Name = "key";
           field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Version);
+          oprot.WriteString(Key);
           oprot.WriteFieldEnd();
         }
-        if (SettingItems != null && __isset.SettingItems) {
-          field.Name = "SettingItems";
-          field.Type = TType.List;
+        if (Contents != null && __isset.contents) {
+          field.Name = "contents";
+          field.Type = TType.String;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          {
-            oprot.WriteListBegin(new TList(TType.Struct, SettingItems.Count));
-            foreach (Ruyi.SDK.CommonType.SettingItem _iter7 in SettingItems)
-            {
-              _iter7.Write(oprot);
-            }
-            oprot.WriteListEnd();
-          }
+          oprot.WriteString(Contents);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -159,19 +152,19 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("SettingSearchResult(");
+      StringBuilder __sb = new StringBuilder("SettingItemNotification(");
       bool __first = true;
-      if (Version != null && __isset.Version) {
+      if (Key != null && __isset.key) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Version: ");
-        __sb.Append(Version);
+        __sb.Append("Key: ");
+        __sb.Append(Key);
       }
-      if (SettingItems != null && __isset.SettingItems) {
+      if (Contents != null && __isset.contents) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("SettingItems: ");
-        __sb.Append(SettingItems);
+        __sb.Append("Contents: ");
+        __sb.Append(Contents);
       }
       __sb.Append(")");
       return __sb.ToString();
