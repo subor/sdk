@@ -244,6 +244,11 @@ namespace Ruyi
 
         private void BackupPath(int index, string cloudPath, string path)
         {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
             var subdirectories = Directory.GetDirectories(path);
             foreach (var i in subdirectories)
             {
