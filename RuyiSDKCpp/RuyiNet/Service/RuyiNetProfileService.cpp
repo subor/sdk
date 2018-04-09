@@ -1,6 +1,6 @@
-#include "..\Response\RuyiNetUploadFileResponse.h"
-
 #include "RuyiNetProfileService.h"
+
+#include "../Response/RuyiNetUploadFileResponse.h"
 
 namespace Ruyi
 {

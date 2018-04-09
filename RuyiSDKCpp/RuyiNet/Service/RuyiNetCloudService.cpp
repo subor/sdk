@@ -1,9 +1,10 @@
+#include "RuyiNetCloudService.h"
+
 #include <filesystem>
 #include <strsafe.h>
 
-#include "RuyiNetCloudService.h"
-#include "..\RuyiNetException.h"
-#include "..\Response\RuyiNetListUserFilesResponse.h"
+#include "../RuyiNetException.h"
+#include "../Response/RuyiNetListUserFilesResponse.h"
 
 namespace Ruyi
 {

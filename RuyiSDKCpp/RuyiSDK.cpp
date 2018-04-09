@@ -1,10 +1,10 @@
+#include "RuyiSDK.h"
 #include <iostream>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string/replace.hpp>
 
 #include "resource.h"
-#include "RuyiSDK.h"
 
 #include "PubSub/MessageCreator.h"
 

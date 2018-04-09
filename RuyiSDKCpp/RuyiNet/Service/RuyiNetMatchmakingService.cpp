@@ -1,3 +1,4 @@
+#include "RuyiNetMatchmakingService.h"
 
 #include <WinSock2.h>
 #include <iphlpapi.h>
@@ -5,7 +6,6 @@
 //#include <stdlib.h>
 
 #include "../RuyiNetException.h"
-#include "RuyiNetMatchmakingService.h"
 
 #define WORKING_BUFFER_SIZE 15000
 #define MAX_TRIES 3
