@@ -9,46 +9,53 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.CommonType
 {
 
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class SettingSearchResult : TBase
+  public partial class AppDataCollection : TBase
   {
-    private string _Version;
-    private List<Ruyi.SDK.CommonType.SettingItem> _SettingItems;
+    private string _category;
+    private List<AppDataRecord> _records;
 
-    public string Version
+    /// <summary>
+    /// The category of the records
+    /// </summary>
+    public string Category
     {
       get
       {
-        return _Version;
+        return _category;
       }
       set
       {
-        __isset.Version = true;
-        this._Version = value;
+        __isset.category = true;
+        this._category = value;
       }
     }
 
-    public List<Ruyi.SDK.CommonType.SettingItem> SettingItems
+    /// <summary>
+    /// The records of the collection. See AppDataRecord
+    /// </summary>
+    public List<AppDataRecord> Records
     {
       get
       {
-        return _SettingItems;
+        return _records;
       }
       set
       {
-        __isset.SettingItems = true;
-        this._SettingItems = value;
+        __isset.records = true;
+        this._records = value;
       }
     }
 
@@ -58,11 +65,11 @@ namespace Ruyi.SDK.SettingSystem.Api
     [Serializable]
     #endif
     public struct Isset {
-      public bool Version;
-      public bool SettingItems;
+      public bool category;
+      public bool records;
     }
 
-    public SettingSearchResult() {
+    public AppDataCollection() {
     }
 
     public void Read (TProtocol iprot)
@@ -82,7 +89,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             case 1:
               if (field.Type == TType.String) {
-                Version = iprot.ReadString();
+                Category = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -90,14 +97,14 @@ namespace Ruyi.SDK.SettingSystem.Api
             case 2:
               if (field.Type == TType.List) {
                 {
-                  SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
-                  TList _list4 = iprot.ReadListBegin();
-                  for( int _i5 = 0; _i5 < _list4.Count; ++_i5)
+                  Records = new List<AppDataRecord>();
+                  TList _list29 = iprot.ReadListBegin();
+                  for( int _i30 = 0; _i30 < _list29.Count; ++_i30)
                   {
-                    Ruyi.SDK.CommonType.SettingItem _elem6;
-                    _elem6 = new Ruyi.SDK.CommonType.SettingItem();
-                    _elem6.Read(iprot);
-                    SettingItems.Add(_elem6);
+                    AppDataRecord _elem31;
+                    _elem31 = new AppDataRecord();
+                    _elem31.Read(iprot);
+                    Records.Add(_elem31);
                   }
                   iprot.ReadListEnd();
                 }
@@ -123,27 +130,27 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("SettingSearchResult");
+        TStruct struc = new TStruct("AppDataCollection");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (Version != null && __isset.Version) {
-          field.Name = "Version";
+        if (Category != null && __isset.category) {
+          field.Name = "category";
           field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Version);
+          oprot.WriteString(Category);
           oprot.WriteFieldEnd();
         }
-        if (SettingItems != null && __isset.SettingItems) {
-          field.Name = "SettingItems";
+        if (Records != null && __isset.records) {
+          field.Name = "records";
           field.Type = TType.List;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
           {
-            oprot.WriteListBegin(new TList(TType.Struct, SettingItems.Count));
-            foreach (Ruyi.SDK.CommonType.SettingItem _iter7 in SettingItems)
+            oprot.WriteListBegin(new TList(TType.Struct, Records.Count));
+            foreach (AppDataRecord _iter32 in Records)
             {
-              _iter7.Write(oprot);
+              _iter32.Write(oprot);
             }
             oprot.WriteListEnd();
           }
@@ -159,19 +166,19 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("SettingSearchResult(");
+      StringBuilder __sb = new StringBuilder("AppDataCollection(");
       bool __first = true;
-      if (Version != null && __isset.Version) {
+      if (Category != null && __isset.category) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Version: ");
-        __sb.Append(Version);
+        __sb.Append("Category: ");
+        __sb.Append(Category);
       }
-      if (SettingItems != null && __isset.SettingItems) {
+      if (Records != null && __isset.records) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("SettingItems: ");
-        __sb.Append(SettingItems);
+        __sb.Append("Records: ");
+        __sb.Append(Records);
       }
       __sb.Append(")");
       return __sb.ToString();
