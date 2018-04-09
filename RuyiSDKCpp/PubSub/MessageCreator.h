@@ -1,6 +1,6 @@
 #pragma once
 
-#include "thrift\TBase.h"
+#include "thrift/TBase.h"
 
 #include "../Generated/InputManager/InputManagerSDKDataTypes_types.h"
 #include "../Generated/StorageLayer/StorageLayerSDKDataTypes_types.h"

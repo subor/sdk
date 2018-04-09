@@ -268,6 +268,8 @@
     <ClCompile Include="RuyiNet\Service\RuyiNetCloudService.cpp" />
     <ClCompile Include="RuyiNet\Service\RuyiNetFriendService.cpp" />
     <ClCompile Include="RuyiNet\Service\RuyiNetLeaderboardService.cpp" />
+    <ClCompile Include="RuyiNet\Service\RuyiNetLobby.cpp" />
+    <ClCompile Include="RuyiNet\Service\RuyiNetLobbyService.cpp" />
     <ClCompile Include="RuyiNet\Service\RuyiNetMatchmakingService.cpp" />
     <ClCompile Include="RuyiNet\Service\RuyiNetPartyService.cpp" />
     <ClCompile Include="RuyiNet\Service\RuyiNetProfileService.cpp" />
@@ -348,6 +350,8 @@
     <ClInclude Include="RuyiNet\Service\RuyiNetFriendService.h" />
     <ClInclude Include="RuyiNet\Service\RuyiNetLeaderboardService.h" />
     <ClInclude Include="RuyiNet\Service\RuyiNetLeaderboardType.h" />
+    <ClInclude Include="RuyiNet\Service\RuyiNetLobby.h" />
+    <ClInclude Include="RuyiNet\Service\RuyiNetLobbyService.h" />
     <ClInclude Include="RuyiNet\Service\RuyiNetMatchmakingService.h" />
     <ClInclude Include="RuyiNet\Service\RuyiNetPartyService.h" />
     <ClInclude Include="RuyiNet\Service\RuyiNetProfileService.h" />

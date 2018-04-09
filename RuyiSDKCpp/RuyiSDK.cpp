@@ -6,7 +6,7 @@
 #include "resource.h"
 #include "RuyiSDK.h"
 
-#include "PubSub\MessageCreator.h"
+#include "PubSub/MessageCreator.h"
 
 #include "version.info"
 

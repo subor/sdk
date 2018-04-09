@@ -160,7 +160,7 @@ namespace Ruyi
 			/// </summary>
 			bool success;
 		};
-
+		
 		typedef std::vector < Data::Response::Friend > ::iterator _iterator;
 
 		/// <summary>
