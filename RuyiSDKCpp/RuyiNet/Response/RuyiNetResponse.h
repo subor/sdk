@@ -238,12 +238,69 @@ namespace Ruyi
 			if (!j["acl"].is_null())
 			{
 				nlohmann::json aclJson = j["acl"];
-				data.parseJson(aclJson);
+				acl.parseJson(aclJson);
 			}
 			if (!j["pendingMembers"].is_null())
 			{
-				nlohmann::json dataJson = j["pendingMembers"];
-				data.parseJson(dataJson);
+				nlohmann::json pendingMembersJson = j["pendingMembers"];
+
+			}
+			if (!j["members"].is_null())
+			{
+				nlohmann::json membersJson = j["members"];
+
+			}
+			if (!j["gameId"].is_null())
+			{
+				gameId = j["gameId"];
+			}
+			if (!j["groupType"].is_null())
+			{
+				groupType = j["groupType"];
+			}
+			if (!j["groupId"].is_null())
+			{
+				groupId = j["groupId"];
+			}
+			if (!j["ownerId"].is_null())
+			{
+				ownerId = j["ownerId"];
+			}
+			if (!j["name"].is_null())
+			{
+				name = j["name"];
+			}
+			if (!j["createdAt"].is_null())
+			{
+				createdAt = j["createdAt"];
+			}
+			if (!j["gameId"].is_null())
+			{
+				gameId = j["gameId"];
+			}
+			if (!j["updatedAt"].is_null())
+			{
+				updatedAt = j["updatedAt"];
+			}
+			if (!j["memberCount"].is_null())
+			{
+				memberCount = j["memberCount"];
+			}
+			if (!j["requestingPendingMemberCount"].is_null())
+			{
+				requestingPendingMemberCount = j["requestingPendingMemberCount"];
+			}
+			if (!j["version"].is_null())
+			{
+				version = j["version"];
+			}
+			if (!j["invitedPendingMemberCount"].is_null())
+			{
+				invitedPendingMemberCount = j["invitedPendingMemberCount"];
+			}
+			if (!j["isOpenGroup"].is_null())
+			{
+				isOpenGroup = j["isOpenGroup"];
 			}
 		}
 	};

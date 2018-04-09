@@ -2128,31 +2128,32 @@ void BCServiceTest::BCS_JsonTest()
 			if (moduleJson.is_array()) 
 			{
 				//auto moduleMapJson = moduleJson.get<std::unordered_map<std::string, nlohmann::json>>();
-				
-				for (auto it = moduleJson.begin(); it != moduleJson.end(); ++it)
-				{
-					string key = it.key();
-
-					Logger::WriteMessage(("dfaasd " + key + "\n").c_str());
-				}
-				
 				/*
+				for (auto it = detailJson["module"].begin(); it != detailJson["module"].end(); ++it)
+				{
+					std::cout << it.key() << " | " << it.value() << "\n";
+					
+					Logger::WriteMessage("dfaasdddddeee \n");
+				}*/
+				
+				
 				for (auto singleModule : moduleJson)
 				{
 					if (singleModule.is_object())
 					{
+						//singleModule.get<std::string>()
 						for (auto &m : singleModule)
 						{
 							if (m.is_string())
 							{
 								string key = m.dump();
-
+								
 								Logger::WriteMessage(("dfaasd " + key).c_str());
 							}
 						}
 					}
 
-				}*/
+				}
 			}
 		}
 	}

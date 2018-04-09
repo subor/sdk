@@ -15,7 +15,7 @@ namespace RuyiCppSDKTest
 		{
 			pBCServiceTest = new BCServiceTest();
 
-			pBCServiceTest->BCS_Authentication_AuthenticateAnonymous(); //order(0)
+			//pBCServiceTest->BCS_Authentication_AuthenticateAnonymous(); //order(0)
 		}
 
 		TEST_CLASS_CLEANUP(ClassCleanup)
