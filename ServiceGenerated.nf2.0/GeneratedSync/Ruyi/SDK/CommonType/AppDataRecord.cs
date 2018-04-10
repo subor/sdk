@@ -15,40 +15,46 @@ using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.CommonType
 {
 
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class AppData : TBase
+  public partial class AppDataRecord : TBase
   {
-    private string _appId;
-    private List<AppDataCollection> _data;
+    private string _id;
+    private SettingValue _content;
 
-    public string AppId
+    /// <summary>
+    /// The record ID
+    /// </summary>
+    public string Id
     {
       get
       {
-        return _appId;
+        return _id;
       }
       set
       {
-        __isset.appId = true;
-        this._appId = value;
+        __isset.id = true;
+        this._id = value;
       }
     }
 
-    public List<AppDataCollection> Data
+    /// <summary>
+    /// The record value
+    /// </summary>
+    public SettingValue Content
     {
       get
       {
-        return _data;
+        return _content;
       }
       set
       {
-        __isset.data = true;
-        this._data = value;
+        __isset.content = true;
+        this._content = value;
       }
     }
 
@@ -58,11 +64,11 @@ namespace Ruyi.SDK.SettingSystem.Api
     [Serializable]
     #endif
     public struct Isset {
-      public bool appId;
-      public bool data;
+      public bool id;
+      public bool content;
     }
 
-    public AppData() {
+    public AppDataRecord() {
     }
 
     public void Read (TProtocol iprot)
@@ -82,25 +88,15 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             case 1:
               if (field.Type == TType.String) {
-                AppId = iprot.ReadString();
+                Id = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.List) {
-                {
-                  Data = new List<AppDataCollection>();
-                  TList _list8 = iprot.ReadListBegin();
-                  for( int _i9 = 0; _i9 < _list8.Count; ++_i9)
-                  {
-                    AppDataCollection _elem10;
-                    _elem10 = new AppDataCollection();
-                    _elem10.Read(iprot);
-                    Data.Add(_elem10);
-                  }
-                  iprot.ReadListEnd();
-                }
+              if (field.Type == TType.Struct) {
+                Content = new SettingValue();
+                Content.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -123,30 +119,23 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("AppData");
+        TStruct struc = new TStruct("AppDataRecord");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (AppId != null && __isset.appId) {
-          field.Name = "appId";
+        if (Id != null && __isset.id) {
+          field.Name = "id";
           field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(AppId);
+          oprot.WriteString(Id);
           oprot.WriteFieldEnd();
         }
-        if (Data != null && __isset.data) {
-          field.Name = "data";
-          field.Type = TType.List;
+        if (Content != null && __isset.content) {
+          field.Name = "content";
+          field.Type = TType.Struct;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          {
-            oprot.WriteListBegin(new TList(TType.Struct, Data.Count));
-            foreach (AppDataCollection _iter11 in Data)
-            {
-              _iter11.Write(oprot);
-            }
-            oprot.WriteListEnd();
-          }
+          Content.Write(oprot);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -159,19 +148,19 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("AppData(");
+      StringBuilder __sb = new StringBuilder("AppDataRecord(");
       bool __first = true;
-      if (AppId != null && __isset.appId) {
+      if (Id != null && __isset.id) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("AppId: ");
-        __sb.Append(AppId);
+        __sb.Append("Id: ");
+        __sb.Append(Id);
       }
-      if (Data != null && __isset.data) {
+      if (Content != null && __isset.content) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Data: ");
-        __sb.Append(Data);
+        __sb.Append("Content: ");
+        __sb.Append(Content== null ? "<null>" : Content.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();

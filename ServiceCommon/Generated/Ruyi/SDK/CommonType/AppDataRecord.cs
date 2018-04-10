@@ -9,46 +9,53 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.CommonType
 {
 
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class SettingSearchResult : TBase
+  public partial class AppDataRecord : TBase
   {
-    private string _Version;
-    private List<Ruyi.SDK.CommonType.SettingItem> _SettingItems;
+    private string _id;
+    private SettingValue _content;
 
-    public string Version
+    /// <summary>
+    /// The record ID
+    /// </summary>
+    public string Id
     {
       get
       {
-        return _Version;
+        return _id;
       }
       set
       {
-        __isset.Version = true;
-        this._Version = value;
+        __isset.id = true;
+        this._id = value;
       }
     }
 
-    public List<Ruyi.SDK.CommonType.SettingItem> SettingItems
+    /// <summary>
+    /// The record value
+    /// </summary>
+    public SettingValue Content
     {
       get
       {
-        return _SettingItems;
+        return _content;
       }
       set
       {
-        __isset.SettingItems = true;
-        this._SettingItems = value;
+        __isset.content = true;
+        this._content = value;
       }
     }
 
@@ -58,11 +65,11 @@ namespace Ruyi.SDK.SettingSystem.Api
     [Serializable]
     #endif
     public struct Isset {
-      public bool Version;
-      public bool SettingItems;
+      public bool id;
+      public bool content;
     }
 
-    public SettingSearchResult() {
+    public AppDataRecord() {
     }
 
     public void Read (TProtocol iprot)
@@ -82,25 +89,15 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             case 1:
               if (field.Type == TType.String) {
-                Version = iprot.ReadString();
+                Id = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.List) {
-                {
-                  SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
-                  TList _list4 = iprot.ReadListBegin();
-                  for( int _i5 = 0; _i5 < _list4.Count; ++_i5)
-                  {
-                    Ruyi.SDK.CommonType.SettingItem _elem6;
-                    _elem6 = new Ruyi.SDK.CommonType.SettingItem();
-                    _elem6.Read(iprot);
-                    SettingItems.Add(_elem6);
-                  }
-                  iprot.ReadListEnd();
-                }
+              if (field.Type == TType.Struct) {
+                Content = new SettingValue();
+                Content.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -123,30 +120,23 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("SettingSearchResult");
+        TStruct struc = new TStruct("AppDataRecord");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (Version != null && __isset.Version) {
-          field.Name = "Version";
+        if (Id != null && __isset.id) {
+          field.Name = "id";
           field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Version);
+          oprot.WriteString(Id);
           oprot.WriteFieldEnd();
         }
-        if (SettingItems != null && __isset.SettingItems) {
-          field.Name = "SettingItems";
-          field.Type = TType.List;
+        if (Content != null && __isset.content) {
+          field.Name = "content";
+          field.Type = TType.Struct;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          {
-            oprot.WriteListBegin(new TList(TType.Struct, SettingItems.Count));
-            foreach (Ruyi.SDK.CommonType.SettingItem _iter7 in SettingItems)
-            {
-              _iter7.Write(oprot);
-            }
-            oprot.WriteListEnd();
-          }
+          Content.Write(oprot);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -159,19 +149,19 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("SettingSearchResult(");
+      StringBuilder __sb = new StringBuilder("AppDataRecord(");
       bool __first = true;
-      if (Version != null && __isset.Version) {
+      if (Id != null && __isset.id) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Version: ");
-        __sb.Append(Version);
+        __sb.Append("Id: ");
+        __sb.Append(Id);
       }
-      if (SettingItems != null && __isset.SettingItems) {
+      if (Content != null && __isset.content) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("SettingItems: ");
-        __sb.Append(SettingItems);
+        __sb.Append("Content: ");
+        __sb.Append(Content== null ? "<null>" : Content.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();
