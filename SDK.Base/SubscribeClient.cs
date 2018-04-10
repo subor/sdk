@@ -56,9 +56,7 @@ namespace Layer0
             {
                 receivingThread = new Thread(() =>
                 {
-                    while (Receive()) { }
-
-                    PublisherLogger.Info("... Subscriber Stopped");
+                    while (Receive()) ;
                 });
                 receivingThread.Start();
             }
@@ -150,6 +148,7 @@ namespace Layer0
                 var msg = socket?.ReceiveMultipartMessage();
                 if (msg == null || PubsubUtil.IsStoppingMessage(msg))
                 {
+                    PublisherLogger.Info("subscribe client stopped by stpping message!");
                     return false;
                 }
 
