@@ -136,13 +136,13 @@ namespace Ruyi.SDK.InputManager
               if (field.Type == TType.List) {
                 {
                   Events = new List<RuyiInputEvent>();
-                  TList _list0 = iprot.ReadListBegin();
-                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
+                  TList _list8 = iprot.ReadListBegin();
+                  for( int _i9 = 0; _i9 < _list8.Count; ++_i9)
                   {
-                    RuyiInputEvent _elem2;
-                    _elem2 = new RuyiInputEvent();
-                    _elem2.Read(iprot);
-                    Events.Add(_elem2);
+                    RuyiInputEvent _elem10;
+                    _elem10 = new RuyiInputEvent();
+                    _elem10.Read(iprot);
+                    Events.Add(_elem10);
                   }
                   iprot.ReadListEnd();
                 }
@@ -202,9 +202,9 @@ namespace Ruyi.SDK.InputManager
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, Events.Count));
-            foreach (RuyiInputEvent _iter3 in Events)
+            foreach (RuyiInputEvent _iter11 in Events)
             {
-              _iter3.Write(oprot);
+              _iter11.Write(oprot);
             }
             oprot.WriteListEnd();
           }

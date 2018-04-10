@@ -12,6 +12,7 @@ void MessageCreator::Initialize()
 {
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.InputDeviceEventHeader", Ruyi::SDK::InputManager::InputDeviceEventHeader);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.InputDeviceConnectionChanged", Ruyi::SDK::InputManager::InputDeviceConnectionChanged);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.RuyiInputStateChanged", Ruyi::SDK::InputManager::RuyiInputStateChanged);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.InputDeviceStateChangedX360", Ruyi::SDK::InputManager::InputDeviceStateChangedX360);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.InputDeviceStateChangedGamepad", Ruyi::SDK::InputManager::InputDeviceStateChangedGamepad);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.InputDeviceStateChangedJoystick", Ruyi::SDK::InputManager::InputDeviceStateChangedJoystick);
@@ -19,7 +20,6 @@ void MessageCreator::Initialize()
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.InputDeviceStateChangedMouse", Ruyi::SDK::InputManager::InputDeviceStateChangedMouse);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.InputActionTriggered", Ruyi::SDK::InputManager::InputActionTriggered);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.RuyiInputEvent", Ruyi::SDK::InputManager::RuyiInputEvent);
-	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.RuyiInputStateChanged", Ruyi::SDK::InputManager::RuyiInputStateChanged);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.InputDeviceStateChangedRuyiController", Ruyi::SDK::InputManager::InputDeviceStateChangedRuyiController);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.InputDeviceStateChanged", Ruyi::SDK::InputManager::InputDeviceStateChanged);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.StorageLayer.GetLocalPathResult", Ruyi::SDK::StorageLayer::GetLocalPathResult);
