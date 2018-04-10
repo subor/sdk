@@ -17,7 +17,12 @@ namespace Ruyi
     /// <summary>
     /// the main class used to communicate with the Ruyi platform
     /// </summary>
-    /// <example><code source="Elo/DuellingEloTest.cs" region="example_1"></code></example>
+    /// <example>
+    /// [!code[](../../../../sdk/UnitTests/Elo/DuellingEloTest.cs#example)]
+    /// </example>
+    /// <example>
+    /// <code source="../../../../../sdk/UnitTests/Elo/DuellingEloTest.cs" region="example"></code>
+    /// </example>
     public class RuyiSDK : IDisposable
     {
         /// <summary>

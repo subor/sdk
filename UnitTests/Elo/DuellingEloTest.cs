@@ -41,7 +41,7 @@ namespace UnitTests.Elo
             Assert.AreEqual(1.0, quality, 0.001);
         }
 
-        #region example_1
+        #region example
         private static void AssertRating(double expected, Rating actual)
         {
             Assert.AreEqual(expected, actual.Mean, ErrorTolerance);
