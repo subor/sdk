@@ -85,13 +85,13 @@ namespace Ruyi.SDK.InputManager
               if (field.Type == TType.List) {
                 {
                   KeyPressEvent = new List<RuyiInputEvent>();
-                  TList _list4 = iprot.ReadListBegin();
-                  for( int _i5 = 0; _i5 < _list4.Count; ++_i5)
+                  TList _list0 = iprot.ReadListBegin();
+                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
-                    RuyiInputEvent _elem6;
-                    _elem6 = new RuyiInputEvent();
-                    _elem6.Read(iprot);
-                    KeyPressEvent.Add(_elem6);
+                    RuyiInputEvent _elem2;
+                    _elem2 = new RuyiInputEvent();
+                    _elem2.Read(iprot);
+                    KeyPressEvent.Add(_elem2);
                   }
                   iprot.ReadListEnd();
                 }
@@ -103,13 +103,13 @@ namespace Ruyi.SDK.InputManager
               if (field.Type == TType.List) {
                 {
                   AnalogEvent = new List<RuyiInputEvent>();
-                  TList _list7 = iprot.ReadListBegin();
-                  for( int _i8 = 0; _i8 < _list7.Count; ++_i8)
+                  TList _list3 = iprot.ReadListBegin();
+                  for( int _i4 = 0; _i4 < _list3.Count; ++_i4)
                   {
-                    RuyiInputEvent _elem9;
-                    _elem9 = new RuyiInputEvent();
-                    _elem9.Read(iprot);
-                    AnalogEvent.Add(_elem9);
+                    RuyiInputEvent _elem5;
+                    _elem5 = new RuyiInputEvent();
+                    _elem5.Read(iprot);
+                    AnalogEvent.Add(_elem5);
                   }
                   iprot.ReadListEnd();
                 }
@@ -145,9 +145,9 @@ namespace Ruyi.SDK.InputManager
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, KeyPressEvent.Count));
-            foreach (RuyiInputEvent _iter10 in KeyPressEvent)
+            foreach (RuyiInputEvent _iter6 in KeyPressEvent)
             {
-              _iter10.Write(oprot);
+              _iter6.Write(oprot);
             }
             oprot.WriteListEnd();
           }
@@ -160,9 +160,9 @@ namespace Ruyi.SDK.InputManager
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, AnalogEvent.Count));
-            foreach (RuyiInputEvent _iter11 in AnalogEvent)
+            foreach (RuyiInputEvent _iter7 in AnalogEvent)
             {
-              _iter11.Write(oprot);
+              _iter7.Write(oprot);
             }
             oprot.WriteListEnd();
           }
