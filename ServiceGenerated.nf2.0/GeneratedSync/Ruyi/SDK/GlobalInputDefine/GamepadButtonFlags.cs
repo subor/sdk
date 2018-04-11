@@ -24,5 +24,11 @@ namespace Ruyi.SDK.GlobalInputDefine
     A = 4096,
     B = 8192,
     X = 16384,
+    LeftTrigger = 32768,
+    RightTrigger = 65536,
+    LeftThumbX = 131072,
+    LeftThumbY = 262144,
+    RightThumbX = 524288,
+    RightThumbY = 1048576,
   }
 }
