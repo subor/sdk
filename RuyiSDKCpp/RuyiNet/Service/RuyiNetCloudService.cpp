@@ -69,14 +69,15 @@ namespace Ruyi
 			throw new RuyiNetException(e.what());
 		}
 
-		for each (auto i in response.data.fileList)
+		//for each (auto i in response.data.fileList)
+		std::for_each(response.data.fileList.begin(), response.data.fileList.end(), [&](RuyiNetListUserFilesResponse::Data::FileDetails& i)
 		{
 			size_t x = i.cloudPath.find(ToString(CLOUD_LOCATION));
 			fs::path filePath(i.cloudPath.replace(x, CLOUD_LOCATION.length(), ""));
 			fs::path fullFilePath = localPath / filePath;
 
 			HRESULT hr = URLDownloadToFile(NULL, ToRuyiString(i.downloadUrl).c_str(), fullFilePath.c_str(), 0, NULL);
-		}
+		});
 
 		if (fs::exists(backupPath))
 		{
@@ -189,7 +190,7 @@ namespace Ruyi
 		if (dwError != ERROR_NO_MORE_FILES)
 		{
 			char buffer[MAX_PATH];
-			sprintf_s(buffer, MAX_PATH, "Crawl path failed with error %x: %s", dwError, ToString(fullPath).c_str());
+			sprintf_s(buffer, MAX_PATH, "Crawl path failed with error %lu: %s", dwError, ToString(fullPath).c_str());
 
 			throw new RuyiNetException(buffer);
 		}
