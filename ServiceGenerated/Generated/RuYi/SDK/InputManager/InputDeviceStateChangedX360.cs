@@ -25,6 +25,7 @@ namespace Ruyi.SDK.InputManager
   public partial class InputDeviceStateChangedX360 : TBase
   {
     private long _PacketNumber;
+    private string _DeviceId;
     private short _LeftThumbDeadZone;
     private short _RightThumbDeadZone;
     private int _Buttons;
@@ -34,6 +35,7 @@ namespace Ruyi.SDK.InputManager
     private short _LeftThumbY;
     private short _RightThumbX;
     private short _RightThumbY;
+    private RuyiInputStateChanged _Changed;
 
     public long PacketNumber
     {
@@ -45,6 +47,19 @@ namespace Ruyi.SDK.InputManager
       {
         __isset.PacketNumber = true;
         this._PacketNumber = value;
+      }
+    }
+
+    public string DeviceId
+    {
+      get
+      {
+        return _DeviceId;
+      }
+      set
+      {
+        __isset.DeviceId = true;
+        this._DeviceId = value;
       }
     }
 
@@ -165,6 +180,19 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    public RuyiInputStateChanged Changed
+    {
+      get
+      {
+        return _Changed;
+      }
+      set
+      {
+        __isset.Changed = true;
+        this._Changed = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -172,6 +200,7 @@ namespace Ruyi.SDK.InputManager
     #endif
     public struct Isset {
       public bool PacketNumber;
+      public bool DeviceId;
       public bool LeftThumbDeadZone;
       public bool RightThumbDeadZone;
       public bool Buttons;
@@ -181,6 +210,7 @@ namespace Ruyi.SDK.InputManager
       public bool LeftThumbY;
       public bool RightThumbX;
       public bool RightThumbY;
+      public bool Changed;
     }
 
     public InputDeviceStateChangedX360() {
@@ -209,64 +239,79 @@ namespace Ruyi.SDK.InputManager
               }
               break;
             case 2:
-              if (field.Type == TType.I16) {
-                LeftThumbDeadZone = iprot.ReadI16();
+              if (field.Type == TType.String) {
+                DeviceId = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 3:
               if (field.Type == TType.I16) {
-                RightThumbDeadZone = iprot.ReadI16();
+                LeftThumbDeadZone = iprot.ReadI16();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 4:
+              if (field.Type == TType.I16) {
+                RightThumbDeadZone = iprot.ReadI16();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 5:
               if (field.Type == TType.I32) {
                 Buttons = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 5:
+            case 6:
               if (field.Type == TType.Byte) {
                 LeftTrigger = iprot.ReadByte();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 6:
+            case 7:
               if (field.Type == TType.Byte) {
                 RightTrigger = iprot.ReadByte();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 7:
+            case 8:
               if (field.Type == TType.I16) {
                 LeftThumbX = iprot.ReadI16();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 8:
+            case 9:
               if (field.Type == TType.I16) {
                 LeftThumbY = iprot.ReadI16();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 9:
+            case 10:
               if (field.Type == TType.I16) {
                 RightThumbX = iprot.ReadI16();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 10:
+            case 11:
               if (field.Type == TType.I16) {
                 RightThumbY = iprot.ReadI16();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 12:
+              if (field.Type == TType.Struct) {
+                Changed = new RuyiInputStateChanged();
+                Changed.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -300,10 +345,18 @@ namespace Ruyi.SDK.InputManager
           oprot.WriteI64(PacketNumber);
           oprot.WriteFieldEnd();
         }
+        if (DeviceId != null && __isset.DeviceId) {
+          field.Name = "DeviceId";
+          field.Type = TType.String;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(DeviceId);
+          oprot.WriteFieldEnd();
+        }
         if (__isset.LeftThumbDeadZone) {
           field.Name = "LeftThumbDeadZone";
           field.Type = TType.I16;
-          field.ID = 2;
+          field.ID = 3;
           oprot.WriteFieldBegin(field);
           oprot.WriteI16(LeftThumbDeadZone);
           oprot.WriteFieldEnd();
@@ -311,7 +364,7 @@ namespace Ruyi.SDK.InputManager
         if (__isset.RightThumbDeadZone) {
           field.Name = "RightThumbDeadZone";
           field.Type = TType.I16;
-          field.ID = 3;
+          field.ID = 4;
           oprot.WriteFieldBegin(field);
           oprot.WriteI16(RightThumbDeadZone);
           oprot.WriteFieldEnd();
@@ -319,7 +372,7 @@ namespace Ruyi.SDK.InputManager
         if (__isset.Buttons) {
           field.Name = "Buttons";
           field.Type = TType.I32;
-          field.ID = 4;
+          field.ID = 5;
           oprot.WriteFieldBegin(field);
           oprot.WriteI32(Buttons);
           oprot.WriteFieldEnd();
@@ -327,7 +380,7 @@ namespace Ruyi.SDK.InputManager
         if (__isset.LeftTrigger) {
           field.Name = "LeftTrigger";
           field.Type = TType.Byte;
-          field.ID = 5;
+          field.ID = 6;
           oprot.WriteFieldBegin(field);
           oprot.WriteByte(LeftTrigger);
           oprot.WriteFieldEnd();
@@ -335,7 +388,7 @@ namespace Ruyi.SDK.InputManager
         if (__isset.RightTrigger) {
           field.Name = "RightTrigger";
           field.Type = TType.Byte;
-          field.ID = 6;
+          field.ID = 7;
           oprot.WriteFieldBegin(field);
           oprot.WriteByte(RightTrigger);
           oprot.WriteFieldEnd();
@@ -343,7 +396,7 @@ namespace Ruyi.SDK.InputManager
         if (__isset.LeftThumbX) {
           field.Name = "LeftThumbX";
           field.Type = TType.I16;
-          field.ID = 7;
+          field.ID = 8;
           oprot.WriteFieldBegin(field);
           oprot.WriteI16(LeftThumbX);
           oprot.WriteFieldEnd();
@@ -351,7 +404,7 @@ namespace Ruyi.SDK.InputManager
         if (__isset.LeftThumbY) {
           field.Name = "LeftThumbY";
           field.Type = TType.I16;
-          field.ID = 8;
+          field.ID = 9;
           oprot.WriteFieldBegin(field);
           oprot.WriteI16(LeftThumbY);
           oprot.WriteFieldEnd();
@@ -359,7 +412,7 @@ namespace Ruyi.SDK.InputManager
         if (__isset.RightThumbX) {
           field.Name = "RightThumbX";
           field.Type = TType.I16;
-          field.ID = 9;
+          field.ID = 10;
           oprot.WriteFieldBegin(field);
           oprot.WriteI16(RightThumbX);
           oprot.WriteFieldEnd();
@@ -367,9 +420,17 @@ namespace Ruyi.SDK.InputManager
         if (__isset.RightThumbY) {
           field.Name = "RightThumbY";
           field.Type = TType.I16;
-          field.ID = 10;
+          field.ID = 11;
           oprot.WriteFieldBegin(field);
           oprot.WriteI16(RightThumbY);
+          oprot.WriteFieldEnd();
+        }
+        if (Changed != null && __isset.Changed) {
+          field.Name = "Changed";
+          field.Type = TType.Struct;
+          field.ID = 12;
+          oprot.WriteFieldBegin(field);
+          Changed.Write(oprot);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -389,6 +450,12 @@ namespace Ruyi.SDK.InputManager
         __first = false;
         __sb.Append("PacketNumber: ");
         __sb.Append(PacketNumber);
+      }
+      if (DeviceId != null && __isset.DeviceId) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("DeviceId: ");
+        __sb.Append(DeviceId);
       }
       if (__isset.LeftThumbDeadZone) {
         if(!__first) { __sb.Append(", "); }
@@ -443,6 +510,12 @@ namespace Ruyi.SDK.InputManager
         __first = false;
         __sb.Append("RightThumbY: ");
         __sb.Append(RightThumbY);
+      }
+      if (Changed != null && __isset.Changed) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Changed: ");
+        __sb.Append(Changed== null ? "<null>" : Changed.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();
