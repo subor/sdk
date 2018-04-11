@@ -25,9 +25,22 @@ namespace Ruyi
 
 	RuyiNetLobby::RuyiNetLobby(RuyiNetResponseGroup& response)
 	{
+		InitWithResponse(response);
+	}
+
+	RuyiNetLobby::~RuyiNetLobby()
+	{
+		PendingMembers.clear();
+		Members.clear();
+		MemberProfileIds.clear();
+	}
+
+	void RuyiNetLobby::InitWithResponse(RuyiNetResponseGroup& response)
+	{
 		ParseMembers(response.pendingMembers, PendingMembers);
 		ParseMembers(response.members, Members);
 
+		MemberProfileIds.clear();
 		std::for_each(Members.begin(), Members.end(), [&](RuyiNetLobbyMember& member)
 		{
 			MemberProfileIds.push_back(&(member.GetProfileId()));

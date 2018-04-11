@@ -7,10 +7,6 @@
 
 namespace Ruyi
 {
-	/*
-	ENUM(RuyiNetLobbyType, char,
-		RANKED,
-		PLAYER);*/
 	enum RuyiNetLobbyType
 	{
 		RANKED,

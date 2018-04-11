@@ -34,8 +34,10 @@ namespace Ruyi
 
 	public:
 		RuyiNetLobby();
-		RuyiNetLobby(RuyiNetResponseGroup& group);
-		
+		RuyiNetLobby(RuyiNetResponseGroup& response);
+		void InitWithResponse(RuyiNetResponseGroup& response);
+		~RuyiNetLobby();
+
 		const std::list<RuyiNetLobbyMember>& GetPendingMembers() { return PendingMembers; }
 		const std::list<RuyiNetLobbyMember>& GetMembers() { return Members; }
 		const std::list<const std::string*>& GetMemberProfileIds() { return MemberProfileIds; }
