@@ -58,7 +58,8 @@ namespace Ruyi
                     profileId = profileId
                 };
 
-                return mClient.BCService.Script_RunParentScript("SendPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index);
+                var response = mClient.BCService.Script_RunParentScript("SendPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index);
+                return response;
             }, callback);
         }
 

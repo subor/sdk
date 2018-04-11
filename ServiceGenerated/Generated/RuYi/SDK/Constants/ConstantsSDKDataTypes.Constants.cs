@@ -67,6 +67,10 @@ namespace Ruyi.SDK.Constants
       tmp3.AppVersion = "1.0.0";
       tmp3.Dispatcher = "dispatcherv2";
       tmp3.AppId = "30001";
+      tmp3.AppVersion = "1.0.0";
+      tmp3.Dispatcher = "dispatcherv2";
+      tmp3.SecretKey = "42522d96-3c4f-4ccc-9545-84b89eb93e35";
+      tmp3.AppVersion = "1.0.0";
       BraincloudServerList.Add(tmp3);
     }
   }
