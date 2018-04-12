@@ -64,13 +64,13 @@ Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unreal
 
 2 create a "include" folder and "lib" folder under your main module folder
 
-3 copy "boost"(from externals\boost_1_64_0) "thrift"(from externals\thrift.cpp\Release\include) "Generated" "PubSub" "RuyiNet" (from RuyiSDKCpp)folder to your "include" file
+3 copy "boost"(from RuyiSDKCpp\bin\Release\include) "thrift"(from RuyiSDKCpp\bin\Release\include) "Generated" "PubSub" "RuyiNet" (from RuyiSDKCpp)folder to your "include" file
 
 4 copy "resource.h" "RuyiSDK.h" "RuyiSDK.cpp" "RuyiString.h" "version.info" (from sdk\RuyiSDKCpp)"zmq.h" "zmq.hpp" "zmq_addon.hpp" "zmq_utils.h"(from externals\ZeroMQ\include) files to your "include" file
 
-5 create a "boost" folder under "lib" folder, copy all the files under "externals\boost_1_64_0\lib\x64" to this "lib\boost" folder.
+5 copy "boost" folder (from "RuyiSDKCpp\bin\Release\lib") to "lib" folder.
 
-6 create a "zmq" folder under "lib" folder, copy all the files under "externals\ZeroMQ\lib" to this "lib\zmq" folder
+6 copy "zmq" folder (from "RuyiSDKCpp\bin\Release\lib") to this "lib" folder
 
 7 copy all files under "externals\thrift.cpp\Release" to "lib" folder
 
