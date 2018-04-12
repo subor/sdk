@@ -150,6 +150,6 @@ basicly, it's same as use binary version, just remove the sdk lib files
 
 1 if you compile with error "\thrift\protocol\tbinaryprotocol.tcc(441): error C4706: assignment within conditional expression"
 
-you can try to add the windows 10 sdk to the building directories. You can easily change it with common visual studio projuect. If In unreal you may need source code version UE4 to change the UnrealBuildTool code. 
+you can try to change the #pragma warning in UE4(it may need a source version UE4) 
 
 Or you can just change the code in "\thrift\protocol\tbinaryprotocol.tcc" and it's easy and won't affect nothing
