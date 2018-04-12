@@ -145,3 +145,11 @@ Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unreal
 basicly, it's same as use binary version, just remove the sdk lib files
 
 11 For any C++ base code, it's basic same theory. Include all the head files, add lib directory to your project.
+
+# issues you may encouter when integrate source code
+
+1 if you compile with error "\thrift\protocol\tbinaryprotocol.tcc(441): error C4706: assignment within conditional expression"
+
+you can try to add the windows 10 sdk to the building directories. Or you can just change the code in "\thrift\protocol\tbinaryprotocol.tcc"
+
+it's very simple.
