@@ -57,3 +57,91 @@ Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unreal
 - Since the sdk uses [boost](http://www.boost.org/), you may encounter `error LNK2038: mismatch detected for 'boost__type_index__abi': value 'RTTI is used'`.  You can solve this by adding `bUseRTTI = true;` to __xxxx.build.cs__.
 
 - Similarly: `Error C4577: 'noexcept' used with no exception handling mode specified`.  You can solve this by adding `bEnableExceptions = true;` to __xxx.build.cs__.
+
+# UE4 Source Code Integration
+
+1 download the source code of SDK and externals from git
+
+2 create a "include" folder and "lib" folder under your main module folder
+
+3 copy "boost"(from externals\boost_1_64_0) "thrift"(from externals\thrift.cpp\Release\include) "Generated" "PubSub" "RuyiNet" (from RuyiSDKCpp)folder to your "include" file
+
+4 copy "resource.h" "RuyiSDK.h" "RuyiSDK.cpp" "RuyiString.h" "version.info" (from sdk\RuyiSDKCpp)"zmq.h" "zmq.hpp" "zmq_addon.hpp" "zmq_utils.h"(from externals\ZeroMQ\include) files to your "include" file
+
+5 create a "boost" folder under "lib" folder, copy all the files under "externals\boost_1_64_0\lib\x64" to this "lib\boost" folder.
+
+6 create a "zmq" folder under "lib" folder, copy all the files under "externals\ZeroMQ\lib" to this "lib\zmq" folder
+
+7 copy all files under "externals\thrift.cpp\Release" to "lib" folder
+
+8 right click your project file and click "Generate visual studio files"
+
+9 Add codes below
+    private string ModulePath
+    {
+        get { return ModuleDirectory; }
+    }
+
+    private string LibPath
+    {
+        get { return Path.GetFullPath(Path.Combine(ModulePath, "lib/")); }
+    } 
+
+    public RuyiSDKDemo(ReadOnlyTargetRules Target) : base(Target)
+	{
+        bUseRTTI = true;
+        bEnableExceptions = true;
+
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+
+		PublicDependencyModuleNames.AddRange
+            (
+                new string[] 
+                {
+                    "Core",
+                    "CoreUObject",
+                    "Engine",
+                    "InputCore",
+                    "HeadMountedDisplay",
+                    "Json",
+                    "ImageWrapper",
+                    "RHI",
+                    "RenderCore",
+                    "UMG",
+                }
+            );
+
+        PublicIncludePaths.AddRange(
+            new string[] {
+
+                "RuyiSDKDemo/include",
+                "RuyiSDKDemo/include/Generated/CommonType",
+			}
+            );
+
+        PublicDelayLoadDLLs.Add(Path.Combine(LibPath, "zmq", "libzmq.dll"));
+
+        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "libthrift.lib"));
+
+        //PublicAdditionalLibraries.Add(Path.Combine(LibPath, "RuyiSDK.lib"));
+        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "zmq", "libzmq.lib"));
+
+        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_chrono-vc141-mt-1_64.lib"));
+        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_chrono-vc141-mt-gd-1_64.lib"));
+        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_date_time-vc141-mt-1_64.lib"));
+        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_date_time-vc141-mt-gd-1_64.lib"));
+        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_system-vc141-mt-1_64.lib"));
+        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_system-vc141-mt-gd-1_64.lib"));
+        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_thread-vc141-mt-1_64.lib"));
+        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_thread-vc141-mt-gd-1_64.lib"));
+
+        PrivateIncludePathModuleNames.AddRange(
+            new string[] 
+            {
+                "DesktopPlatform",
+            }
+            );
+    }
+basicly, it's same as use binary version, just remove the sdk lib files
+
+11 For any C++ base code, it's basic same theory. Include all the head files, add lib directory to your project.
