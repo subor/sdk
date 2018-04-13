@@ -8,9 +8,9 @@ Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unreal
     - Windows 10 SDK (10.0.15063.0) (under __SDKs, libraries, and frameworks__)
 - Unreal Engine 18, Compiled version
 
-## Instructions
+## Download SDK from developer website Instructions
 
-1. Our SDK files will be in two folders: __include__ and __lib__.  Put them in one of your game module source folder.  For example, `source/ModuleName/include` and `source/ModuleName/lib`.  They may be put in a sub-folder, just make sure they're in the same folder.
+1. You can directly download our sdk from our developer website(http://dev.playruyi.com). Our SDK files will be in two folders: __include__ and __lib__.  Put them in one of your game module source folder.  For example, `source/ModuleName/include` and `source/ModuleName/lib`.  They may be put in a sub-folder, just make sure they're in the same folder.
 1. Open __ModuleName.Build.cs__ and add `ModuleName/xxx/include` to the `PublicIncludePaths` property.  For example:
 
         PublicIncludePaths.AddRange(
@@ -58,98 +58,12 @@ Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unreal
 
 - Similarly: `Error C4577: 'noexcept' used with no exception handling mode specified`.  You can solve this by adding `bEnableExceptions = true;` to __xxx.build.cs__.
 
-# UE4 Source Code Integration
+## Download sdk_source repo Instruction
 
-1 download the source code of SDK and externals from git
+you can also download sdk from our sdk_source git.
 
-2 create a "include" folder and "lib" folder under your main module folder
+1 download the sdk_source repo, then open SDK.sln, build it.
 
-3 copy "boost"(from RuyiSDKCpp\bin\Release\include) "thrift"(from RuyiSDKCpp\bin\Release\include) "Generated" "PubSub" "RuyiNet" (from RuyiSDKCpp)folder to your "include" file
+2 Go to "RuyiSDKCpp\bin\Release", copy the "include" and "lib" folder to your main module.
 
-4 copy "resource.h" "RuyiSDK.h" "RuyiSDK.cpp" "RuyiString.h" "version.info" (from sdk\RuyiSDKCpp)"zmq.h" "zmq.hpp" "zmq_addon.hpp" "zmq_utils.h"(from externals\ZeroMQ\include) files to your "include" file
-
-5 copy "boost" folder (from "RuyiSDKCpp\bin\Release\lib") to "lib" folder.
-
-6 copy "zmq" folder (from "RuyiSDKCpp\bin\Release\lib") to this "lib" folder
-
-7 copy all files under "externals\thrift.cpp\Release" to "lib" folder
-
-8 right click your project file and click "Generate visual studio files"
-
-9 Add codes below
-    private string ModulePath
-    {
-        get { return ModuleDirectory; }
-    }
-
-    private string LibPath
-    {
-        get { return Path.GetFullPath(Path.Combine(ModulePath, "lib/")); }
-    } 
-
-    public RuyiSDKDemo(ReadOnlyTargetRules Target) : base(Target)
-	{
-        bUseRTTI = true;
-        bEnableExceptions = true;
-
-        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-
-		PublicDependencyModuleNames.AddRange
-            (
-                new string[] 
-                {
-                    "Core",
-                    "CoreUObject",
-                    "Engine",
-                    "InputCore",
-                    "HeadMountedDisplay",
-                    "Json",
-                    "ImageWrapper",
-                    "RHI",
-                    "RenderCore",
-                    "UMG",
-                }
-            );
-
-        PublicIncludePaths.AddRange(
-            new string[] {
-
-                "RuyiSDKDemo/include",
-                "RuyiSDKDemo/include/Generated/CommonType",
-			}
-            );
-
-        PublicDelayLoadDLLs.Add(Path.Combine(LibPath, "zmq", "libzmq.dll"));
-
-        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "libthrift.lib"));
-
-        //PublicAdditionalLibraries.Add(Path.Combine(LibPath, "RuyiSDK.lib"));
-        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "zmq", "libzmq.lib"));
-
-        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_chrono-vc141-mt-1_64.lib"));
-        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_chrono-vc141-mt-gd-1_64.lib"));
-        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_date_time-vc141-mt-1_64.lib"));
-        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_date_time-vc141-mt-gd-1_64.lib"));
-        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_system-vc141-mt-1_64.lib"));
-        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_system-vc141-mt-gd-1_64.lib"));
-        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_thread-vc141-mt-1_64.lib"));
-        PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_thread-vc141-mt-gd-1_64.lib"));
-
-        PrivateIncludePathModuleNames.AddRange(
-            new string[] 
-            {
-                "DesktopPlatform",
-            }
-            );
-    }
-basicly, it's same as use binary version, just remove the sdk lib files
-
-11 For any C++ base code, it's basic same theory. Include all the head files, add lib directory to your project.
-
-# issues you may encouter when integrate source code
-
-1 if you compile with error "\thrift\protocol\tbinaryprotocol.tcc(441): error C4706: assignment within conditional expression"
-
-you can try to change the #pragma warning in UE4(it may need a source version UE4) 
-
-Or you can just change the code in "\thrift\protocol\tbinaryprotocol.tcc" and it's easy and won't affect nothing
+3 The rest is just the same as the insturction of downloading sdk from webside.
