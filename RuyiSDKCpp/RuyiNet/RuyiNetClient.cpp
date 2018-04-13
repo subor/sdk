@@ -3,34 +3,46 @@
 #include "Service/RuyiNetCloudService.h"
 #include "Service/RuyiNetFriendService.h"
 #include "Service/RuyiNetLeaderboardService.h"
-#include "Service/RuyiNetMatchmakingService.h"
 #include "Service/RuyiNetPartyService.h"
 #include "Service/RuyiNetProfileService.h"
 #include "Service/RuyiNetUserFileService.h"
 #include "Service/RuyiNetVideoService.h"
+#include "Service/RuyiNetMatchmakingService.h"
+
 #include "Response/RuyiNetGetProfileResponse.h"
+#include "Response/RuyiNetProfile.h"
 
 namespace Ruyi
 {
+	
+
 	RuyiNetClient::RuyiNetClient(const boost::shared_ptr<TProtocol1> & protocol)
 		: BCService(nullptr), mCloudService(nullptr), mFriendService(nullptr), mLeaderboardService(nullptr),
-		mMatchmakingService(nullptr), mPartyService(nullptr), mProfileService(nullptr), 
-		mVideoService(nullptr), mInitialised(false)
+		mPartyService(nullptr), mProfileService(nullptr), 
+		mVideoService(nullptr), mMatchmakingService(nullptr), mInitialised(false)
 	{
 		BCService = new SDK::BrainCloudApi::BrainCloudServiceClient(protocol);
 
 		mCloudService = new RuyiNetCloudService(this);
 		mFriendService = new RuyiNetFriendService(this);
 		mLeaderboardService = new RuyiNetLeaderboardService(this);
-		mMatchmakingService = new RuyiNetMatchmakingService(this);
 		mPartyService = new RuyiNetPartyService(this);
 		mProfileService = new RuyiNetProfileService(this);
 		mUserFileService = new RuyiNetUserFileService(this);
 		mVideoService = new RuyiNetVideoService(this);
+		mMatchmakingService = new RuyiNetMatchmakingService(this);
+
+		for (int i = 0; i < MAX_PLAYERS; ++i)
+		{ 
+			mCurrentPlayers[i] = nullptr;
+		}
 	}
 
 	RuyiNetClient::~RuyiNetClient()
 	{
+		delete mMatchmakingService;
+		mMatchmakingService = nullptr;
+
 		delete mVideoService;
 		mVideoService = nullptr;
 
@@ -42,9 +54,6 @@ namespace Ruyi
 
 		delete mPartyService;
 		mPartyService = nullptr;
-
-		delete mMatchmakingService;
-		mMatchmakingService = nullptr;
 
 		delete mLeaderboardService;
 		mLeaderboardService = nullptr;
@@ -81,104 +90,45 @@ namespace Ruyi
 		}
 	}
 
-	void RuyiNetClient::Initialise(const RuyiString & appId, const RuyiString & appSecret, const std::function<void()> & onInitialised)
+	void RuyiNetClient::Initialise(const std::string& appId, const std::string& appSecret)
 	{
-		if (mInitialised)
-		{
-			if (onInitialised != nullptr)
-			{
-				onInitialised();
-			}
-
-			return;
-		}
-
 		mAppId = appId;
 		mAppSecret = appSecret;
-
-		EnqueueTask<json>([&mCurrentPlayers = mCurrentPlayers, &BCService = BCService, &mAppId = mAppId, &mNewUser = mNewUser]() -> std::string
+		try 
 		{
 			for (int i = 0; i < MAX_PLAYERS; ++i)
 			{
-				if (mCurrentPlayers[i] != nullptr)
-				{
-					delete mCurrentPlayers[i];
-					mCurrentPlayers[i] = nullptr;
-				}
-
 				std::string jsonResponse;
-				BCService->Identity_SwitchToSingletonChildProfile(jsonResponse, ToString(mAppId), true, i);
-				SwitchToChildProfileResponse childProfile = json::parse(jsonResponse);
-				if (childProfile.status != 200)
+				BCService->Identity_SwitchToSingletonChildProfile(jsonResponse, mAppId, true, i);
+
+				auto retJson = nlohmann::json::parse(jsonResponse);
+
+				SwitchToChildProfileResponse childProfile;
+				childProfile.parseJson(retJson);
+
+				if (STATUS_OK != childProfile.status)
 				{
 					continue;
 				}
 
-				auto profileId = childProfile.data.parentProfileId;
-				auto profileName = childProfile.data.playerName;
+				nlohmann::json payloadJson;
+				payloadJson["profileId"] = childProfile.data.parentProfileId;
+				std::string scriptData = payloadJson.dump();
+				BCService->Script_RunParentScript(jsonResponse, "GetProfile", scriptData, "RUYI", i);
 
-				mNewUser = childProfile.data.newUser;
-
-				json payload = { "profileId", profileId };
-				BCService->Script_RunParentScript(jsonResponse, "GetProfile", payload, "RUYI", i);
-
-				RuyiNetGetProfileResponse profileData = json::parse(jsonResponse);
-				if (profileData.status != 200 ||
-					profileData.data.success == false)
+				RuyiNetGetProfileResponse profileData;
+				retJson = nlohmann::json::parse(jsonResponse);
+				profileData.parseJson(retJson);
+				if (profileData.status != 200 || profileData.data.success == false)
 				{
 					continue;
 				}
 
 				mCurrentPlayers[i] = new RuyiNetProfile(profileData.data.response);
 			}
-
-			json response = { "status", 200 };
-			return response;
-		},
-		[&mInitialised = mInitialised, &onInitialised](json response)
+		} catch(std::exception e)
 		{
-			mInitialised = true;
-			if (onInitialised != nullptr)
-			{
-				onInitialised();
-			}
-		});
-	}
-
-	void RuyiNetClient::Update()
-	{
-		mTaskQueue.Update();
-	}
-	
-	void to_json(json & j, const RuyiNetClient::SwitchToChildProfileResponse & data)
-	{
-		j = json
-		{
-			{ "data", data.data },
-			{ "status", data.status }
-		};
-	}
-
-	void from_json(const json & j, RuyiNetClient::SwitchToChildProfileResponse & data)
-	{
-		data.data = j.at("data").get<RuyiNetClient::SwitchToChildProfileResponse::Data>();
-		data.status = j.at("status").get<int>();
-	}
-
-	void to_json(json & j, const RuyiNetClient::SwitchToChildProfileResponse::Data & data)
-	{
-		j = json
-		{
-			{ "parentProfileId", data.parentProfileId },
-			{ "playerName", data.playerName },
-			{ "newUser", data.newUser }
-		};
-	}
-
-	void from_json(const json & j, RuyiNetClient::SwitchToChildProfileResponse::Data & data)
-	{
-		data.parentProfileId = j.at("parentProfileId").get<std::string>();
-		data.playerName = j.at("playerName").get<std::string>();
-		data.newUser = j.at("newUser").get<bool>();
+			throw e;
+		}
 	}
 }

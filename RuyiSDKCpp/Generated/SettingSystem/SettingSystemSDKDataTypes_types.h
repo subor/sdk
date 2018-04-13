@@ -35,17 +35,13 @@ typedef std::string JSON;
 
 class CategoryNode;
 
-class AppDataRecord;
-
-class AppDataCollection;
-
-class AppData;
-
 class SettingSearchResult;
 
 class SettingTree;
 
 class NodeList;
+
+class SettingItemNotification;
 
 typedef struct _CategoryNode__isset {
   _CategoryNode__isset() : id(false), categoryId(false), sortingPriority(false), children(false) {}
@@ -106,162 +102,6 @@ class CategoryNode : public virtual ::apache::thrift::TBase {
 void swap(CategoryNode &a, CategoryNode &b);
 
 inline std::ostream& operator<<(std::ostream& out, const CategoryNode& obj)
-{
-  obj.printTo(out);
-  return out;
-}
-
-typedef struct _AppDataRecord__isset {
-  _AppDataRecord__isset() : id(false), value(true) {}
-  bool id :1;
-  bool value :1;
-} _AppDataRecord__isset;
-
-class AppDataRecord : public virtual ::apache::thrift::TBase {
- public:
-
-  AppDataRecord(const AppDataRecord&);
-  AppDataRecord& operator=(const AppDataRecord&);
-  AppDataRecord() : id(), value("{}") {
-  }
-
-  virtual ~AppDataRecord() throw();
-  std::string id;
-  JSON value;
-
-  _AppDataRecord__isset __isset;
-
-  void __set_id(const std::string& val);
-
-  void __set_value(const JSON& val);
-
-  bool operator == (const AppDataRecord & rhs) const
-  {
-    if (!(id == rhs.id))
-      return false;
-    if (!(value == rhs.value))
-      return false;
-    return true;
-  }
-  bool operator != (const AppDataRecord &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const AppDataRecord & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-  virtual void printTo(std::ostream& out) const;
-};
-
-void swap(AppDataRecord &a, AppDataRecord &b);
-
-inline std::ostream& operator<<(std::ostream& out, const AppDataRecord& obj)
-{
-  obj.printTo(out);
-  return out;
-}
-
-typedef struct _AppDataCollection__isset {
-  _AppDataCollection__isset() : id(false), records(false) {}
-  bool id :1;
-  bool records :1;
-} _AppDataCollection__isset;
-
-class AppDataCollection : public virtual ::apache::thrift::TBase {
- public:
-
-  AppDataCollection(const AppDataCollection&);
-  AppDataCollection& operator=(const AppDataCollection&);
-  AppDataCollection() : id() {
-  }
-
-  virtual ~AppDataCollection() throw();
-  std::string id;
-  std::vector<AppDataRecord>  records;
-
-  _AppDataCollection__isset __isset;
-
-  void __set_id(const std::string& val);
-
-  void __set_records(const std::vector<AppDataRecord> & val);
-
-  bool operator == (const AppDataCollection & rhs) const
-  {
-    if (!(id == rhs.id))
-      return false;
-    if (!(records == rhs.records))
-      return false;
-    return true;
-  }
-  bool operator != (const AppDataCollection &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const AppDataCollection & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-  virtual void printTo(std::ostream& out) const;
-};
-
-void swap(AppDataCollection &a, AppDataCollection &b);
-
-inline std::ostream& operator<<(std::ostream& out, const AppDataCollection& obj)
-{
-  obj.printTo(out);
-  return out;
-}
-
-typedef struct _AppData__isset {
-  _AppData__isset() : appId(false), data(false) {}
-  bool appId :1;
-  bool data :1;
-} _AppData__isset;
-
-class AppData : public virtual ::apache::thrift::TBase {
- public:
-
-  AppData(const AppData&);
-  AppData& operator=(const AppData&);
-  AppData() : appId() {
-  }
-
-  virtual ~AppData() throw();
-  std::string appId;
-  std::vector<AppDataCollection>  data;
-
-  _AppData__isset __isset;
-
-  void __set_appId(const std::string& val);
-
-  void __set_data(const std::vector<AppDataCollection> & val);
-
-  bool operator == (const AppData & rhs) const
-  {
-    if (!(appId == rhs.appId))
-      return false;
-    if (!(data == rhs.data))
-      return false;
-    return true;
-  }
-  bool operator != (const AppData &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const AppData & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-  virtual void printTo(std::ostream& out) const;
-};
-
-void swap(AppData &a, AppData &b);
-
-inline std::ostream& operator<<(std::ostream& out, const AppData& obj)
 {
   obj.printTo(out);
   return out;
@@ -424,6 +264,58 @@ class NodeList : public virtual ::apache::thrift::TBase {
 void swap(NodeList &a, NodeList &b);
 
 inline std::ostream& operator<<(std::ostream& out, const NodeList& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _SettingItemNotification__isset {
+  _SettingItemNotification__isset() : key(false), contents(true) {}
+  bool key :1;
+  bool contents :1;
+} _SettingItemNotification__isset;
+
+class SettingItemNotification : public virtual ::apache::thrift::TBase {
+ public:
+
+  SettingItemNotification(const SettingItemNotification&);
+  SettingItemNotification& operator=(const SettingItemNotification&);
+  SettingItemNotification() : key(), contents("{}") {
+  }
+
+  virtual ~SettingItemNotification() throw();
+  std::string key;
+  JSON contents;
+
+  _SettingItemNotification__isset __isset;
+
+  void __set_key(const std::string& val);
+
+  void __set_contents(const JSON& val);
+
+  bool operator == (const SettingItemNotification & rhs) const
+  {
+    if (!(key == rhs.key))
+      return false;
+    if (!(contents == rhs.contents))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingItemNotification &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingItemNotification & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(SettingItemNotification &a, SettingItemNotification &b);
+
+inline std::ostream& operator<<(std::ostream& out, const SettingItemNotification& obj)
 {
   obj.printTo(out);
   return out;

@@ -19,37 +19,46 @@ using Thrift.Transport;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// Notification of setting item from layer0
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class AppDataRecord : TBase
+  public partial class SettingItemNotification : TBase
   {
-    private string _id;
-    private string _value;
+    private string _key;
+    private string _contents;
 
-    public string Id
+    /// <summary>
+    /// The item's ID
+    /// </summary>
+    public string Key
     {
       get
       {
-        return _id;
+        return _key;
       }
       set
       {
-        __isset.id = true;
-        this._id = value;
+        __isset.key = true;
+        this._key = value;
       }
     }
 
-    public string Value
+    /// <summary>
+    /// Optional. The arguments of the notification. In json string format
+    /// </summary>
+    public string Contents
     {
       get
       {
-        return _value;
+        return _contents;
       }
       set
       {
-        __isset.@value = true;
-        this._value = value;
+        __isset.contents = true;
+        this._contents = value;
       }
     }
 
@@ -59,13 +68,13 @@ namespace Ruyi.SDK.SettingSystem.Api
     [Serializable]
     #endif
     public struct Isset {
-      public bool id;
-      public bool @value;
+      public bool key;
+      public bool contents;
     }
 
-    public AppDataRecord() {
-      this._value = "{}";
-      this.__isset.@value = true;
+    public SettingItemNotification() {
+      this._contents = "{}";
+      this.__isset.contents = true;
     }
 
     public void Read (TProtocol iprot)
@@ -85,14 +94,14 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             case 1:
               if (field.Type == TType.String) {
-                Id = iprot.ReadString();
+                Key = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
               if (field.Type == TType.String) {
-                Value = iprot.ReadString();
+                Contents = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -115,23 +124,23 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("AppDataRecord");
+        TStruct struc = new TStruct("SettingItemNotification");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (Id != null && __isset.id) {
-          field.Name = "id";
+        if (Key != null && __isset.key) {
+          field.Name = "key";
           field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Id);
+          oprot.WriteString(Key);
           oprot.WriteFieldEnd();
         }
-        if (Value != null && __isset.@value) {
-          field.Name = "value";
+        if (Contents != null && __isset.contents) {
+          field.Name = "contents";
           field.Type = TType.String;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Value);
+          oprot.WriteString(Contents);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -144,19 +153,19 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("AppDataRecord(");
+      StringBuilder __sb = new StringBuilder("SettingItemNotification(");
       bool __first = true;
-      if (Id != null && __isset.id) {
+      if (Key != null && __isset.key) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Id: ");
-        __sb.Append(Id);
+        __sb.Append("Key: ");
+        __sb.Append(Key);
       }
-      if (Value != null && __isset.@value) {
+      if (Contents != null && __isset.contents) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Value: ");
-        __sb.Append(Value);
+        __sb.Append("Contents: ");
+        __sb.Append(Contents);
       }
       __sb.Append(")");
       return __sb.ToString();

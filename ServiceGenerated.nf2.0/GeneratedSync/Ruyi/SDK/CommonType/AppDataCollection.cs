@@ -15,40 +15,46 @@ using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.InputManager
+namespace Ruyi.SDK.CommonType
 {
 
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class RuyiInputStateChanged : TBase
+  public partial class AppDataCollection : TBase
   {
-    private List<RuyiInputEvent> _keyPressEvent;
-    private List<RuyiInputEvent> _analogEvent;
+    private string _category;
+    private List<AppDataRecord> _records;
 
-    public List<RuyiInputEvent> KeyPressEvent
+    /// <summary>
+    /// The category of the records
+    /// </summary>
+    public string Category
     {
       get
       {
-        return _keyPressEvent;
+        return _category;
       }
       set
       {
-        __isset.keyPressEvent = true;
-        this._keyPressEvent = value;
+        __isset.category = true;
+        this._category = value;
       }
     }
 
-    public List<RuyiInputEvent> AnalogEvent
+    /// <summary>
+    /// The records of the collection. See AppDataRecord
+    /// </summary>
+    public List<AppDataRecord> Records
     {
       get
       {
-        return _analogEvent;
+        return _records;
       }
       set
       {
-        __isset.analogEvent = true;
-        this._analogEvent = value;
+        __isset.records = true;
+        this._records = value;
       }
     }
 
@@ -58,11 +64,11 @@ namespace Ruyi.SDK.InputManager
     [Serializable]
     #endif
     public struct Isset {
-      public bool keyPressEvent;
-      public bool analogEvent;
+      public bool category;
+      public bool records;
     }
 
-    public RuyiInputStateChanged() {
+    public AppDataCollection() {
     }
 
     public void Read (TProtocol iprot)
@@ -81,19 +87,8 @@ namespace Ruyi.SDK.InputManager
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.List) {
-                {
-                  KeyPressEvent = new List<RuyiInputEvent>();
-                  TList _list0 = iprot.ReadListBegin();
-                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
-                  {
-                    RuyiInputEvent _elem2;
-                    _elem2 = new RuyiInputEvent();
-                    _elem2.Read(iprot);
-                    KeyPressEvent.Add(_elem2);
-                  }
-                  iprot.ReadListEnd();
-                }
+              if (field.Type == TType.String) {
+                Category = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -101,14 +96,14 @@ namespace Ruyi.SDK.InputManager
             case 2:
               if (field.Type == TType.List) {
                 {
-                  AnalogEvent = new List<RuyiInputEvent>();
-                  TList _list3 = iprot.ReadListBegin();
-                  for( int _i4 = 0; _i4 < _list3.Count; ++_i4)
+                  Records = new List<AppDataRecord>();
+                  TList _list29 = iprot.ReadListBegin();
+                  for( int _i30 = 0; _i30 < _list29.Count; ++_i30)
                   {
-                    RuyiInputEvent _elem5;
-                    _elem5 = new RuyiInputEvent();
-                    _elem5.Read(iprot);
-                    AnalogEvent.Add(_elem5);
+                    AppDataRecord _elem31;
+                    _elem31 = new AppDataRecord();
+                    _elem31.Read(iprot);
+                    Records.Add(_elem31);
                   }
                   iprot.ReadListEnd();
                 }
@@ -134,34 +129,27 @@ namespace Ruyi.SDK.InputManager
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("RuyiInputStateChanged");
+        TStruct struc = new TStruct("AppDataCollection");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (KeyPressEvent != null && __isset.keyPressEvent) {
-          field.Name = "keyPressEvent";
-          field.Type = TType.List;
+        if (Category != null && __isset.category) {
+          field.Name = "category";
+          field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          {
-            oprot.WriteListBegin(new TList(TType.Struct, KeyPressEvent.Count));
-            foreach (RuyiInputEvent _iter6 in KeyPressEvent)
-            {
-              _iter6.Write(oprot);
-            }
-            oprot.WriteListEnd();
-          }
+          oprot.WriteString(Category);
           oprot.WriteFieldEnd();
         }
-        if (AnalogEvent != null && __isset.analogEvent) {
-          field.Name = "analogEvent";
+        if (Records != null && __isset.records) {
+          field.Name = "records";
           field.Type = TType.List;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
           {
-            oprot.WriteListBegin(new TList(TType.Struct, AnalogEvent.Count));
-            foreach (RuyiInputEvent _iter7 in AnalogEvent)
+            oprot.WriteListBegin(new TList(TType.Struct, Records.Count));
+            foreach (AppDataRecord _iter32 in Records)
             {
-              _iter7.Write(oprot);
+              _iter32.Write(oprot);
             }
             oprot.WriteListEnd();
           }
@@ -177,19 +165,19 @@ namespace Ruyi.SDK.InputManager
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("RuyiInputStateChanged(");
+      StringBuilder __sb = new StringBuilder("AppDataCollection(");
       bool __first = true;
-      if (KeyPressEvent != null && __isset.keyPressEvent) {
+      if (Category != null && __isset.category) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("KeyPressEvent: ");
-        __sb.Append(KeyPressEvent);
+        __sb.Append("Category: ");
+        __sb.Append(Category);
       }
-      if (AnalogEvent != null && __isset.analogEvent) {
+      if (Records != null && __isset.records) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("AnalogEvent: ");
-        __sb.Append(AnalogEvent);
+        __sb.Append("Records: ");
+        __sb.Append(Records);
       }
       __sb.Append(")");
       return __sb.ToString();
