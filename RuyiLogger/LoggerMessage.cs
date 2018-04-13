@@ -30,20 +30,6 @@ namespace RuyiLogger
         Fatal = 0x50,
     }
 
-    public class LoggerStackFrame
-    {
-        public string Filename { get; private set; }
-        public string Method { get; private set; }
-        public int Line { get; private set; }
-
-        public LoggerStackFrame(System.Diagnostics.StackFrame frame)
-        {
-            Filename = frame.GetFileName();
-            Method = frame.GetMethod().Name;
-            Line = frame.GetFileLineNumber();
-        }
-    }
-
     public class LoggerMessage
     {
         /// <summary>
@@ -109,6 +95,24 @@ namespace RuyiLogger
         public string ToPluginString()
         {
             return $"[{Date,10}]\t[{MsgSource,20}]\t[{Level,10}]\t{Message}";
+        }
+    }
+
+    /// <summary>
+    /// Stack frame suitable for logging.
+    /// </summary>
+    /// <seealso cref="RuyiLogger.Logger"/>
+    public class LoggerStackFrame
+    {
+        public string Filename { get; private set; }
+        public string Method { get; private set; }
+        public int Line { get; private set; }
+
+        public LoggerStackFrame(System.Diagnostics.StackFrame frame)
+        {
+            Filename = frame.GetFileName();
+            Method = frame.GetMethod().Name;
+            Line = frame.GetFileLineNumber();
         }
     }
 }

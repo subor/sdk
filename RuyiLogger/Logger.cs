@@ -56,10 +56,12 @@ namespace RuyiLogger
 
         static public void Log(LoggerMessage msg)
         {
+#if DEBUG
             if (msg.Level >= LogLevel.Warn && msg.Frames == null)
             {
-                msg.Frames = GetFrames(5).ToArray();
+                msg.Frames = GetFrames(1, 5).ToArray();
             }
+#endif
 
             for (int i = 0; i < ruyiLoggers.Count; i++)
                 ruyiLoggers[i].Log(msg);
@@ -80,25 +82,24 @@ namespace RuyiLogger
         /// <summary>
         /// Get stack frames suitable for logging
         /// </summary>
-        /// <param name="maxFrames"></param>
+        /// <param name="maxFrames">Number of frames to return.  If less than or equal to 0, all frames.</param>
         /// <returns></returns>
-        static public List<LoggerStackFrame> GetFrames(int maxFrames)
+        static public List<LoggerStackFrame> GetFrames(int skipFrames = 0, int maxFrames = 0)
         {
-            var stackTrace = new System.Diagnostics.StackTrace(true);
-            var list = new List<LoggerStackFrame>();
+            var stackTrace = new System.Diagnostics.StackTrace(skipFrames, true);
+            var retval = new List<LoggerStackFrame>();
 
             for (int i = 0; i < stackTrace.FrameCount; ++i)
             {
                 var frame = stackTrace.GetFrame(i);
                 if (frame.GetFileName() == null)
                     continue;
-                list.Add(new LoggerStackFrame(frame));
+                retval.Add(new LoggerStackFrame(frame));
 
-                // If we've got several frames just stop.  We don't need full callstack
-                if (list.Count >= maxFrames)
+                if (maxFrames > 0 && retval.Count >= maxFrames)
                     break;
             }
-            return list;
+            return retval;
         }
     }
 }
