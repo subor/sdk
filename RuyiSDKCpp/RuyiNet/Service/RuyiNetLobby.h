@@ -19,8 +19,8 @@ namespace Ruyi
 			/// <param name="profileId">The profile ID of the player.</param>
 			/// <param name="role">The role of the player.</param>
 			RuyiNetLobbyMember(const std::string& profileId, const std::string& role) : ProfileId(profileId), Role(role) {}
-			const std::string& GetProfileId() { return ProfileId; }
-			const std::string& GetRole() { return Role; }
+			const std::string& GetProfileId() const { return ProfileId; }
+			const std::string& GetRole() const { return Role; }
 		private:
 			/// <summary>
 			/// The profile ID of the player.
@@ -38,21 +38,21 @@ namespace Ruyi
 		void InitWithResponse(RuyiNetResponseGroup& response);
 		~RuyiNetLobby();
 
-		const std::list<RuyiNetLobbyMember>& GetPendingMembers() { return PendingMembers; }
-		const std::list<RuyiNetLobbyMember>& GetMembers() { return Members; }
-		const std::list<const std::string*>& GetMemberProfileIds() { return MemberProfileIds; }
-		const std::string& GetLobbyId() { return LobbyId; }
-		const std::string& GetOwnerProfileId() { return OwnerProfileId; }
-		const std::string& GetState() { return State; }
-		const std::string& GetConnectionString() { return ConnectionString; }
-		const RuyiNetLobbyType& GetLobbyType() { return LobbyType; }
-		const long& GetCreatedAt() { return CreatedAt; }
-		const long& GetUpdatedAt() { return UpdatedAt; }
-		const int& GetMemberCount() { return MemberCount; }
-		const int& GetMaxSlots() { return MaxSlots; }
-		const int& GetFreeSlots() { return FreeSlots; }
-		const int& GetRequestingPendingMemberCount() { return RequestingPendingMemberCount; }
-		const int& GetInvitedPendingMemberCount() { return InvitedPendingMemberCount; }
+		const std::list<RuyiNetLobbyMember>& GetPendingMembers() const { return PendingMembers; }
+		const std::list<RuyiNetLobbyMember>& GetMembers() const { return Members; }
+		const std::list<const std::string*>& GetMemberProfileIds() const { return MemberProfileIds; }
+		const std::string& GetLobbyId() const { return LobbyId; }
+		const std::string& GetOwnerProfileId() const { return OwnerProfileId; }
+		const std::string& GetState() const { return State; }
+		const std::string& GetConnectionString() const { return ConnectionString; }
+		const RuyiNetLobbyType& GetLobbyType() const { return LobbyType; }
+		const long& GetCreatedAt() const { return CreatedAt; }
+		const long& GetUpdatedAt() const { return UpdatedAt; }
+		const int& GetMemberCount() const { return MemberCount; }
+		const int& GetMaxSlots() const { return MaxSlots; }
+		const int& GetFreeSlots() const { return FreeSlots; }
+		const int& GetRequestingPendingMemberCount() const { return RequestingPendingMemberCount; }
+		const int& GetInvitedPendingMemberCount() const { return InvitedPendingMemberCount; }
 
 	private:
 		/// <summary>

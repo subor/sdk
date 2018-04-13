@@ -65,6 +65,35 @@ namespace Ruyi
 		/// <param name="lobbyList">The Found lobbies list</param>
 		void FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType, int freeSlots, std::string searchCriteria, std::list<RuyiNetLobby*>& lobbyList);
 
+		/// <summary>
+		/// Joins a lobby created by another player.
+		/// </summary>
+		/// <param name="index">The index of user</param>
+		/// <param name="lobbyId">The ID of the lobby to join.</param>
+		void JoinLobby(int index, std::string lobbyId);
+		
+		/// <summary>
+		/// Leaves a lobby.
+		/// </summary>
+		/// <param name="index">The index of user</param>
+		/// <param name="lobbyId">The ID of the lobby to leave.</param>
+		/// <param name="response">The parsed data struct of return json.</param>
+		void LeaveLobby(int index, std::string lobbyId, RuyiNetResponse& response);
+
+		/// <summary>
+		/// Starts a lobby game
+		/// </summary>
+		/// <param name="index">The index of user</param>
+		/// <param name="lobbyId">The ID of the lobby to start the game for.</param>
+		/// <param name="connectionString">A connection string used to connect to the host.</param>
+		/// <param name="response">The parsed data struct of return json.</param>
+		void StartGame(int index, std::string lobbyId, std::string connectionString, RuyiNetResponse& response);
+
+		/// <summary>
+		/// update the lobby data
+		/// </summary>
+		void UpdateLobby();
+
 		const RuyiNetLobby* CurrentLobby() const { return mCurrentLobby; }
 
 	private:

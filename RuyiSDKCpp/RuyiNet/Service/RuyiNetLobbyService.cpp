@@ -69,6 +69,78 @@ namespace Ruyi
 		});	
 	}
 
+	void RuyiNetLobbyService::JoinLobby(int index, std::string lobbyId)
+	{
+		nlohmann::json payloadJson;
+
+		payloadJson["lobbyId"] = lobbyId;
+
+		std::string responseStr = RunParentScript(index, "Lobby_Join", payloadJson);
+		nlohmann::json retJson = nlohmann::json::parse(responseStr);
+		RuyiNetLobbyResponse response;
+		response.parseJson(retJson);
+
+		InitLobby(response.data.response);
+	}
+
+	void RuyiNetLobbyService::LeaveLobby(int index, std::string lobbyId, RuyiNetResponse& response)
+	{
+		nlohmann::json payloadJson;
+
+		payloadJson["lobbyId"] = lobbyId;
+
+		std::string responseStr = RunParentScript(index, "Lobby_Leave", payloadJson);
+		nlohmann::json retJson = nlohmann::json::parse(responseStr);
+		response.parseJson(retJson);
+	}
+
+	void RuyiNetLobbyService::StartGame(int index, std::string lobbyId, std::string connectionString, RuyiNetResponse& response)
+	{
+		nlohmann::json payloadJson;
+
+		payloadJson["lobbyId"] = lobbyId;
+		payloadJson["connectionString"] = connectionString;
+
+		std::string responseStr = RunParentScript(index, "Lobby_StartGame", payloadJson);
+		nlohmann::json retJson = nlohmann::json::parse(responseStr);
+		response.parseJson(retJson);
+	}
+
+	void RuyiNetLobbyService::UpdateLobby()
+	{
+		if (nullptr != mCurrentLobby)
+		{
+			nlohmann::json payloadJson;
+
+			payloadJson["lobbyId"] = mCurrentLobby->GetLobbyId();
+
+			std::string responseStr = RunParentScript(mClient->ActivePlayerIndex(), "Lobby_Update", payloadJson);
+			nlohmann::json retJson = nlohmann::json::parse(responseStr);
+			RuyiNetLobbyResponse response;
+			response.parseJson(retJson);
+
+			RuyiNetLobby* pUpdatedLobby = new RuyiNetLobby(response.data.response);
+			if (nullptr != pUpdatedLobby)
+			{
+				std::list<std::string> newPlayers;
+				std::list<std::string> oldPlayers;
+
+				bool lobbyClosed = (0 != mCurrentLobby->GetState().compare("CLOSED")) && (0 == pUpdatedLobby->GetState().compare("CLOSED"));
+				bool lobbyStarted = (0 != mCurrentLobby->GetState().compare("STARTED")) && (0 == pUpdatedLobby->GetState().compare("STARTED"));
+
+				std::for_each(pUpdatedLobby->GetMemberProfileIds().begin(), pUpdatedLobby->GetMemberProfileIds().end(), [&](std::string& memberProfileId) 
+				{
+					bool isNew = false;
+
+					if (isNew)
+					{
+						
+					}
+				});
+			}
+		}
+	}
+
 	void RuyiNetLobbyService::InitLobby(RuyiNetResponseGroup& response)
 	{
 		DeleteLobby();

@@ -131,4 +131,16 @@ namespace Ruyi
 			throw e;
 		}
 	}
+
+	int RuyiNetClient::ActivePlayerIndex()
+	{
+		for (int i = 0; i < MAX_PLAYERS; ++i)
+		{
+			if (nullptr != mCurrentPlayers[i])
+				return i;
+		}
+
+		return 0;
+	}
+
 }

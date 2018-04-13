@@ -58,6 +58,11 @@ namespace Ruyi
 			return mCurrentPlayers[index]; 
 		}
 
+		/// <summary>
+		/// Returns the index of the first active player available.
+		/// </summary>
+		int ActivePlayerIndex();
+
 		SDK::BrainCloudApi::BrainCloudServiceClient * const GetBCService() { return BCService; }
 		/// <summary>
 		/// Handles backing up data to the cloud.
