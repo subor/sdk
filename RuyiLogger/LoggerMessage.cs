@@ -30,6 +30,20 @@ namespace RuyiLogger
         Fatal = 0x50,
     }
 
+    public class LoggerStackFrame
+    {
+        public string Filename { get; private set; }
+        public string Method { get; private set; }
+        public int Line { get; private set; }
+
+        public LoggerStackFrame(System.Diagnostics.StackFrame frame)
+        {
+            Filename = frame.GetFileName();
+            Method = frame.GetMethod().Name;
+            Line = frame.GetFileLineNumber();
+        }
+    }
+
     public class LoggerMessage
     {
         /// <summary>
@@ -54,6 +68,13 @@ namespace RuyiLogger
         /// </summary>
         public string MsgType { get; set; }
         public DateTime Date { get; set; }
+
+        /// <summary>
+        /// Original exception
+        /// </summary>
+        public Exception Exception { get; set; }
+
+        public LoggerStackFrame[] Frames { get; set; }
 
         public LoggerMessage()
         {
