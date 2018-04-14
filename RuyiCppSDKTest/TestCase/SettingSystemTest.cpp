@@ -227,7 +227,7 @@ void SettingSystemTest::PlayerLoginAndChangeSettings_0(std::map<string, string>&
 
 	string userId = _playerInfos[0]["data"]["profileId"].asString();
 
-	std::map<string, string> updateSettings;
+	std::map<string, SettingValue> updateSettings;
 
 	std::map<string, string>::iterator settingsIt = settings.find("Jump");
 	if (settingsIt != settings.end()) 
@@ -256,7 +256,10 @@ void SettingSystemTest::PlayerLoginAndChangeSettings_0(std::map<string, string>&
 		std::stringstream ss(strSettingModified);
 		try { read_json(ss, pt); }
 		catch (ptree_error& e) { Logger::WriteMessage("PlayerLoginAndChangeSettings_0 Parse Json Error"); }
-		updateSettings["Jump"] = pt.get<string>("Jump");
+		SettingValue sv;
+		sv.dataType = settingsIt->second;
+		sv.dataValue = strSettingModified;
+		updateSettings["Jump"] = sv;
 	}
 
 	int count = 0;
@@ -282,7 +285,7 @@ void SettingSystemTest::PlayerLoginAndChangeSettings_1(std::map<string, string>&
 
 	string userId = _playerInfos[1]["data"]["profileId"].asString();
 
-	std::map<string, string> updateSettings;
+	std::map<string, SettingValue> updateSettings;
 	std::map<string, string>::iterator settingsIt = settings.find("Shot");
 	if (settingsIt != settings.end()) 
 	{
@@ -297,7 +300,10 @@ void SettingSystemTest::PlayerLoginAndChangeSettings_1(std::map<string, string>&
 		vecATI[1] = atiModify;
 
 		string shotJsonModified = doserializeActionTriggerInfo(vecATI);
-		updateSettings["Shot"] = shotJsonModified;
+		SettingValue sv;
+		sv.dataType = settingsIt->second;
+		sv.dataValue = shotJsonModified;
+		updateSettings["Shot"] = sv;
 	}
 
 	int count = 0;
