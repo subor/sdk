@@ -1,17 +1,23 @@
 ﻿using System;
-using System.Text;
 
 namespace RuyiLogger
 {
     public enum MessageCategory
     {
+        Unknown = 0,
         Request,
         Reply,
         Publisher,
         Subscriber,
-        Framework,      // message comes from the running framework aka layer0
+        /// <summary>
+        /// Message comes from the running framework aka layer0
+        /// </summary>
+        Framework,
         Layer0 = Framework,
-        TRC,            // TRC message
+        /// <summary>
+        /// TRC message
+        /// </summary>
+        TRC,
         MainClient
     }
 
@@ -26,74 +32,62 @@ namespace RuyiLogger
 
     public class LoggerMessage
     {
-        public LogLevel level;       // the log level
-        public MessageCategory category;    // the message category
-        protected string source;               // where the message comes from
-        protected string channel;              // target service or topic, according to the eventType
-        public string message;
+        /// <summary>
+        /// The log level
+        /// </summary>
+        public LogLevel Level { get; set; } = LogLevel.Debug;
+        /// <summary>
+        /// The message category
+        /// </summary>
+        public MessageCategory Category { get; set; } = MessageCategory.Unknown;
+        /// <summary>
+        /// Where the message comes from
+        /// </summary>
+        public string MsgSource { get; set; }
+        /// <summary>
+        /// Target service or topic, according to the eventType
+        /// </summary>
+        public string MsgTarget { get; set; }
+        public string Message { get; set; }
+        /// <summary>
+        /// C# type of the message, could use it for reflection purposes
+        /// </summary>
+        public string MsgType { get; set; }
         public DateTime Date { get; set; }
 
         public LoggerMessage()
         {
             Date = DateTime.Now;
-            level = LogLevel.Debug;
         }
 
-        public string ShownMessage
-        {
-            get
-            {
-                if (category == MessageCategory.Publisher || category == MessageCategory.Request || category == MessageCategory.Reply)
-                {
-                    byte[] bts = Convert.FromBase64String(message);
-                    return Encoding.UTF8.GetString(bts);
-                }
-                return message;
-            }
-            set { }
-        }
-
-        public string MsgSource
-        {
-            get { return source; }
-            set { source = value; }
-        }
-
-        public string MsgTarget
-        {
-            get { return channel; }
-            set { channel = value; }
-        }
-
+        /// <summary>
+        /// Alias for MsgTarget
+        /// </summary>
         public string Topic
         {
-            get { return channel; }
-            set { channel = value; }
+            get { return MsgTarget; }
+            set { MsgTarget = value; }
         }
 
-        public string Message
+        public LoggerMessage(LoggerMessage lm)
         {
-            get { return message; }
-        }
-
-        public string Category
-        {
-            get { return category.ToString(); }
-        }
-
-        public string Level
-        {
-            get { return level.ToString(); }
+            Level = lm.Level;
+            Category = lm.Category;
+            MsgSource = lm.MsgSource;
+            MsgTarget = lm.MsgTarget;
+            Message = lm.Message;
+            MsgType = lm.MsgType;
+            Date = lm.Date;
         }
 
         override public string ToString()
         {
-            return $"[{category,10}]\t[{source,10}]\t[{channel,10}]\t{message}";
+            return $"[{Category,10}]\t[{MsgSource,10}]\t[{MsgTarget,10}]\t{Message}";
         }
 
         public string ToPluginString()
         {
-            return $"[{Date,10}]\t[{source,20}]\t[{Level,10}]\t{message}";
+            return $"[{Date,10}]\t[{MsgSource,20}]\t[{Level,10}]\t{Message}";
         }
     }
 }

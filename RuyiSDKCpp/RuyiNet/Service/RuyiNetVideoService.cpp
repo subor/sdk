@@ -6,109 +6,144 @@ namespace Ruyi
 		: RuyiNetService(client)
 	{
 	}
-
-	void RuyiNetVideoService::UploadVideo(int index, const RuyiString & cloudFilename, const RuyiString & localPath,
-		const RuyiNetTask<RuyiNetUploadFileResponse>::CallbackType & callback)
+	
+	void RuyiNetVideoService::UploadVideo(int index, const std::string& cloudFilename, const std::string& localPath, RuyiNetUploadFileResponse& response)
 	{
-		auto BCService = mClient->GetBCService();
-		auto videoLocation = ToString(VIDEO_LOCATION);
-		auto filename = ToString(cloudFilename);
-		EnqueuePlatformTask<RuyiNetUploadFileResponse>(index,
-			[&BCService, &videoLocation, &index, &filename, &localPath]() -> std::string
+		try
 		{
-			std::string response;
-			BCService->File_UploadFile(response, videoLocation, filename, true, false, ToString(localPath), index);
-			RuyiNetUploadFileResponse uploadFileResponse = json::parse(response);
-			if (uploadFileResponse.status == 200)
+			std::string videoLocation = ToString(VIDEO_LOCATION);
+			std::string responseStr;
+			mClient->GetBCService()->File_UploadFile(responseStr, videoLocation, cloudFilename, true, false, localPath, index);
+			nlohmann::json responseJson1 = nlohmann::json::parse(responseStr);
+			response.parseJson(responseJson1);
+			if (STATUS_OK == response.status)
 			{
-				std::string cdnResponse;
-				BCService->File_GetCDNUrl(cdnResponse, videoLocation, filename, index);
-				RuyiNetGetCDNResponse cdnUrl = json::parse(cdnResponse);
-				if (cdnUrl.status == 200)
+				mClient->GetBCService()->File_GetCDNUrl(responseStr, videoLocation, cloudFilename, index);
+				nlohmann::json responseJson2 = nlohmann::json::parse(responseStr);
+				RuyiNetGetCDNResponse cdnResponse;
+				cdnResponse.parseJson(responseJson2);
+				if (STATUS_OK == cdnResponse.status)
 				{
-					json videoEntity =
-					{
-						{ "appServerUrl", cdnUrl.data.appServerUrl },
-						{ "cloudFilename", filename }
-					};
+					nlohmann::json videoEntityJson;
+					videoEntityJson["appServerUrl"] = cdnResponse.data.appServerUrl;
+					videoEntityJson["cloudFilename"] = cloudFilename;
+					
+					nlohmann::json aclJson;
+					aclJson["other"] = 1;
 
-					json acl =
-					{
-						{"other", 1 }
-					};
+					std::string videoEntityStr = videoEntityJson.dump();
+					std::string aclStr = aclJson.dump();
 
-					std::string entityResponse;
-					BCService->Entity_CreateEntity(entityResponse, videoLocation, videoEntity, acl, index);
+					mClient->GetBCService()->Entity_CreateEntity(responseStr, videoLocation, videoEntityStr, aclStr, index);
+					nlohmann::json responseJson3 = nlohmann::json::parse(responseStr);
+					response.parseJson(responseJson3);
 				}
 			}
-
-			return response;
-		}, callback);
-	}
-
-	void RuyiNetVideoService::DownloadVideo(int index, const RuyiString & cloudFilename)
-	{
-
-	}
-
-	void RuyiNetVideoService::ListVideos(int index, const RuyiNetTask<RuyiNetListUserFilesResponse>::CallbackType & callback)
-	{
-		auto BCService = mClient->GetBCService();
-		auto videoLocation = ToString(VIDEO_LOCATION);
-		EnqueuePlatformTask<RuyiNetListUserFilesResponse>(index, [&BCService, &videoLocation, &index]() -> std::string
+		} catch (nlohmann::detail::exception& e)
 		{
-			std::string response;
-			BCService->File_ListUserFiles_SNSFO(response, videoLocation, false, index);
-			return response;
-		}, callback);
-	}
-
-	void RuyiNetVideoService::DeleteVideo(int index, const RuyiString & cloudFilename,
-		const RuyiNetTask<RuyiNetUploadFileResponse>::CallbackType & callback)
-	{
-		auto BCService = mClient->GetBCService();
-		auto videoLocation = ToString(VIDEO_LOCATION);
-		auto filename = ToString(cloudFilename);
-		EnqueuePlatformTask<RuyiNetUploadFileResponse>(index, 
-			[&BCService, &videoLocation, &filename, &index]() -> std::string
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
 		{
-			std::string response;
-			BCService->File_DeleteUserFile(response, videoLocation, filename, index);
-			return response;
-		}, callback);
+			throw new RuyiNetException(e.what());
+		}
 	}
-
-	void RuyiNetVideoService::GetVideoUrL(int index, const RuyiString & cloudFilename,
-		const RuyiNetTask<RuyiNetGetCDNResponse>::CallbackType & callback)
+	
+	void RuyiNetVideoService::DownloadVideo(int index, const std::string& cloudFilename, RuyiNetResponse& response)
 	{
-		auto BCService = mClient->GetBCService();
-		auto videoLocation = ToString(VIDEO_LOCATION);
-		auto filename = ToString(cloudFilename);
-		EnqueuePlatformTask<RuyiNetGetCDNResponse>(index,
-			[&BCService, &videoLocation, &filename, &index]() -> std::string
+		try 
 		{
-			std::string response;
-			BCService->File_GetCDNUrl(response, videoLocation, filename, index);
-			return response;
-		}, callback);
+			std::string videoLocation = ToString(VIDEO_LOCATION);
+			std::string responseStr;
+			mClient->GetBCService()->File_DownloadFile(responseStr, videoLocation, cloudFilename, true, index);
+			nlohmann::json responseJson = nlohmann::json::parse(responseStr);
+			response.parseJson(responseJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
 	}
-
-	void RuyiNetVideoService::GetFriendsVideos(int index, const RuyiString & profileId,
-		const RuyiNetTask<RuyiNetGetFriendsVideosResponse>::CallbackType callback)
+	
+	void RuyiNetVideoService::ListVideos(int index, RuyiNetListUserFilesResponse& response)
 	{
-		auto BCService = mClient->GetBCService();
-		auto videoLocation = ToString(VIDEO_LOCATION);
-		EnqueuePlatformTask<RuyiNetGetFriendsVideosResponse>(index,
-			[&BCService, &videoLocation, &profileId, &index]() -> std::string
+		try
 		{
-			json payload = 
-			{
-				{ "entityType", videoLocation }
-			};
+			std::string videoLocation = ToString(VIDEO_LOCATION);
+			std::string responseStr;
+			mClient->GetBCService()->File_ListUserFiles_SNSFO(responseStr, videoLocation, false, index);
+			nlohmann::json responseJson = nlohmann::json::parse(responseStr);
+			response.parseJson(responseJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
+	}
+	
+	void RuyiNetVideoService::DeleteVideo(int index, const std::string& cloudFilename, RuyiNetUploadFileResponse& response)
+	{
+		try 
+		{
+			std::string videoLocation = ToString(VIDEO_LOCATION);
+			std::string responseStr;
+			mClient->GetBCService()->File_DeleteUserFile(responseStr, videoLocation, cloudFilename, index);
+			nlohmann::json responseJson = nlohmann::json::parse(responseStr);
+			response.parseJson(responseJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
+	}
+	
+	void RuyiNetVideoService::GetVideoUrL(int index, const std::string& cloudFilename, RuyiNetGetCDNResponse& response)
+	{
+		try
+		{
+			std::string videoLocation = ToString(VIDEO_LOCATION);
+			std::string responseStr;
+			mClient->GetBCService()->File_GetCDNUrl(responseStr, videoLocation, cloudFilename, index);
+			nlohmann::json responseJson = nlohmann::json::parse(responseStr);
+			response.parseJson(responseJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
+	}
+	
+	void RuyiNetVideoService::GetFriendsVideos(int index, const std::string& profileId, RuyiNetGetFriendsVideosResponse& response)
+	{
+		try
+		{
+			std::string videoLocation = ToString(VIDEO_LOCATION);
+			std::string responseStr;
 
-			std::string response;
-			BCService->Entity_GetSharedEntitiesListForProfileId(response, ToString(profileId), payload, {}, 100, index);
-			return response;
-		}, callback);
+			nlohmann::json payloadJson;
+			
+			payloadJson["entityType"] = videoLocation;
+
+			std::string payloadStr = payloadJson.dump();
+
+			mClient->GetBCService()->Entity_GetSharedEntitiesListForProfileId(responseStr, profileId, payloadStr, "{}", 100, index);
+
+			nlohmann::json responseJson = nlohmann::json::parse(responseStr);
+
+			response.parseJson(responseJson);
+		} catch (nlohmann::detail::exception& e)
+		{
+			throw new RuyiNetException(e.what());
+		} catch (::apache::thrift::TApplicationException& e)
+		{
+			throw new RuyiNetException(e.what());
+		}
 	}
 }

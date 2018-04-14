@@ -27,5 +27,6 @@ namespace Ruyi.SDK.ExternalErrors
     Err_15 = 15,
     Err_16 = 16,
     Err_17 = 17,
+    Err_18 = 18,
   }
 }

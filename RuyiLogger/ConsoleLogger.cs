@@ -4,8 +4,8 @@ namespace RuyiLogger
 {
     public class ConsoleLogger : IRuyiLogger
     {
-        string silent = "silent";
-        string verbose = "verbose";
+        const string silent = "silent";
+        const string verbose = "verbose";
 
         string logLevelStr = null;
         LogLevel logLevel = LogLevel.Debug;
@@ -25,7 +25,7 @@ namespace RuyiLogger
             else if (logLevelStr == silent)
                 return false;
 
-            return (int)msg.level >= (int)logLevel;
+            return (int)msg.Level >= (int)logLevel;
         }
 
         public void SetLogLevel(string lvl)
@@ -35,7 +35,7 @@ namespace RuyiLogger
                 logLevelStr = lvl.ToLower();
             if (lvl != null && logLevelStr != silent && logLevelStr != verbose)
             {
-                logLevel = (LogLevel)Enum.Parse(typeof(LogLevel), lvl);
+                logLevel = (LogLevel)Enum.Parse(typeof(LogLevel), lvl, true);
             }
         }
 

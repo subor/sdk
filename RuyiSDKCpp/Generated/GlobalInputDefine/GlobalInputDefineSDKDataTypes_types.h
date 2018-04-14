@@ -56,24 +56,17 @@ struct GamepadButtonFlags {
     RightShoulder = 512,
     A = 4096,
     B = 8192,
-    X = 16384
+    X = 16384,
+    LeftTrigger = 32768,
+    RightTrigger = 65536,
+    LeftThumbX = 131072,
+    LeftThumbY = 262144,
+    RightThumbX = 524288,
+    RightThumbY = 1048576
   };
 };
 
 extern const std::map<int, const char*> _GamepadButtonFlags_VALUES_TO_NAMES;
-
-struct GamepadFunctionKey {
-  enum type {
-    LeftTrigger = 0,
-    RightTrigger = 1,
-    LeftThumbX = 2,
-    LeftThumbY = 3,
-    RightThumbX = 4,
-    RightThumbY = 5
-  };
-};
-
-extern const std::map<int, const char*> _GamepadFunctionKey_VALUES_TO_NAMES;
 
 struct Key {
   enum type {
@@ -901,10 +894,10 @@ inline std::ostream& operator<<(std::ostream& out, const RuyiInputStateJoystick&
 }
 
 typedef struct _RuyiInputStateRuyiController__isset {
-  _RuyiInputStateRuyiController__isset() : PacketId(false), ChannelId(false), UID(false), KeyPress(false), AnalogL2(false), AnalogR2(false), AnalogLeftJoyX(false), AnalogLeftJoyY(false), AnalogRightJoyX(false), AnalogRightJoyY(false) {}
+  _RuyiInputStateRuyiController__isset() : PacketId(false), ChannelId(false), DeviceId(false), KeyPress(false), AnalogL2(false), AnalogR2(false), AnalogLeftJoyX(false), AnalogLeftJoyY(false), AnalogRightJoyX(false), AnalogRightJoyY(false) {}
   bool PacketId :1;
   bool ChannelId :1;
-  bool UID :1;
+  bool DeviceId :1;
   bool KeyPress :1;
   bool AnalogL2 :1;
   bool AnalogR2 :1;
@@ -919,14 +912,14 @@ class RuyiInputStateRuyiController : public virtual ::apache::thrift::TBase {
 
   RuyiInputStateRuyiController(const RuyiInputStateRuyiController&);
   RuyiInputStateRuyiController& operator=(const RuyiInputStateRuyiController&);
-  RuyiInputStateRuyiController() : PacketId(0), ChannelId(0), UID(), KeyPress(0), AnalogL2(0), AnalogR2(0), AnalogLeftJoyX(0), AnalogLeftJoyY(0), AnalogRightJoyX(0), AnalogRightJoyY(0) {
+  RuyiInputStateRuyiController() : PacketId(0), ChannelId(0), DeviceId(), KeyPress(0), AnalogL2(0), AnalogR2(0), AnalogLeftJoyX(0), AnalogLeftJoyY(0), AnalogRightJoyX(0), AnalogRightJoyY(0) {
   }
 
   virtual ~RuyiInputStateRuyiController() throw();
   int64_t PacketId;
   int32_t ChannelId;
-  std::string UID;
-  int64_t KeyPress;
+  std::string DeviceId;
+  int32_t KeyPress;
   int8_t AnalogL2;
   int8_t AnalogR2;
   int8_t AnalogLeftJoyX;
@@ -940,9 +933,9 @@ class RuyiInputStateRuyiController : public virtual ::apache::thrift::TBase {
 
   void __set_ChannelId(const int32_t val);
 
-  void __set_UID(const std::string& val);
+  void __set_DeviceId(const std::string& val);
 
-  void __set_KeyPress(const int64_t val);
+  void __set_KeyPress(const int32_t val);
 
   void __set_AnalogL2(const int8_t val);
 
@@ -962,7 +955,7 @@ class RuyiInputStateRuyiController : public virtual ::apache::thrift::TBase {
       return false;
     if (!(ChannelId == rhs.ChannelId))
       return false;
-    if (!(UID == rhs.UID))
+    if (!(DeviceId == rhs.DeviceId))
       return false;
     if (!(KeyPress == rhs.KeyPress))
       return false;
