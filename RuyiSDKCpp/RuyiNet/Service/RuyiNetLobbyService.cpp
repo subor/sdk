@@ -122,21 +122,60 @@ namespace Ruyi
 			RuyiNetLobby* pUpdatedLobby = new RuyiNetLobby(response.data.response);
 			if (nullptr != pUpdatedLobby)
 			{
-				std::list<std::string> newPlayers;
-				std::list<std::string> oldPlayers;
+				std::list<std::string> newPlayers; //in UpdatedLobby but not in CurrentLobby
+				std::list<std::string> leftPlayers; //in currentLobby but not in UpdatedLobby which means they've left
 
 				bool lobbyClosed = (0 != mCurrentLobby->GetState().compare("CLOSED")) && (0 == pUpdatedLobby->GetState().compare("CLOSED"));
 				bool lobbyStarted = (0 != mCurrentLobby->GetState().compare("STARTED")) && (0 == pUpdatedLobby->GetState().compare("STARTED"));
+				std::list<const std::string*>& updatedMemberIds = (std::list<const std::string*>&)pUpdatedLobby->GetMemberProfileIds();
+				std::list<const std::string*>& currentMemberIds = (std::list<const std::string*>&)mCurrentLobby->GetMemberProfileIds();
+				std::list<const std::string*>::iterator it_update;
+				std::list<const std::string*>::iterator it_current;
 
-				std::for_each(pUpdatedLobby->GetMemberProfileIds().begin(), pUpdatedLobby->GetMemberProfileIds().end(), [&](std::string& memberProfileId) 
+				//find new players which are not in currentMemberIds but in updatedMemberIds
+				for (it_update = updatedMemberIds.begin(); it_update != updatedMemberIds.end(); ++it_update)
 				{
-					bool isNew = false;
+					bool isNew = true;
+
+					for (it_current = currentMemberIds.begin(); it_current != currentMemberIds.end(); ++it_current)
+					{
+						if (0 == (*it_update)->compare(**it_current)) 
+						{
+							isNew = false;
+							break;
+						}
+					}
 
 					if (isNew)
 					{
-						
+						newPlayers.push_back(**it_update);
 					}
-				});
+				}
+				
+				//find left players which are not in updatedMemberIds but in currentMemberIds
+				for (it_current = currentMemberIds.begin(); it_current != currentMemberIds.end(); ++it_current)
+				{
+					bool isOld = true;
+
+					for (it_update = updatedMemberIds.begin(); it_update != updatedMemberIds.end(); ++it_update)
+					{
+						if (0 == (*it_current)->compare(**it_update))
+						{
+							isOld = false;
+							break;
+						}
+					}
+
+					if (isOld)
+					{
+						leftPlayers.push_back(**it_current);
+					}
+				}
+
+				for (std::list<std::string>::iterator it = newPlayers.begin(); it != newPlayers.end(); ++it)
+				{
+				
+				}
 			}
 		}
 	}
