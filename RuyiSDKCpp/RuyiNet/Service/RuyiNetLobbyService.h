@@ -4,11 +4,14 @@
 #include "RuyiNetLobby.h"
 #include "../Response/RuyiNetLobbyResponse.h"
 
+#include <functional>
+
 namespace Ruyi
 {
 	class RuyiNetLobbyService : public RuyiNetService
 	{
 	public:
+		RuyiNetLobbyService(RuyiNetClient * client);
 
 		/// <summary>
 		/// Creates a lobby that other players can find and join.
@@ -95,6 +98,11 @@ namespace Ruyi
 		void UpdateLobby();
 
 		const RuyiNetLobby* CurrentLobby() const { return mCurrentLobby; }
+
+		std::function<void(std::string)> OnPlayerJoinLobby;
+		std::function<void(std::string)> OnPlayerLeaveLobby;
+		std::function<void()> OnLobbyClosed;
+		std::function<void()> OnLobbyStartGame;
 
 	private:
 		RuyiNetLobby* mCurrentLobby;

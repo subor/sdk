@@ -2,6 +2,15 @@
 
 namespace Ruyi
 {
+	RuyiNetLobbyService::RuyiNetLobbyService(RuyiNetClient * client) : RuyiNetService(client)
+	{
+		mCurrentLobby = nullptr;
+		OnPlayerJoinLobby = nullptr;
+		OnPlayerLeaveLobby = nullptr;
+		OnLobbyClosed = nullptr;
+		OnLobbyStartGame = nullptr;
+	}
+
 	void RuyiNetLobbyService::CreateLobby(int index, int maxSlots, RuyiNetLobbyType lobbyType)
 	{
 		CreateLobby(index, maxSlots, lobbyType, "{}");
@@ -120,6 +129,7 @@ namespace Ruyi
 			response.parseJson(retJson);
 
 			RuyiNetLobby* pUpdatedLobby = new RuyiNetLobby(response.data.response);
+
 			if (nullptr != pUpdatedLobby)
 			{
 				std::list<std::string> newPlayers; //in UpdatedLobby but not in CurrentLobby
@@ -174,9 +184,33 @@ namespace Ruyi
 
 				for (std::list<std::string>::iterator it = newPlayers.begin(); it != newPlayers.end(); ++it)
 				{
-				
+					if (nullptr != OnPlayerJoinLobby) OnPlayerJoinLobby(*it);
 				}
+
+				for (std::list<std::string>::iterator it = leftPlayers.begin(); it != leftPlayers.end(); ++it)
+				{
+					if (nullptr != OnPlayerLeaveLobby) OnPlayerLeaveLobby(*it);
+				}
+
+				if (lobbyClosed)
+				{
+					for (int i = 0; i < mClient->MAX_PLAYERS; ++i)
+					{
+						if (nullptr != mClient->GetPlayer(i))
+						{
+							RuyiNetResponse response;
+							LeaveLobby(i, mCurrentLobby->GetLobbyId(), response);
+						}
+
+						if (nullptr != OnLobbyClosed) OnLobbyClosed();
+					}
+				} else if (lobbyStarted)
+				{
+					if (nullptr != OnLobbyStartGame) OnLobbyStartGame();
+				} else {}
 			}
+			
+					
 		}
 	}
 
