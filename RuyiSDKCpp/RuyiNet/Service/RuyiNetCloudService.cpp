@@ -15,19 +15,19 @@ namespace Ruyi
 	{
 	}
 
-	void RuyiNetCloudService::BackupData(int index, const RuyiString& persistentDataPath, bool& success)
+	void RuyiNetCloudService::BackupData(int index, const RuyiString& persistentDataPath, RuyiNetResponse& response)
 	{
-		BackupData(index, persistentDataPath, false, success);
+		BackupData(index, persistentDataPath, false, response);
 	}
 	
-	void RuyiNetCloudService::RestoreData(int index, const RuyiString& persistentDataPath, RuyiNetListUserFilesResponse& response)
+	void RuyiNetCloudService::RestoreData(int index, const RuyiString& persistentDataPath, RuyiNetResponse& response)
 	{
 		TCHAR fullpath[MAX_PATH] = TEXT("");
 
 		auto result = GetFullPathName(persistentDataPath.c_str(), MAX_PATH, fullpath, NULL);
 		if (result == 0)
 		{
-			throw new RuyiNetException("Could not get full path.");
+			throw RuyiNetException("Could not get full path.");
 		}
 
 		fs::path localPath(fullpath);
@@ -55,22 +55,14 @@ namespace Ruyi
 				fs::remove(oldfilepath);
 			}
 		});
-		try
-		{
-			std::string responseData;
-			mClient->GetBCService()->File_ListUserFiles_SNSFO(responseData, ToString(CLOUD_LOCATION), true, index);
-			nlohmann::json responseJson = nlohmann::json::parse(responseData);
-			response.parseJson(responseJson);
-		} catch (nlohmann::detail::exception& e)
-		{
-			throw new RuyiNetException(e.what());
-		} catch (::apache::thrift::TApplicationException& e)
-		{
-			throw new RuyiNetException(e.what());
-		}
+		
+		std::string responseData;
+		mClient->GetBCService()->File_ListUserFiles_SNSFO(responseData, ToString(CLOUD_LOCATION), true, index);
+		nlohmann::json responseJson = nlohmann::json::parse(responseData);
+		RuyiNetListUserFilesResponse response1;
+		response1.parseJson(responseJson);
 
-		//for each (auto i in response.data.fileList)
-		std::for_each(response.data.fileList.begin(), response.data.fileList.end(), [&](RuyiNetListUserFilesResponse::Data::FileDetails& i)
+		std::for_each(response1.data.fileList.begin(), response1.data.fileList.end(), [&](RuyiNetListUserFilesResponse::Data::FileDetails& i)
 		{
 			size_t x = i.cloudPath.find(ToString(CLOUD_LOCATION));
 			fs::path filePath(i.cloudPath.replace(x, CLOUD_LOCATION.length(), ""));
@@ -85,17 +77,17 @@ namespace Ruyi
 		}
 	}
 
-	void RuyiNetCloudService::BackupData(int index, const RuyiString& persistentDataPath, bool cleanMode, bool& success)
+	void RuyiNetCloudService::BackupData(int index, const RuyiString& persistentDataPath, bool cleanMode, RuyiNetResponse& response)
 	{	
 		TCHAR fullpath[MAX_PATH] = TEXT("");
 
 		auto result = GetFullPathName(persistentDataPath.c_str(), MAX_PATH, fullpath, NULL);
 		if (result == 0)
 		{
-			throw new RuyiNetException("Could not get full path.");
+			throw RuyiNetException("Could not get full path.");
 		}
 
-		BackupPath(index, CLOUD_LOCATION, fullpath, success);
+		BackupPath(index, CLOUD_LOCATION, fullpath, response);
 
 		if (cleanMode)
 		{
@@ -118,7 +110,7 @@ namespace Ruyi
 		}
 	}
 
-	void RuyiNetCloudService::BackupPath(int index, const RuyiString& cloudPath, const RuyiString& localPath, bool& success)
+	void RuyiNetCloudService::BackupPath(int index, const RuyiString& cloudPath, const RuyiString& localPath, RuyiNetResponse& response)
 	{
 		fs::path clouddir(cloudPath);
 		fs::path localdir(localPath);
@@ -132,28 +124,30 @@ namespace Ruyi
 				fs::path newCloudPath = clouddir / subdir;
 				fs::path newLocalPath = localdir / subdir;
 
-				BackupPath(index, newCloudPath.c_str(), newLocalPath.c_str(), success);
+				BackupPath(index, newCloudPath.c_str(), newLocalPath.c_str(), response);
 			} else
 			{
 				fs::path filename(fileData.cFileName);
 				fs::path filepath = localdir / filename;
 
 				std::string data;
+				RuyiNetUploadFileResponse response1;
 				mClient->GetBCService()->File_UploadFile(data, ToString(cloudPath), filepath.string(), true, true, ToString(localPath), index);
 				nlohmann::json responseJson = nlohmann::json::parse(data);
-				if (responseJson["status"].is_null() || responseJson["status"] != 200)
+				response1.parseJson(responseJson);
+				if (response1.status != 200)
 				{
 					char buffer[MAX_PATH];
 					sprintf_s(buffer, MAX_PATH, "Failed to upload file: %s", ToString(fileData.cFileName).c_str());
 
-					success = false;
+					response.status = responseJson["status"];
 
-					throw new RuyiNetException(buffer);
+					throw RuyiNetException(buffer);
 				}
 			}
 		});
 
-		success = true;
+		response.status = STATUS_OK;
 	}
 
 	void RuyiNetCloudService::ForeachFile(const wchar_t * fullPath, std::function<void(const WIN32_FIND_DATA & fileData)> action)
@@ -162,7 +156,7 @@ namespace Ruyi
 		StringCchLength(fullPath, MAX_PATH, &localPathLength);
 		if (localPathLength > (MAX_PATH - 3))
 		{
-			throw new RuyiNetException("Directory path is too long.");
+			throw RuyiNetException("Directory path is too long.");
 		}
 
 		TCHAR szDir[MAX_PATH];
@@ -173,7 +167,7 @@ namespace Ruyi
 		HANDLE hFind = FindFirstFile(szDir, &ffd);
 		if (INVALID_HANDLE_VALUE == hFind)
 		{
-			throw new RuyiNetException("FindFirstFile failed.");
+			throw RuyiNetException("FindFirstFile failed.");
 		}
 
 		fs::path localdir(fullPath);
@@ -192,7 +186,7 @@ namespace Ruyi
 			char buffer[MAX_PATH];
 			sprintf_s(buffer, MAX_PATH, "Crawl path failed with error %lu: %s", dwError, ToString(fullPath).c_str());
 
-			throw new RuyiNetException(buffer);
+			throw RuyiNetException(buffer);
 		}
 	}
 }

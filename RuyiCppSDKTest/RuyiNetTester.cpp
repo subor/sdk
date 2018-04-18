@@ -34,6 +34,41 @@ namespace RuyiCppSDKTest
 			pRuyiNetTest->RuyiNet_Initialize();
 			pRuyiNetTest->FriendServiceTest();
 		}
+
+		TEST_METHOD(RUYINET_LeaderboardService)
+		{
+			pRuyiNetTest->Login();
+			pRuyiNetTest->RuyiNet_Initialize();
+			pRuyiNetTest->LeaderboardServiceTest();
+		}
+
+		TEST_METHOD(RUYINET_CloudService)
+		{
+			pRuyiNetTest->Login();
+			pRuyiNetTest->RuyiNet_Initialize();
+			pRuyiNetTest->CloudServiceTest();
+		}
+
+		TEST_METHOD(RUYINET_LobbyService)
+		{
+			pRuyiNetTest->Login();
+			pRuyiNetTest->RuyiNet_Initialize();
+			pRuyiNetTest->LobbyServiceTest();
+		}
+
+		TEST_METHOD(RUYINET_PartyService)
+		{
+			pRuyiNetTest->Login();
+			pRuyiNetTest->RuyiNet_Initialize();
+			pRuyiNetTest->PartyServiceTest();
+		}
+
+		TEST_METHOD(RUYINET_TelemetryService)
+		{
+			pRuyiNetTest->Login();
+			pRuyiNetTest->RuyiNet_Initialize();
+			pRuyiNetTest->TelemetryServiceTest();
+		}
 	};
 
 	RuyiNetTest* RuyiNetTester::pRuyiNetTest;

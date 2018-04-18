@@ -18,6 +18,11 @@ public:
 	void Login();
 	void RuyiNet_Initialize();
 	void FriendServiceTest();
+	void LeaderboardServiceTest();
+	void CloudServiceTest();
+	void LobbyServiceTest();
+	void PartyServiceTest();
+	void TelemetryServiceTest();
 
 private:
 

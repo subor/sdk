@@ -11,12 +11,12 @@ namespace Ruyi
 		OnLobbyStartGame = nullptr;
 	}
 
-	void RuyiNetLobbyService::CreateLobby(int index, int maxSlots, RuyiNetLobbyType lobbyType)
+	void RuyiNetLobbyService::CreateLobby(int index, int maxSlots, RuyiNetLobbyType lobbyType, RuyiNetLobbyResponse& response)
 	{
-		CreateLobby(index, maxSlots, lobbyType, "{}");
+		CreateLobby(index, maxSlots, lobbyType, "{}", response);
 	}
 
-	void RuyiNetLobbyService::CreateLobby(int index, int maxSlots, RuyiNetLobbyType lobbyType, std::string customAttributes)
+	void RuyiNetLobbyService::CreateLobby(int index, int maxSlots, RuyiNetLobbyType lobbyType, std::string customAttributes, RuyiNetLobbyResponse& response)
 	{
 		nlohmann::json payloadJson;
 
@@ -27,7 +27,6 @@ namespace Ruyi
 
 		std::string responseStr = RunParentScript(index, "Lobby_Create", payloadJson);
 		nlohmann::json retJson = nlohmann::json::parse(responseStr);
-		RuyiNetLobbyResponse response;
 		response.parseJson(retJson);
 
 		InitLobby(response.data.response);
@@ -46,17 +45,17 @@ namespace Ruyi
 		response.parseJson(retJson);
 	}
 
-	void RuyiNetLobbyService::FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType, std::list<RuyiNetLobby*>& lobbyList)
+	void RuyiNetLobbyService::FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType, std::list<RuyiNetLobby*>& lobbyList, RuyiNetLobbyFindResponse& response)
 	{
-		FindLobbies(index, numResults, lobbyType, 0, lobbyList);
+		FindLobbies(index, numResults, lobbyType, 0, lobbyList, response);
 	}
 
-	void RuyiNetLobbyService::FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType, int freeSlots, std::list<RuyiNetLobby*>& lobbyList)
+	void RuyiNetLobbyService::FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType, int freeSlots, std::list<RuyiNetLobby*>& lobbyList, RuyiNetLobbyFindResponse& response)
 	{
-		FindLobbies(index, numResults, lobbyType, freeSlots, "{}", lobbyList);
+		FindLobbies(index, numResults, lobbyType, freeSlots, "{}", lobbyList, response);
 	}
 
-	void RuyiNetLobbyService::FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType, int freeSlots, std::string searchCriteria, std::list<RuyiNetLobby*>& lobbyList)
+	void RuyiNetLobbyService::FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType, int freeSlots, std::string searchCriteria, std::list<RuyiNetLobby*>& lobbyList, RuyiNetLobbyFindResponse& response)
 	{
 		nlohmann::json payloadJson;
 
@@ -68,7 +67,6 @@ namespace Ruyi
 
 		std::string responseStr = RunParentScript(index, "Lobby_Find", payloadJson);
 		nlohmann::json retJson = nlohmann::json::parse(responseStr);
-		RuyiNetLobbyFindResponse response;
 		response.parseJson(retJson);
 
 		std::for_each(response.data.response.results.items.begin(), response.data.response.results.items.end(), [&](RuyiNetResponseGroup& groupResponse) 
@@ -78,7 +76,7 @@ namespace Ruyi
 		});	
 	}
 
-	void RuyiNetLobbyService::JoinLobby(int index, std::string lobbyId)
+	void RuyiNetLobbyService::JoinLobby(int index, std::string lobbyId, RuyiNetLobbyResponse& response)
 	{
 		nlohmann::json payloadJson;
 
@@ -86,7 +84,6 @@ namespace Ruyi
 
 		std::string responseStr = RunParentScript(index, "Lobby_Join", payloadJson);
 		nlohmann::json retJson = nlohmann::json::parse(responseStr);
-		RuyiNetLobbyResponse response;
 		response.parseJson(retJson);
 
 		InitLobby(response.data.response);
