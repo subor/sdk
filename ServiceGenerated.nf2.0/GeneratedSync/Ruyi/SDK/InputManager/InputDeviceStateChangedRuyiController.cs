@@ -25,8 +25,8 @@ namespace Ruyi.SDK.InputManager
   {
     private long _PacketId;
     private int _ChannelId;
-    private string _UID;
-    private long _KeyPress;
+    private string _DeviceId;
+    private int _KeyPress;
     private sbyte _AnalogL2;
     private sbyte _AnalogR2;
     private sbyte _AnalogLeftJoyX;
@@ -61,20 +61,20 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
-    public string UID
+    public string DeviceId
     {
       get
       {
-        return _UID;
+        return _DeviceId;
       }
       set
       {
-        __isset.UID = true;
-        this._UID = value;
+        __isset.DeviceId = true;
+        this._DeviceId = value;
       }
     }
 
-    public long KeyPress
+    public int KeyPress
     {
       get
       {
@@ -186,7 +186,7 @@ namespace Ruyi.SDK.InputManager
     public struct Isset {
       public bool PacketId;
       public bool ChannelId;
-      public bool UID;
+      public bool DeviceId;
       public bool KeyPress;
       public bool AnalogL2;
       public bool AnalogR2;
@@ -231,14 +231,14 @@ namespace Ruyi.SDK.InputManager
               break;
             case 3:
               if (field.Type == TType.String) {
-                UID = iprot.ReadString();
+                DeviceId = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 4:
-              if (field.Type == TType.I64) {
-                KeyPress = iprot.ReadI64();
+              if (field.Type == TType.I32) {
+                KeyPress = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -330,20 +330,20 @@ namespace Ruyi.SDK.InputManager
           oprot.WriteI32(ChannelId);
           oprot.WriteFieldEnd();
         }
-        if (UID != null && __isset.UID) {
-          field.Name = "UID";
+        if (DeviceId != null && __isset.DeviceId) {
+          field.Name = "DeviceId";
           field.Type = TType.String;
           field.ID = 3;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(UID);
+          oprot.WriteString(DeviceId);
           oprot.WriteFieldEnd();
         }
         if (__isset.KeyPress) {
           field.Name = "KeyPress";
-          field.Type = TType.I64;
+          field.Type = TType.I32;
           field.ID = 4;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI64(KeyPress);
+          oprot.WriteI32(KeyPress);
           oprot.WriteFieldEnd();
         }
         if (__isset.AnalogL2) {
@@ -426,11 +426,11 @@ namespace Ruyi.SDK.InputManager
         __sb.Append("ChannelId: ");
         __sb.Append(ChannelId);
       }
-      if (UID != null && __isset.UID) {
+      if (DeviceId != null && __isset.DeviceId) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("UID: ");
-        __sb.Append(UID);
+        __sb.Append("DeviceId: ");
+        __sb.Append(DeviceId);
       }
       if (__isset.KeyPress) {
         if(!__first) { __sb.Append(", "); }

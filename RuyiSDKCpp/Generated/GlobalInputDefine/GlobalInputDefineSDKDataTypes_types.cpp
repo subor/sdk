@@ -60,7 +60,13 @@ int _kGamepadButtonFlagsValues[] = {
   GamepadButtonFlags::RightShoulder,
   GamepadButtonFlags::A,
   GamepadButtonFlags::B,
-  GamepadButtonFlags::X
+  GamepadButtonFlags::X,
+  GamepadButtonFlags::LeftTrigger,
+  GamepadButtonFlags::RightTrigger,
+  GamepadButtonFlags::LeftThumbX,
+  GamepadButtonFlags::LeftThumbY,
+  GamepadButtonFlags::RightThumbX,
+  GamepadButtonFlags::RightThumbY
 };
 const char* _kGamepadButtonFlagsNames[] = {
   "Y",
@@ -77,19 +83,7 @@ const char* _kGamepadButtonFlagsNames[] = {
   "RightShoulder",
   "A",
   "B",
-  "X"
-};
-const std::map<int, const char*> _GamepadButtonFlags_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(15, _kGamepadButtonFlagsValues, _kGamepadButtonFlagsNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
-
-int _kGamepadFunctionKeyValues[] = {
-  GamepadFunctionKey::LeftTrigger,
-  GamepadFunctionKey::RightTrigger,
-  GamepadFunctionKey::LeftThumbX,
-  GamepadFunctionKey::LeftThumbY,
-  GamepadFunctionKey::RightThumbX,
-  GamepadFunctionKey::RightThumbY
-};
-const char* _kGamepadFunctionKeyNames[] = {
+  "X",
   "LeftTrigger",
   "RightTrigger",
   "LeftThumbX",
@@ -97,7 +91,7 @@ const char* _kGamepadFunctionKeyNames[] = {
   "RightThumbX",
   "RightThumbY"
 };
-const std::map<int, const char*> _GamepadFunctionKey_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(6, _kGamepadFunctionKeyValues, _kGamepadFunctionKeyNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+const std::map<int, const char*> _GamepadButtonFlags_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(21, _kGamepadButtonFlagsValues, _kGamepadButtonFlagsNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
 
 int _kKeyValues[] = {
   Key::Unknown,
@@ -1874,11 +1868,11 @@ void RuyiInputStateRuyiController::__set_ChannelId(const int32_t val) {
   this->ChannelId = val;
 }
 
-void RuyiInputStateRuyiController::__set_UID(const std::string& val) {
-  this->UID = val;
+void RuyiInputStateRuyiController::__set_DeviceId(const std::string& val) {
+  this->DeviceId = val;
 }
 
-void RuyiInputStateRuyiController::__set_KeyPress(const int64_t val) {
+void RuyiInputStateRuyiController::__set_KeyPress(const int32_t val) {
   this->KeyPress = val;
 }
 
@@ -1945,15 +1939,15 @@ uint32_t RuyiInputStateRuyiController::read(::apache::thrift::protocol::TProtoco
         break;
       case 3:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->UID);
-          this->__isset.UID = true;
+          xfer += iprot->readString(this->DeviceId);
+          this->__isset.DeviceId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 4:
-        if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->KeyPress);
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->KeyPress);
           this->__isset.KeyPress = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -2032,12 +2026,12 @@ uint32_t RuyiInputStateRuyiController::write(::apache::thrift::protocol::TProtoc
   xfer += oprot->writeI32(this->ChannelId);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("UID", ::apache::thrift::protocol::T_STRING, 3);
-  xfer += oprot->writeString(this->UID);
+  xfer += oprot->writeFieldBegin("DeviceId", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString(this->DeviceId);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("KeyPress", ::apache::thrift::protocol::T_I64, 4);
-  xfer += oprot->writeI64(this->KeyPress);
+  xfer += oprot->writeFieldBegin("KeyPress", ::apache::thrift::protocol::T_I32, 4);
+  xfer += oprot->writeI32(this->KeyPress);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("AnalogL2", ::apache::thrift::protocol::T_BYTE, 5);
@@ -2073,7 +2067,7 @@ void swap(RuyiInputStateRuyiController &a, RuyiInputStateRuyiController &b) {
   using ::std::swap;
   swap(a.PacketId, b.PacketId);
   swap(a.ChannelId, b.ChannelId);
-  swap(a.UID, b.UID);
+  swap(a.DeviceId, b.DeviceId);
   swap(a.KeyPress, b.KeyPress);
   swap(a.AnalogL2, b.AnalogL2);
   swap(a.AnalogR2, b.AnalogR2);
@@ -2087,7 +2081,7 @@ void swap(RuyiInputStateRuyiController &a, RuyiInputStateRuyiController &b) {
 RuyiInputStateRuyiController::RuyiInputStateRuyiController(const RuyiInputStateRuyiController& other16) {
   PacketId = other16.PacketId;
   ChannelId = other16.ChannelId;
-  UID = other16.UID;
+  DeviceId = other16.DeviceId;
   KeyPress = other16.KeyPress;
   AnalogL2 = other16.AnalogL2;
   AnalogR2 = other16.AnalogR2;
@@ -2100,7 +2094,7 @@ RuyiInputStateRuyiController::RuyiInputStateRuyiController(const RuyiInputStateR
 RuyiInputStateRuyiController& RuyiInputStateRuyiController::operator=(const RuyiInputStateRuyiController& other17) {
   PacketId = other17.PacketId;
   ChannelId = other17.ChannelId;
-  UID = other17.UID;
+  DeviceId = other17.DeviceId;
   KeyPress = other17.KeyPress;
   AnalogL2 = other17.AnalogL2;
   AnalogR2 = other17.AnalogR2;
@@ -2116,7 +2110,7 @@ void RuyiInputStateRuyiController::printTo(std::ostream& out) const {
   out << "RuyiInputStateRuyiController(";
   out << "PacketId=" << to_string(PacketId);
   out << ", " << "ChannelId=" << to_string(ChannelId);
-  out << ", " << "UID=" << to_string(UID);
+  out << ", " << "DeviceId=" << to_string(DeviceId);
   out << ", " << "KeyPress=" << to_string(KeyPress);
   out << ", " << "AnalogL2=" << to_string(AnalogL2);
   out << ", " << "AnalogR2=" << to_string(AnalogR2);

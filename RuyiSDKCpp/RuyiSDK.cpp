@@ -10,6 +10,8 @@
 
 #include "version.info"
 
+#pragma comment(lib,"version.lib")
+
 using namespace Ruyi;
 using namespace Ruyi::SDK;
 using namespace Ruyi::SDK::SDKValidator;
