@@ -185,22 +185,7 @@ namespace Ruyi.SDK.BrainCloudApi
       /// </summary>
       /// <param name="clientIndex"></param>
       bool Client_IsInitialized(int clientIndex);
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId"></param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
       void Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex);
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="serverURL">The URL to the brainCloud server</param>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId">The app id</param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
       void Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex);
       /// <summary>
       /// Initialize the identity aspects of brainCloud.
@@ -302,33 +287,6 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="bytesPerSec">The low transfer rate threshold in bytes/sec</param>
       /// <param name="clientIndex"></param>
       void Client_SetUploadLowTransferRateThreshold(int bytesPerSec, int clientIndex);
-      /// <summary>
-      /// Enables the timeout message caching which is disabled by default.
-      /// Once enabled, if a client side timeout is encountered
-      /// (i.e. brainCloud server is unreachable presumably due to the client
-      /// network being down) the SDK will do the following:
-      /// 
-      /// 1 - cache the currently queued messages to brainCloud
-      /// 2 - call the network error callback
-      /// 3 - then expect the app to call either:
-      ///     a) RetryCachedMessages() to retry sending to brainCloud
-      ///     b) FlushCachedMessages() to dump all messages in the queue.
-      /// 
-      /// Between steps 2 and 3, the app can prompt the user to retry connecting
-      /// to brainCloud to determine whether to follow path 3a or 3b.
-      /// 
-      /// Note that if path 3a is followed, and another timeout is encountered,
-      /// the process will begin all over again from step 1.
-      /// 
-      /// WARNING - the brainCloud SDK will cache *all* API calls sent
-      /// when a timeout is encountered if this mechanism is enabled.
-      /// This effectively freezes all communication with brainCloud.
-      /// Apps must call either RetryCachedMessages() or FlushCachedMessages()
-      /// for the brainCloud SDK to resume sending messages.
-      /// ResetCommunication() will also clear the message cache.
-      /// </summary>
-      /// <param name="enabled">True if message should be cached on timeout</param>
-      /// <param name="clientIndex"></param>
       void Client_EnableNetworkErrorMessageCaching(bool enabled, int clientIndex);
       /// <summary>
       /// Attempts to resend any cached messages. If no messages are in the cache,
@@ -1021,14 +979,6 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="jsonAttributes">Attributes of the member being added.</param>
       /// <param name="clientIndex"></param>
       string Group_AddGroupMember(string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex);
-      /// <summary>
-      /// Approve an outstanding request to join the group.
-      /// </summary>
-      /// <param name="groupId">ID of the group.</param>
-      /// <param name="profileId">Profile ID of the invitation being deleted.</param>
-      /// <param name="role">Role of the member being invited.</param>
-      /// <param name="jsonAttributes">Attributes of the member being invited.</param>
-      /// <param name="clientIndex"></param>
       string Group_ApproveGroupJoinRequest(string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex);
       /// <summary>
       /// Automatically join an open group that matches the search criteria and has space available.
@@ -1082,10 +1032,6 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="version">The current version of the group entity (for concurrency checking).</param>
       /// <param name="clientIndex"></param>
       string Group_DeleteGroupEntity(string groupId, string entityId, long version, int clientIndex);
-      /// <summary>
-      /// Read information on groups to which the current user belongs.
-      /// </summary>
-      /// <param name="clientIndex"></param>
       string Group_GetMyGroups(int clientIndex);
       /// <summary>
       /// Increment elements for the group's data field.
@@ -1123,11 +1069,6 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="groupId">ID of the group.</param>
       /// <param name="clientIndex"></param>
       string Group_LeaveGroup(string groupId, int clientIndex);
-      /// <summary>
-      /// Retrieve a page of group summary information based on the specified context.
-      /// </summary>
-      /// <param name="jsonContext">Query context.</param>
-      /// <param name="clientIndex"></param>
       string Group_ListGroupsPage(string jsonContext, int clientIndex);
       /// <summary>
       /// Retrieve a page of group summary information based on the encoded context
@@ -1137,11 +1078,6 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="pageOffset">Number of pages by which to offset the query.</param>
       /// <param name="clientIndex"></param>
       string Group_ListGroupsPageByOffset(string context, int pageOffset, int clientIndex);
-      /// <summary>
-      /// Read information on groups to which the specified user belongs.  Access is subject to restrictions.
-      /// </summary>
-      /// <param name="profileId">User to read groups for</param>
-      /// <param name="clientIndex"></param>
       string Group_ListGroupsWithMember(string profileId, int clientIndex);
       /// <summary>
       /// Read the specified group.
@@ -1241,12 +1177,6 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="password">The user's password</param>
       /// <param name="clientIndex"></param>
       string Identity_AttachEmailIdentity(string email, string password, int clientIndex);
-      /// <summary>
-      /// Merge the profile associated with the provided e=mail with the current profile.
-      /// </summary>
-      /// <param name="email">The user's e-mail address</param>
-      /// <param name="password">The user's password</param>
-      /// <param name="clientIndex"></param>
       string Identity_MergeEmailIdentity(string email, string password, int clientIndex);
       /// <summary>
       /// Detach the e-mail identity from the current profile
@@ -1337,6 +1267,15 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="authenticationType">Type of authentication</param>
       /// <param name="clientIndex"></param>
       string Identity_RefreshIdentity(string externalId, string authenticationToken, string authenticationType, int clientIndex);
+      /// <summary>
+      /// Allows email identity email address to be changed
+      /// </summary>
+      /// <param name="oldEmailAddress">Old email address</param>
+      /// <param name="password">Password for identity</param>
+      /// <param name="newEmailAddress">New email address</param>
+      /// <param name="updateContactEmail">Whether to update contact email in profile</param>
+      /// <param name="clientIndex"></param>
+      string Identity_ChangeEmailIdentity(string oldEmailAddress, string password, string newEmailAddress, bool updateContactEmail, int clientIndex);
       /// <summary>
       /// Attaches a peer identity to this user's profile
       /// </summary>
@@ -1790,172 +1729,24 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="flagUrls">Optional processing of urls</param>
       /// <param name="clientIndex"></param>
       string Profanity_ProfanityIdentifyBadWords(string text, string languages, bool flagEmail, bool flagPhone, bool flagUrls, int clientIndex);
-      /// <summary>
-      /// Deregisters all device tokens currently registered to the user.
-      /// </summary>
-      /// <param name="clientIndex"></param>
       string PushNotification_DeregisterAllPushNotificationDeviceTokens(int clientIndex);
-      /// <summary>
-      /// Deregisters the given device token from the server to disable this device
-      /// from receiving push notifications.
-      /// </summary>
-      /// <param name="platform">The device platform being registered.</param>
-      /// <param name="token">The platform-dependant device token needed for push notifications.</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_DeregisterPushNotificationDeviceToken(string platform, string token, int clientIndex);
-      /// <summary>
-      /// Registers the given device token with the server to enable this device
-      /// to receive push notifications.
-      /// </summary>
-      /// <param name="platform"></param>
-      /// <param name="token">The platform-dependant device token needed for push notifications.</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_RegisterPushNotificationDeviceToken(string platform, string token, int clientIndex);
-      /// <summary>
-      /// Sends a simple push notification based on the passed in message.
-      /// NOTE: It is possible to send a push notification to oneself.
-      /// </summary>
-      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
-      /// <param name="message">Text of the push notification</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_SendSimplePushNotification(string toProfileId, string message, int clientIndex);
-      /// <summary>
-      /// Sends a notification to a user based on a brainCloud portal configured notification template.
-      /// NOTE: It is possible to send a push notification to oneself.
-      /// </summary>
-      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
-      /// <param name="notificationTemplateId">Id of the notification template</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_SendRichPushNotification(string toProfileId, int notificationTemplateId, int clientIndex);
-      /// <summary>
-      /// Sends a notification to a user based on a brainCloud portal configured notification template.
-      /// Includes JSON defining the substitution params to use with the template.
-      /// See the Portal documentation for more info.
-      /// NOTE: It is possible to send a push notification to oneself.
-      /// </summary>
-      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
-      /// <param name="notificationTemplateId">Id of the notification template</param>
-      /// <param name="substitutionJson">JSON defining the substitution params to use with the template</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_SendRichPushNotificationWithParams(string toProfileId, int notificationTemplateId, string substitutionJson, int clientIndex);
-      /// <summary>
-      /// Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
-      /// Includes JSON defining the substitution params to use with the template.
-      /// See the Portal documentation for more info.
-      /// </summary>
-      /// <param name="groupId">Target group</param>
-      /// <param name="notificationTemplateId">Id of the notification template</param>
-      /// <param name="substitutionsJson">JSON defining the substitution params to use with the template</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_SendTemplatedPushNotificationToGroup(string groupId, int notificationTemplateId, string substitutionsJson, int clientIndex);
-      /// <summary>
-      /// Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
-      /// Includes JSON defining the substitution params to use with the template.
-      /// See the Portal documentation for more info.
-      /// </summary>
-      /// <param name="groupId">Target group</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_SendNormalizedPushNotificationToGroup(string groupId, string alertContentJson, string customDataJson, int clientIndex);
-      /// <summary>
-      /// Schedules raw notifications based on user local time.
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="startTime">Start time of sending the push notification</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_ScheduleRawPushNotificationUTC(string profileId, string fcmContent, string iosContent, string facebookContent, int startTime, int clientIndex);
-      /// <summary>
-      /// Schedules raw notifications based on user local time.
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_ScheduleRawPushNotificationMinutes(string profileId, string fcmContent, string iosContent, string facebookContent, int minutesFromNow, int clientIndex);
-      /// <summary>
-      /// Sends a raw push notification to a target user.
-      /// </summary>
-      /// <param name="toProfileId">The profileId of the user to receive the notification</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_SendRawPushNotification(string toProfileId, string fcmContent, string iosContent, string facebookContent, int clientIndex);
-      /// <summary>
-      /// Sends a raw push notification to a target list of users.
-      /// </summary>
-      /// <param name="profileIds">Collection of profile IDs to send the notification to</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_SendRawPushNotificationBatch(List<string> profileIds, string fcmContent, string iosContent, string facebookContent, int clientIndex);
-      /// <summary>
-      /// Sends a raw push notification to a target group.
-      /// </summary>
-      /// <param name="groupId">Target group</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_SendRawPushNotificationToGroup(string groupId, string fcmContent, string iosContent, string facebookContent, int clientIndex);
-      /// <summary>
-      /// Schedules a normalized push notification to a user
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="startTime">Start time of sending the push notification</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_ScheduleNormalizedPushNotificationUTC(string profileId, string alertContentJson, string customDataJson, int startTime, int clientIndex);
-      /// <summary>
-      /// Schedules a normalized push notification to a user
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_ScheduleNormalizedPushNotificationMinutes(string profileId, string alertContentJson, string customDataJson, int minutesFromNow, int clientIndex);
-      /// <summary>
-      /// Schedules a rich push notification to a user
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="notificationTemplateId">Body and title of alert</param>
-      /// <param name="substitutionsJson">Optional custom data</param>
-      /// <param name="startTime">Start time of sending the push notification</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_ScheduleRichPushNotificationUTC(string profileId, int notificationTemplateId, string substitutionsJson, int startTime, int clientIndex);
-      /// <summary>
-      /// Schedules a rich push notification to a user
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="notificationTemplateId">Body and title of alert</param>
-      /// <param name="substitutionsJson">Optional custom data</param>
-      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_ScheduleRichPushNotificationMinutes(string profileId, int notificationTemplateId, string substitutionsJson, int minutesFromNow, int clientIndex);
-      /// <summary>
-      /// Sends a notification to a user consisting of alert content and custom data.
-      /// </summary>
-      /// <param name="toProfileId">The profileId of the user to receive the notification</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_SendNormalizedPushNotification(string toProfileId, string alertContentJson, string customDataJson, int clientIndex);
-      /// <summary>
-      /// Sends a notification to multiple users consisting of alert content and custom data.
-      /// </summary>
-      /// <param name="profileIds">Collection of profile IDs to send the notification to</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="clientIndex"></param>
       string PushNotification_SendNormalizedPushNotificationBatch(List<string> profileIds, string alertContentJson, string customDataJson, int clientIndex);
       /// <summary>
       /// Executes a script on the server.
@@ -2256,13 +2047,8 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="leaderboardId">The leaderboard for the tournament</param>
       /// <param name="clientIndex"></param>
       string Tournament_ViewCurrentReward(string leaderboardId, int clientIndex);
-      /// <summary>
-      /// Returns the user's reward from a finished tournament
-      /// </summary>
-      /// <param name="leaderboardId">The leaderboard for the tournament</param>
-      /// <param name="versionId">Version of the tournament. Use -1 for the latest version.</param>
-      /// <param name="clientIndex"></param>
       string Tournament_ViewReward(string leaderboardId, int versionId, int clientIndex);
+      string Patch_GetGameManifest(string gameId, int clientIndex);
       string SocialFeed_ShareVideo(int timestamp, string resource, List<string> tagged, List<string> show, List<string> block, int clientIndex);
       string SocialFeed_ShareScreenshot(int timestamp, string resource, List<string> tagged, List<string> show, List<string> block, int clientIndex);
       string SocialFeed_ShareAchievement(int timestamp, string resource, List<string> tagged, List<string> show, List<string> block, int clientIndex);
@@ -2529,25 +2315,10 @@ namespace Ruyi.SDK.BrainCloudApi
       IAsyncResult Begin_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex);
       bool End_Client_IsInitialized(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId"></param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex);
       void End_Client_Initialize_SSS(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="serverURL">The URL to the brainCloud server</param>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId">The app id</param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex);
       void End_Client_Initialize_SSSS(IAsyncResult asyncResult);
@@ -2691,33 +2462,6 @@ namespace Ruyi.SDK.BrainCloudApi
       IAsyncResult Begin_Client_SetUploadLowTransferRateThreshold(AsyncCallback callback, object state, int bytesPerSec, int clientIndex);
       void End_Client_SetUploadLowTransferRateThreshold(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Enables the timeout message caching which is disabled by default.
-      /// Once enabled, if a client side timeout is encountered
-      /// (i.e. brainCloud server is unreachable presumably due to the client
-      /// network being down) the SDK will do the following:
-      /// 
-      /// 1 - cache the currently queued messages to brainCloud
-      /// 2 - call the network error callback
-      /// 3 - then expect the app to call either:
-      ///     a) RetryCachedMessages() to retry sending to brainCloud
-      ///     b) FlushCachedMessages() to dump all messages in the queue.
-      /// 
-      /// Between steps 2 and 3, the app can prompt the user to retry connecting
-      /// to brainCloud to determine whether to follow path 3a or 3b.
-      /// 
-      /// Note that if path 3a is followed, and another timeout is encountered,
-      /// the process will begin all over again from step 1.
-      /// 
-      /// WARNING - the brainCloud SDK will cache *all* API calls sent
-      /// when a timeout is encountered if this mechanism is enabled.
-      /// This effectively freezes all communication with brainCloud.
-      /// Apps must call either RetryCachedMessages() or FlushCachedMessages()
-      /// for the brainCloud SDK to resume sending messages.
-      /// ResetCommunication() will also clear the message cache.
-      /// </summary>
-      /// <param name="enabled">True if message should be cached on timeout</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Client_EnableNetworkErrorMessageCaching(AsyncCallback callback, object state, bool enabled, int clientIndex);
       void End_Client_EnableNetworkErrorMessageCaching(IAsyncResult asyncResult);
@@ -3701,14 +3445,6 @@ namespace Ruyi.SDK.BrainCloudApi
       IAsyncResult Begin_Group_AddGroupMember(AsyncCallback callback, object state, string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex);
       string End_Group_AddGroupMember(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Approve an outstanding request to join the group.
-      /// </summary>
-      /// <param name="groupId">ID of the group.</param>
-      /// <param name="profileId">Profile ID of the invitation being deleted.</param>
-      /// <param name="role">Role of the member being invited.</param>
-      /// <param name="jsonAttributes">Attributes of the member being invited.</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_ApproveGroupJoinRequest(AsyncCallback callback, object state, string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex);
       string End_Group_ApproveGroupJoinRequest(IAsyncResult asyncResult);
@@ -3783,10 +3519,6 @@ namespace Ruyi.SDK.BrainCloudApi
       IAsyncResult Begin_Group_DeleteGroupEntity(AsyncCallback callback, object state, string groupId, string entityId, long version, int clientIndex);
       string End_Group_DeleteGroupEntity(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Read information on groups to which the current user belongs.
-      /// </summary>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_GetMyGroups(AsyncCallback callback, object state, int clientIndex);
       string End_Group_GetMyGroups(IAsyncResult asyncResult);
@@ -3842,11 +3574,6 @@ namespace Ruyi.SDK.BrainCloudApi
       IAsyncResult Begin_Group_LeaveGroup(AsyncCallback callback, object state, string groupId, int clientIndex);
       string End_Group_LeaveGroup(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Retrieve a page of group summary information based on the specified context.
-      /// </summary>
-      /// <param name="jsonContext">Query context.</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_ListGroupsPage(AsyncCallback callback, object state, string jsonContext, int clientIndex);
       string End_Group_ListGroupsPage(IAsyncResult asyncResult);
@@ -3862,11 +3589,6 @@ namespace Ruyi.SDK.BrainCloudApi
       IAsyncResult Begin_Group_ListGroupsPageByOffset(AsyncCallback callback, object state, string context, int pageOffset, int clientIndex);
       string End_Group_ListGroupsPageByOffset(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Read information on groups to which the specified user belongs.  Access is subject to restrictions.
-      /// </summary>
-      /// <param name="profileId">User to read groups for</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Group_ListGroupsWithMember(AsyncCallback callback, object state, string profileId, int clientIndex);
       string End_Group_ListGroupsWithMember(IAsyncResult asyncResult);
@@ -4011,12 +3733,6 @@ namespace Ruyi.SDK.BrainCloudApi
       IAsyncResult Begin_Identity_AttachEmailIdentity(AsyncCallback callback, object state, string email, string password, int clientIndex);
       string End_Identity_AttachEmailIdentity(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Merge the profile associated with the provided e=mail with the current profile.
-      /// </summary>
-      /// <param name="email">The user's e-mail address</param>
-      /// <param name="password">The user's password</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_MergeEmailIdentity(AsyncCallback callback, object state, string email, string password, int clientIndex);
       string End_Identity_MergeEmailIdentity(IAsyncResult asyncResult);
@@ -4148,6 +3864,18 @@ namespace Ruyi.SDK.BrainCloudApi
       #if SILVERLIGHT
       IAsyncResult Begin_Identity_RefreshIdentity(AsyncCallback callback, object state, string externalId, string authenticationToken, string authenticationType, int clientIndex);
       string End_Identity_RefreshIdentity(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Allows email identity email address to be changed
+      /// </summary>
+      /// <param name="oldEmailAddress">Old email address</param>
+      /// <param name="password">Password for identity</param>
+      /// <param name="newEmailAddress">New email address</param>
+      /// <param name="updateContactEmail">Whether to update contact email in profile</param>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Identity_ChangeEmailIdentity(AsyncCallback callback, object state, string oldEmailAddress, string password, string newEmailAddress, bool updateContactEmail, int clientIndex);
+      string End_Identity_ChangeEmailIdentity(IAsyncResult asyncResult);
       #endif
       /// <summary>
       /// Attaches a peer identity to this user's profile
@@ -4794,226 +4522,78 @@ namespace Ruyi.SDK.BrainCloudApi
       IAsyncResult Begin_Profanity_ProfanityIdentifyBadWords(AsyncCallback callback, object state, string text, string languages, bool flagEmail, bool flagPhone, bool flagUrls, int clientIndex);
       string End_Profanity_ProfanityIdentifyBadWords(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Deregisters all device tokens currently registered to the user.
-      /// </summary>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_DeregisterAllPushNotificationDeviceTokens(AsyncCallback callback, object state, int clientIndex);
       string End_PushNotification_DeregisterAllPushNotificationDeviceTokens(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Deregisters the given device token from the server to disable this device
-      /// from receiving push notifications.
-      /// </summary>
-      /// <param name="platform">The device platform being registered.</param>
-      /// <param name="token">The platform-dependant device token needed for push notifications.</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_DeregisterPushNotificationDeviceToken(AsyncCallback callback, object state, string platform, string token, int clientIndex);
       string End_PushNotification_DeregisterPushNotificationDeviceToken(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Registers the given device token with the server to enable this device
-      /// to receive push notifications.
-      /// </summary>
-      /// <param name="platform"></param>
-      /// <param name="token">The platform-dependant device token needed for push notifications.</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_RegisterPushNotificationDeviceToken(AsyncCallback callback, object state, string platform, string token, int clientIndex);
       string End_PushNotification_RegisterPushNotificationDeviceToken(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Sends a simple push notification based on the passed in message.
-      /// NOTE: It is possible to send a push notification to oneself.
-      /// </summary>
-      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
-      /// <param name="message">Text of the push notification</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendSimplePushNotification(AsyncCallback callback, object state, string toProfileId, string message, int clientIndex);
       string End_PushNotification_SendSimplePushNotification(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Sends a notification to a user based on a brainCloud portal configured notification template.
-      /// NOTE: It is possible to send a push notification to oneself.
-      /// </summary>
-      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
-      /// <param name="notificationTemplateId">Id of the notification template</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendRichPushNotification(AsyncCallback callback, object state, string toProfileId, int notificationTemplateId, int clientIndex);
       string End_PushNotification_SendRichPushNotification(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Sends a notification to a user based on a brainCloud portal configured notification template.
-      /// Includes JSON defining the substitution params to use with the template.
-      /// See the Portal documentation for more info.
-      /// NOTE: It is possible to send a push notification to oneself.
-      /// </summary>
-      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
-      /// <param name="notificationTemplateId">Id of the notification template</param>
-      /// <param name="substitutionJson">JSON defining the substitution params to use with the template</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendRichPushNotificationWithParams(AsyncCallback callback, object state, string toProfileId, int notificationTemplateId, string substitutionJson, int clientIndex);
       string End_PushNotification_SendRichPushNotificationWithParams(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
-      /// Includes JSON defining the substitution params to use with the template.
-      /// See the Portal documentation for more info.
-      /// </summary>
-      /// <param name="groupId">Target group</param>
-      /// <param name="notificationTemplateId">Id of the notification template</param>
-      /// <param name="substitutionsJson">JSON defining the substitution params to use with the template</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendTemplatedPushNotificationToGroup(AsyncCallback callback, object state, string groupId, int notificationTemplateId, string substitutionsJson, int clientIndex);
       string End_PushNotification_SendTemplatedPushNotificationToGroup(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
-      /// Includes JSON defining the substitution params to use with the template.
-      /// See the Portal documentation for more info.
-      /// </summary>
-      /// <param name="groupId">Target group</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendNormalizedPushNotificationToGroup(AsyncCallback callback, object state, string groupId, string alertContentJson, string customDataJson, int clientIndex);
       string End_PushNotification_SendNormalizedPushNotificationToGroup(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Schedules raw notifications based on user local time.
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="startTime">Start time of sending the push notification</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_ScheduleRawPushNotificationUTC(AsyncCallback callback, object state, string profileId, string fcmContent, string iosContent, string facebookContent, int startTime, int clientIndex);
       string End_PushNotification_ScheduleRawPushNotificationUTC(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Schedules raw notifications based on user local time.
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_ScheduleRawPushNotificationMinutes(AsyncCallback callback, object state, string profileId, string fcmContent, string iosContent, string facebookContent, int minutesFromNow, int clientIndex);
       string End_PushNotification_ScheduleRawPushNotificationMinutes(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Sends a raw push notification to a target user.
-      /// </summary>
-      /// <param name="toProfileId">The profileId of the user to receive the notification</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendRawPushNotification(AsyncCallback callback, object state, string toProfileId, string fcmContent, string iosContent, string facebookContent, int clientIndex);
       string End_PushNotification_SendRawPushNotification(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Sends a raw push notification to a target list of users.
-      /// </summary>
-      /// <param name="profileIds">Collection of profile IDs to send the notification to</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendRawPushNotificationBatch(AsyncCallback callback, object state, List<string> profileIds, string fcmContent, string iosContent, string facebookContent, int clientIndex);
       string End_PushNotification_SendRawPushNotificationBatch(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Sends a raw push notification to a target group.
-      /// </summary>
-      /// <param name="groupId">Target group</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendRawPushNotificationToGroup(AsyncCallback callback, object state, string groupId, string fcmContent, string iosContent, string facebookContent, int clientIndex);
       string End_PushNotification_SendRawPushNotificationToGroup(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Schedules a normalized push notification to a user
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="startTime">Start time of sending the push notification</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_ScheduleNormalizedPushNotificationUTC(AsyncCallback callback, object state, string profileId, string alertContentJson, string customDataJson, int startTime, int clientIndex);
       string End_PushNotification_ScheduleNormalizedPushNotificationUTC(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Schedules a normalized push notification to a user
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_ScheduleNormalizedPushNotificationMinutes(AsyncCallback callback, object state, string profileId, string alertContentJson, string customDataJson, int minutesFromNow, int clientIndex);
       string End_PushNotification_ScheduleNormalizedPushNotificationMinutes(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Schedules a rich push notification to a user
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="notificationTemplateId">Body and title of alert</param>
-      /// <param name="substitutionsJson">Optional custom data</param>
-      /// <param name="startTime">Start time of sending the push notification</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_ScheduleRichPushNotificationUTC(AsyncCallback callback, object state, string profileId, int notificationTemplateId, string substitutionsJson, int startTime, int clientIndex);
       string End_PushNotification_ScheduleRichPushNotificationUTC(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Schedules a rich push notification to a user
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="notificationTemplateId">Body and title of alert</param>
-      /// <param name="substitutionsJson">Optional custom data</param>
-      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_ScheduleRichPushNotificationMinutes(AsyncCallback callback, object state, string profileId, int notificationTemplateId, string substitutionsJson, int minutesFromNow, int clientIndex);
       string End_PushNotification_ScheduleRichPushNotificationMinutes(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Sends a notification to a user consisting of alert content and custom data.
-      /// </summary>
-      /// <param name="toProfileId">The profileId of the user to receive the notification</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendNormalizedPushNotification(AsyncCallback callback, object state, string toProfileId, string alertContentJson, string customDataJson, int clientIndex);
       string End_PushNotification_SendNormalizedPushNotification(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Sends a notification to multiple users consisting of alert content and custom data.
-      /// </summary>
-      /// <param name="profileIds">Collection of profile IDs to send the notification to</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_PushNotification_SendNormalizedPushNotificationBatch(AsyncCallback callback, object state, List<string> profileIds, string alertContentJson, string customDataJson, int clientIndex);
       string End_PushNotification_SendNormalizedPushNotificationBatch(IAsyncResult asyncResult);
@@ -5416,15 +4996,13 @@ namespace Ruyi.SDK.BrainCloudApi
       IAsyncResult Begin_Tournament_ViewCurrentReward(AsyncCallback callback, object state, string leaderboardId, int clientIndex);
       string End_Tournament_ViewCurrentReward(IAsyncResult asyncResult);
       #endif
-      /// <summary>
-      /// Returns the user's reward from a finished tournament
-      /// </summary>
-      /// <param name="leaderboardId">The leaderboard for the tournament</param>
-      /// <param name="versionId">Version of the tournament. Use -1 for the latest version.</param>
-      /// <param name="clientIndex"></param>
       #if SILVERLIGHT
       IAsyncResult Begin_Tournament_ViewReward(AsyncCallback callback, object state, string leaderboardId, int versionId, int clientIndex);
       string End_Tournament_ViewReward(IAsyncResult asyncResult);
+      #endif
+      #if SILVERLIGHT
+      IAsyncResult Begin_Patch_GetGameManifest(AsyncCallback callback, object state, string gameId, int clientIndex);
+      string End_Patch_GetGameManifest(IAsyncResult asyncResult);
       #endif
       #if SILVERLIGHT
       IAsyncResult Begin_SocialFeed_ShareVideo(AsyncCallback callback, object state, int timestamp, string resource, List<string> tagged, List<string> show, List<string> block, int clientIndex);
@@ -7168,13 +6746,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId"></param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
       public void Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -7237,14 +6808,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="serverURL">The URL to the brainCloud server</param>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId">The app id</param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
       public void Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -8181,33 +7744,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Enables the timeout message caching which is disabled by default.
-      /// Once enabled, if a client side timeout is encountered
-      /// (i.e. brainCloud server is unreachable presumably due to the client
-      /// network being down) the SDK will do the following:
-      /// 
-      /// 1 - cache the currently queued messages to brainCloud
-      /// 2 - call the network error callback
-      /// 3 - then expect the app to call either:
-      ///     a) RetryCachedMessages() to retry sending to brainCloud
-      ///     b) FlushCachedMessages() to dump all messages in the queue.
-      /// 
-      /// Between steps 2 and 3, the app can prompt the user to retry connecting
-      /// to brainCloud to determine whether to follow path 3a or 3b.
-      /// 
-      /// Note that if path 3a is followed, and another timeout is encountered,
-      /// the process will begin all over again from step 1.
-      /// 
-      /// WARNING - the brainCloud SDK will cache *all* API calls sent
-      /// when a timeout is encountered if this mechanism is enabled.
-      /// This effectively freezes all communication with brainCloud.
-      /// Apps must call either RetryCachedMessages() or FlushCachedMessages()
-      /// for the brainCloud SDK to resume sending messages.
-      /// ResetCommunication() will also clear the message cache.
-      /// </summary>
-      /// <param name="enabled">True if message should be cached on timeout</param>
-      /// <param name="clientIndex"></param>
       public void Client_EnableNetworkErrorMessageCaching(bool enabled, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -14963,14 +14499,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Approve an outstanding request to join the group.
-      /// </summary>
-      /// <param name="groupId">ID of the group.</param>
-      /// <param name="profileId">Profile ID of the invitation being deleted.</param>
-      /// <param name="role">Role of the member being invited.</param>
-      /// <param name="jsonAttributes">Attributes of the member being invited.</param>
-      /// <param name="clientIndex"></param>
       public string Group_ApproveGroupJoinRequest(string groupId, string profileId, Ruyi.SDK.BrainCloudApi.Role role, string jsonAttributes, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15477,10 +15005,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Read information on groups to which the current user belongs.
-      /// </summary>
-      /// <param name="clientIndex"></param>
       public string Group_GetMyGroups(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -15895,11 +15419,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Retrieve a page of group summary information based on the specified context.
-      /// </summary>
-      /// <param name="jsonContext">Query context.</param>
-      /// <param name="clientIndex"></param>
       public string Group_ListGroupsPage(string jsonContext, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -16034,11 +15553,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Read information on groups to which the specified user belongs.  Access is subject to restrictions.
-      /// </summary>
-      /// <param name="profileId">User to read groups for</param>
-      /// <param name="clientIndex"></param>
       public string Group_ListGroupsWithMember(string profileId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -17082,12 +16596,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Merge the profile associated with the provided e=mail with the current profile.
-      /// </summary>
-      /// <param name="email">The user's e-mail address</param>
-      /// <param name="password">The user's password</param>
-      /// <param name="clientIndex"></param>
       public string Identity_MergeEmailIdentity(string email, string password, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -18040,6 +17548,80 @@ namespace Ruyi.SDK.BrainCloudApi
           return result.Success;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Identity_RefreshIdentity failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Identity_ChangeEmailIdentity(AsyncCallback callback, object state, string oldEmailAddress, string password, string newEmailAddress, bool updateContactEmail, int clientIndex)
+      {
+        return send_Identity_ChangeEmailIdentity(callback, state, oldEmailAddress, password, newEmailAddress, updateContactEmail, clientIndex);
+      }
+
+      public string End_Identity_ChangeEmailIdentity(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Identity_ChangeEmailIdentity();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Allows email identity email address to be changed
+      /// </summary>
+      /// <param name="oldEmailAddress">Old email address</param>
+      /// <param name="password">Password for identity</param>
+      /// <param name="newEmailAddress">New email address</param>
+      /// <param name="updateContactEmail">Whether to update contact email in profile</param>
+      /// <param name="clientIndex"></param>
+      public string Identity_ChangeEmailIdentity(string oldEmailAddress, string password, string newEmailAddress, bool updateContactEmail, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Identity_ChangeEmailIdentity(oldEmailAddress, password, newEmailAddress, updateContactEmail, clientIndex);
+        return recv_Identity_ChangeEmailIdentity();
+
+        #else
+        var asyncResult = Begin_Identity_ChangeEmailIdentity(null, null, oldEmailAddress, password, newEmailAddress, updateContactEmail, clientIndex);
+        return End_Identity_ChangeEmailIdentity(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Identity_ChangeEmailIdentity(AsyncCallback callback, object state, string oldEmailAddress, string password, string newEmailAddress, bool updateContactEmail, int clientIndex)
+      #else
+      public void send_Identity_ChangeEmailIdentity(string oldEmailAddress, string password, string newEmailAddress, bool updateContactEmail, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Identity_ChangeEmailIdentity", TMessageType.Call, seqid_));
+        Identity_ChangeEmailIdentity_args args = new Identity_ChangeEmailIdentity_args();
+        args.OldEmailAddress = oldEmailAddress;
+        args.Password = password;
+        args.NewEmailAddress = newEmailAddress;
+        args.UpdateContactEmail = updateContactEmail;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public string recv_Identity_ChangeEmailIdentity()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Identity_ChangeEmailIdentity_result result = new Identity_ChangeEmailIdentity_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Identity_ChangeEmailIdentity failed: unknown result");
       }
 
       
@@ -22503,10 +22085,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Deregisters all device tokens currently registered to the user.
-      /// </summary>
-      /// <param name="clientIndex"></param>
       public string PushNotification_DeregisterAllPushNotificationDeviceTokens(int clientIndex)
       {
         #if !SILVERLIGHT
@@ -22569,13 +22147,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Deregisters the given device token from the server to disable this device
-      /// from receiving push notifications.
-      /// </summary>
-      /// <param name="platform">The device platform being registered.</param>
-      /// <param name="token">The platform-dependant device token needed for push notifications.</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_DeregisterPushNotificationDeviceToken(string platform, string token, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -22640,13 +22211,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Registers the given device token with the server to enable this device
-      /// to receive push notifications.
-      /// </summary>
-      /// <param name="platform"></param>
-      /// <param name="token">The platform-dependant device token needed for push notifications.</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_RegisterPushNotificationDeviceToken(string platform, string token, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -22711,13 +22275,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Sends a simple push notification based on the passed in message.
-      /// NOTE: It is possible to send a push notification to oneself.
-      /// </summary>
-      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
-      /// <param name="message">Text of the push notification</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_SendSimplePushNotification(string toProfileId, string message, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -22782,13 +22339,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Sends a notification to a user based on a brainCloud portal configured notification template.
-      /// NOTE: It is possible to send a push notification to oneself.
-      /// </summary>
-      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
-      /// <param name="notificationTemplateId">Id of the notification template</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_SendRichPushNotification(string toProfileId, int notificationTemplateId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -22853,16 +22403,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Sends a notification to a user based on a brainCloud portal configured notification template.
-      /// Includes JSON defining the substitution params to use with the template.
-      /// See the Portal documentation for more info.
-      /// NOTE: It is possible to send a push notification to oneself.
-      /// </summary>
-      /// <param name="toProfileId">The braincloud profileId of the user to receive the notification</param>
-      /// <param name="notificationTemplateId">Id of the notification template</param>
-      /// <param name="substitutionJson">JSON defining the substitution params to use with the template</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_SendRichPushNotificationWithParams(string toProfileId, int notificationTemplateId, string substitutionJson, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -22928,15 +22468,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
-      /// Includes JSON defining the substitution params to use with the template.
-      /// See the Portal documentation for more info.
-      /// </summary>
-      /// <param name="groupId">Target group</param>
-      /// <param name="notificationTemplateId">Id of the notification template</param>
-      /// <param name="substitutionsJson">JSON defining the substitution params to use with the template</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_SendTemplatedPushNotificationToGroup(string groupId, int notificationTemplateId, string substitutionsJson, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -23002,15 +22533,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
-      /// Includes JSON defining the substitution params to use with the template.
-      /// See the Portal documentation for more info.
-      /// </summary>
-      /// <param name="groupId">Target group</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_SendNormalizedPushNotificationToGroup(string groupId, string alertContentJson, string customDataJson, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -23076,15 +22598,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Schedules raw notifications based on user local time.
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="startTime">Start time of sending the push notification</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_ScheduleRawPushNotificationUTC(string profileId, string fcmContent, string iosContent, string facebookContent, int startTime, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -23152,15 +22665,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Schedules raw notifications based on user local time.
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_ScheduleRawPushNotificationMinutes(string profileId, string fcmContent, string iosContent, string facebookContent, int minutesFromNow, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -23228,14 +22732,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Sends a raw push notification to a target user.
-      /// </summary>
-      /// <param name="toProfileId">The profileId of the user to receive the notification</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_SendRawPushNotification(string toProfileId, string fcmContent, string iosContent, string facebookContent, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -23302,14 +22798,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Sends a raw push notification to a target list of users.
-      /// </summary>
-      /// <param name="profileIds">Collection of profile IDs to send the notification to</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_SendRawPushNotificationBatch(List<string> profileIds, string fcmContent, string iosContent, string facebookContent, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -23376,14 +22864,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Sends a raw push notification to a target group.
-      /// </summary>
-      /// <param name="groupId">Target group</param>
-      /// <param name="fcmContent">Valid Fcm data content</param>
-      /// <param name="iosContent">Valid ios data content</param>
-      /// <param name="facebookContent">Facebook template string</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_SendRawPushNotificationToGroup(string groupId, string fcmContent, string iosContent, string facebookContent, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -23450,14 +22930,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Schedules a normalized push notification to a user
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="startTime">Start time of sending the push notification</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_ScheduleNormalizedPushNotificationUTC(string profileId, string alertContentJson, string customDataJson, int startTime, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -23524,14 +22996,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Schedules a normalized push notification to a user
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_ScheduleNormalizedPushNotificationMinutes(string profileId, string alertContentJson, string customDataJson, int minutesFromNow, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -23598,14 +23062,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Schedules a rich push notification to a user
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="notificationTemplateId">Body and title of alert</param>
-      /// <param name="substitutionsJson">Optional custom data</param>
-      /// <param name="startTime">Start time of sending the push notification</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_ScheduleRichPushNotificationUTC(string profileId, int notificationTemplateId, string substitutionsJson, int startTime, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -23672,14 +23128,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Schedules a rich push notification to a user
-      /// </summary>
-      /// <param name="profileId">The profileId of the user to receive the notification</param>
-      /// <param name="notificationTemplateId">Body and title of alert</param>
-      /// <param name="substitutionsJson">Optional custom data</param>
-      /// <param name="minutesFromNow">Minutes from now to send the push notification</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_ScheduleRichPushNotificationMinutes(string profileId, int notificationTemplateId, string substitutionsJson, int minutesFromNow, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -23746,13 +23194,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Sends a notification to a user consisting of alert content and custom data.
-      /// </summary>
-      /// <param name="toProfileId">The profileId of the user to receive the notification</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_SendNormalizedPushNotification(string toProfileId, string alertContentJson, string customDataJson, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -23818,13 +23259,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Sends a notification to multiple users consisting of alert content and custom data.
-      /// </summary>
-      /// <param name="profileIds">Collection of profile IDs to send the notification to</param>
-      /// <param name="alertContentJson">Body and title of alert</param>
-      /// <param name="customDataJson">Optional custom data</param>
-      /// <param name="clientIndex"></param>
       public string PushNotification_SendNormalizedPushNotificationBatch(List<string> profileIds, string alertContentJson, string customDataJson, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -26294,12 +25728,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       #endif
 
-      /// <summary>
-      /// Returns the user's reward from a finished tournament
-      /// </summary>
-      /// <param name="leaderboardId">The leaderboard for the tournament</param>
-      /// <param name="versionId">Version of the tournament. Use -1 for the latest version.</param>
-      /// <param name="clientIndex"></param>
       public string Tournament_ViewReward(string leaderboardId, int versionId, int clientIndex)
       {
         #if !SILVERLIGHT
@@ -26347,6 +25775,69 @@ namespace Ruyi.SDK.BrainCloudApi
           return result.Success;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Tournament_ViewReward failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Patch_GetGameManifest(AsyncCallback callback, object state, string gameId, int clientIndex)
+      {
+        return send_Patch_GetGameManifest(callback, state, gameId, clientIndex);
+      }
+
+      public string End_Patch_GetGameManifest(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Patch_GetGameManifest();
+      }
+
+      #endif
+
+      public string Patch_GetGameManifest(string gameId, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Patch_GetGameManifest(gameId, clientIndex);
+        return recv_Patch_GetGameManifest();
+
+        #else
+        var asyncResult = Begin_Patch_GetGameManifest(null, null, gameId, clientIndex);
+        return End_Patch_GetGameManifest(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Patch_GetGameManifest(AsyncCallback callback, object state, string gameId, int clientIndex)
+      #else
+      public void send_Patch_GetGameManifest(string gameId, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Patch_GetGameManifest", TMessageType.Call, seqid_));
+        Patch_GetGameManifest_args args = new Patch_GetGameManifest_args();
+        args.GameId = gameId;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public string recv_Patch_GetGameManifest()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Patch_GetGameManifest_result result = new Patch_GetGameManifest_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Patch_GetGameManifest failed: unknown result");
       }
 
       
@@ -28542,6 +28033,7 @@ namespace Ruyi.SDK.BrainCloudApi
         processMap_["Identity_GetIdentities"] = Identity_GetIdentities_Process;
         processMap_["Identity_GetExpiredIdentities"] = Identity_GetExpiredIdentities_Process;
         processMap_["Identity_RefreshIdentity"] = Identity_RefreshIdentity_Process;
+        processMap_["Identity_ChangeEmailIdentity"] = Identity_ChangeEmailIdentity_Process;
         processMap_["Identity_AttachPeerProfile"] = Identity_AttachPeerProfile_Process;
         processMap_["Identity_DetachPeer"] = Identity_DetachPeer_Process;
         processMap_["Identity_GetPeerProfiles"] = Identity_GetPeerProfiles_Process;
@@ -28659,6 +28151,7 @@ namespace Ruyi.SDK.BrainCloudApi
         processMap_["Tournament_PostTournamentScoreWithResults"] = Tournament_PostTournamentScoreWithResults_Process;
         processMap_["Tournament_ViewCurrentReward"] = Tournament_ViewCurrentReward_Process;
         processMap_["Tournament_ViewReward"] = Tournament_ViewReward_Process;
+        processMap_["Patch_GetGameManifest"] = Patch_GetGameManifest_Process;
         processMap_["SocialFeed_ShareVideo"] = SocialFeed_ShareVideo_Process;
         processMap_["SocialFeed_ShareScreenshot"] = SocialFeed_ShareScreenshot_Process;
         processMap_["SocialFeed_ShareAchievement"] = SocialFeed_ShareAchievement_Process;
@@ -33706,6 +33199,34 @@ namespace Ruyi.SDK.BrainCloudApi
         oprot.Transport.Flush();
       }
 
+      public void Identity_ChangeEmailIdentity_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Identity_ChangeEmailIdentity_args args = new Identity_ChangeEmailIdentity_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Identity_ChangeEmailIdentity_result result = new Identity_ChangeEmailIdentity_result();
+        try
+        {
+          result.Success = iface_.Identity_ChangeEmailIdentity(args.OldEmailAddress, args.Password, args.NewEmailAddress, args.UpdateContactEmail, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Identity_ChangeEmailIdentity", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Identity_ChangeEmailIdentity", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
       public void Identity_AttachPeerProfile_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
         Identity_AttachPeerProfile_args args = new Identity_AttachPeerProfile_args();
@@ -36976,6 +36497,34 @@ namespace Ruyi.SDK.BrainCloudApi
           Console.Error.WriteLine(ex.ToString());
           TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
           oprot.WriteMessageBegin(new TMessage("Tournament_ViewReward", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Patch_GetGameManifest_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Patch_GetGameManifest_args args = new Patch_GetGameManifest_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Patch_GetGameManifest_result result = new Patch_GetGameManifest_result();
+        try
+        {
+          result.Success = iface_.Patch_GetGameManifest(args.GameId, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Patch_GetGameManifest", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Patch_GetGameManifest", TMessageType.Exception, seqid));
           x.Write(oprot);
         }
         oprot.WriteMessageEnd();
@@ -44290,9 +43839,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _appVersion;
       private int _clientIndex;
 
-      /// <summary>
-      /// The secret key for your app
-      /// </summary>
       public string SecretKey
       {
         get
@@ -44319,9 +43865,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// The app version
-      /// </summary>
       public string AppVersion
       {
         get
@@ -44576,9 +44119,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _appVersion;
       private int _clientIndex;
 
-      /// <summary>
-      /// The URL to the brainCloud server
-      /// </summary>
       public string ServerURL
       {
         get
@@ -44592,9 +44132,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// The secret key for your app
-      /// </summary>
       public string SecretKey
       {
         get
@@ -44608,9 +44145,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// The app id
-      /// </summary>
       public string AppId
       {
         get
@@ -44624,9 +44158,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// The app version
-      /// </summary>
       public string AppVersion
       {
         get
@@ -47610,9 +47141,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private bool _enabled;
       private int _clientIndex;
 
-      /// <summary>
-      /// True if message should be cached on timeout
-      /// </summary>
       public bool Enabled
       {
         get
@@ -75139,9 +74667,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonAttributes;
       private int _clientIndex;
 
-      /// <summary>
-      /// ID of the group.
-      /// </summary>
       public string GroupId
       {
         get
@@ -75155,9 +74680,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Profile ID of the invitation being deleted.
-      /// </summary>
       public string ProfileId
       {
         get
@@ -75172,7 +74694,6 @@ namespace Ruyi.SDK.BrainCloudApi
       }
 
       /// <summary>
-      /// Role of the member being invited.
       /// 
       /// <seealso cref="Ruyi.SDK.BrainCloudApi.Role"/>
       /// </summary>
@@ -75189,9 +74710,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Attributes of the member being invited.
-      /// </summary>
       public string JsonAttributes
       {
         get
@@ -79429,9 +78947,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _jsonContext;
       private int _clientIndex;
 
-      /// <summary>
-      /// Query context.
-      /// </summary>
       public string JsonContext
       {
         get
@@ -79984,9 +79499,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _profileId;
       private int _clientIndex;
 
-      /// <summary>
-      /// User to read groups for
-      /// </summary>
       public string ProfileId
       {
         get
@@ -84403,9 +83915,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _password;
       private int _clientIndex;
 
-      /// <summary>
-      /// The user's e-mail address
-      /// </summary>
       public string Email
       {
         get
@@ -84419,9 +83928,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// The user's password
-      /// </summary>
       public string Password
       {
         get
@@ -88422,6 +87928,381 @@ namespace Ruyi.SDK.BrainCloudApi
 
       public override string ToString() {
         StringBuilder __sb = new StringBuilder("Identity_RefreshIdentity_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Identity_ChangeEmailIdentity_args : TBase
+    {
+      private string _oldEmailAddress;
+      private string _password;
+      private string _newEmailAddress;
+      private bool _updateContactEmail;
+      private int _clientIndex;
+
+      /// <summary>
+      /// Old email address
+      /// </summary>
+      public string OldEmailAddress
+      {
+        get
+        {
+          return _oldEmailAddress;
+        }
+        set
+        {
+          __isset.oldEmailAddress = true;
+          this._oldEmailAddress = value;
+        }
+      }
+
+      /// <summary>
+      /// Password for identity
+      /// </summary>
+      public string Password
+      {
+        get
+        {
+          return _password;
+        }
+        set
+        {
+          __isset.password = true;
+          this._password = value;
+        }
+      }
+
+      /// <summary>
+      /// New email address
+      /// </summary>
+      public string NewEmailAddress
+      {
+        get
+        {
+          return _newEmailAddress;
+        }
+        set
+        {
+          __isset.newEmailAddress = true;
+          this._newEmailAddress = value;
+        }
+      }
+
+      /// <summary>
+      /// Whether to update contact email in profile
+      /// </summary>
+      public bool UpdateContactEmail
+      {
+        get
+        {
+          return _updateContactEmail;
+        }
+        set
+        {
+          __isset.updateContactEmail = true;
+          this._updateContactEmail = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool oldEmailAddress;
+        public bool password;
+        public bool newEmailAddress;
+        public bool updateContactEmail;
+        public bool clientIndex;
+      }
+
+      public Identity_ChangeEmailIdentity_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  OldEmailAddress = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String) {
+                  Password = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.String) {
+                  NewEmailAddress = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.Bool) {
+                  UpdateContactEmail = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 5:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Identity_ChangeEmailIdentity_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (OldEmailAddress != null && __isset.oldEmailAddress) {
+            field.Name = "oldEmailAddress";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(OldEmailAddress);
+            oprot.WriteFieldEnd();
+          }
+          if (Password != null && __isset.password) {
+            field.Name = "password";
+            field.Type = TType.String;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Password);
+            oprot.WriteFieldEnd();
+          }
+          if (NewEmailAddress != null && __isset.newEmailAddress) {
+            field.Name = "newEmailAddress";
+            field.Type = TType.String;
+            field.ID = 3;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(NewEmailAddress);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.updateContactEmail) {
+            field.Name = "updateContactEmail";
+            field.Type = TType.Bool;
+            field.ID = 4;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(UpdateContactEmail);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 5;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Identity_ChangeEmailIdentity_args(");
+        bool __first = true;
+        if (OldEmailAddress != null && __isset.oldEmailAddress) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("OldEmailAddress: ");
+          __sb.Append(OldEmailAddress);
+        }
+        if (Password != null && __isset.password) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Password: ");
+          __sb.Append(Password);
+        }
+        if (NewEmailAddress != null && __isset.newEmailAddress) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("NewEmailAddress: ");
+          __sb.Append(NewEmailAddress);
+        }
+        if (__isset.updateContactEmail) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("UpdateContactEmail: ");
+          __sb.Append(UpdateContactEmail);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Identity_ChangeEmailIdentity_result : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Identity_ChangeEmailIdentity_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Identity_ChangeEmailIdentity_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Identity_ChangeEmailIdentity_result(");
         bool __first = true;
         if (Success != null && __isset.success) {
           if(!__first) { __sb.Append(", "); }
@@ -106275,9 +106156,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _token;
       private int _clientIndex;
 
-      /// <summary>
-      /// The device platform being registered.
-      /// </summary>
       public string Platform
       {
         get
@@ -106291,9 +106169,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// The platform-dependant device token needed for push notifications.
-      /// </summary>
       public string Token
       {
         get
@@ -106585,9 +106460,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// The platform-dependant device token needed for push notifications.
-      /// </summary>
       public string Token
       {
         get
@@ -106866,9 +106738,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _message;
       private int _clientIndex;
 
-      /// <summary>
-      /// The braincloud profileId of the user to receive the notification
-      /// </summary>
       public string ToProfileId
       {
         get
@@ -106882,9 +106751,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Text of the push notification
-      /// </summary>
       public string Message
       {
         get
@@ -107163,9 +107029,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _notificationTemplateId;
       private int _clientIndex;
 
-      /// <summary>
-      /// The braincloud profileId of the user to receive the notification
-      /// </summary>
       public string ToProfileId
       {
         get
@@ -107179,9 +107042,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Id of the notification template
-      /// </summary>
       public int NotificationTemplateId
       {
         get
@@ -107461,9 +107321,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _substitutionJson;
       private int _clientIndex;
 
-      /// <summary>
-      /// The braincloud profileId of the user to receive the notification
-      /// </summary>
       public string ToProfileId
       {
         get
@@ -107477,9 +107334,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Id of the notification template
-      /// </summary>
       public int NotificationTemplateId
       {
         get
@@ -107493,9 +107347,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// JSON defining the substitution params to use with the template
-      /// </summary>
       public string SubstitutionJson
       {
         get
@@ -107797,9 +107648,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _substitutionsJson;
       private int _clientIndex;
 
-      /// <summary>
-      /// Target group
-      /// </summary>
       public string GroupId
       {
         get
@@ -107813,9 +107661,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Id of the notification template
-      /// </summary>
       public int NotificationTemplateId
       {
         get
@@ -107829,9 +107674,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// JSON defining the substitution params to use with the template
-      /// </summary>
       public string SubstitutionsJson
       {
         get
@@ -108133,9 +107975,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _customDataJson;
       private int _clientIndex;
 
-      /// <summary>
-      /// Target group
-      /// </summary>
       public string GroupId
       {
         get
@@ -108149,9 +107988,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Body and title of alert
-      /// </summary>
       public string AlertContentJson
       {
         get
@@ -108165,9 +108001,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Optional custom data
-      /// </summary>
       public string CustomDataJson
       {
         get
@@ -108471,9 +108304,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _startTime;
       private int _clientIndex;
 
-      /// <summary>
-      /// The profileId of the user to receive the notification
-      /// </summary>
       public string ProfileId
       {
         get
@@ -108487,9 +108317,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Valid Fcm data content
-      /// </summary>
       public string FcmContent
       {
         get
@@ -108503,9 +108330,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Valid ios data content
-      /// </summary>
       public string IosContent
       {
         get
@@ -108519,9 +108343,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Facebook template string
-      /// </summary>
       public string FacebookContent
       {
         get
@@ -108535,9 +108356,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Start time of sending the push notification
-      /// </summary>
       public int StartTime
       {
         get
@@ -108885,9 +108703,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _minutesFromNow;
       private int _clientIndex;
 
-      /// <summary>
-      /// The profileId of the user to receive the notification
-      /// </summary>
       public string ProfileId
       {
         get
@@ -108901,9 +108716,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Valid Fcm data content
-      /// </summary>
       public string FcmContent
       {
         get
@@ -108917,9 +108729,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Valid ios data content
-      /// </summary>
       public string IosContent
       {
         get
@@ -108933,9 +108742,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Facebook template string
-      /// </summary>
       public string FacebookContent
       {
         get
@@ -108949,9 +108755,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Minutes from now to send the push notification
-      /// </summary>
       public int MinutesFromNow
       {
         get
@@ -109298,9 +109101,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _facebookContent;
       private int _clientIndex;
 
-      /// <summary>
-      /// The profileId of the user to receive the notification
-      /// </summary>
       public string ToProfileId
       {
         get
@@ -109314,9 +109114,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Valid Fcm data content
-      /// </summary>
       public string FcmContent
       {
         get
@@ -109330,9 +109127,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Valid ios data content
-      /// </summary>
       public string IosContent
       {
         get
@@ -109346,9 +109140,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Facebook template string
-      /// </summary>
       public string FacebookContent
       {
         get
@@ -109673,9 +109464,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _facebookContent;
       private int _clientIndex;
 
-      /// <summary>
-      /// Collection of profile IDs to send the notification to
-      /// </summary>
       public List<string> ProfileIds
       {
         get
@@ -109689,9 +109477,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Valid Fcm data content
-      /// </summary>
       public string FcmContent
       {
         get
@@ -109705,9 +109490,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Valid ios data content
-      /// </summary>
       public string IosContent
       {
         get
@@ -109721,9 +109503,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Facebook template string
-      /// </summary>
       public string FacebookContent
       {
         get
@@ -110065,9 +109844,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _facebookContent;
       private int _clientIndex;
 
-      /// <summary>
-      /// Target group
-      /// </summary>
       public string GroupId
       {
         get
@@ -110081,9 +109857,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Valid Fcm data content
-      /// </summary>
       public string FcmContent
       {
         get
@@ -110097,9 +109870,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Valid ios data content
-      /// </summary>
       public string IosContent
       {
         get
@@ -110113,9 +109883,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Facebook template string
-      /// </summary>
       public string FacebookContent
       {
         get
@@ -110440,9 +110207,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _startTime;
       private int _clientIndex;
 
-      /// <summary>
-      /// The profileId of the user to receive the notification
-      /// </summary>
       public string ProfileId
       {
         get
@@ -110456,9 +110220,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Body and title of alert
-      /// </summary>
       public string AlertContentJson
       {
         get
@@ -110472,9 +110233,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Optional custom data
-      /// </summary>
       public string CustomDataJson
       {
         get
@@ -110488,9 +110246,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Start time of sending the push notification
-      /// </summary>
       public int StartTime
       {
         get
@@ -110815,9 +110570,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _minutesFromNow;
       private int _clientIndex;
 
-      /// <summary>
-      /// The profileId of the user to receive the notification
-      /// </summary>
       public string ProfileId
       {
         get
@@ -110831,9 +110583,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Body and title of alert
-      /// </summary>
       public string AlertContentJson
       {
         get
@@ -110847,9 +110596,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Optional custom data
-      /// </summary>
       public string CustomDataJson
       {
         get
@@ -110863,9 +110609,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Minutes from now to send the push notification
-      /// </summary>
       public int MinutesFromNow
       {
         get
@@ -111190,9 +110933,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _startTime;
       private int _clientIndex;
 
-      /// <summary>
-      /// The profileId of the user to receive the notification
-      /// </summary>
       public string ProfileId
       {
         get
@@ -111206,9 +110946,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Body and title of alert
-      /// </summary>
       public int NotificationTemplateId
       {
         get
@@ -111222,9 +110959,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Optional custom data
-      /// </summary>
       public string SubstitutionsJson
       {
         get
@@ -111238,9 +110972,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Start time of sending the push notification
-      /// </summary>
       public int StartTime
       {
         get
@@ -111565,9 +111296,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _minutesFromNow;
       private int _clientIndex;
 
-      /// <summary>
-      /// The profileId of the user to receive the notification
-      /// </summary>
       public string ProfileId
       {
         get
@@ -111581,9 +111309,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Body and title of alert
-      /// </summary>
       public int NotificationTemplateId
       {
         get
@@ -111597,9 +111322,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Optional custom data
-      /// </summary>
       public string SubstitutionsJson
       {
         get
@@ -111613,9 +111335,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Minutes from now to send the push notification
-      /// </summary>
       public int MinutesFromNow
       {
         get
@@ -111939,9 +111658,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _customDataJson;
       private int _clientIndex;
 
-      /// <summary>
-      /// The profileId of the user to receive the notification
-      /// </summary>
       public string ToProfileId
       {
         get
@@ -111955,9 +111671,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Body and title of alert
-      /// </summary>
       public string AlertContentJson
       {
         get
@@ -111971,9 +111684,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Optional custom data
-      /// </summary>
       public string CustomDataJson
       {
         get
@@ -112275,9 +111985,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private string _customDataJson;
       private int _clientIndex;
 
-      /// <summary>
-      /// Collection of profile IDs to send the notification to
-      /// </summary>
       public List<string> ProfileIds
       {
         get
@@ -112291,9 +111998,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Body and title of alert
-      /// </summary>
       public string AlertContentJson
       {
         get
@@ -112307,9 +112011,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Optional custom data
-      /// </summary>
       public string CustomDataJson
       {
         get
@@ -123507,9 +123208,6 @@ namespace Ruyi.SDK.BrainCloudApi
       private int _versionId;
       private int _clientIndex;
 
-      /// <summary>
-      /// The leaderboard for the tournament
-      /// </summary>
       public string LeaderboardId
       {
         get
@@ -123523,9 +123221,6 @@ namespace Ruyi.SDK.BrainCloudApi
         }
       }
 
-      /// <summary>
-      /// Version of the tournament. Use -1 for the latest version.
-      /// </summary>
       public int VersionId
       {
         get
@@ -123781,6 +123476,261 @@ namespace Ruyi.SDK.BrainCloudApi
 
       public override string ToString() {
         StringBuilder __sb = new StringBuilder("Tournament_ViewReward_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Patch_GetGameManifest_args : TBase
+    {
+      private string _gameId;
+      private int _clientIndex;
+
+      public string GameId
+      {
+        get
+        {
+          return _gameId;
+        }
+        set
+        {
+          __isset.gameId = true;
+          this._gameId = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool gameId;
+        public bool clientIndex;
+      }
+
+      public Patch_GetGameManifest_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  GameId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Patch_GetGameManifest_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (GameId != null && __isset.gameId) {
+            field.Name = "gameId";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(GameId);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Patch_GetGameManifest_args(");
+        bool __first = true;
+        if (GameId != null && __isset.gameId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("GameId: ");
+          __sb.Append(GameId);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Patch_GetGameManifest_result : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Patch_GetGameManifest_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Patch_GetGameManifest_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Patch_GetGameManifest_result(");
         bool __first = true;
         if (Success != null && __isset.success) {
           if(!__first) { __sb.Append(", "); }

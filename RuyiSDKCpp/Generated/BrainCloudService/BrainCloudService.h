@@ -308,32 +308,7 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual bool Client_IsInitialized(const int32_t clientIndex) = 0;
-
-  /**
-   * Method initializes the BrainCloudClient.
-   * 
-   * @param secretKey The secret key for your app
-   * 
-   * @param appId
-   * @param appVersion The app version
-   * 
-   * @param clientIndex
-   */
   virtual void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) = 0;
-
-  /**
-   * Method initializes the BrainCloudClient.
-   * 
-   * @param serverURL The URL to the brainCloud server
-   * 
-   * @param secretKey The secret key for your app
-   * 
-   * @param appId The app id
-   * 
-   * @param appVersion The app version
-   * 
-   * @param clientIndex
-   */
   virtual void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) = 0;
 
   /**
@@ -466,36 +441,6 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual void Client_SetUploadLowTransferRateThreshold(const int32_t bytesPerSec, const int32_t clientIndex) = 0;
-
-  /**
-   * Enables the timeout message caching which is disabled by default.
-   * Once enabled, if a client side timeout is encountered
-   * (i.e. brainCloud server is unreachable presumably due to the client
-   * network being down) the SDK will do the following:
-   * 
-   * 1 - cache the currently queued messages to brainCloud
-   * 2 - call the network error callback
-   * 3 - then expect the app to call either:
-   *     a) RetryCachedMessages() to retry sending to brainCloud
-   *     b) FlushCachedMessages() to dump all messages in the queue.
-   * 
-   * Between steps 2 and 3, the app can prompt the user to retry connecting
-   * to brainCloud to determine whether to follow path 3a or 3b.
-   * 
-   * Note that if path 3a is followed, and another timeout is encountered,
-   * the process will begin all over again from step 1.
-   * 
-   * WARNING - the brainCloud SDK will cache *all* API calls sent
-   * when a timeout is encountered if this mechanism is enabled.
-   * This effectively freezes all communication with brainCloud.
-   * Apps must call either RetryCachedMessages() or FlushCachedMessages()
-   * for the brainCloud SDK to resume sending messages.
-   * ResetCommunication() will also clear the message cache.
-   * 
-   * @param enabled True if message should be cached on timeout
-   * 
-   * @param clientIndex
-   */
   virtual void Client_EnableNetworkErrorMessageCaching(const bool enabled, const int32_t clientIndex) = 0;
 
   /**
@@ -1566,20 +1511,6 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual void Group_AddGroupMember(std::string& _return, const std::string& groupId, const std::string& profileId, const  ::Ruyi::SDK::BrainCloudApi::Role::type role, const std::string& jsonAttributes, const int32_t clientIndex) = 0;
-
-  /**
-   * Approve an outstanding request to join the group.
-   * 
-   * @param groupId ID of the group.
-   * 
-   * @param profileId Profile ID of the invitation being deleted.
-   * 
-   * @param role Role of the member being invited.
-   * 
-   * @param jsonAttributes Attributes of the member being invited.
-   * 
-   * @param clientIndex
-   */
   virtual void Group_ApproveGroupJoinRequest(std::string& _return, const std::string& groupId, const std::string& profileId, const  ::Ruyi::SDK::BrainCloudApi::Role::type role, const std::string& jsonAttributes, const int32_t clientIndex) = 0;
 
   /**
@@ -1666,12 +1597,6 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual void Group_DeleteGroupEntity(std::string& _return, const std::string& groupId, const std::string& entityId, const int64_t version, const int32_t clientIndex) = 0;
-
-  /**
-   * Read information on groups to which the current user belongs.
-   * 
-   * @param clientIndex
-   */
   virtual void Group_GetMyGroups(std::string& _return, const int32_t clientIndex) = 0;
 
   /**
@@ -1730,14 +1655,6 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual void Group_LeaveGroup(std::string& _return, const std::string& groupId, const int32_t clientIndex) = 0;
-
-  /**
-   * Retrieve a page of group summary information based on the specified context.
-   * 
-   * @param jsonContext Query context.
-   * 
-   * @param clientIndex
-   */
   virtual void Group_ListGroupsPage(std::string& _return, const std::string& jsonContext, const int32_t clientIndex) = 0;
 
   /**
@@ -1751,14 +1668,6 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual void Group_ListGroupsPageByOffset(std::string& _return, const std::string& context, const int32_t pageOffset, const int32_t clientIndex) = 0;
-
-  /**
-   * Read information on groups to which the specified user belongs.  Access is subject to restrictions.
-   * 
-   * @param profileId User to read groups for
-   * 
-   * @param clientIndex
-   */
   virtual void Group_ListGroupsWithMember(std::string& _return, const std::string& profileId, const int32_t clientIndex) = 0;
 
   /**
@@ -1914,16 +1823,6 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual void Identity_AttachEmailIdentity(std::string& _return, const std::string& email, const std::string& password, const int32_t clientIndex) = 0;
-
-  /**
-   * Merge the profile associated with the provided e=mail with the current profile.
-   * 
-   * @param email The user's e-mail address
-   * 
-   * @param password The user's password
-   * 
-   * @param clientIndex
-   */
   virtual void Identity_MergeEmailIdentity(std::string& _return, const std::string& email, const std::string& password, const int32_t clientIndex) = 0;
 
   /**
@@ -2064,6 +1963,21 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual void Identity_RefreshIdentity(std::string& _return, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const int32_t clientIndex) = 0;
+
+  /**
+   * Allows email identity email address to be changed
+   * 
+   * @param oldEmailAddress Old email address
+   * 
+   * @param password Password for identity
+   * 
+   * @param newEmailAddress New email address
+   * 
+   * @param updateContactEmail Whether to update contact email in profile
+   * 
+   * @param clientIndex
+   */
+  virtual void Identity_ChangeEmailIdentity(std::string& _return, const std::string& oldEmailAddress, const std::string& password, const std::string& newEmailAddress, const bool updateContactEmail, const int32_t clientIndex) = 0;
 
   /**
    * Attaches a peer identity to this user's profile
@@ -2794,270 +2708,24 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual void Profanity_ProfanityIdentifyBadWords(std::string& _return, const std::string& text, const std::string& languages, const bool flagEmail, const bool flagPhone, const bool flagUrls, const int32_t clientIndex) = 0;
-
-  /**
-   * Deregisters all device tokens currently registered to the user.
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_DeregisterAllPushNotificationDeviceTokens(std::string& _return, const int32_t clientIndex) = 0;
-
-  /**
-   * Deregisters the given device token from the server to disable this device
-   * from receiving push notifications.
-   * 
-   * @param platform The device platform being registered.
-   * 
-   * @param token The platform-dependant device token needed for push notifications.
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_DeregisterPushNotificationDeviceToken(std::string& _return, const std::string& platform, const std::string& token, const int32_t clientIndex) = 0;
-
-  /**
-   * Registers the given device token with the server to enable this device
-   * to receive push notifications.
-   * 
-   * @param platform
-   * @param token The platform-dependant device token needed for push notifications.
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_RegisterPushNotificationDeviceToken(std::string& _return, const std::string& platform, const std::string& token, const int32_t clientIndex) = 0;
-
-  /**
-   * Sends a simple push notification based on the passed in message.
-   * NOTE: It is possible to send a push notification to oneself.
-   * 
-   * @param toProfileId The braincloud profileId of the user to receive the notification
-   * 
-   * @param message Text of the push notification
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_SendSimplePushNotification(std::string& _return, const std::string& toProfileId, const std::string& message, const int32_t clientIndex) = 0;
-
-  /**
-   * Sends a notification to a user based on a brainCloud portal configured notification template.
-   * NOTE: It is possible to send a push notification to oneself.
-   * 
-   * @param toProfileId The braincloud profileId of the user to receive the notification
-   * 
-   * @param notificationTemplateId Id of the notification template
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_SendRichPushNotification(std::string& _return, const std::string& toProfileId, const int32_t notificationTemplateId, const int32_t clientIndex) = 0;
-
-  /**
-   * Sends a notification to a user based on a brainCloud portal configured notification template.
-   * Includes JSON defining the substitution params to use with the template.
-   * See the Portal documentation for more info.
-   * NOTE: It is possible to send a push notification to oneself.
-   * 
-   * @param toProfileId The braincloud profileId of the user to receive the notification
-   * 
-   * @param notificationTemplateId Id of the notification template
-   * 
-   * @param substitutionJson JSON defining the substitution params to use with the template
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_SendRichPushNotificationWithParams(std::string& _return, const std::string& toProfileId, const int32_t notificationTemplateId, const std::string& substitutionJson, const int32_t clientIndex) = 0;
-
-  /**
-   * Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
-   * Includes JSON defining the substitution params to use with the template.
-   * See the Portal documentation for more info.
-   * 
-   * @param groupId Target group
-   * 
-   * @param notificationTemplateId Id of the notification template
-   * 
-   * @param substitutionsJson JSON defining the substitution params to use with the template
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_SendTemplatedPushNotificationToGroup(std::string& _return, const std::string& groupId, const int32_t notificationTemplateId, const std::string& substitutionsJson, const int32_t clientIndex) = 0;
-
-  /**
-   * Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
-   * Includes JSON defining the substitution params to use with the template.
-   * See the Portal documentation for more info.
-   * 
-   * @param groupId Target group
-   * 
-   * @param alertContentJson Body and title of alert
-   * 
-   * @param customDataJson Optional custom data
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_SendNormalizedPushNotificationToGroup(std::string& _return, const std::string& groupId, const std::string& alertContentJson, const std::string& customDataJson, const int32_t clientIndex) = 0;
-
-  /**
-   * Schedules raw notifications based on user local time.
-   * 
-   * @param profileId The profileId of the user to receive the notification
-   * 
-   * @param fcmContent Valid Fcm data content
-   * 
-   * @param iosContent Valid ios data content
-   * 
-   * @param facebookContent Facebook template string
-   * 
-   * @param startTime Start time of sending the push notification
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_ScheduleRawPushNotificationUTC(std::string& _return, const std::string& profileId, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t startTime, const int32_t clientIndex) = 0;
-
-  /**
-   * Schedules raw notifications based on user local time.
-   * 
-   * @param profileId The profileId of the user to receive the notification
-   * 
-   * @param fcmContent Valid Fcm data content
-   * 
-   * @param iosContent Valid ios data content
-   * 
-   * @param facebookContent Facebook template string
-   * 
-   * @param minutesFromNow Minutes from now to send the push notification
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_ScheduleRawPushNotificationMinutes(std::string& _return, const std::string& profileId, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t minutesFromNow, const int32_t clientIndex) = 0;
-
-  /**
-   * Sends a raw push notification to a target user.
-   * 
-   * @param toProfileId The profileId of the user to receive the notification
-   * 
-   * @param fcmContent Valid Fcm data content
-   * 
-   * @param iosContent Valid ios data content
-   * 
-   * @param facebookContent Facebook template string
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_SendRawPushNotification(std::string& _return, const std::string& toProfileId, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t clientIndex) = 0;
-
-  /**
-   * Sends a raw push notification to a target list of users.
-   * 
-   * @param profileIds Collection of profile IDs to send the notification to
-   * 
-   * @param fcmContent Valid Fcm data content
-   * 
-   * @param iosContent Valid ios data content
-   * 
-   * @param facebookContent Facebook template string
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_SendRawPushNotificationBatch(std::string& _return, const std::vector<std::string> & profileIds, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t clientIndex) = 0;
-
-  /**
-   * Sends a raw push notification to a target group.
-   * 
-   * @param groupId Target group
-   * 
-   * @param fcmContent Valid Fcm data content
-   * 
-   * @param iosContent Valid ios data content
-   * 
-   * @param facebookContent Facebook template string
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_SendRawPushNotificationToGroup(std::string& _return, const std::string& groupId, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t clientIndex) = 0;
-
-  /**
-   * Schedules a normalized push notification to a user
-   * 
-   * @param profileId The profileId of the user to receive the notification
-   * 
-   * @param alertContentJson Body and title of alert
-   * 
-   * @param customDataJson Optional custom data
-   * 
-   * @param startTime Start time of sending the push notification
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_ScheduleNormalizedPushNotificationUTC(std::string& _return, const std::string& profileId, const std::string& alertContentJson, const std::string& customDataJson, const int32_t startTime, const int32_t clientIndex) = 0;
-
-  /**
-   * Schedules a normalized push notification to a user
-   * 
-   * @param profileId The profileId of the user to receive the notification
-   * 
-   * @param alertContentJson Body and title of alert
-   * 
-   * @param customDataJson Optional custom data
-   * 
-   * @param minutesFromNow Minutes from now to send the push notification
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_ScheduleNormalizedPushNotificationMinutes(std::string& _return, const std::string& profileId, const std::string& alertContentJson, const std::string& customDataJson, const int32_t minutesFromNow, const int32_t clientIndex) = 0;
-
-  /**
-   * Schedules a rich push notification to a user
-   * 
-   * @param profileId The profileId of the user to receive the notification
-   * 
-   * @param notificationTemplateId Body and title of alert
-   * 
-   * @param substitutionsJson Optional custom data
-   * 
-   * @param startTime Start time of sending the push notification
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_ScheduleRichPushNotificationUTC(std::string& _return, const std::string& profileId, const int32_t notificationTemplateId, const std::string& substitutionsJson, const int32_t startTime, const int32_t clientIndex) = 0;
-
-  /**
-   * Schedules a rich push notification to a user
-   * 
-   * @param profileId The profileId of the user to receive the notification
-   * 
-   * @param notificationTemplateId Body and title of alert
-   * 
-   * @param substitutionsJson Optional custom data
-   * 
-   * @param minutesFromNow Minutes from now to send the push notification
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_ScheduleRichPushNotificationMinutes(std::string& _return, const std::string& profileId, const int32_t notificationTemplateId, const std::string& substitutionsJson, const int32_t minutesFromNow, const int32_t clientIndex) = 0;
-
-  /**
-   * Sends a notification to a user consisting of alert content and custom data.
-   * 
-   * @param toProfileId The profileId of the user to receive the notification
-   * 
-   * @param alertContentJson Body and title of alert
-   * 
-   * @param customDataJson Optional custom data
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_SendNormalizedPushNotification(std::string& _return, const std::string& toProfileId, const std::string& alertContentJson, const std::string& customDataJson, const int32_t clientIndex) = 0;
-
-  /**
-   * Sends a notification to multiple users consisting of alert content and custom data.
-   * 
-   * @param profileIds Collection of profile IDs to send the notification to
-   * 
-   * @param alertContentJson Body and title of alert
-   * 
-   * @param customDataJson Optional custom data
-   * 
-   * @param clientIndex
-   */
   virtual void PushNotification_SendNormalizedPushNotificationBatch(std::string& _return, const std::vector<std::string> & profileIds, const std::string& alertContentJson, const std::string& customDataJson, const int32_t clientIndex) = 0;
 
   /**
@@ -3520,17 +3188,8 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual void Tournament_ViewCurrentReward(std::string& _return, const std::string& leaderboardId, const int32_t clientIndex) = 0;
-
-  /**
-   * Returns the user's reward from a finished tournament
-   * 
-   * @param leaderboardId The leaderboard for the tournament
-   * 
-   * @param versionId Version of the tournament. Use -1 for the latest version.
-   * 
-   * @param clientIndex
-   */
   virtual void Tournament_ViewReward(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) = 0;
+  virtual void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareScreenshot(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareAchievement(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
@@ -4133,6 +3792,9 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
   void Identity_RefreshIdentity(std::string& /* _return */, const std::string& /* externalId */, const std::string& /* authenticationToken */, const std::string& /* authenticationType */, const int32_t /* clientIndex */) {
     return;
   }
+  void Identity_ChangeEmailIdentity(std::string& /* _return */, const std::string& /* oldEmailAddress */, const std::string& /* password */, const std::string& /* newEmailAddress */, const bool /* updateContactEmail */, const int32_t /* clientIndex */) {
+    return;
+  }
   void Identity_AttachPeerProfile(std::string& /* _return */, const std::string& /* peer */, const std::string& /* externalId */, const std::string& /* authenticationToken */, const std::string& /* authenticationType */, const std::string& /* externalAuthName */, const bool /* forceCreate */, const int32_t /* clientIndex */) {
     return;
   }
@@ -4482,6 +4144,9 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
     return;
   }
   void Tournament_ViewReward(std::string& /* _return */, const std::string& /* leaderboardId */, const int32_t /* versionId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Patch_GetGameManifest(std::string& /* _return */, const std::string& /* gameId */, const int32_t /* clientIndex */) {
     return;
   }
   void SocialFeed_ShareVideo(std::string& /* _return */, const int32_t /* timestamp */, const std::string& /* resource */, const std::vector<std::string> & /* tagged */, const std::vector<std::string> & /* show */, const std::vector<std::string> & /* block */, const int32_t /* clientIndex */) {
@@ -24957,6 +24622,138 @@ class BrainCloudService_Identity_RefreshIdentity_presult {
 
 };
 
+typedef struct _BrainCloudService_Identity_ChangeEmailIdentity_args__isset {
+  _BrainCloudService_Identity_ChangeEmailIdentity_args__isset() : oldEmailAddress(false), password(false), newEmailAddress(false), updateContactEmail(false), clientIndex(false) {}
+  bool oldEmailAddress :1;
+  bool password :1;
+  bool newEmailAddress :1;
+  bool updateContactEmail :1;
+  bool clientIndex :1;
+} _BrainCloudService_Identity_ChangeEmailIdentity_args__isset;
+
+class BrainCloudService_Identity_ChangeEmailIdentity_args {
+ public:
+
+  BrainCloudService_Identity_ChangeEmailIdentity_args(const BrainCloudService_Identity_ChangeEmailIdentity_args&);
+  BrainCloudService_Identity_ChangeEmailIdentity_args& operator=(const BrainCloudService_Identity_ChangeEmailIdentity_args&);
+  BrainCloudService_Identity_ChangeEmailIdentity_args() : oldEmailAddress(), password(), newEmailAddress(), updateContactEmail(0), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Identity_ChangeEmailIdentity_args() throw();
+  std::string oldEmailAddress;
+  std::string password;
+  std::string newEmailAddress;
+  bool updateContactEmail;
+  int32_t clientIndex;
+
+  _BrainCloudService_Identity_ChangeEmailIdentity_args__isset __isset;
+
+  void __set_oldEmailAddress(const std::string& val);
+
+  void __set_password(const std::string& val);
+
+  void __set_newEmailAddress(const std::string& val);
+
+  void __set_updateContactEmail(const bool val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Identity_ChangeEmailIdentity_args & rhs) const
+  {
+    if (!(oldEmailAddress == rhs.oldEmailAddress))
+      return false;
+    if (!(password == rhs.password))
+      return false;
+    if (!(newEmailAddress == rhs.newEmailAddress))
+      return false;
+    if (!(updateContactEmail == rhs.updateContactEmail))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Identity_ChangeEmailIdentity_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Identity_ChangeEmailIdentity_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Identity_ChangeEmailIdentity_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Identity_ChangeEmailIdentity_pargs() throw();
+  const std::string* oldEmailAddress;
+  const std::string* password;
+  const std::string* newEmailAddress;
+  const bool* updateContactEmail;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Identity_ChangeEmailIdentity_result__isset {
+  _BrainCloudService_Identity_ChangeEmailIdentity_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Identity_ChangeEmailIdentity_result__isset;
+
+class BrainCloudService_Identity_ChangeEmailIdentity_result {
+ public:
+
+  BrainCloudService_Identity_ChangeEmailIdentity_result(const BrainCloudService_Identity_ChangeEmailIdentity_result&);
+  BrainCloudService_Identity_ChangeEmailIdentity_result& operator=(const BrainCloudService_Identity_ChangeEmailIdentity_result&);
+  BrainCloudService_Identity_ChangeEmailIdentity_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Identity_ChangeEmailIdentity_result() throw();
+  std::string success;
+
+  _BrainCloudService_Identity_ChangeEmailIdentity_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Identity_ChangeEmailIdentity_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Identity_ChangeEmailIdentity_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Identity_ChangeEmailIdentity_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Identity_ChangeEmailIdentity_presult__isset {
+  _BrainCloudService_Identity_ChangeEmailIdentity_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Identity_ChangeEmailIdentity_presult__isset;
+
+class BrainCloudService_Identity_ChangeEmailIdentity_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Identity_ChangeEmailIdentity_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Identity_ChangeEmailIdentity_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 typedef struct _BrainCloudService_Identity_AttachPeerProfile_args__isset {
   _BrainCloudService_Identity_AttachPeerProfile_args__isset() : peer(false), externalId(false), authenticationToken(false), authenticationType(false), externalAuthName(false), forceCreate(false), clientIndex(false) {}
   bool peer :1;
@@ -38833,6 +38630,117 @@ class BrainCloudService_Tournament_ViewReward_presult {
 
 };
 
+typedef struct _BrainCloudService_Patch_GetGameManifest_args__isset {
+  _BrainCloudService_Patch_GetGameManifest_args__isset() : gameId(false), clientIndex(false) {}
+  bool gameId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Patch_GetGameManifest_args__isset;
+
+class BrainCloudService_Patch_GetGameManifest_args {
+ public:
+
+  BrainCloudService_Patch_GetGameManifest_args(const BrainCloudService_Patch_GetGameManifest_args&);
+  BrainCloudService_Patch_GetGameManifest_args& operator=(const BrainCloudService_Patch_GetGameManifest_args&);
+  BrainCloudService_Patch_GetGameManifest_args() : gameId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Patch_GetGameManifest_args() throw();
+  std::string gameId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Patch_GetGameManifest_args__isset __isset;
+
+  void __set_gameId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Patch_GetGameManifest_args & rhs) const
+  {
+    if (!(gameId == rhs.gameId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Patch_GetGameManifest_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Patch_GetGameManifest_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Patch_GetGameManifest_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Patch_GetGameManifest_pargs() throw();
+  const std::string* gameId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Patch_GetGameManifest_result__isset {
+  _BrainCloudService_Patch_GetGameManifest_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Patch_GetGameManifest_result__isset;
+
+class BrainCloudService_Patch_GetGameManifest_result {
+ public:
+
+  BrainCloudService_Patch_GetGameManifest_result(const BrainCloudService_Patch_GetGameManifest_result&);
+  BrainCloudService_Patch_GetGameManifest_result& operator=(const BrainCloudService_Patch_GetGameManifest_result&);
+  BrainCloudService_Patch_GetGameManifest_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Patch_GetGameManifest_result() throw();
+  std::string success;
+
+  _BrainCloudService_Patch_GetGameManifest_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Patch_GetGameManifest_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Patch_GetGameManifest_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Patch_GetGameManifest_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Patch_GetGameManifest_presult__isset {
+  _BrainCloudService_Patch_GetGameManifest_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Patch_GetGameManifest_presult__isset;
+
+class BrainCloudService_Patch_GetGameManifest_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Patch_GetGameManifest_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Patch_GetGameManifest_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 typedef struct _BrainCloudService_SocialFeed_ShareVideo_args__isset {
   _BrainCloudService_SocialFeed_ShareVideo_args__isset() : timestamp(false), resource(false), tagged(false), show(false), block(false), clientIndex(false) {}
   bool timestamp :1;
@@ -43232,6 +43140,9 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Identity_RefreshIdentity(std::string& _return, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const int32_t clientIndex);
   void send_Identity_RefreshIdentity(const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const int32_t clientIndex);
   void recv_Identity_RefreshIdentity(std::string& _return);
+  void Identity_ChangeEmailIdentity(std::string& _return, const std::string& oldEmailAddress, const std::string& password, const std::string& newEmailAddress, const bool updateContactEmail, const int32_t clientIndex);
+  void send_Identity_ChangeEmailIdentity(const std::string& oldEmailAddress, const std::string& password, const std::string& newEmailAddress, const bool updateContactEmail, const int32_t clientIndex);
+  void recv_Identity_ChangeEmailIdentity(std::string& _return);
   void Identity_AttachPeerProfile(std::string& _return, const std::string& peer, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex);
   void send_Identity_AttachPeerProfile(const std::string& peer, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex);
   void recv_Identity_AttachPeerProfile(std::string& _return);
@@ -43583,6 +43494,9 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Tournament_ViewReward(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex);
   void send_Tournament_ViewReward(const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex);
   void recv_Tournament_ViewReward(std::string& _return);
+  void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex);
+  void send_Patch_GetGameManifest(const std::string& gameId, const int32_t clientIndex);
+  void recv_Patch_GetGameManifest(std::string& _return);
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex);
   void send_SocialFeed_ShareVideo(const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex);
   void recv_SocialFeed_ShareVideo(std::string& _return);
@@ -43869,6 +43783,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Identity_GetIdentities(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Identity_GetExpiredIdentities(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Identity_RefreshIdentity(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Identity_ChangeEmailIdentity(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Identity_AttachPeerProfile(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Identity_DetachPeer(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Identity_GetPeerProfiles(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -43986,6 +43901,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Tournament_PostTournamentScoreWithResults(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Tournament_ViewCurrentReward(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Tournament_ViewReward(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Patch_GetGameManifest(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SocialFeed_ShareVideo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SocialFeed_ShareScreenshot(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SocialFeed_ShareAchievement(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -44198,6 +44114,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Identity_GetIdentities"] = &BrainCloudServiceProcessor::process_Identity_GetIdentities;
     processMap_["Identity_GetExpiredIdentities"] = &BrainCloudServiceProcessor::process_Identity_GetExpiredIdentities;
     processMap_["Identity_RefreshIdentity"] = &BrainCloudServiceProcessor::process_Identity_RefreshIdentity;
+    processMap_["Identity_ChangeEmailIdentity"] = &BrainCloudServiceProcessor::process_Identity_ChangeEmailIdentity;
     processMap_["Identity_AttachPeerProfile"] = &BrainCloudServiceProcessor::process_Identity_AttachPeerProfile;
     processMap_["Identity_DetachPeer"] = &BrainCloudServiceProcessor::process_Identity_DetachPeer;
     processMap_["Identity_GetPeerProfiles"] = &BrainCloudServiceProcessor::process_Identity_GetPeerProfiles;
@@ -44315,6 +44232,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Tournament_PostTournamentScoreWithResults"] = &BrainCloudServiceProcessor::process_Tournament_PostTournamentScoreWithResults;
     processMap_["Tournament_ViewCurrentReward"] = &BrainCloudServiceProcessor::process_Tournament_ViewCurrentReward;
     processMap_["Tournament_ViewReward"] = &BrainCloudServiceProcessor::process_Tournament_ViewReward;
+    processMap_["Patch_GetGameManifest"] = &BrainCloudServiceProcessor::process_Patch_GetGameManifest;
     processMap_["SocialFeed_ShareVideo"] = &BrainCloudServiceProcessor::process_SocialFeed_ShareVideo;
     processMap_["SocialFeed_ShareScreenshot"] = &BrainCloudServiceProcessor::process_SocialFeed_ShareScreenshot;
     processMap_["SocialFeed_ShareAchievement"] = &BrainCloudServiceProcessor::process_SocialFeed_ShareAchievement;
@@ -46126,6 +46044,16 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
     return;
   }
 
+  void Identity_ChangeEmailIdentity(std::string& _return, const std::string& oldEmailAddress, const std::string& password, const std::string& newEmailAddress, const bool updateContactEmail, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Identity_ChangeEmailIdentity(_return, oldEmailAddress, password, newEmailAddress, updateContactEmail, clientIndex);
+    }
+    ifaces_[i]->Identity_ChangeEmailIdentity(_return, oldEmailAddress, password, newEmailAddress, updateContactEmail, clientIndex);
+    return;
+  }
+
   void Identity_AttachPeerProfile(std::string& _return, const std::string& peer, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -47296,6 +47224,16 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
     return;
   }
 
+  void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Patch_GetGameManifest(_return, gameId, clientIndex);
+    }
+    ifaces_[i]->Patch_GetGameManifest(_return, gameId, clientIndex);
+    return;
+  }
+
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -48170,6 +48108,9 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Identity_RefreshIdentity(std::string& _return, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const int32_t clientIndex);
   int32_t send_Identity_RefreshIdentity(const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const int32_t clientIndex);
   void recv_Identity_RefreshIdentity(std::string& _return, const int32_t seqid);
+  void Identity_ChangeEmailIdentity(std::string& _return, const std::string& oldEmailAddress, const std::string& password, const std::string& newEmailAddress, const bool updateContactEmail, const int32_t clientIndex);
+  int32_t send_Identity_ChangeEmailIdentity(const std::string& oldEmailAddress, const std::string& password, const std::string& newEmailAddress, const bool updateContactEmail, const int32_t clientIndex);
+  void recv_Identity_ChangeEmailIdentity(std::string& _return, const int32_t seqid);
   void Identity_AttachPeerProfile(std::string& _return, const std::string& peer, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex);
   int32_t send_Identity_AttachPeerProfile(const std::string& peer, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex);
   void recv_Identity_AttachPeerProfile(std::string& _return, const int32_t seqid);
@@ -48521,6 +48462,9 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Tournament_ViewReward(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex);
   int32_t send_Tournament_ViewReward(const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex);
   void recv_Tournament_ViewReward(std::string& _return, const int32_t seqid);
+  void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex);
+  int32_t send_Patch_GetGameManifest(const std::string& gameId, const int32_t clientIndex);
+  void recv_Patch_GetGameManifest(std::string& _return, const int32_t seqid);
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex);
   int32_t send_SocialFeed_ShareVideo(const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex);
   void recv_SocialFeed_ShareVideo(std::string& _return, const int32_t seqid);

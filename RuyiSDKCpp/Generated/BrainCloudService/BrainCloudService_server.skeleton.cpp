@@ -375,34 +375,11 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Client_IsInitialized\n");
   }
 
-  /**
-   * Method initializes the BrainCloudClient.
-   * 
-   * @param secretKey The secret key for your app
-   * 
-   * @param appId
-   * @param appVersion The app version
-   * 
-   * @param clientIndex
-   */
   void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Client_Initialize_SSS\n");
   }
 
-  /**
-   * Method initializes the BrainCloudClient.
-   * 
-   * @param serverURL The URL to the brainCloud server
-   * 
-   * @param secretKey The secret key for your app
-   * 
-   * @param appId The app id
-   * 
-   * @param appVersion The app version
-   * 
-   * @param clientIndex
-   */
   void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Client_Initialize_SSSS\n");
@@ -578,35 +555,6 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Client_SetUploadLowTransferRateThreshold\n");
   }
 
-  /**
-   * Enables the timeout message caching which is disabled by default.
-   * Once enabled, if a client side timeout is encountered
-   * (i.e. brainCloud server is unreachable presumably due to the client
-   * network being down) the SDK will do the following:
-   * 
-   * 1 - cache the currently queued messages to brainCloud
-   * 2 - call the network error callback
-   * 3 - then expect the app to call either:
-   *     a) RetryCachedMessages() to retry sending to brainCloud
-   *     b) FlushCachedMessages() to dump all messages in the queue.
-   * 
-   * Between steps 2 and 3, the app can prompt the user to retry connecting
-   * to brainCloud to determine whether to follow path 3a or 3b.
-   * 
-   * Note that if path 3a is followed, and another timeout is encountered,
-   * the process will begin all over again from step 1.
-   * 
-   * WARNING - the brainCloud SDK will cache *all* API calls sent
-   * when a timeout is encountered if this mechanism is enabled.
-   * This effectively freezes all communication with brainCloud.
-   * Apps must call either RetryCachedMessages() or FlushCachedMessages()
-   * for the brainCloud SDK to resume sending messages.
-   * ResetCommunication() will also clear the message cache.
-   * 
-   * @param enabled True if message should be cached on timeout
-   * 
-   * @param clientIndex
-   */
   void Client_EnableNetworkErrorMessageCaching(const bool enabled, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Client_EnableNetworkErrorMessageCaching\n");
@@ -1969,19 +1917,6 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Group_AddGroupMember\n");
   }
 
-  /**
-   * Approve an outstanding request to join the group.
-   * 
-   * @param groupId ID of the group.
-   * 
-   * @param profileId Profile ID of the invitation being deleted.
-   * 
-   * @param role Role of the member being invited.
-   * 
-   * @param jsonAttributes Attributes of the member being invited.
-   * 
-   * @param clientIndex
-   */
   void Group_ApproveGroupJoinRequest(std::string& _return, const std::string& groupId, const std::string& profileId, const  ::Ruyi::SDK::BrainCloudApi::Role::type role, const std::string& jsonAttributes, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Group_ApproveGroupJoinRequest\n");
@@ -2090,11 +2025,6 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Group_DeleteGroupEntity\n");
   }
 
-  /**
-   * Read information on groups to which the current user belongs.
-   * 
-   * @param clientIndex
-   */
   void Group_GetMyGroups(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Group_GetMyGroups\n");
@@ -2172,13 +2102,6 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Group_LeaveGroup\n");
   }
 
-  /**
-   * Retrieve a page of group summary information based on the specified context.
-   * 
-   * @param jsonContext Query context.
-   * 
-   * @param clientIndex
-   */
   void Group_ListGroupsPage(std::string& _return, const std::string& jsonContext, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Group_ListGroupsPage\n");
@@ -2199,13 +2122,6 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Group_ListGroupsPageByOffset\n");
   }
 
-  /**
-   * Read information on groups to which the specified user belongs.  Access is subject to restrictions.
-   * 
-   * @param profileId User to read groups for
-   * 
-   * @param clientIndex
-   */
   void Group_ListGroupsWithMember(std::string& _return, const std::string& profileId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Group_ListGroupsWithMember\n");
@@ -2407,15 +2323,6 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Identity_AttachEmailIdentity\n");
   }
 
-  /**
-   * Merge the profile associated with the provided e=mail with the current profile.
-   * 
-   * @param email The user's e-mail address
-   * 
-   * @param password The user's password
-   * 
-   * @param clientIndex
-   */
   void Identity_MergeEmailIdentity(std::string& _return, const std::string& email, const std::string& password, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Identity_MergeEmailIdentity\n");
@@ -2597,6 +2504,24 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Identity_RefreshIdentity(std::string& _return, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Identity_RefreshIdentity\n");
+  }
+
+  /**
+   * Allows email identity email address to be changed
+   * 
+   * @param oldEmailAddress Old email address
+   * 
+   * @param password Password for identity
+   * 
+   * @param newEmailAddress New email address
+   * 
+   * @param updateContactEmail Whether to update contact email in profile
+   * 
+   * @param clientIndex
+   */
+  void Identity_ChangeEmailIdentity(std::string& _return, const std::string& oldEmailAddress, const std::string& password, const std::string& newEmailAddress, const bool updateContactEmail, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Identity_ChangeEmailIdentity\n");
   }
 
   /**
@@ -3521,323 +3446,96 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Profanity_ProfanityIdentifyBadWords\n");
   }
 
-  /**
-   * Deregisters all device tokens currently registered to the user.
-   * 
-   * @param clientIndex
-   */
   void PushNotification_DeregisterAllPushNotificationDeviceTokens(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_DeregisterAllPushNotificationDeviceTokens\n");
   }
 
-  /**
-   * Deregisters the given device token from the server to disable this device
-   * from receiving push notifications.
-   * 
-   * @param platform The device platform being registered.
-   * 
-   * @param token The platform-dependant device token needed for push notifications.
-   * 
-   * @param clientIndex
-   */
   void PushNotification_DeregisterPushNotificationDeviceToken(std::string& _return, const std::string& platform, const std::string& token, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_DeregisterPushNotificationDeviceToken\n");
   }
 
-  /**
-   * Registers the given device token with the server to enable this device
-   * to receive push notifications.
-   * 
-   * @param platform
-   * @param token The platform-dependant device token needed for push notifications.
-   * 
-   * @param clientIndex
-   */
   void PushNotification_RegisterPushNotificationDeviceToken(std::string& _return, const std::string& platform, const std::string& token, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_RegisterPushNotificationDeviceToken\n");
   }
 
-  /**
-   * Sends a simple push notification based on the passed in message.
-   * NOTE: It is possible to send a push notification to oneself.
-   * 
-   * @param toProfileId The braincloud profileId of the user to receive the notification
-   * 
-   * @param message Text of the push notification
-   * 
-   * @param clientIndex
-   */
   void PushNotification_SendSimplePushNotification(std::string& _return, const std::string& toProfileId, const std::string& message, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_SendSimplePushNotification\n");
   }
 
-  /**
-   * Sends a notification to a user based on a brainCloud portal configured notification template.
-   * NOTE: It is possible to send a push notification to oneself.
-   * 
-   * @param toProfileId The braincloud profileId of the user to receive the notification
-   * 
-   * @param notificationTemplateId Id of the notification template
-   * 
-   * @param clientIndex
-   */
   void PushNotification_SendRichPushNotification(std::string& _return, const std::string& toProfileId, const int32_t notificationTemplateId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_SendRichPushNotification\n");
   }
 
-  /**
-   * Sends a notification to a user based on a brainCloud portal configured notification template.
-   * Includes JSON defining the substitution params to use with the template.
-   * See the Portal documentation for more info.
-   * NOTE: It is possible to send a push notification to oneself.
-   * 
-   * @param toProfileId The braincloud profileId of the user to receive the notification
-   * 
-   * @param notificationTemplateId Id of the notification template
-   * 
-   * @param substitutionJson JSON defining the substitution params to use with the template
-   * 
-   * @param clientIndex
-   */
   void PushNotification_SendRichPushNotificationWithParams(std::string& _return, const std::string& toProfileId, const int32_t notificationTemplateId, const std::string& substitutionJson, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_SendRichPushNotificationWithParams\n");
   }
 
-  /**
-   * Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
-   * Includes JSON defining the substitution params to use with the template.
-   * See the Portal documentation for more info.
-   * 
-   * @param groupId Target group
-   * 
-   * @param notificationTemplateId Id of the notification template
-   * 
-   * @param substitutionsJson JSON defining the substitution params to use with the template
-   * 
-   * @param clientIndex
-   */
   void PushNotification_SendTemplatedPushNotificationToGroup(std::string& _return, const std::string& groupId, const int32_t notificationTemplateId, const std::string& substitutionsJson, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_SendTemplatedPushNotificationToGroup\n");
   }
 
-  /**
-   * Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
-   * Includes JSON defining the substitution params to use with the template.
-   * See the Portal documentation for more info.
-   * 
-   * @param groupId Target group
-   * 
-   * @param alertContentJson Body and title of alert
-   * 
-   * @param customDataJson Optional custom data
-   * 
-   * @param clientIndex
-   */
   void PushNotification_SendNormalizedPushNotificationToGroup(std::string& _return, const std::string& groupId, const std::string& alertContentJson, const std::string& customDataJson, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_SendNormalizedPushNotificationToGroup\n");
   }
 
-  /**
-   * Schedules raw notifications based on user local time.
-   * 
-   * @param profileId The profileId of the user to receive the notification
-   * 
-   * @param fcmContent Valid Fcm data content
-   * 
-   * @param iosContent Valid ios data content
-   * 
-   * @param facebookContent Facebook template string
-   * 
-   * @param startTime Start time of sending the push notification
-   * 
-   * @param clientIndex
-   */
   void PushNotification_ScheduleRawPushNotificationUTC(std::string& _return, const std::string& profileId, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t startTime, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_ScheduleRawPushNotificationUTC\n");
   }
 
-  /**
-   * Schedules raw notifications based on user local time.
-   * 
-   * @param profileId The profileId of the user to receive the notification
-   * 
-   * @param fcmContent Valid Fcm data content
-   * 
-   * @param iosContent Valid ios data content
-   * 
-   * @param facebookContent Facebook template string
-   * 
-   * @param minutesFromNow Minutes from now to send the push notification
-   * 
-   * @param clientIndex
-   */
   void PushNotification_ScheduleRawPushNotificationMinutes(std::string& _return, const std::string& profileId, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t minutesFromNow, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_ScheduleRawPushNotificationMinutes\n");
   }
 
-  /**
-   * Sends a raw push notification to a target user.
-   * 
-   * @param toProfileId The profileId of the user to receive the notification
-   * 
-   * @param fcmContent Valid Fcm data content
-   * 
-   * @param iosContent Valid ios data content
-   * 
-   * @param facebookContent Facebook template string
-   * 
-   * @param clientIndex
-   */
   void PushNotification_SendRawPushNotification(std::string& _return, const std::string& toProfileId, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_SendRawPushNotification\n");
   }
 
-  /**
-   * Sends a raw push notification to a target list of users.
-   * 
-   * @param profileIds Collection of profile IDs to send the notification to
-   * 
-   * @param fcmContent Valid Fcm data content
-   * 
-   * @param iosContent Valid ios data content
-   * 
-   * @param facebookContent Facebook template string
-   * 
-   * @param clientIndex
-   */
   void PushNotification_SendRawPushNotificationBatch(std::string& _return, const std::vector<std::string> & profileIds, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_SendRawPushNotificationBatch\n");
   }
 
-  /**
-   * Sends a raw push notification to a target group.
-   * 
-   * @param groupId Target group
-   * 
-   * @param fcmContent Valid Fcm data content
-   * 
-   * @param iosContent Valid ios data content
-   * 
-   * @param facebookContent Facebook template string
-   * 
-   * @param clientIndex
-   */
   void PushNotification_SendRawPushNotificationToGroup(std::string& _return, const std::string& groupId, const std::string& fcmContent, const std::string& iosContent, const std::string& facebookContent, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_SendRawPushNotificationToGroup\n");
   }
 
-  /**
-   * Schedules a normalized push notification to a user
-   * 
-   * @param profileId The profileId of the user to receive the notification
-   * 
-   * @param alertContentJson Body and title of alert
-   * 
-   * @param customDataJson Optional custom data
-   * 
-   * @param startTime Start time of sending the push notification
-   * 
-   * @param clientIndex
-   */
   void PushNotification_ScheduleNormalizedPushNotificationUTC(std::string& _return, const std::string& profileId, const std::string& alertContentJson, const std::string& customDataJson, const int32_t startTime, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_ScheduleNormalizedPushNotificationUTC\n");
   }
 
-  /**
-   * Schedules a normalized push notification to a user
-   * 
-   * @param profileId The profileId of the user to receive the notification
-   * 
-   * @param alertContentJson Body and title of alert
-   * 
-   * @param customDataJson Optional custom data
-   * 
-   * @param minutesFromNow Minutes from now to send the push notification
-   * 
-   * @param clientIndex
-   */
   void PushNotification_ScheduleNormalizedPushNotificationMinutes(std::string& _return, const std::string& profileId, const std::string& alertContentJson, const std::string& customDataJson, const int32_t minutesFromNow, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_ScheduleNormalizedPushNotificationMinutes\n");
   }
 
-  /**
-   * Schedules a rich push notification to a user
-   * 
-   * @param profileId The profileId of the user to receive the notification
-   * 
-   * @param notificationTemplateId Body and title of alert
-   * 
-   * @param substitutionsJson Optional custom data
-   * 
-   * @param startTime Start time of sending the push notification
-   * 
-   * @param clientIndex
-   */
   void PushNotification_ScheduleRichPushNotificationUTC(std::string& _return, const std::string& profileId, const int32_t notificationTemplateId, const std::string& substitutionsJson, const int32_t startTime, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_ScheduleRichPushNotificationUTC\n");
   }
 
-  /**
-   * Schedules a rich push notification to a user
-   * 
-   * @param profileId The profileId of the user to receive the notification
-   * 
-   * @param notificationTemplateId Body and title of alert
-   * 
-   * @param substitutionsJson Optional custom data
-   * 
-   * @param minutesFromNow Minutes from now to send the push notification
-   * 
-   * @param clientIndex
-   */
   void PushNotification_ScheduleRichPushNotificationMinutes(std::string& _return, const std::string& profileId, const int32_t notificationTemplateId, const std::string& substitutionsJson, const int32_t minutesFromNow, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_ScheduleRichPushNotificationMinutes\n");
   }
 
-  /**
-   * Sends a notification to a user consisting of alert content and custom data.
-   * 
-   * @param toProfileId The profileId of the user to receive the notification
-   * 
-   * @param alertContentJson Body and title of alert
-   * 
-   * @param customDataJson Optional custom data
-   * 
-   * @param clientIndex
-   */
   void PushNotification_SendNormalizedPushNotification(std::string& _return, const std::string& toProfileId, const std::string& alertContentJson, const std::string& customDataJson, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_SendNormalizedPushNotification\n");
   }
 
-  /**
-   * Sends a notification to multiple users consisting of alert content and custom data.
-   * 
-   * @param profileIds Collection of profile IDs to send the notification to
-   * 
-   * @param alertContentJson Body and title of alert
-   * 
-   * @param customDataJson Optional custom data
-   * 
-   * @param clientIndex
-   */
   void PushNotification_SendNormalizedPushNotificationBatch(std::string& _return, const std::vector<std::string> & profileIds, const std::string& alertContentJson, const std::string& customDataJson, const int32_t clientIndex) {
     // Your implementation goes here
     printf("PushNotification_SendNormalizedPushNotificationBatch\n");
@@ -4403,18 +4101,14 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Tournament_ViewCurrentReward\n");
   }
 
-  /**
-   * Returns the user's reward from a finished tournament
-   * 
-   * @param leaderboardId The leaderboard for the tournament
-   * 
-   * @param versionId Version of the tournament. Use -1 for the latest version.
-   * 
-   * @param clientIndex
-   */
   void Tournament_ViewReward(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Tournament_ViewReward\n");
+  }
+
+  void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Patch_GetGameManifest\n");
   }
 
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {

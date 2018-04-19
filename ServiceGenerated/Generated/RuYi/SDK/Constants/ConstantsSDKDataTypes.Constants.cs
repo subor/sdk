@@ -45,20 +45,20 @@ namespace Ruyi.SDK.Constants
       tmp0.AppVersion = "1.0.0";
       BraincloudServerList.Add(tmp0);
       BraincloudServerInfo tmp1 = new BraincloudServerInfo();
-      tmp1.AppVersion = "1.0.0";
       tmp1.SecretKey = "c7df4982-479d-4daa-adcd-44967c8d5c3b";
-      tmp1.Dispatcher = "dispatcherv2";
+      tmp1.AppVersion = "1.0.0";
       tmp1.UrlRoot = "https://braincloud:4443/";
-      tmp1.Name = "internalruyimaster";
+      tmp1.Dispatcher = "dispatcherv2";
       tmp1.AppId = "30006";
+      tmp1.Name = "internalruyimaster";
       BraincloudServerList.Add(tmp1);
       BraincloudServerInfo tmp2 = new BraincloudServerInfo();
-      tmp2.Name = "localhost";
-      tmp2.AppId = "30001";
       tmp2.SecretKey = "655a2914-be71-495b-868f-68f6b4f6dfb1";
-      tmp2.AppVersion = "1.0.0";
-      tmp2.UrlRoot = "https://localhost:8443/";
       tmp2.Dispatcher = "dispatcherv2";
+      tmp2.AppId = "30001";
+      tmp2.AppVersion = "1.0.0";
+      tmp2.Name = "localhost";
+      tmp2.UrlRoot = "https://localhost:8443/";
       BraincloudServerList.Add(tmp2);
     }
   }

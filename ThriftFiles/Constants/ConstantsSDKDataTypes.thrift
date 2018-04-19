@@ -51,19 +51,11 @@ const list<BraincloudServerInfo> BraincloudServerList = [
 		"appVersion": "1.0.0",
 	},
 	{
-		"name": "braincloudunittestuse",
+		"name": "internalruyimaster",
 		"urlRoot": "https://braincloud:4443/",
 		"dispatcher": "dispatcherv2",
-		"secretKey": "1b057efd-4ce5-4245-b076-caba21972e5c",
-		"appId": "30002",
-		"appVersion": "1.0.0",
-	},
-	{
-		"name": "internalray",
-		"urlRoot": "",
-		"dispatcher": "",
-		"secretKey": "f75514d5-10bf-4e10-8701-2b9e16356d3f",
-		"appId": "11782",
+		"secretKey": "c7df4982-479d-4daa-adcd-44967c8d5c3b",
+		"appId": "30006",
 		"appVersion": "1.0.0",
 	},
 	{

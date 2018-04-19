@@ -259,32 +259,9 @@ service BrainCloudService {
 	/** Returns true if brainCloud has been initialized. */
 	bool Client_IsInitialized(1: i32 clientIndex),
 
-	/** Method initializes the BrainCloudClient. */
-	void Client_Initialize_SSS(
-		/** The secret key for your app */
-		1: string secretKey, 
-		2: string appId, 
-		
-		/** The app version */
-		3: string appVersion, 
-		4: i32 clientIndex
-	),
+	void Client_Initialize_SSS(1: string secretKey, 2: string appId, 3: string appVersion, 4: i32 clientIndex),
 
-	/** Method initializes the BrainCloudClient. */
-	void Client_Initialize_SSSS(
-		/** The URL to the brainCloud server */
-		1: string serverURL, 
-		
-		/** The secret key for your app */
-		2: string secretKey, 
-		
-		/** The app id */
-		3: string appId, 
-		
-		/** The app version */
-		4: string appVersion, 
-		5: i32 clientIndex
-	),
+	void Client_Initialize_SSSS(1: string serverURL, 2: string secretKey, 3: string appId, 4: string appVersion, 5: i32 clientIndex),
 
 	/** Initialize the identity aspects of brainCloud. */
 	void Client_InitializeIdentity(
@@ -372,34 +349,7 @@ service BrainCloudService {
 		2: i32 clientIndex
 	),
 
-	/** Enables the timeout message caching which is disabled by default.
-             Once enabled, if a client side timeout is encountered
-             (i.e. brainCloud server is unreachable presumably due to the client
-             network being down) the SDK will do the following:
-            
-             1 - cache the currently queued messages to brainCloud
-             2 - call the network error callback
-             3 - then expect the app to call either:
-                 a) RetryCachedMessages() to retry sending to brainCloud
-                 b) FlushCachedMessages() to dump all messages in the queue.
-            
-             Between steps 2 and 3, the app can prompt the user to retry connecting
-             to brainCloud to determine whether to follow path 3a or 3b.
-            
-             Note that if path 3a is followed, and another timeout is encountered,
-             the process will begin all over again from step 1.
-            
-             WARNING - the brainCloud SDK will cache *all* API calls sent
-             when a timeout is encountered if this mechanism is enabled.
-             This effectively freezes all communication with brainCloud.
-             Apps must call either RetryCachedMessages() or FlushCachedMessages()
-             for the brainCloud SDK to resume sending messages.
-             ResetCommunication() will also clear the message cache. */
-	void Client_EnableNetworkErrorMessageCaching(
-		/** True if message should be cached on timeout */
-		1: bool enabled, 
-		2: i32 clientIndex
-	),
+	void Client_EnableNetworkErrorMessageCaching(1: bool enabled, 2: i32 clientIndex),
 
 	/** Attempts to resend any cached messages. If no messages are in the cache,
             this method does nothing. */
@@ -1297,21 +1247,7 @@ service BrainCloudService {
 		5: i32 clientIndex
 	),
 
-	/** Approve an outstanding request to join the group. */
-	string Group_ApproveGroupJoinRequest(
-		/** ID of the group. */
-		1: string groupId, 
-		
-		/** Profile ID of the invitation being deleted. */
-		2: string profileId, 
-		
-		/** Role of the member being invited. */
-		3: BrainCloudServiceSDKDataTypes.Role role, 
-		
-		/** Attributes of the member being invited. */
-		4: string jsonAttributes, 
-		5: i32 clientIndex
-	),
+	string Group_ApproveGroupJoinRequest(1: string groupId, 2: string profileId, 3: BrainCloudServiceSDKDataTypes.Role role, 4: string jsonAttributes, 5: i32 clientIndex),
 
 	/** Automatically join an open group that matches the search criteria and has space available. */
 	string Group_AutoJoinGroup(
@@ -1401,7 +1337,6 @@ service BrainCloudService {
 		4: i32 clientIndex
 	),
 
-	/** Read information on groups to which the current user belongs. */
 	string Group_GetMyGroups(1: i32 clientIndex),
 
 	/** Increment elements for the group's data field. */
@@ -1457,12 +1392,7 @@ service BrainCloudService {
 		2: i32 clientIndex
 	),
 
-	/** Retrieve a page of group summary information based on the specified context. */
-	string Group_ListGroupsPage(
-		/** Query context. */
-		1: string jsonContext, 
-		2: i32 clientIndex
-	),
+	string Group_ListGroupsPage(1: string jsonContext, 2: i32 clientIndex),
 
 	/** Retrieve a page of group summary information based on the encoded context 
             and specified page offset. */
@@ -1475,12 +1405,7 @@ service BrainCloudService {
 		3: i32 clientIndex
 	),
 
-	/** Read information on groups to which the specified user belongs.  Access is subject to restrictions. */
-	string Group_ListGroupsWithMember(
-		/** User to read groups for */
-		1: string profileId, 
-		2: i32 clientIndex
-	),
+	string Group_ListGroupsWithMember(1: string profileId, 2: i32 clientIndex),
 
 	/** Read the specified group. */
 	string Group_ReadGroup(
@@ -1622,15 +1547,7 @@ service BrainCloudService {
 		3: i32 clientIndex
 	),
 
-	/** Merge the profile associated with the provided e=mail with the current profile. */
-	string Identity_MergeEmailIdentity(
-		/** The user's e-mail address */
-		1: string email, 
-		
-		/** The user's password */
-		2: string password, 
-		3: i32 clientIndex
-	),
+	string Identity_MergeEmailIdentity(1: string email, 2: string password, 3: i32 clientIndex),
 
 	/** Detach the e-mail identity from the current profile */
 	string Identity_DetachEmailIdentity(
@@ -1750,6 +1667,22 @@ service BrainCloudService {
 		/** Type of authentication */
 		3: string authenticationType, 
 		4: i32 clientIndex
+	),
+
+	/** Allows email identity email address to be changed */
+	string Identity_ChangeEmailIdentity(
+		/** Old email address */
+		1: string oldEmailAddress, 
+		
+		/** Password for identity */
+		2: string password, 
+		
+		/** New email address */
+		3: string newEmailAddress, 
+		
+		/** Whether to update contact email in profile */
+		4: bool updateContactEmail, 
+		5: i32 clientIndex
 	),
 
 	/** Attaches a peer identity to this user's profile */
@@ -2351,271 +2284,43 @@ service BrainCloudService {
 		6: i32 clientIndex
 	),
 
-	/** Deregisters all device tokens currently registered to the user. */
 	string PushNotification_DeregisterAllPushNotificationDeviceTokens(1: i32 clientIndex),
 
-	/** Deregisters the given device token from the server to disable this device
-            from receiving push notifications. */
-	string PushNotification_DeregisterPushNotificationDeviceToken(
-		/** The device platform being registered. */
-		1: string platform, 
-		
-		/** The platform-dependant device token needed for push notifications. */
-		2: string token, 
-		3: i32 clientIndex
-	),
+	string PushNotification_DeregisterPushNotificationDeviceToken(1: string platform, 2: string token, 3: i32 clientIndex),
 
-	/** Registers the given device token with the server to enable this device
-            to receive push notifications. */
-	string PushNotification_RegisterPushNotificationDeviceToken(1: string platform, 
-		/** The platform-dependant device token needed for push notifications. */
-		2: string token, 
-		3: i32 clientIndex
-	),
+	string PushNotification_RegisterPushNotificationDeviceToken(1: string platform, 2: string token, 3: i32 clientIndex),
 
-	/** Sends a simple push notification based on the passed in message.
-            NOTE: It is possible to send a push notification to oneself. */
-	string PushNotification_SendSimplePushNotification(
-		/** The braincloud profileId of the user to receive the notification */
-		1: string toProfileId, 
-		
-		/** Text of the push notification */
-		2: string message, 
-		3: i32 clientIndex
-	),
+	string PushNotification_SendSimplePushNotification(1: string toProfileId, 2: string message, 3: i32 clientIndex),
 
-	/** Sends a notification to a user based on a brainCloud portal configured notification template.
-            NOTE: It is possible to send a push notification to oneself. */
-	string PushNotification_SendRichPushNotification(
-		/** The braincloud profileId of the user to receive the notification */
-		1: string toProfileId, 
-		
-		/** Id of the notification template */
-		2: i32 notificationTemplateId, 
-		3: i32 clientIndex
-	),
+	string PushNotification_SendRichPushNotification(1: string toProfileId, 2: i32 notificationTemplateId, 3: i32 clientIndex),
 
-	/** Sends a notification to a user based on a brainCloud portal configured notification template.
-            Includes JSON defining the substitution params to use with the template.
-            See the Portal documentation for more info.
-            NOTE: It is possible to send a push notification to oneself. */
-	string PushNotification_SendRichPushNotificationWithParams(
-		/** The braincloud profileId of the user to receive the notification */
-		1: string toProfileId, 
-		
-		/** Id of the notification template */
-		2: i32 notificationTemplateId, 
-		
-		/** JSON defining the substitution params to use with the template */
-		3: string substitutionJson, 
-		4: i32 clientIndex
-	),
+	string PushNotification_SendRichPushNotificationWithParams(1: string toProfileId, 2: i32 notificationTemplateId, 3: string substitutionJson, 4: i32 clientIndex),
 
-	/** Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
-            Includes JSON defining the substitution params to use with the template.
-            See the Portal documentation for more info. */
-	string PushNotification_SendTemplatedPushNotificationToGroup(
-		/** Target group */
-		1: string groupId, 
-		
-		/** Id of the notification template */
-		2: i32 notificationTemplateId, 
-		
-		/** JSON defining the substitution params to use with the template */
-		3: string substitutionsJson, 
-		4: i32 clientIndex
-	),
+	string PushNotification_SendTemplatedPushNotificationToGroup(1: string groupId, 2: i32 notificationTemplateId, 3: string substitutionsJson, 4: i32 clientIndex),
 
-	/** Sends a notification to a "group" of user based on a brainCloud portal configured notification template.
-            Includes JSON defining the substitution params to use with the template.
-            See the Portal documentation for more info. */
-	string PushNotification_SendNormalizedPushNotificationToGroup(
-		/** Target group */
-		1: string groupId, 
-		
-		/** Body and title of alert */
-		2: string alertContentJson, 
-		
-		/** Optional custom data */
-		3: string customDataJson, 
-		4: i32 clientIndex
-	),
+	string PushNotification_SendNormalizedPushNotificationToGroup(1: string groupId, 2: string alertContentJson, 3: string customDataJson, 4: i32 clientIndex),
 
-	/** Schedules raw notifications based on user local time. */
-	string PushNotification_ScheduleRawPushNotificationUTC(
-		/** The profileId of the user to receive the notification */
-		1: string profileId, 
-		
-		/** Valid Fcm data content */
-		2: string fcmContent, 
-		
-		/** Valid ios data content */
-		3: string iosContent, 
-		
-		/** Facebook template string */
-		4: string facebookContent, 
-		
-		/** Start time of sending the push notification */
-		5: i32 startTime, 
-		6: i32 clientIndex
-	),
+	string PushNotification_ScheduleRawPushNotificationUTC(1: string profileId, 2: string fcmContent, 3: string iosContent, 4: string facebookContent, 5: i32 startTime, 6: i32 clientIndex),
 
-	/** Schedules raw notifications based on user local time. */
-	string PushNotification_ScheduleRawPushNotificationMinutes(
-		/** The profileId of the user to receive the notification */
-		1: string profileId, 
-		
-		/** Valid Fcm data content */
-		2: string fcmContent, 
-		
-		/** Valid ios data content */
-		3: string iosContent, 
-		
-		/** Facebook template string */
-		4: string facebookContent, 
-		
-		/** Minutes from now to send the push notification */
-		5: i32 minutesFromNow, 
-		6: i32 clientIndex
-	),
+	string PushNotification_ScheduleRawPushNotificationMinutes(1: string profileId, 2: string fcmContent, 3: string iosContent, 4: string facebookContent, 5: i32 minutesFromNow, 6: i32 clientIndex),
 
-	/** Sends a raw push notification to a target user. */
-	string PushNotification_SendRawPushNotification(
-		/** The profileId of the user to receive the notification */
-		1: string toProfileId, 
-		
-		/** Valid Fcm data content */
-		2: string fcmContent, 
-		
-		/** Valid ios data content */
-		3: string iosContent, 
-		
-		/** Facebook template string */
-		4: string facebookContent, 
-		5: i32 clientIndex
-	),
+	string PushNotification_SendRawPushNotification(1: string toProfileId, 2: string fcmContent, 3: string iosContent, 4: string facebookContent, 5: i32 clientIndex),
 
-	/** Sends a raw push notification to a target list of users. */
-	string PushNotification_SendRawPushNotificationBatch(
-		/** Collection of profile IDs to send the notification to */
-		1: list<string> profileIds, 
-		
-		/** Valid Fcm data content */
-		2: string fcmContent, 
-		
-		/** Valid ios data content */
-		3: string iosContent, 
-		
-		/** Facebook template string */
-		4: string facebookContent, 
-		5: i32 clientIndex
-	),
+	string PushNotification_SendRawPushNotificationBatch(1: list<string> profileIds, 2: string fcmContent, 3: string iosContent, 4: string facebookContent, 5: i32 clientIndex),
 
-	/** Sends a raw push notification to a target group. */
-	string PushNotification_SendRawPushNotificationToGroup(
-		/** Target group */
-		1: string groupId, 
-		
-		/** Valid Fcm data content */
-		2: string fcmContent, 
-		
-		/** Valid ios data content */
-		3: string iosContent, 
-		
-		/** Facebook template string */
-		4: string facebookContent, 
-		5: i32 clientIndex
-	),
+	string PushNotification_SendRawPushNotificationToGroup(1: string groupId, 2: string fcmContent, 3: string iosContent, 4: string facebookContent, 5: i32 clientIndex),
 
-	/** Schedules a normalized push notification to a user */
-	string PushNotification_ScheduleNormalizedPushNotificationUTC(
-		/** The profileId of the user to receive the notification */
-		1: string profileId, 
-		
-		/** Body and title of alert */
-		2: string alertContentJson, 
-		
-		/** Optional custom data */
-		3: string customDataJson, 
-		
-		/** Start time of sending the push notification */
-		4: i32 startTime, 
-		5: i32 clientIndex
-	),
+	string PushNotification_ScheduleNormalizedPushNotificationUTC(1: string profileId, 2: string alertContentJson, 3: string customDataJson, 4: i32 startTime, 5: i32 clientIndex),
 
-	/** Schedules a normalized push notification to a user */
-	string PushNotification_ScheduleNormalizedPushNotificationMinutes(
-		/** The profileId of the user to receive the notification */
-		1: string profileId, 
-		
-		/** Body and title of alert */
-		2: string alertContentJson, 
-		
-		/** Optional custom data */
-		3: string customDataJson, 
-		
-		/** Minutes from now to send the push notification */
-		4: i32 minutesFromNow, 
-		5: i32 clientIndex
-	),
+	string PushNotification_ScheduleNormalizedPushNotificationMinutes(1: string profileId, 2: string alertContentJson, 3: string customDataJson, 4: i32 minutesFromNow, 5: i32 clientIndex),
 
-	/** Schedules a rich push notification to a user */
-	string PushNotification_ScheduleRichPushNotificationUTC(
-		/** The profileId of the user to receive the notification */
-		1: string profileId, 
-		
-		/** Body and title of alert */
-		2: i32 notificationTemplateId, 
-		
-		/** Optional custom data */
-		3: string substitutionsJson, 
-		
-		/** Start time of sending the push notification */
-		4: i32 startTime, 
-		5: i32 clientIndex
-	),
+	string PushNotification_ScheduleRichPushNotificationUTC(1: string profileId, 2: i32 notificationTemplateId, 3: string substitutionsJson, 4: i32 startTime, 5: i32 clientIndex),
 
-	/** Schedules a rich push notification to a user */
-	string PushNotification_ScheduleRichPushNotificationMinutes(
-		/** The profileId of the user to receive the notification */
-		1: string profileId, 
-		
-		/** Body and title of alert */
-		2: i32 notificationTemplateId, 
-		
-		/** Optional custom data */
-		3: string substitutionsJson, 
-		
-		/** Minutes from now to send the push notification */
-		4: i32 minutesFromNow, 
-		5: i32 clientIndex
-	),
+	string PushNotification_ScheduleRichPushNotificationMinutes(1: string profileId, 2: i32 notificationTemplateId, 3: string substitutionsJson, 4: i32 minutesFromNow, 5: i32 clientIndex),
 
-	/** Sends a notification to a user consisting of alert content and custom data. */
-	string PushNotification_SendNormalizedPushNotification(
-		/** The profileId of the user to receive the notification */
-		1: string toProfileId, 
-		
-		/** Body and title of alert */
-		2: string alertContentJson, 
-		
-		/** Optional custom data */
-		3: string customDataJson, 
-		4: i32 clientIndex
-	),
+	string PushNotification_SendNormalizedPushNotification(1: string toProfileId, 2: string alertContentJson, 3: string customDataJson, 4: i32 clientIndex),
 
-	/** Sends a notification to multiple users consisting of alert content and custom data. */
-	string PushNotification_SendNormalizedPushNotificationBatch(
-		/** Collection of profile IDs to send the notification to */
-		1: list<string> profileIds, 
-		
-		/** Body and title of alert */
-		2: string alertContentJson, 
-		
-		/** Optional custom data */
-		3: string customDataJson, 
-		4: i32 clientIndex
-	),
+	string PushNotification_SendNormalizedPushNotificationBatch(1: list<string> profileIds, 2: string alertContentJson, 3: string customDataJson, 4: i32 clientIndex),
 
 	/** Executes a script on the server. */
 	string Script_RunScript(
@@ -3066,15 +2771,9 @@ service BrainCloudService {
 		2: i32 clientIndex
 	),
 
-	/** Returns the user's reward from a finished tournament */
-	string Tournament_ViewReward(
-		/** The leaderboard for the tournament */
-		1: string leaderboardId, 
-		
-		/** Version of the tournament. Use -1 for the latest version. */
-		2: i32 versionId, 
-		3: i32 clientIndex
-	),
+	string Tournament_ViewReward(1: string leaderboardId, 2: i32 versionId, 3: i32 clientIndex),
+
+	string Patch_GetGameManifest(1: string gameId, 2: i32 clientIndex),
 
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 
