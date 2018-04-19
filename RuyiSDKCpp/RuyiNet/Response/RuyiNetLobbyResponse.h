@@ -138,6 +138,9 @@ namespace Ruyi
 				if (!j["response"].is_null())
 				{
 					nlohmann::json responseJson = j["response"];
+					
+					if (!responseJson.is_object()) return;
+
 					response.parseJson(responseJson);
 				}
 			}

@@ -69,6 +69,13 @@ namespace RuyiCppSDKTest
 			pRuyiNetTest->RuyiNet_Initialize();
 			pRuyiNetTest->TelemetryServiceTest();
 		}
+
+		TEST_METHOD(RUYINET_UserFileService)
+		{
+			pRuyiNetTest->Login();
+			pRuyiNetTest->RuyiNet_Initialize();
+			pRuyiNetTest->UserFileServiceTest();
+		}
 	};
 
 	RuyiNetTest* RuyiNetTester::pRuyiNetTest;

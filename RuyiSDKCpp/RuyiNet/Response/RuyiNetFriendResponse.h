@@ -185,6 +185,8 @@ namespace Ruyi
 			{
 				nlohmann::json dataJson = j["data"];
 
+				if (!dataJson.is_object()) return;
+
 				if (!dataJson["success"].is_null())
 				{
 					data.success = dataJson["success"];
@@ -193,6 +195,8 @@ namespace Ruyi
 				if (!dataJson["response"].is_null())
 				{
 					nlohmann::json responseJson = dataJson["response"];
+
+					if (!responseJson.is_object()) return;
 
 					if (!responseJson["server_time"].is_null())
 					{

@@ -9,6 +9,7 @@
 #include "RuyiNet/Service/RuyiNetLobbyService.h"
 #include "RuyiNet/Service/RuyiNetPartyService.h"
 #include "RuyiNet/Service/RuyiNetTelemetryService.h"
+#include "RuyiNet/Service/RuyiNetUserFileService.h"
 
 #include "boost/container/detail/json.hpp"
 
@@ -128,10 +129,13 @@ void RuyiNetTest::CloudServiceTest()
 {
 	//test: backup data
 	StorageLayer::GetLocalPathResult result;
-	ruyiSDK->Storage->GetLocalPath(result, "/<HDD0>/n.txt");
+	ruyiSDK->Storage->GetLocalPath(result, "/");
+	std::string localPath = result.path + "Resources/Configs/SystemSetting/SystemSetting.cfg";
 	
+	Logger::WriteMessage(("CloudServiceTest localPath:" + localPath).c_str());
+
 	RuyiNetResponse response1;
-	const RuyiString persistentDataPath = ToRuyiString(result.path);
+	const RuyiString persistentDataPath = ToRuyiString(localPath);
 	ruyiSDK->RuyiNet->GetCloudService()->BackupData(0, persistentDataPath, response1);
 
 	Assert::IsTrue(STATUS_OK == response1.status);
@@ -243,4 +247,42 @@ void RuyiNetTest::TelemetryServiceTest()
 	ruyiSDK->RuyiNet->GetTelemetryService()->EndTelemetrySession(0, session1.GetId(), response5);
 
 	Assert::IsTrue(STATUS_OK == response5.status);
+}
+
+void RuyiNetTest::UserFileServiceTest() 
+{
+	StorageLayer::GetLocalPathResult result;
+	ruyiSDK->Storage->GetLocalPath(result, "/");
+	std::string localPath = result.path + "Resources/Configs/SystemSetting/SystemSetting.cfg";
+	std::string cloudPath = "test/files";
+	std::string cloudFile = "testCloudFile_shared.cfg";
+
+	RuyiNetUploadFileResponse response1;
+	ruyiSDK->RuyiNet->GetUserFileService()->UploadFile(0, cloudPath, cloudFile, true, true, localPath, response1);
+
+	Assert::IsTrue(STATUS_OK == response1.status);
+
+	std::string uploadId = response1.data.fileDetails.uploadId;
+	ruyiSDK->RuyiNet->GetUserFileService()->CancelUpload(0, uploadId);
+	
+	double progress = ruyiSDK->RuyiNet->GetUserFileService()->GetUploadProgress(0, uploadId);
+
+	Assert::IsTrue(progress <= 0);
+
+	RuyiNetListUserFilesResponse response2;
+	ruyiSDK->RuyiNet->GetUserFileService()->ListUserFiles(0, response2);
+
+	Assert::IsTrue(STATUS_OK == response2.status);
+
+	RuyiNetUploadFileResponse response3;
+	ruyiSDK->RuyiNet->GetUserFileService()->DeleteUserFile(0, cloudPath, cloudFile, response3);
+
+	Assert::IsTrue(STATUS_OK == response3.status || (400 == response3.status));
+
+	RuyiNetGetCDNResponse response4;
+	ruyiSDK->RuyiNet->GetUserFileService()->GetCDNUrl(0, cloudPath, cloudFile, response4);
+
+	Logger::WriteMessage(("GetCDNUrl cdn url:" + response4.data.cdnUrl).c_str());
+
+	Assert::IsTrue(STATUS_OK == response4.status);
 }

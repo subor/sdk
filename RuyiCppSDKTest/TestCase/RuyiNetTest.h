@@ -23,6 +23,7 @@ public:
 	void LobbyServiceTest();
 	void PartyServiceTest();
 	void TelemetryServiceTest();
+	void UserFileServiceTest();
 
 private:
 

@@ -25,11 +25,10 @@ namespace Ruyi
 		PIP_ADAPTER_ADDRESSES pAddresses = NULL;
 		try
 		{
-
 			auto player = mClient->GetPlayer(index);
 			if (player == nullptr)
 			{
-				throw new RuyiNetException("Player is not signed in.");
+				throw RuyiNetException("Player is not signed in.");
 			}
 
 			ULONG outBufLen = WORKING_BUFFER_SIZE;
@@ -43,7 +42,7 @@ namespace Ruyi
 				pAddresses = (IP_ADAPTER_ADDRESSES *)MALLOC(outBufLen);
 				if (pAddresses == NULL)
 				{
-					throw new RuyiNetException("Memory allocation failed for IP_ADAPTER_ADDRESSES struct\n");
+					throw RuyiNetException("Memory allocation failed for IP_ADAPTER_ADDRESSES struct\n");
 				}
 
 				dwRetVal = GetAdaptersAddresses(family, flags, NULL, pAddresses, &outBufLen);
@@ -119,22 +118,6 @@ namespace Ruyi
 			mClient->GetBCService()->MatchMaking_EnableMatchMaking(retStr, index);
 			nlohmann::json retJson = nlohmann::json::parse(retStr);
 			response.parseJson(retJson);
-		} catch (nlohmann::detail::exception& e)
-		{
-			if (pAddresses != NULL)
-			{
-				FREE(pAddresses);
-				pAddresses = NULL;
-			}
-			throw new RuyiNetException(e.what());
-		} catch (::apache::thrift::TApplicationException& e)
-		{
-			if (pAddresses != NULL)
-			{
-				FREE(pAddresses);
-				pAddresses = NULL;
-			}
-			throw new RuyiNetException(e.what());
 		} catch (RuyiNetException e)
 		{
 			if (pAddresses != NULL)
@@ -147,103 +130,49 @@ namespace Ruyi
 
 	void RuyiNetMatchmakingService::DisableMatchmaking(int index, RuyiNetResponse& response)
 	{
-		try
-		{
-			std::string retStr;
-			mClient->GetBCService()->MatchMaking_DisableMatchMaking(retStr, index);
-			nlohmann::json retJson = nlohmann::json::parse(retStr);
-			response.parseJson(retJson);
-		} catch (nlohmann::detail::exception& e)
-		{
-			throw new RuyiNetException(e.what());
-		} catch (::apache::thrift::TApplicationException& e)
-		{
-			throw new RuyiNetException(e.what());
-		}
+		std::string retStr;
+		mClient->GetBCService()->MatchMaking_DisableMatchMaking(retStr, index);
+		nlohmann::json retJson = nlohmann::json::parse(retStr);
+		response.parseJson(retJson);
 	}
 
 	void RuyiNetMatchmakingService::SetPlayerRating(int index, long playerRating, RuyiNetResponse& response)
 	{
-		try
-		{
-			std::string retStr;
-			mClient->GetBCService()->MatchMaking_SetPlayerRating(retStr, playerRating, index);
-			nlohmann::json retJson = nlohmann::json::parse(retStr);
-			response.parseJson(retJson);
-		} catch (nlohmann::detail::exception& e)
-		{
-			throw new RuyiNetException(e.what());
-		} catch (::apache::thrift::TApplicationException& e)
-		{
-			throw new RuyiNetException(e.what());
-		}
+		std::string retStr;
+		mClient->GetBCService()->MatchMaking_SetPlayerRating(retStr, playerRating, index);
+		nlohmann::json retJson = nlohmann::json::parse(retStr);
+		response.parseJson(retJson);
 	}
 
 	void RuyiNetMatchmakingService::IncrementPlayerRating(int index, long increment, RuyiNetResponse& response)
 	{
-		try
-		{
-			std::string retStr;
-			mClient->GetBCService()->MatchMaking_IncrementPlayerRating(retStr, increment, index);
-			nlohmann::json retJson = nlohmann::json::parse(retStr);
-			response.parseJson(retJson);
-		} catch (nlohmann::detail::exception& e)
-		{
-			throw new RuyiNetException(e.what());
-		} catch (::apache::thrift::TApplicationException& e)
-		{
-			throw new RuyiNetException(e.what());
-		}
+		std::string retStr;
+		mClient->GetBCService()->MatchMaking_IncrementPlayerRating(retStr, increment, index);
+		nlohmann::json retJson = nlohmann::json::parse(retStr);
+		response.parseJson(retJson);
 	}
 
 	void RuyiNetMatchmakingService::DecrementPlayerRating(int index, long decrement, RuyiNetResponse& response)
 	{
-		try
-		{
-			std::string retStr;
-			mClient->GetBCService()->MatchMaking_DecrementPlayerRating(retStr, decrement, index);
-			nlohmann::json retJson = nlohmann::json::parse(retStr);
-			response.parseJson(retJson);
-		} catch (nlohmann::detail::exception& e)
-		{
-			throw new RuyiNetException(e.what());
-		} catch (::apache::thrift::TApplicationException& e)
-		{
-			throw new RuyiNetException(e.what());
-		}
+		std::string retStr;
+		mClient->GetBCService()->MatchMaking_DecrementPlayerRating(retStr, decrement, index);
+		nlohmann::json retJson = nlohmann::json::parse(retStr);
+		response.parseJson(retJson);
 	}
 
 	void RuyiNetMatchmakingService::ResetPlayerRating(int index, RuyiNetResponse& response)
 	{
-		try
-		{
-			std::string retStr;
-			mClient->GetBCService()->MatchMaking_ResetPlayerRating(retStr, index);
-			nlohmann::json retJson = nlohmann::json::parse(retStr);
-			response.parseJson(retJson);
-		} catch (nlohmann::detail::exception& e)
-		{
-			throw new RuyiNetException(e.what());
-		} catch (::apache::thrift::TApplicationException& e)
-		{
-			throw new RuyiNetException(e.what());
-		}
+		std::string retStr;
+		mClient->GetBCService()->MatchMaking_ResetPlayerRating(retStr, index);
+		nlohmann::json retJson = nlohmann::json::parse(retStr);
+		response.parseJson(retJson);
 	}
 
 	void RuyiNetMatchmakingService::FindPlayers(int index, long rangeDelta, long numMatches, RuyiNetFindPlayersResponse& response)
 	{
-		try
-		{
-			std::string retStr;
-			mClient->GetBCService()->MatchMaking_FindPlayers(retStr, rangeDelta, numMatches, index);
-			nlohmann::json retJson = nlohmann::json::parse(retStr);
-			response.parseJson(retJson);
-		} catch (nlohmann::detail::exception& e)
-		{
-			throw new RuyiNetException(e.what());
-		} catch (::apache::thrift::TApplicationException& e)
-		{
-			throw new RuyiNetException(e.what());
-		}
+		std::string retStr;
+		mClient->GetBCService()->MatchMaking_FindPlayers(retStr, rangeDelta, numMatches, index);
+		nlohmann::json retJson = nlohmann::json::parse(retStr);
+		response.parseJson(retJson);
 	}
 }
