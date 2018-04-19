@@ -55,6 +55,8 @@ namespace RuyiLogger
         public string MsgType { get; set; }
         public DateTime Date { get; set; }
 
+        public LoggerStackFrame[] Frames { get; set; }
+
         public LoggerMessage()
         {
             Date = DateTime.Now;
@@ -88,6 +90,67 @@ namespace RuyiLogger
         public string ToPluginString()
         {
             return $"[{Date,10}]\t[{MsgSource,20}]\t[{Level,10}]\t{Message}";
+        }
+    }
+
+    public class LoggerMessageEx : LoggerMessage
+    {
+        /// <summary>
+        /// Original exception
+        /// </summary>
+        public Exception Exception { get; set; }
+    }
+
+    /// <summary>
+    /// LoggerMessage refering to a path (either a file or folder)
+    /// </summary>
+    public class LogPathReferenceMessage : LoggerMessageEx
+    {
+        public string Path { get; private set; }
+        public LogPathReferenceMessage(string path)
+            : base()
+        {
+            Path = path;
+        }
+    }
+
+    /// <summary>
+    /// LoggerMessage refering to a specific file, and optionally line and column within the file.
+    /// </summary>
+    public class LogFileReferenceMessage : LoggerMessageEx
+    {
+        public string Path { get; private set; }
+        public int Line { get; private set; }
+        public int Col { get; private set; }
+
+        public LogFileReferenceMessage(string path, int line = -1, int col = -1)
+        {
+            Path = path;
+            Line = line;
+            Col = col;
+        }
+    }
+
+    public class LogCommandLineMessage : LoggerMessageEx
+    {
+        public string Arguments { get; set; }
+    }
+
+    /// <summary>
+    /// Stack frame suitable for logging.
+    /// </summary>
+    /// <seealso cref="RuyiLogger.Logger"/>
+    public class LoggerStackFrame
+    {
+        public string Filename { get; private set; }
+        public string Method { get; private set; }
+        public int Line { get; private set; }
+
+        public LoggerStackFrame(System.Diagnostics.StackFrame frame)
+        {
+            Filename = frame.GetFileName();
+            Method = frame.GetMethod().Name;
+            Line = frame.GetFileLineNumber();
         }
     }
 }
