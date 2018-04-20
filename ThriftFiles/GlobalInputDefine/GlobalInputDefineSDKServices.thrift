@@ -1,0 +1,1 @@
+include "GlobalInputDefineSDKDataTypes.thrift"
