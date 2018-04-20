@@ -37,37 +37,29 @@ namespace Ruyi.SDK.Constants
     static ConstantsSDKDataTypesConstants()
     {
       BraincloudServerInfo tmp0 = new BraincloudServerInfo();
+      tmp0.Name = "external";
       tmp0.UrlRoot = "";
       tmp0.Dispatcher = "";
       tmp0.SecretKey = "5f73bb67-2b82-444a-8801-e2bb8b09e917";
-      tmp0.AppVersion = "1.0.0";
-      tmp0.Name = "external";
       tmp0.AppId = "11498";
+      tmp0.AppVersion = "1.0.0";
       BraincloudServerList.Add(tmp0);
       BraincloudServerInfo tmp1 = new BraincloudServerInfo();
-      tmp1.Name = "braincloudunittestuse";
-      tmp1.UrlRoot = "https://braincloud:4443/";
-      tmp1.Dispatcher = "dispatcherv2";
-      tmp1.SecretKey = "1b057efd-4ce5-4245-b076-caba21972e5c";
-      tmp1.AppId = "30002";
       tmp1.AppVersion = "1.0.0";
+      tmp1.SecretKey = "c7df4982-479d-4daa-adcd-44967c8d5c3b";
+      tmp1.Dispatcher = "dispatcherv2";
+      tmp1.UrlRoot = "https://braincloud:4443/";
+      tmp1.Name = "internalruyimaster";
+      tmp1.AppId = "30006";
       BraincloudServerList.Add(tmp1);
       BraincloudServerInfo tmp2 = new BraincloudServerInfo();
-      tmp2.Dispatcher = "dispatcherv2";
-      tmp2.AppId = "30006";
-      tmp2.SecretKey = "c7df4982-479d-4daa-adcd-44967c8d5c3b";
+      tmp2.Name = "localhost";
+      tmp2.AppId = "30001";
+      tmp2.SecretKey = "655a2914-be71-495b-868f-68f6b4f6dfb1";
       tmp2.AppVersion = "1.0.0";
-      tmp2.Name = "internalruyimaster";
-      tmp2.UrlRoot = "https://braincloud:4443/";
+      tmp2.UrlRoot = "https://localhost:8443/";
+      tmp2.Dispatcher = "dispatcherv2";
       BraincloudServerList.Add(tmp2);
-      BraincloudServerInfo tmp3 = new BraincloudServerInfo();
-      tmp3.UrlRoot = "https://localhost:8443/";
-      tmp3.Name = "localhost";
-      tmp3.AppId = "30001";
-      tmp3.SecretKey = "655a2914-be71-495b-868f-68f6b4f6dfb1";
-      tmp3.AppVersion = "1.0.0";
-      tmp3.Dispatcher = "dispatcherv2";
-      BraincloudServerList.Add(tmp3);
     }
   }
 }
