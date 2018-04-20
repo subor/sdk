@@ -131,6 +131,11 @@ namespace RuyiLogger
         }
     }
 
+    public class LogCommandLineMessage : LoggerMessageEx
+    {
+        public string Arguments { get; set; }
+    }
+
     /// <summary>
     /// Stack frame suitable for logging.
     /// </summary>
