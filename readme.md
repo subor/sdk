@@ -22,3 +22,7 @@ If you don't want to build the libs above, you can use [the one we provide](http
 1. Build the libs mentioned above, each one should have their own folder, put them in ___externals___, beside ___sdk___
 1. Open ___sdk/SDK.sln___, we get two c# version sdks targeting on .net framework 3.5 & .net standard 2.0. build it.
 1. For cpp version, remove the post build event script, it will actually only copy files(.h;.lib) around, build it.
+
+
+##Known Issue
+1. To build the SDK compatible with Layer0 you're using, you need to specify the version number for msbuild, do it like msbuild SDK.sln /p:AssemblyVersion=a.b.c.d /p:AssemblyMain=a.b.c /p:AssemblyRevision=d, while a.b..c.d is the version number of the layer0, while you can get layer0 version by: right click layer0 -> properties -> details -> File version
