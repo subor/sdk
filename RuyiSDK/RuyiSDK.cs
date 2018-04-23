@@ -7,10 +7,12 @@ using Ruyi.SDK.StorageLayer;
 using Ruyi.SDK.UserServiceExternal;
 using RuyiLogger;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi
 {
@@ -94,16 +96,18 @@ namespace Ruyi
 
         private RuyiSDKContext context = null;
 
-        private TSocketTransportTS lowLatencyTransport = null;
+        private TTransport lowLatencyTransport = null;
         /// <summary>
         /// Underlying transport and protocol for low-latency messages
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public TBinaryProtocolTS LowLatencyProtocol { get; private set; }
 
-        private TSocketTransportTS highLatencyTransport = null;
+        private TTransport highLatencyTransport = null;
         /// <summary>
         /// Underlying transport and protocol for high-latency messages
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public TBinaryProtocolTS HighLatencyProtocol { get; private set; }
 
         private ValidatorService.Client validator = null;
@@ -141,16 +145,25 @@ namespace Ruyi
 
         bool Init()
         {
-            // If debugger attached don't want messages to timeout
-            var timeout = System.Diagnostics.Debugger.IsAttached ? 600000 : 10000;
+            if (context.Transport == null)
+            {
+                // If debugger attached don't want messages to timeout
+                var timeout = System.Diagnostics.Debugger.IsAttached ? 600000 : 10000;
 
-            // init and open high/low latency transport, create protocols
-            var lowLatencyPort = context.LowLatencyPort == 0 ? ConstantsSDKDataTypesConstants.low_latency_socket_port : context.LowLatencyPort;
-            lowLatencyTransport = new TSocketTransportTS(context.RemoteAddress, lowLatencyPort, timeout);
+                // init and open high/low latency transport, create protocols
+                var lowLatencyPort = context.LowLatencyPort == 0 ? ConstantsSDKDataTypesConstants.low_latency_socket_port : context.LowLatencyPort;
+                lowLatencyTransport = new TSocketTransportTS(context.RemoteAddress, lowLatencyPort, timeout);
+
+                var highLatencyPort = context.HighLatencyPort == 0 ? ConstantsSDKDataTypesConstants.high_latency_socket_port : context.HighLatencyPort;
+                highLatencyTransport = new TSocketTransportTS(context.RemoteAddress, highLatencyPort, timeout);
+            }
+            else
+            {
+                lowLatencyTransport = context.Transport;
+                highLatencyTransport = context.Transport;
+            }
+
             LowLatencyProtocol = new TBinaryProtocolTS(lowLatencyTransport);
-
-            var highLatencyPort = context.HighLatencyPort == 0 ? ConstantsSDKDataTypesConstants.high_latency_socket_port : context.HighLatencyPort;
-            highLatencyTransport = new TSocketTransportTS(context.RemoteAddress, highLatencyPort, timeout);
             HighLatencyProtocol = new TBinaryProtocolTS(highLatencyTransport);
 
             lowLatencyTransport.Open();
