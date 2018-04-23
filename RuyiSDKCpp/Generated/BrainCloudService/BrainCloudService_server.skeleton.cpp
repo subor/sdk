@@ -46,7 +46,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param pushNotificationMessage Optional push notification message to send to the other party.
    * Refer to the Push Notification functions for the syntax required.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void AsyncMatch_CreateMatch(std::string& _return, const std::string& jsonOpponentIds, const std::string& pushNotificationMessage, const int32_t clientIndex) {
     // Your implementation goes here
@@ -83,7 +83,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonSummary Optional JSON string defining what the other player will see as a summary of the game when listing their games
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void AsyncMatch_CreateMatchWithInitialTurn(std::string& _return, const std::string& jsonOpponentIds, const std::string& jsonMatchState, const std::string& pushNotificationMessage, const std::string& nextPlayer, const std::string& jsonSummary, const int32_t clientIndex) {
     // Your implementation goes here
@@ -110,7 +110,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonStatistics Optional JSON string blob provided by the caller
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void AsyncMatch_SubmitTurn(std::string& _return, const std::string& ownerId, const std::string& matchId, const int64_t version, const std::string& jsonMatchState, const std::string& pushNotificationMessage, const std::string& nextPlayer, const std::string& jsonSummary, const std::string& jsonStatistics, const int32_t clientIndex) {
     // Your implementation goes here
@@ -128,7 +128,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonSummary JSON string provided by the caller that other players will see as a summary of the game when listing their games
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void AsyncMatch_UpdateMatchSummaryData(std::string& _return, const std::string& ownerId, const std::string& matchId, const int64_t version, const std::string& jsonSummary, const int32_t clientIndex) {
     // Your implementation goes here
@@ -142,7 +142,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param matchId Match identifier
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void AsyncMatch_CompleteMatch(std::string& _return, const std::string& ownerId, const std::string& matchId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -156,7 +156,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param matchId Match identifier
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void AsyncMatch_ReadMatch(std::string& _return, const std::string& ownerId, const std::string& matchId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -170,7 +170,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param matchId Match identifier
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void AsyncMatch_ReadMatchHistory(std::string& _return, const std::string& ownerId, const std::string& matchId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -180,7 +180,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Returns all matches that are NOT in a COMPLETE state for which the player is involved.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void AsyncMatch_FindMatches(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -190,7 +190,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Returns all matches that are in a COMPLETE state for which the player is involved.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void AsyncMatch_FindCompleteMatches(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -204,7 +204,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param matchId Match identifier
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void AsyncMatch_AbandonMatch(std::string& _return, const std::string& ownerId, const std::string& matchId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -219,7 +219,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param matchId Match identifier
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void AsyncMatch_DeleteMatch(std::string& _return, const std::string& ownerId, const std::string& matchId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -229,7 +229,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Used to create the anonymous installation id for the brainCloud profile.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Authentication_GenerateAnonymousId(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -244,7 +244,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param anonymousId The anonymous installation id that was generated for this device
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Authentication_Initialize(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -255,7 +255,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Used to clear the saved profile id - to use in cases when the user is
    * attempting to switch to a different app profile.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Authentication_ClearSavedProfileID(const int32_t clientIndex) {
     // Your implementation goes here
@@ -268,7 +268,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param forceCreate Should a new profile be created if it does not exist?
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Authentication_AuthenticateAnonymous(std::string& _return, const bool forceCreate, const int32_t clientIndex) {
     // Your implementation goes here
@@ -288,7 +288,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param forceCreate Should a new profile be created for this user if the account does not exist?
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Authentication_AuthenticateEmailPassword(std::string& _return, const std::string& email, const std::string& password, const bool forceCreate, const int32_t clientIndex) {
     // Your implementation goes here
@@ -305,7 +305,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param forceCreate Should a new profile be created for this user if the account does not exist?
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Authentication_AuthenticateUniversal(std::string& _return, const std::string& userId, const std::string& password, const bool forceCreate, const int32_t clientIndex) {
     // Your implementation goes here
@@ -324,7 +324,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param forceCreate Should a new profile be created for this user if the account does not exist?
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Authentication_AuthenticateExternal(std::string& _return, const std::string& userId, const std::string& token, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex) {
     // Your implementation goes here
@@ -336,7 +336,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param externalId The email address to send the reset email to.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Authentication_ResetEmailPassword(std::string& _return, const std::string& externalId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -344,9 +344,231 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   }
 
   /**
+   * Enable logging of brainCloud transactions (comms etc)
+   * 
+   * @param enable True if logging is to be enabled
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  void Client_EnableLogging(const bool enable, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_EnableLogging\n");
+  }
+
+  /**
+   * Resets all messages and calls to the server
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  void Client_ResetCommunication(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_ResetCommunication\n");
+  }
+
+  /**
+   * Sets the packet timeouts using a list of integers that
+   * represent timeout values for each packet retry. The
+   * first item in the list represents the timeout for the first packet
+   * attempt, the second for the second packet attempt, and so on.
+   * 
+   * The number of entries in this array determines how many packet
+   * retries will occur.
+   * 
+   * By default, the packet timeout array is {10, 10, 10}
+   * 
+   * Note that this method does not change the timeout for authentication
+   * packets (use SetAuthenticationPacketTimeout method).
+   * 
+   * @param timeouts An array of packet timeouts.
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  void Client_SetPacketTimeouts(const std::vector<int32_t> & timeouts, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_SetPacketTimeouts\n");
+  }
+
+  /**
+   * Sets the packet timeouts back to default.
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  void Client_SetPacketTimeoutsToDefault(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_SetPacketTimeoutsToDefault\n");
+  }
+
+  /**
+   * Returns the list of packet timeouts.
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  void Client_GetPacketTimeouts(std::vector<int32_t> & _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_GetPacketTimeouts\n");
+  }
+
+  /**
+   * Sets the authentication packet timeout which is tracked separately
+   * from all other packets. Note that authentication packets are never
+   * retried and so this value represents the total time a client would
+   * wait to receive a reply to an authentication API call. By default
+   * this timeout is set to 15 seconds.
+   * 
+   * @param timeoutSecs
+   * @param clientIndex The index of the BrainCloud client
+   */
+  void Client_SetAuthenticationPacketTimeout(const int32_t timeoutSecs, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_SetAuthenticationPacketTimeout\n");
+  }
+
+  /**
+   * Gets the authentication packet timeout which is tracked separately
+   * from all other packets. Note that authentication packets are never
+   * retried and so this value represents the total time a client would
+   * wait to receive a reply to an authentication API call. By default
+   * this timeout is set to 15 seconds.
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  int32_t Client_GetAuthenticationPacketTimeout(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_GetAuthenticationPacketTimeout\n");
+  }
+
+  /**
+   * Returns the low transfer rate timeout in secs
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  int32_t Client_GetUploadLowTransferRateTimeout(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_GetUploadLowTransferRateTimeout\n");
+  }
+
+  /**
+   * Sets the timeout in seconds of a low speed upload
+   * (i.e. transfer rate which is underneath the low transfer rate threshold).
+   * By default this is set to 120 secs.Setting this value to 0 will
+   * turn off the timeout. Note that this timeout method
+   * does not work on Unity mobile platforms.
+   * 
+   * @param timeoutSecs
+   * @param clientIndex The index of the BrainCloud client
+   */
+  void Client_SetUploadLowTransferRateTimeout(const int32_t timeoutSecs, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_SetUploadLowTransferRateTimeout\n");
+  }
+
+  /**
+   * Returns the low transfer rate threshold in bytes/sec
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  int32_t Client_GetUploadLowTransferRateThreshold(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_GetUploadLowTransferRateThreshold\n");
+  }
+
+  /**
+   * Sets the low transfer rate threshold of an upload in bytes/sec.
+   * If the transfer rate dips below the given threshold longer
+   * than the specified timeout, the transfer will fail.
+   * By default this is set to 50 bytes/sec. Note that this timeout method
+   * does not work on Unity mobile platforms.
+   * 
+   * @param bytesPerSec The low transfer rate threshold in bytes/sec
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  void Client_SetUploadLowTransferRateThreshold(const int32_t bytesPerSec, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_SetUploadLowTransferRateThreshold\n");
+  }
+
+  void Client_EnableNetworkErrorMessageCaching(const bool enabled, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_EnableNetworkErrorMessageCaching\n");
+  }
+
+  /**
+   * Attempts to resend any cached messages. If no messages are in the cache,
+   * this method does nothing.
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  void Client_RetryCachedMessages(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_RetryCachedMessages\n");
+  }
+
+  /**
+   * Flushes the cached messages to resume API call processing. This will dump
+   * all of the cached messages in the queue.
+   * 
+   * @param sendApiErrorCallbacks If set to true API error callbacks will
+   * be called for every cached message with statusCode CLIENT_NETWORK_ERROR and reasonCode CLIENT_NETWORK_ERROR_TIMEOUT.
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  void Client_FlushCachedMessages(const bool sendApiErrorCallbacks, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_FlushCachedMessages\n");
+  }
+
+  /**
+   * Inserts a marker which will tell the brainCloud comms layer
+   * to close the message bundle off at this point. Any messages queued
+   * before this method was called will likely be bundled together in
+   * the next send to the server.
+   * 
+   * To ensure that only a single message is sent to the server you would
+   * do something like this:
+   * 
+   * InsertEndOfMessageBundleMarker()
+   * SomeApiCall()
+   * InsertEndOfMessageBundleMarker()
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  void Client_InsertEndOfMessageBundleMarker(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_InsertEndOfMessageBundleMarker\n");
+  }
+
+  /**
+   * Sets the country code sent to brainCloud when a user authenticates.
+   * Will override any auto detected country.
+   * 
+   * @param countryCode ISO 3166-1 two-letter country code
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  void Client_OverrideCountryCode(const std::string& countryCode, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_OverrideCountryCode\n");
+  }
+
+  /**
+   * Sets the language code sent to brainCloud when a user authenticates.
+   * If the language is set to a non-ISO 639-1 standard value the game default will be used instead.
+   * Will override any auto detected language.
+   * 
+   * @param languageCode ISO 639-1 two-letter language code
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
+  void Client_OverrideLanguageCode(const std::string& languageCode, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_OverrideLanguageCode\n");
+  }
+
+  /**
    * Returns the sessionId or empty string if no session present.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Client_GetSessionId(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -358,7 +580,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * If a session time out or session invalidation is returned from executing a
    * sever API call, this flag will reset back to false.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   bool Client_IsAuthenticated(const int32_t clientIndex) {
     // Your implementation goes here
@@ -368,7 +590,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Returns true if brainCloud has been initialized.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   bool Client_IsInitialized(const int32_t clientIndex) {
     // Your implementation goes here
@@ -392,7 +614,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param anonymousId The anonymous id
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -403,233 +625,11 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Update method needs to be called regularly in order
    * to process incoming and outgoing messages.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Client_Update(const int32_t clientIndex) {
     // Your implementation goes here
     printf("Client_Update\n");
-  }
-
-  /**
-   * Enable logging of brainCloud transactions (comms etc)
-   * 
-   * @param enable True if logging is to be enabled
-   * 
-   * @param clientIndex
-   */
-  void Client_EnableLogging(const bool enable, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_EnableLogging\n");
-  }
-
-  /**
-   * Resets all messages and calls to the server
-   * 
-   * @param clientIndex
-   */
-  void Client_ResetCommunication(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_ResetCommunication\n");
-  }
-
-  /**
-   * Sets the packet timeouts using a list of integers that
-   * represent timeout values for each packet retry. The
-   * first item in the list represents the timeout for the first packet
-   * attempt, the second for the second packet attempt, and so on.
-   * 
-   * The number of entries in this array determines how many packet
-   * retries will occur.
-   * 
-   * By default, the packet timeout array is {10, 10, 10}
-   * 
-   * Note that this method does not change the timeout for authentication
-   * packets (use SetAuthenticationPacketTimeout method).
-   * 
-   * @param timeouts An array of packet timeouts.
-   * 
-   * @param clientIndex
-   */
-  void Client_SetPacketTimeouts(const std::vector<int32_t> & timeouts, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_SetPacketTimeouts\n");
-  }
-
-  /**
-   * Sets the packet timeouts back to default.
-   * 
-   * @param clientIndex
-   */
-  void Client_SetPacketTimeoutsToDefault(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_SetPacketTimeoutsToDefault\n");
-  }
-
-  /**
-   * Returns the list of packet timeouts.
-   * 
-   * @param clientIndex
-   */
-  void Client_GetPacketTimeouts(std::vector<int32_t> & _return, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_GetPacketTimeouts\n");
-  }
-
-  /**
-   * Sets the authentication packet timeout which is tracked separately
-   * from all other packets. Note that authentication packets are never
-   * retried and so this value represents the total time a client would
-   * wait to receive a reply to an authentication API call. By default
-   * this timeout is set to 15 seconds.
-   * 
-   * @param timeoutSecs
-   * @param clientIndex
-   */
-  void Client_SetAuthenticationPacketTimeout(const int32_t timeoutSecs, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_SetAuthenticationPacketTimeout\n");
-  }
-
-  /**
-   * Gets the authentication packet timeout which is tracked separately
-   * from all other packets. Note that authentication packets are never
-   * retried and so this value represents the total time a client would
-   * wait to receive a reply to an authentication API call. By default
-   * this timeout is set to 15 seconds.
-   * 
-   * @param clientIndex
-   */
-  int32_t Client_GetAuthenticationPacketTimeout(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_GetAuthenticationPacketTimeout\n");
-  }
-
-  /**
-   * Returns the low transfer rate timeout in secs
-   * 
-   * @param clientIndex
-   */
-  int32_t Client_GetUploadLowTransferRateTimeout(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_GetUploadLowTransferRateTimeout\n");
-  }
-
-  /**
-   * Sets the timeout in seconds of a low speed upload
-   * (i.e. transfer rate which is underneath the low transfer rate threshold).
-   * By default this is set to 120 secs.Setting this value to 0 will
-   * turn off the timeout. Note that this timeout method
-   * does not work on Unity mobile platforms.
-   * 
-   * @param timeoutSecs
-   * @param clientIndex
-   */
-  void Client_SetUploadLowTransferRateTimeout(const int32_t timeoutSecs, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_SetUploadLowTransferRateTimeout\n");
-  }
-
-  /**
-   * Returns the low transfer rate threshold in bytes/sec
-   * 
-   * @param clientIndex
-   */
-  int32_t Client_GetUploadLowTransferRateThreshold(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_GetUploadLowTransferRateThreshold\n");
-  }
-
-  /**
-   * Sets the low transfer rate threshold of an upload in bytes/sec.
-   * If the transfer rate dips below the given threshold longer
-   * than the specified timeout, the transfer will fail.
-   * By default this is set to 50 bytes/sec. Note that this timeout method
-   * does not work on Unity mobile platforms.
-   * 
-   * @param bytesPerSec The low transfer rate threshold in bytes/sec
-   * 
-   * @param clientIndex
-   */
-  void Client_SetUploadLowTransferRateThreshold(const int32_t bytesPerSec, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_SetUploadLowTransferRateThreshold\n");
-  }
-
-  void Client_EnableNetworkErrorMessageCaching(const bool enabled, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_EnableNetworkErrorMessageCaching\n");
-  }
-
-  /**
-   * Attempts to resend any cached messages. If no messages are in the cache,
-   * this method does nothing.
-   * 
-   * @param clientIndex
-   */
-  void Client_RetryCachedMessages(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_RetryCachedMessages\n");
-  }
-
-  /**
-   * Flushes the cached messages to resume API call processing. This will dump
-   * all of the cached messages in the queue.
-   * 
-   * @param sendApiErrorCallbacks If set to true API error callbacks will
-   * be called for every cached message with statusCode CLIENT_NETWORK_ERROR and reasonCode CLIENT_NETWORK_ERROR_TIMEOUT.
-   * 
-   * @param clientIndex
-   */
-  void Client_FlushCachedMessages(const bool sendApiErrorCallbacks, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_FlushCachedMessages\n");
-  }
-
-  /**
-   * Inserts a marker which will tell the brainCloud comms layer
-   * to close the message bundle off at this point. Any messages queued
-   * before this method was called will likely be bundled together in
-   * the next send to the server.
-   * 
-   * To ensure that only a single message is sent to the server you would
-   * do something like this:
-   * 
-   * InsertEndOfMessageBundleMarker()
-   * SomeApiCall()
-   * InsertEndOfMessageBundleMarker()
-   * 
-   * @param clientIndex
-   */
-  void Client_InsertEndOfMessageBundleMarker(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_InsertEndOfMessageBundleMarker\n");
-  }
-
-  /**
-   * Sets the country code sent to brainCloud when a user authenticates.
-   * Will override any auto detected country.
-   * 
-   * @param countryCode ISO 3166-1 two-letter country code
-   * 
-   * @param clientIndex
-   */
-  void Client_OverrideCountryCode(const std::string& countryCode, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_OverrideCountryCode\n");
-  }
-
-  /**
-   * Sets the language code sent to brainCloud when a user authenticates.
-   * If the language is set to a non-ISO 639-1 standard value the game default will be used instead.
-   * Will override any auto detected language.
-   * 
-   * @param languageCode ISO 639-1 two-letter language code
-   * 
-   * @param clientIndex
-   */
-  void Client_OverrideLanguageCode(const std::string& languageCode, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_OverrideLanguageCode\n");
   }
 
   /**
@@ -639,7 +639,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonEventProperties The properties of the event
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void DataStream_CustomPageEvent(std::string& _return, const std::string& eventName, const std::string& jsonEventProperties, const int32_t clientIndex) {
     // Your implementation goes here
@@ -653,7 +653,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonEventProperties The properties of the event
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void DataStream_CustomScreenEvent(std::string& _return, const std::string& eventName, const std::string& jsonEventProperties, const int32_t clientIndex) {
     // Your implementation goes here
@@ -667,7 +667,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonEventProperties The properties of the event
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void DataStream_CustomTrackEvent(std::string& _return, const std::string& eventName, const std::string& jsonEventProperties, const int32_t clientIndex) {
     // Your implementation goes here
@@ -684,7 +684,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param jsonEntityAcl The entity's access control list as json. A null acl implies default
    * permissions which make the entity readable/writeable by only the user.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_CreateEntity(std::string& _return, const std::string& entityType, const std::string& jsonEntityData, const std::string& jsonEntityAcl, const int32_t clientIndex) {
     // Your implementation goes here
@@ -696,7 +696,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param entityType The entity type to search for
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_GetEntitiesByType(std::string& _return, const std::string& entityType, const int32_t clientIndex) {
     // Your implementation goes here
@@ -720,7 +720,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * entity on the server does not match the version passed in, the
    * server operation will fail. Use -1 to skip version checking.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_UpdateEntity(std::string& _return, const std::string& entityId, const std::string& entityType, const std::string& jsonEntityData, const std::string& jsonEntityAcl, const int32_t version, const int32_t clientIndex) {
     // Your implementation goes here
@@ -743,7 +743,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * entity on the server does not match the version passed in, the
    * server operation will fail. Use -1 to skip version checking.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_UpdateSharedEntity(std::string& _return, const std::string& entityId, const std::string& targetProfileId, const std::string& entityType, const std::string& jsonEntityData, const int32_t version, const int32_t clientIndex) {
     // Your implementation goes here
@@ -759,7 +759,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * entity on the server does not match the version passed in, the
    * server operation will fail. Use -1 to skip version checking.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_DeleteEntity(std::string& _return, const std::string& entityId, const int32_t version, const int32_t clientIndex) {
     // Your implementation goes here
@@ -780,7 +780,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * entity on the server does not match the version passed in, the
    * server operation will fail. Use -1 to skip version checking.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_UpdateSingleton(std::string& _return, const std::string& entityType, const std::string& jsonEntityData, const std::string& jsonEntityAcl, const int32_t version, const int32_t clientIndex) {
     // Your implementation goes here
@@ -796,7 +796,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * entity on the server does not match the version passed in, the
    * server operation will fail. Use -1 to skip version checking.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_DeleteSingleton(std::string& _return, const std::string& entityType, const int32_t version, const int32_t clientIndex) {
     // Your implementation goes here
@@ -808,7 +808,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param entityId The id of the entity
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_GetEntity(std::string& _return, const std::string& entityId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -820,7 +820,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param entityType The entity type as defined by the user
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_GetSingleton(std::string& _return, const std::string& entityType, const int32_t clientIndex) {
     // Your implementation goes here
@@ -836,7 +836,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param entityId The ID of the entity that will be retrieved
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_GetSharedEntityForProfileId(std::string& _return, const std::string& profileId, const std::string& entityId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -850,7 +850,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param profileId The profile id to retrieve shared entities for
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_GetSharedEntitiesForProfileId(std::string& _return, const std::string& profileId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -866,7 +866,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param maxReturn The maximum number of entities to return
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_GetList(std::string& _return, const std::string& whereJson, const std::string& orderByJson, const int32_t maxReturn, const int32_t clientIndex) {
     // Your implementation goes here
@@ -884,7 +884,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param maxReturn The maximum number of entities to return
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_GetSharedEntitiesListForProfileId(std::string& _return, const std::string& profileId, const std::string& whereJson, const std::string& orderByJson, const int32_t maxReturn, const int32_t clientIndex) {
     // Your implementation goes here
@@ -896,7 +896,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param whereJson Mongo style query string
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_GetListCount(std::string& _return, const std::string& whereJson, const int32_t clientIndex) {
     // Your implementation goes here
@@ -911,7 +911,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param jsonContext The json context for the page request.
    * See the portal appendix documentation for format
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_GetPage(std::string& _return, const std::string& jsonContext, const int32_t clientIndex) {
     // Your implementation goes here
@@ -928,7 +928,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param pageOffset The positive or negative page offset to fetch. Uses the last page
    * retrieved using the context string to determine a starting point.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_GetPageOffset(std::string& _return, const std::string& context, const int32_t pageOffset, const int32_t clientIndex) {
     // Your implementation goes here
@@ -942,7 +942,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonData The subset of data to increment
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_IncrementUserEntityData(std::string& _return, const std::string& entityId, const std::string& jsonData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -958,7 +958,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonData The subset of data to increment
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Entity_IncrementSharedUserEntityData(std::string& _return, const std::string& entityId, const std::string& targetProfileId, const std::string& jsonData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -978,7 +978,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonEventData The user-defined data for this event encoded in JSON.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Event_SendEvent(std::string& _return, const std::string& toProfileId, const std::string& eventType, const std::string& jsonEventData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -992,7 +992,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonEventData The user-defined data for this event encoded in JSON.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Event_UpdateIncomingEventData(std::string& _return, const std::string& evId, const std::string& jsonEventData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1004,7 +1004,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param evId The event id
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Event_DeleteIncomingEvent(std::string& _return, const std::string& evId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1014,7 +1014,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Get the events currently queued for the user.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Event_GetEvents(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1036,7 +1036,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param localPath The path and fileName of the local file
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void File_UploadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool shareable, const bool replaceIfExists, const std::string& localPath, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1051,7 +1051,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param uploadId Upload ID of the file to cancel
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void File_CancelUpload(const std::string& uploadId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1064,7 +1064,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param uploadId The id of the upload
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   double File_GetUploadProgress(const std::string& uploadId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1077,7 +1077,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param uploadId The id of the upload
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   int64_t File_GetUploadBytesTransferred(const std::string& uploadId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1089,7 +1089,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param uploadId The id of the upload
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   int64_t File_GetUploadTotalBytesToTransfer(const std::string& uploadId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1099,7 +1099,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * List all user files
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void File_ListUserFiles_SFO(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1113,7 +1113,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param recurse Whether to recurse down the path
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void File_ListUserFiles_SNSFO(std::string& _return, const std::string& cloudPath, const bool recurse, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1126,7 +1126,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param cloudPath File path
    * 
    * @param cloudFileName
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void File_DeleteUserFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFileName, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1140,7 +1140,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param recurse Whether to recurse down the path
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void File_DeleteUserFiles(std::string& _return, const std::string& cloudPath, const bool recurse, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1154,7 +1154,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param cloudFilename Name of file
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void File_GetCDNUrl(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1168,7 +1168,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param maxResults Maximum number of results to return.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_FindUserByUniversalId(std::string& _return, const std::string& searchText, const int32_t maxResults, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1182,7 +1182,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param authenticationType The authentication type used for the user's ID
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_GetProfileInfoForCredential(std::string& _return, const std::string& externalId, const std::string& authenticationType, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1196,7 +1196,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param externalAuthType The external authentication type used for this friend's external id
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_GetProfileInfoForExternalAuthId(std::string& _return, const std::string& externalId, const std::string& externalAuthType, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1210,7 +1210,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param authenticationType Associated authentication type.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_GetExternalIdForProfileId(std::string& _return, const std::string& profileId, const std::string& authenticationType, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1224,7 +1224,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param friendId Profile Id of friend who owns entity.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_ReadFriendEntity(std::string& _return, const std::string& entityId, const std::string& friendId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1236,7 +1236,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param entityType Types of entities to retrieve.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_ReadFriendsEntities(std::string& _return, const std::string& entityType, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1248,7 +1248,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param friendId Profile Id of friend to retrieve user state for.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_ReadFriendUserState(std::string& _return, const std::string& friendId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1260,7 +1260,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param profileId Profile Id of user to retrieve player state for.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_GetSummaryDataForProfileId(std::string& _return, const std::string& profileId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1275,7 +1275,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param maxResults Maximum number of results to return.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_FindUsersByExactName(std::string& _return, const std::string& searchText, const int32_t maxResults, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1290,7 +1290,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param maxResults Maximum number of results to return.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_FindUsersBySubstrName(std::string& _return, const std::string& searchText, const int32_t maxResults, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1304,7 +1304,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param includeSummaryData True if including summary data; false otherwise.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_ListFriends(std::string& _return, const  ::Ruyi::SDK::BrainCloudApi::FriendPlatform::type friendPlatform, const bool includeSummaryData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1316,7 +1316,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param profileIds Collection of profile IDs.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_AddFriends(std::string& _return, const std::vector<std::string> & profileIds, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1328,7 +1328,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param profileIds Collection of profile IDs.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_RemoveFriends(std::string& _return, const std::vector<std::string> & profileIds, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1340,7 +1340,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param profileIds Collection of profile IDs.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Friend_GetUsersOnlineStatus(std::string& _return, const std::vector<std::string> & profileIds, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1351,7 +1351,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method retrieves all gamification data for the player.
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadAllGamification(std::string& _return, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1362,7 +1362,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method retrieves all milestones defined for the game.
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadMilestones(std::string& _return, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1373,7 +1373,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Read all of the achievements defined for the game.
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadAchievements(std::string& _return, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1384,7 +1384,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method returns all defined xp levels and any rewards associated
    * with those xp levels.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadXpLevelsMetaData(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1395,7 +1395,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method retrives the list of achieved achievements.
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadAchievedAchievements(std::string& _return, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1406,7 +1406,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method retrieves the list of completed milestones.
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadCompletedMilestones(std::string& _return, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1417,7 +1417,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method retrieves the list of in progress milestones
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadInProgressMilestones(std::string& _return, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1430,7 +1430,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param category The milestone category
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadMilestonesByCategory(std::string& _return, const std::string& category, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1444,7 +1444,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param achievementIds A collection of achievement ids to award
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_AwardAchievements(std::string& _return, const std::vector<std::string> & achievementIds, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1455,7 +1455,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method retrieves all of the quests defined for the game.
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadQuests(std::string& _return, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1466,7 +1466,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method returns all completed quests.
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadCompletedQuests(std::string& _return, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1477,7 +1477,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method returns all in progress quests.
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadInProgressQuests(std::string& _return, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1488,7 +1488,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method returns all quests that haven't been started.
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadNotStartedQuests(std::string& _return, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1499,7 +1499,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method returns all quests with status.
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadQuestsWithStatus(std::string& _return, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1510,7 +1510,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method returns all quests with a basic percentage.
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadQuestsWithBasicPercentage(std::string& _return, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1521,7 +1521,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method returns all quests with a complex percentage.
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadQuestsWithComplexPercentage(std::string& _return, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1534,7 +1534,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param category The quest category
    * 
    * @param includeMetaData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ReadQuestsByCategory(std::string& _return, const std::string& category, const bool includeMetaData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1546,7 +1546,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param milestoneIds List of milestones to reset
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Gamification_ResetMilestones(std::string& _return, const std::vector<std::string> & milestoneIds, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1556,7 +1556,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Method reads all the global properties of the game
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalApp_ReadProperties(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1574,7 +1574,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonEntityData The entity's data as a json string
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_CreateEntity(std::string& _return, const std::string& entityType, const int64_t timeToLive, const std::string& jsonEntityAcl, const std::string& jsonEntityData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1594,7 +1594,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonEntityData The entity's data as a json string
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_CreateEntityWithIndexedId(std::string& _return, const std::string& entityType, const std::string& indexedId, const int64_t timeToLive, const std::string& jsonEntityAcl, const std::string& jsonEntityData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1610,7 +1610,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonEntityData The entity's data as a json string
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_UpdateEntity(std::string& _return, const std::string& entityId, const int32_t version, const std::string& jsonEntityData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1626,7 +1626,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonEntityAcl The entity's access control list as json.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_UpdateEntityAcl(std::string& _return, const std::string& entityId, const int32_t version, const std::string& jsonEntityAcl, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1642,7 +1642,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param timeToLive Sets expiry time for entity in milliseconds if > 0
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_UpdateEntityTimeToLive(std::string& _return, const std::string& entityId, const int32_t version, const int64_t timeToLive, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1656,7 +1656,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param version The version of the entity to delete
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_DeleteEntity(std::string& _return, const std::string& entityId, const int32_t version, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1668,7 +1668,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param entityId The entity ID
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_ReadEntity(std::string& _return, const std::string& entityId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1684,7 +1684,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param maxReturn The maximum number of entities to return
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_GetList(std::string& _return, const std::string& whereJson, const std::string& orderByJson, const int32_t maxReturn, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1698,7 +1698,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param maxReturn The maximum number of entities to return
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_GetListByIndexedId(std::string& _return, const std::string& entityIndexedId, const int32_t maxReturn, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1710,7 +1710,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param whereJson Mongo style query string
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_GetListCount(std::string& _return, const std::string& whereJson, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1725,7 +1725,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param jsonContext The json context for the page request.
    * See the portal appendix documentation for format
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_GetPage(std::string& _return, const std::string& jsonContext, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1742,7 +1742,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param pageOffset The positive or negative page offset to fetch. Uses the last page
    * retrieved using the context string to determine a starting point.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_GetPageOffset(std::string& _return, const std::string& context, const int32_t pageOffset, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1756,7 +1756,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonData The subset of data to increment
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_IncrementGlobalEntityData(std::string& _return, const std::string& entityId, const std::string& jsonData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1769,7 +1769,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param whereJson
    * @param maxReturn The maximum number of entities to return
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_GetRandomEntitiesMatching(std::string& _return, const std::string& whereJson, const int32_t maxReturn, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1787,7 +1787,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param acl The entity's access control list
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_UpdateEntityOwnerAndAcl(std::string& _return, const std::string& entityId, const int64_t version, const std::string& ownerId, const  ::Ruyi::SDK::BrainCloudApi::JSON& acl, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1803,7 +1803,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param acl The entity's access control list
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalEntity_MakeSystemEntity(std::string& _return, const std::string& entityId, const int64_t version, const  ::Ruyi::SDK::BrainCloudApi::JSON& acl, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1813,7 +1813,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Method returns all of the global statistics.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalStatistics_ReadAllGlobalStats(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1825,7 +1825,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param globalStats A list containing the statistics to read
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalStatistics_ReadGlobalStatsSubset(std::string& _return, const std::vector<std::string> & globalStats, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1837,7 +1837,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param category The global statistics category
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalStatistics_ReadGlobalStatsForCategory(std::string& _return, const std::string& category, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1861,7 +1861,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * }
    * which increments stat1 by 9 up to a limit of 30.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalStatistics_IncrementGlobalStats(std::string& _return, const std::string& jsonData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1880,7 +1880,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    *     "TREES_CLIMBED": 1
    * }
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void GlobalStatistics_ProcessStatistics(std::string& _return, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & statisticsData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1892,7 +1892,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param groupId ID of the group.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_AcceptGroupInvitation(std::string& _return, const std::string& groupId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1910,7 +1910,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonAttributes Attributes of the member being added.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_AddGroupMember(std::string& _return, const std::string& groupId, const std::string& profileId, const  ::Ruyi::SDK::BrainCloudApi::Role::type role, const std::string& jsonAttributes, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1931,7 +1931,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param dataQueryJson Query parameters (optional)
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_AutoJoinGroup(std::string& _return, const std::string& groupType, const  ::Ruyi::SDK::BrainCloudApi::AutoJoinStrategy::type autoJoinStrategy, const std::string& dataQueryJson, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1945,7 +1945,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param profileId Profile ID of the invitation being deleted.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_CancelGroupInvitation(std::string& _return, const std::string& groupId, const std::string& profileId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1969,7 +1969,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonDefaultMemberAttributes Default attributes for group members.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_CreateGroup(std::string& _return, const std::string& name, const std::string& groupType, const bool isOpenGroup, const  ::Ruyi::SDK::BrainCloudApi::JSON& acl, const std::string& jsonData, const std::string& jsonOwnerAttributes, const std::string& jsonDefaultMemberAttributes, const int32_t clientIndex) {
     // Your implementation goes here
@@ -1988,7 +1988,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonData Custom application data.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_CreateGroupEntity(std::string& _return, const std::string& groupId, const std::string& entityType, const bool isOwnedByGroupMember, const  ::Ruyi::SDK::BrainCloudApi::JSON& acl, const std::string& jsonData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2002,7 +2002,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param version Current version of the group
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_DeleteGroup(std::string& _return, const std::string& groupId, const int64_t version, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2018,7 +2018,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param version The current version of the group entity (for concurrency checking).
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_DeleteGroupEntity(std::string& _return, const std::string& groupId, const std::string& entityId, const int64_t version, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2037,7 +2037,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonData Partial data map with incremental values.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_IncrementGroupData(std::string& _return, const std::string& groupId, const std::string& jsonData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2053,7 +2053,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonData Partial data map with incremental values.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_IncrementGroupEntityData(std::string& _return, const std::string& groupId, const std::string& entityId, const std::string& jsonData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2071,7 +2071,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonAttributes Attributes of the member being invited.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_InviteGroupMember(std::string& _return, const std::string& groupId, const std::string& profileId, const  ::Ruyi::SDK::BrainCloudApi::Role::type role, const std::string& jsonAttributes, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2083,7 +2083,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param groupId ID of the group.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_JoinGroup(std::string& _return, const std::string& groupId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2095,7 +2095,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param groupId ID of the group.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_LeaveGroup(std::string& _return, const std::string& groupId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2115,7 +2115,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param pageOffset Number of pages by which to offset the query.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_ListGroupsPageByOffset(std::string& _return, const std::string& context, const int32_t pageOffset, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2132,7 +2132,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param groupId ID of the group.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_ReadGroup(std::string& _return, const std::string& groupId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2144,7 +2144,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param groupId ID of the group.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_ReadGroupData(std::string& _return, const std::string& groupId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2156,7 +2156,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonContext Query context.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_ReadGroupEntitiesPage(std::string& _return, const std::string& jsonContext, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2170,7 +2170,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param pageOffset Number of pages by which to offset the query.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_ReadGroupEntitiesPageByOffset(std::string& _return, const std::string& encodedContext, const int32_t pageOffset, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2184,7 +2184,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param entityId ID of the entity.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_ReadGroupEntity(std::string& _return, const std::string& groupId, const std::string& entityId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2196,7 +2196,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param groupId ID of the group.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_ReadGroupMembers(std::string& _return, const std::string& groupId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2208,7 +2208,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param groupId ID of the group.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_RejectGroupInvitation(std::string& _return, const std::string& groupId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2222,7 +2222,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param profileId Profile ID of the invitation being deleted.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_RejectGroupJoinRequest(std::string& _return, const std::string& groupId, const std::string& profileId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2236,7 +2236,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param profileId Profile ID of the member being deleted.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_RemoveGroupMember(std::string& _return, const std::string& groupId, const std::string& profileId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2252,7 +2252,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonData Data to apply.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_UpdateGroupData(std::string& _return, const std::string& groupId, const int64_t version, const std::string& jsonData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2270,7 +2270,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonData Custom application data.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_UpdateGroupEntityData(std::string& _return, const std::string& groupId, const std::string& entityId, const int64_t version, const std::string& jsonData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2288,7 +2288,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonAttributes Attributes of the member being updated (optional).
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_UpdateGroupMember(std::string& _return, const std::string& groupId, const std::string& profileId, const  ::Ruyi::SDK::BrainCloudApi::Role::type role, const std::string& jsonAttributes, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2302,7 +2302,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param name Name to apply.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Group_UpdateGroupName(std::string& _return, const std::string& groupId, const std::string& name, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2316,7 +2316,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param password The user's password
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_AttachEmailIdentity(std::string& _return, const std::string& email, const std::string& password, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2335,7 +2335,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param continueAnon Proceed even if the profile will revert to anonymous?
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_DetachEmailIdentity(std::string& _return, const std::string& email, const bool continueAnon, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2349,7 +2349,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param password The user's password
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_AttachUniversalIdentity(std::string& _return, const std::string& userId, const std::string& password, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2363,7 +2363,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param password The user's password
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_MergeUniversalIdentity(std::string& _return, const std::string& userId, const std::string& password, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2377,7 +2377,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param continueAnon Proceed even if the profile will revert to anonymous?
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_DetachUniversalIdentity(std::string& _return, const std::string& userId, const bool continueAnon, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2394,7 +2394,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param forceCreate Should a new profile be created if it does not exist?
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_SwitchToChildProfile(std::string& _return, const std::string& childProfileId, const std::string& childAppId, const bool forceCreate, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2409,7 +2409,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param forceCreate Should a new profile be created if one does not exist?
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_SwitchToSingletonChildProfile(std::string& _return, const std::string& childAppId, const bool forceCreate, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2429,7 +2429,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param forceCreate If the profile does not exist, should it be created?
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_AttachParentWithIdentity(std::string& _return, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2441,7 +2441,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param parentLevelName The level of the parent to switch to
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_SwitchToParentProfile(std::string& _return, const std::string& parentLevelName, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2451,7 +2451,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Detaches parent from this user's profile
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_DetachParent(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2463,7 +2463,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param includeSummaryData Whether to return the summary friend data along with this call
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_GetChildProfiles(std::string& _return, const bool includeSummaryData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2473,7 +2473,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Retrieve list of identities
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_GetIdentities(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2483,7 +2483,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Retrieve list of expired identities
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_GetExpiredIdentities(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2499,7 +2499,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param authenticationType Type of authentication
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_RefreshIdentity(std::string& _return, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2517,7 +2517,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param updateContactEmail Whether to update contact email in profile
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_ChangeEmailIdentity(std::string& _return, const std::string& oldEmailAddress, const std::string& password, const std::string& newEmailAddress, const bool updateContactEmail, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2539,7 +2539,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param forceCreate If the profile does not exist, should it be created?
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_AttachPeerProfile(std::string& _return, const std::string& peer, const std::string& externalId, const std::string& authenticationToken, const std::string& authenticationType, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2551,7 +2551,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param peer Name of the peer to connect to
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_DetachPeer(std::string& _return, const std::string& peer, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2561,7 +2561,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Retrieves a list of attached peer profiles
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Identity_GetPeerProfiles(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2576,7 +2576,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param body The email body
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Mail_SendBasicEmail(std::string& _return, const std::string& profileId, const std::string& subject, const std::string& body, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2590,7 +2590,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param jsonServiceParams Parameters to send to the email service. See the documentation for
    * a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Mail_SendAdvancedEmail(std::string& _return, const std::string& profileId, const std::string& jsonServiceParams, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2605,7 +2605,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param jsonServiceParams Parameters to send to the email service. See the documentation for
    * a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Mail_SendAdvancedEmailByAddress(std::string& _return, const std::string& emailAddress, const std::string& jsonServiceParams, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2615,7 +2615,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Read match making record
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_Read(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2627,7 +2627,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param playerRating The new player rating.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_SetPlayerRating(std::string& _return, const int64_t playerRating, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2637,7 +2637,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Resets player rating
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_ResetPlayerRating(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2649,7 +2649,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param increment The increment amount
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_IncrementPlayerRating(std::string& _return, const int64_t increment, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2661,7 +2661,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param decrement The decrement amount
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_DecrementPlayerRating(std::string& _return, const int64_t decrement, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2671,7 +2671,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Turns shield on
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_TurnShieldOn(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2683,7 +2683,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param minutes Number of minutes to turn the shield on for
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_TurnShieldOnFor(std::string& _return, const int32_t minutes, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2693,7 +2693,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Turns shield off
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_TurnShieldOff(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2705,7 +2705,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param minutes Number of minutes to increase the shield time for
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_IncrementShieldOnFor(std::string& _return, const int32_t minutes, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2719,7 +2719,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param playerId The player id or use null to retrieve for the current player
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_GetShieldExpiry(std::string& _return, const std::string& playerId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2733,7 +2733,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param numMatches The maximum number of matches to return
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_FindPlayers(std::string& _return, const int64_t rangeDelta, const int64_t numMatches, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2749,7 +2749,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonAttributes Attributes match criteria
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_FindPlayersWithAttributes(std::string& _return, const int64_t rangeDelta, const int64_t numMatches, const std::string& jsonAttributes, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2765,7 +2765,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonExtraParms Parameters to pass to the CloudCode filter script
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_FindPlayersUsingFilter(std::string& _return, const int64_t rangeDelta, const int64_t numMatches, const std::string& jsonExtraParms, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2784,7 +2784,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonExtraParms Parameters to pass to the CloudCode filter script
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_FindPlayersWithAttributesUsingFilter(std::string& _return, const int64_t rangeDelta, const int64_t numMatches, const std::string& jsonAttributes, const std::string& jsonExtraParms, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2794,7 +2794,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Enables Match Making for the Player
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_EnableMatchMaking(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2804,7 +2804,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Disables Match Making for the Player
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void MatchMaking_DisableMatchMaking(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2818,7 +2818,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param rangeDelta The range delta used for the initial match search
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void OneWayMatch_StartMatch(std::string& _return, const std::string& otherPlayerId, const int64_t rangeDelta, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2830,7 +2830,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param playbackStreamId The playback stream id returned in the start match
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void OneWayMatch_CancelMatch(std::string& _return, const std::string& playbackStreamId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2842,7 +2842,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param playbackStreamId The playback stream id returned in the initial start match
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void OneWayMatch_CompleteMatch(std::string& _return, const std::string& playbackStreamId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2856,7 +2856,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param includeSharedData Whether to include shared data in the stream
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlaybackStream_StartStream(std::string& _return, const std::string& targetPlayerId, const bool includeSharedData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2868,7 +2868,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param playbackStreamId Identifies the stream to read
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlaybackStream_ReadStream(std::string& _return, const std::string& playbackStreamId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2880,7 +2880,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param playbackStreamId Identifies the stream to read
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlaybackStream_EndStream(std::string& _return, const std::string& playbackStreamId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2892,7 +2892,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param playbackStreamId Identifies the stream to read
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlaybackStream_DeleteStream(std::string& _return, const std::string& playbackStreamId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2908,7 +2908,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param summary Current summary data as of this event
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlaybackStream_AddEvent(std::string& _return, const std::string& playbackStreamId, const std::string& eventData, const std::string& summary, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2922,7 +2922,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param maxNumStreams The player that started the stream
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlaybackStream_GetRecentStreamsForInitiatingPlayer(std::string& _return, const std::string& initiatingPlayerId, const int32_t maxNumStreams, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2936,7 +2936,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param maxNumStreams The player that started the stream
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlaybackStream_GetRecentStreamsForTargetPlayer(std::string& _return, const std::string& targetPlayerId, const int32_t maxNumStreams, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2950,7 +2950,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Apps will typically call this method after authenticating to get an
    * up-to-date view of the user's data.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerState_ReadUserState(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2963,7 +2963,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * to re-authenticate and create a new profile.
    * This is mostly used for debugging/qa.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerState_DeleteUser(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2977,7 +2977,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * the player record will continue to exist after the reset (so the user
    * does not need to re-authenticate).
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerState_ResetUser(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2987,7 +2987,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Logs user out of server.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerState_Logout(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -2999,7 +2999,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param userName The name of the user
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerState_UpdateUserName(std::string& _return, const std::string& userName, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3022,7 +3022,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    *   "highScore":45123
    * }
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerState_UpdateSummaryFriendData(std::string& _return, const std::string& jsonSummaryData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3032,7 +3032,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Retrieve the user's attributes.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerState_GetAttributes(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3046,7 +3046,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param wipeExisting Whether to wipe existing attributes prior to update.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerState_UpdateAttributes(std::string& _return, const std::string& jsonAttributes, const bool wipeExisting, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3058,7 +3058,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param attributeNames List of attribute names.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerState_RemoveAttributes(std::string& _return, const std::vector<std::string> & attributeNames, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3070,7 +3070,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param pictureUrl URL to apply.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerState_UpdateUserPictureUrl(std::string& _return, const std::string& pictureUrl, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3083,7 +3083,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param contactEmail Updated email
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerState_UpdateContactEmail(std::string& _return, const std::string& contactEmail, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3093,7 +3093,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Read all available user statistics.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerStatistics_ReadAllUserStats(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3104,7 +3104,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Reads a subset of user statistics as defined by the input JSON.
    * 
    * @param playerStats
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerStatistics_ReadUserStatsSubset(std::string& _return, const std::vector<std::string> & playerStats, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3116,7 +3116,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param category The user statistics category
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerStatistics_ReadUserStatsForCategory(std::string& _return, const std::string& category, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3126,7 +3126,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Reset all of the statistics for this user back to their initial value.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerStatistics_ResetAllUserStats(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3153,7 +3153,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * }
    * which increments stat1 by 9 up to a limit of 30.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerStatistics_IncrementUserStats_SSFO(std::string& _return, const std::string& jsonData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3181,7 +3181,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * }
    * which increments stat1 by 9 up to a limit of 30.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerStatistics_IncrementUserStats_DSFO(std::string& _return, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & dictData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3200,7 +3200,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    *     "TREES_CLIMBED": 1
    * }
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerStatistics_ProcessStatistics(std::string& _return, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & statisticsData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3210,7 +3210,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Returns JSON representing the next experience level for the user.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerStatistics_GetNextExperienceLevel(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3223,7 +3223,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param xpValue The amount to increase the user's experience by
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerStatistics_IncrementExperiencePoints(std::string& _return, const int32_t xpValue, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3237,7 +3237,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param xpValue The amount to set the the player's experience to
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerStatistics_SetExperiencePoints(std::string& _return, const int32_t xpValue, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3256,7 +3256,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param eventName
    * @param eventMultiplier
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerStatisticsEvent_TriggerStatsEvent(std::string& _return, const std::string& eventName, const int32_t eventMultiplier, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3279,7 +3279,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    *   }
    * ]
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void PlayerStatisticsEvent_TriggerStatsEvents(std::string& _return, const std::string& jsonData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3293,7 +3293,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param currencyType The currency type to retrieve or null
    * if all currency types are being requested.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Product_GetCurrency(std::string& _return, const std::string& currencyType, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3316,7 +3316,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param userCurrency The currency to retrieve the sales
    * inventory for. This is only used for Steam and Facebook stores.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Product_GetSalesInventory(std::string& _return, const std::string& platform, const std::string& userCurrency, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3341,7 +3341,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param category The product category
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Product_GetSalesInventoryByCategory(std::string& _return, const std::string& platform, const std::string& userCurrency, const std::string& category, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3354,7 +3354,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param receipt Receipt XML
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Product_VerifyMicrosoftReceipt(std::string& _return, const std::string& receipt, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3364,7 +3364,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Returns the eligible promotions for the player.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Product_GetEligiblePromotions(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3377,7 +3377,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param base64EncReceiptData Base64 encoded receipt data
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Product_VerifyItunesReceipt(std::string& _return, const std::string& base64EncReceiptData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3397,7 +3397,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param flagUrls Optional processing of urls
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Profanity_ProfanityCheck(std::string& _return, const std::string& text, const std::string& languages, const bool flagEmail, const bool flagPhone, const bool flagUrls, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3419,7 +3419,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param flagUrls Optional processing of urls
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Profanity_ProfanityReplaceText(std::string& _return, const std::string& text, const std::string& replaceSymbol, const std::string& languages, const bool flagEmail, const bool flagPhone, const bool flagUrls, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3439,7 +3439,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param flagUrls Optional processing of urls
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Profanity_ProfanityIdentifyBadWords(std::string& _return, const std::string& text, const std::string& languages, const bool flagEmail, const bool flagPhone, const bool flagUrls, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3548,7 +3548,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jsonScriptData Data to be sent to the script in json format
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Script_RunScript(std::string& _return, const std::string& scriptName, const std::string& jsonScriptData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3564,7 +3564,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param startDateInUTC The start date as a DateTime object
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Script_ScheduleRunScriptUTC(std::string& _return, const std::string& scriptName, const std::string& jsonScriptData, const  ::Ruyi::SDK::BrainCloudApi::date startDateInUTC, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3580,7 +3580,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param minutesFromNow Number of minutes from now to run script
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Script_ScheduleRunScriptMinutes(std::string& _return, const std::string& scriptName, const std::string& jsonScriptData, const int64_t minutesFromNow, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3596,7 +3596,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param parentLevel The level name of the parent to run the script from
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Script_RunParentScript(std::string& _return, const std::string& scriptName, const std::string& jsonScriptData, const std::string& parentLevel, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3608,7 +3608,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param jobId ID of script job to cancel
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Script_CancelScheduledScript(std::string& _return, const std::string& jobId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3624,7 +3624,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param peer Identifies the peer
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Script_RunPeerScript(std::string& _return, const std::string& scriptName, const std::string& jsonScriptData, const std::string& peer, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3641,7 +3641,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param peer Identifies the peer
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Script_RunPeerScriptAsynch(std::string& _return, const std::string& scriptName, const std::string& jsonScriptData, const std::string& peer, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3668,7 +3668,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param replaceName If true, the currently logged in player's name will be replaced
    * by the string "You".
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_GetSocialLeaderboard(std::string& _return, const std::string& leaderboardId, const bool replaceName, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3685,7 +3685,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param replaceName If true, the currently logged in player's name will be replaced
    * by the string "You".
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_GetMultiSocialLeaderboard(std::string& _return, const std::vector<std::string> & leaderboardIds, const int32_t leaderboardResultCount, const bool replaceName, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3708,7 +3708,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param endIndex The index at which to end the page.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_GetGlobalLeaderboardPage(std::string& _return, const std::string& leaderboardId, const  ::Ruyi::SDK::BrainCloudApi::SortOrder::type sort, const int32_t startIndex, const int32_t endIndex, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3730,7 +3730,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param versionId The historical version to retrieve.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_GetGlobalLeaderboardPageByVersion(std::string& _return, const std::string& leaderboardId, const  ::Ruyi::SDK::BrainCloudApi::SortOrder::type sort, const int32_t startIndex, const int32_t endIndex, const int32_t versionId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3751,7 +3751,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param afterCount The count of number of players after the current player to include.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_GetGlobalLeaderboardView(std::string& _return, const std::string& leaderboardId, const  ::Ruyi::SDK::BrainCloudApi::SortOrder::type sort, const int32_t beforeCount, const int32_t afterCount, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3773,7 +3773,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param versionId The historial version to retrieve. Use -1 for current leaderboard.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_GetGlobalLeaderboardViewByVersion(std::string& _return, const std::string& leaderboardId, const  ::Ruyi::SDK::BrainCloudApi::SortOrder::type sort, const int32_t beforeCount, const int32_t afterCount, const int32_t versionId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3785,7 +3785,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param leaderboardId In_leaderboard identifier.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_GetGlobalLeaderboardVersions(std::string& _return, const std::string& leaderboardId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3799,7 +3799,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param groupId The group ID
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_GetGroupSocialLeaderboard(std::string& _return, const std::string& leaderboardId, const std::string& groupId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3821,7 +3821,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param score The score to post
    * 
    * @param jsonData
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_PostScoreToLeaderboard(std::string& _return, const std::string& leaderboardId, const int64_t score, const std::string& jsonData, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3835,7 +3835,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param versionId The version of the leaderboard
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_RemovePlayerScore(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3862,7 +3862,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param retainedCount How many rotations to keep
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_PostScoreToDynamicLeaderboard(std::string& _return, const std::string& leaderboardId, const int64_t score, const std::string& jsonData, const  ::Ruyi::SDK::BrainCloudApi::SocialLeaderboardType::type leaderboardType, const  ::Ruyi::SDK::BrainCloudApi::RotationType::type rotationType, const  ::Ruyi::SDK::BrainCloudApi::date rotationReset, const int32_t retainedCount, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3889,7 +3889,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param numDaysToRotate How many days between each rotation
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_PostScoreToDynamicLeaderboardDays(std::string& _return, const std::string& leaderboardId, const int64_t score, const std::string& jsonData, const  ::Ruyi::SDK::BrainCloudApi::SocialLeaderboardType::type leaderboardType, const  ::Ruyi::SDK::BrainCloudApi::date rotationReset, const int32_t retainedCount, const int32_t numDaysToRotate, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3903,7 +3903,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param profileIds The IDs of the players
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_GetPlayersSocialLeaderboard(std::string& _return, const std::string& leaderboardId, const std::vector<std::string> & profileIds, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3913,7 +3913,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Retrieve a list of all leaderboards
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_ListLeaderboards(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3925,7 +3925,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param leaderboardId The ID of the leaderboard
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_GetGlobalLeaderboardEntryCount(std::string& _return, const std::string& leaderboardId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3939,7 +3939,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param versionId The version of the leaderboard
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_GetGlobalLeaderboardEntryCountByVersion(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3953,7 +3953,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param versionId The version of the leaderboard. Use -1 for current.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_GetPlayerScore(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3965,7 +3965,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param leaderboardIds A collection of leaderboardIds to retrieve scores from
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void SocialLeaderboard_GetPlayerScoresFromLeaderboards(std::string& _return, const std::vector<std::string> & leaderboardIds, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3976,7 +3976,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * Method returns the server time in UTC. This is in UNIX millis time format.
    * For instance 1396378241893 represents 2014-04-01 2:50:41.893 in GMT-4.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Time_ReadServerTime(std::string& _return, const int32_t clientIndex) {
     // Your implementation goes here
@@ -3991,7 +3991,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param versionId Version of the tournament to claim rewards for.
    * Use -1 for the latest version.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Tournament_ClaimTournamentReward(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -4005,7 +4005,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param versionId Version of the tournament. Use -1 for the latest version.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Tournament_GetTournamentStatus(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -4023,7 +4023,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param initialScore The initial score for players first joining a tournament
    * Usually 0, unless leaderboard is LOW_VALUE
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Tournament_JoinTournament(std::string& _return, const std::string& leaderboardId, const std::string& tournamentCode, const int64_t initialScore, const int32_t clientIndex) {
     // Your implementation goes here
@@ -4035,7 +4035,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param leaderboardId The leaderboard for the tournament
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Tournament_LeaveTournament(std::string& _return, const std::string& leaderboardId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -4054,7 +4054,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param roundStartedTime Time the user started the match resulting in the score
    * being posted.
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Tournament_PostTournamentScore(std::string& _return, const std::string& leaderboardId, const int64_t score, const std::string& jsonData, const  ::Ruyi::SDK::BrainCloudApi::date roundStartedTime, const int32_t clientIndex) {
     // Your implementation goes here
@@ -4082,7 +4082,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * @param initialScore The initial score for players first joining a tournament
    * Usually 0, unless leaderboard is LOW_VALUE
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Tournament_PostTournamentScoreWithResults(std::string& _return, const std::string& leaderboardId, const int64_t score, const std::string& jsonData, const  ::Ruyi::SDK::BrainCloudApi::date roundStartedTime, const  ::Ruyi::SDK::BrainCloudApi::SortOrder::type sort, const int32_t beforeCount, const int32_t afterCount, const int64_t initialScore, const int32_t clientIndex) {
     // Your implementation goes here
@@ -4094,7 +4094,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param leaderboardId The leaderboard for the tournament
    * 
-   * @param clientIndex
+   * @param clientIndex The index of the BrainCloud client
    */
   void Tournament_ViewCurrentReward(std::string& _return, const std::string& leaderboardId, const int32_t clientIndex) {
     // Your implementation goes here
@@ -4251,16 +4251,45 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Telemetry_EndTelemetryEvent\n");
   }
 
+  /**
+   * Download file from BrainCloud
+   * 
+   * @param cloudPath The cloud path
+   * 
+   * @param cloudFilename The cloud filename
+   * 
+   * @param replaceIfExists True to replace the existing file
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
   void File_DownloadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex) {
     // Your implementation goes here
     printf("File_DownloadFile\n");
   }
 
+  /**
+   * Get download information
+   * 
+   * @param cloudPath The cloud path
+   * 
+   * @param cloudFilename The cloud filename
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
   void File_GetDownloadInfo(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const int32_t clientIndex) {
     // Your implementation goes here
     printf("File_GetDownloadInfo\n");
   }
 
+  /**
+   * Cancel the download task
+   * 
+   * @param cloudPath The cloud path
+   * 
+   * @param cloudFilename The cloud filename
+   * 
+   * @param clientIndex The index of the BrainCloud client
+   */
   void File_CancelDownload(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const int32_t clientIndex) {
     // Your implementation goes here
     printf("File_CancelDownload\n");
