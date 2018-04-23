@@ -27,6 +27,7 @@ namespace Ruyi.SDK.UserServiceExternal
     private string _userId;
     private string _action;
     private long _timestamp;
+    private List<TriggerKeys> _Triggers;
 
     public string UserId
     {
@@ -67,6 +68,19 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
+    public List<TriggerKeys> Triggers
+    {
+      get
+      {
+        return _Triggers;
+      }
+      set
+      {
+        __isset.Triggers = true;
+        this._Triggers = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -76,6 +90,7 @@ namespace Ruyi.SDK.UserServiceExternal
       public bool userId;
       public bool action;
       public bool timestamp;
+      public bool Triggers;
     }
 
     public InputActionEvent() {
@@ -113,6 +128,24 @@ namespace Ruyi.SDK.UserServiceExternal
             case 3:
               if (field.Type == TType.I64) {
                 Timestamp = iprot.ReadI64();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 4:
+              if (field.Type == TType.List) {
+                {
+                  Triggers = new List<TriggerKeys>();
+                  TList _list0 = iprot.ReadListBegin();
+                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
+                  {
+                    TriggerKeys _elem2;
+                    _elem2 = new TriggerKeys();
+                    _elem2.Read(iprot);
+                    Triggers.Add(_elem2);
+                  }
+                  iprot.ReadListEnd();
+                }
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -162,6 +195,21 @@ namespace Ruyi.SDK.UserServiceExternal
           oprot.WriteI64(Timestamp);
           oprot.WriteFieldEnd();
         }
+        if (Triggers != null && __isset.Triggers) {
+          field.Name = "Triggers";
+          field.Type = TType.List;
+          field.ID = 4;
+          oprot.WriteFieldBegin(field);
+          {
+            oprot.WriteListBegin(new TList(TType.Struct, Triggers.Count));
+            foreach (TriggerKeys _iter3 in Triggers)
+            {
+              _iter3.Write(oprot);
+            }
+            oprot.WriteListEnd();
+          }
+          oprot.WriteFieldEnd();
+        }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
@@ -191,6 +239,12 @@ namespace Ruyi.SDK.UserServiceExternal
         __first = false;
         __sb.Append("Timestamp: ");
         __sb.Append(Timestamp);
+      }
+      if (Triggers != null && __isset.Triggers) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Triggers: ");
+        __sb.Append(Triggers);
       }
       __sb.Append(")");
       return __sb.ToString();
