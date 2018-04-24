@@ -18,127 +18,154 @@ using Thrift.Transport;
 
 namespace Ruyi.SDK.Speech
 {
+  public abstract partial class VoiceCommand : TAbstractBase {
+    public abstract void Write(TProtocol protocol);
+    public readonly bool Isset;
+    public abstract object Data { get; }
+    protected VoiceCommand(bool isset) {
+      Isset = isset;
+    }
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
-  public partial class VoiceCommand : TBase
-  {
-    private List<sbyte> _result;
+    public class ___undefined : VoiceCommand {
+      public override object Data { get { return null; } }
+      public ___undefined() : base(false) {}
 
-    public List<sbyte> Result
-    {
-      get
-      {
-        return _result;
+      public override void Write(TProtocol protocol) {
+        throw new TProtocolException( TProtocolException.INVALID_DATA, "Cannot persist an union type which is not set.");
       }
-      set
-      {
-        __isset.result = true;
-        this._result = value;
+
+    }
+
+    public class Filename : VoiceCommand {
+      private string _data;
+      public override object Data { get { return _data; } }
+      public Filename(string data) : base(true) {
+        this._data = data;
       }
-    }
-
-
-    public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
-      public bool result;
-    }
-
-    public VoiceCommand() {
-    }
-
-    public void Read (TProtocol iprot)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        TField field;
-        iprot.ReadStructBegin();
-        while (true)
+      public override void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
-            break;
-          }
-          switch (field.ID)
-          {
-            case 1:
-              if (field.Type == TType.List) {
-                {
-                  Result = new List<sbyte>();
-                  TList _list0 = iprot.ReadListBegin();
-                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
-                  {
-                    sbyte _elem2;
-                    _elem2 = iprot.ReadByte();
-                    Result.Add(_elem2);
-                  }
-                  iprot.ReadListEnd();
-                }
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            default: 
-              TProtocolUtil.Skip(iprot, field.Type);
-              break;
-          }
-          iprot.ReadFieldEnd();
-        }
-        iprot.ReadStructEnd();
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
-
-    public void Write(TProtocol oprot) {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        TStruct struc = new TStruct("VoiceCommand");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (Result != null && __isset.result) {
-          field.Name = "result";
-          field.Type = TType.List;
+          TStruct struc = new TStruct("VoiceCommand");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          field.Name = "Filename";
+          field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          {
-            oprot.WriteListBegin(new TList(TType.Byte, Result.Count));
-            foreach (sbyte _iter3 in Result)
-            {
-              oprot.WriteByte(_iter3);
-            }
-            oprot.WriteListEnd();
-          }
+          oprot.WriteString(_data);
           oprot.WriteFieldEnd();
-        }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
       }
       finally
       {
         oprot.DecrementRecursionDepth();
       }
+      }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("VoiceCommand(");
-      bool __first = true;
-      if (Result != null && __isset.result) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Result: ");
-        __sb.Append(Result);
+    public class RawData : VoiceCommand {
+      private List<sbyte> _data;
+      public override object Data { get { return _data; } }
+      public RawData(List<sbyte> data) : base(true) {
+        this._data = data;
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      public override void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("VoiceCommand");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          field.Name = "RawData";
+          field.Type = TType.List;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          {
+            oprot.WriteListBegin(new TList(TType.Byte, _data.Count));
+            foreach (sbyte _iter0 in _data)
+            {
+              oprot.WriteByte(_iter0);
+            }
+            oprot.WriteListEnd();
+          }
+          oprot.WriteFieldEnd();
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
+      }
+    }
+
+    public static VoiceCommand Read(TProtocol iprot)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        VoiceCommand retval;
+        iprot.ReadStructBegin();
+        TField field = iprot.ReadFieldBegin();
+        if (field.Type == TType.Stop)
+        {
+          iprot.ReadFieldEnd();
+          retval = new ___undefined();
+        }
+        else
+        {
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String) {
+                string temp;
+                temp = iprot.ReadString();
+                retval = new Filename(temp);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+                retval = new ___undefined();
+              }
+              break;
+            case 2:
+              if (field.Type == TType.List) {
+                List<sbyte> temp;
+                {
+                  temp = new List<sbyte>();
+                  TList _list1 = iprot.ReadListBegin();
+                  for( int _i2 = 0; _i2 < _list1.Count; ++_i2)
+                  {
+                    sbyte _elem3;
+                    _elem3 = iprot.ReadByte();
+                    temp.Add(_elem3);
+                  }
+                  iprot.ReadListEnd();
+                }
+                retval = new RawData(temp);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+                retval = new ___undefined();
+              }
+              break;
+            default: 
+              TProtocolUtil.Skip(iprot, field.Type);
+              retval = new ___undefined();
+              break;
+          }
+          iprot.ReadFieldEnd();
+          if (iprot.ReadFieldBegin().Type != TType.Stop)
+          {
+            throw new TProtocolException(TProtocolException.INVALID_DATA);
+          }
+        }
+        iprot.ReadStructEnd();
+        return retval;
+    }
+    finally
+    {
+      iprot.DecrementRecursionDepth();
+    }
     }
 
   }
