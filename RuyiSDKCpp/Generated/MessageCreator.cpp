@@ -37,7 +37,6 @@ void MessageCreator::Initialize()
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.GlobalInputDefine.RuyiInputStateRuyiController", Ruyi::SDK::GlobalInputDefine::RuyiInputStateRuyiController);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.BrainCloudApi.FileUploadSuccessResult", Ruyi::SDK::BrainCloudApi::FileUploadSuccessResult);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.BrainCloudApi.FileUploadFailedResult", Ruyi::SDK::BrainCloudApi::FileUploadFailedResult);
-	REGIST_CREATION_FUNCTION("Ruyi.SDK.Constants.BraincloudServerInfo", Ruyi::SDK::Constants::BraincloudServerInfo);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.LocalizationService.LanguageChangedMsg", Ruyi::SDK::LocalizationService::LanguageChangedMsg);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.UserServiceExternal.InputActionEvent", Ruyi::SDK::UserServiceExternal::InputActionEvent);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.UserServiceExternal.UserEvent", Ruyi::SDK::UserServiceExternal::UserEvent);
