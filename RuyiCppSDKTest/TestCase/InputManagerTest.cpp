@@ -22,6 +22,7 @@ unsigned int InputManagerTest::SubscriberMessage()
 	replace_all(*modifier, "{addr}", "localhost");
 
 	ruyiSDK->Subscriber->Subscribe("service/inputmanager_internal");
+	//ruyiSDK->Subscriber->Subscribe("service/user_service_external");
 	ruyiSDK->Subscriber->AddMessageHandler(this, &InputManagerTest::SubStateChangeHandler2);
 
 	return 0;
