@@ -58,6 +58,7 @@ namespace Layer0
                 {
                     while (Receive()) ;
                 });
+                receivingThread.Name = "Subscriber";
                 receivingThread.Start();
             }
         }

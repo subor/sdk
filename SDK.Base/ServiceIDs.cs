@@ -27,6 +27,7 @@ namespace Layer0
         DEVELOPER_MODE,
         L2FORWARDER,
         SPEECH,
+        MEDIA,
 
         LOW_POWER_END,
         #endregion

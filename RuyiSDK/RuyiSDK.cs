@@ -2,6 +2,7 @@
 using NetMQ;
 using Ruyi.SDK.Constants;
 using Ruyi.SDK.LocalizationService;
+using Ruyi.SDK.MediaService;
 using Ruyi.SDK.SDKValidator;
 using Ruyi.SDK.StorageLayer;
 using Ruyi.SDK.UserServiceExternal;
@@ -25,7 +26,7 @@ namespace Ruyi
         /// Flags specifying which SDK features to initialize
         /// </summary>
         [Flags]
-        public enum Features
+        public enum SDKFeatures
         {
             /// <summary>
             /// No SDK features
@@ -59,11 +60,24 @@ namespace Ruyi
             /// Speech
             /// </summary>
             Speech = 1 << 6,
+            /// <summary>
+            /// Media player service
+            /// </summary>
+            Media = 1 << 7,
+            /// <summary>
+            /// Initialize subscriber for publisher/subscriber messaging
+            /// </summary>
+            Subscriber = 1 << 16,
+
+            /// <summary>
+            /// Most important SDK features (key layer0 services)
+            /// </summary>
+            Basic = Online | Settings | Users | Input | Subscriber,
 
             /// <summary>
             /// All SDK features
             /// </summary>
-            All = Storage | L10N | Online | Settings | Users | Input | Speech,
+            All = Basic | Storage | L10N | Speech | Media,
         }
 
         /// <summary>
@@ -99,6 +113,11 @@ namespace Ruyi
         //public InputMgrExternal.Client InputMgr { get; private set; }
 
         public Ruyi.SDK.Speech.SpeechService.Client SpeechService { get; private set;}
+
+        /// <summary>
+        /// Media player services
+        /// </summary>
+        public MediaService.Client Media { get; private set; }
 
         private RuyiSDKContext context = null;
 
@@ -179,18 +198,21 @@ namespace Ruyi
                 return false;
 
             // init subscriber
-            var pubout = ConstantsSDKDataTypesConstants.layer0_publisher_out_uri.SetAddress(context.RemoteAddress);
-            Subscriber = SubscribeClient.CreateInstance(pubout);
+            if (IsFeatureEnabled(SDKFeatures.Subscriber))
+            {
+                var pubout = ConstantsSDKDataTypesConstants.layer0_publisher_out_uri.SetAddress(context.RemoteAddress);
+                Subscriber = SubscribeClient.CreateInstance(pubout);
+            }
 
             // init storage layer
-            if (IsFeatureEnabled(Features.Storage))
+            if (IsFeatureEnabled(SDKFeatures.Storage))
             {
                 var stoProtocol = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.STORAGELAYER.ServiceID());
                 Storage = new StorageLayerService.Client(stoProtocol);
             }
 
             // init braincloud service
-            if (IsFeatureEnabled(Features.Online))
+            if (IsFeatureEnabled(SDKFeatures.Online))
             {
                 var bcProtocol = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.BCSERVICE.ServiceID());
                 RuyiNetService = new RuyiNetClient(bcProtocol, Storage);
@@ -198,21 +220,21 @@ namespace Ruyi
             }
 
             // init setting system
-            if (IsFeatureEnabled(Features.Settings))
+            if (IsFeatureEnabled(SDKFeatures.Settings))
             {
                 var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.L0SETTINGSYSTEM_EXTERNAL.ServiceID());
                 SettingSys = new Ruyi.SDK.SettingSystem.Api.SettingSystemService.Client(proto);
             }
 
             // init L10N
-            if (IsFeatureEnabled(Features.L10N))
+            if (IsFeatureEnabled(SDKFeatures.L10N))
             {
                 var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.L10NSERVICE.ServiceID());
                 L10NService = new LocalizationService.Client(proto);
             }
 
             // user manager
-            if (IsFeatureEnabled(Features.Users))
+            if (IsFeatureEnabled(SDKFeatures.Users))
             {
                 var proto = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.USER_SERVICE_EXTERNAL.ServiceID());
                 UserService = new UserServExternal.Client(proto);
@@ -231,12 +253,18 @@ namespace Ruyi
                 SpeechService = new SDK.Speech.SpeechService.Client(proto);
             }
 
+            if (IsFeatureEnabled(SDKFeatures.Media))
+            {
+                var proto = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.MEDIA.ServiceID());
+                Media = new MediaService.Client(proto);
+            }
+
             return true;
         }
 
-        bool IsFeatureEnabled(Features fea)
+        bool IsFeatureEnabled(SDKFeatures fea)
         {
-            return ((int)context.EnabledFeatures & (int)fea) != 0;
+            return context.EnabledFeatures.HasFlag(fea);
         }
 
         bool ValidateVersion()
