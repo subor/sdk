@@ -26,6 +26,7 @@ namespace Layer0
         HTTP_SUBSCRIBE,
         DEVELOPER_MODE,
         L2FORWARDER,
+        SPEECH,
 
         LOW_POWER_END,
         #endregion

@@ -55,11 +55,15 @@ namespace Ruyi
             /// Input Manager
             /// </summary>
             Input = 1 << 5,
+            /// <summary>
+            /// Speech
+            /// </summary>
+            Speech = 1 << 6,
 
             /// <summary>
             /// All SDK features
             /// </summary>
-            All = Storage | L10N | Online | Settings | Users | Input,
+            All = Storage | L10N | Online | Settings | Users | Input | Speech,
         }
 
         /// <summary>
@@ -93,6 +97,8 @@ namespace Ruyi
         public UserServExternal.Client UserService { get; private set; }
 
         //public InputMgrExternal.Client InputMgr { get; private set; }
+
+        public Ruyi.SDK.Speech.SpeechService.Client SpeechService { get; private set;}
 
         private RuyiSDKContext context = null;
 
@@ -218,6 +224,12 @@ namespace Ruyi
             //    var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.INPUTMANAGER_EXTERNAL.ServiceID());
             //    InputMgr = new InputMgrExternal.Client(proto);
             //}
+
+            if (IsFeatureEnabled(Features.Speech))
+            {
+                var proto = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.SPEECH.ServiceID());
+                SpeechService = new SDK.Speech.SpeechService.Client(proto);
+            }
 
             return true;
         }
