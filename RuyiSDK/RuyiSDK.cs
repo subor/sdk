@@ -247,7 +247,7 @@ namespace Ruyi
             //    InputMgr = new InputMgrExternal.Client(proto);
             //}
 
-            if (IsFeatureEnabled(Features.Speech))
+            if (IsFeatureEnabled(SDKFeatures.Speech))
             {
                 var proto = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.SPEECH.ServiceID());
                 SpeechService = new SDK.Speech.SpeechService.Client(proto);
