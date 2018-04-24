@@ -287,75 +287,6 @@ class BrainCloudServiceIf {
   virtual void Authentication_ResetEmailPassword(std::string& _return, const std::string& externalId, const int32_t clientIndex) = 0;
 
   /**
-   * Returns the sessionId or empty string if no session present.
-   * 
-   * @param clientIndex
-   */
-  virtual void Client_GetSessionId(std::string& _return, const int32_t clientIndex) = 0;
-
-  /**
-   * Returns true if the user is currently authenticated.
-   * If a session time out or session invalidation is returned from executing a
-   * sever API call, this flag will reset back to false.
-   * 
-   * @param clientIndex
-   */
-  virtual bool Client_IsAuthenticated(const int32_t clientIndex) = 0;
-
-  /**
-   * Returns true if brainCloud has been initialized.
-   * 
-   * @param clientIndex
-   */
-  virtual bool Client_IsInitialized(const int32_t clientIndex) = 0;
-
-  /**
-   * Method initializes the BrainCloudClient.
-   * 
-   * @param secretKey The secret key for your app
-   * 
-   * @param appId
-   * @param appVersion The app version
-   * 
-   * @param clientIndex
-   */
-  virtual void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) = 0;
-
-  /**
-   * Method initializes the BrainCloudClient.
-   * 
-   * @param serverURL The URL to the brainCloud server
-   * 
-   * @param secretKey The secret key for your app
-   * 
-   * @param appId The app id
-   * 
-   * @param appVersion The app version
-   * 
-   * @param clientIndex
-   */
-  virtual void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) = 0;
-
-  /**
-   * Initialize the identity aspects of brainCloud.
-   * 
-   * @param profileId The profile id
-   * 
-   * @param anonymousId The anonymous id
-   * 
-   * @param clientIndex
-   */
-  virtual void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) = 0;
-
-  /**
-   * Update method needs to be called regularly in order
-   * to process incoming and outgoing messages.
-   * 
-   * @param clientIndex
-   */
-  virtual void Client_Update(const int32_t clientIndex) = 0;
-
-  /**
    * Enable logging of brainCloud transactions (comms etc)
    * 
    * @param enable True if logging is to be enabled
@@ -554,6 +485,75 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual void Client_OverrideLanguageCode(const std::string& languageCode, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns the sessionId or empty string if no session present.
+   * 
+   * @param clientIndex
+   */
+  virtual void Client_GetSessionId(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
+   * Returns true if the user is currently authenticated.
+   * If a session time out or session invalidation is returned from executing a
+   * sever API call, this flag will reset back to false.
+   * 
+   * @param clientIndex
+   */
+  virtual bool Client_IsAuthenticated(const int32_t clientIndex) = 0;
+
+  /**
+   * Returns true if brainCloud has been initialized.
+   * 
+   * @param clientIndex
+   */
+  virtual bool Client_IsInitialized(const int32_t clientIndex) = 0;
+
+  /**
+   * Method initializes the BrainCloudClient.
+   * 
+   * @param secretKey The secret key for your app
+   * 
+   * @param appId
+   * @param appVersion The app version
+   * 
+   * @param clientIndex
+   */
+  virtual void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) = 0;
+
+  /**
+   * Method initializes the BrainCloudClient.
+   * 
+   * @param serverURL The URL to the brainCloud server
+   * 
+   * @param secretKey The secret key for your app
+   * 
+   * @param appId The app id
+   * 
+   * @param appVersion The app version
+   * 
+   * @param clientIndex
+   */
+  virtual void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) = 0;
+
+  /**
+   * Initialize the identity aspects of brainCloud.
+   * 
+   * @param profileId The profile id
+   * 
+   * @param anonymousId The anonymous id
+   * 
+   * @param clientIndex
+   */
+  virtual void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) = 0;
+
+  /**
+   * Update method needs to be called regularly in order
+   * to process incoming and outgoing messages.
+   * 
+   * @param clientIndex
+   */
+  virtual void Client_Update(const int32_t clientIndex) = 0;
 
   /**
    * Creates custom data stream page event
@@ -3559,6 +3559,7 @@ class BrainCloudServiceIf {
   virtual void Telemetry_LogTelemetryEvent(std::string& _return, const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex) = 0;
   virtual void Telemetry_StartTelemetryEvent(std::string& _return, const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex) = 0;
   virtual void Telemetry_EndTelemetryEvent(std::string& _return, const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex) = 0;
+  virtual void Client_SetSessionId(std::string& _return, const int32_t clientIndex, const std::string& session) = 0;
   virtual void File_DownloadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex) = 0;
   virtual void File_GetDownloadInfo(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const int32_t clientIndex) = 0;
   virtual void File_CancelDownload(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const int32_t clientIndex) = 0;
@@ -3648,29 +3649,6 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
   void Authentication_ResetEmailPassword(std::string& /* _return */, const std::string& /* externalId */, const int32_t /* clientIndex */) {
     return;
   }
-  void Client_GetSessionId(std::string& /* _return */, const int32_t /* clientIndex */) {
-    return;
-  }
-  bool Client_IsAuthenticated(const int32_t /* clientIndex */) {
-    bool _return = false;
-    return _return;
-  }
-  bool Client_IsInitialized(const int32_t /* clientIndex */) {
-    bool _return = false;
-    return _return;
-  }
-  void Client_Initialize_SSS(const std::string& /* secretKey */, const std::string& /* appId */, const std::string& /* appVersion */, const int32_t /* clientIndex */) {
-    return;
-  }
-  void Client_Initialize_SSSS(const std::string& /* serverURL */, const std::string& /* secretKey */, const std::string& /* appId */, const std::string& /* appVersion */, const int32_t /* clientIndex */) {
-    return;
-  }
-  void Client_InitializeIdentity(const std::string& /* profileId */, const std::string& /* anonymousId */, const int32_t /* clientIndex */) {
-    return;
-  }
-  void Client_Update(const int32_t /* clientIndex */) {
-    return;
-  }
   void Client_EnableLogging(const bool /* enable */, const int32_t /* clientIndex */) {
     return;
   }
@@ -3723,6 +3701,29 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
     return;
   }
   void Client_OverrideLanguageCode(const std::string& /* languageCode */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Client_GetSessionId(std::string& /* _return */, const int32_t /* clientIndex */) {
+    return;
+  }
+  bool Client_IsAuthenticated(const int32_t /* clientIndex */) {
+    bool _return = false;
+    return _return;
+  }
+  bool Client_IsInitialized(const int32_t /* clientIndex */) {
+    bool _return = false;
+    return _return;
+  }
+  void Client_Initialize_SSS(const std::string& /* secretKey */, const std::string& /* appId */, const std::string& /* appVersion */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Client_Initialize_SSSS(const std::string& /* serverURL */, const std::string& /* secretKey */, const std::string& /* appId */, const std::string& /* appVersion */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Client_InitializeIdentity(const std::string& /* profileId */, const std::string& /* anonymousId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Client_Update(const int32_t /* clientIndex */) {
     return;
   }
   void DataStream_CustomPageEvent(std::string& /* _return */, const std::string& /* eventName */, const std::string& /* jsonEventProperties */, const int32_t /* clientIndex */) {
@@ -4566,6 +4567,9 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
     return;
   }
   void Telemetry_EndTelemetryEvent(std::string& /* _return */, const std::string& /* telemetrySessionId */, const int32_t /* timestamp */, const std::string& /* eventType */, const std::string& /* participantId */, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & /* customData */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Client_SetSessionId(std::string& /* _return */, const int32_t /* clientIndex */, const std::string& /* session */) {
     return;
   }
   void File_DownloadFile(std::string& /* _return */, const std::string& /* cloudPath */, const std::string& /* cloudFilename */, const bool /* replaceIfExists */, const int32_t /* clientIndex */) {
@@ -6820,725 +6824,6 @@ class BrainCloudService_Authentication_ResetEmailPassword_presult {
 
 };
 
-typedef struct _BrainCloudService_Client_GetSessionId_args__isset {
-  _BrainCloudService_Client_GetSessionId_args__isset() : clientIndex(false) {}
-  bool clientIndex :1;
-} _BrainCloudService_Client_GetSessionId_args__isset;
-
-class BrainCloudService_Client_GetSessionId_args {
- public:
-
-  BrainCloudService_Client_GetSessionId_args(const BrainCloudService_Client_GetSessionId_args&);
-  BrainCloudService_Client_GetSessionId_args& operator=(const BrainCloudService_Client_GetSessionId_args&);
-  BrainCloudService_Client_GetSessionId_args() : clientIndex(0) {
-  }
-
-  virtual ~BrainCloudService_Client_GetSessionId_args() throw();
-  int32_t clientIndex;
-
-  _BrainCloudService_Client_GetSessionId_args__isset __isset;
-
-  void __set_clientIndex(const int32_t val);
-
-  bool operator == (const BrainCloudService_Client_GetSessionId_args & rhs) const
-  {
-    if (!(clientIndex == rhs.clientIndex))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_GetSessionId_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_GetSessionId_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_GetSessionId_pargs {
- public:
-
-
-  virtual ~BrainCloudService_Client_GetSessionId_pargs() throw();
-  const int32_t* clientIndex;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _BrainCloudService_Client_GetSessionId_result__isset {
-  _BrainCloudService_Client_GetSessionId_result__isset() : success(false) {}
-  bool success :1;
-} _BrainCloudService_Client_GetSessionId_result__isset;
-
-class BrainCloudService_Client_GetSessionId_result {
- public:
-
-  BrainCloudService_Client_GetSessionId_result(const BrainCloudService_Client_GetSessionId_result&);
-  BrainCloudService_Client_GetSessionId_result& operator=(const BrainCloudService_Client_GetSessionId_result&);
-  BrainCloudService_Client_GetSessionId_result() : success() {
-  }
-
-  virtual ~BrainCloudService_Client_GetSessionId_result() throw();
-  std::string success;
-
-  _BrainCloudService_Client_GetSessionId_result__isset __isset;
-
-  void __set_success(const std::string& val);
-
-  bool operator == (const BrainCloudService_Client_GetSessionId_result & rhs) const
-  {
-    if (!(success == rhs.success))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_GetSessionId_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_GetSessionId_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _BrainCloudService_Client_GetSessionId_presult__isset {
-  _BrainCloudService_Client_GetSessionId_presult__isset() : success(false) {}
-  bool success :1;
-} _BrainCloudService_Client_GetSessionId_presult__isset;
-
-class BrainCloudService_Client_GetSessionId_presult {
- public:
-
-
-  virtual ~BrainCloudService_Client_GetSessionId_presult() throw();
-  std::string* success;
-
-  _BrainCloudService_Client_GetSessionId_presult__isset __isset;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
-typedef struct _BrainCloudService_Client_IsAuthenticated_args__isset {
-  _BrainCloudService_Client_IsAuthenticated_args__isset() : clientIndex(false) {}
-  bool clientIndex :1;
-} _BrainCloudService_Client_IsAuthenticated_args__isset;
-
-class BrainCloudService_Client_IsAuthenticated_args {
- public:
-
-  BrainCloudService_Client_IsAuthenticated_args(const BrainCloudService_Client_IsAuthenticated_args&);
-  BrainCloudService_Client_IsAuthenticated_args& operator=(const BrainCloudService_Client_IsAuthenticated_args&);
-  BrainCloudService_Client_IsAuthenticated_args() : clientIndex(0) {
-  }
-
-  virtual ~BrainCloudService_Client_IsAuthenticated_args() throw();
-  int32_t clientIndex;
-
-  _BrainCloudService_Client_IsAuthenticated_args__isset __isset;
-
-  void __set_clientIndex(const int32_t val);
-
-  bool operator == (const BrainCloudService_Client_IsAuthenticated_args & rhs) const
-  {
-    if (!(clientIndex == rhs.clientIndex))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_IsAuthenticated_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_IsAuthenticated_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_IsAuthenticated_pargs {
- public:
-
-
-  virtual ~BrainCloudService_Client_IsAuthenticated_pargs() throw();
-  const int32_t* clientIndex;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _BrainCloudService_Client_IsAuthenticated_result__isset {
-  _BrainCloudService_Client_IsAuthenticated_result__isset() : success(false) {}
-  bool success :1;
-} _BrainCloudService_Client_IsAuthenticated_result__isset;
-
-class BrainCloudService_Client_IsAuthenticated_result {
- public:
-
-  BrainCloudService_Client_IsAuthenticated_result(const BrainCloudService_Client_IsAuthenticated_result&);
-  BrainCloudService_Client_IsAuthenticated_result& operator=(const BrainCloudService_Client_IsAuthenticated_result&);
-  BrainCloudService_Client_IsAuthenticated_result() : success(0) {
-  }
-
-  virtual ~BrainCloudService_Client_IsAuthenticated_result() throw();
-  bool success;
-
-  _BrainCloudService_Client_IsAuthenticated_result__isset __isset;
-
-  void __set_success(const bool val);
-
-  bool operator == (const BrainCloudService_Client_IsAuthenticated_result & rhs) const
-  {
-    if (!(success == rhs.success))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_IsAuthenticated_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_IsAuthenticated_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _BrainCloudService_Client_IsAuthenticated_presult__isset {
-  _BrainCloudService_Client_IsAuthenticated_presult__isset() : success(false) {}
-  bool success :1;
-} _BrainCloudService_Client_IsAuthenticated_presult__isset;
-
-class BrainCloudService_Client_IsAuthenticated_presult {
- public:
-
-
-  virtual ~BrainCloudService_Client_IsAuthenticated_presult() throw();
-  bool* success;
-
-  _BrainCloudService_Client_IsAuthenticated_presult__isset __isset;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
-typedef struct _BrainCloudService_Client_IsInitialized_args__isset {
-  _BrainCloudService_Client_IsInitialized_args__isset() : clientIndex(false) {}
-  bool clientIndex :1;
-} _BrainCloudService_Client_IsInitialized_args__isset;
-
-class BrainCloudService_Client_IsInitialized_args {
- public:
-
-  BrainCloudService_Client_IsInitialized_args(const BrainCloudService_Client_IsInitialized_args&);
-  BrainCloudService_Client_IsInitialized_args& operator=(const BrainCloudService_Client_IsInitialized_args&);
-  BrainCloudService_Client_IsInitialized_args() : clientIndex(0) {
-  }
-
-  virtual ~BrainCloudService_Client_IsInitialized_args() throw();
-  int32_t clientIndex;
-
-  _BrainCloudService_Client_IsInitialized_args__isset __isset;
-
-  void __set_clientIndex(const int32_t val);
-
-  bool operator == (const BrainCloudService_Client_IsInitialized_args & rhs) const
-  {
-    if (!(clientIndex == rhs.clientIndex))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_IsInitialized_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_IsInitialized_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_IsInitialized_pargs {
- public:
-
-
-  virtual ~BrainCloudService_Client_IsInitialized_pargs() throw();
-  const int32_t* clientIndex;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _BrainCloudService_Client_IsInitialized_result__isset {
-  _BrainCloudService_Client_IsInitialized_result__isset() : success(false) {}
-  bool success :1;
-} _BrainCloudService_Client_IsInitialized_result__isset;
-
-class BrainCloudService_Client_IsInitialized_result {
- public:
-
-  BrainCloudService_Client_IsInitialized_result(const BrainCloudService_Client_IsInitialized_result&);
-  BrainCloudService_Client_IsInitialized_result& operator=(const BrainCloudService_Client_IsInitialized_result&);
-  BrainCloudService_Client_IsInitialized_result() : success(0) {
-  }
-
-  virtual ~BrainCloudService_Client_IsInitialized_result() throw();
-  bool success;
-
-  _BrainCloudService_Client_IsInitialized_result__isset __isset;
-
-  void __set_success(const bool val);
-
-  bool operator == (const BrainCloudService_Client_IsInitialized_result & rhs) const
-  {
-    if (!(success == rhs.success))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_IsInitialized_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_IsInitialized_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _BrainCloudService_Client_IsInitialized_presult__isset {
-  _BrainCloudService_Client_IsInitialized_presult__isset() : success(false) {}
-  bool success :1;
-} _BrainCloudService_Client_IsInitialized_presult__isset;
-
-class BrainCloudService_Client_IsInitialized_presult {
- public:
-
-
-  virtual ~BrainCloudService_Client_IsInitialized_presult() throw();
-  bool* success;
-
-  _BrainCloudService_Client_IsInitialized_presult__isset __isset;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
-typedef struct _BrainCloudService_Client_Initialize_SSS_args__isset {
-  _BrainCloudService_Client_Initialize_SSS_args__isset() : secretKey(false), appId(false), appVersion(false), clientIndex(false) {}
-  bool secretKey :1;
-  bool appId :1;
-  bool appVersion :1;
-  bool clientIndex :1;
-} _BrainCloudService_Client_Initialize_SSS_args__isset;
-
-class BrainCloudService_Client_Initialize_SSS_args {
- public:
-
-  BrainCloudService_Client_Initialize_SSS_args(const BrainCloudService_Client_Initialize_SSS_args&);
-  BrainCloudService_Client_Initialize_SSS_args& operator=(const BrainCloudService_Client_Initialize_SSS_args&);
-  BrainCloudService_Client_Initialize_SSS_args() : secretKey(), appId(), appVersion(), clientIndex(0) {
-  }
-
-  virtual ~BrainCloudService_Client_Initialize_SSS_args() throw();
-  std::string secretKey;
-  std::string appId;
-  std::string appVersion;
-  int32_t clientIndex;
-
-  _BrainCloudService_Client_Initialize_SSS_args__isset __isset;
-
-  void __set_secretKey(const std::string& val);
-
-  void __set_appId(const std::string& val);
-
-  void __set_appVersion(const std::string& val);
-
-  void __set_clientIndex(const int32_t val);
-
-  bool operator == (const BrainCloudService_Client_Initialize_SSS_args & rhs) const
-  {
-    if (!(secretKey == rhs.secretKey))
-      return false;
-    if (!(appId == rhs.appId))
-      return false;
-    if (!(appVersion == rhs.appVersion))
-      return false;
-    if (!(clientIndex == rhs.clientIndex))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_Initialize_SSS_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_Initialize_SSS_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_Initialize_SSS_pargs {
- public:
-
-
-  virtual ~BrainCloudService_Client_Initialize_SSS_pargs() throw();
-  const std::string* secretKey;
-  const std::string* appId;
-  const std::string* appVersion;
-  const int32_t* clientIndex;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_Initialize_SSS_result {
- public:
-
-  BrainCloudService_Client_Initialize_SSS_result(const BrainCloudService_Client_Initialize_SSS_result&);
-  BrainCloudService_Client_Initialize_SSS_result& operator=(const BrainCloudService_Client_Initialize_SSS_result&);
-  BrainCloudService_Client_Initialize_SSS_result() {
-  }
-
-  virtual ~BrainCloudService_Client_Initialize_SSS_result() throw();
-
-  bool operator == (const BrainCloudService_Client_Initialize_SSS_result & /* rhs */) const
-  {
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_Initialize_SSS_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_Initialize_SSS_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_Initialize_SSS_presult {
- public:
-
-
-  virtual ~BrainCloudService_Client_Initialize_SSS_presult() throw();
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
-typedef struct _BrainCloudService_Client_Initialize_SSSS_args__isset {
-  _BrainCloudService_Client_Initialize_SSSS_args__isset() : serverURL(false), secretKey(false), appId(false), appVersion(false), clientIndex(false) {}
-  bool serverURL :1;
-  bool secretKey :1;
-  bool appId :1;
-  bool appVersion :1;
-  bool clientIndex :1;
-} _BrainCloudService_Client_Initialize_SSSS_args__isset;
-
-class BrainCloudService_Client_Initialize_SSSS_args {
- public:
-
-  BrainCloudService_Client_Initialize_SSSS_args(const BrainCloudService_Client_Initialize_SSSS_args&);
-  BrainCloudService_Client_Initialize_SSSS_args& operator=(const BrainCloudService_Client_Initialize_SSSS_args&);
-  BrainCloudService_Client_Initialize_SSSS_args() : serverURL(), secretKey(), appId(), appVersion(), clientIndex(0) {
-  }
-
-  virtual ~BrainCloudService_Client_Initialize_SSSS_args() throw();
-  std::string serverURL;
-  std::string secretKey;
-  std::string appId;
-  std::string appVersion;
-  int32_t clientIndex;
-
-  _BrainCloudService_Client_Initialize_SSSS_args__isset __isset;
-
-  void __set_serverURL(const std::string& val);
-
-  void __set_secretKey(const std::string& val);
-
-  void __set_appId(const std::string& val);
-
-  void __set_appVersion(const std::string& val);
-
-  void __set_clientIndex(const int32_t val);
-
-  bool operator == (const BrainCloudService_Client_Initialize_SSSS_args & rhs) const
-  {
-    if (!(serverURL == rhs.serverURL))
-      return false;
-    if (!(secretKey == rhs.secretKey))
-      return false;
-    if (!(appId == rhs.appId))
-      return false;
-    if (!(appVersion == rhs.appVersion))
-      return false;
-    if (!(clientIndex == rhs.clientIndex))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_Initialize_SSSS_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_Initialize_SSSS_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_Initialize_SSSS_pargs {
- public:
-
-
-  virtual ~BrainCloudService_Client_Initialize_SSSS_pargs() throw();
-  const std::string* serverURL;
-  const std::string* secretKey;
-  const std::string* appId;
-  const std::string* appVersion;
-  const int32_t* clientIndex;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_Initialize_SSSS_result {
- public:
-
-  BrainCloudService_Client_Initialize_SSSS_result(const BrainCloudService_Client_Initialize_SSSS_result&);
-  BrainCloudService_Client_Initialize_SSSS_result& operator=(const BrainCloudService_Client_Initialize_SSSS_result&);
-  BrainCloudService_Client_Initialize_SSSS_result() {
-  }
-
-  virtual ~BrainCloudService_Client_Initialize_SSSS_result() throw();
-
-  bool operator == (const BrainCloudService_Client_Initialize_SSSS_result & /* rhs */) const
-  {
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_Initialize_SSSS_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_Initialize_SSSS_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_Initialize_SSSS_presult {
- public:
-
-
-  virtual ~BrainCloudService_Client_Initialize_SSSS_presult() throw();
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
-typedef struct _BrainCloudService_Client_InitializeIdentity_args__isset {
-  _BrainCloudService_Client_InitializeIdentity_args__isset() : profileId(false), anonymousId(false), clientIndex(false) {}
-  bool profileId :1;
-  bool anonymousId :1;
-  bool clientIndex :1;
-} _BrainCloudService_Client_InitializeIdentity_args__isset;
-
-class BrainCloudService_Client_InitializeIdentity_args {
- public:
-
-  BrainCloudService_Client_InitializeIdentity_args(const BrainCloudService_Client_InitializeIdentity_args&);
-  BrainCloudService_Client_InitializeIdentity_args& operator=(const BrainCloudService_Client_InitializeIdentity_args&);
-  BrainCloudService_Client_InitializeIdentity_args() : profileId(), anonymousId(), clientIndex(0) {
-  }
-
-  virtual ~BrainCloudService_Client_InitializeIdentity_args() throw();
-  std::string profileId;
-  std::string anonymousId;
-  int32_t clientIndex;
-
-  _BrainCloudService_Client_InitializeIdentity_args__isset __isset;
-
-  void __set_profileId(const std::string& val);
-
-  void __set_anonymousId(const std::string& val);
-
-  void __set_clientIndex(const int32_t val);
-
-  bool operator == (const BrainCloudService_Client_InitializeIdentity_args & rhs) const
-  {
-    if (!(profileId == rhs.profileId))
-      return false;
-    if (!(anonymousId == rhs.anonymousId))
-      return false;
-    if (!(clientIndex == rhs.clientIndex))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_InitializeIdentity_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_InitializeIdentity_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_InitializeIdentity_pargs {
- public:
-
-
-  virtual ~BrainCloudService_Client_InitializeIdentity_pargs() throw();
-  const std::string* profileId;
-  const std::string* anonymousId;
-  const int32_t* clientIndex;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_InitializeIdentity_result {
- public:
-
-  BrainCloudService_Client_InitializeIdentity_result(const BrainCloudService_Client_InitializeIdentity_result&);
-  BrainCloudService_Client_InitializeIdentity_result& operator=(const BrainCloudService_Client_InitializeIdentity_result&);
-  BrainCloudService_Client_InitializeIdentity_result() {
-  }
-
-  virtual ~BrainCloudService_Client_InitializeIdentity_result() throw();
-
-  bool operator == (const BrainCloudService_Client_InitializeIdentity_result & /* rhs */) const
-  {
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_InitializeIdentity_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_InitializeIdentity_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_InitializeIdentity_presult {
- public:
-
-
-  virtual ~BrainCloudService_Client_InitializeIdentity_presult() throw();
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
-typedef struct _BrainCloudService_Client_Update_args__isset {
-  _BrainCloudService_Client_Update_args__isset() : clientIndex(false) {}
-  bool clientIndex :1;
-} _BrainCloudService_Client_Update_args__isset;
-
-class BrainCloudService_Client_Update_args {
- public:
-
-  BrainCloudService_Client_Update_args(const BrainCloudService_Client_Update_args&);
-  BrainCloudService_Client_Update_args& operator=(const BrainCloudService_Client_Update_args&);
-  BrainCloudService_Client_Update_args() : clientIndex(0) {
-  }
-
-  virtual ~BrainCloudService_Client_Update_args() throw();
-  int32_t clientIndex;
-
-  _BrainCloudService_Client_Update_args__isset __isset;
-
-  void __set_clientIndex(const int32_t val);
-
-  bool operator == (const BrainCloudService_Client_Update_args & rhs) const
-  {
-    if (!(clientIndex == rhs.clientIndex))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_Update_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_Update_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_Update_pargs {
- public:
-
-
-  virtual ~BrainCloudService_Client_Update_pargs() throw();
-  const int32_t* clientIndex;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_Update_result {
- public:
-
-  BrainCloudService_Client_Update_result(const BrainCloudService_Client_Update_result&);
-  BrainCloudService_Client_Update_result& operator=(const BrainCloudService_Client_Update_result&);
-  BrainCloudService_Client_Update_result() {
-  }
-
-  virtual ~BrainCloudService_Client_Update_result() throw();
-
-  bool operator == (const BrainCloudService_Client_Update_result & /* rhs */) const
-  {
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_Update_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_Update_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_Update_presult {
- public:
-
-
-  virtual ~BrainCloudService_Client_Update_presult() throw();
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
 typedef struct _BrainCloudService_Client_EnableLogging_args__isset {
   _BrainCloudService_Client_EnableLogging_args__isset() : enable(false), clientIndex(false) {}
   bool enable :1;
@@ -9131,6 +8416,725 @@ class BrainCloudService_Client_OverrideLanguageCode_presult {
 
 
   virtual ~BrainCloudService_Client_OverrideLanguageCode_presult() throw();
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Client_GetSessionId_args__isset {
+  _BrainCloudService_Client_GetSessionId_args__isset() : clientIndex(false) {}
+  bool clientIndex :1;
+} _BrainCloudService_Client_GetSessionId_args__isset;
+
+class BrainCloudService_Client_GetSessionId_args {
+ public:
+
+  BrainCloudService_Client_GetSessionId_args(const BrainCloudService_Client_GetSessionId_args&);
+  BrainCloudService_Client_GetSessionId_args& operator=(const BrainCloudService_Client_GetSessionId_args&);
+  BrainCloudService_Client_GetSessionId_args() : clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Client_GetSessionId_args() throw();
+  int32_t clientIndex;
+
+  _BrainCloudService_Client_GetSessionId_args__isset __isset;
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Client_GetSessionId_args & rhs) const
+  {
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_GetSessionId_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_GetSessionId_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_GetSessionId_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Client_GetSessionId_pargs() throw();
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Client_GetSessionId_result__isset {
+  _BrainCloudService_Client_GetSessionId_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Client_GetSessionId_result__isset;
+
+class BrainCloudService_Client_GetSessionId_result {
+ public:
+
+  BrainCloudService_Client_GetSessionId_result(const BrainCloudService_Client_GetSessionId_result&);
+  BrainCloudService_Client_GetSessionId_result& operator=(const BrainCloudService_Client_GetSessionId_result&);
+  BrainCloudService_Client_GetSessionId_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Client_GetSessionId_result() throw();
+  std::string success;
+
+  _BrainCloudService_Client_GetSessionId_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Client_GetSessionId_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_GetSessionId_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_GetSessionId_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Client_GetSessionId_presult__isset {
+  _BrainCloudService_Client_GetSessionId_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Client_GetSessionId_presult__isset;
+
+class BrainCloudService_Client_GetSessionId_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Client_GetSessionId_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Client_GetSessionId_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Client_IsAuthenticated_args__isset {
+  _BrainCloudService_Client_IsAuthenticated_args__isset() : clientIndex(false) {}
+  bool clientIndex :1;
+} _BrainCloudService_Client_IsAuthenticated_args__isset;
+
+class BrainCloudService_Client_IsAuthenticated_args {
+ public:
+
+  BrainCloudService_Client_IsAuthenticated_args(const BrainCloudService_Client_IsAuthenticated_args&);
+  BrainCloudService_Client_IsAuthenticated_args& operator=(const BrainCloudService_Client_IsAuthenticated_args&);
+  BrainCloudService_Client_IsAuthenticated_args() : clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Client_IsAuthenticated_args() throw();
+  int32_t clientIndex;
+
+  _BrainCloudService_Client_IsAuthenticated_args__isset __isset;
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Client_IsAuthenticated_args & rhs) const
+  {
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_IsAuthenticated_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_IsAuthenticated_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_IsAuthenticated_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Client_IsAuthenticated_pargs() throw();
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Client_IsAuthenticated_result__isset {
+  _BrainCloudService_Client_IsAuthenticated_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Client_IsAuthenticated_result__isset;
+
+class BrainCloudService_Client_IsAuthenticated_result {
+ public:
+
+  BrainCloudService_Client_IsAuthenticated_result(const BrainCloudService_Client_IsAuthenticated_result&);
+  BrainCloudService_Client_IsAuthenticated_result& operator=(const BrainCloudService_Client_IsAuthenticated_result&);
+  BrainCloudService_Client_IsAuthenticated_result() : success(0) {
+  }
+
+  virtual ~BrainCloudService_Client_IsAuthenticated_result() throw();
+  bool success;
+
+  _BrainCloudService_Client_IsAuthenticated_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const BrainCloudService_Client_IsAuthenticated_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_IsAuthenticated_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_IsAuthenticated_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Client_IsAuthenticated_presult__isset {
+  _BrainCloudService_Client_IsAuthenticated_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Client_IsAuthenticated_presult__isset;
+
+class BrainCloudService_Client_IsAuthenticated_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Client_IsAuthenticated_presult() throw();
+  bool* success;
+
+  _BrainCloudService_Client_IsAuthenticated_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Client_IsInitialized_args__isset {
+  _BrainCloudService_Client_IsInitialized_args__isset() : clientIndex(false) {}
+  bool clientIndex :1;
+} _BrainCloudService_Client_IsInitialized_args__isset;
+
+class BrainCloudService_Client_IsInitialized_args {
+ public:
+
+  BrainCloudService_Client_IsInitialized_args(const BrainCloudService_Client_IsInitialized_args&);
+  BrainCloudService_Client_IsInitialized_args& operator=(const BrainCloudService_Client_IsInitialized_args&);
+  BrainCloudService_Client_IsInitialized_args() : clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Client_IsInitialized_args() throw();
+  int32_t clientIndex;
+
+  _BrainCloudService_Client_IsInitialized_args__isset __isset;
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Client_IsInitialized_args & rhs) const
+  {
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_IsInitialized_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_IsInitialized_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_IsInitialized_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Client_IsInitialized_pargs() throw();
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Client_IsInitialized_result__isset {
+  _BrainCloudService_Client_IsInitialized_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Client_IsInitialized_result__isset;
+
+class BrainCloudService_Client_IsInitialized_result {
+ public:
+
+  BrainCloudService_Client_IsInitialized_result(const BrainCloudService_Client_IsInitialized_result&);
+  BrainCloudService_Client_IsInitialized_result& operator=(const BrainCloudService_Client_IsInitialized_result&);
+  BrainCloudService_Client_IsInitialized_result() : success(0) {
+  }
+
+  virtual ~BrainCloudService_Client_IsInitialized_result() throw();
+  bool success;
+
+  _BrainCloudService_Client_IsInitialized_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const BrainCloudService_Client_IsInitialized_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_IsInitialized_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_IsInitialized_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Client_IsInitialized_presult__isset {
+  _BrainCloudService_Client_IsInitialized_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Client_IsInitialized_presult__isset;
+
+class BrainCloudService_Client_IsInitialized_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Client_IsInitialized_presult() throw();
+  bool* success;
+
+  _BrainCloudService_Client_IsInitialized_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Client_Initialize_SSS_args__isset {
+  _BrainCloudService_Client_Initialize_SSS_args__isset() : secretKey(false), appId(false), appVersion(false), clientIndex(false) {}
+  bool secretKey :1;
+  bool appId :1;
+  bool appVersion :1;
+  bool clientIndex :1;
+} _BrainCloudService_Client_Initialize_SSS_args__isset;
+
+class BrainCloudService_Client_Initialize_SSS_args {
+ public:
+
+  BrainCloudService_Client_Initialize_SSS_args(const BrainCloudService_Client_Initialize_SSS_args&);
+  BrainCloudService_Client_Initialize_SSS_args& operator=(const BrainCloudService_Client_Initialize_SSS_args&);
+  BrainCloudService_Client_Initialize_SSS_args() : secretKey(), appId(), appVersion(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Client_Initialize_SSS_args() throw();
+  std::string secretKey;
+  std::string appId;
+  std::string appVersion;
+  int32_t clientIndex;
+
+  _BrainCloudService_Client_Initialize_SSS_args__isset __isset;
+
+  void __set_secretKey(const std::string& val);
+
+  void __set_appId(const std::string& val);
+
+  void __set_appVersion(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Client_Initialize_SSS_args & rhs) const
+  {
+    if (!(secretKey == rhs.secretKey))
+      return false;
+    if (!(appId == rhs.appId))
+      return false;
+    if (!(appVersion == rhs.appVersion))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_Initialize_SSS_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_Initialize_SSS_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_Initialize_SSS_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Client_Initialize_SSS_pargs() throw();
+  const std::string* secretKey;
+  const std::string* appId;
+  const std::string* appVersion;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_Initialize_SSS_result {
+ public:
+
+  BrainCloudService_Client_Initialize_SSS_result(const BrainCloudService_Client_Initialize_SSS_result&);
+  BrainCloudService_Client_Initialize_SSS_result& operator=(const BrainCloudService_Client_Initialize_SSS_result&);
+  BrainCloudService_Client_Initialize_SSS_result() {
+  }
+
+  virtual ~BrainCloudService_Client_Initialize_SSS_result() throw();
+
+  bool operator == (const BrainCloudService_Client_Initialize_SSS_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_Initialize_SSS_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_Initialize_SSS_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_Initialize_SSS_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Client_Initialize_SSS_presult() throw();
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Client_Initialize_SSSS_args__isset {
+  _BrainCloudService_Client_Initialize_SSSS_args__isset() : serverURL(false), secretKey(false), appId(false), appVersion(false), clientIndex(false) {}
+  bool serverURL :1;
+  bool secretKey :1;
+  bool appId :1;
+  bool appVersion :1;
+  bool clientIndex :1;
+} _BrainCloudService_Client_Initialize_SSSS_args__isset;
+
+class BrainCloudService_Client_Initialize_SSSS_args {
+ public:
+
+  BrainCloudService_Client_Initialize_SSSS_args(const BrainCloudService_Client_Initialize_SSSS_args&);
+  BrainCloudService_Client_Initialize_SSSS_args& operator=(const BrainCloudService_Client_Initialize_SSSS_args&);
+  BrainCloudService_Client_Initialize_SSSS_args() : serverURL(), secretKey(), appId(), appVersion(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Client_Initialize_SSSS_args() throw();
+  std::string serverURL;
+  std::string secretKey;
+  std::string appId;
+  std::string appVersion;
+  int32_t clientIndex;
+
+  _BrainCloudService_Client_Initialize_SSSS_args__isset __isset;
+
+  void __set_serverURL(const std::string& val);
+
+  void __set_secretKey(const std::string& val);
+
+  void __set_appId(const std::string& val);
+
+  void __set_appVersion(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Client_Initialize_SSSS_args & rhs) const
+  {
+    if (!(serverURL == rhs.serverURL))
+      return false;
+    if (!(secretKey == rhs.secretKey))
+      return false;
+    if (!(appId == rhs.appId))
+      return false;
+    if (!(appVersion == rhs.appVersion))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_Initialize_SSSS_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_Initialize_SSSS_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_Initialize_SSSS_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Client_Initialize_SSSS_pargs() throw();
+  const std::string* serverURL;
+  const std::string* secretKey;
+  const std::string* appId;
+  const std::string* appVersion;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_Initialize_SSSS_result {
+ public:
+
+  BrainCloudService_Client_Initialize_SSSS_result(const BrainCloudService_Client_Initialize_SSSS_result&);
+  BrainCloudService_Client_Initialize_SSSS_result& operator=(const BrainCloudService_Client_Initialize_SSSS_result&);
+  BrainCloudService_Client_Initialize_SSSS_result() {
+  }
+
+  virtual ~BrainCloudService_Client_Initialize_SSSS_result() throw();
+
+  bool operator == (const BrainCloudService_Client_Initialize_SSSS_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_Initialize_SSSS_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_Initialize_SSSS_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_Initialize_SSSS_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Client_Initialize_SSSS_presult() throw();
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Client_InitializeIdentity_args__isset {
+  _BrainCloudService_Client_InitializeIdentity_args__isset() : profileId(false), anonymousId(false), clientIndex(false) {}
+  bool profileId :1;
+  bool anonymousId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Client_InitializeIdentity_args__isset;
+
+class BrainCloudService_Client_InitializeIdentity_args {
+ public:
+
+  BrainCloudService_Client_InitializeIdentity_args(const BrainCloudService_Client_InitializeIdentity_args&);
+  BrainCloudService_Client_InitializeIdentity_args& operator=(const BrainCloudService_Client_InitializeIdentity_args&);
+  BrainCloudService_Client_InitializeIdentity_args() : profileId(), anonymousId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Client_InitializeIdentity_args() throw();
+  std::string profileId;
+  std::string anonymousId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Client_InitializeIdentity_args__isset __isset;
+
+  void __set_profileId(const std::string& val);
+
+  void __set_anonymousId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Client_InitializeIdentity_args & rhs) const
+  {
+    if (!(profileId == rhs.profileId))
+      return false;
+    if (!(anonymousId == rhs.anonymousId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_InitializeIdentity_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_InitializeIdentity_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_InitializeIdentity_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Client_InitializeIdentity_pargs() throw();
+  const std::string* profileId;
+  const std::string* anonymousId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_InitializeIdentity_result {
+ public:
+
+  BrainCloudService_Client_InitializeIdentity_result(const BrainCloudService_Client_InitializeIdentity_result&);
+  BrainCloudService_Client_InitializeIdentity_result& operator=(const BrainCloudService_Client_InitializeIdentity_result&);
+  BrainCloudService_Client_InitializeIdentity_result() {
+  }
+
+  virtual ~BrainCloudService_Client_InitializeIdentity_result() throw();
+
+  bool operator == (const BrainCloudService_Client_InitializeIdentity_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_InitializeIdentity_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_InitializeIdentity_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_InitializeIdentity_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Client_InitializeIdentity_presult() throw();
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Client_Update_args__isset {
+  _BrainCloudService_Client_Update_args__isset() : clientIndex(false) {}
+  bool clientIndex :1;
+} _BrainCloudService_Client_Update_args__isset;
+
+class BrainCloudService_Client_Update_args {
+ public:
+
+  BrainCloudService_Client_Update_args(const BrainCloudService_Client_Update_args&);
+  BrainCloudService_Client_Update_args& operator=(const BrainCloudService_Client_Update_args&);
+  BrainCloudService_Client_Update_args() : clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Client_Update_args() throw();
+  int32_t clientIndex;
+
+  _BrainCloudService_Client_Update_args__isset __isset;
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Client_Update_args & rhs) const
+  {
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_Update_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_Update_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_Update_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Client_Update_pargs() throw();
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_Update_result {
+ public:
+
+  BrainCloudService_Client_Update_result(const BrainCloudService_Client_Update_result&);
+  BrainCloudService_Client_Update_result& operator=(const BrainCloudService_Client_Update_result&);
+  BrainCloudService_Client_Update_result() {
+  }
+
+  virtual ~BrainCloudService_Client_Update_result() throw();
+
+  bool operator == (const BrainCloudService_Client_Update_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_Update_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_Update_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_Update_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Client_Update_presult() throw();
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -42312,6 +42316,117 @@ class BrainCloudService_Telemetry_EndTelemetryEvent_presult {
 
 };
 
+typedef struct _BrainCloudService_Client_SetSessionId_args__isset {
+  _BrainCloudService_Client_SetSessionId_args__isset() : clientIndex(false), session(false) {}
+  bool clientIndex :1;
+  bool session :1;
+} _BrainCloudService_Client_SetSessionId_args__isset;
+
+class BrainCloudService_Client_SetSessionId_args {
+ public:
+
+  BrainCloudService_Client_SetSessionId_args(const BrainCloudService_Client_SetSessionId_args&);
+  BrainCloudService_Client_SetSessionId_args& operator=(const BrainCloudService_Client_SetSessionId_args&);
+  BrainCloudService_Client_SetSessionId_args() : clientIndex(0), session() {
+  }
+
+  virtual ~BrainCloudService_Client_SetSessionId_args() throw();
+  int32_t clientIndex;
+  std::string session;
+
+  _BrainCloudService_Client_SetSessionId_args__isset __isset;
+
+  void __set_clientIndex(const int32_t val);
+
+  void __set_session(const std::string& val);
+
+  bool operator == (const BrainCloudService_Client_SetSessionId_args & rhs) const
+  {
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    if (!(session == rhs.session))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_SetSessionId_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_SetSessionId_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Client_SetSessionId_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Client_SetSessionId_pargs() throw();
+  const int32_t* clientIndex;
+  const std::string* session;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Client_SetSessionId_result__isset {
+  _BrainCloudService_Client_SetSessionId_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Client_SetSessionId_result__isset;
+
+class BrainCloudService_Client_SetSessionId_result {
+ public:
+
+  BrainCloudService_Client_SetSessionId_result(const BrainCloudService_Client_SetSessionId_result&);
+  BrainCloudService_Client_SetSessionId_result& operator=(const BrainCloudService_Client_SetSessionId_result&);
+  BrainCloudService_Client_SetSessionId_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Client_SetSessionId_result() throw();
+  std::string success;
+
+  _BrainCloudService_Client_SetSessionId_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Client_SetSessionId_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Client_SetSessionId_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Client_SetSessionId_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Client_SetSessionId_presult__isset {
+  _BrainCloudService_Client_SetSessionId_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Client_SetSessionId_presult__isset;
+
+class BrainCloudService_Client_SetSessionId_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Client_SetSessionId_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Client_SetSessionId_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 typedef struct _BrainCloudService_File_DownloadFile_args__isset {
   _BrainCloudService_File_DownloadFile_args__isset() : cloudPath(false), cloudFilename(false), replaceIfExists(false), clientIndex(false) {}
   bool cloudPath :1;
@@ -42755,27 +42870,6 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Authentication_ResetEmailPassword(std::string& _return, const std::string& externalId, const int32_t clientIndex);
   void send_Authentication_ResetEmailPassword(const std::string& externalId, const int32_t clientIndex);
   void recv_Authentication_ResetEmailPassword(std::string& _return);
-  void Client_GetSessionId(std::string& _return, const int32_t clientIndex);
-  void send_Client_GetSessionId(const int32_t clientIndex);
-  void recv_Client_GetSessionId(std::string& _return);
-  bool Client_IsAuthenticated(const int32_t clientIndex);
-  void send_Client_IsAuthenticated(const int32_t clientIndex);
-  bool recv_Client_IsAuthenticated();
-  bool Client_IsInitialized(const int32_t clientIndex);
-  void send_Client_IsInitialized(const int32_t clientIndex);
-  bool recv_Client_IsInitialized();
-  void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
-  void send_Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
-  void recv_Client_Initialize_SSS();
-  void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
-  void send_Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
-  void recv_Client_Initialize_SSSS();
-  void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex);
-  void send_Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex);
-  void recv_Client_InitializeIdentity();
-  void Client_Update(const int32_t clientIndex);
-  void send_Client_Update(const int32_t clientIndex);
-  void recv_Client_Update();
   void Client_EnableLogging(const bool enable, const int32_t clientIndex);
   void send_Client_EnableLogging(const bool enable, const int32_t clientIndex);
   void recv_Client_EnableLogging();
@@ -42827,6 +42921,27 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Client_OverrideLanguageCode(const std::string& languageCode, const int32_t clientIndex);
   void send_Client_OverrideLanguageCode(const std::string& languageCode, const int32_t clientIndex);
   void recv_Client_OverrideLanguageCode();
+  void Client_GetSessionId(std::string& _return, const int32_t clientIndex);
+  void send_Client_GetSessionId(const int32_t clientIndex);
+  void recv_Client_GetSessionId(std::string& _return);
+  bool Client_IsAuthenticated(const int32_t clientIndex);
+  void send_Client_IsAuthenticated(const int32_t clientIndex);
+  bool recv_Client_IsAuthenticated();
+  bool Client_IsInitialized(const int32_t clientIndex);
+  void send_Client_IsInitialized(const int32_t clientIndex);
+  bool recv_Client_IsInitialized();
+  void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
+  void send_Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
+  void recv_Client_Initialize_SSS();
+  void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
+  void send_Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
+  void recv_Client_Initialize_SSSS();
+  void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex);
+  void send_Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex);
+  void recv_Client_InitializeIdentity();
+  void Client_Update(const int32_t clientIndex);
+  void send_Client_Update(const int32_t clientIndex);
+  void recv_Client_Update();
   void DataStream_CustomPageEvent(std::string& _return, const std::string& eventName, const std::string& jsonEventProperties, const int32_t clientIndex);
   void send_DataStream_CustomPageEvent(const std::string& eventName, const std::string& jsonEventProperties, const int32_t clientIndex);
   void recv_DataStream_CustomPageEvent(std::string& _return);
@@ -43667,6 +43782,9 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Telemetry_EndTelemetryEvent(std::string& _return, const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex);
   void send_Telemetry_EndTelemetryEvent(const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex);
   void recv_Telemetry_EndTelemetryEvent(std::string& _return);
+  void Client_SetSessionId(std::string& _return, const int32_t clientIndex, const std::string& session);
+  void send_Client_SetSessionId(const int32_t clientIndex, const std::string& session);
+  void recv_Client_SetSessionId(std::string& _return);
   void File_DownloadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex);
   void send_File_DownloadFile(const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex);
   void recv_File_DownloadFile(std::string& _return);
@@ -43710,13 +43828,6 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Authentication_AuthenticateUniversal(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Authentication_AuthenticateExternal(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Authentication_ResetEmailPassword(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_Client_GetSessionId(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_Client_IsAuthenticated(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_Client_IsInitialized(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_Client_Initialize_SSS(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_Client_Initialize_SSSS(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_Client_InitializeIdentity(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_Client_Update(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Client_EnableLogging(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Client_ResetCommunication(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Client_SetPacketTimeouts(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -43734,6 +43845,13 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Client_InsertEndOfMessageBundleMarker(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Client_OverrideCountryCode(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Client_OverrideLanguageCode(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Client_GetSessionId(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Client_IsAuthenticated(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Client_IsInitialized(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Client_Initialize_SSS(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Client_Initialize_SSSS(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Client_InitializeIdentity(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Client_Update(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_DataStream_CustomPageEvent(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_DataStream_CustomScreenEvent(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_DataStream_CustomTrackEvent(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -44014,6 +44132,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Telemetry_LogTelemetryEvent(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Telemetry_StartTelemetryEvent(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Telemetry_EndTelemetryEvent(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Client_SetSessionId(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_File_DownloadFile(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_File_GetDownloadInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_File_CancelDownload(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -44039,13 +44158,6 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Authentication_AuthenticateUniversal"] = &BrainCloudServiceProcessor::process_Authentication_AuthenticateUniversal;
     processMap_["Authentication_AuthenticateExternal"] = &BrainCloudServiceProcessor::process_Authentication_AuthenticateExternal;
     processMap_["Authentication_ResetEmailPassword"] = &BrainCloudServiceProcessor::process_Authentication_ResetEmailPassword;
-    processMap_["Client_GetSessionId"] = &BrainCloudServiceProcessor::process_Client_GetSessionId;
-    processMap_["Client_IsAuthenticated"] = &BrainCloudServiceProcessor::process_Client_IsAuthenticated;
-    processMap_["Client_IsInitialized"] = &BrainCloudServiceProcessor::process_Client_IsInitialized;
-    processMap_["Client_Initialize_SSS"] = &BrainCloudServiceProcessor::process_Client_Initialize_SSS;
-    processMap_["Client_Initialize_SSSS"] = &BrainCloudServiceProcessor::process_Client_Initialize_SSSS;
-    processMap_["Client_InitializeIdentity"] = &BrainCloudServiceProcessor::process_Client_InitializeIdentity;
-    processMap_["Client_Update"] = &BrainCloudServiceProcessor::process_Client_Update;
     processMap_["Client_EnableLogging"] = &BrainCloudServiceProcessor::process_Client_EnableLogging;
     processMap_["Client_ResetCommunication"] = &BrainCloudServiceProcessor::process_Client_ResetCommunication;
     processMap_["Client_SetPacketTimeouts"] = &BrainCloudServiceProcessor::process_Client_SetPacketTimeouts;
@@ -44063,6 +44175,13 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Client_InsertEndOfMessageBundleMarker"] = &BrainCloudServiceProcessor::process_Client_InsertEndOfMessageBundleMarker;
     processMap_["Client_OverrideCountryCode"] = &BrainCloudServiceProcessor::process_Client_OverrideCountryCode;
     processMap_["Client_OverrideLanguageCode"] = &BrainCloudServiceProcessor::process_Client_OverrideLanguageCode;
+    processMap_["Client_GetSessionId"] = &BrainCloudServiceProcessor::process_Client_GetSessionId;
+    processMap_["Client_IsAuthenticated"] = &BrainCloudServiceProcessor::process_Client_IsAuthenticated;
+    processMap_["Client_IsInitialized"] = &BrainCloudServiceProcessor::process_Client_IsInitialized;
+    processMap_["Client_Initialize_SSS"] = &BrainCloudServiceProcessor::process_Client_Initialize_SSS;
+    processMap_["Client_Initialize_SSSS"] = &BrainCloudServiceProcessor::process_Client_Initialize_SSSS;
+    processMap_["Client_InitializeIdentity"] = &BrainCloudServiceProcessor::process_Client_InitializeIdentity;
+    processMap_["Client_Update"] = &BrainCloudServiceProcessor::process_Client_Update;
     processMap_["DataStream_CustomPageEvent"] = &BrainCloudServiceProcessor::process_DataStream_CustomPageEvent;
     processMap_["DataStream_CustomScreenEvent"] = &BrainCloudServiceProcessor::process_DataStream_CustomScreenEvent;
     processMap_["DataStream_CustomTrackEvent"] = &BrainCloudServiceProcessor::process_DataStream_CustomTrackEvent;
@@ -44343,6 +44462,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Telemetry_LogTelemetryEvent"] = &BrainCloudServiceProcessor::process_Telemetry_LogTelemetryEvent;
     processMap_["Telemetry_StartTelemetryEvent"] = &BrainCloudServiceProcessor::process_Telemetry_StartTelemetryEvent;
     processMap_["Telemetry_EndTelemetryEvent"] = &BrainCloudServiceProcessor::process_Telemetry_EndTelemetryEvent;
+    processMap_["Client_SetSessionId"] = &BrainCloudServiceProcessor::process_Client_SetSessionId;
     processMap_["File_DownloadFile"] = &BrainCloudServiceProcessor::process_File_DownloadFile;
     processMap_["File_GetDownloadInfo"] = &BrainCloudServiceProcessor::process_File_GetDownloadInfo;
     processMap_["File_CancelDownload"] = &BrainCloudServiceProcessor::process_File_CancelDownload;
@@ -44562,70 +44682,6 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
     return;
   }
 
-  void Client_GetSessionId(std::string& _return, const int32_t clientIndex) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Client_GetSessionId(_return, clientIndex);
-    }
-    ifaces_[i]->Client_GetSessionId(_return, clientIndex);
-    return;
-  }
-
-  bool Client_IsAuthenticated(const int32_t clientIndex) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Client_IsAuthenticated(clientIndex);
-    }
-    return ifaces_[i]->Client_IsAuthenticated(clientIndex);
-  }
-
-  bool Client_IsInitialized(const int32_t clientIndex) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Client_IsInitialized(clientIndex);
-    }
-    return ifaces_[i]->Client_IsInitialized(clientIndex);
-  }
-
-  void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Client_Initialize_SSS(secretKey, appId, appVersion, clientIndex);
-    }
-    ifaces_[i]->Client_Initialize_SSS(secretKey, appId, appVersion, clientIndex);
-  }
-
-  void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Client_Initialize_SSSS(serverURL, secretKey, appId, appVersion, clientIndex);
-    }
-    ifaces_[i]->Client_Initialize_SSSS(serverURL, secretKey, appId, appVersion, clientIndex);
-  }
-
-  void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Client_InitializeIdentity(profileId, anonymousId, clientIndex);
-    }
-    ifaces_[i]->Client_InitializeIdentity(profileId, anonymousId, clientIndex);
-  }
-
-  void Client_Update(const int32_t clientIndex) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Client_Update(clientIndex);
-    }
-    ifaces_[i]->Client_Update(clientIndex);
-  }
-
   void Client_EnableLogging(const bool enable, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -44778,6 +44834,70 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
       ifaces_[i]->Client_OverrideLanguageCode(languageCode, clientIndex);
     }
     ifaces_[i]->Client_OverrideLanguageCode(languageCode, clientIndex);
+  }
+
+  void Client_GetSessionId(std::string& _return, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Client_GetSessionId(_return, clientIndex);
+    }
+    ifaces_[i]->Client_GetSessionId(_return, clientIndex);
+    return;
+  }
+
+  bool Client_IsAuthenticated(const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Client_IsAuthenticated(clientIndex);
+    }
+    return ifaces_[i]->Client_IsAuthenticated(clientIndex);
+  }
+
+  bool Client_IsInitialized(const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Client_IsInitialized(clientIndex);
+    }
+    return ifaces_[i]->Client_IsInitialized(clientIndex);
+  }
+
+  void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Client_Initialize_SSS(secretKey, appId, appVersion, clientIndex);
+    }
+    ifaces_[i]->Client_Initialize_SSS(secretKey, appId, appVersion, clientIndex);
+  }
+
+  void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Client_Initialize_SSSS(serverURL, secretKey, appId, appVersion, clientIndex);
+    }
+    ifaces_[i]->Client_Initialize_SSSS(serverURL, secretKey, appId, appVersion, clientIndex);
+  }
+
+  void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Client_InitializeIdentity(profileId, anonymousId, clientIndex);
+    }
+    ifaces_[i]->Client_InitializeIdentity(profileId, anonymousId, clientIndex);
+  }
+
+  void Client_Update(const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Client_Update(clientIndex);
+    }
+    ifaces_[i]->Client_Update(clientIndex);
   }
 
   void DataStream_CustomPageEvent(std::string& _return, const std::string& eventName, const std::string& jsonEventProperties, const int32_t clientIndex) {
@@ -47576,6 +47696,16 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
     return;
   }
 
+  void Client_SetSessionId(std::string& _return, const int32_t clientIndex, const std::string& session) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Client_SetSessionId(_return, clientIndex, session);
+    }
+    ifaces_[i]->Client_SetSessionId(_return, clientIndex, session);
+    return;
+  }
+
   void File_DownloadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -47693,27 +47823,6 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Authentication_ResetEmailPassword(std::string& _return, const std::string& externalId, const int32_t clientIndex);
   int32_t send_Authentication_ResetEmailPassword(const std::string& externalId, const int32_t clientIndex);
   void recv_Authentication_ResetEmailPassword(std::string& _return, const int32_t seqid);
-  void Client_GetSessionId(std::string& _return, const int32_t clientIndex);
-  int32_t send_Client_GetSessionId(const int32_t clientIndex);
-  void recv_Client_GetSessionId(std::string& _return, const int32_t seqid);
-  bool Client_IsAuthenticated(const int32_t clientIndex);
-  int32_t send_Client_IsAuthenticated(const int32_t clientIndex);
-  bool recv_Client_IsAuthenticated(const int32_t seqid);
-  bool Client_IsInitialized(const int32_t clientIndex);
-  int32_t send_Client_IsInitialized(const int32_t clientIndex);
-  bool recv_Client_IsInitialized(const int32_t seqid);
-  void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
-  int32_t send_Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
-  void recv_Client_Initialize_SSS(const int32_t seqid);
-  void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
-  int32_t send_Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
-  void recv_Client_Initialize_SSSS(const int32_t seqid);
-  void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex);
-  int32_t send_Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex);
-  void recv_Client_InitializeIdentity(const int32_t seqid);
-  void Client_Update(const int32_t clientIndex);
-  int32_t send_Client_Update(const int32_t clientIndex);
-  void recv_Client_Update(const int32_t seqid);
   void Client_EnableLogging(const bool enable, const int32_t clientIndex);
   int32_t send_Client_EnableLogging(const bool enable, const int32_t clientIndex);
   void recv_Client_EnableLogging(const int32_t seqid);
@@ -47765,6 +47874,27 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Client_OverrideLanguageCode(const std::string& languageCode, const int32_t clientIndex);
   int32_t send_Client_OverrideLanguageCode(const std::string& languageCode, const int32_t clientIndex);
   void recv_Client_OverrideLanguageCode(const int32_t seqid);
+  void Client_GetSessionId(std::string& _return, const int32_t clientIndex);
+  int32_t send_Client_GetSessionId(const int32_t clientIndex);
+  void recv_Client_GetSessionId(std::string& _return, const int32_t seqid);
+  bool Client_IsAuthenticated(const int32_t clientIndex);
+  int32_t send_Client_IsAuthenticated(const int32_t clientIndex);
+  bool recv_Client_IsAuthenticated(const int32_t seqid);
+  bool Client_IsInitialized(const int32_t clientIndex);
+  int32_t send_Client_IsInitialized(const int32_t clientIndex);
+  bool recv_Client_IsInitialized(const int32_t seqid);
+  void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
+  int32_t send_Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
+  void recv_Client_Initialize_SSS(const int32_t seqid);
+  void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
+  int32_t send_Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex);
+  void recv_Client_Initialize_SSSS(const int32_t seqid);
+  void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex);
+  int32_t send_Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex);
+  void recv_Client_InitializeIdentity(const int32_t seqid);
+  void Client_Update(const int32_t clientIndex);
+  int32_t send_Client_Update(const int32_t clientIndex);
+  void recv_Client_Update(const int32_t seqid);
   void DataStream_CustomPageEvent(std::string& _return, const std::string& eventName, const std::string& jsonEventProperties, const int32_t clientIndex);
   int32_t send_DataStream_CustomPageEvent(const std::string& eventName, const std::string& jsonEventProperties, const int32_t clientIndex);
   void recv_DataStream_CustomPageEvent(std::string& _return, const int32_t seqid);
@@ -48605,6 +48735,9 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Telemetry_EndTelemetryEvent(std::string& _return, const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex);
   int32_t send_Telemetry_EndTelemetryEvent(const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex);
   void recv_Telemetry_EndTelemetryEvent(std::string& _return, const int32_t seqid);
+  void Client_SetSessionId(std::string& _return, const int32_t clientIndex, const std::string& session);
+  int32_t send_Client_SetSessionId(const int32_t clientIndex, const std::string& session);
+  void recv_Client_SetSessionId(std::string& _return, const int32_t seqid);
   void File_DownloadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex);
   int32_t send_File_DownloadFile(const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex);
   void recv_File_DownloadFile(std::string& _return, const int32_t seqid);
