@@ -20,11 +20,6 @@
 //#include "BaseUnitTest.h"
 #include "RuyiSDK.h"
 
-#ifdef _DEBUG
-#pragma comment(lib, "json_vc71_libmtd.lib")
-#else
-#pragma comment(lib, "json_vc71_libmt.lib")
-#endif
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
