@@ -64,7 +64,6 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingCategory.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingItem.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingValue.cs" />
-    <Compile Include="GeneratedSync\Ruyi\SDK\Constants\BraincloudServerInfo.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Constants\ConstantsSDKDataTypes.Constants.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorCode.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorInfos.cs" />
