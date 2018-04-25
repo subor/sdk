@@ -1,4 +1,7 @@
-﻿namespace Ruyi
+﻿using System.ComponentModel;
+using Thrift.Transport;
+
+namespace Ruyi
 {
     /// <summary>
     /// context used to create RuyiSDK instance
@@ -45,16 +48,24 @@
         /// <summary>
         /// Specify which SDK features should be enabled.  Default is all features enabled.
         /// </summary>
-        public RuyiSDK.Features EnabledFeatures { get; set; } = RuyiSDK.Features.All;
+        public RuyiSDK.SDKFeatures EnabledFeatures { get; set; } = RuyiSDK.SDKFeatures.All;
 
         /// <summary>
         /// Port to connect to for low-latency messages.  Leave as zero to use default.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public int LowLatencyPort = 0;
         /// <summary>
         /// Port to connect to for high-latency messages.  Leave as zero to use default.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public int HighLatencyPort = 0;
+
+        /// <summary>
+        /// Thrift transport to use.  If null will initialize default.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public TTransport Transport;
 
         /// <summary>
         /// validation check

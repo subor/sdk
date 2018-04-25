@@ -27,6 +27,8 @@ namespace Layer0
         DEVELOPER_MODE,
         L2FORWARDER,
         IOT_BLUETOOTH,
+        SPEECH,
+        MEDIA,
 
         LOW_POWER_END,
         #endregion
