@@ -66,9 +66,9 @@ namespace Ruyi.SDK.Speech
     }
 
     public class RawData : VoiceCommand {
-      private List<sbyte> _data;
+      private byte[] _data;
       public override object Data { get { return _data; } }
-      public RawData(List<sbyte> data) : base(true) {
+      public RawData(byte[] data) : base(true) {
         this._data = data;
       }
       public override void Write(TProtocol oprot) {
@@ -79,17 +79,10 @@ namespace Ruyi.SDK.Speech
           oprot.WriteStructBegin(struc);
           TField field = new TField();
           field.Name = "RawData";
-          field.Type = TType.List;
+          field.Type = TType.String;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          {
-            oprot.WriteListBegin(new TList(TType.Byte, _data.Count));
-            foreach (sbyte _iter0 in _data)
-            {
-              oprot.WriteByte(_iter0);
-            }
-            oprot.WriteListEnd();
-          }
+          oprot.WriteBinary(_data);
           oprot.WriteFieldEnd();
           oprot.WriteFieldStop();
           oprot.WriteStructEnd();
@@ -129,19 +122,9 @@ namespace Ruyi.SDK.Speech
               }
               break;
             case 2:
-              if (field.Type == TType.List) {
-                List<sbyte> temp;
-                {
-                  temp = new List<sbyte>();
-                  TList _list1 = iprot.ReadListBegin();
-                  for( int _i2 = 0; _i2 < _list1.Count; ++_i2)
-                  {
-                    sbyte _elem3;
-                    _elem3 = iprot.ReadByte();
-                    temp.Add(_elem3);
-                  }
-                  iprot.ReadListEnd();
-                }
+              if (field.Type == TType.String) {
+                byte[] temp;
+                temp = iprot.ReadBinary();
                 retval = new RawData(temp);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
