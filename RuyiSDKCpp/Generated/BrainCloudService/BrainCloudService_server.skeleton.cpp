@@ -4557,11 +4557,6 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Telemetry_EndTelemetryEvent\n");
   }
 
-  void Client_SetSessionId(std::string& _return, const int32_t clientIndex, const std::string& session) {
-    // Your implementation goes here
-    printf("Client_SetSessionId\n");
-  }
-
   void File_DownloadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex) {
     // Your implementation goes here
     printf("File_DownloadFile\n");

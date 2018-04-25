@@ -18,7 +18,12 @@ namespace RuyiLogger
         /// TRC message
         /// </summary>
         TRC,
-        MainClient
+        MainClient,
+        /// <summary>
+        /// System tray application
+        /// </summary>
+        SystemTray,
+        MiniUI = SystemTray,
     }
 
     public enum LogLevel
@@ -129,6 +134,11 @@ namespace RuyiLogger
             Line = line;
             Col = col;
         }
+    }
+
+    public class LogCommandLineMessage : LoggerMessageEx
+    {
+        public string Arguments { get; set; }
     }
 
     /// <summary>

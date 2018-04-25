@@ -2291,7 +2291,6 @@ namespace Ruyi.SDK.BrainCloudApi
       string Telemetry_LogTelemetryEvent(string telemetrySessionId, int timestamp, string eventType, string participantId, Dictionary<string, string> customData, int clientIndex);
       string Telemetry_StartTelemetryEvent(string telemetrySessionId, int timestamp, string eventType, string participantId, Dictionary<string, string> customData, int clientIndex);
       string Telemetry_EndTelemetryEvent(string telemetrySessionId, int timestamp, string eventType, string participantId, Dictionary<string, string> customData, int clientIndex);
-      string Client_SetSessionId(int clientIndex, string session);
       string File_DownloadFile(string cloudPath, string cloudFilename, bool replaceIfExists, int clientIndex);
       string File_GetDownloadInfo(string cloudPath, string cloudFilename, int clientIndex);
       string File_CancelDownload(string cloudPath, string cloudFilename, int clientIndex);
@@ -5538,10 +5537,6 @@ namespace Ruyi.SDK.BrainCloudApi
       #if SILVERLIGHT
       IAsyncResult Begin_Telemetry_EndTelemetryEvent(AsyncCallback callback, object state, string telemetrySessionId, int timestamp, string eventType, string participantId, Dictionary<string, string> customData, int clientIndex);
       string End_Telemetry_EndTelemetryEvent(IAsyncResult asyncResult);
-      #endif
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_SetSessionId(AsyncCallback callback, object state, int clientIndex, string session);
-      string End_Client_SetSessionId(IAsyncResult asyncResult);
       #endif
       #if SILVERLIGHT
       IAsyncResult Begin_File_DownloadFile(AsyncCallback callback, object state, string cloudPath, string cloudFilename, bool replaceIfExists, int clientIndex);
@@ -28173,69 +28168,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       
       #if SILVERLIGHT
-      public IAsyncResult Begin_Client_SetSessionId(AsyncCallback callback, object state, int clientIndex, string session)
-      {
-        return send_Client_SetSessionId(callback, state, clientIndex, session);
-      }
-
-      public string End_Client_SetSessionId(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_Client_SetSessionId();
-      }
-
-      #endif
-
-      public string Client_SetSessionId(int clientIndex, string session)
-      {
-        #if !SILVERLIGHT
-        send_Client_SetSessionId(clientIndex, session);
-        return recv_Client_SetSessionId();
-
-        #else
-        var asyncResult = Begin_Client_SetSessionId(null, null, clientIndex, session);
-        return End_Client_SetSessionId(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_SetSessionId(AsyncCallback callback, object state, int clientIndex, string session)
-      #else
-      public void send_Client_SetSessionId(int clientIndex, string session)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_SetSessionId", TMessageType.Call, seqid_));
-        Client_SetSessionId_args args = new Client_SetSessionId_args();
-        args.ClientIndex = clientIndex;
-        args.Session = session;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public string recv_Client_SetSessionId()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_SetSessionId_result result = new Client_SetSessionId_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_SetSessionId failed: unknown result");
-      }
-
-      
-      #if SILVERLIGHT
       public IAsyncResult Begin_File_DownloadFile(AsyncCallback callback, object state, string cloudPath, string cloudFilename, bool replaceIfExists, int clientIndex)
       {
         return send_File_DownloadFile(callback, state, cloudPath, cloudFilename, replaceIfExists, clientIndex);
@@ -28755,7 +28687,6 @@ namespace Ruyi.SDK.BrainCloudApi
         processMap_["Telemetry_LogTelemetryEvent"] = Telemetry_LogTelemetryEvent_Process;
         processMap_["Telemetry_StartTelemetryEvent"] = Telemetry_StartTelemetryEvent_Process;
         processMap_["Telemetry_EndTelemetryEvent"] = Telemetry_EndTelemetryEvent_Process;
-        processMap_["Client_SetSessionId"] = Client_SetSessionId_Process;
         processMap_["File_DownloadFile"] = File_DownloadFile_Process;
         processMap_["File_GetDownloadInfo"] = File_GetDownloadInfo_Process;
         processMap_["File_CancelDownload"] = File_CancelDownload_Process;
@@ -37829,34 +37760,6 @@ namespace Ruyi.SDK.BrainCloudApi
           Console.Error.WriteLine(ex.ToString());
           TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
           oprot.WriteMessageBegin(new TMessage("Telemetry_EndTelemetryEvent", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_SetSessionId_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_SetSessionId_args args = new Client_SetSessionId_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_SetSessionId_result result = new Client_SetSessionId_result();
-        try
-        {
-          result.Success = iface_.Client_SetSessionId(args.ClientIndex, args.Session);
-          oprot.WriteMessageBegin(new TMessage("Client_SetSessionId", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_SetSessionId", TMessageType.Exception, seqid));
           x.Write(oprot);
         }
         oprot.WriteMessageEnd();
@@ -133360,261 +133263,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       public override string ToString() {
         StringBuilder __sb = new StringBuilder("Telemetry_EndTelemetryEvent_result(");
-        bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_SetSessionId_args : TBase
-    {
-      private int _clientIndex;
-      private string _session;
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-      public string Session
-      {
-        get
-        {
-          return _session;
-        }
-        set
-        {
-          __isset.session = true;
-          this._session = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool clientIndex;
-        public bool session;
-      }
-
-      public Client_SetSessionId_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String) {
-                  Session = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_SetSessionId_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          if (Session != null && __isset.session) {
-            field.Name = "session";
-            field.Type = TType.String;
-            field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Session);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_SetSessionId_args(");
-        bool __first = true;
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        if (Session != null && __isset.session) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("Session: ");
-          __sb.Append(Session);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_SetSessionId_result : TBase
-    {
-      private string _success;
-
-      public string Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool success;
-      }
-
-      public Client_SetSessionId_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.String) {
-                  Success = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_SetSessionId_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-
-          if (this.__isset.success) {
-            if (Success != null) {
-              field.Name = "Success";
-              field.Type = TType.String;
-              field.ID = 0;
-              oprot.WriteFieldBegin(field);
-              oprot.WriteString(Success);
-              oprot.WriteFieldEnd();
-            }
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_SetSessionId_result(");
         bool __first = true;
         if (Success != null && __isset.success) {
           if(!__first) { __sb.Append(", "); }

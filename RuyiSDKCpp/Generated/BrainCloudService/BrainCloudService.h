@@ -3559,7 +3559,6 @@ class BrainCloudServiceIf {
   virtual void Telemetry_LogTelemetryEvent(std::string& _return, const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex) = 0;
   virtual void Telemetry_StartTelemetryEvent(std::string& _return, const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex) = 0;
   virtual void Telemetry_EndTelemetryEvent(std::string& _return, const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex) = 0;
-  virtual void Client_SetSessionId(std::string& _return, const int32_t clientIndex, const std::string& session) = 0;
   virtual void File_DownloadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex) = 0;
   virtual void File_GetDownloadInfo(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const int32_t clientIndex) = 0;
   virtual void File_CancelDownload(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const int32_t clientIndex) = 0;
@@ -4567,9 +4566,6 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
     return;
   }
   void Telemetry_EndTelemetryEvent(std::string& /* _return */, const std::string& /* telemetrySessionId */, const int32_t /* timestamp */, const std::string& /* eventType */, const std::string& /* participantId */, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & /* customData */, const int32_t /* clientIndex */) {
-    return;
-  }
-  void Client_SetSessionId(std::string& /* _return */, const int32_t /* clientIndex */, const std::string& /* session */) {
     return;
   }
   void File_DownloadFile(std::string& /* _return */, const std::string& /* cloudPath */, const std::string& /* cloudFilename */, const bool /* replaceIfExists */, const int32_t /* clientIndex */) {
@@ -42316,117 +42312,6 @@ class BrainCloudService_Telemetry_EndTelemetryEvent_presult {
 
 };
 
-typedef struct _BrainCloudService_Client_SetSessionId_args__isset {
-  _BrainCloudService_Client_SetSessionId_args__isset() : clientIndex(false), session(false) {}
-  bool clientIndex :1;
-  bool session :1;
-} _BrainCloudService_Client_SetSessionId_args__isset;
-
-class BrainCloudService_Client_SetSessionId_args {
- public:
-
-  BrainCloudService_Client_SetSessionId_args(const BrainCloudService_Client_SetSessionId_args&);
-  BrainCloudService_Client_SetSessionId_args& operator=(const BrainCloudService_Client_SetSessionId_args&);
-  BrainCloudService_Client_SetSessionId_args() : clientIndex(0), session() {
-  }
-
-  virtual ~BrainCloudService_Client_SetSessionId_args() throw();
-  int32_t clientIndex;
-  std::string session;
-
-  _BrainCloudService_Client_SetSessionId_args__isset __isset;
-
-  void __set_clientIndex(const int32_t val);
-
-  void __set_session(const std::string& val);
-
-  bool operator == (const BrainCloudService_Client_SetSessionId_args & rhs) const
-  {
-    if (!(clientIndex == rhs.clientIndex))
-      return false;
-    if (!(session == rhs.session))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_SetSessionId_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_SetSessionId_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Client_SetSessionId_pargs {
- public:
-
-
-  virtual ~BrainCloudService_Client_SetSessionId_pargs() throw();
-  const int32_t* clientIndex;
-  const std::string* session;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _BrainCloudService_Client_SetSessionId_result__isset {
-  _BrainCloudService_Client_SetSessionId_result__isset() : success(false) {}
-  bool success :1;
-} _BrainCloudService_Client_SetSessionId_result__isset;
-
-class BrainCloudService_Client_SetSessionId_result {
- public:
-
-  BrainCloudService_Client_SetSessionId_result(const BrainCloudService_Client_SetSessionId_result&);
-  BrainCloudService_Client_SetSessionId_result& operator=(const BrainCloudService_Client_SetSessionId_result&);
-  BrainCloudService_Client_SetSessionId_result() : success() {
-  }
-
-  virtual ~BrainCloudService_Client_SetSessionId_result() throw();
-  std::string success;
-
-  _BrainCloudService_Client_SetSessionId_result__isset __isset;
-
-  void __set_success(const std::string& val);
-
-  bool operator == (const BrainCloudService_Client_SetSessionId_result & rhs) const
-  {
-    if (!(success == rhs.success))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Client_SetSessionId_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Client_SetSessionId_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _BrainCloudService_Client_SetSessionId_presult__isset {
-  _BrainCloudService_Client_SetSessionId_presult__isset() : success(false) {}
-  bool success :1;
-} _BrainCloudService_Client_SetSessionId_presult__isset;
-
-class BrainCloudService_Client_SetSessionId_presult {
- public:
-
-
-  virtual ~BrainCloudService_Client_SetSessionId_presult() throw();
-  std::string* success;
-
-  _BrainCloudService_Client_SetSessionId_presult__isset __isset;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
 typedef struct _BrainCloudService_File_DownloadFile_args__isset {
   _BrainCloudService_File_DownloadFile_args__isset() : cloudPath(false), cloudFilename(false), replaceIfExists(false), clientIndex(false) {}
   bool cloudPath :1;
@@ -43782,9 +43667,6 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Telemetry_EndTelemetryEvent(std::string& _return, const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex);
   void send_Telemetry_EndTelemetryEvent(const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex);
   void recv_Telemetry_EndTelemetryEvent(std::string& _return);
-  void Client_SetSessionId(std::string& _return, const int32_t clientIndex, const std::string& session);
-  void send_Client_SetSessionId(const int32_t clientIndex, const std::string& session);
-  void recv_Client_SetSessionId(std::string& _return);
   void File_DownloadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex);
   void send_File_DownloadFile(const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex);
   void recv_File_DownloadFile(std::string& _return);
@@ -44132,7 +44014,6 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Telemetry_LogTelemetryEvent(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Telemetry_StartTelemetryEvent(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Telemetry_EndTelemetryEvent(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_Client_SetSessionId(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_File_DownloadFile(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_File_GetDownloadInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_File_CancelDownload(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -44462,7 +44343,6 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Telemetry_LogTelemetryEvent"] = &BrainCloudServiceProcessor::process_Telemetry_LogTelemetryEvent;
     processMap_["Telemetry_StartTelemetryEvent"] = &BrainCloudServiceProcessor::process_Telemetry_StartTelemetryEvent;
     processMap_["Telemetry_EndTelemetryEvent"] = &BrainCloudServiceProcessor::process_Telemetry_EndTelemetryEvent;
-    processMap_["Client_SetSessionId"] = &BrainCloudServiceProcessor::process_Client_SetSessionId;
     processMap_["File_DownloadFile"] = &BrainCloudServiceProcessor::process_File_DownloadFile;
     processMap_["File_GetDownloadInfo"] = &BrainCloudServiceProcessor::process_File_GetDownloadInfo;
     processMap_["File_CancelDownload"] = &BrainCloudServiceProcessor::process_File_CancelDownload;
@@ -47696,16 +47576,6 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
     return;
   }
 
-  void Client_SetSessionId(std::string& _return, const int32_t clientIndex, const std::string& session) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Client_SetSessionId(_return, clientIndex, session);
-    }
-    ifaces_[i]->Client_SetSessionId(_return, clientIndex, session);
-    return;
-  }
-
   void File_DownloadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -48735,9 +48605,6 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Telemetry_EndTelemetryEvent(std::string& _return, const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex);
   int32_t send_Telemetry_EndTelemetryEvent(const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex);
   void recv_Telemetry_EndTelemetryEvent(std::string& _return, const int32_t seqid);
-  void Client_SetSessionId(std::string& _return, const int32_t clientIndex, const std::string& session);
-  int32_t send_Client_SetSessionId(const int32_t clientIndex, const std::string& session);
-  void recv_Client_SetSessionId(std::string& _return, const int32_t seqid);
   void File_DownloadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex);
   int32_t send_File_DownloadFile(const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex);
   void recv_File_DownloadFile(std::string& _return, const int32_t seqid);
