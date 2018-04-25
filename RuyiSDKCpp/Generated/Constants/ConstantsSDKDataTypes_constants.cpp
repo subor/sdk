@@ -42,33 +42,33 @@ ConstantsSDKDataTypesConstants::ConstantsSDKDataTypesConstants() {
   broker_power_message = "mmi.power.operation";
 
   BraincloudServerInfo tmp2;
-  tmp2.urlRoot = "";
-  tmp2.__isset.urlRoot = true;
   tmp2.name = "external";
   tmp2.__isset.name = true;
+  tmp2.urlRoot = "";
+  tmp2.__isset.urlRoot = true;
   tmp2.dispatcher = "";
   tmp2.__isset.dispatcher = true;
   tmp2.appId = "11498";
   tmp2.__isset.appId = true;
-  tmp2.appVersion = "1.0.0";
-  tmp2.__isset.appVersion = true;
   tmp2.secretKey = "5f73bb67-2b82-444a-8801-e2bb8b09e917";
   tmp2.__isset.secretKey = true;
+  tmp2.appVersion = "1.0.0";
+  tmp2.__isset.appVersion = true;
 
   BraincloudServerList.push_back(tmp2);
   BraincloudServerInfo tmp3;
-  tmp3.appVersion = "1.0.0";
-  tmp3.__isset.appVersion = true;
-  tmp3.secretKey = "c7df4982-479d-4daa-adcd-44967c8d5c3b";
-  tmp3.__isset.secretKey = true;
+  tmp3.urlRoot = "https://braincloud:4443/";
+  tmp3.__isset.urlRoot = true;
   tmp3.name = "internalruyimaster";
   tmp3.__isset.name = true;
   tmp3.dispatcher = "dispatcherv2";
   tmp3.__isset.dispatcher = true;
-  tmp3.urlRoot = "https://braincloud:4443/";
-  tmp3.__isset.urlRoot = true;
   tmp3.appId = "30006";
   tmp3.__isset.appId = true;
+  tmp3.appVersion = "1.0.0";
+  tmp3.__isset.appVersion = true;
+  tmp3.secretKey = "c7df4982-479d-4daa-adcd-44967c8d5c3b";
+  tmp3.__isset.secretKey = true;
 
   BraincloudServerList.push_back(tmp3);
   BraincloudServerInfo tmp4;

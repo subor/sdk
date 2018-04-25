@@ -459,7 +459,8 @@ inline std::ostream& operator<<(std::ostream& out, const InputDeviceStateChanged
 }
 
 typedef struct _InputDeviceStateChangedKeyboard__isset {
-  _InputDeviceStateChangedKeyboard__isset() : RawOffset(false), Value(false), Timestamp(false), Sequence(false), Key(false), IsPressed(false), IsReleased(false) {}
+  _InputDeviceStateChangedKeyboard__isset() : DeviceId(false), RawOffset(false), Value(false), Timestamp(false), Sequence(false), Key(false), IsPressed(false), IsReleased(false) {}
+  bool DeviceId :1;
   bool RawOffset :1;
   bool Value :1;
   bool Timestamp :1;
@@ -474,10 +475,11 @@ class InputDeviceStateChangedKeyboard : public virtual ::apache::thrift::TBase {
 
   InputDeviceStateChangedKeyboard(const InputDeviceStateChangedKeyboard&);
   InputDeviceStateChangedKeyboard& operator=(const InputDeviceStateChangedKeyboard&);
-  InputDeviceStateChangedKeyboard() : RawOffset(0), Value(0), Timestamp(0), Sequence(0), Key(0), IsPressed(0), IsReleased(0) {
+  InputDeviceStateChangedKeyboard() : DeviceId(), RawOffset(0), Value(0), Timestamp(0), Sequence(0), Key(0), IsPressed(0), IsReleased(0) {
   }
 
   virtual ~InputDeviceStateChangedKeyboard() throw();
+  std::string DeviceId;
   int32_t RawOffset;
   int32_t Value;
   int32_t Timestamp;
@@ -487,6 +489,8 @@ class InputDeviceStateChangedKeyboard : public virtual ::apache::thrift::TBase {
   bool IsReleased;
 
   _InputDeviceStateChangedKeyboard__isset __isset;
+
+  void __set_DeviceId(const std::string& val);
 
   void __set_RawOffset(const int32_t val);
 
@@ -504,6 +508,8 @@ class InputDeviceStateChangedKeyboard : public virtual ::apache::thrift::TBase {
 
   bool operator == (const InputDeviceStateChangedKeyboard & rhs) const
   {
+    if (!(DeviceId == rhs.DeviceId))
+      return false;
     if (!(RawOffset == rhs.RawOffset))
       return false;
     if (!(Value == rhs.Value))
