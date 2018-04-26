@@ -21,6 +21,8 @@ namespace Ruyi
 	class RuyiNetUserFileService;
 	class RuyiNetVideoService;
 	class RuyiNetMatchmakingService;
+	class RuyiNetLobbyService;
+	class RuyiNetTelemetryService;
 
 	class RuyiNetClient
 	{
@@ -58,6 +60,11 @@ namespace Ruyi
 			return mCurrentPlayers[index]; 
 		}
 
+		/// <summary>
+		/// Returns the index of the first active player available.
+		/// </summary>
+		int ActivePlayerIndex();
+
 		SDK::BrainCloudApi::BrainCloudServiceClient * const GetBCService() { return BCService; }
 		/// <summary>
 		/// Handles backing up data to the cloud.
@@ -87,6 +94,14 @@ namespace Ruyi
 		/// Allows users to locate players to play against each other.
 		/// </summary>
 		RuyiNetMatchmakingService* const GetMatchmakingService() { return mMatchmakingService; }
+		/// <summary>
+		/// Manages lobbies for network games.
+		/// </summary>
+		RuyiNetLobbyService* const GetLobbyService() { return mLobbyService; }
+		/// <summary>
+		/// Handles pushing telemetry data to the cloud.
+		/// </summary>
+		RuyiNetTelemetryService* const GetTelemetryService() { return mTelemetryService; }
 
 		static const int MAX_PLAYERS = 4;
 
@@ -133,6 +148,8 @@ namespace Ruyi
 		RuyiNetUserFileService* mUserFileService;
 		RuyiNetVideoService* mVideoService;
 		RuyiNetMatchmakingService* mMatchmakingService;
+		RuyiNetLobbyService* mLobbyService;
+		RuyiNetTelemetryService* mTelemetryService;
 
 		struct RuyiNetProfile* mCurrentPlayers[MAX_PLAYERS];
 

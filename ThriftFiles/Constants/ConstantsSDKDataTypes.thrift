@@ -1,16 +1,6 @@
 namespace csharp Ruyi.SDK.Constants
 namespace cpp Ruyi.SDK.Constants
 
-struct BraincloudServerInfo {
-    1: string name,
-    2: string urlRoot,
-    3: string dispatcher,
-    4: string secretKey,
-    5: string appId,
-    6: string appVersion,
-}
-
-
 const i32 low_latency_socket_port = 11290
 
 const i32 high_latency_socket_port = 11390
@@ -40,31 +30,4 @@ const string debugger_publisher_out_uri = "tcp://{addr}:8868"
 const string broker_playback_message = "mmi.developer.playback"
 
 const string broker_power_message = "mmi.power.operation"
-
-const list<BraincloudServerInfo> BraincloudServerList = [
-	{
-		"name": "external",
-		"urlRoot": "",
-		"dispatcher": "",
-		"secretKey": "5f73bb67-2b82-444a-8801-e2bb8b09e917",
-		"appId": "11498",
-		"appVersion": "1.0.0",
-	},
-	{
-		"name": "internalruyimaster",
-		"urlRoot": "https://braincloud:4443/",
-		"dispatcher": "dispatcherv2",
-		"secretKey": "c7df4982-479d-4daa-adcd-44967c8d5c3b",
-		"appId": "30006",
-		"appVersion": "1.0.0",
-	},
-	{
-		"name": "localhost",
-		"urlRoot": "https://localhost:8443/",
-		"dispatcher": "dispatcherv2",
-		"secretKey": "655a2914-be71-495b-868f-68f6b4f6dfb1",
-		"appId": "30001",
-		"appVersion": "1.0.0",
-	},
-]
 

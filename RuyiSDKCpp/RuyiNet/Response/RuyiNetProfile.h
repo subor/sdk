@@ -56,6 +56,9 @@ namespace Ruyi
 			if (!j["summaryFriendData"].is_null())
 			{
 				nlohmann::json summaryFriendDataJson = j["summaryFriendData"];
+				
+				if (!summaryFriendDataJson.is_object()) return;
+
 				summaryFriendData.parseJson(summaryFriendDataJson);
 			}
 		}

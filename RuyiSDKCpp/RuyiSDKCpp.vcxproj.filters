@@ -232,6 +232,15 @@
     <ClCompile Include="RuyiNet\Service\RuyiNetMatchmakingService.cpp">
       <Filter>Sources\RuyiNet\Service</Filter>
     </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetLobby.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetLobbyService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetTelemetryService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Generated\GlobalInputDefine\GlobalInputDefineSDKDataTypes_constants.h">
@@ -468,6 +477,21 @@
     </ClInclude>
     <ClInclude Include="RuyiNet\Response\RuyiNetFindPlayersResponse.h">
       <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetLobbyResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetLobby.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetLobbyService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetTelemetrySessionResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetTelemetryService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

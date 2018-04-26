@@ -8,6 +8,8 @@
 #include "Service/RuyiNetUserFileService.h"
 #include "Service/RuyiNetVideoService.h"
 #include "Service/RuyiNetMatchmakingService.h"
+#include "Service/RuyiNetLobbyService.h"
+#include "Service/RuyiNetTelemetryService.h"
 
 #include "Response/RuyiNetGetProfileResponse.h"
 #include "Response/RuyiNetProfile.h"
@@ -19,7 +21,7 @@ namespace Ruyi
 	RuyiNetClient::RuyiNetClient(const boost::shared_ptr<TProtocol1> & protocol)
 		: BCService(nullptr), mCloudService(nullptr), mFriendService(nullptr), mLeaderboardService(nullptr),
 		mPartyService(nullptr), mProfileService(nullptr), 
-		mVideoService(nullptr), mMatchmakingService(nullptr), mInitialised(false)
+		mVideoService(nullptr), mMatchmakingService(nullptr), mLobbyService(nullptr), mTelemetryService(nullptr), mInitialised(false)
 	{
 		BCService = new SDK::BrainCloudApi::BrainCloudServiceClient(protocol);
 
@@ -31,6 +33,8 @@ namespace Ruyi
 		mUserFileService = new RuyiNetUserFileService(this);
 		mVideoService = new RuyiNetVideoService(this);
 		mMatchmakingService = new RuyiNetMatchmakingService(this);
+		mLobbyService = new RuyiNetLobbyService(this);
+		mTelemetryService = new RuyiNetTelemetryService(this);
 
 		for (int i = 0; i < MAX_PLAYERS; ++i)
 		{ 
@@ -40,6 +44,12 @@ namespace Ruyi
 
 	RuyiNetClient::~RuyiNetClient()
 	{
+		delete mTelemetryService;
+		mTelemetryService = nullptr;
+
+		delete mLobbyService;
+		mLobbyService = nullptr;
+
 		delete mMatchmakingService;
 		mMatchmakingService = nullptr;
 
@@ -131,4 +141,16 @@ namespace Ruyi
 			throw e;
 		}
 	}
+
+	int RuyiNetClient::ActivePlayerIndex()
+	{
+		for (int i = 0; i < MAX_PLAYERS; ++i)
+		{
+			if (nullptr != mCurrentPlayers[i])
+				return i;
+		}
+
+		return 0;
+	}
+
 }
