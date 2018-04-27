@@ -113,6 +113,7 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\StorageLayer\GetLocalPathResult.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\StorageLayer\StorageLayerService.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\InputActionEvent.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\TriggerKeys.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\UserEvent.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\UserGender.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\UserInfo_Public.cs" />

@@ -93,6 +93,8 @@ namespace Ruyi
 			{
 				nlohmann::json dataJson = j["data"];
 
+				if (!dataJson.is_object()) return;
+
 				if (!dataJson["fileList"].is_null())
 				{
 					nlohmann::json fileListJson = dataJson["fileList"];

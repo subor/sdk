@@ -103,10 +103,14 @@ namespace Ruyi
 			{
 				nlohmann::json dataJson = j["data"];
 
+				if (!dataJson.is_object()) return;
+
 				if (!dataJson["entities"].is_null())
 				{
 					nlohmann::json entitiesJson = dataJson["entities"];
 					
+					if (!entitiesJson.is_object()) return;
+
 					if (entitiesJson.is_array())
 					{
 						for (auto entities : entitiesJson)

@@ -100,9 +100,15 @@ namespace Ruyi
 			if (!j["data"].is_null())
 			{
 				nlohmann::json dataJson = j["data"];
+
+				if (!dataJson.is_object()) return;
+
 				if (!dataJson["fileDetails"].is_null())
 				{
 					nlohmann::json fileDetailsJson = dataJson["fileDetails"];
+					
+					if (!fileDetailsJson.is_object()) return;
+					
 					if (!fileDetailsJson["updatedAt"].is_null())
 					{
 						data.fileDetails.updatedAt = fileDetailsJson["updatedAt"];

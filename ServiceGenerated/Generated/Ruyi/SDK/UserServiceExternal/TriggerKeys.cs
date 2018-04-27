@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
@@ -21,62 +22,62 @@ namespace Ruyi.SDK.UserServiceExternal
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class InputActionEvent : TBase
+  public partial class TriggerKeys : TBase
   {
-    private string _userId;
-    private string _action;
-    private long _timestamp;
-    private List<TriggerKeys> _Triggers;
+    private sbyte _DeviceType;
+    private int _Key;
+    private sbyte _NewValue;
+    private sbyte _OldValue;
 
-    public string UserId
+    public sbyte DeviceType
     {
       get
       {
-        return _userId;
+        return _DeviceType;
       }
       set
       {
-        __isset.userId = true;
-        this._userId = value;
+        __isset.DeviceType = true;
+        this._DeviceType = value;
       }
     }
 
-    public string Action
+    public int Key
     {
       get
       {
-        return _action;
+        return _Key;
       }
       set
       {
-        __isset.action = true;
-        this._action = value;
+        __isset.Key = true;
+        this._Key = value;
       }
     }
 
-    public long Timestamp
+    public sbyte NewValue
     {
       get
       {
-        return _timestamp;
+        return _NewValue;
       }
       set
       {
-        __isset.timestamp = true;
-        this._timestamp = value;
+        __isset.NewValue = true;
+        this._NewValue = value;
       }
     }
 
-    public List<TriggerKeys> Triggers
+    public sbyte OldValue
     {
       get
       {
-        return _Triggers;
+        return _OldValue;
       }
       set
       {
-        __isset.Triggers = true;
-        this._Triggers = value;
+        __isset.OldValue = true;
+        this._OldValue = value;
       }
     }
 
@@ -86,13 +87,13 @@ namespace Ruyi.SDK.UserServiceExternal
     [Serializable]
     #endif
     public struct Isset {
-      public bool userId;
-      public bool action;
-      public bool timestamp;
-      public bool Triggers;
+      public bool DeviceType;
+      public bool Key;
+      public bool NewValue;
+      public bool OldValue;
     }
 
-    public InputActionEvent() {
+    public TriggerKeys() {
     }
 
     public void Read (TProtocol iprot)
@@ -111,40 +112,29 @@ namespace Ruyi.SDK.UserServiceExternal
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String) {
-                UserId = iprot.ReadString();
+              if (field.Type == TType.Byte) {
+                DeviceType = iprot.ReadByte();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.String) {
-                Action = iprot.ReadString();
+              if (field.Type == TType.I32) {
+                Key = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 3:
-              if (field.Type == TType.I64) {
-                Timestamp = iprot.ReadI64();
+              if (field.Type == TType.Byte) {
+                NewValue = iprot.ReadByte();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 4:
-              if (field.Type == TType.List) {
-                {
-                  Triggers = new List<TriggerKeys>();
-                  TList _list0 = iprot.ReadListBegin();
-                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
-                  {
-                    TriggerKeys _elem2;
-                    _elem2 = new TriggerKeys();
-                    _elem2.Read(iprot);
-                    Triggers.Add(_elem2);
-                  }
-                  iprot.ReadListEnd();
-                }
+              if (field.Type == TType.Byte) {
+                OldValue = iprot.ReadByte();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -167,46 +157,39 @@ namespace Ruyi.SDK.UserServiceExternal
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("InputActionEvent");
+        TStruct struc = new TStruct("TriggerKeys");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (UserId != null && __isset.userId) {
-          field.Name = "userId";
-          field.Type = TType.String;
+        if (__isset.DeviceType) {
+          field.Name = "DeviceType";
+          field.Type = TType.Byte;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(UserId);
+          oprot.WriteByte(DeviceType);
           oprot.WriteFieldEnd();
         }
-        if (Action != null && __isset.action) {
-          field.Name = "action";
-          field.Type = TType.String;
+        if (__isset.Key) {
+          field.Name = "Key";
+          field.Type = TType.I32;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Action);
+          oprot.WriteI32(Key);
           oprot.WriteFieldEnd();
         }
-        if (__isset.timestamp) {
-          field.Name = "timestamp";
-          field.Type = TType.I64;
+        if (__isset.NewValue) {
+          field.Name = "NewValue";
+          field.Type = TType.Byte;
           field.ID = 3;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI64(Timestamp);
+          oprot.WriteByte(NewValue);
           oprot.WriteFieldEnd();
         }
-        if (Triggers != null && __isset.Triggers) {
-          field.Name = "Triggers";
-          field.Type = TType.List;
+        if (__isset.OldValue) {
+          field.Name = "OldValue";
+          field.Type = TType.Byte;
           field.ID = 4;
           oprot.WriteFieldBegin(field);
-          {
-            oprot.WriteListBegin(new TList(TType.Struct, Triggers.Count));
-            foreach (TriggerKeys _iter3 in Triggers)
-            {
-              _iter3.Write(oprot);
-            }
-            oprot.WriteListEnd();
-          }
+          oprot.WriteByte(OldValue);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -219,31 +202,31 @@ namespace Ruyi.SDK.UserServiceExternal
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("InputActionEvent(");
+      StringBuilder __sb = new StringBuilder("TriggerKeys(");
       bool __first = true;
-      if (UserId != null && __isset.userId) {
+      if (__isset.DeviceType) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("UserId: ");
-        __sb.Append(UserId);
+        __sb.Append("DeviceType: ");
+        __sb.Append(DeviceType);
       }
-      if (Action != null && __isset.action) {
+      if (__isset.Key) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Action: ");
-        __sb.Append(Action);
+        __sb.Append("Key: ");
+        __sb.Append(Key);
       }
-      if (__isset.timestamp) {
+      if (__isset.NewValue) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Timestamp: ");
-        __sb.Append(Timestamp);
+        __sb.Append("NewValue: ");
+        __sb.Append(NewValue);
       }
-      if (Triggers != null && __isset.Triggers) {
+      if (__isset.OldValue) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Triggers: ");
-        __sb.Append(Triggers);
+        __sb.Append("OldValue: ");
+        __sb.Append(OldValue);
       }
       __sb.Append(")");
       return __sb.ToString();

@@ -23,6 +23,7 @@ namespace Ruyi.SDK.InputManager
   #endif
   public partial class InputDeviceStateChangedKeyboard : TBase
   {
+    private string _DeviceId;
     private int _RawOffset;
     private int _Value;
     private int _Timestamp;
@@ -30,6 +31,19 @@ namespace Ruyi.SDK.InputManager
     private sbyte _Key;
     private bool _IsPressed;
     private bool _IsReleased;
+
+    public string DeviceId
+    {
+      get
+      {
+        return _DeviceId;
+      }
+      set
+      {
+        __isset.DeviceId = true;
+        this._DeviceId = value;
+      }
+    }
 
     public int RawOffset
     {
@@ -128,6 +142,7 @@ namespace Ruyi.SDK.InputManager
     [Serializable]
     #endif
     public struct Isset {
+      public bool DeviceId;
       public bool RawOffset;
       public bool @Value;
       public bool Timestamp;
@@ -156,48 +171,55 @@ namespace Ruyi.SDK.InputManager
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                RawOffset = iprot.ReadI32();
+              if (field.Type == TType.String) {
+                DeviceId = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
               if (field.Type == TType.I32) {
-                Value = iprot.ReadI32();
+                RawOffset = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 3:
               if (field.Type == TType.I32) {
-                Timestamp = iprot.ReadI32();
+                Value = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 4:
               if (field.Type == TType.I32) {
-                Sequence = iprot.ReadI32();
+                Timestamp = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 5:
+              if (field.Type == TType.I32) {
+                Sequence = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 6:
               if (field.Type == TType.Byte) {
                 Key = iprot.ReadByte();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 6:
+            case 7:
               if (field.Type == TType.Bool) {
                 IsPressed = iprot.ReadBool();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 7:
+            case 8:
               if (field.Type == TType.Bool) {
                 IsReleased = iprot.ReadBool();
               } else { 
@@ -225,10 +247,18 @@ namespace Ruyi.SDK.InputManager
         TStruct struc = new TStruct("InputDeviceStateChangedKeyboard");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
+        if (DeviceId != null && __isset.DeviceId) {
+          field.Name = "DeviceId";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(DeviceId);
+          oprot.WriteFieldEnd();
+        }
         if (__isset.RawOffset) {
           field.Name = "RawOffset";
           field.Type = TType.I32;
-          field.ID = 1;
+          field.ID = 2;
           oprot.WriteFieldBegin(field);
           oprot.WriteI32(RawOffset);
           oprot.WriteFieldEnd();
@@ -236,7 +266,7 @@ namespace Ruyi.SDK.InputManager
         if (__isset.@Value) {
           field.Name = "Value";
           field.Type = TType.I32;
-          field.ID = 2;
+          field.ID = 3;
           oprot.WriteFieldBegin(field);
           oprot.WriteI32(Value);
           oprot.WriteFieldEnd();
@@ -244,7 +274,7 @@ namespace Ruyi.SDK.InputManager
         if (__isset.Timestamp) {
           field.Name = "Timestamp";
           field.Type = TType.I32;
-          field.ID = 3;
+          field.ID = 4;
           oprot.WriteFieldBegin(field);
           oprot.WriteI32(Timestamp);
           oprot.WriteFieldEnd();
@@ -252,7 +282,7 @@ namespace Ruyi.SDK.InputManager
         if (__isset.Sequence) {
           field.Name = "Sequence";
           field.Type = TType.I32;
-          field.ID = 4;
+          field.ID = 5;
           oprot.WriteFieldBegin(field);
           oprot.WriteI32(Sequence);
           oprot.WriteFieldEnd();
@@ -260,7 +290,7 @@ namespace Ruyi.SDK.InputManager
         if (__isset.Key) {
           field.Name = "Key";
           field.Type = TType.Byte;
-          field.ID = 5;
+          field.ID = 6;
           oprot.WriteFieldBegin(field);
           oprot.WriteByte(Key);
           oprot.WriteFieldEnd();
@@ -268,7 +298,7 @@ namespace Ruyi.SDK.InputManager
         if (__isset.IsPressed) {
           field.Name = "IsPressed";
           field.Type = TType.Bool;
-          field.ID = 6;
+          field.ID = 7;
           oprot.WriteFieldBegin(field);
           oprot.WriteBool(IsPressed);
           oprot.WriteFieldEnd();
@@ -276,7 +306,7 @@ namespace Ruyi.SDK.InputManager
         if (__isset.IsReleased) {
           field.Name = "IsReleased";
           field.Type = TType.Bool;
-          field.ID = 7;
+          field.ID = 8;
           oprot.WriteFieldBegin(field);
           oprot.WriteBool(IsReleased);
           oprot.WriteFieldEnd();
@@ -293,6 +323,12 @@ namespace Ruyi.SDK.InputManager
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("InputDeviceStateChangedKeyboard(");
       bool __first = true;
+      if (DeviceId != null && __isset.DeviceId) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("DeviceId: ");
+        __sb.Append(DeviceId);
+      }
       if (__isset.RawOffset) {
         if(!__first) { __sb.Append(", "); }
         __first = false;

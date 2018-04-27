@@ -1,5 +1,6 @@
 #include "BCServiceTest.h"
 #include <windows.h>
+#include <unordered_map>
 
 #include "boost/container/detail/json.hpp"
 #include "RuyiNet/Response/RuyiNetGetProfileResponse.h"
@@ -2076,11 +2077,12 @@ void BCServiceTest::BCS_JsonTest()
 	//string str = json;
 	Logger::WriteMessage(("BCS_JsonTest:" + str + "\n").c_str());
 
-	string jsonStr = "{\"data\":{\"response\":{\"server_time\":1520991855472,\"friends\":[{\"playerId\":\"12334444\",\"name\":\"aaa\",\"pictureUrl\":null,\"summaryFriendData\":null,\"externalData\":{\"brainCloud\":{}}},{\"playerId\":\"554444444\",\"name\":\"bbbb\",\"pictureUrl\":null,\"summaryFriendData\":null,\"externalData\":{\"brainCloud\":{}}}]},\"success\":true},\"status\":200}";
+	//string jsonStr = "{\"data\":{\"response\":{\"server_time\":1520991855472,\"friends\":[{\"playerId\":\"12334444\",\"name\":\"aaa\",\"pictureUrl\":null,\"summaryFriendData\":null,\"externalData\":{\"brainCloud\":{}}},{\"playerId\":\"554444444\",\"name\":\"bbbb\",\"pictureUrl\":null,\"summaryFriendData\":null,\"externalData\":{\"brainCloud\":{}}}]},\"success\":true},\"status\":200}";
+	string jsonStr = "{ \"detail\":{\"comp\": \"MXCHIP.Inc\",\"from\":\"ShangHai\",\"focus\":\"Internet of Things\",\"module\":[{\"k1\":\"EMW3165\"},{\"k2\":\"EMW3166\"},{\"k3\":\"EMW3031\"},{\"k4\":\"EMW3239\"}]}}";
 	Logger::WriteMessage(("BCS_JsonTest jsonStr:" + jsonStr + "\n").c_str());
 
 	nlohmann::json json1 = nlohmann::json::parse(jsonStr);
-
+	/*
 	if (!json1["data"].is_null())
 	{
 		Logger::WriteMessage("abccc\n");
@@ -2110,6 +2112,47 @@ void BCServiceTest::BCS_JsonTest()
 							Logger::WriteMessage(("json1 friend name:" + name + "\n").c_str());
 						}
 					}
+				}
+			}
+		}
+	}
+	*/
+
+	if (!json1["detail"].is_null())
+	{
+		nlohmann::json detailJson = json1["detail"];
+
+		if (!detailJson["module"].is_null())
+		{
+			nlohmann::json moduleJson = detailJson["module"];
+			if (moduleJson.is_array()) 
+			{
+				//auto moduleMapJson = moduleJson.get<std::unordered_map<std::string, nlohmann::json>>();
+				/*
+				for (auto it = detailJson["module"].begin(); it != detailJson["module"].end(); ++it)
+				{
+					std::cout << it.key() << " | " << it.value() << "\n";
+					
+					Logger::WriteMessage("dfaasdddddeee \n");
+				}*/
+				
+				
+				for (auto singleModule : moduleJson)
+				{
+					if (singleModule.is_object())
+					{
+						//singleModule.get<std::string>()
+						for (auto &m : singleModule)
+						{
+							if (m.is_string())
+							{
+								string key = m.dump();
+								
+								Logger::WriteMessage(("dfaasd " + key).c_str());
+							}
+						}
+					}
+
 				}
 			}
 		}
