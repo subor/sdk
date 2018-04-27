@@ -1752,6 +1752,22 @@ service BrainCloudService {
 		4: i32 clientIndex
 	),
 
+	/** Allows email identity email address to be changed */
+	string Identity_ChangeEmailIdentity(
+		/** Old email address */
+		1: string oldEmailAddress, 
+		
+		/** Password for identity */
+		2: string password, 
+		
+		/** New email address */
+		3: string newEmailAddress, 
+		
+		/** Whether to update contact email in profile */
+		4: bool updateContactEmail, 
+		5: i32 clientIndex
+	),
+
 	/** Attaches a peer identity to this user's profile */
 	string Identity_AttachPeerProfile(
 		/** Name of the peer to connect to */
@@ -3075,6 +3091,8 @@ service BrainCloudService {
 		2: i32 versionId, 
 		3: i32 clientIndex
 	),
+
+	string Patch_GetGameManifest(1: string gameId, 2: i32 clientIndex),
 
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 
