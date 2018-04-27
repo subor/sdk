@@ -71,6 +71,8 @@ namespace Ruyi
 			{
 				nlohmann::json dataJson = j["data"];
 
+				if (!dataJson.is_object()) return;
+
 				data.parseJson(dataJson);
 			}
 			if (!j["status"].is_null())

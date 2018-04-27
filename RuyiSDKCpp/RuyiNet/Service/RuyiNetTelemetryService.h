@@ -13,6 +13,7 @@ namespace Ruyi
 	class RuyiNetTelemetrySession
 	{
 	public:
+		RuyiNetTelemetrySession() {}
 		RuyiNetTelemetrySession(std::string& id, int timestamp) : Id(id), Timestamp(timestamp) {}
 		/// <summary>
 		/// The ID of the telemetry session.

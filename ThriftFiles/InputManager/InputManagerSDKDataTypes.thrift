@@ -49,13 +49,14 @@ struct InputDeviceStateChangedJoystick {
 }
 
 struct InputDeviceStateChangedKeyboard {
-    1: i32 RawOffset,
-    2: i32 Value,
-    3: i32 Timestamp,
-    4: i32 Sequence,
-    5: i8 Key,
-    6: bool IsPressed,
-    7: bool IsReleased,
+    1: string DeviceId,
+    2: i32 RawOffset,
+    3: i32 Value,
+    4: i32 Timestamp,
+    5: i32 Sequence,
+    6: i8 Key,
+    7: bool IsPressed,
+    8: bool IsReleased,
 }
 
 struct InputDeviceStateChangedMouse {
