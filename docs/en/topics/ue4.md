@@ -8,9 +8,9 @@ Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unreal
     - Windows 10 SDK (10.0.15063.0) (under __SDKs, libraries, and frameworks__)
 - Unreal Engine 18, Compiled version
 
-## Instructions
+## Download SDK from developer website Instructions
 
-1. Our SDK files will be in two folders: __include__ and __lib__.  Put them in one of your game module source folder.  For example, `source/ModuleName/include` and `source/ModuleName/lib`.  They may be put in a sub-folder, just make sure they're in the same folder.
+1. You can directly download our sdk from our developer website(http://dev.playruyi.com). Our SDK files will be in two folders: __include__ and __lib__.  Put them in one of your game module source folder.  For example, `source/ModuleName/include` and `source/ModuleName/lib`.  They may be put in a sub-folder, just make sure they're in the same folder.
 1. Open __ModuleName.Build.cs__ and add `ModuleName/xxx/include` to the `PublicIncludePaths` property.  For example:
 
         PublicIncludePaths.AddRange(
@@ -57,3 +57,35 @@ Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unreal
 - Since the sdk uses [boost](http://www.boost.org/), you may encounter `error LNK2038: mismatch detected for 'boost__type_index__abi': value 'RTTI is used'`.  You can solve this by adding `bUseRTTI = true;` to __xxxx.build.cs__.
 
 - Similarly: `Error C4577: 'noexcept' used with no exception handling mode specified`.  You can solve this by adding `bEnableExceptions = true;` to __xxx.build.cs__.
+
+## Download sdk_source repo Instruction
+
+you can also download sdk from our sdk_source git.
+
+1 download the sdk_source repo.
+
+2 Download the third-party library the link we provide. Unpack it, copy the whole "externals" folder to 
+ 
+  the same level of your "sdk_source" folder.
+  
+3 Open "SDK.sln", right click "RuyiSDKCpp" solution, open "Properties", chose "Configuration Properties/Build Events/Post-Build Event", clear the "Command Line"
+        
+ then add the cmd below:
+ 
+ mkdir $(OutDir)include
+copy $(ProjectDir)RuyiSDK.h $(OutDir)include\RuyiSDK.h /y
+xcopy $(ProjectDir)PubSub $(OutDir)include\PubSub /Y /I /E /R /F /D  /EXCLUDE:excludes.txt
+xcopy $(ProjectDir)Generated $(OutDir)include\Generated /Y /I /E /R  /F /D /EXCLUDE:excludes.txt
+xcopy $(ProjectDir)RuyiNet $(OutDir)include\RuyiNet /Y /I /E /R  /F /D /EXCLUDE:excludes.txt
+xcopy $(ProjectDir)..\..\externals\thrift.cpp\src\thrift\*.h $(OutDir)include\thrift /Y /I /E /R /F /D
+xcopy $(ProjectDir)..\..\externals\thrift.cpp\src\thrift\*.tcc $(OutDir)include\thrift /Y /I /E /R /F /D
+xcopy $(ProjectDir)..\..\externals\boost_1_64_0\boost $(OutDir)include\boost /Y /I /E /R /F /D /EXCLUDE:excludes.txt
+xcopy $(ProjectDir)..\..\externals\boost_1_64_0\lib\x64 $(OutDir)lib\boost /Y /I /E /R /F /D 
+xcopy $(ProjectDir)..\..\externals\ZeroMQ\lib $(OutDir)lib\zmq /Y /I /E /R /F /D
+
+
+4 Build the "RuyiSDKCpp" solution.
+
+5 Go to "RuyiSDKCpp\bin\Release", copy the "include" and "lib" folder to your main module.
+
+6 The rest is just the same as the insturction of downloading sdk from webside.
