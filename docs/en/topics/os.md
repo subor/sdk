@@ -25,7 +25,7 @@ __Checking Ruyi OS Version of Running Machine__
 
 If version __0.7__ or later, check registry value of `HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Subor\MachineInfo`
 
-Check the top of `c:\windows\ad.log`:
+For versions before __0.7__, check the top of `c:\windows\ad.log`:
 ```
 Initial all Process on 02-05-2018 20:03:26
 RUYI OS v0.5_20180205B

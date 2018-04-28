@@ -16,7 +16,7 @@
 
 1. Input device (gamepad/keyboard/mouse)?
 
-    It will include a gamepad eerily similar to Xbox.  Keyboard/mouse are also supported.
+    It will include a gamepad eerily similar to Xbox.  Keyboard/mouse are also supported.  [Details](topics/input.md)
 
 1. What about peripherals, display/audio ports, etc.?
 
@@ -73,11 +73,15 @@
 
 1. What about security?
 
-    Ruyi provides security measures comparable to other consoles.  Premium content is protected against un-authorized copying.  Cheating is prevented by blocking bots, disallowing content tampering, etc..  [Details](topics/security.md)
+    [Ruyi OS](topics/os.md) provides security measures comparable to other consoles.  Premium content is protected against un-authorized copying.  Cheating is prevented by blocking bots, disallowing content tampering, etc..  [Details](topics/security.md)
+
+1. Does [PC mode](topics/pc_mode.md) have DRM or anti-copy technology similar to Steam?  What about other security, anti-cheat, etc.?
+
+    PC mode is similar to a regular desktop PC environment; there is no DRM, anti-copy, anti-cheat, etc.  We are investigating providing some solution, but there is currently no roadmap.
 
 1. Will there be TRC/TCR?
 
-    Yes.  We are well aware how much developers hate them despite them being for the benefit of consumers.
+    Yes.  We are well aware how much developers hate them despite them being for the benefit of consumers.  [Details](topics/trc.md)
 
 1. What is the submission process and how long will it take?
 

@@ -20,13 +20,16 @@
 
 ## Software Compatibility
 
-__Graphics APIs__
+__Graphics__
 
 - Vulkan 1.0.1
 - DirectX 9/10/11/__12__
 - OpenGL 4.5
     - 4.6 support is partial
     - Use a tool like [GLview](http://realtech-vr.com/admin/glview) for list of supported extensions
+- HDR10 output is __not__ supported
+    - The hardware and driver support HDR10, but [Windows 10 RS1](os.md) does not.
+    - It is possible to add HDR10 support on a per-title basis via [AGS](amd_gpu_services.,d).
 
 __Operating System__
 
