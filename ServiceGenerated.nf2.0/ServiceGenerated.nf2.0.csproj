@@ -64,14 +64,12 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingCategory.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingItem.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingValue.cs" />
-    <Compile Include="GeneratedSync\Ruyi\SDK\Constants\BraincloudServerInfo.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Constants\ConstantsSDKDataTypes.Constants.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorCode.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorInfos.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorsSDKDataTypes.Constants.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\Gamepad.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\GamepadButtonFlags.cs" />
-    <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\GamepadFunctionKey.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\GlobalInputDefineSDKDataTypes.Constants.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\JoystickOffset.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\Key.cs" />
@@ -115,6 +113,7 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\StorageLayer\GetLocalPathResult.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\StorageLayer\StorageLayerService.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\InputActionEvent.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\TriggerKeys.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\UserEvent.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\UserGender.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\UserInfo_Public.cs" />

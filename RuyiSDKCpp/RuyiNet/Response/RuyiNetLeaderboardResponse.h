@@ -129,77 +129,81 @@ namespace Ruyi
 				if (!dataJson["response"].is_null())
 				{
 					nlohmann::json responseJson = dataJson["response"];
-					if (!responseJson["server_time"].is_null())
+
+					if (responseJson.is_object()) 
 					{
-						data.response.server_time = responseJson["server_time"];
-					}
-					if (!responseJson["versionId"].is_null())
-					{
-						data.response.versionId = responseJson["versionId"];
-					}
-					if (!responseJson["leaderboardId"].is_null())
-					{
-						data.response.leaderboardId = responseJson["leaderboardId"];
-					}
-					if (!responseJson["timeBeforeReset"].is_null())
-					{
-						data.response.timeBeforeReset = responseJson["timeBeforeReset"];
-					}
-					if (!responseJson["moreAfter"].is_null())
-					{
-						data.response.moreAfter = responseJson["moreAfter"];
-					}
-					if (!responseJson["moreBefore"].is_null())
-					{
-						data.response.moreBefore = responseJson["moreBefore"];
-					}
-					if (!responseJson["leaderboard"].is_null())
-					{
-						nlohmann::json leaderboardJson = responseJson["leaderboard"];
-						if (leaderboardJson.is_array())
+						if (!responseJson["server_time"].is_null())
 						{
-							for(auto leaderboardDataJson : leaderboardJson)
+							data.response.server_time = responseJson["server_time"];
+						}
+						if (!responseJson["versionId"].is_null())
+						{
+							data.response.versionId = responseJson["versionId"];
+						}
+						if (!responseJson["leaderboardId"].is_null())
+						{
+							data.response.leaderboardId = responseJson["leaderboardId"];
+						}
+						if (!responseJson["timeBeforeReset"].is_null())
+						{
+							data.response.timeBeforeReset = responseJson["timeBeforeReset"];
+						}
+						if (!responseJson["moreAfter"].is_null())
+						{
+							data.response.moreAfter = responseJson["moreAfter"];
+						}
+						if (!responseJson["moreBefore"].is_null())
+						{
+							data.response.moreBefore = responseJson["moreBefore"];
+						}
+						if (!responseJson["leaderboard"].is_null())
+						{
+							nlohmann::json leaderboardJson = responseJson["leaderboard"];
+							if (leaderboardJson.is_array())
 							{
-								Data::Response::LeaderboardData leaderboardData;
+								for (auto leaderboardDataJson : leaderboardJson)
+								{
+									Data::Response::LeaderboardData leaderboardData;
 
-								if (!leaderboardDataJson["playerId"].is_null())
-								{
-									leaderboardData.playerId = leaderboardDataJson["playerId"];
-								}
-								if (!leaderboardDataJson["score"].is_null())
-								{
-									leaderboardData.score = leaderboardDataJson["score"];
-								}
-								if (!leaderboardDataJson["createdAt"].is_null())
-								{
-									leaderboardData.createdAt = leaderboardDataJson["createdAt"];
-								}
-								if (!leaderboardDataJson["updatedAt"].is_null())
-								{
-									leaderboardData.updatedAt = leaderboardDataJson["updatedAt"];
-								}
-								if (!leaderboardDataJson["index"].is_null())
-								{
-									leaderboardData.index = leaderboardDataJson["index"];
-								}
-								if (!leaderboardDataJson["rank"].is_null())
-								{
-									leaderboardData.index = leaderboardDataJson["rank"];
-								}
-								if (!leaderboardDataJson["name"].is_null())
-								{
-									leaderboardData.index = leaderboardDataJson["name"];
-								}
-								if (!leaderboardDataJson["pictureUrl"].is_null())
-								{
-									leaderboardData.index = leaderboardDataJson["pictureUrl"];
-								}
-								if (!leaderboardDataJson["isFriend"].is_null())
-								{
-									leaderboardData.index = leaderboardDataJson["isFriend"];
-								}
+									if (!leaderboardDataJson["playerId"].is_null())
+									{
+										leaderboardData.playerId = leaderboardDataJson["playerId"];
+									}
+									if (!leaderboardDataJson["score"].is_null())
+									{
+										leaderboardData.score = leaderboardDataJson["score"];
+									}
+									if (!leaderboardDataJson["createdAt"].is_null())
+									{
+										leaderboardData.createdAt = leaderboardDataJson["createdAt"];
+									}
+									if (!leaderboardDataJson["updatedAt"].is_null())
+									{
+										leaderboardData.updatedAt = leaderboardDataJson["updatedAt"];
+									}
+									if (!leaderboardDataJson["index"].is_null())
+									{
+										leaderboardData.index = leaderboardDataJson["index"];
+									}
+									if (!leaderboardDataJson["rank"].is_null())
+									{
+										leaderboardData.index = leaderboardDataJson["rank"];
+									}
+									if (!leaderboardDataJson["name"].is_null())
+									{
+										leaderboardData.index = leaderboardDataJson["name"];
+									}
+									if (!leaderboardDataJson["pictureUrl"].is_null())
+									{
+										leaderboardData.index = leaderboardDataJson["pictureUrl"];
+									}
+									if (!leaderboardDataJson["isFriend"].is_null())
+									{
+										leaderboardData.index = leaderboardDataJson["isFriend"];
+									}
 
-								data.response.leaderboard.push_back(leaderboardData);
+									data.response.leaderboard.push_back(leaderboardData);
+								}
 							}
 						}
 					}

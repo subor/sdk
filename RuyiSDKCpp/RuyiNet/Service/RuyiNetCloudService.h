@@ -3,6 +3,7 @@
 #include "RuyiNetService.h"
 #include "../Response/RuyiNetListUserFilesResponse.h"
 #include "../Response/RuyiNetUploadFileResponse.h"
+#include "../Response/RuyiNetResponse.h"
 
 namespace Ruyi
 {
@@ -20,18 +21,18 @@ namespace Ruyi
 		/// <param name="index">The index of user</param>
 		/// <param name="persistentDataPath">backup data of the path from storageLayerService </param>
 		/// <param name="success">wheter the operation is a success or not</param>
-		void BackupData(int index, const RuyiString& persistentDataPath, bool& success);
+		void BackupData(int index, const RuyiString& persistentDataPath, RuyiNetResponse& response);
 		/// <summary>
 		/// Manually restore the save data up to this point.
 		/// </summary>
 		/// <param name="index">The index of user</param>
 		/// <param name="persistentDataPath">restore data of the path from storageLayerService</param>
 		/// <param name="response">The response after restoring data</param>
-		void RestoreData(int index, const RuyiString& persistentDataPath, RuyiNetListUserFilesResponse& response);
+		void RestoreData(int index, const RuyiString& persistentDataPath, RuyiNetResponse& response);
 
 	private:
-		void BackupData(int index, const RuyiString& persistentDataPath, bool cleanMode, bool& success);
-		void BackupPath(int index, const RuyiString& cloudPath, const RuyiString& localPath, bool& success);
+		void BackupData(int index, const RuyiString& persistentDataPath, bool cleanMode, RuyiNetResponse& response);
+		void BackupPath(int index, const RuyiString& cloudPath, const RuyiString& localPath, RuyiNetResponse& response);
 		void ForeachFile(const wchar_t * fullPath, std::function<void(const WIN32_FIND_DATA & fileData)> action);
 
 		const RuyiString CLOUD_LOCATION = RUYI_STR("cloud");

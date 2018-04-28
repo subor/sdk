@@ -1034,6 +1034,10 @@ InputDeviceStateChangedKeyboard::~InputDeviceStateChangedKeyboard() throw() {
 }
 
 
+void InputDeviceStateChangedKeyboard::__set_DeviceId(const std::string& val) {
+  this->DeviceId = val;
+}
+
 void InputDeviceStateChangedKeyboard::__set_RawOffset(const int32_t val) {
   this->RawOffset = val;
 }
@@ -1084,6 +1088,14 @@ uint32_t InputDeviceStateChangedKeyboard::read(::apache::thrift::protocol::TProt
     switch (fid)
     {
       case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceId);
+          this->__isset.DeviceId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->RawOffset);
           this->__isset.RawOffset = true;
@@ -1091,7 +1103,7 @@ uint32_t InputDeviceStateChangedKeyboard::read(::apache::thrift::protocol::TProt
           xfer += iprot->skip(ftype);
         }
         break;
-      case 2:
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->Value);
           this->__isset.Value = true;
@@ -1099,7 +1111,7 @@ uint32_t InputDeviceStateChangedKeyboard::read(::apache::thrift::protocol::TProt
           xfer += iprot->skip(ftype);
         }
         break;
-      case 3:
+      case 4:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->Timestamp);
           this->__isset.Timestamp = true;
@@ -1107,7 +1119,7 @@ uint32_t InputDeviceStateChangedKeyboard::read(::apache::thrift::protocol::TProt
           xfer += iprot->skip(ftype);
         }
         break;
-      case 4:
+      case 5:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->Sequence);
           this->__isset.Sequence = true;
@@ -1115,7 +1127,7 @@ uint32_t InputDeviceStateChangedKeyboard::read(::apache::thrift::protocol::TProt
           xfer += iprot->skip(ftype);
         }
         break;
-      case 5:
+      case 6:
         if (ftype == ::apache::thrift::protocol::T_BYTE) {
           xfer += iprot->readByte(this->Key);
           this->__isset.Key = true;
@@ -1123,7 +1135,7 @@ uint32_t InputDeviceStateChangedKeyboard::read(::apache::thrift::protocol::TProt
           xfer += iprot->skip(ftype);
         }
         break;
-      case 6:
+      case 7:
         if (ftype == ::apache::thrift::protocol::T_BOOL) {
           xfer += iprot->readBool(this->IsPressed);
           this->__isset.IsPressed = true;
@@ -1131,7 +1143,7 @@ uint32_t InputDeviceStateChangedKeyboard::read(::apache::thrift::protocol::TProt
           xfer += iprot->skip(ftype);
         }
         break;
-      case 7:
+      case 8:
         if (ftype == ::apache::thrift::protocol::T_BOOL) {
           xfer += iprot->readBool(this->IsReleased);
           this->__isset.IsReleased = true;
@@ -1156,31 +1168,35 @@ uint32_t InputDeviceStateChangedKeyboard::write(::apache::thrift::protocol::TPro
   apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("InputDeviceStateChangedKeyboard");
 
-  xfer += oprot->writeFieldBegin("RawOffset", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeFieldBegin("DeviceId", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->DeviceId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("RawOffset", ::apache::thrift::protocol::T_I32, 2);
   xfer += oprot->writeI32(this->RawOffset);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Value", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("Value", ::apache::thrift::protocol::T_I32, 3);
   xfer += oprot->writeI32(this->Value);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Timestamp", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeFieldBegin("Timestamp", ::apache::thrift::protocol::T_I32, 4);
   xfer += oprot->writeI32(this->Timestamp);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Sequence", ::apache::thrift::protocol::T_I32, 4);
+  xfer += oprot->writeFieldBegin("Sequence", ::apache::thrift::protocol::T_I32, 5);
   xfer += oprot->writeI32(this->Sequence);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Key", ::apache::thrift::protocol::T_BYTE, 5);
+  xfer += oprot->writeFieldBegin("Key", ::apache::thrift::protocol::T_BYTE, 6);
   xfer += oprot->writeByte(this->Key);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("IsPressed", ::apache::thrift::protocol::T_BOOL, 6);
+  xfer += oprot->writeFieldBegin("IsPressed", ::apache::thrift::protocol::T_BOOL, 7);
   xfer += oprot->writeBool(this->IsPressed);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("IsReleased", ::apache::thrift::protocol::T_BOOL, 7);
+  xfer += oprot->writeFieldBegin("IsReleased", ::apache::thrift::protocol::T_BOOL, 8);
   xfer += oprot->writeBool(this->IsReleased);
   xfer += oprot->writeFieldEnd();
 
@@ -1191,6 +1207,7 @@ uint32_t InputDeviceStateChangedKeyboard::write(::apache::thrift::protocol::TPro
 
 void swap(InputDeviceStateChangedKeyboard &a, InputDeviceStateChangedKeyboard &b) {
   using ::std::swap;
+  swap(a.DeviceId, b.DeviceId);
   swap(a.RawOffset, b.RawOffset);
   swap(a.Value, b.Value);
   swap(a.Timestamp, b.Timestamp);
@@ -1202,6 +1219,7 @@ void swap(InputDeviceStateChangedKeyboard &a, InputDeviceStateChangedKeyboard &b
 }
 
 InputDeviceStateChangedKeyboard::InputDeviceStateChangedKeyboard(const InputDeviceStateChangedKeyboard& other24) {
+  DeviceId = other24.DeviceId;
   RawOffset = other24.RawOffset;
   Value = other24.Value;
   Timestamp = other24.Timestamp;
@@ -1212,6 +1230,7 @@ InputDeviceStateChangedKeyboard::InputDeviceStateChangedKeyboard(const InputDevi
   __isset = other24.__isset;
 }
 InputDeviceStateChangedKeyboard& InputDeviceStateChangedKeyboard::operator=(const InputDeviceStateChangedKeyboard& other25) {
+  DeviceId = other25.DeviceId;
   RawOffset = other25.RawOffset;
   Value = other25.Value;
   Timestamp = other25.Timestamp;
@@ -1225,7 +1244,8 @@ InputDeviceStateChangedKeyboard& InputDeviceStateChangedKeyboard::operator=(cons
 void InputDeviceStateChangedKeyboard::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
   out << "InputDeviceStateChangedKeyboard(";
-  out << "RawOffset=" << to_string(RawOffset);
+  out << "DeviceId=" << to_string(DeviceId);
+  out << ", " << "RawOffset=" << to_string(RawOffset);
   out << ", " << "Value=" << to_string(Value);
   out << ", " << "Timestamp=" << to_string(Timestamp);
   out << ", " << "Sequence=" << to_string(Sequence);
