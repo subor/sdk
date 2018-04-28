@@ -4,13 +4,12 @@ Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unreal
 
 ## Prerequisites
 
-- [Visual Studio 2017](https://www.visualstudio.com/vs/community/) version 15.3 or later with the following individual components:
-    - Windows 10 SDK (10.0.15063.0) (under __SDKs, libraries, and frameworks__)
+- See [prerequisites for C++ SDK](cplusplus.md#Prerequsites)
 - Unreal Engine 18, Compiled version
 
-## Instructions
+## Download SDK from developer website Instructions
 
-1. Our SDK files will be in two folders: __include__ and __lib__.  Put them in one of your game module source folder.  For example, `source/ModuleName/include` and `source/ModuleName/lib`.  They may be put in a sub-folder, just make sure they're in the same folder.
+1. You can directly download our sdk from our developer website(http://dev.playruyi.com). Our SDK files will be in two folders: __include__ and __lib__.  Put them in one of your game module source folder.  For example, `source/ModuleName/include` and `source/ModuleName/lib`.  They may be put in a sub-folder, just make sure they're in the same folder.
 1. Open __ModuleName.Build.cs__ and add `ModuleName/xxx/include` to the `PublicIncludePaths` property.  For example:
 
         PublicIncludePaths.AddRange(
@@ -51,6 +50,33 @@ Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unreal
 1. Open your project with Unreal Engine 4 Editor.  Click __File -> Refresh Visual Studio Project__ (or right-click __xxxxx.uproject__ file and click __Generate visual studio project file__).  Wait for it to finish, then reload your Visual Studio project and you will find __include__ and __lib__ folders in _Solution Explorer_ (click __View -> Solution Explorer__).
 1. When using SDK functions, include `RuyiSDK.h` and use apprpropriate namespaces (like `Ruyi::RuyiSDK`).  Refer to the [UE4 sample](https://bitbucket.org/playruyi/unreal_demo) and [SDK documentation](http://dev.playruyi.com/api) for API details.
 1. Build your project.
+
+## Download sdk_source repo Instructions
+
+You can also download the SDK from our [sdk_source](https://bitbucket.org/playruyi/sdk_source) repository.
+
+1. Download the sdk_source repo.
+
+1. Download the third-party libraries using the provided link.  Unpack it, copy the __externals__ folder to the same level of your __sdk_source__ folder.
+  
+1. Open "SDK.sln", right click "RuyiSDKCpp" solution, open "Properties", choose "Configuration Properties/Build Events/Post-Build Event", replace "Command Line" with the following:  
+
+        mkdir $(OutDir)include
+        copy $(ProjectDir)RuyiSDK.h $(OutDir)include\RuyiSDK.h /y
+        xcopy $(ProjectDir)PubSub $(OutDir)include\PubSub /Y /I /E /R /F /D  /EXCLUDE:excludes.txt
+        xcopy $(ProjectDir)Generated $(OutDir)include\Generated /Y /I /E /R  /F /D /EXCLUDE:excludes.txt
+        xcopy $(ProjectDir)RuyiNet $(OutDir)include\RuyiNet /Y /I /E /R  /F /D /EXCLUDE:excludes.txt
+        xcopy $(ProjectDir)..\..\externals\thrift.cpp\src\thrift\*.h $(OutDir)include\thrift /Y /I /E /R /F /D
+        xcopy $(ProjectDir)..\..\externals\thrift.cpp\src\thrift\*.tcc $(OutDir)include\thrift /Y /I /E /R /F /D
+        xcopy $(ProjectDir)..\..\externals\boost_1_64_0\boost $(OutDir)include\boost /Y /I /E /R /F /D /EXCLUDE:excludes.txt
+        xcopy $(ProjectDir)..\..\externals\boost_1_64_0\lib\x64 $(OutDir)lib\boost /Y /I /E /R /F /D 
+        xcopy $(ProjectDir)..\..\externals\ZeroMQ\lib $(OutDir)lib\zmq /Y /I /E /R /F /D
+
+1. Build the "RuyiSDKCpp" solution.
+
+1. Go to "RuyiSDKCpp\bin\Release", copy the __include__ and __lib__ folder to your main module.
+
+1. The rest is just the same as the insturction of downloading sdk from website.
 
 ## Common Issues
 
