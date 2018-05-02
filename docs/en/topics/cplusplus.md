@@ -9,18 +9,18 @@ This documentation is about how to intergrate Ruyi C++ SDK to a common VS C++ pr
 
 ## Download SDK from developer website Instructions
 
-1. You can directly download our sdk from our developer website(http://dev.playruyi.com). Our SDK files will be in two folders: __include__ and __lib__.  
+1. Download C++ SDK from our developer website (http://dev.playruyi.com/udownloadslist/SDK). It contains two folders: __include__ and __lib__.  
 Put them in one of your source folder.  For example, create a "RuyiSDK" folder, then put them under it.
 
 1. Right click your solution, click "Properties"
 
 1. In Configuration Selection, choose "Release" "x64"
 
-1. Choose "Configuration Properties / C/C++ / General" in Property Page, add `$(ProjectDir)..\RuyiSDK\include` in "Additional Include Directories"
+1. Choose "Configuration Properties / C/C++ / General" in Property Page, in "Additional Include Directories" add `$(ProjectDir)..\RuyiSDK\include` 
 
-1. Choose "Configuration Properties / Linker / General" in Property Page, add `$(ProjectDir)..\RuyiSDK\lib`, `$(ProjectDir)..\RuyiSDK\lib\boost`, and `$(ProjectDir)..\RuyiSDK\lib\zmq` to "Additional Library Directiories"
+1. Choose "Configuration Properties / Linker / General" in Property Page, in "Additional Library Directiories" add `$(ProjectDir)..\RuyiSDK\lib`, `$(ProjectDir)..\RuyiSDK\lib\boost`, and `$(ProjectDir)..\RuyiSDK\lib\zmq`
 
-1. Choose "Configuration Properties / Linker / Input" in Property page, add `RuyiSDK.lib` and `libzmq.lib` to "Additional Dependencies"
+1. Choose "Configuration Properties / Linker / Input" in Property page, to "Additional Dependencies" add `RuyiSDK.lib` and `libzmq.lib`
 
 1. And `#include "RuyiSDK.h"` to your code and initialize the SDK:
     ```
