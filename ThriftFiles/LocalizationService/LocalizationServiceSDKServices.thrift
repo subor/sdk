@@ -3,6 +3,7 @@ include "LocalizationServiceSDKDataTypes.thrift"
 namespace csharp Ruyi.SDK.LocalizationService
 namespace cpp Ruyi.SDK.LocalizationService
 
+
 service LocalizationService {
 	/** Switch language to specified one. */
 	bool SwitchLanguage(

@@ -3,6 +3,7 @@ include "BrainCloudServiceSDKDataTypes.thrift"
 namespace csharp Ruyi.SDK.BrainCloudApi
 namespace cpp Ruyi.SDK.BrainCloudApi
 
+
 service BrainCloudService {
 	/** Creates an instance of an asynchronous match. */
 	string AsyncMatch_CreateMatch(
