@@ -45,6 +45,8 @@ namespace Ruyi
 			{
 				nlohmann::json dataJson = j["data"];
 
+				if (!dataJson.is_object()) return;
+
 				if (!dataJson["appServerUrl"].is_null())
 				{
 					data.appServerUrl = dataJson["appServerUrl"];

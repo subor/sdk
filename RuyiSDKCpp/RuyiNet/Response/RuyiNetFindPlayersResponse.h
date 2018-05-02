@@ -68,9 +68,14 @@ namespace Ruyi
 			{
 				nlohmann::json dataJson = j["data"];
 
+				if (!dataJson.is_object()) return;
+
 				if (!dataJson["matchesFound"].is_null())
 				{
 					nlohmann::json matchesFoundJson = dataJson["matchesFound"];
+					
+					if (!matchesFoundJson.is_object()) return;
+					
 					if (matchesFoundJson.is_array()) 
 					{
 						for (auto matches : matchesFoundJson) 
