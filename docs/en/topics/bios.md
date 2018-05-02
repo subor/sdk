@@ -27,9 +27,10 @@ Check the top of the `DA220REL.txt` file:
 *   BIOS Version:  DA220013.rom (V0.13)
 ```
 
-__Important__
+__Important__:
 
-The BIOS version __must__ match the [Ruyi OS](os.md) version because the BIOS must be paired with a compatible AMD driver.
+- The BIOS version __must__ match the [Ruyi OS](os.md) version because the BIOS must be paired with a compatible AMD driver.
+- If updating from BIOS 0.09 (or earlier) to BIOS 0.19 (or later), you must first update to BIOS 0.13 and OS 0.6 then update to the mroe recent BIOS/OS.
 
 | BIOS Version/Date | Ruyi OS Version | AMD Driver Stack Version/Date
 |-|-|-
