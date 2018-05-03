@@ -31,3 +31,4 @@ const string broker_playback_message = "mmi.developer.playback"
 
 const string broker_power_message = "mmi.power.operation"
 
+

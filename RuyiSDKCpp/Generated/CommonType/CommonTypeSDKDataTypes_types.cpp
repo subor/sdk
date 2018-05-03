@@ -13,6 +13,16 @@
 
 namespace Ruyi { namespace SDK { namespace CommonType {
 
+int _kLoginStateValues[] = {
+  LoginState::Logout,
+  LoginState::Login
+};
+const char* _kLoginStateNames[] = {
+  "Logout",
+  "Login"
+};
+const std::map<int, const char*> _LoginState_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(2, _kLoginStateValues, _kLoginStateNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
 int _kInputCagetoryValues[] = {
   InputCagetory::RuyiGamePad,
   InputCagetory::KeyboardMouse,
