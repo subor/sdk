@@ -54,8 +54,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp7.ErrorCode = ExternalErrorCode.Err_7;
       EXTERNALERRORLIST.Add(tmp7);
       ExternalErrorInfos tmp8 = new ExternalErrorInfos();
-      tmp8.Description = "specified user {0} is not playing app {1}";
       tmp8.ErrorCode = ExternalErrorCode.Err_8;
+      tmp8.Description = "specified user {0} is not playing app {1}";
       EXTERNALERRORLIST.Add(tmp8);
       ExternalErrorInfos tmp9 = new ExternalErrorInfos();
       tmp9.ErrorCode = ExternalErrorCode.Err_9;
@@ -94,8 +94,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp17.Description = "";
       EXTERNALERRORLIST.Add(tmp17);
       ExternalErrorInfos tmp18 = new ExternalErrorInfos();
-      tmp18.Description = "trigger action failed when changing setting {0}!";
       tmp18.ErrorCode = ExternalErrorCode.Err_18;
+      tmp18.Description = "trigger action failed when changing setting {0}!";
       EXTERNALERRORLIST.Add(tmp18);
     }
   }

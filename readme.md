@@ -1,5 +1,9 @@
 #This is the open source project for RuyiSDK.
 
+__WARNING__
+
+This document will soon be retired.  Check [its replacement](https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/build_sdk_source.md).
+
 ##Dependencies:  
 * Visual studio 2017, later than 15.3   
 * Windows 10 SDK (10.0.15063.0)
@@ -14,8 +18,6 @@
 ** [openssl](https://www.openssl.org/), used by thrift, version 1.1.1-dev  
 * [jsoncpp](https://github.com/open-source-parsers/jsoncpp), used by cpp unit test, version 1.8.3    
 * [zeromq](http://zeromq.org/), version 4.2
-
-If you don't want to build the libs above, you can use [the one we provide](https://bitbucket.org/playruyi/sdk_source/downloads/externals.zip)
 
 ##Build Guide
 1. Clone the repo, or download it, put them under the folder named ___sdk___
