@@ -43,3 +43,4 @@ struct SettingItemNotification {
 	2: JSON contents = "{}",
 }
 
+

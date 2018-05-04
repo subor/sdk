@@ -1,6 +1,13 @@
 namespace csharp Ruyi.SDK.CommonType
 namespace cpp Ruyi.SDK.CommonType
 
+enum LoginState {
+    /** Logout state */
+	Logout = 0,
+    /** Login state */
+	Login = 1,
+}
+
 enum InputCagetory {
     RuyiGamePad = 0,
     KeyboardMouse = 1,
@@ -143,4 +150,5 @@ struct AppData {
     /** The user data of the App. See AppDataCollection */
 	2: list<AppDataCollection> data,
 }
+
 

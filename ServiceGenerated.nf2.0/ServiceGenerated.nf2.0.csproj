@@ -68,6 +68,17 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorCode.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorInfos.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorsSDKDataTypes.Constants.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\AddPathMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\MediaFile.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\MediaFileEvent.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\MediaFileEventTypes.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\MediaTask.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\PlaybackProgressMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\QueryMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\QueryResultMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\RemovePathMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\RequestMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\Speech\File.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\Gamepad.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\GamepadButtonFlags.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\GlobalInputDefine\GlobalInputDefineSDKDataTypes.Constants.cs" />
@@ -100,6 +111,10 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\RuyiInputStateChanged.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\LocalizationService\LanguageChangedMsg.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\LocalizationService\LocalizationService.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\MediaService.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\PauseMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\PlayMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\StopMsg.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\PublisherSubscriber\PubSubSDKDataTypes.Constants.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\PublisherSubscriber\ServiceLaunchEvent.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\PublisherSubscriber\ServiceLaunchEventType.cs" />
@@ -110,6 +125,8 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\SettingSearchResult.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\SettingSystemService.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\SettingTree.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\Speech\SpeechResult.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\Speech\SpeechService.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\StorageLayer\GetLocalPathResult.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\StorageLayer\StorageLayerService.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\InputActionEvent.cs" />
@@ -118,6 +135,7 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\UserGender.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\UserInfo_Public.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\UserServiceExternal\UserServExternal.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\Speech\VoiceCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

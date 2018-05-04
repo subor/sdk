@@ -36,7 +36,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\externals\thrift0.10.0\Thrift.ns2.0.csproj" />
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj">
-      <Private></Private>
     </ProjectReference>
     <ProjectReference Include="..\SDK.Base\SDK.Base.csproj" />
     <ProjectReference Include="..\ServiceGenerated\ServiceGenerated.csproj" />
