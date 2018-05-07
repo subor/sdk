@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Ruyi.SDK.Cloud
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// True Skill calculator specialised for two players.

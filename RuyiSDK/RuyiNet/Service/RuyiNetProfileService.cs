@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Ruyi.SDK.Cloud
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// Methods to help a player manage their profile.

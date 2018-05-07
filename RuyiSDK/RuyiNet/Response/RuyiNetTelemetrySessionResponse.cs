@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ruyi.SDK.Cloud
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// Response recieved after making a telemetry session request.

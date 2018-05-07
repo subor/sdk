@@ -1,4 +1,4 @@
-﻿namespace Ruyi.SDK.Cloud
+﻿namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// A class used to specify the valid value range for team IDs.

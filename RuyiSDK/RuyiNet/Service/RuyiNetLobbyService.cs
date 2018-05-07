@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
 
-namespace Ruyi.SDK.Cloud
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// Manages lobbies for network games.

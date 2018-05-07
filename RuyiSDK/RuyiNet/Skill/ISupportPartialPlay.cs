@@ -1,4 +1,4 @@
-﻿namespace Ruyi.SDK.Cloud
+﻿namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// The interface for players that support partial play.

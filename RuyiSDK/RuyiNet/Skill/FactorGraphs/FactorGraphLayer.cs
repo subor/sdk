@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Ruyi.SDK.Cloud
+namespace Ruyi.SDK.Online
 {
     public abstract class FactorGraphLayerBase<TValue>
     {

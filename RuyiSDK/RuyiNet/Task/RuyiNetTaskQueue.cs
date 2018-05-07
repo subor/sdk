@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 
-namespace Ruyi.SDK.Cloud
+namespace Ruyi.SDK.Online
 {
     internal class RuyiNetTaskQueue
     {

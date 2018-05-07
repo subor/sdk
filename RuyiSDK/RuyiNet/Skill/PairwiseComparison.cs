@@ -1,4 +1,4 @@
-﻿namespace Ruyi.SDK.Cloud
+﻿namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// The type of comparison to make when calculating a new rating.

@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Security;
 
-namespace Ruyi.SDK.Cloud
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// Handles backing up data to the cloud.

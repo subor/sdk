@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ruyi.SDK.Cloud
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// Allows users to upload files to their individual accounts

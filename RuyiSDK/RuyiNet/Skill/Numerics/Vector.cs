@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Ruyi.SDK.Cloud
+namespace Ruyi.SDK.Online
 {
     internal class Vector : Matrix
     {

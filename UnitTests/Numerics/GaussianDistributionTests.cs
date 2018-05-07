@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ruyi.SDK.Cloud.Tests.Numerics
+namespace Ruyi.SDK.Online.Tests.Numerics
 {
     [TestFixture]
     class GaussianDistributionTests

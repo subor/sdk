@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Ruyi.SDK.Cloud
+namespace Ruyi.SDK.Online
 {
     public class FactorList<TValue>
     {

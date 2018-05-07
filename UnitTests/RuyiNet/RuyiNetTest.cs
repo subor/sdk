@@ -3,7 +3,7 @@ using Ruyi.SDK.BrainCloudApi;
 using System;
 using System.Collections.Generic;
 
-namespace Ruyi.SDK.Cloud.Tests
+namespace Ruyi.SDK.Online.Tests
 {
     [TestFixture, Timeout(120000)]
     class RuyiNetTest

@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using Thrift.Protocol;
 
-namespace Ruyi.SDK.Cloud
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// The main client for accessing Ruyi Net Services

@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Ruyi.SDK.Cloud.Tests.Elo
+namespace Ruyi.SDK.Online.Tests.Elo
 {
     [TestFixture]
     public class FideEloCalculatorTest

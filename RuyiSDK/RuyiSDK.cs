@@ -1,6 +1,6 @@
 ﻿using Layer0;
 using NetMQ;
-using Ruyi.SDK.Cloud;
+using Ruyi.SDK.Online;
 using Ruyi.SDK.Constants;
 using Ruyi.SDK.LocalizationService;
 using Ruyi.SDK.MediaService;

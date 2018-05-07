@@ -1,4 +1,4 @@
-﻿namespace Ruyi.SDK.Cloud
+﻿namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// Information on the current game.
