@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Ruyi
+namespace Ruyi.SDK.Cloud
 {
     /// <summary>
     /// Handles pushing telemetry data to the cloud.

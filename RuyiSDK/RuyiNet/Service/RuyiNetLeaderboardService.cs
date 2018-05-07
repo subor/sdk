@@ -2,7 +2,7 @@
 using Ruyi.SDK.BrainCloudApi;
 using System;
 
-namespace Ruyi
+namespace Ruyi.SDK.Cloud
 {
     /// <summary>
     /// Provides operations to retrieve leaderboard data and submit scores.

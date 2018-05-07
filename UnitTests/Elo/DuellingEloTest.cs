@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using Ruyi;
 
-namespace UnitTests.Elo
+namespace Ruyi.SDK.Cloud.Tests.Elo
 {
     [TestFixture]
     public class DuellingEloTest

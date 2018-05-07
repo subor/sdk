@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ruyi
+namespace Ruyi.SDK.Cloud
 {
     /// <summary>
     /// Calculates ELO ratings using a Gaussian distribution.

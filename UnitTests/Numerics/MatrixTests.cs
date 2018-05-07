@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
-using Ruyi;
-using System;
 
-namespace UnitTests.Numerics
+namespace Ruyi.SDK.Cloud.Tests.Numerics
 {
     [TestFixture]
     public class MatrixTests

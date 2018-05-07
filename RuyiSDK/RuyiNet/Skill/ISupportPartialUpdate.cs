@@ -1,4 +1,4 @@
-﻿namespace Ruyi
+﻿namespace Ruyi.SDK.Cloud
 {
     /// <summary>
     /// An interface for players that support partial updates.

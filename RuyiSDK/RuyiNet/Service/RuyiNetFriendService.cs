@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Ruyi
+namespace Ruyi.SDK.Cloud
 {
     /// <summary>
     /// A service for handling players' friend lists.

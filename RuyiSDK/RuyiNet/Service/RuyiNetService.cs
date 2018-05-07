@@ -1,4 +1,4 @@
-﻿namespace Ruyi
+﻿namespace Ruyi.SDK.Cloud
 {
     /// <summary>
     /// Base class for all Net Services.

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Ruyi
+namespace Ruyi.SDK.Cloud
 {
     public class DiagonalMatrix : Matrix
     {

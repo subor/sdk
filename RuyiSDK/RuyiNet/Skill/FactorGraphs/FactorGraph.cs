@@ -1,4 +1,4 @@
-﻿namespace Ruyi
+﻿namespace Ruyi.SDK.Cloud
 {
     public class FactorGraph<TSelf, TValue, TVariable>
         where TSelf : FactorGraph<TSelf, TValue, TVariable>

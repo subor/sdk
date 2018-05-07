@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Ruyi
+namespace Ruyi.SDK.Cloud
 {
     public abstract class Schedule<T>
     {

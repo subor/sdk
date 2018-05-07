@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Ruyi
+namespace Ruyi.SDK.Cloud
 {
     public class GaussianWeightedSumFactor : GaussianFactor
     {

@@ -1,4 +1,4 @@
-﻿namespace Ruyi
+﻿namespace Ruyi.SDK.Cloud
 {
     internal class TeamDifferencesComparisonLayer<TPlayer>
         : TrueSkillFactorGraphLayer<TPlayer, Variable<GaussianDistribution>, 

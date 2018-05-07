@@ -1,4 +1,4 @@
-﻿namespace Ruyi
+﻿namespace Ruyi.SDK.Cloud
 {
     /// <summary>
     /// Represents the k-factor used when calculating ELO ratings.

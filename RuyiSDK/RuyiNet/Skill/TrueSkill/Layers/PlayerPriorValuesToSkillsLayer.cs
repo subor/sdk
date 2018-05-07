@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Ruyi
+namespace Ruyi.SDK.Cloud
 {
     internal class PlayerPriorValuesToSkillsLayer<TPlayer>
         : TrueSkillFactorGraphLayer<TPlayer, DefaultVariable<GaussianDistribution>, GaussianPriorFactor, KeyedVariable<TPlayer, GaussianDistribution>>
