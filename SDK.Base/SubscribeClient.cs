@@ -214,8 +214,12 @@ namespace Layer0
                         Log($"subscribe client terminated: { e.Message }", level);
                     }
                 }
-                socket.Dispose();
-                socket = null;
+                try
+                {
+                    socket.Dispose();
+                    socket = null;
+                }
+                catch { }
             }
 
             // closing socket will throw an exception in Receive() which will be caught to end the thread.
