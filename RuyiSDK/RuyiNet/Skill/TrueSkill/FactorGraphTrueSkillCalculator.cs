@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Ruyi
+namespace Ruyi.SDK.Online
 {
     public class FactorGraphTrueSkillCalculator : SkillCalculator
     {
