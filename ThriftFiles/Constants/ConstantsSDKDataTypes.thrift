@@ -11,11 +11,11 @@ const string layer0_publisher_in_uri = "tcp://{addr}:5567"
 
 const string layer0_publisher_out_uri = "tcp://{addr}:5568"
 
-const string setting_config_folder = "/ruyilocalroot/resources/configs/"
+const string setting_config_folder = "/resources/configs/"
 
-const string setting_system_config = "/ruyilocalroot/resources/configs/systemsetting"
+const string setting_system_config = "/resources/configs/systemsetting"
 
-const string setting_system_user_config = "/ruyilocalroot/resources/configs/usersetting"
+const string setting_system_user_config = "/resources/configs/usersetting"
 
 const string system_setting_version = "1.0.0.1"
 
