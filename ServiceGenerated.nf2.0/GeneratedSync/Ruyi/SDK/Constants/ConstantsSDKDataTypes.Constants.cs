@@ -22,9 +22,9 @@ namespace Ruyi.SDK.Constants
     public const string layer0_broker_address = "inproc://{addr}:5555";
     public const string layer0_publisher_in_uri = "tcp://{addr}:5567";
     public const string layer0_publisher_out_uri = "tcp://{addr}:5568";
-    public const string setting_config_folder = "/resources/configs/";
-    public const string setting_system_config = "/resources/configs/systemsetting";
-    public const string setting_system_user_config = "/resources/configs/usersetting";
+    public const string setting_config_folder = "resources/configs/";
+    public const string setting_system_config = "resources/configs/systemsetting";
+    public const string setting_system_user_config = "resources/configs/usersetting";
     public const string system_setting_version = "1.0.0.1";
     public const string layer0_debugger_channel = "layer0_debugger_channel";
     public const string trc_test_channel = "trc_test_channel";

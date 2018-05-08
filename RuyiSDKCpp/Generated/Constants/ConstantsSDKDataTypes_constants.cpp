@@ -21,11 +21,11 @@ ConstantsSDKDataTypesConstants::ConstantsSDKDataTypesConstants() {
 
   layer0_publisher_out_uri = "tcp://{addr}:5568";
 
-  setting_config_folder = "/resources/configs/";
+  setting_config_folder = "resources/configs/";
 
-  setting_system_config = "/resources/configs/systemsetting";
+  setting_system_config = "resources/configs/systemsetting";
 
-  setting_system_user_config = "/resources/configs/usersetting";
+  setting_system_user_config = "resources/configs/usersetting";
 
   system_setting_version = "1.0.0.1";
 
