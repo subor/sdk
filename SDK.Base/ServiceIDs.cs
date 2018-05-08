@@ -46,6 +46,7 @@ namespace Layer0
         INPUTMANAGER_EXTERNAL,
         L10NSERVICE,
         OVERLAYMANAGER_INTERNAL,
+        UPDATESERVICE,
 
         HIGH_POWER_END,
         #endregion
