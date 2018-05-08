@@ -142,7 +142,8 @@ namespace RuyiLogger
 
     public class LogCommandLineMessage : LoggerMessageEx
     {
-        public string CommandLine { get; set; }
+        public string Command { get; set; }
+        public string Arguments { get; set; }
     }
 
     /// <summary>
