@@ -112,7 +112,7 @@ namespace Ruyi
 
         //public InputMgrExternal.Client InputMgr { get; private set; }
 
-        public Ruyi.SDK.Speech.SpeechService.Client SpeechService { get; private set;}
+        public Ruyi.SDK.Speech.SpeechService.Client SpeechService { get; private set; }
 
         /// <summary>
         /// Media player services
@@ -180,7 +180,7 @@ namespace Ruyi
                 lowLatencyTransport = new TSocketTransportTS(context.RemoteAddress, lowLatencyPort, timeout);
 
                 var highLatencyPort = context.HighLatencyPort == 0 ? ConstantsSDKDataTypesConstants.high_latency_socket_port : context.HighLatencyPort;
-                highLatencyTransport = new TSocketTransportTS(context.RemoteAddress, highLatencyPort, timeout);
+                highLatencyTransport = new TSocketTransportTS(context.RemoteAddress, highLatencyPort, timeout * 2);
             }
             else
             {
