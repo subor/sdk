@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RuyiDevTools
+namespace Ruyi.DevTool
 {
     public class SocketLogReceiver
     {
