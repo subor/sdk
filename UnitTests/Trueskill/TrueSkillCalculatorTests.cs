@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using Ruyi;
 
-namespace UnitTests.Trueskill
+namespace Ruyi.SDK.Online.Tests.Trueskill
 {
     public static class TrueSkillCalculatorTests
     {

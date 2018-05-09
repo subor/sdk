@@ -1,11 +1,13 @@
 ﻿using Layer0;
 using NetMQ;
+using Ruyi.SDK.Online;
 using Ruyi.SDK.Constants;
 using Ruyi.SDK.LocalizationService;
 using Ruyi.SDK.MediaService;
-using Ruyi.SDK.SDKValidator;
+using Ruyi.SDK.Speech;
 using Ruyi.SDK.StorageLayer;
 using Ruyi.SDK.UserServiceExternal;
+using Ruyi.SDK.SDKValidator;
 using RuyiLogger;
 using System;
 using System.ComponentModel;
@@ -112,7 +114,7 @@ namespace Ruyi
 
         //public InputMgrExternal.Client InputMgr { get; private set; }
 
-        public Ruyi.SDK.Speech.SpeechService.Client SpeechService { get; private set;}
+        public SpeechService.Client SpeechService { get; private set;}
 
         /// <summary>
         /// Media player services
@@ -223,7 +225,7 @@ namespace Ruyi
             if (IsFeatureEnabled(SDKFeatures.Settings))
             {
                 var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.L0SETTINGSYSTEM_EXTERNAL.ServiceID());
-                SettingSys = new Ruyi.SDK.SettingSystem.Api.SettingSystemService.Client(proto);
+                SettingSys = new SDK.SettingSystem.Api.SettingSystemService.Client(proto);
             }
 
             // init L10N
@@ -250,7 +252,7 @@ namespace Ruyi
             if (IsFeatureEnabled(SDKFeatures.Speech))
             {
                 var proto = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.SPEECH.ServiceID());
-                SpeechService = new SDK.Speech.SpeechService.Client(proto);
+                SpeechService = new SpeechService.Client(proto);
             }
 
             if (IsFeatureEnabled(SDKFeatures.Media))
