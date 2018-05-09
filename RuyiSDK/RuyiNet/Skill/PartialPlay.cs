@@ -1,4 +1,4 @@
-﻿namespace Ruyi
+﻿namespace Ruyi.SDK.Online
 {
     internal static class PartialPlay
     {

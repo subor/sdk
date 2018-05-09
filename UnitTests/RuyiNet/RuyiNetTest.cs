@@ -1,10 +1,9 @@
 ﻿using NUnit.Framework;
-using Ruyi;
 using Ruyi.SDK.BrainCloudApi;
 using System;
 using System.Collections.Generic;
 
-namespace UnitTests.RuyiNet
+namespace Ruyi.SDK.Online.Tests
 {
     [TestFixture, Timeout(120000)]
     class RuyiNetTest

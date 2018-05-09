@@ -1,4 +1,4 @@
-﻿namespace Ruyi
+﻿namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// The interface for players that support partial play.
