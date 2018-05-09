@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace Ruyi
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// Allows users to upload videos to their individual accounts.

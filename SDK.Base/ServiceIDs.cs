@@ -38,7 +38,6 @@ namespace Layer0
 
         L0SETTINGSYSTEM_EXTERNAL,
         L0SETTINGSYSTEM_INTERNAL,
-        //GSSERVICE,
         USER_SERVICE_INTERNAL,
         USER_SERVICE_EXTERNAL,
         BCSERVICE,
@@ -47,6 +46,7 @@ namespace Layer0
         L10NSERVICE,
         OVERLAYMANAGER_INTERNAL,
         UPDATESERVICE,
+        TEST,
 
         HIGH_POWER_END,
         #endregion
