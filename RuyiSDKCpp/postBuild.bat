@@ -20,8 +20,8 @@ xcopy %ProjectDir%\..\..\externals\thrift.cpp\src\thrift\*.tcc %OutDir%\include\
 
 xcopy %ProjectDir%\..\..\externals\ZeroMQ\lib %OutDir%\lib\zmq /Y /I /E /R /F /D
 
-rem copy %ProjectDir%\RuyiString.h %OutDir%\include\RuyiString.h /y
-rem xcopy %ProjectDir%\RuyiNet %OutDir%\include\RuyiNet /Y /I /E /R /F /D  /EXCLUDE:excludes.txt
+copy %ProjectDir%\RuyiString.h %OutDir%\include\RuyiString.h /y
+xcopy %ProjectDir%\RuyiNet %OutDir%\include\RuyiNet /Y /I /E /R /F /D  /EXCLUDE:excludes.txt
 
 xcopy %ProjectDir%\..\..\externals\boost_1_64_0\boost %OutDir%\include\boost /Y /I /E /R /F /D /EXCLUDE:excludes.txt
 xcopy %ProjectDir%\..\..\externals\boost_1_64_0\lib\x64 %OutDir%\lib\boost /Y /I /E /R /F /D 

@@ -1,4 +1,4 @@
-﻿namespace Ruyi
+﻿namespace Ruyi.SDK.Online
 {
     internal class TeamPerformancesToTeamPerformanceDifferencesLayer<TPlayer>
         : TrueSkillFactorGraphLayer<TPlayer, Variable<GaussianDistribution>, GaussianWeightedSumFactor, Variable<GaussianDistribution>>
