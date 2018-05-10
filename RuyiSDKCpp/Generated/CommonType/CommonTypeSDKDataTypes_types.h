@@ -20,6 +20,15 @@
 
 namespace Ruyi { namespace SDK { namespace CommonType {
 
+struct LoginState {
+  enum type {
+    Logout = 0,
+    Login = 1
+  };
+};
+
+extern const std::map<int, const char*> _LoginState_VALUES_TO_NAMES;
+
 struct InputCagetory {
   enum type {
     RuyiGamePad = 0,

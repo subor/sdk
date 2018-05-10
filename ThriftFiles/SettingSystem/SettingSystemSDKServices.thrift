@@ -4,6 +4,7 @@ include "../../../commons/Config/SDKDesc/ServiceCommon/thrift/CommonType/CommonT
 namespace csharp Ruyi.SDK.SettingSystem.Api
 namespace cpp Ruyi.SDK.SettingSystem.Api
 
+
 service SettingSystemService {
 	/** Get a setting data of the module. */
 	CommonTypeSDKDataTypes.SettingItem GetSettingItem(

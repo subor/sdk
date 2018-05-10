@@ -1,1 +1,2 @@
 include "CommonTypeSDKDataTypes.thrift"
+

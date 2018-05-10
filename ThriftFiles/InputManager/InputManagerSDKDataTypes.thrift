@@ -109,3 +109,4 @@ struct InputDeviceStateChanged {
     7: InputDeviceStateChangedRuyiController ruyicontroller,
 }
 
+

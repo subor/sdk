@@ -6,3 +6,4 @@ struct LanguageChangedMsg {
     2: string oldLanguage,
 }
 
+

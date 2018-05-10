@@ -56,9 +56,9 @@ namespace Layer0
             {
                 receivingThread = new Thread(() =>
                 {
-                    Thread.CurrentThread.Name = "Subscribe: " + topic;
                     while (Receive()) ;
                 });
+                receivingThread.Name = "Subscriber: " + topic;
                 receivingThread.Start();
             }
         }
@@ -214,8 +214,12 @@ namespace Layer0
                         Log($"subscribe client terminated: { e.Message }", level);
                     }
                 }
-                socket.Dispose();
-                socket = null;
+                try
+                {
+                    socket.Dispose();
+                    socket = null;
+                }
+                catch { }
             }
 
             // closing socket will throw an exception in Receive() which will be caught to end the thread.

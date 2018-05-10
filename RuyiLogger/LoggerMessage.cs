@@ -24,6 +24,10 @@ namespace RuyiLogger
         /// </summary>
         SystemTray,
         MiniUI = SystemTray,
+        /// <summary>
+        /// DevTool
+        /// </summary>
+        DevTool,
     }
 
     public enum LogLevel
@@ -138,6 +142,7 @@ namespace RuyiLogger
 
     public class LogCommandLineMessage : LoggerMessageEx
     {
+        public string Command { get; set; }
         public string Arguments { get; set; }
     }
 

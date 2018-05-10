@@ -1,4 +1,4 @@
-﻿namespace Ruyi
+﻿namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// Information on the current game.

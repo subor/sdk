@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ruyi
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// Response received after creating a lobby.
