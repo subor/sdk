@@ -4,7 +4,7 @@
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;Internal_Release</Configurations>
+    <Configurations>Debug;Release</Configurations>
     <RootNamespace>Ruyi.SDK</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -19,16 +19,8 @@
     <OutputPath>..\..\output\Release\RuyiSDK</OutputPath>
     <DocumentationFile>..\..\output\Release\RuyiSDK\RuyiSDK.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Internal_Release|AnyCPU'">
-    <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>bin\Release\RuyiSDK.xml</DocumentationFile>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>bin\Release\RuyiSDK.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Internal_Release|x64'">
-    <OutputPath>bin\Release\netstandard2.0\</OutputPath>
     <DocumentationFile>bin\Release\RuyiSDK.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
