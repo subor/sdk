@@ -216,11 +216,11 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib\boost;$(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib;$(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib\zmq;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\output\Debug\RuyiSDKCpp\lib\boost;$(SolutionDir)..\output\Debug\RuyiSDKCpp\lib;$(SolutionDir)..\output\Debug\RuyiSDKCpp\lib\zmq;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK.lib;libzmq.lib;jsoncpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\externals\ZeroMQ\lib\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|x64'">
@@ -235,11 +235,11 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib\boost;$(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib;$(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib\zmq;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\output\Debug\RuyiSDKCpp\lib\boost;$(SolutionDir)..\output\Debug\RuyiSDKCpp\lib;$(SolutionDir)..\output\Debug\RuyiSDKCpp\lib\zmq;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK_mt.lib;libzmq.lib;jsoncpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\externals\ZeroMQ\lib\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -293,7 +293,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib\boost;$(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib;$(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib\zmq;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\output\Release\RuyiSDKCpp\lib\boost;$(SolutionDir)..\output\Release\RuyiSDKCpp\lib;$(SolutionDir)..\output\Release\RuyiSDKCpp\lib\zmq;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK.lib;jsoncpp.lib;libzmq.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -316,7 +316,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib\boost;$(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib;$(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib\zmq;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\output\Release\RuyiSDKCpp\lib\boost;$(SolutionDir)..\output\Release\RuyiSDKCpp\lib;$(SolutionDir)..\output\Release\RuyiSDKCpp\lib\zmq;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK_mt.lib;libzmq.lib;jsoncpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>

@@ -8,15 +8,16 @@
     <RootNamespace>Ruyi.SDK</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\RuyiSDK.xml</DocumentationFile>
+    <DocumentationFile>..\..\output\Debug\RuyiSDK\RuyiSDK.xml</DocumentationFile>
+    <OutputPath>..\..\output\Debug\RuyiSDK\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>bin\Debug\RuyiSDK.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>bin\Release\RuyiSDK.xml</DocumentationFile>
+    <OutputPath>..\..\output\Release\RuyiSDK</OutputPath>
+    <DocumentationFile>..\..\output\Release\RuyiSDK\RuyiSDK.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Internal_Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
