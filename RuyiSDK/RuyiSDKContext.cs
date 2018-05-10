@@ -68,6 +68,11 @@ namespace Ruyi
         public TTransport Transport;
 
         /// <summary>
+        /// Timeout (in ms) for connections.  If less than or equal to 0, use default.
+        /// </summary>
+        public int Timeout { get; set; } = 0;
+
+        /// <summary>
         /// validation check
         /// </summary>
         /// <returns></returns>
