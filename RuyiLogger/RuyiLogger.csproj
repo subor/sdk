@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" TreatAsLocalProperty="RunCodeAnalysis">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;Internal_Release</Configurations>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="NetMQ" Version="4.0.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+</Project>
