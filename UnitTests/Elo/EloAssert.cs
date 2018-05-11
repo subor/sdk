@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using Ruyi;
 
-namespace UnitTests.Elo
+namespace Ruyi.SDK.Online.Tests.Elo
 {
     internal static class EloAssert
     {

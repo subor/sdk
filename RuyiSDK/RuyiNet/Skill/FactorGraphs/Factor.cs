@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Ruyi
+namespace Ruyi.SDK.Online
 {
     public abstract class Factor<TValue>
     {

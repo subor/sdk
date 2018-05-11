@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
-using Ruyi;
 
-namespace UnitTests.Trueskill
+namespace Ruyi.SDK.Online.Tests.Trueskill
 {
     [TestFixture]
     public class TwoTeamTrueSkillCalculatorTest
