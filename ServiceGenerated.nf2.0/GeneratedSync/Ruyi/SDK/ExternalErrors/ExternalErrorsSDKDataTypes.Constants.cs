@@ -21,8 +21,8 @@ namespace Ruyi.SDK.ExternalErrors
     static ExternalErrorsSDKDataTypesConstants()
     {
       ExternalErrorInfos tmp0 = new ExternalErrorInfos();
-      tmp0.ErrorCode = ExternalErrorCode.Err_0;
       tmp0.Description = "";
+      tmp0.ErrorCode = ExternalErrorCode.Err_0;
       EXTERNALERRORLIST.Add(tmp0);
       ExternalErrorInfos tmp1 = new ExternalErrorInfos();
       tmp1.Description = "setting {0} is not found!";
@@ -37,12 +37,12 @@ namespace Ruyi.SDK.ExternalErrors
       tmp3.ErrorCode = ExternalErrorCode.Err_3;
       EXTERNALERRORLIST.Add(tmp3);
       ExternalErrorInfos tmp4 = new ExternalErrorInfos();
-      tmp4.Description = "lambda expression error: {0}";
       tmp4.ErrorCode = ExternalErrorCode.Err_4;
+      tmp4.Description = "lambda expression error: {0}";
       EXTERNALERRORLIST.Add(tmp4);
       ExternalErrorInfos tmp5 = new ExternalErrorInfos();
-      tmp5.ErrorCode = ExternalErrorCode.Err_5;
       tmp5.Description = "[type error] trying to assign a {0} to setting category {1} 's property {2}, whose data type is {3}";
+      tmp5.ErrorCode = ExternalErrorCode.Err_5;
       EXTERNALERRORLIST.Add(tmp5);
       ExternalErrorInfos tmp6 = new ExternalErrorInfos();
       tmp6.ErrorCode = ExternalErrorCode.Err_6;
@@ -53,12 +53,12 @@ namespace Ruyi.SDK.ExternalErrors
       tmp7.ErrorCode = ExternalErrorCode.Err_7;
       EXTERNALERRORLIST.Add(tmp7);
       ExternalErrorInfos tmp8 = new ExternalErrorInfos();
-      tmp8.Description = "specified user {0} is not playing app {1}";
       tmp8.ErrorCode = ExternalErrorCode.Err_8;
+      tmp8.Description = "specified user {0} is not playing app {1}";
       EXTERNALERRORLIST.Add(tmp8);
       ExternalErrorInfos tmp9 = new ExternalErrorInfos();
-      tmp9.ErrorCode = ExternalErrorCode.Err_9;
       tmp9.Description = "user is not found by id {0}";
+      tmp9.ErrorCode = ExternalErrorCode.Err_9;
       EXTERNALERRORLIST.Add(tmp9);
       ExternalErrorInfos tmp10 = new ExternalErrorInfos();
       tmp10.ErrorCode = ExternalErrorCode.Err_10;
@@ -69,8 +69,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp11.Description = "";
       EXTERNALERRORLIST.Add(tmp11);
       ExternalErrorInfos tmp12 = new ExternalErrorInfos();
-      tmp12.ErrorCode = ExternalErrorCode.Err_12;
       tmp12.Description = "";
+      tmp12.ErrorCode = ExternalErrorCode.Err_12;
       EXTERNALERRORLIST.Add(tmp12);
       ExternalErrorInfos tmp13 = new ExternalErrorInfos();
       tmp13.ErrorCode = ExternalErrorCode.Err_13;
@@ -81,8 +81,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp14.ErrorCode = ExternalErrorCode.Err_14;
       EXTERNALERRORLIST.Add(tmp14);
       ExternalErrorInfos tmp15 = new ExternalErrorInfos();
-      tmp15.Description = "";
       tmp15.ErrorCode = ExternalErrorCode.Err_15;
+      tmp15.Description = "";
       EXTERNALERRORLIST.Add(tmp15);
       ExternalErrorInfos tmp16 = new ExternalErrorInfos();
       tmp16.Description = "";
