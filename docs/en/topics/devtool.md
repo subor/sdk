@@ -15,6 +15,7 @@ Assistance for any plugin is available via `RuyiDev.exe <plugin> -h`.
 
 | Name | Functionality
 |-|-
+| API Tool | Process Thrift files and generate API (see [building SDK source](build_sdk_source.md))
 | App Runner | Installation and starting/stopping of apps
 | Layer0 Debugger | Debug SDK API usage
 | Localization Tool | 

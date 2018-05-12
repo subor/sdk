@@ -93,3 +93,16 @@ The runtime, [layer0](layer0.md), checks the version of the SDK used by client a
 The SDK source also includes the underlying [Thrift interface definitions](https://bitbucket.org/playruyi/sdk_source/src/master/ThriftFiles/).  This means the Ruyi SDK can be generated for a [large number of different langauges](https://thrift.apache.org/docs/Languages).
 
 Run `thrift.exe --help` for a full list of supported languages (generators) and options.
+
+The API Tool provided with [devtool](devtool.md) provdes some assistance working with Thrift files.
+
+For example, to generate API similar to what we provide in SDK (see [sdk_source](https://bitbucket.org/playruyi/sdk_source)):
+```
+:: C++
+DevTools\RuyiShell.exe -v Debug ApiTool --ThriftFiles=sdk\ThriftFiles --ThriftExe=..\tools\thrift\thrift.exe --Gen=cpp --ServiceOutput=sdk\ServiceGenerated\Generated --Options=OutputPrefix --Generate
+
+:: C#
+DevTools\RuyiShell.exe -v Debug ApiTool --ThriftFiles=sdk\ThriftFiles --ThriftExe=..\tools\thrift\thrift.exe --Gen="csharp:async,union" --ServiceOutput=sdk\ServiceGenerated\Generated --CommonOutput=sdk\ServiceCommon\Generated --Generate
+```
+
+Generate C++ 
