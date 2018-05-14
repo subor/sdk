@@ -239,7 +239,7 @@
       <AdditionalDependencies>RuyiSDK_mt.lib;libzmq.lib;jsoncpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\output\Debug\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -320,7 +320,7 @@
       <AdditionalDependencies>RuyiSDK_mt.lib;libzmq.lib;jsoncpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\output\Release\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
