@@ -73,11 +73,11 @@
             /// MD5 hash of the patch file.
             /// </summary>
             public string PatchMd5 { get; set; }
+        }
 
         /// <summary>
         /// A list of patches for this game.
         /// </summary>
-        }
         public Patch[] PatchInfo { get; private set; }
     }
 }
