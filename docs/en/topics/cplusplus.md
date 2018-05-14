@@ -23,17 +23,17 @@ Put them in one of your source folder.  For example, create a "RuyiSDK" folder, 
 1. Choose "Configuration Properties / Linker / Input" in Property page, to "Additional Dependencies" add `RuyiSDK.lib` and `libzmq.lib`
 
 1. And `#include "RuyiSDK.h"` to your code and initialize the SDK:
-    ```
-    Ruyi::RuyiSDK* ruyiSDK = Ruyi::RuyiSDK::CreateSDKInstance(Ruyi::RuyiSDKContext Ruyi::RuyiSDKContext::Endpoint::Console, "localhost"));
 
-    if (nullptr != ruyiSDK)
-    {
-        std::string ret;
-        
-        ruyiSDK->BCService->Authentication_ClearSavedProfileID(0);
-        ruyiSDK->BCService->Authentication_AuthenticateEmailPassword(ret, "username", "password", true, 0);
+        Ruyi::RuyiSDK* ruyiSDK = Ruyi::RuyiSDK::CreateSDKInstance(Ruyi::RuyiSDKContext Ruyi::RuyiSDKContext::Endpoint::Console, "localhost"));
 
-        std::cout << ret << std::endl;
-    }
-    ```
+        if (nullptr != ruyiSDK)
+        {
+            std::string ret;
+            
+            ruyiSDK->BCService->Authentication_ClearSavedProfileID(0);
+            ruyiSDK->BCService->Authentication_AuthenticateEmailPassword(ret, "username", "password", true, 0);
+
+            std::cout << ret << std::endl;
+        }
+
 1. Compile the code, if everything goes well, which means you've intergrate Ruyi SDK successfully.

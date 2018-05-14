@@ -9,6 +9,9 @@
 - 8 GB GDDR5 shared memory
     - 256 GB/s bandwidth
     - 2 GB reserved for GPU
+- Storage
+    - 128/256 GB SSD
+    - 1 TB HDD
 - Ports/peripherals
     - 4x USB 3.0 (back), 2x USB 2.0 (front)
     - 2x HDMI 2.0
@@ -17,6 +20,15 @@
     - Bluetooth
     - 2x 3.5mm audio (input/output)
     - S/PDIF
+
+### Revisions
+
+There are several devkit hardware revisions:
+
+| Hardware Revision | Hardware | Known Issues
+|-|-|-
+| PVT (2018/5-) | 128 or 256 GB SSD & 1 TB HDD<br/>1.3 GHz GPU
+| DVT (2017/12-2018/4) | Toshiba HDD<br/>1.2 GHz GPU | Noisy<br/>HDD performance
 
 ## Software Compatibility
 
