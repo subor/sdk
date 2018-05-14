@@ -21,36 +21,36 @@ __Instructions__
 1. Clone or download `bitbucket.org/playruyi/sdk_source.git` to __sdk__ folder:  
     `git clone https://your_username_here@bitbucket.org/playruyi/sdk_source.git sdk`
 1. Unzip external libs (listed [above in prerequisites](#prerequisites)) to __externals/__ folder beside __sdk/__.  Like this:
-    ```
-    +---externals
-    |   +---boost_1_64_0
-    |   |   +---boost
-    |   |   \---lib
-    |   |       \---x64
-    |   +---jsoncpp
-    |   |   +---include
-    |   |   |   \---json
-    |   |   \---src
-    |   |       \---lib_json
-    |   +---OpenSSL
-    |   |   +---include
-    |   |   |   \---openssl
-    |   |   \---lib
-    |   |       \---engines-1_1
-    |   +---thrift.cpp
-    |   |   +---src
-    |   |   |   \---thrift
-    |   |   \---test
-    |   +---thrift0.10.0
-    |   \---ZeroMQ
-    |       +---include
-    |       \---lib
-    \---sdk
-        +---RuyiLogger
-        +---RuyiSDK
-        +---RuyiSDKCpp
-        +...
-    ```
+
+        +---externals
+        |   +---boost_1_64_0
+        |   |   +---boost
+        |   |   \---lib
+        |   |       \---x64
+        |   +---jsoncpp
+        |   |   +---include
+        |   |   |   \---json
+        |   |   \---src
+        |   |       \---lib_json
+        |   +---OpenSSL
+        |   |   +---include
+        |   |   |   \---openssl
+        |   |   \---lib
+        |   |       \---engines-1_1
+        |   +---thrift.cpp
+        |   |   +---src
+        |   |   |   \---thrift
+        |   |   \---test
+        |   +---thrift0.10.0
+        |   \---ZeroMQ
+        |       +---include
+        |       \---lib
+        \---sdk
+            +---RuyiLogger
+            +---RuyiSDK
+            +---RuyiSDKCpp
+            +...
+
 1. Build external libs
     * If asked to retarget projects, for Windows SDK version pick 10.0.15063.0 and Platform Toolset "Upgrade to v141"
     * Select __Release__ and __x64__ when possible
@@ -59,7 +59,7 @@ __Instructions__
     * __Release_mt__ is for libraries compiled with `/MT`
 1. [Build the SDK](#Building)
 
-## C#
+## C Sharp/C# #
 
 __Prerequisites__
 
@@ -84,7 +84,7 @@ The runtime, [layer0](layer0.md), checks the version of the SDK used by client a
 
         `msbuild SDK.sln /p:AssemblyVersion=a.b.c.d /p:AssemblyMain=a.b.c /p:AssemblyRevision=d`
 
-        e.g.
+        e.g. for `0.7.2.1447`:
 
         `msbuild SDK.sln /p:AssemblyVersion=0.7.2.1447 /p:AssemblyMain=0.7.2 /p:AssemblyRevision=1447`
 
@@ -104,5 +104,3 @@ DevTools\RuyiShell.exe -v Debug ApiTool --ThriftFiles=sdk\ThriftFiles --ThriftEx
 :: C#
 DevTools\RuyiShell.exe -v Debug ApiTool --ThriftFiles=sdk\ThriftFiles --ThriftExe=..\tools\thrift\thrift.exe --Gen="csharp:async,union" --ServiceOutput=sdk\ServiceGenerated\Generated --CommonOutput=sdk\ServiceCommon\Generated --Generate
 ```
-
-Generate C++ 
