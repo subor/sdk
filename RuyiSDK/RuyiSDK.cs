@@ -175,7 +175,8 @@ namespace Ruyi
             if (context.Transport == null)
             {
                 // If debugger attached don't want messages to timeout
-                var timeout = System.Diagnostics.Debugger.IsAttached ? 600000 : 10000;
+                var timeout = System.Diagnostics.Debugger.IsAttached ? 600000
+                    : (context.Timeout <= 0 ? 10000 : context.Timeout);
 
                 // init and open high/low latency transport, create protocols
                 var lowLatencyPort = context.LowLatencyPort == 0 ? ConstantsSDKDataTypesConstants.low_latency_socket_port : context.LowLatencyPort;
