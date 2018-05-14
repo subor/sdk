@@ -220,7 +220,7 @@
       <AdditionalDependencies>RuyiSDK.lib;libzmq.lib;jsoncpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\externals\ZeroMQ\lib\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|x64'">
@@ -239,7 +239,7 @@
       <AdditionalDependencies>RuyiSDK_mt.lib;libzmq.lib;jsoncpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\externals\ZeroMQ\lib\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -297,7 +297,7 @@
       <AdditionalDependencies>RuyiSDK.lib;jsoncpp.lib;libzmq.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_mt|x64'">
@@ -320,7 +320,7 @@
       <AdditionalDependencies>RuyiSDK_mt.lib;libzmq.lib;jsoncpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(ProjectDir)..\RuyiSDKCpp\bin\$(Configuration)\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
