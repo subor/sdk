@@ -87,6 +87,9 @@
     <Compile Include="..\RuyiSDK\RuyiNet\RuyiNetException.cs">
       <Link>RuyiNet\RuyiNetException.cs</Link>
     </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\RuyiNetHttpStatus.cs">
+      <Link>RuyiNet\RuyiNetHttpStatus.cs</Link>
+    </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetCloudService.cs">
       <Link>RuyiNet\Service\RuyiNetCloudService.cs</Link>
     </Compile>

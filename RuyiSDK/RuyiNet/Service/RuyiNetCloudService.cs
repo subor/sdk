@@ -93,7 +93,7 @@ namespace Ruyi.SDK.Online
                         NullValueHandling = NullValueHandling.Ignore
                     });
 
-                    if (response.status != 200)
+                    if (response.status != RuyiNetHttpStatus.OK)
                     {
                         return data;
                     }
@@ -112,7 +112,7 @@ namespace Ruyi.SDK.Online
                     //var backupInfo = new DirectoryInfo(backupPath);
                     //backupInfo.Delete(true);
 
-                    return JsonConvert.SerializeObject(new RuyiNetResponse() { status = 200, message = "Restore Data Successful" });
+                    return JsonConvert.SerializeObject(new RuyiNetResponse() { status = RuyiNetHttpStatus.OK, message = "Restore Data Successful" });
                 }
                 catch (Exception e)
                 {
@@ -195,7 +195,7 @@ namespace Ruyi.SDK.Online
                         }
                     }
 
-                    return JsonConvert.SerializeObject(new RuyiNetResponse() { status = 200 });
+                    return JsonConvert.SerializeObject(new RuyiNetResponse() { status = RuyiNetHttpStatus.OK });
                 }
                 catch (Exception e)
                 {
@@ -275,7 +275,7 @@ namespace Ruyi.SDK.Online
                 //  as a parameter when downloading the data.
                 var data = mClient.BCService.File_UploadFile(cloudPath, fileName, true/*false*/, true, i, index);
                 var response = JsonConvert.DeserializeObject<RuyiNetUploadFileResponse>(data);
-                if (response.status != 200)
+                if (response.status != RuyiNetHttpStatus.OK)
                 {
                     throw new RuyiNetException("Failed to upload file: " + i);
                 }
