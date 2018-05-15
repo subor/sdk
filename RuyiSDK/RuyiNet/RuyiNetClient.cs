@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using Thrift.Protocol;
 
-namespace Ruyi
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// The main client for accessing Ruyi Net Services
@@ -131,6 +131,11 @@ namespace Ruyi
         public RuyiNetPartyService PartyService { get; private set; }
 
         /// <summary>
+        /// Get manifest info for a game.
+        /// </summary>
+        public RuyiNetPatchService PatchService { get; private set; }
+
+        /// <summary>
         /// Allows users to upload files to their individual accounts
         /// </summary>
         public RuyiNetProfileService ProfileService { get; private set; }
@@ -249,6 +254,7 @@ namespace Ruyi
             LeaderboardService = new RuyiNetLeaderboardService(this);
             LobbyService = new RuyiNetLobbyService(this);
             PartyService = new RuyiNetPartyService(this);
+            PatchService = new RuyiNetPatchService(this);
             ProfileService = new RuyiNetProfileService(this);
             TelemetryService = new RuyiNetTelemetryService(this);
             UserFileService = new RuyiNetUserFileService(this);

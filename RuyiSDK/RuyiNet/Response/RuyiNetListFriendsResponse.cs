@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ruyi
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// The response after a friend list is requested.

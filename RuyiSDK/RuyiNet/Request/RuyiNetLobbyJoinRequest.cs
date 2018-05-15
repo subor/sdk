@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ruyi
+namespace Ruyi.SDK.Online
 {
     [Serializable]
     class RuyiNetLobbyJoinRequest

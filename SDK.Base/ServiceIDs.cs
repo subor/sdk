@@ -26,6 +26,9 @@ namespace Layer0
         HTTP_SUBSCRIBE,
         DEVELOPER_MODE,
         L2FORWARDER,
+        IOT_BLUETOOTH,
+        SPEECH,
+        MEDIA,
 
         LOW_POWER_END,
         #endregion
@@ -35,7 +38,6 @@ namespace Layer0
 
         L0SETTINGSYSTEM_EXTERNAL,
         L0SETTINGSYSTEM_INTERNAL,
-        //GSSERVICE,
         USER_SERVICE_INTERNAL,
         USER_SERVICE_EXTERNAL,
         BCSERVICE,
@@ -43,6 +45,7 @@ namespace Layer0
         INPUTMANAGER_EXTERNAL,
         L10NSERVICE,
         OVERLAYMANAGER_INTERNAL,
+        TEST,
 
         HIGH_POWER_END,
         #endregion

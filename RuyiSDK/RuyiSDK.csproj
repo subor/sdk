@@ -5,6 +5,7 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Internal_Release</Configurations>
+    <RootNamespace>Ruyi.SDK</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\RuyiSDK.xml</DocumentationFile>
@@ -36,7 +37,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\externals\thrift0.10.0\Thrift.ns2.0.csproj" />
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj">
-      <Private></Private>
     </ProjectReference>
     <ProjectReference Include="..\SDK.Base\SDK.Base.csproj" />
     <ProjectReference Include="..\ServiceGenerated\ServiceGenerated.csproj" />
