@@ -1,6 +1,6 @@
-﻿using RuyiLogger;
+﻿using Ruyi.Logging;
 
-namespace Layer0
+namespace Ruyi.Layer0
 {
     static public class TRCChecker
     {

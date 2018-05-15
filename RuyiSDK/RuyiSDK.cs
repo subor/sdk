@@ -1,4 +1,4 @@
-﻿using Layer0;
+﻿using Ruyi.Layer0;
 using NetMQ;
 using Ruyi.SDK.Online;
 using Ruyi.SDK.Constants;
@@ -8,7 +8,7 @@ using Ruyi.SDK.Speech;
 using Ruyi.SDK.StorageLayer;
 using Ruyi.SDK.UserServiceExternal;
 using Ruyi.SDK.SDKValidator;
-using RuyiLogger;
+using Ruyi.Logging;
 using System;
 using System.ComponentModel;
 using System.Linq;
