@@ -32,11 +32,11 @@ namespace Ruyi.SDK.Online
                 var response = mClient.BCService.File_UploadFile(PROFILE_LOCATION, PROFILE_IMAGE_FILENAME, true, true, filename, index);
                 var uploadedFile = JsonConvert.DeserializeObject<RuyiNetUploadFileResponse>(response);
 
-                if (uploadedFile.status == 200)
+                if (uploadedFile.status == RuyiNetHttpStatus.OK)
                 {
                     response = mClient.BCService.File_GetCDNUrl(PROFILE_LOCATION, PROFILE_IMAGE_FILENAME, index);
                     var cdnUrl = JsonConvert.DeserializeObject<RuyiNetGetCDNResponse>(response);
-                    if (cdnUrl.status == 200)
+                    if (cdnUrl.status == RuyiNetHttpStatus.OK)
                     {
                         mClient.BCService.PlayerState_UpdateUserPictureUrl(cdnUrl.data.appServerUrl, index);
                     }
