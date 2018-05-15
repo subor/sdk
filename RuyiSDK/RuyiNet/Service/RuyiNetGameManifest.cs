@@ -31,6 +31,7 @@
                 PatchInfo = new Patch[response.data.patchInfo.Length];
                 for (int i = 0; i < PatchInfo.Length; ++i)
                 {
+					PatchInfo[i] = new Patch();
                     PatchInfo[i].FromVersion = response.data.patchInfo[i].fromVersion;
                     PatchInfo[i].ToVersion = response.data.patchInfo[i].toVersion;
                     PatchInfo[i].ReleaseNotesLocation = response.data.patchInfo[i].releaseNotesLocation;
