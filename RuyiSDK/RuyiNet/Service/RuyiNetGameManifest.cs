@@ -20,17 +20,23 @@
         /// <param name="response">The response class to convert from.</param>
         public RuyiNetGameManifest(RuyiNetGetGameManifestResponse response)
         {
-            GameId = response.data.gameId;
-            LatestVersion = response.data.latestVersion;
+            Status = response.status;
 
-            PatchInfo = new Patch[response.data.patchInfo.Length];
-            for (int i = 0; i < PatchInfo.Length; ++i)
+            if (Status == RuyiNetHttpStatus.OK &&
+                response.data != null)
             {
-                PatchInfo[i].FromVersion = response.data.patchInfo[i].fromVersion;
-                PatchInfo[i].ToVersion = response.data.patchInfo[i].toVersion;
-                PatchInfo[i].ReleaseNotesLocation = response.data.patchInfo[i].releaseNotesLocation;
-                PatchInfo[i].PatchLocation = response.data.patchInfo[i].patchLocation;
-                PatchInfo[i].PatchMd5 = response.data.patchInfo[i].patchMd5;
+                GameId = response.data.gameId;
+                LatestVersion = response.data.latestVersion;
+
+                PatchInfo = new Patch[response.data.patchInfo.Length];
+                for (int i = 0; i < PatchInfo.Length; ++i)
+                {
+                    PatchInfo[i].FromVersion = response.data.patchInfo[i].fromVersion;
+                    PatchInfo[i].ToVersion = response.data.patchInfo[i].toVersion;
+                    PatchInfo[i].ReleaseNotesLocation = response.data.patchInfo[i].releaseNotesLocation;
+                    PatchInfo[i].PatchLocation = response.data.patchInfo[i].patchLocation;
+                    PatchInfo[i].PatchMd5 = response.data.patchInfo[i].patchMd5;
+                }
             }
         }
 
@@ -79,5 +85,10 @@
         /// A list of patches for this game.
         /// </summary>
         public Patch[] PatchInfo { get; private set; }
+
+        /// <summary>
+        /// The status of the response data (compare to RuyiNetHttpStatus.OK).
+        /// </summary>
+        public int Status { get; private set; }
     }
 }

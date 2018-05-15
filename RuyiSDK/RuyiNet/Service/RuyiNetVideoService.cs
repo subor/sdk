@@ -37,11 +37,11 @@ namespace Ruyi.SDK.Online
                 var response = mClient.BCService.File_UploadFile(VIDEO_LOCATION, cloudFilename, true, false, localPath, index);
                 var uploadedFile = JsonConvert.DeserializeObject<RuyiNetUploadFileResponse>(response);
 
-                if (uploadedFile.status == 200)
+                if (uploadedFile.status == RuyiNetHttpStatus.OK)
                 {
                     var cdnResponse = mClient.BCService.File_GetCDNUrl(VIDEO_LOCATION, cloudFilename, index);
                     var cdnUrl = JsonConvert.DeserializeObject<RuyiNetGetCDNResponse>(cdnResponse);
-                    if (cdnUrl.status == 200)
+                    if (cdnUrl.status == RuyiNetHttpStatus.OK)
                     {
                         var videoEntity = JsonConvert.SerializeObject(new RuyiNetVideo()
                         {
