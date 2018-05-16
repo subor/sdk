@@ -19,7 +19,7 @@ namespace Ruyi.SDK.Online
         /// <param name="clientIndex">The index of the client making the call.</param>
         /// <param name="gameId">The index of the client making the call.</param>
         /// <param name="callback">Callback to call when the operation is complete.</param>
-        public void EndTelemetrySession(int clientIndex, string gameId, RuyiNetTask<RuyiNetGameManifest>.CallbackType callback)
+        public void GetGameManifest(int clientIndex, string gameId, Action<RuyiNetGameManifest> callback)
         {
             EnqueueTask(() =>
             {
