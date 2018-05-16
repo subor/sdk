@@ -179,10 +179,10 @@ namespace Ruyi
             {
                 // init and open high/low latency transport, create protocols
                 var lowLatencyPort = context.LowLatencyPort == 0 ? ConstantsSDKDataTypesConstants.low_latency_socket_port : context.LowLatencyPort;
-                lowLatencyTransport = new TSocketTransportTS(context.RemoteAddress, lowLatencyPort, SDKUtility.Instance.LowLatencyTimeout);
+                lowLatencyTransport = new TSocketTransportTS(context.RemoteAddress, lowLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.LowLatencyTimeout : context.Timeout);
 
                 var highLatencyPort = context.HighLatencyPort == 0 ? ConstantsSDKDataTypesConstants.high_latency_socket_port : context.HighLatencyPort;
-                highLatencyTransport = new TSocketTransportTS(context.RemoteAddress, highLatencyPort, SDKUtility.Instance.HighLatencyTimeout);
+                highLatencyTransport = new TSocketTransportTS(context.RemoteAddress, highLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.HighLatencyTimeout : context.Timeout);
             }
             else
             {
