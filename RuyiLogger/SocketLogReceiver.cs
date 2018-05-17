@@ -1,4 +1,4 @@
-﻿using RuyiLogger;
+﻿using Ruyi.Logging;
 using NetMQ;
 using NetMQ.Sockets;
 using Newtonsoft.Json;
