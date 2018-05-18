@@ -13,6 +13,52 @@
 
 namespace Ruyi { namespace SDK { namespace GlobalInputDefine {
 
+int _kRuyiGamePadButtonFlagsValues[] = {
+  RuyiGamePadButtonFlags::GamePad_L3,
+  RuyiGamePadButtonFlags::GamePad_R3,
+  RuyiGamePadButtonFlags::GamePad_X,
+  RuyiGamePadButtonFlags::GamePad_B,
+  RuyiGamePadButtonFlags::GamePad_Y,
+  RuyiGamePadButtonFlags::GamePad_A,
+  RuyiGamePadButtonFlags::GamePad_LB,
+  RuyiGamePadButtonFlags::GamePad_RB,
+  RuyiGamePadButtonFlags::GamePad_Left,
+  RuyiGamePadButtonFlags::GamePad_Right,
+  RuyiGamePadButtonFlags::GamePad_Up,
+  RuyiGamePadButtonFlags::GamePad_Down,
+  RuyiGamePadButtonFlags::GamePad_Start,
+  RuyiGamePadButtonFlags::GamePad_Back,
+  RuyiGamePadButtonFlags::GamePad_LT,
+  RuyiGamePadButtonFlags::GamePad_RT,
+  RuyiGamePadButtonFlags::GamePad_LJoyX,
+  RuyiGamePadButtonFlags::GamePad_LJoyY,
+  RuyiGamePadButtonFlags::GamePad_RJoyX,
+  RuyiGamePadButtonFlags::GamePad_RJoyY
+};
+const char* _kRuyiGamePadButtonFlagsNames[] = {
+  "GamePad_L3",
+  "GamePad_R3",
+  "GamePad_X",
+  "GamePad_B",
+  "GamePad_Y",
+  "GamePad_A",
+  "GamePad_LB",
+  "GamePad_RB",
+  "GamePad_Left",
+  "GamePad_Right",
+  "GamePad_Up",
+  "GamePad_Down",
+  "GamePad_Start",
+  "GamePad_Back",
+  "GamePad_LT",
+  "GamePad_RT",
+  "GamePad_LJoyX",
+  "GamePad_LJoyY",
+  "GamePad_RJoyX",
+  "GamePad_RJoyY"
+};
+const std::map<int, const char*> _RuyiGamePadButtonFlags_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(20, _kRuyiGamePadButtonFlagsValues, _kRuyiGamePadButtonFlagsNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
 int _kRuyiInputDeviceTypeValues[] = {
   RuyiInputDeviceType::XB360,
   RuyiInputDeviceType::Mouse,

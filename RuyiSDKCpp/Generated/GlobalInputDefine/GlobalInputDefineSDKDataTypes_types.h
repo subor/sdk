@@ -20,6 +20,33 @@
 
 namespace Ruyi { namespace SDK { namespace GlobalInputDefine {
 
+struct RuyiGamePadButtonFlags {
+  enum type {
+    GamePad_L3 = 1,
+    GamePad_R3 = 2,
+    GamePad_X = 4,
+    GamePad_B = 8,
+    GamePad_Y = 16,
+    GamePad_A = 32,
+    GamePad_LB = 64,
+    GamePad_RB = 128,
+    GamePad_Left = 256,
+    GamePad_Right = 512,
+    GamePad_Up = 1024,
+    GamePad_Down = 2048,
+    GamePad_Start = 4096,
+    GamePad_Back = 8192,
+    GamePad_LT = 32768,
+    GamePad_RT = 65536,
+    GamePad_LJoyX = 131072,
+    GamePad_LJoyY = 262144,
+    GamePad_RJoyX = 524288,
+    GamePad_RJoyY = 1048576
+  };
+};
+
+extern const std::map<int, const char*> _RuyiGamePadButtonFlags_VALUES_TO_NAMES;
+
 struct RuyiInputDeviceType {
   enum type {
     XB360 = 0,
