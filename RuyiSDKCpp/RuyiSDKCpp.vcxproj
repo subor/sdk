@@ -203,7 +203,7 @@
       <AdditionalLibraryDirectories>..\..\externals\ZeroMQ\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>$(SolutionDir)..\basic_tools\ruyi cppsdk --verbose --projectdir=$(ProjectDir) --outdir=$(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|Win32'">
@@ -229,7 +229,7 @@
       <AdditionalLibraryDirectories>..\..\externals\ZeroMQ\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>$(SolutionDir)..\basic_tools\ruyi cppsdk --verbose --projectdir=$(ProjectDir) --outdir=$(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -267,7 +267,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>$(SolutionDir)..\basic_tools\ruyi cppsdk --verbose --projectdir=$(ProjectDir) --outdir=$(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|x64'">
@@ -306,7 +306,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>$(SolutionDir)..\basic_tools\ruyi cppsdk --verbose --projectdir=$(ProjectDir) --outdir=$(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -325,7 +325,7 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>$(SolutionDir)..\basic_tools\ruyi cppsdk --verbose --projectdir=$(ProjectDir) --outdir=$(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_mt|Win32'">
@@ -344,7 +344,7 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>$(SolutionDir)..\basic_tools\ruyi cppsdk --verbose --projectdir=$(ProjectDir) --outdir=$(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -376,7 +376,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>$(SolutionDir)..\basic_tools\ruyi cppsdk --verbose --projectdir=$(ProjectDir) --outdir=$(OutDir)</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -412,7 +412,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>$(SolutionDir)..\basic_tools\ruyi cppsdk --verbose --projectdir=$(ProjectDir) --outdir=$(OutDir)</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
