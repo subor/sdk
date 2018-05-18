@@ -29,7 +29,7 @@ __Graphics__
     - Use a tool like [GLview](http://realtech-vr.com/admin/glview) for list of supported extensions
 - HDR10 output is __not__ supported
     - The hardware and driver support HDR10, but [Windows 10 RS1](os.md) does not.
-    - It is possible to add HDR10 support on a per-title basis via [AGS](amd_gpu_services.,d).
+    - It is possible to add HDR10 support on a per-title basis via [AGS](amd_gpu_services.md).
 
 __Operating System__
 
