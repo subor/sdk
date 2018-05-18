@@ -144,7 +144,7 @@ namespace Ruyi
 		}
 	}
 
-	void RuyiNetClient::Exit()
+	void RuyiNetClient::ExitAccount()
 	{
 		for (int i = 0; i < MAX_PLAYERS; ++i)
 		{
