@@ -142,6 +142,19 @@ namespace Ruyi
 		}
 	}
 
+	void RuyiNetClient::Exit()
+	{
+		for (int i = 0; i < MAX_PLAYERS; ++i)
+		{
+			if (nullptr != mCurrentPlayers[i])
+			{
+				std::string response;
+				BCService->Script_RunParentScript(response, "RUYI_Cleanup", "", "RUYI", i);
+				BCService->Identity_SwitchToParentProfile(response, "RUYI", i);
+			}
+		}
+	}
+
 	int RuyiNetClient::ActivePlayerIndex()
 	{
 		for (int i = 0; i < MAX_PLAYERS; ++i)
