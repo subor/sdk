@@ -38,9 +38,9 @@ namespace Ruyi
 		void Initialise(const std::string& appId, const std::string& appSecret);
 		
 		/// <summary>
-		/// End the RUYI net client, call this when you exit your account
+		/// log out logined account
 		/// </summary>
-		void ExitAccount();
+		void LogoutAccount();
 
 		/**
 		* return appId of the game
