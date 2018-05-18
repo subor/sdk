@@ -51,7 +51,7 @@ namespace Ruyi.SDK.Online
                     CurrentPlayers[i] = null;
                     var jsonResponse = BCService.Identity_SwitchToSingletonChildProfile(AppId, true, i);
                     var childProfile = JsonConvert.DeserializeObject<RuyiNetSwitchToChildProfileResponse>(jsonResponse);
-                    if (childProfile.status != 200)
+                    if (childProfile.status != RuyiNetHttpStatus.OK)
                     {
                         continue;
                     }
@@ -65,7 +65,7 @@ namespace Ruyi.SDK.Online
                     jsonResponse = BCService.Script_RunParentScript("GetProfile", JsonConvert.SerializeObject(payload), "RUYI", i);
 
                     var profileData = JsonConvert.DeserializeObject<RuyiNetGetProfileResponse>(jsonResponse);
-                    if (profileData.status != 200 ||
+                    if (profileData.status != RuyiNetHttpStatus.OK ||
                         profileData.data.success == false)
                     {
                         continue;
@@ -76,7 +76,7 @@ namespace Ruyi.SDK.Online
 
                 var response = new RuyiNetResponse()
                 {
-                    status = 200
+                    status = RuyiNetHttpStatus.OK
                 };
 
                 return JsonConvert.SerializeObject(response);

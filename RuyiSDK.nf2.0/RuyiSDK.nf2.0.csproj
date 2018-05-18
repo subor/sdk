@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\output\Debug\RuyiSDK.nf2.0\</OutputPath>
     <DefineConstants>TRACE;DEBUG;NET20</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\output\Release\RuyiSDK.nf2.0\</OutputPath>
     <DefineConstants>TRACE;NET20</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -86,6 +86,9 @@
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\RuyiNetException.cs">
       <Link>RuyiNet\RuyiNetException.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\RuyiNetHttpStatus.cs">
+      <Link>RuyiNet\RuyiNetHttpStatus.cs</Link>
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetCloudService.cs">
       <Link>RuyiNet\Service\RuyiNetCloudService.cs</Link>
