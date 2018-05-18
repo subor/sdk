@@ -40,7 +40,7 @@ namespace Ruyi
 		/// <summary>
 		/// End the RUYI net client, call this when you exit your account
 		/// </summary>
-		void Exit();
+		void ExitAccount();
 
 		/**
 		* return appId of the game

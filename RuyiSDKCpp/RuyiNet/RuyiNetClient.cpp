@@ -44,6 +44,8 @@ namespace Ruyi
 
 	RuyiNetClient::~RuyiNetClient()
 	{
+		ExitAccount();
+
 		delete mTelemetryService;
 		mTelemetryService = nullptr;
 
