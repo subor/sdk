@@ -34,6 +34,7 @@ __Important__:
 
 | BIOS Version/Date | Ruyi OS Version | AMD Driver Stack Version/Date
 |-|-|-
+| [0.20](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220020.zip) | 0.11 | 1.0.1.0 2018/5/2
 | [0.19](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220019.zip) | 0.10 | 1.0.1.0 2018/4/17
 | [0.13](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220013.zip) | 0.6 | 0.0.9.0 2018/2/2
 | [0.11](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220011.zip) | 0.5 | 0.0.7.4 2018/1/5
