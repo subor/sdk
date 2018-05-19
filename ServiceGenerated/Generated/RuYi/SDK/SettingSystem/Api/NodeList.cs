@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class NodeList : TBase
   {
     private List<Ruyi.SDK.CommonType.SettingCategory> _SettingCategories;
@@ -55,75 +58,84 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool SettingCategories;
       public bool SettingItems;
     }
 
-    public NodeList() {
+    public NodeList()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.List) {
+              if (field.Type == TType.List)
+              {
                 {
                   SettingCategories = new List<Ruyi.SDK.CommonType.SettingCategory>();
-                  TList _list18 = iprot.ReadListBegin();
-                  for( int _i19 = 0; _i19 < _list18.Count; ++_i19)
+                  TList _list18 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i19 = 0; _i19 < _list18.Count; ++_i19)
                   {
                     Ruyi.SDK.CommonType.SettingCategory _elem20;
                     _elem20 = new Ruyi.SDK.CommonType.SettingCategory();
-                    _elem20.Read(iprot);
+                    await _elem20.ReadAsync(iprot, cancellationToken);
                     SettingCategories.Add(_elem20);
                   }
-                  iprot.ReadListEnd();
+                  await iprot.ReadListEndAsync(cancellationToken);
                 }
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.List) {
+              if (field.Type == TType.List)
+              {
                 {
                   SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
-                  TList _list21 = iprot.ReadListBegin();
-                  for( int _i22 = 0; _i22 < _list21.Count; ++_i22)
+                  TList _list21 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i22 = 0; _i22 < _list21.Count; ++_i22)
                   {
                     Ruyi.SDK.CommonType.SettingItem _elem23;
                     _elem23 = new Ruyi.SDK.CommonType.SettingItem();
-                    _elem23.Read(iprot);
+                    await _elem23.ReadAsync(iprot, cancellationToken);
                     SettingItems.Add(_elem23);
                   }
-                  iprot.ReadListEnd();
+                  await iprot.ReadListEndAsync(cancellationToken);
                 }
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -131,45 +143,48 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("NodeList");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (SettingCategories != null && __isset.SettingCategories) {
+        var struc = new TStruct("NodeList");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (SettingCategories != null && __isset.SettingCategories)
+        {
           field.Name = "SettingCategories";
           field.Type = TType.List;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
-            oprot.WriteListBegin(new TList(TType.Struct, SettingCategories.Count));
+            await oprot.WriteListBeginAsync(new TList(TType.Struct, SettingCategories.Count), cancellationToken);
             foreach (Ruyi.SDK.CommonType.SettingCategory _iter24 in SettingCategories)
             {
-              _iter24.Write(oprot);
+              await _iter24.WriteAsync(oprot, cancellationToken);
             }
-            oprot.WriteListEnd();
+            await oprot.WriteListEndAsync(cancellationToken);
           }
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (SettingItems != null && __isset.SettingItems) {
+        if (SettingItems != null && __isset.SettingItems)
+        {
           field.Name = "SettingItems";
           field.Type = TType.List;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
-            oprot.WriteListBegin(new TList(TType.Struct, SettingItems.Count));
+            await oprot.WriteListBeginAsync(new TList(TType.Struct, SettingItems.Count), cancellationToken);
             foreach (Ruyi.SDK.CommonType.SettingItem _iter25 in SettingItems)
             {
-              _iter25.Write(oprot);
+              await _iter25.WriteAsync(oprot, cancellationToken);
             }
-            oprot.WriteListEnd();
+            await oprot.WriteListEndAsync(cancellationToken);
           }
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -177,25 +192,27 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("NodeList(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("NodeList(");
       bool __first = true;
-      if (SettingCategories != null && __isset.SettingCategories) {
-        if(!__first) { __sb.Append(", "); }
+      if (SettingCategories != null && __isset.SettingCategories)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("SettingCategories: ");
-        __sb.Append(SettingCategories);
+        sb.Append("SettingCategories: ");
+        sb.Append(SettingCategories);
       }
-      if (SettingItems != null && __isset.SettingItems) {
-        if(!__first) { __sb.Append(", "); }
+      if (SettingItems != null && __isset.SettingItems)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("SettingItems: ");
-        __sb.Append(SettingItems);
+        sb.Append("SettingItems: ");
+        sb.Append(SettingItems);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.InputManager
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class InputDeviceStateChangedX360 : TBase
   {
     private long _PacketNumber;
@@ -195,10 +198,8 @@ namespace Ruyi.SDK.InputManager
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool PacketNumber;
       public bool DeviceId;
       public bool LeftThumbDeadZone;
@@ -213,116 +214,157 @@ namespace Ruyi.SDK.InputManager
       public bool Changed;
     }
 
-    public InputDeviceStateChangedX360() {
+    public InputDeviceStateChangedX360()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I64) {
-                PacketNumber = iprot.ReadI64();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I64)
+              {
+                PacketNumber = await iprot.ReadI64Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.String) {
-                DeviceId = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                DeviceId = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 3:
-              if (field.Type == TType.I16) {
-                LeftThumbDeadZone = iprot.ReadI16();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I16)
+              {
+                LeftThumbDeadZone = await iprot.ReadI16Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 4:
-              if (field.Type == TType.I16) {
-                RightThumbDeadZone = iprot.ReadI16();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I16)
+              {
+                RightThumbDeadZone = await iprot.ReadI16Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 5:
-              if (field.Type == TType.I32) {
-                Buttons = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I32)
+              {
+                Buttons = await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 6:
-              if (field.Type == TType.Byte) {
-                LeftTrigger = iprot.ReadByte();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.Byte)
+              {
+                LeftTrigger = await iprot.ReadByteAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 7:
-              if (field.Type == TType.Byte) {
-                RightTrigger = iprot.ReadByte();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.Byte)
+              {
+                RightTrigger = await iprot.ReadByteAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 8:
-              if (field.Type == TType.I16) {
-                LeftThumbX = iprot.ReadI16();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I16)
+              {
+                LeftThumbX = await iprot.ReadI16Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 9:
-              if (field.Type == TType.I16) {
-                LeftThumbY = iprot.ReadI16();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I16)
+              {
+                LeftThumbY = await iprot.ReadI16Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 10:
-              if (field.Type == TType.I16) {
-                RightThumbX = iprot.ReadI16();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I16)
+              {
+                RightThumbX = await iprot.ReadI16Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 11:
-              if (field.Type == TType.I16) {
-                RightThumbY = iprot.ReadI16();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I16)
+              {
+                RightThumbY = await iprot.ReadI16Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 12:
-              if (field.Type == TType.Struct) {
+              if (field.Type == TType.Struct)
+              {
                 Changed = new RuyiInputStateChanged();
-                Changed.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await Changed.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -330,111 +372,124 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("InputDeviceStateChangedX360");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (__isset.PacketNumber) {
+        var struc = new TStruct("InputDeviceStateChangedX360");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (__isset.PacketNumber)
+        {
           field.Name = "PacketNumber";
           field.Type = TType.I64;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI64(PacketNumber);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI64Async(PacketNumber, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (DeviceId != null && __isset.DeviceId) {
+        if (DeviceId != null && __isset.DeviceId)
+        {
           field.Name = "DeviceId";
           field.Type = TType.String;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(DeviceId);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(DeviceId, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.LeftThumbDeadZone) {
+        if (__isset.LeftThumbDeadZone)
+        {
           field.Name = "LeftThumbDeadZone";
           field.Type = TType.I16;
           field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI16(LeftThumbDeadZone);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI16Async(LeftThumbDeadZone, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.RightThumbDeadZone) {
+        if (__isset.RightThumbDeadZone)
+        {
           field.Name = "RightThumbDeadZone";
           field.Type = TType.I16;
           field.ID = 4;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI16(RightThumbDeadZone);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI16Async(RightThumbDeadZone, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.Buttons) {
+        if (__isset.Buttons)
+        {
           field.Name = "Buttons";
           field.Type = TType.I32;
           field.ID = 5;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Buttons);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async(Buttons, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.LeftTrigger) {
+        if (__isset.LeftTrigger)
+        {
           field.Name = "LeftTrigger";
           field.Type = TType.Byte;
           field.ID = 6;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteByte(LeftTrigger);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteByteAsync(LeftTrigger, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.RightTrigger) {
+        if (__isset.RightTrigger)
+        {
           field.Name = "RightTrigger";
           field.Type = TType.Byte;
           field.ID = 7;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteByte(RightTrigger);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteByteAsync(RightTrigger, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.LeftThumbX) {
+        if (__isset.LeftThumbX)
+        {
           field.Name = "LeftThumbX";
           field.Type = TType.I16;
           field.ID = 8;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI16(LeftThumbX);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI16Async(LeftThumbX, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.LeftThumbY) {
+        if (__isset.LeftThumbY)
+        {
           field.Name = "LeftThumbY";
           field.Type = TType.I16;
           field.ID = 9;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI16(LeftThumbY);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI16Async(LeftThumbY, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.RightThumbX) {
+        if (__isset.RightThumbX)
+        {
           field.Name = "RightThumbX";
           field.Type = TType.I16;
           field.ID = 10;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI16(RightThumbX);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI16Async(RightThumbX, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.RightThumbY) {
+        if (__isset.RightThumbY)
+        {
           field.Name = "RightThumbY";
           field.Type = TType.I16;
           field.ID = 11;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI16(RightThumbY);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI16Async(RightThumbY, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Changed != null && __isset.Changed) {
+        if (Changed != null && __isset.Changed)
+        {
           field.Name = "Changed";
           field.Type = TType.Struct;
           field.ID = 12;
-          oprot.WriteFieldBegin(field);
-          Changed.Write(oprot);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Changed.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -442,85 +497,97 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("InputDeviceStateChangedX360(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("InputDeviceStateChangedX360(");
       bool __first = true;
-      if (__isset.PacketNumber) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.PacketNumber)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("PacketNumber: ");
-        __sb.Append(PacketNumber);
+        sb.Append("PacketNumber: ");
+        sb.Append(PacketNumber);
       }
-      if (DeviceId != null && __isset.DeviceId) {
-        if(!__first) { __sb.Append(", "); }
+      if (DeviceId != null && __isset.DeviceId)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("DeviceId: ");
-        __sb.Append(DeviceId);
+        sb.Append("DeviceId: ");
+        sb.Append(DeviceId);
       }
-      if (__isset.LeftThumbDeadZone) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.LeftThumbDeadZone)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("LeftThumbDeadZone: ");
-        __sb.Append(LeftThumbDeadZone);
+        sb.Append("LeftThumbDeadZone: ");
+        sb.Append(LeftThumbDeadZone);
       }
-      if (__isset.RightThumbDeadZone) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.RightThumbDeadZone)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("RightThumbDeadZone: ");
-        __sb.Append(RightThumbDeadZone);
+        sb.Append("RightThumbDeadZone: ");
+        sb.Append(RightThumbDeadZone);
       }
-      if (__isset.Buttons) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.Buttons)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Buttons: ");
-        __sb.Append(Buttons);
+        sb.Append("Buttons: ");
+        sb.Append(Buttons);
       }
-      if (__isset.LeftTrigger) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.LeftTrigger)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("LeftTrigger: ");
-        __sb.Append(LeftTrigger);
+        sb.Append("LeftTrigger: ");
+        sb.Append(LeftTrigger);
       }
-      if (__isset.RightTrigger) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.RightTrigger)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("RightTrigger: ");
-        __sb.Append(RightTrigger);
+        sb.Append("RightTrigger: ");
+        sb.Append(RightTrigger);
       }
-      if (__isset.LeftThumbX) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.LeftThumbX)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("LeftThumbX: ");
-        __sb.Append(LeftThumbX);
+        sb.Append("LeftThumbX: ");
+        sb.Append(LeftThumbX);
       }
-      if (__isset.LeftThumbY) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.LeftThumbY)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("LeftThumbY: ");
-        __sb.Append(LeftThumbY);
+        sb.Append("LeftThumbY: ");
+        sb.Append(LeftThumbY);
       }
-      if (__isset.RightThumbX) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.RightThumbX)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("RightThumbX: ");
-        __sb.Append(RightThumbX);
+        sb.Append("RightThumbX: ");
+        sb.Append(RightThumbX);
       }
-      if (__isset.RightThumbY) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.RightThumbY)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("RightThumbY: ");
-        __sb.Append(RightThumbY);
+        sb.Append("RightThumbY: ");
+        sb.Append(RightThumbY);
       }
-      if (Changed != null && __isset.Changed) {
-        if(!__first) { __sb.Append(", "); }
+      if (Changed != null && __isset.Changed)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Changed: ");
-        __sb.Append(Changed== null ? "<null>" : Changed.ToString());
+        sb.Append("Changed: ");
+        sb.Append(Changed== null ? "<null>" : Changed.ToString());
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

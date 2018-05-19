@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.InputManager
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class InputDeviceStateChangedJoystick : TBase
   {
     private int _RawOffset;
@@ -97,10 +100,8 @@ namespace Ruyi.SDK.InputManager
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool RawOffset;
       public bool @Value;
       public bool Timestamp;
@@ -108,66 +109,86 @@ namespace Ruyi.SDK.InputManager
       public bool Offset;
     }
 
-    public InputDeviceStateChangedJoystick() {
+    public InputDeviceStateChangedJoystick()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                RawOffset = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I32)
+              {
+                RawOffset = await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.I32) {
-                Value = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I32)
+              {
+                Value = await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 3:
-              if (field.Type == TType.I32) {
-                Timestamp = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I32)
+              {
+                Timestamp = await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 4:
-              if (field.Type == TType.I32) {
-                Sequence = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I32)
+              {
+                Sequence = await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 5:
-              if (field.Type == TType.I16) {
-                Offset = iprot.ReadI16();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I16)
+              {
+                Offset = await iprot.ReadI16Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -175,55 +196,61 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("InputDeviceStateChangedJoystick");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (__isset.RawOffset) {
+        var struc = new TStruct("InputDeviceStateChangedJoystick");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (__isset.RawOffset)
+        {
           field.Name = "RawOffset";
           field.Type = TType.I32;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(RawOffset);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async(RawOffset, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.@Value) {
+        if (__isset.@Value)
+        {
           field.Name = "Value";
           field.Type = TType.I32;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Value);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async(Value, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.Timestamp) {
+        if (__isset.Timestamp)
+        {
           field.Name = "Timestamp";
           field.Type = TType.I32;
           field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Timestamp);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async(Timestamp, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.Sequence) {
+        if (__isset.Sequence)
+        {
           field.Name = "Sequence";
           field.Type = TType.I32;
           field.ID = 4;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Sequence);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async(Sequence, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.Offset) {
+        if (__isset.Offset)
+        {
           field.Name = "Offset";
           field.Type = TType.I16;
           field.ID = 5;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI16(Offset);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI16Async(Offset, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -231,43 +258,48 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("InputDeviceStateChangedJoystick(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("InputDeviceStateChangedJoystick(");
       bool __first = true;
-      if (__isset.RawOffset) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.RawOffset)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("RawOffset: ");
-        __sb.Append(RawOffset);
+        sb.Append("RawOffset: ");
+        sb.Append(RawOffset);
       }
-      if (__isset.@Value) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.@Value)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Value: ");
-        __sb.Append(Value);
+        sb.Append("Value: ");
+        sb.Append(Value);
       }
-      if (__isset.Timestamp) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.Timestamp)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Timestamp: ");
-        __sb.Append(Timestamp);
+        sb.Append("Timestamp: ");
+        sb.Append(Timestamp);
       }
-      if (__isset.Sequence) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.Sequence)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Sequence: ");
-        __sb.Append(Sequence);
+        sb.Append("Sequence: ");
+        sb.Append(Sequence);
       }
-      if (__isset.Offset) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.Offset)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Offset: ");
-        __sb.Append(Offset);
+        sb.Append("Offset: ");
+        sb.Append(Offset);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

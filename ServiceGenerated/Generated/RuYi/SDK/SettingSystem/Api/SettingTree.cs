@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class SettingTree : TBase
   {
     private CategoryNode _CateNode;
@@ -69,88 +72,100 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool CateNode;
       public bool SettingCategories;
       public bool SettingItems;
     }
 
-    public SettingTree() {
+    public SettingTree()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.Struct) {
+              if (field.Type == TType.Struct)
+              {
                 CateNode = new CategoryNode();
-                CateNode.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await CateNode.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.Map) {
+              if (field.Type == TType.Map)
+              {
                 {
                   SettingCategories = new Dictionary<string, Ruyi.SDK.CommonType.SettingCategory>();
-                  TMap _map8 = iprot.ReadMapBegin();
-                  for( int _i9 = 0; _i9 < _map8.Count; ++_i9)
+                  TMap _map8 = await iprot.ReadMapBeginAsync(cancellationToken);
+                  for(int _i9 = 0; _i9 < _map8.Count; ++_i9)
                   {
                     string _key10;
                     Ruyi.SDK.CommonType.SettingCategory _val11;
-                    _key10 = iprot.ReadString();
+                    _key10 = await iprot.ReadStringAsync(cancellationToken);
                     _val11 = new Ruyi.SDK.CommonType.SettingCategory();
-                    _val11.Read(iprot);
+                    await _val11.ReadAsync(iprot, cancellationToken);
                     SettingCategories[_key10] = _val11;
                   }
-                  iprot.ReadMapEnd();
+                  await iprot.ReadMapEndAsync(cancellationToken);
                 }
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 3:
-              if (field.Type == TType.Map) {
+              if (field.Type == TType.Map)
+              {
                 {
                   SettingItems = new Dictionary<string, Ruyi.SDK.CommonType.SettingItem>();
-                  TMap _map12 = iprot.ReadMapBegin();
-                  for( int _i13 = 0; _i13 < _map12.Count; ++_i13)
+                  TMap _map12 = await iprot.ReadMapBeginAsync(cancellationToken);
+                  for(int _i13 = 0; _i13 < _map12.Count; ++_i13)
                   {
                     string _key14;
                     Ruyi.SDK.CommonType.SettingItem _val15;
-                    _key14 = iprot.ReadString();
+                    _key14 = await iprot.ReadStringAsync(cancellationToken);
                     _val15 = new Ruyi.SDK.CommonType.SettingItem();
-                    _val15.Read(iprot);
+                    await _val15.ReadAsync(iprot, cancellationToken);
                     SettingItems[_key14] = _val15;
                   }
-                  iprot.ReadMapEnd();
+                  await iprot.ReadMapEndAsync(cancellationToken);
                 }
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -158,55 +173,59 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("SettingTree");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (CateNode != null && __isset.CateNode) {
+        var struc = new TStruct("SettingTree");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (CateNode != null && __isset.CateNode)
+        {
           field.Name = "CateNode";
           field.Type = TType.Struct;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          CateNode.Write(oprot);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await CateNode.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (SettingCategories != null && __isset.SettingCategories) {
+        if (SettingCategories != null && __isset.SettingCategories)
+        {
           field.Name = "SettingCategories";
           field.Type = TType.Map;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
-            oprot.WriteMapBegin(new TMap(TType.String, TType.Struct, SettingCategories.Count));
+            await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.Struct, SettingCategories.Count), cancellationToken);
             foreach (string _iter16 in SettingCategories.Keys)
             {
-              oprot.WriteString(_iter16);
-              SettingCategories[_iter16].Write(oprot);
+              await oprot.WriteStringAsync(_iter16, cancellationToken);
+              await SettingCategories[_iter16].WriteAsync(oprot, cancellationToken);
             }
-            oprot.WriteMapEnd();
+            await oprot.WriteMapEndAsync(cancellationToken);
           }
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (SettingItems != null && __isset.SettingItems) {
+        if (SettingItems != null && __isset.SettingItems)
+        {
           field.Name = "SettingItems";
           field.Type = TType.Map;
           field.ID = 3;
-          oprot.WriteFieldBegin(field);
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
-            oprot.WriteMapBegin(new TMap(TType.String, TType.Struct, SettingItems.Count));
+            await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.Struct, SettingItems.Count), cancellationToken);
             foreach (string _iter17 in SettingItems.Keys)
             {
-              oprot.WriteString(_iter17);
-              SettingItems[_iter17].Write(oprot);
+              await oprot.WriteStringAsync(_iter17, cancellationToken);
+              await SettingItems[_iter17].WriteAsync(oprot, cancellationToken);
             }
-            oprot.WriteMapEnd();
+            await oprot.WriteMapEndAsync(cancellationToken);
           }
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -214,31 +233,34 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("SettingTree(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("SettingTree(");
       bool __first = true;
-      if (CateNode != null && __isset.CateNode) {
-        if(!__first) { __sb.Append(", "); }
+      if (CateNode != null && __isset.CateNode)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("CateNode: ");
-        __sb.Append(CateNode== null ? "<null>" : CateNode.ToString());
+        sb.Append("CateNode: ");
+        sb.Append(CateNode== null ? "<null>" : CateNode.ToString());
       }
-      if (SettingCategories != null && __isset.SettingCategories) {
-        if(!__first) { __sb.Append(", "); }
+      if (SettingCategories != null && __isset.SettingCategories)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("SettingCategories: ");
-        __sb.Append(SettingCategories);
+        sb.Append("SettingCategories: ");
+        sb.Append(SettingCategories);
       }
-      if (SettingItems != null && __isset.SettingItems) {
-        if(!__first) { __sb.Append(", "); }
+      if (SettingItems != null && __isset.SettingItems)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("SettingItems: ");
-        __sb.Append(SettingItems);
+        sb.Append("SettingItems: ");
+        sb.Append(SettingItems);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.InputManager
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class InputDeviceStateChanged : TBase
   {
     private InputDeviceEventHeader _header;
@@ -125,10 +128,8 @@ namespace Ruyi.SDK.InputManager
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool header;
       public bool x360;
       public bool dgamepad;
@@ -138,87 +139,113 @@ namespace Ruyi.SDK.InputManager
       public bool ruyicontroller;
     }
 
-    public InputDeviceStateChanged() {
+    public InputDeviceStateChanged()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.Struct) {
+              if (field.Type == TType.Struct)
+              {
                 Header = new InputDeviceEventHeader();
-                Header.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await Header.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.Struct) {
+              if (field.Type == TType.Struct)
+              {
                 X360 = new InputDeviceStateChangedX360();
-                X360.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await X360.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 3:
-              if (field.Type == TType.Struct) {
+              if (field.Type == TType.Struct)
+              {
                 Dgamepad = new InputDeviceStateChangedGamepad();
-                Dgamepad.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await Dgamepad.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 4:
-              if (field.Type == TType.Struct) {
+              if (field.Type == TType.Struct)
+              {
                 Djoystick = new InputDeviceStateChangedJoystick();
-                Djoystick.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await Djoystick.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 5:
-              if (field.Type == TType.Struct) {
+              if (field.Type == TType.Struct)
+              {
                 Dkeyboard = new InputDeviceStateChangedKeyboard();
-                Dkeyboard.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await Dkeyboard.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 6:
-              if (field.Type == TType.Struct) {
+              if (field.Type == TType.Struct)
+              {
                 Dmouse = new InputDeviceStateChangedMouse();
-                Dmouse.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await Dmouse.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 7:
-              if (field.Type == TType.Struct) {
+              if (field.Type == TType.Struct)
+              {
                 Ruyicontroller = new InputDeviceStateChangedRuyiController();
-                Ruyicontroller.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await Ruyicontroller.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -226,71 +253,79 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("InputDeviceStateChanged");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (Header != null && __isset.header) {
+        var struc = new TStruct("InputDeviceStateChanged");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (Header != null && __isset.header)
+        {
           field.Name = "header";
           field.Type = TType.Struct;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          Header.Write(oprot);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Header.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (X360 != null && __isset.x360) {
+        if (X360 != null && __isset.x360)
+        {
           field.Name = "x360";
           field.Type = TType.Struct;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          X360.Write(oprot);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await X360.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Dgamepad != null && __isset.dgamepad) {
+        if (Dgamepad != null && __isset.dgamepad)
+        {
           field.Name = "dgamepad";
           field.Type = TType.Struct;
           field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          Dgamepad.Write(oprot);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Dgamepad.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Djoystick != null && __isset.djoystick) {
+        if (Djoystick != null && __isset.djoystick)
+        {
           field.Name = "djoystick";
           field.Type = TType.Struct;
           field.ID = 4;
-          oprot.WriteFieldBegin(field);
-          Djoystick.Write(oprot);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Djoystick.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Dkeyboard != null && __isset.dkeyboard) {
+        if (Dkeyboard != null && __isset.dkeyboard)
+        {
           field.Name = "dkeyboard";
           field.Type = TType.Struct;
           field.ID = 5;
-          oprot.WriteFieldBegin(field);
-          Dkeyboard.Write(oprot);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Dkeyboard.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Dmouse != null && __isset.dmouse) {
+        if (Dmouse != null && __isset.dmouse)
+        {
           field.Name = "dmouse";
           field.Type = TType.Struct;
           field.ID = 6;
-          oprot.WriteFieldBegin(field);
-          Dmouse.Write(oprot);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Dmouse.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Ruyicontroller != null && __isset.ruyicontroller) {
+        if (Ruyicontroller != null && __isset.ruyicontroller)
+        {
           field.Name = "ruyicontroller";
           field.Type = TType.Struct;
           field.ID = 7;
-          oprot.WriteFieldBegin(field);
-          Ruyicontroller.Write(oprot);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Ruyicontroller.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -298,55 +333,62 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("InputDeviceStateChanged(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("InputDeviceStateChanged(");
       bool __first = true;
-      if (Header != null && __isset.header) {
-        if(!__first) { __sb.Append(", "); }
+      if (Header != null && __isset.header)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Header: ");
-        __sb.Append(Header== null ? "<null>" : Header.ToString());
+        sb.Append("Header: ");
+        sb.Append(Header== null ? "<null>" : Header.ToString());
       }
-      if (X360 != null && __isset.x360) {
-        if(!__first) { __sb.Append(", "); }
+      if (X360 != null && __isset.x360)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("X360: ");
-        __sb.Append(X360== null ? "<null>" : X360.ToString());
+        sb.Append("X360: ");
+        sb.Append(X360== null ? "<null>" : X360.ToString());
       }
-      if (Dgamepad != null && __isset.dgamepad) {
-        if(!__first) { __sb.Append(", "); }
+      if (Dgamepad != null && __isset.dgamepad)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Dgamepad: ");
-        __sb.Append(Dgamepad== null ? "<null>" : Dgamepad.ToString());
+        sb.Append("Dgamepad: ");
+        sb.Append(Dgamepad== null ? "<null>" : Dgamepad.ToString());
       }
-      if (Djoystick != null && __isset.djoystick) {
-        if(!__first) { __sb.Append(", "); }
+      if (Djoystick != null && __isset.djoystick)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Djoystick: ");
-        __sb.Append(Djoystick== null ? "<null>" : Djoystick.ToString());
+        sb.Append("Djoystick: ");
+        sb.Append(Djoystick== null ? "<null>" : Djoystick.ToString());
       }
-      if (Dkeyboard != null && __isset.dkeyboard) {
-        if(!__first) { __sb.Append(", "); }
+      if (Dkeyboard != null && __isset.dkeyboard)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Dkeyboard: ");
-        __sb.Append(Dkeyboard== null ? "<null>" : Dkeyboard.ToString());
+        sb.Append("Dkeyboard: ");
+        sb.Append(Dkeyboard== null ? "<null>" : Dkeyboard.ToString());
       }
-      if (Dmouse != null && __isset.dmouse) {
-        if(!__first) { __sb.Append(", "); }
+      if (Dmouse != null && __isset.dmouse)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Dmouse: ");
-        __sb.Append(Dmouse== null ? "<null>" : Dmouse.ToString());
+        sb.Append("Dmouse: ");
+        sb.Append(Dmouse== null ? "<null>" : Dmouse.ToString());
       }
-      if (Ruyicontroller != null && __isset.ruyicontroller) {
-        if(!__first) { __sb.Append(", "); }
+      if (Ruyicontroller != null && __isset.ruyicontroller)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Ruyicontroller: ");
-        __sb.Append(Ruyicontroller== null ? "<null>" : Ruyicontroller.ToString());
+        sb.Append("Ruyicontroller: ");
+        sb.Append(Ruyicontroller== null ? "<null>" : Ruyicontroller.ToString());
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

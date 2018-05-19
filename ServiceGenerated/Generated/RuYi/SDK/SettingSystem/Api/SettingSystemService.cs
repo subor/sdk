@@ -9,1126 +9,589 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.SettingSystem.Api
 {
-  public partial class SettingSystemService {
-    public interface ISync {
+  public partial class SettingSystemService
+  {
+    public interface IAsync
+    {
       /// <summary>
       /// Get a setting data of the module.
       /// </summary>
       /// <param name="id">The setting's unique id in current module.</param>
-      Ruyi.SDK.CommonType.SettingItem GetSettingItem(string id);
+      Task<Ruyi.SDK.CommonType.SettingItem> GetSettingItemAsync(string id, CancellationToken cancellationToken);
+
       /// <summary>
       /// Get a list of setting data of the module.
       /// </summary>
       /// <param name="category">Category to filter the settings. Null indicates getting all settings of the module</param>
       /// <param name="includeChildren">Whecher to get the settings of children cagegories.</param>
-      List<Ruyi.SDK.CommonType.SettingItem> GetSettingItems(string category, bool includeChildren);
+      Task<List<Ruyi.SDK.CommonType.SettingItem>> GetSettingItemsAsync(string category, bool includeChildren, CancellationToken cancellationToken);
+
       /// <summary>
       /// Search a set of settings using a json format string.
       /// According to the format of json string your write, searching can be separated to 3 types: simple search, lambda search and complicated search. And each of they can be combined with the other.
       /// </summary>
       /// <param name="filterJson">Json string used to search.</param>
-      Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult> SearchSettingItems(string filterJson);
+      Task<Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult>> SearchSettingItemsAsync(string filterJson, CancellationToken cancellationToken);
+
       /// <summary>
       /// Get settings and categories in a tree
       /// </summary>
-      Ruyi.SDK.SettingSystem.Api.SettingTree GetCategoryNode();
-      Ruyi.SDK.SettingSystem.Api.NodeList GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType);
+      Task<Ruyi.SDK.SettingSystem.Api.SettingTree> GetCategoryNodeAsync(CancellationToken cancellationToken);
+
+      Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, CancellationToken cancellationToken);
+
       /// <summary>
       /// Set the specified setting's "dataValue" with the new value
       /// </summary>
       /// <param name="key">Identity of the setting</param>
       /// <param name="val">Value to be set</param>
-      bool SetSettingItem(string key, string val);
+      Task<bool> SetSettingItemAsync(string key, string val, CancellationToken cancellationToken);
+
       /// <summary>
       /// Set a set of settings' "dataValue"
       /// </summary>
       /// <param name="keyValues">The key-values to be set.</param>
-      int SetSettingItems(Dictionary<string, string> keyValues);
+      Task<int> SetSettingItemsAsync(Dictionary<string, string> keyValues, CancellationToken cancellationToken);
+
       /// <summary>
       /// Restore a module setting to default
       /// </summary>
       /// <param name="moduleName">Module name specifies the module to be restored.</param>
       /// <param name="category">The category of which to restored. Null indicates all settings.</param>
-      bool RestoreDefault(string moduleName, string category);
-      bool RestoreUserDefault(string userId, string moduleName, string category);
+      Task<bool> RestoreDefaultAsync(string moduleName, string category, CancellationToken cancellationToken);
+
+      Task<bool> RestoreUserDefaultAsync(string userId, string moduleName, string category, CancellationToken cancellationToken);
+
       /// <summary>
       /// Update the module settings from an older version to the latest one
       /// </summary>
       /// <param name="moduleName">Module of the setting</param>
-      bool UpdateModuleVersion(string moduleName);
-      int SetUserAppData(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems);
-      Ruyi.SDK.CommonType.AppData GetUserAppData(string userId, string category, List<string> settingKeys);
-      int RemoveUserAppData(string userId, string category, List<string> settingKeys);
+      Task<bool> UpdateModuleVersionAsync(string moduleName, CancellationToken cancellationToken);
+
+      Task<int> SetUserAppDataAsync(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems, CancellationToken cancellationToken);
+
+      Task<Ruyi.SDK.CommonType.AppData> GetUserAppDataAsync(string userId, string category, List<string> settingKeys, CancellationToken cancellationToken);
+
+      Task<int> RemoveUserAppDataAsync(string userId, string category, List<string> settingKeys, CancellationToken cancellationToken);
+
       /// <summary>
       /// Notify layer0 that a setting item has specific event
       /// </summary>
       /// <param name="key">The item's ID</param>
       /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
-      bool SettingItemNotify(string key, string contents);
+      Task<bool> SettingItemNotifyAsync(string key, string contents, CancellationToken cancellationToken);
+
     }
 
-    public interface IAsync {
-      /// <summary>
-      /// Get a setting data of the module.
-      /// </summary>
-      /// <param name="id">The setting's unique id in current module.</param>
-      Task<Ruyi.SDK.CommonType.SettingItem> GetSettingItemAsync(string id);
-      /// <summary>
-      /// Get a list of setting data of the module.
-      /// </summary>
-      /// <param name="category">Category to filter the settings. Null indicates getting all settings of the module</param>
-      /// <param name="includeChildren">Whecher to get the settings of children cagegories.</param>
-      Task<List<Ruyi.SDK.CommonType.SettingItem>> GetSettingItemsAsync(string category, bool includeChildren);
-      /// <summary>
-      /// Search a set of settings using a json format string.
-      /// According to the format of json string your write, searching can be separated to 3 types: simple search, lambda search and complicated search. And each of they can be combined with the other.
-      /// </summary>
-      /// <param name="filterJson">Json string used to search.</param>
-      Task<Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult>> SearchSettingItemsAsync(string filterJson);
-      /// <summary>
-      /// Get settings and categories in a tree
-      /// </summary>
-      Task<Ruyi.SDK.SettingSystem.Api.SettingTree> GetCategoryNodeAsync();
-      Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType);
-      /// <summary>
-      /// Set the specified setting's "dataValue" with the new value
-      /// </summary>
-      /// <param name="key">Identity of the setting</param>
-      /// <param name="val">Value to be set</param>
-      Task<bool> SetSettingItemAsync(string key, string val);
-      /// <summary>
-      /// Set a set of settings' "dataValue"
-      /// </summary>
-      /// <param name="keyValues">The key-values to be set.</param>
-      Task<int> SetSettingItemsAsync(Dictionary<string, string> keyValues);
-      /// <summary>
-      /// Restore a module setting to default
-      /// </summary>
-      /// <param name="moduleName">Module name specifies the module to be restored.</param>
-      /// <param name="category">The category of which to restored. Null indicates all settings.</param>
-      Task<bool> RestoreDefaultAsync(string moduleName, string category);
-      Task<bool> RestoreUserDefaultAsync(string userId, string moduleName, string category);
-      /// <summary>
-      /// Update the module settings from an older version to the latest one
-      /// </summary>
-      /// <param name="moduleName">Module of the setting</param>
-      Task<bool> UpdateModuleVersionAsync(string moduleName);
-      Task<int> SetUserAppDataAsync(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems);
-      Task<Ruyi.SDK.CommonType.AppData> GetUserAppDataAsync(string userId, string category, List<string> settingKeys);
-      Task<int> RemoveUserAppDataAsync(string userId, string category, List<string> settingKeys);
-      /// <summary>
-      /// Notify layer0 that a setting item has specific event
-      /// </summary>
-      /// <param name="key">The item's ID</param>
-      /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
-      Task<bool> SettingItemNotifyAsync(string key, string contents);
-    }
 
-    public interface Iface : ISync, IAsync {
-      /// <summary>
-      /// Get a setting data of the module.
-      /// </summary>
-      /// <param name="id">The setting's unique id in current module.</param>
-      IAsyncResult Begin_GetSettingItem(AsyncCallback callback, object state, string id);
-      Ruyi.SDK.CommonType.SettingItem End_GetSettingItem(IAsyncResult asyncResult);
-      /// <summary>
-      /// Get a list of setting data of the module.
-      /// </summary>
-      /// <param name="category">Category to filter the settings. Null indicates getting all settings of the module</param>
-      /// <param name="includeChildren">Whecher to get the settings of children cagegories.</param>
-      IAsyncResult Begin_GetSettingItems(AsyncCallback callback, object state, string category, bool includeChildren);
-      List<Ruyi.SDK.CommonType.SettingItem> End_GetSettingItems(IAsyncResult asyncResult);
-      /// <summary>
-      /// Search a set of settings using a json format string.
-      /// According to the format of json string your write, searching can be separated to 3 types: simple search, lambda search and complicated search. And each of they can be combined with the other.
-      /// </summary>
-      /// <param name="filterJson">Json string used to search.</param>
-      IAsyncResult Begin_SearchSettingItems(AsyncCallback callback, object state, string filterJson);
-      Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult> End_SearchSettingItems(IAsyncResult asyncResult);
-      /// <summary>
-      /// Get settings and categories in a tree
-      /// </summary>
-      IAsyncResult Begin_GetCategoryNode(AsyncCallback callback, object state);
-      Ruyi.SDK.SettingSystem.Api.SettingTree End_GetCategoryNode(IAsyncResult asyncResult);
-      IAsyncResult Begin_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType);
-      Ruyi.SDK.SettingSystem.Api.NodeList End_GetChildNode(IAsyncResult asyncResult);
-      /// <summary>
-      /// Set the specified setting's "dataValue" with the new value
-      /// </summary>
-      /// <param name="key">Identity of the setting</param>
-      /// <param name="val">Value to be set</param>
-      IAsyncResult Begin_SetSettingItem(AsyncCallback callback, object state, string key, string val);
-      bool End_SetSettingItem(IAsyncResult asyncResult);
-      /// <summary>
-      /// Set a set of settings' "dataValue"
-      /// </summary>
-      /// <param name="keyValues">The key-values to be set.</param>
-      IAsyncResult Begin_SetSettingItems(AsyncCallback callback, object state, Dictionary<string, string> keyValues);
-      int End_SetSettingItems(IAsyncResult asyncResult);
-      /// <summary>
-      /// Restore a module setting to default
-      /// </summary>
-      /// <param name="moduleName">Module name specifies the module to be restored.</param>
-      /// <param name="category">The category of which to restored. Null indicates all settings.</param>
-      IAsyncResult Begin_RestoreDefault(AsyncCallback callback, object state, string moduleName, string category);
-      bool End_RestoreDefault(IAsyncResult asyncResult);
-      IAsyncResult Begin_RestoreUserDefault(AsyncCallback callback, object state, string userId, string moduleName, string category);
-      bool End_RestoreUserDefault(IAsyncResult asyncResult);
-      /// <summary>
-      /// Update the module settings from an older version to the latest one
-      /// </summary>
-      /// <param name="moduleName">Module of the setting</param>
-      IAsyncResult Begin_UpdateModuleVersion(AsyncCallback callback, object state, string moduleName);
-      bool End_UpdateModuleVersion(IAsyncResult asyncResult);
-      IAsyncResult Begin_SetUserAppData(AsyncCallback callback, object state, string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems);
-      int End_SetUserAppData(IAsyncResult asyncResult);
-      IAsyncResult Begin_GetUserAppData(AsyncCallback callback, object state, string userId, string category, List<string> settingKeys);
-      Ruyi.SDK.CommonType.AppData End_GetUserAppData(IAsyncResult asyncResult);
-      IAsyncResult Begin_RemoveUserAppData(AsyncCallback callback, object state, string userId, string category, List<string> settingKeys);
-      int End_RemoveUserAppData(IAsyncResult asyncResult);
-      /// <summary>
-      /// Notify layer0 that a setting item has specific event
-      /// </summary>
-      /// <param name="key">The item's ID</param>
-      /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
-      IAsyncResult Begin_SettingItemNotify(AsyncCallback callback, object state, string key, string contents);
-      bool End_SettingItemNotify(IAsyncResult asyncResult);
-    }
-
-    public class Client : IDisposable, Iface {
-      public Client(TProtocol prot) : this(prot, prot)
+    public class Client : TBaseClient, IDisposable, IAsync
+    {
+      public Client(TProtocol protocol) : this(protocol, protocol)
       {
       }
 
-      public Client(TProtocol iprot, TProtocol oprot)
-      {
-        iprot_ = iprot;
-        oprot_ = oprot;
+      public Client(TProtocol inputProtocol, TProtocol outputProtocol) : base(inputProtocol, outputProtocol)      {
       }
-
-      protected TProtocol iprot_;
-      protected TProtocol oprot_;
-      protected int seqid_;
-
-      public TProtocol InputProtocol
+      public async Task<Ruyi.SDK.CommonType.SettingItem> GetSettingItemAsync(string id, CancellationToken cancellationToken)
       {
-        get { return iprot_; }
-      }
-      public TProtocol OutputProtocol
-      {
-        get { return oprot_; }
-      }
-
-
-      #region " IDisposable Support "
-      private bool _IsDisposed;
-
-      // IDisposable
-      public void Dispose()
-      {
-        Dispose(true);
-      }
-      
-
-      protected virtual void Dispose(bool disposing)
-      {
-        if (!_IsDisposed)
-        {
-          if (disposing)
-          {
-            if (iprot_ != null)
-            {
-              ((IDisposable)iprot_).Dispose();
-            }
-            if (oprot_ != null)
-            {
-              ((IDisposable)oprot_).Dispose();
-            }
-          }
-        }
-        _IsDisposed = true;
-      }
-      #endregion
-
-
-      
-      public IAsyncResult Begin_GetSettingItem(AsyncCallback callback, object state, string id)
-      {
-        return send_GetSettingItem(callback, state, id);
-      }
-
-      public Ruyi.SDK.CommonType.SettingItem End_GetSettingItem(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_GetSettingItem();
-      }
-
-      public async Task<Ruyi.SDK.CommonType.SettingItem> GetSettingItemAsync(string id)
-      {
-        Ruyi.SDK.CommonType.SettingItem retval;
-        retval = await Task.Run(() =>
-        {
-          return GetSettingItem(id);
-        });
-        return retval;
-      }
-
-      /// <summary>
-      /// Get a setting data of the module.
-      /// </summary>
-      /// <param name="id">The setting's unique id in current module.</param>
-      public Ruyi.SDK.CommonType.SettingItem GetSettingItem(string id)
-      {
-        var asyncResult = Begin_GetSettingItem(null, null, id);
-        return End_GetSettingItem(asyncResult);
-
-      }
-      public IAsyncResult send_GetSettingItem(AsyncCallback callback, object state, string id)
-      {
-        oprot_.WriteMessageBegin(new TMessage("GetSettingItem", TMessageType.Call, seqid_));
-        GetSettingItem_args args = new GetSettingItem_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetSettingItem", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new GetSettingItemArgs();
         args.Id = id;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public Ruyi.SDK.CommonType.SettingItem recv_GetSettingItem()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        GetSettingItem_result result = new GetSettingItem_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new GetSettingItemResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetSettingItem failed: unknown result");
       }
 
-      
-      public IAsyncResult Begin_GetSettingItems(AsyncCallback callback, object state, string category, bool includeChildren)
+      public async Task<List<Ruyi.SDK.CommonType.SettingItem>> GetSettingItemsAsync(string category, bool includeChildren, CancellationToken cancellationToken)
       {
-        return send_GetSettingItems(callback, state, category, includeChildren);
-      }
-
-      public List<Ruyi.SDK.CommonType.SettingItem> End_GetSettingItems(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_GetSettingItems();
-      }
-
-      public async Task<List<Ruyi.SDK.CommonType.SettingItem>> GetSettingItemsAsync(string category, bool includeChildren)
-      {
-        List<Ruyi.SDK.CommonType.SettingItem> retval;
-        retval = await Task.Run(() =>
-        {
-          return GetSettingItems(category, includeChildren);
-        });
-        return retval;
-      }
-
-      /// <summary>
-      /// Get a list of setting data of the module.
-      /// </summary>
-      /// <param name="category">Category to filter the settings. Null indicates getting all settings of the module</param>
-      /// <param name="includeChildren">Whecher to get the settings of children cagegories.</param>
-      public List<Ruyi.SDK.CommonType.SettingItem> GetSettingItems(string category, bool includeChildren)
-      {
-        var asyncResult = Begin_GetSettingItems(null, null, category, includeChildren);
-        return End_GetSettingItems(asyncResult);
-
-      }
-      public IAsyncResult send_GetSettingItems(AsyncCallback callback, object state, string category, bool includeChildren)
-      {
-        oprot_.WriteMessageBegin(new TMessage("GetSettingItems", TMessageType.Call, seqid_));
-        GetSettingItems_args args = new GetSettingItems_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetSettingItems", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new GetSettingItemsArgs();
         args.Category = category;
         args.IncludeChildren = includeChildren;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public List<Ruyi.SDK.CommonType.SettingItem> recv_GetSettingItems()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        GetSettingItems_result result = new GetSettingItems_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new GetSettingItemsResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetSettingItems failed: unknown result");
       }
 
-      
-      public IAsyncResult Begin_SearchSettingItems(AsyncCallback callback, object state, string filterJson)
+      public async Task<Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult>> SearchSettingItemsAsync(string filterJson, CancellationToken cancellationToken)
       {
-        return send_SearchSettingItems(callback, state, filterJson);
-      }
-
-      public Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult> End_SearchSettingItems(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_SearchSettingItems();
-      }
-
-      public async Task<Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult>> SearchSettingItemsAsync(string filterJson)
-      {
-        Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult> retval;
-        retval = await Task.Run(() =>
-        {
-          return SearchSettingItems(filterJson);
-        });
-        return retval;
-      }
-
-      /// <summary>
-      /// Search a set of settings using a json format string.
-      /// According to the format of json string your write, searching can be separated to 3 types: simple search, lambda search and complicated search. And each of they can be combined with the other.
-      /// </summary>
-      /// <param name="filterJson">Json string used to search.</param>
-      public Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult> SearchSettingItems(string filterJson)
-      {
-        var asyncResult = Begin_SearchSettingItems(null, null, filterJson);
-        return End_SearchSettingItems(asyncResult);
-
-      }
-      public IAsyncResult send_SearchSettingItems(AsyncCallback callback, object state, string filterJson)
-      {
-        oprot_.WriteMessageBegin(new TMessage("SearchSettingItems", TMessageType.Call, seqid_));
-        SearchSettingItems_args args = new SearchSettingItems_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("SearchSettingItems", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new SearchSettingItemsArgs();
         args.FilterJson = filterJson;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult> recv_SearchSettingItems()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        SearchSettingItems_result result = new SearchSettingItems_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new SearchSettingItemsResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SearchSettingItems failed: unknown result");
       }
 
-      
-      public IAsyncResult Begin_GetCategoryNode(AsyncCallback callback, object state)
+      public async Task<Ruyi.SDK.SettingSystem.Api.SettingTree> GetCategoryNodeAsync(CancellationToken cancellationToken)
       {
-        return send_GetCategoryNode(callback, state);
-      }
-
-      public Ruyi.SDK.SettingSystem.Api.SettingTree End_GetCategoryNode(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_GetCategoryNode();
-      }
-
-      public async Task<Ruyi.SDK.SettingSystem.Api.SettingTree> GetCategoryNodeAsync()
-      {
-        Ruyi.SDK.SettingSystem.Api.SettingTree retval;
-        retval = await Task.Run(() =>
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetCategoryNode", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new GetCategoryNodeArgs();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
         {
-          return GetCategoryNode();
-        });
-        return retval;
-      }
-
-      /// <summary>
-      /// Get settings and categories in a tree
-      /// </summary>
-      public Ruyi.SDK.SettingSystem.Api.SettingTree GetCategoryNode()
-      {
-        var asyncResult = Begin_GetCategoryNode(null, null);
-        return End_GetCategoryNode(asyncResult);
-
-      }
-      public IAsyncResult send_GetCategoryNode(AsyncCallback callback, object state)
-      {
-        oprot_.WriteMessageBegin(new TMessage("GetCategoryNode", TMessageType.Call, seqid_));
-        GetCategoryNode_args args = new GetCategoryNode_args();
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public Ruyi.SDK.SettingSystem.Api.SettingTree recv_GetCategoryNode()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        GetCategoryNode_result result = new GetCategoryNode_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new GetCategoryNodeResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetCategoryNode failed: unknown result");
       }
 
-      
-      public IAsyncResult Begin_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType)
+      public async Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, CancellationToken cancellationToken)
       {
-        return send_GetChildNode(callback, state, parent, nodeType);
-      }
-
-      public Ruyi.SDK.SettingSystem.Api.NodeList End_GetChildNode(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_GetChildNode();
-      }
-
-      public async Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType)
-      {
-        Ruyi.SDK.SettingSystem.Api.NodeList retval;
-        retval = await Task.Run(() =>
-        {
-          return GetChildNode(parent, nodeType);
-        });
-        return retval;
-      }
-
-      public Ruyi.SDK.SettingSystem.Api.NodeList GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType)
-      {
-        var asyncResult = Begin_GetChildNode(null, null, parent, nodeType);
-        return End_GetChildNode(asyncResult);
-
-      }
-      public IAsyncResult send_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType)
-      {
-        oprot_.WriteMessageBegin(new TMessage("GetChildNode", TMessageType.Call, seqid_));
-        GetChildNode_args args = new GetChildNode_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetChildNode", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new GetChildNodeArgs();
         args.Parent = parent;
         args.NodeType = nodeType;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public Ruyi.SDK.SettingSystem.Api.NodeList recv_GetChildNode()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        GetChildNode_result result = new GetChildNode_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new GetChildNodeResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetChildNode failed: unknown result");
       }
 
-      
-      public IAsyncResult Begin_SetSettingItem(AsyncCallback callback, object state, string key, string val)
+      public async Task<bool> SetSettingItemAsync(string key, string val, CancellationToken cancellationToken)
       {
-        return send_SetSettingItem(callback, state, key, val);
-      }
-
-      public bool End_SetSettingItem(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_SetSettingItem();
-      }
-
-      public async Task<bool> SetSettingItemAsync(string key, string val)
-      {
-        bool retval;
-        retval = await Task.Run(() =>
-        {
-          return SetSettingItem(key, val);
-        });
-        return retval;
-      }
-
-      /// <summary>
-      /// Set the specified setting's "dataValue" with the new value
-      /// </summary>
-      /// <param name="key">Identity of the setting</param>
-      /// <param name="val">Value to be set</param>
-      public bool SetSettingItem(string key, string val)
-      {
-        var asyncResult = Begin_SetSettingItem(null, null, key, val);
-        return End_SetSettingItem(asyncResult);
-
-      }
-      public IAsyncResult send_SetSettingItem(AsyncCallback callback, object state, string key, string val)
-      {
-        oprot_.WriteMessageBegin(new TMessage("SetSettingItem", TMessageType.Call, seqid_));
-        SetSettingItem_args args = new SetSettingItem_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("SetSettingItem", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new SetSettingItemArgs();
         args.Key = key;
         args.Val = val;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public bool recv_SetSettingItem()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        SetSettingItem_result result = new SetSettingItem_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new SetSettingItemResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SetSettingItem failed: unknown result");
       }
 
-      
-      public IAsyncResult Begin_SetSettingItems(AsyncCallback callback, object state, Dictionary<string, string> keyValues)
+      public async Task<int> SetSettingItemsAsync(Dictionary<string, string> keyValues, CancellationToken cancellationToken)
       {
-        return send_SetSettingItems(callback, state, keyValues);
-      }
-
-      public int End_SetSettingItems(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_SetSettingItems();
-      }
-
-      public async Task<int> SetSettingItemsAsync(Dictionary<string, string> keyValues)
-      {
-        int retval;
-        retval = await Task.Run(() =>
-        {
-          return SetSettingItems(keyValues);
-        });
-        return retval;
-      }
-
-      /// <summary>
-      /// Set a set of settings' "dataValue"
-      /// </summary>
-      /// <param name="keyValues">The key-values to be set.</param>
-      public int SetSettingItems(Dictionary<string, string> keyValues)
-      {
-        var asyncResult = Begin_SetSettingItems(null, null, keyValues);
-        return End_SetSettingItems(asyncResult);
-
-      }
-      public IAsyncResult send_SetSettingItems(AsyncCallback callback, object state, Dictionary<string, string> keyValues)
-      {
-        oprot_.WriteMessageBegin(new TMessage("SetSettingItems", TMessageType.Call, seqid_));
-        SetSettingItems_args args = new SetSettingItems_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("SetSettingItems", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new SetSettingItemsArgs();
         args.KeyValues = keyValues;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public int recv_SetSettingItems()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        SetSettingItems_result result = new SetSettingItems_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new SetSettingItemsResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SetSettingItems failed: unknown result");
       }
 
-      
-      public IAsyncResult Begin_RestoreDefault(AsyncCallback callback, object state, string moduleName, string category)
+      public async Task<bool> RestoreDefaultAsync(string moduleName, string category, CancellationToken cancellationToken)
       {
-        return send_RestoreDefault(callback, state, moduleName, category);
-      }
-
-      public bool End_RestoreDefault(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_RestoreDefault();
-      }
-
-      public async Task<bool> RestoreDefaultAsync(string moduleName, string category)
-      {
-        bool retval;
-        retval = await Task.Run(() =>
-        {
-          return RestoreDefault(moduleName, category);
-        });
-        return retval;
-      }
-
-      /// <summary>
-      /// Restore a module setting to default
-      /// </summary>
-      /// <param name="moduleName">Module name specifies the module to be restored.</param>
-      /// <param name="category">The category of which to restored. Null indicates all settings.</param>
-      public bool RestoreDefault(string moduleName, string category)
-      {
-        var asyncResult = Begin_RestoreDefault(null, null, moduleName, category);
-        return End_RestoreDefault(asyncResult);
-
-      }
-      public IAsyncResult send_RestoreDefault(AsyncCallback callback, object state, string moduleName, string category)
-      {
-        oprot_.WriteMessageBegin(new TMessage("RestoreDefault", TMessageType.Call, seqid_));
-        RestoreDefault_args args = new RestoreDefault_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("RestoreDefault", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new RestoreDefaultArgs();
         args.ModuleName = moduleName;
         args.Category = category;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public bool recv_RestoreDefault()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        RestoreDefault_result result = new RestoreDefault_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new RestoreDefaultResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "RestoreDefault failed: unknown result");
       }
 
-      
-      public IAsyncResult Begin_RestoreUserDefault(AsyncCallback callback, object state, string userId, string moduleName, string category)
+      public async Task<bool> RestoreUserDefaultAsync(string userId, string moduleName, string category, CancellationToken cancellationToken)
       {
-        return send_RestoreUserDefault(callback, state, userId, moduleName, category);
-      }
-
-      public bool End_RestoreUserDefault(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_RestoreUserDefault();
-      }
-
-      public async Task<bool> RestoreUserDefaultAsync(string userId, string moduleName, string category)
-      {
-        bool retval;
-        retval = await Task.Run(() =>
-        {
-          return RestoreUserDefault(userId, moduleName, category);
-        });
-        return retval;
-      }
-
-      public bool RestoreUserDefault(string userId, string moduleName, string category)
-      {
-        var asyncResult = Begin_RestoreUserDefault(null, null, userId, moduleName, category);
-        return End_RestoreUserDefault(asyncResult);
-
-      }
-      public IAsyncResult send_RestoreUserDefault(AsyncCallback callback, object state, string userId, string moduleName, string category)
-      {
-        oprot_.WriteMessageBegin(new TMessage("RestoreUserDefault", TMessageType.Call, seqid_));
-        RestoreUserDefault_args args = new RestoreUserDefault_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("RestoreUserDefault", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new RestoreUserDefaultArgs();
         args.UserId = userId;
         args.ModuleName = moduleName;
         args.Category = category;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public bool recv_RestoreUserDefault()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        RestoreUserDefault_result result = new RestoreUserDefault_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new RestoreUserDefaultResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "RestoreUserDefault failed: unknown result");
       }
 
-      
-      public IAsyncResult Begin_UpdateModuleVersion(AsyncCallback callback, object state, string moduleName)
+      public async Task<bool> UpdateModuleVersionAsync(string moduleName, CancellationToken cancellationToken)
       {
-        return send_UpdateModuleVersion(callback, state, moduleName);
-      }
-
-      public bool End_UpdateModuleVersion(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_UpdateModuleVersion();
-      }
-
-      public async Task<bool> UpdateModuleVersionAsync(string moduleName)
-      {
-        bool retval;
-        retval = await Task.Run(() =>
-        {
-          return UpdateModuleVersion(moduleName);
-        });
-        return retval;
-      }
-
-      /// <summary>
-      /// Update the module settings from an older version to the latest one
-      /// </summary>
-      /// <param name="moduleName">Module of the setting</param>
-      public bool UpdateModuleVersion(string moduleName)
-      {
-        var asyncResult = Begin_UpdateModuleVersion(null, null, moduleName);
-        return End_UpdateModuleVersion(asyncResult);
-
-      }
-      public IAsyncResult send_UpdateModuleVersion(AsyncCallback callback, object state, string moduleName)
-      {
-        oprot_.WriteMessageBegin(new TMessage("UpdateModuleVersion", TMessageType.Call, seqid_));
-        UpdateModuleVersion_args args = new UpdateModuleVersion_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("UpdateModuleVersion", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new UpdateModuleVersionArgs();
         args.ModuleName = moduleName;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public bool recv_UpdateModuleVersion()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        UpdateModuleVersion_result result = new UpdateModuleVersion_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new UpdateModuleVersionResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "UpdateModuleVersion failed: unknown result");
       }
 
-      
-      public IAsyncResult Begin_SetUserAppData(AsyncCallback callback, object state, string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems)
+      public async Task<int> SetUserAppDataAsync(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems, CancellationToken cancellationToken)
       {
-        return send_SetUserAppData(callback, state, userId, category, settingItems);
-      }
-
-      public int End_SetUserAppData(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_SetUserAppData();
-      }
-
-      public async Task<int> SetUserAppDataAsync(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems)
-      {
-        int retval;
-        retval = await Task.Run(() =>
-        {
-          return SetUserAppData(userId, category, settingItems);
-        });
-        return retval;
-      }
-
-      public int SetUserAppData(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems)
-      {
-        var asyncResult = Begin_SetUserAppData(null, null, userId, category, settingItems);
-        return End_SetUserAppData(asyncResult);
-
-      }
-      public IAsyncResult send_SetUserAppData(AsyncCallback callback, object state, string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems)
-      {
-        oprot_.WriteMessageBegin(new TMessage("SetUserAppData", TMessageType.Call, seqid_));
-        SetUserAppData_args args = new SetUserAppData_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("SetUserAppData", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new SetUserAppDataArgs();
         args.UserId = userId;
         args.Category = category;
         args.SettingItems = settingItems;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public int recv_SetUserAppData()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        SetUserAppData_result result = new SetUserAppData_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new SetUserAppDataResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SetUserAppData failed: unknown result");
       }
 
-      
-      public IAsyncResult Begin_GetUserAppData(AsyncCallback callback, object state, string userId, string category, List<string> settingKeys)
+      public async Task<Ruyi.SDK.CommonType.AppData> GetUserAppDataAsync(string userId, string category, List<string> settingKeys, CancellationToken cancellationToken)
       {
-        return send_GetUserAppData(callback, state, userId, category, settingKeys);
-      }
-
-      public Ruyi.SDK.CommonType.AppData End_GetUserAppData(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_GetUserAppData();
-      }
-
-      public async Task<Ruyi.SDK.CommonType.AppData> GetUserAppDataAsync(string userId, string category, List<string> settingKeys)
-      {
-        Ruyi.SDK.CommonType.AppData retval;
-        retval = await Task.Run(() =>
-        {
-          return GetUserAppData(userId, category, settingKeys);
-        });
-        return retval;
-      }
-
-      public Ruyi.SDK.CommonType.AppData GetUserAppData(string userId, string category, List<string> settingKeys)
-      {
-        var asyncResult = Begin_GetUserAppData(null, null, userId, category, settingKeys);
-        return End_GetUserAppData(asyncResult);
-
-      }
-      public IAsyncResult send_GetUserAppData(AsyncCallback callback, object state, string userId, string category, List<string> settingKeys)
-      {
-        oprot_.WriteMessageBegin(new TMessage("GetUserAppData", TMessageType.Call, seqid_));
-        GetUserAppData_args args = new GetUserAppData_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetUserAppData", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new GetUserAppDataArgs();
         args.UserId = userId;
         args.Category = category;
         args.SettingKeys = settingKeys;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public Ruyi.SDK.CommonType.AppData recv_GetUserAppData()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        GetUserAppData_result result = new GetUserAppData_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new GetUserAppDataResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetUserAppData failed: unknown result");
       }
 
-      
-      public IAsyncResult Begin_RemoveUserAppData(AsyncCallback callback, object state, string userId, string category, List<string> settingKeys)
+      public async Task<int> RemoveUserAppDataAsync(string userId, string category, List<string> settingKeys, CancellationToken cancellationToken)
       {
-        return send_RemoveUserAppData(callback, state, userId, category, settingKeys);
-      }
-
-      public int End_RemoveUserAppData(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_RemoveUserAppData();
-      }
-
-      public async Task<int> RemoveUserAppDataAsync(string userId, string category, List<string> settingKeys)
-      {
-        int retval;
-        retval = await Task.Run(() =>
-        {
-          return RemoveUserAppData(userId, category, settingKeys);
-        });
-        return retval;
-      }
-
-      public int RemoveUserAppData(string userId, string category, List<string> settingKeys)
-      {
-        var asyncResult = Begin_RemoveUserAppData(null, null, userId, category, settingKeys);
-        return End_RemoveUserAppData(asyncResult);
-
-      }
-      public IAsyncResult send_RemoveUserAppData(AsyncCallback callback, object state, string userId, string category, List<string> settingKeys)
-      {
-        oprot_.WriteMessageBegin(new TMessage("RemoveUserAppData", TMessageType.Call, seqid_));
-        RemoveUserAppData_args args = new RemoveUserAppData_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("RemoveUserAppData", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new RemoveUserAppDataArgs();
         args.UserId = userId;
         args.Category = category;
         args.SettingKeys = settingKeys;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public int recv_RemoveUserAppData()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        RemoveUserAppData_result result = new RemoveUserAppData_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new RemoveUserAppDataResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "RemoveUserAppData failed: unknown result");
       }
 
-      
-      public IAsyncResult Begin_SettingItemNotify(AsyncCallback callback, object state, string key, string contents)
+      public async Task<bool> SettingItemNotifyAsync(string key, string contents, CancellationToken cancellationToken)
       {
-        return send_SettingItemNotify(callback, state, key, contents);
-      }
-
-      public bool End_SettingItemNotify(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_SettingItemNotify();
-      }
-
-      public async Task<bool> SettingItemNotifyAsync(string key, string contents)
-      {
-        bool retval;
-        retval = await Task.Run(() =>
-        {
-          return SettingItemNotify(key, contents);
-        });
-        return retval;
-      }
-
-      /// <summary>
-      /// Notify layer0 that a setting item has specific event
-      /// </summary>
-      /// <param name="key">The item's ID</param>
-      /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
-      public bool SettingItemNotify(string key, string contents)
-      {
-        var asyncResult = Begin_SettingItemNotify(null, null, key, contents);
-        return End_SettingItemNotify(asyncResult);
-
-      }
-      public IAsyncResult send_SettingItemNotify(AsyncCallback callback, object state, string key, string contents)
-      {
-        oprot_.WriteMessageBegin(new TMessage("SettingItemNotify", TMessageType.Call, seqid_));
-        SettingItemNotify_args args = new SettingItemNotify_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("SettingItemNotify", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new SettingItemNotifyArgs();
         args.Key = key;
         args.Contents = contents;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public bool recv_SettingItemNotify()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        SettingItemNotify_result result = new SettingItemNotify_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new SettingItemNotifyResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
-        if (result.__isset.error1) {
+        if (result.__isset.error1)
+        {
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SettingItemNotify failed: unknown result");
       }
 
     }
-    public class AsyncProcessor : TAsyncProcessor {
-      public AsyncProcessor(IAsync iface)
+
+    public class AsyncProcessor : ITAsyncProcessor
+    {
+      private IAsync _iAsync;
+
+      public AsyncProcessor(IAsync iAsync)
       {
-        iface_ = iface;
+        if (iAsync == null) throw new ArgumentNullException(nameof(iAsync));
+
+        _iAsync = iAsync;
         processMap_["GetSettingItem"] = GetSettingItem_ProcessAsync;
         processMap_["GetSettingItems"] = GetSettingItems_ProcessAsync;
         processMap_["SearchSettingItems"] = SearchSettingItems_ProcessAsync;
@@ -1145,54 +608,64 @@ namespace Ruyi.SDK.SettingSystem.Api
         processMap_["SettingItemNotify"] = SettingItemNotify_ProcessAsync;
       }
 
-      protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
-      private IAsync iface_;
+      protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken);
       protected Dictionary<string, ProcessFunction> processMap_ = new Dictionary<string, ProcessFunction>();
 
       public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot)
       {
+        return await ProcessAsync(iprot, oprot, CancellationToken.None);
+      }
+
+      public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
         try
         {
-          TMessage msg = iprot.ReadMessageBegin();
+          var msg = await iprot.ReadMessageBeginAsync(cancellationToken);
+
           ProcessFunction fn;
           processMap_.TryGetValue(msg.Name, out fn);
-          if (fn == null) {
-            TProtocolUtil.Skip(iprot, TType.Struct);
-            iprot.ReadMessageEnd();
-            TApplicationException x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
-            oprot.WriteMessageBegin(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID));
-            x.Write(oprot);
-            oprot.WriteMessageEnd();
-            oprot.Transport.Flush();
+
+          if (fn == null)
+          {
+            await TProtocolUtil.SkipAsync(iprot, TType.Struct, cancellationToken);
+            await iprot.ReadMessageEndAsync(cancellationToken);
+            var x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
+            await oprot.WriteMessageBeginAsync(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID), cancellationToken);
+            await x.WriteAsync(oprot, cancellationToken);
+            await oprot.WriteMessageEndAsync(cancellationToken);
+            await oprot.Transport.FlushAsync(cancellationToken);
             return true;
           }
-          await fn(msg.SeqID, iprot, oprot);
+
+          await fn(msg.SeqID, iprot, oprot, cancellationToken);
+
         }
         catch (IOException)
         {
           return false;
         }
+
         return true;
       }
 
-      public async Task GetSettingItem_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task GetSettingItem_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        GetSettingItem_args args = new GetSettingItem_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        GetSettingItem_result result = new GetSettingItem_result();
+        var args = new GetSettingItemArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new GetSettingItemResult();
         try
         {
           try
           {
-            result.Success = await iface_.GetSettingItemAsync(args.Id);
+            result.Success = await _iAsync.GetSettingItemAsync(args.Id, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("GetSettingItem", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("GetSettingItem", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1202,32 +675,32 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("GetSettingItem", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("GetSettingItem", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task GetSettingItems_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task GetSettingItems_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        GetSettingItems_args args = new GetSettingItems_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        GetSettingItems_result result = new GetSettingItems_result();
+        var args = new GetSettingItemsArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new GetSettingItemsResult();
         try
         {
           try
           {
-            result.Success = await iface_.GetSettingItemsAsync(args.Category, args.IncludeChildren);
+            result.Success = await _iAsync.GetSettingItemsAsync(args.Category, args.IncludeChildren, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("GetSettingItems", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("GetSettingItems", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1237,32 +710,32 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("GetSettingItems", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("GetSettingItems", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task SearchSettingItems_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task SearchSettingItems_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        SearchSettingItems_args args = new SearchSettingItems_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        SearchSettingItems_result result = new SearchSettingItems_result();
+        var args = new SearchSettingItemsArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new SearchSettingItemsResult();
         try
         {
           try
           {
-            result.Success = await iface_.SearchSettingItemsAsync(args.FilterJson);
+            result.Success = await _iAsync.SearchSettingItemsAsync(args.FilterJson, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("SearchSettingItems", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("SearchSettingItems", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1272,32 +745,32 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("SearchSettingItems", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("SearchSettingItems", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task GetCategoryNode_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task GetCategoryNode_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        GetCategoryNode_args args = new GetCategoryNode_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        GetCategoryNode_result result = new GetCategoryNode_result();
+        var args = new GetCategoryNodeArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new GetCategoryNodeResult();
         try
         {
           try
           {
-            result.Success = await iface_.GetCategoryNodeAsync();
+            result.Success = await _iAsync.GetCategoryNodeAsync(cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("GetCategoryNode", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("GetCategoryNode", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1307,32 +780,32 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("GetCategoryNode", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("GetCategoryNode", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task GetChildNode_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task GetChildNode_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        GetChildNode_args args = new GetChildNode_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        GetChildNode_result result = new GetChildNode_result();
+        var args = new GetChildNodeArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new GetChildNodeResult();
         try
         {
           try
           {
-            result.Success = await iface_.GetChildNodeAsync(args.Parent, args.NodeType);
+            result.Success = await _iAsync.GetChildNodeAsync(args.Parent, args.NodeType, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("GetChildNode", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("GetChildNode", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1342,32 +815,32 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("GetChildNode", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("GetChildNode", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task SetSettingItem_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task SetSettingItem_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        SetSettingItem_args args = new SetSettingItem_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        SetSettingItem_result result = new SetSettingItem_result();
+        var args = new SetSettingItemArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new SetSettingItemResult();
         try
         {
           try
           {
-            result.Success = await iface_.SetSettingItemAsync(args.Key, args.Val);
+            result.Success = await _iAsync.SetSettingItemAsync(args.Key, args.Val, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("SetSettingItem", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("SetSettingItem", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1377,32 +850,32 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("SetSettingItem", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("SetSettingItem", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task SetSettingItems_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task SetSettingItems_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        SetSettingItems_args args = new SetSettingItems_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        SetSettingItems_result result = new SetSettingItems_result();
+        var args = new SetSettingItemsArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new SetSettingItemsResult();
         try
         {
           try
           {
-            result.Success = await iface_.SetSettingItemsAsync(args.KeyValues);
+            result.Success = await _iAsync.SetSettingItemsAsync(args.KeyValues, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("SetSettingItems", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("SetSettingItems", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1412,32 +885,32 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("SetSettingItems", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("SetSettingItems", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task RestoreDefault_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task RestoreDefault_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        RestoreDefault_args args = new RestoreDefault_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        RestoreDefault_result result = new RestoreDefault_result();
+        var args = new RestoreDefaultArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new RestoreDefaultResult();
         try
         {
           try
           {
-            result.Success = await iface_.RestoreDefaultAsync(args.ModuleName, args.Category);
+            result.Success = await _iAsync.RestoreDefaultAsync(args.ModuleName, args.Category, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("RestoreDefault", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("RestoreDefault", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1447,32 +920,32 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("RestoreDefault", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("RestoreDefault", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task RestoreUserDefault_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task RestoreUserDefault_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        RestoreUserDefault_args args = new RestoreUserDefault_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        RestoreUserDefault_result result = new RestoreUserDefault_result();
+        var args = new RestoreUserDefaultArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new RestoreUserDefaultResult();
         try
         {
           try
           {
-            result.Success = await iface_.RestoreUserDefaultAsync(args.UserId, args.ModuleName, args.Category);
+            result.Success = await _iAsync.RestoreUserDefaultAsync(args.UserId, args.ModuleName, args.Category, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("RestoreUserDefault", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("RestoreUserDefault", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1482,32 +955,32 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("RestoreUserDefault", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("RestoreUserDefault", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task UpdateModuleVersion_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task UpdateModuleVersion_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        UpdateModuleVersion_args args = new UpdateModuleVersion_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        UpdateModuleVersion_result result = new UpdateModuleVersion_result();
+        var args = new UpdateModuleVersionArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new UpdateModuleVersionResult();
         try
         {
           try
           {
-            result.Success = await iface_.UpdateModuleVersionAsync(args.ModuleName);
+            result.Success = await _iAsync.UpdateModuleVersionAsync(args.ModuleName, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("UpdateModuleVersion", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("UpdateModuleVersion", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1517,32 +990,32 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("UpdateModuleVersion", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("UpdateModuleVersion", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task SetUserAppData_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task SetUserAppData_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        SetUserAppData_args args = new SetUserAppData_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        SetUserAppData_result result = new SetUserAppData_result();
+        var args = new SetUserAppDataArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new SetUserAppDataResult();
         try
         {
           try
           {
-            result.Success = await iface_.SetUserAppDataAsync(args.UserId, args.Category, args.SettingItems);
+            result.Success = await _iAsync.SetUserAppDataAsync(args.UserId, args.Category, args.SettingItems, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("SetUserAppData", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("SetUserAppData", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1552,32 +1025,32 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("SetUserAppData", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("SetUserAppData", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task GetUserAppData_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task GetUserAppData_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        GetUserAppData_args args = new GetUserAppData_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        GetUserAppData_result result = new GetUserAppData_result();
+        var args = new GetUserAppDataArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new GetUserAppDataResult();
         try
         {
           try
           {
-            result.Success = await iface_.GetUserAppDataAsync(args.UserId, args.Category, args.SettingKeys);
+            result.Success = await _iAsync.GetUserAppDataAsync(args.UserId, args.Category, args.SettingKeys, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("GetUserAppData", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("GetUserAppData", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1587,32 +1060,32 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("GetUserAppData", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("GetUserAppData", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task RemoveUserAppData_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task RemoveUserAppData_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        RemoveUserAppData_args args = new RemoveUserAppData_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        RemoveUserAppData_result result = new RemoveUserAppData_result();
+        var args = new RemoveUserAppDataArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new RemoveUserAppDataResult();
         try
         {
           try
           {
-            result.Success = await iface_.RemoveUserAppDataAsync(args.UserId, args.Category, args.SettingKeys);
+            result.Success = await _iAsync.RemoveUserAppDataAsync(args.UserId, args.Category, args.SettingKeys, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("RemoveUserAppData", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("RemoveUserAppData", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1622,32 +1095,32 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("RemoveUserAppData", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("RemoveUserAppData", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task SettingItemNotify_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task SettingItemNotify_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        SettingItemNotify_args args = new SettingItemNotify_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        SettingItemNotify_result result = new SettingItemNotify_result();
+        var args = new SettingItemNotifyArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new SettingItemNotifyResult();
         try
         {
           try
           {
-            result.Success = await iface_.SettingItemNotifyAsync(args.Key, args.Contents);
+            result.Success = await _iAsync.SettingItemNotifyAsync(args.Key, args.Contents, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
             result.Error1 = error1;
           }
-          oprot.WriteMessageBegin(new TMessage("SettingItemNotify", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          await oprot.WriteMessageBeginAsync(new TMessage("SettingItemNotify", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -1657,563 +1130,18 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("SettingItemNotify", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("SettingItemNotify", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-    }
-
-    public class Processor : TProcessor {
-      public Processor(ISync iface)
-      {
-        iface_ = iface;
-        processMap_["GetSettingItem"] = GetSettingItem_Process;
-        processMap_["GetSettingItems"] = GetSettingItems_Process;
-        processMap_["SearchSettingItems"] = SearchSettingItems_Process;
-        processMap_["GetCategoryNode"] = GetCategoryNode_Process;
-        processMap_["GetChildNode"] = GetChildNode_Process;
-        processMap_["SetSettingItem"] = SetSettingItem_Process;
-        processMap_["SetSettingItems"] = SetSettingItems_Process;
-        processMap_["RestoreDefault"] = RestoreDefault_Process;
-        processMap_["RestoreUserDefault"] = RestoreUserDefault_Process;
-        processMap_["UpdateModuleVersion"] = UpdateModuleVersion_Process;
-        processMap_["SetUserAppData"] = SetUserAppData_Process;
-        processMap_["GetUserAppData"] = GetUserAppData_Process;
-        processMap_["RemoveUserAppData"] = RemoveUserAppData_Process;
-        processMap_["SettingItemNotify"] = SettingItemNotify_Process;
-      }
-
-      protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
-      private ISync iface_;
-      protected Dictionary<string, ProcessFunction> processMap_ = new Dictionary<string, ProcessFunction>();
-
-      public bool Process(TProtocol iprot, TProtocol oprot)
-      {
-        try
-        {
-          TMessage msg = iprot.ReadMessageBegin();
-          ProcessFunction fn;
-          processMap_.TryGetValue(msg.Name, out fn);
-          if (fn == null) {
-            TProtocolUtil.Skip(iprot, TType.Struct);
-            iprot.ReadMessageEnd();
-            TApplicationException x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
-            oprot.WriteMessageBegin(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID));
-            x.Write(oprot);
-            oprot.WriteMessageEnd();
-            oprot.Transport.Flush();
-            return true;
-          }
-          fn(msg.SeqID, iprot, oprot);
-        }
-        catch (IOException)
-        {
-          return false;
-        }
-        return true;
-      }
-
-      public void GetSettingItem_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        GetSettingItem_args args = new GetSettingItem_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        GetSettingItem_result result = new GetSettingItem_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.GetSettingItem(args.Id);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("GetSettingItem", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("GetSettingItem", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void GetSettingItems_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        GetSettingItems_args args = new GetSettingItems_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        GetSettingItems_result result = new GetSettingItems_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.GetSettingItems(args.Category, args.IncludeChildren);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("GetSettingItems", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("GetSettingItems", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void SearchSettingItems_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        SearchSettingItems_args args = new SearchSettingItems_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        SearchSettingItems_result result = new SearchSettingItems_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.SearchSettingItems(args.FilterJson);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("SearchSettingItems", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("SearchSettingItems", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void GetCategoryNode_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        GetCategoryNode_args args = new GetCategoryNode_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        GetCategoryNode_result result = new GetCategoryNode_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.GetCategoryNode();
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("GetCategoryNode", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("GetCategoryNode", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void GetChildNode_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        GetChildNode_args args = new GetChildNode_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        GetChildNode_result result = new GetChildNode_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.GetChildNode(args.Parent, args.NodeType);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("GetChildNode", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("GetChildNode", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void SetSettingItem_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        SetSettingItem_args args = new SetSettingItem_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        SetSettingItem_result result = new SetSettingItem_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.SetSettingItem(args.Key, args.Val);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("SetSettingItem", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("SetSettingItem", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void SetSettingItems_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        SetSettingItems_args args = new SetSettingItems_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        SetSettingItems_result result = new SetSettingItems_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.SetSettingItems(args.KeyValues);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("SetSettingItems", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("SetSettingItems", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void RestoreDefault_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        RestoreDefault_args args = new RestoreDefault_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        RestoreDefault_result result = new RestoreDefault_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.RestoreDefault(args.ModuleName, args.Category);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("RestoreDefault", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("RestoreDefault", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void RestoreUserDefault_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        RestoreUserDefault_args args = new RestoreUserDefault_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        RestoreUserDefault_result result = new RestoreUserDefault_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.RestoreUserDefault(args.UserId, args.ModuleName, args.Category);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("RestoreUserDefault", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("RestoreUserDefault", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void UpdateModuleVersion_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        UpdateModuleVersion_args args = new UpdateModuleVersion_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        UpdateModuleVersion_result result = new UpdateModuleVersion_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.UpdateModuleVersion(args.ModuleName);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("UpdateModuleVersion", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("UpdateModuleVersion", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void SetUserAppData_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        SetUserAppData_args args = new SetUserAppData_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        SetUserAppData_result result = new SetUserAppData_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.SetUserAppData(args.UserId, args.Category, args.SettingItems);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("SetUserAppData", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("SetUserAppData", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void GetUserAppData_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        GetUserAppData_args args = new GetUserAppData_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        GetUserAppData_result result = new GetUserAppData_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.GetUserAppData(args.UserId, args.Category, args.SettingKeys);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("GetUserAppData", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("GetUserAppData", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void RemoveUserAppData_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        RemoveUserAppData_args args = new RemoveUserAppData_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        RemoveUserAppData_result result = new RemoveUserAppData_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.RemoveUserAppData(args.UserId, args.Category, args.SettingKeys);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("RemoveUserAppData", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("RemoveUserAppData", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void SettingItemNotify_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        SettingItemNotify_args args = new SettingItemNotify_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        SettingItemNotify_result result = new SettingItemNotify_result();
-        try
-        {
-          try
-          {
-            result.Success = iface_.SettingItemNotify(args.Key, args.Contents);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          oprot.WriteMessageBegin(new TMessage("SettingItemNotify", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("SettingItemNotify", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class GetSettingItem_args : TBase
+    public partial class GetSettingItemArgs : TBase
     {
       private string _id;
 
@@ -2235,45 +1163,51 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool id;
       }
 
-      public GetSettingItem_args() {
+      public GetSettingItemArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  Id = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  Id = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -2281,23 +1215,25 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("GetSettingItem_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (Id != null && __isset.id) {
+          var struc = new TStruct("GetSettingItem_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (Id != null && __isset.id)
+          {
             field.Name = "id";
             field.Type = TType.String;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Id);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Id, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -2305,26 +1241,24 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("GetSettingItem_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetSettingItem_args(");
         bool __first = true;
-        if (Id != null && __isset.id) {
-          if(!__first) { __sb.Append(", "); }
+        if (Id != null && __isset.id)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Id: ");
-          __sb.Append(Id);
+          sb.Append("Id: ");
+          sb.Append(Id);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class GetSettingItem_result : TBase
+    public partial class GetSettingItemResult : TBase
     {
       private Ruyi.SDK.CommonType.SettingItem _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -2357,55 +1291,64 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public GetSettingItem_result() {
+      public GetSettingItemResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Success = new Ruyi.SDK.CommonType.SettingItem();
-                  Success.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Success.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -2413,35 +1356,41 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("GetSettingItem_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("GetSettingItem_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
-            if (Success != null) {
+          if(this.__isset.success)
+          {
+            if (Success != null)
+            {
               field.Name = "Success";
               field.Type = TType.Struct;
               field.ID = 0;
-              oprot.WriteFieldBegin(field);
-              Success.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Success.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -2449,32 +1398,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("GetSettingItem_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetSettingItem_result(");
         bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (Success != null && __isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success== null ? "<null>" : Success.ToString());
+          sb.Append("Success: ");
+          sb.Append(Success== null ? "<null>" : Success.ToString());
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class GetSettingItems_args : TBase
+    public partial class GetSettingItemsArgs : TBase
     {
       private string _category;
       private bool _includeChildren;
@@ -2513,53 +1461,62 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool category;
         public bool includeChildren;
       }
 
-      public GetSettingItems_args() {
+      public GetSettingItemsArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  Category = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  Category = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 2:
-                if (field.Type == TType.Bool) {
-                  IncludeChildren = iprot.ReadBool();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.Bool)
+                {
+                  IncludeChildren = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -2567,31 +1524,34 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("GetSettingItems_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (Category != null && __isset.category) {
+          var struc = new TStruct("GetSettingItems_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (Category != null && __isset.category)
+          {
             field.Name = "category";
             field.Type = TType.String;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Category);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Category, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (__isset.includeChildren) {
+          if (__isset.includeChildren)
+          {
             field.Name = "includeChildren";
             field.Type = TType.Bool;
             field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteBool(IncludeChildren);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(IncludeChildren, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -2599,32 +1559,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("GetSettingItems_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetSettingItems_args(");
         bool __first = true;
-        if (Category != null && __isset.category) {
-          if(!__first) { __sb.Append(", "); }
+        if (Category != null && __isset.category)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Category: ");
-          __sb.Append(Category);
+          sb.Append("Category: ");
+          sb.Append(Category);
         }
-        if (__isset.includeChildren) {
-          if(!__first) { __sb.Append(", "); }
+        if (__isset.includeChildren)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("IncludeChildren: ");
-          __sb.Append(IncludeChildren);
+          sb.Append("IncludeChildren: ");
+          sb.Append(IncludeChildren);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class GetSettingItems_result : TBase
+    public partial class GetSettingItemsResult : TBase
     {
       private List<Ruyi.SDK.CommonType.SettingItem> _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -2657,65 +1616,74 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public GetSettingItems_result() {
+      public GetSettingItemsResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.List) {
+                if (field.Type == TType.List)
+                {
                   {
                     Success = new List<Ruyi.SDK.CommonType.SettingItem>();
-                    TList _list0 = iprot.ReadListBegin();
-                    for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
+                    TList _list0 = await iprot.ReadListBeginAsync(cancellationToken);
+                    for(int _i1 = 0; _i1 < _list0.Count; ++_i1)
                     {
                       Ruyi.SDK.CommonType.SettingItem _elem2;
                       _elem2 = new Ruyi.SDK.CommonType.SettingItem();
-                      _elem2.Read(iprot);
+                      await _elem2.ReadAsync(iprot, cancellationToken);
                       Success.Add(_elem2);
                     }
-                    iprot.ReadListEnd();
+                    await iprot.ReadListEndAsync(cancellationToken);
                   }
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -2723,42 +1691,48 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("GetSettingItems_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("GetSettingItems_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
-            if (Success != null) {
+          if(this.__isset.success)
+          {
+            if (Success != null)
+            {
               field.Name = "Success";
               field.Type = TType.List;
               field.ID = 0;
-              oprot.WriteFieldBegin(field);
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
               {
-                oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
+                await oprot.WriteListBeginAsync(new TList(TType.Struct, Success.Count), cancellationToken);
                 foreach (Ruyi.SDK.CommonType.SettingItem _iter3 in Success)
                 {
-                  _iter3.Write(oprot);
+                  await _iter3.WriteAsync(oprot, cancellationToken);
                 }
-                oprot.WriteListEnd();
+                await oprot.WriteListEndAsync(cancellationToken);
               }
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -2766,32 +1740,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("GetSettingItems_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetSettingItems_result(");
         bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (Success != null && __isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
+          sb.Append("Success: ");
+          sb.Append(Success);
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class SearchSettingItems_args : TBase
+    public partial class SearchSettingItemsArgs : TBase
     {
       private string _filterJson;
 
@@ -2813,45 +1786,51 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool filterJson;
       }
 
-      public SearchSettingItems_args() {
+      public SearchSettingItemsArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  FilterJson = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  FilterJson = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -2859,23 +1838,25 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("SearchSettingItems_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (FilterJson != null && __isset.filterJson) {
+          var struc = new TStruct("SearchSettingItems_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (FilterJson != null && __isset.filterJson)
+          {
             field.Name = "filterJson";
             field.Type = TType.String;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(FilterJson);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(FilterJson, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -2883,26 +1864,24 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("SearchSettingItems_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SearchSettingItems_args(");
         bool __first = true;
-        if (FilterJson != null && __isset.filterJson) {
-          if(!__first) { __sb.Append(", "); }
+        if (FilterJson != null && __isset.filterJson)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("FilterJson: ");
-          __sb.Append(FilterJson);
+          sb.Append("FilterJson: ");
+          sb.Append(FilterJson);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class SearchSettingItems_result : TBase
+    public partial class SearchSettingItemsResult : TBase
     {
       private Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult> _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -2935,67 +1914,76 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public SearchSettingItems_result() {
+      public SearchSettingItemsResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Map) {
+                if (field.Type == TType.Map)
+                {
                   {
                     Success = new Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult>();
-                    TMap _map4 = iprot.ReadMapBegin();
-                    for( int _i5 = 0; _i5 < _map4.Count; ++_i5)
+                    TMap _map4 = await iprot.ReadMapBeginAsync(cancellationToken);
+                    for(int _i5 = 0; _i5 < _map4.Count; ++_i5)
                     {
                       string _key6;
                       Ruyi.SDK.SettingSystem.Api.SettingSearchResult _val7;
-                      _key6 = iprot.ReadString();
+                      _key6 = await iprot.ReadStringAsync(cancellationToken);
                       _val7 = new Ruyi.SDK.SettingSystem.Api.SettingSearchResult();
-                      _val7.Read(iprot);
+                      await _val7.ReadAsync(iprot, cancellationToken);
                       Success[_key6] = _val7;
                     }
-                    iprot.ReadMapEnd();
+                    await iprot.ReadMapEndAsync(cancellationToken);
                   }
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3003,43 +1991,49 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("SearchSettingItems_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("SearchSettingItems_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
-            if (Success != null) {
+          if(this.__isset.success)
+          {
+            if (Success != null)
+            {
               field.Name = "Success";
               field.Type = TType.Map;
               field.ID = 0;
-              oprot.WriteFieldBegin(field);
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
               {
-                oprot.WriteMapBegin(new TMap(TType.String, TType.Struct, Success.Count));
+                await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.Struct, Success.Count), cancellationToken);
                 foreach (string _iter8 in Success.Keys)
                 {
-                  oprot.WriteString(_iter8);
-                  Success[_iter8].Write(oprot);
+                  await oprot.WriteStringAsync(_iter8, cancellationToken);
+                  await Success[_iter8].WriteAsync(oprot, cancellationToken);
                 }
-                oprot.WriteMapEnd();
+                await oprot.WriteMapEndAsync(cancellationToken);
               }
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3047,59 +2041,63 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("SearchSettingItems_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SearchSettingItems_result(");
         bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (Success != null && __isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
+          sb.Append("Success: ");
+          sb.Append(Success);
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class GetCategoryNode_args : TBase
+    public partial class GetCategoryNodeArgs : TBase
     {
 
-      public GetCategoryNode_args() {
+      public GetCategoryNodeArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3107,14 +2105,15 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("GetCategoryNode_args");
-          oprot.WriteStructBegin(struc);
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          var struc = new TStruct("GetCategoryNode_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3122,19 +2121,16 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("GetCategoryNode_args(");
-        __sb.Append(")");
-        return __sb.ToString();
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetCategoryNode_args(");
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class GetCategoryNode_result : TBase
+    public partial class GetCategoryNodeResult : TBase
     {
       private Ruyi.SDK.SettingSystem.Api.SettingTree _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -3167,55 +2163,64 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public GetCategoryNode_result() {
+      public GetCategoryNodeResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Success = new Ruyi.SDK.SettingSystem.Api.SettingTree();
-                  Success.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Success.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3223,35 +2228,41 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("GetCategoryNode_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("GetCategoryNode_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
-            if (Success != null) {
+          if(this.__isset.success)
+          {
+            if (Success != null)
+            {
               field.Name = "Success";
               field.Type = TType.Struct;
               field.ID = 0;
-              oprot.WriteFieldBegin(field);
-              Success.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Success.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3259,32 +2270,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("GetCategoryNode_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetCategoryNode_result(");
         bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (Success != null && __isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success== null ? "<null>" : Success.ToString());
+          sb.Append("Success: ");
+          sb.Append(Success== null ? "<null>" : Success.ToString());
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class GetChildNode_args : TBase
+    public partial class GetChildNodeArgs : TBase
     {
       private string _parent;
       private Ruyi.SDK.SettingSystem.Api.NodeType _nodeType;
@@ -3321,53 +2331,62 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool parent;
         public bool nodeType;
       }
 
-      public GetChildNode_args() {
+      public GetChildNodeArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  Parent = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  Parent = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 2:
-                if (field.Type == TType.I32) {
-                  NodeType = (Ruyi.SDK.SettingSystem.Api.NodeType)iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.I32)
+                {
+                  NodeType = (Ruyi.SDK.SettingSystem.Api.NodeType)await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3375,31 +2394,34 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("GetChildNode_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (Parent != null && __isset.parent) {
+          var struc = new TStruct("GetChildNode_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (Parent != null && __isset.parent)
+          {
             field.Name = "parent";
             field.Type = TType.String;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Parent);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Parent, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (__isset.nodeType) {
+          if (__isset.nodeType)
+          {
             field.Name = "nodeType";
             field.Type = TType.I32;
             field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32((int)NodeType);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async((int)NodeType, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3407,32 +2429,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("GetChildNode_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetChildNode_args(");
         bool __first = true;
-        if (Parent != null && __isset.parent) {
-          if(!__first) { __sb.Append(", "); }
+        if (Parent != null && __isset.parent)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Parent: ");
-          __sb.Append(Parent);
+          sb.Append("Parent: ");
+          sb.Append(Parent);
         }
-        if (__isset.nodeType) {
-          if(!__first) { __sb.Append(", "); }
+        if (__isset.nodeType)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("NodeType: ");
-          __sb.Append(NodeType);
+          sb.Append("NodeType: ");
+          sb.Append(NodeType);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class GetChildNode_result : TBase
+    public partial class GetChildNodeResult : TBase
     {
       private Ruyi.SDK.SettingSystem.Api.NodeList _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -3465,55 +2486,64 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public GetChildNode_result() {
+      public GetChildNodeResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Success = new Ruyi.SDK.SettingSystem.Api.NodeList();
-                  Success.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Success.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3521,35 +2551,41 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("GetChildNode_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("GetChildNode_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
-            if (Success != null) {
+          if(this.__isset.success)
+          {
+            if (Success != null)
+            {
               field.Name = "Success";
               field.Type = TType.Struct;
               field.ID = 0;
-              oprot.WriteFieldBegin(field);
-              Success.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Success.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3557,32 +2593,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("GetChildNode_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetChildNode_result(");
         bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (Success != null && __isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success== null ? "<null>" : Success.ToString());
+          sb.Append("Success: ");
+          sb.Append(Success== null ? "<null>" : Success.ToString());
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class SetSettingItem_args : TBase
+    public partial class SetSettingItemArgs : TBase
     {
       private string _key;
       private string _val;
@@ -3621,53 +2656,62 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool key;
         public bool val;
       }
 
-      public SetSettingItem_args() {
+      public SetSettingItemArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  Key = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  Key = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 2:
-                if (field.Type == TType.String) {
-                  Val = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  Val = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3675,31 +2719,34 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("SetSettingItem_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (Key != null && __isset.key) {
+          var struc = new TStruct("SetSettingItem_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (Key != null && __isset.key)
+          {
             field.Name = "key";
             field.Type = TType.String;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Key);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Key, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (Val != null && __isset.val) {
+          if (Val != null && __isset.val)
+          {
             field.Name = "val";
             field.Type = TType.String;
             field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Val);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Val, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3707,32 +2754,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("SetSettingItem_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SetSettingItem_args(");
         bool __first = true;
-        if (Key != null && __isset.key) {
-          if(!__first) { __sb.Append(", "); }
+        if (Key != null && __isset.key)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Key: ");
-          __sb.Append(Key);
+          sb.Append("Key: ");
+          sb.Append(Key);
         }
-        if (Val != null && __isset.val) {
-          if(!__first) { __sb.Append(", "); }
+        if (Val != null && __isset.val)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Val: ");
-          __sb.Append(Val);
+          sb.Append("Val: ");
+          sb.Append(Val);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class SetSettingItem_result : TBase
+    public partial class SetSettingItemResult : TBase
     {
       private bool _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -3765,54 +2811,63 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public SetSettingItem_result() {
+      public SetSettingItemResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Bool) {
-                  Success = iprot.ReadBool();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.Bool)
+                {
+                  Success = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3820,33 +2875,38 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("SetSettingItem_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("SetSettingItem_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
+          if(this.__isset.success)
+          {
             field.Name = "Success";
             field.Type = TType.Bool;
             field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteBool(Success);
-            oprot.WriteFieldEnd();
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3854,32 +2914,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("SetSettingItem_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SetSettingItem_result(");
         bool __first = true;
-        if (__isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
+          sb.Append("Success: ");
+          sb.Append(Success);
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class SetSettingItems_args : TBase
+    public partial class SetSettingItemsArgs : TBase
     {
       private Dictionary<string, string> _keyValues;
 
@@ -3901,57 +2960,63 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool keyValues;
       }
 
-      public SetSettingItems_args() {
+      public SetSettingItemsArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.Map) {
+                if (field.Type == TType.Map)
+                {
                   {
                     KeyValues = new Dictionary<string, string>();
-                    TMap _map9 = iprot.ReadMapBegin();
-                    for( int _i10 = 0; _i10 < _map9.Count; ++_i10)
+                    TMap _map9 = await iprot.ReadMapBeginAsync(cancellationToken);
+                    for(int _i10 = 0; _i10 < _map9.Count; ++_i10)
                     {
                       string _key11;
                       string _val12;
-                      _key11 = iprot.ReadString();
-                      _val12 = iprot.ReadString();
+                      _key11 = await iprot.ReadStringAsync(cancellationToken);
+                      _val12 = await iprot.ReadStringAsync(cancellationToken);
                       KeyValues[_key11] = _val12;
                     }
-                    iprot.ReadMapEnd();
+                    await iprot.ReadMapEndAsync(cancellationToken);
                   }
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3959,31 +3024,33 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("SetSettingItems_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (KeyValues != null && __isset.keyValues) {
+          var struc = new TStruct("SetSettingItems_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (KeyValues != null && __isset.keyValues)
+          {
             field.Name = "keyValues";
             field.Type = TType.Map;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
             {
-              oprot.WriteMapBegin(new TMap(TType.String, TType.String, KeyValues.Count));
+              await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.String, KeyValues.Count), cancellationToken);
               foreach (string _iter13 in KeyValues.Keys)
               {
-                oprot.WriteString(_iter13);
-                oprot.WriteString(KeyValues[_iter13]);
+                await oprot.WriteStringAsync(_iter13, cancellationToken);
+                await oprot.WriteStringAsync(KeyValues[_iter13], cancellationToken);
               }
-              oprot.WriteMapEnd();
+              await oprot.WriteMapEndAsync(cancellationToken);
             }
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -3991,26 +3058,24 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("SetSettingItems_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SetSettingItems_args(");
         bool __first = true;
-        if (KeyValues != null && __isset.keyValues) {
-          if(!__first) { __sb.Append(", "); }
+        if (KeyValues != null && __isset.keyValues)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("KeyValues: ");
-          __sb.Append(KeyValues);
+          sb.Append("KeyValues: ");
+          sb.Append(KeyValues);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class SetSettingItems_result : TBase
+    public partial class SetSettingItemsResult : TBase
     {
       private int _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -4043,54 +3108,63 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public SetSettingItems_result() {
+      public SetSettingItemsResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.I32) {
-                  Success = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.I32)
+                {
+                  Success = await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -4098,33 +3172,38 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("SetSettingItems_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("SetSettingItems_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
+          if(this.__isset.success)
+          {
             field.Name = "Success";
             field.Type = TType.I32;
             field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(Success);
-            oprot.WriteFieldEnd();
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -4132,32 +3211,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("SetSettingItems_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SetSettingItems_result(");
         bool __first = true;
-        if (__isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
+          sb.Append("Success: ");
+          sb.Append(Success);
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class RestoreDefault_args : TBase
+    public partial class RestoreDefaultArgs : TBase
     {
       private string _moduleName;
       private string _category;
@@ -4196,53 +3274,62 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool moduleName;
         public bool category;
       }
 
-      public RestoreDefault_args() {
+      public RestoreDefaultArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  ModuleName = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  ModuleName = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 2:
-                if (field.Type == TType.String) {
-                  Category = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  Category = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -4250,31 +3337,34 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("RestoreDefault_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (ModuleName != null && __isset.moduleName) {
+          var struc = new TStruct("RestoreDefault_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (ModuleName != null && __isset.moduleName)
+          {
             field.Name = "moduleName";
             field.Type = TType.String;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(ModuleName);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(ModuleName, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (Category != null && __isset.category) {
+          if (Category != null && __isset.category)
+          {
             field.Name = "category";
             field.Type = TType.String;
             field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Category);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Category, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -4282,32 +3372,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("RestoreDefault_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("RestoreDefault_args(");
         bool __first = true;
-        if (ModuleName != null && __isset.moduleName) {
-          if(!__first) { __sb.Append(", "); }
+        if (ModuleName != null && __isset.moduleName)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("ModuleName: ");
-          __sb.Append(ModuleName);
+          sb.Append("ModuleName: ");
+          sb.Append(ModuleName);
         }
-        if (Category != null && __isset.category) {
-          if(!__first) { __sb.Append(", "); }
+        if (Category != null && __isset.category)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Category: ");
-          __sb.Append(Category);
+          sb.Append("Category: ");
+          sb.Append(Category);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class RestoreDefault_result : TBase
+    public partial class RestoreDefaultResult : TBase
     {
       private bool _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -4340,54 +3429,63 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public RestoreDefault_result() {
+      public RestoreDefaultResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Bool) {
-                  Success = iprot.ReadBool();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.Bool)
+                {
+                  Success = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -4395,33 +3493,38 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("RestoreDefault_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("RestoreDefault_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
+          if(this.__isset.success)
+          {
             field.Name = "Success";
             field.Type = TType.Bool;
             field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteBool(Success);
-            oprot.WriteFieldEnd();
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -4429,32 +3532,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("RestoreDefault_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("RestoreDefault_result(");
         bool __first = true;
-        if (__isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
+          sb.Append("Success: ");
+          sb.Append(Success);
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class RestoreUserDefault_args : TBase
+    public partial class RestoreUserDefaultArgs : TBase
     {
       private string _userId;
       private string _moduleName;
@@ -4501,61 +3603,73 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool userId;
         public bool moduleName;
         public bool category;
       }
 
-      public RestoreUserDefault_args() {
+      public RestoreUserDefaultArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  UserId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  UserId = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 2:
-                if (field.Type == TType.String) {
-                  ModuleName = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  ModuleName = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 3:
-                if (field.Type == TType.String) {
-                  Category = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  Category = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -4563,39 +3677,43 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("RestoreUserDefault_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (UserId != null && __isset.userId) {
+          var struc = new TStruct("RestoreUserDefault_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (UserId != null && __isset.userId)
+          {
             field.Name = "userId";
             field.Type = TType.String;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(UserId);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(UserId, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (ModuleName != null && __isset.moduleName) {
+          if (ModuleName != null && __isset.moduleName)
+          {
             field.Name = "moduleName";
             field.Type = TType.String;
             field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(ModuleName);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(ModuleName, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (Category != null && __isset.category) {
+          if (Category != null && __isset.category)
+          {
             field.Name = "category";
             field.Type = TType.String;
             field.ID = 3;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Category);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Category, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -4603,38 +3721,38 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("RestoreUserDefault_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("RestoreUserDefault_args(");
         bool __first = true;
-        if (UserId != null && __isset.userId) {
-          if(!__first) { __sb.Append(", "); }
+        if (UserId != null && __isset.userId)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("UserId: ");
-          __sb.Append(UserId);
+          sb.Append("UserId: ");
+          sb.Append(UserId);
         }
-        if (ModuleName != null && __isset.moduleName) {
-          if(!__first) { __sb.Append(", "); }
+        if (ModuleName != null && __isset.moduleName)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("ModuleName: ");
-          __sb.Append(ModuleName);
+          sb.Append("ModuleName: ");
+          sb.Append(ModuleName);
         }
-        if (Category != null && __isset.category) {
-          if(!__first) { __sb.Append(", "); }
+        if (Category != null && __isset.category)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Category: ");
-          __sb.Append(Category);
+          sb.Append("Category: ");
+          sb.Append(Category);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class RestoreUserDefault_result : TBase
+    public partial class RestoreUserDefaultResult : TBase
     {
       private bool _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -4667,54 +3785,63 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public RestoreUserDefault_result() {
+      public RestoreUserDefaultResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Bool) {
-                  Success = iprot.ReadBool();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.Bool)
+                {
+                  Success = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -4722,33 +3849,38 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("RestoreUserDefault_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("RestoreUserDefault_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
+          if(this.__isset.success)
+          {
             field.Name = "Success";
             field.Type = TType.Bool;
             field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteBool(Success);
-            oprot.WriteFieldEnd();
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -4756,32 +3888,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("RestoreUserDefault_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("RestoreUserDefault_result(");
         bool __first = true;
-        if (__isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
+          sb.Append("Success: ");
+          sb.Append(Success);
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class UpdateModuleVersion_args : TBase
+    public partial class UpdateModuleVersionArgs : TBase
     {
       private string _moduleName;
 
@@ -4803,45 +3934,51 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool moduleName;
       }
 
-      public UpdateModuleVersion_args() {
+      public UpdateModuleVersionArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  ModuleName = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  ModuleName = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -4849,23 +3986,25 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("UpdateModuleVersion_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (ModuleName != null && __isset.moduleName) {
+          var struc = new TStruct("UpdateModuleVersion_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (ModuleName != null && __isset.moduleName)
+          {
             field.Name = "moduleName";
             field.Type = TType.String;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(ModuleName);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(ModuleName, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -4873,26 +4012,24 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("UpdateModuleVersion_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("UpdateModuleVersion_args(");
         bool __first = true;
-        if (ModuleName != null && __isset.moduleName) {
-          if(!__first) { __sb.Append(", "); }
+        if (ModuleName != null && __isset.moduleName)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("ModuleName: ");
-          __sb.Append(ModuleName);
+          sb.Append("ModuleName: ");
+          sb.Append(ModuleName);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class UpdateModuleVersion_result : TBase
+    public partial class UpdateModuleVersionResult : TBase
     {
       private bool _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -4925,54 +4062,63 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public UpdateModuleVersion_result() {
+      public UpdateModuleVersionResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Bool) {
-                  Success = iprot.ReadBool();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.Bool)
+                {
+                  Success = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -4980,33 +4126,38 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("UpdateModuleVersion_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("UpdateModuleVersion_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
+          if(this.__isset.success)
+          {
             field.Name = "Success";
             field.Type = TType.Bool;
             field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteBool(Success);
-            oprot.WriteFieldEnd();
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -5014,32 +4165,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("UpdateModuleVersion_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("UpdateModuleVersion_result(");
         bool __first = true;
-        if (__isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
+          sb.Append("Success: ");
+          sb.Append(Success);
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class SetUserAppData_args : TBase
+    public partial class SetUserAppDataArgs : TBase
     {
       private string _userId;
       private string _category;
@@ -5086,74 +4236,86 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool userId;
         public bool category;
         public bool settingItems;
       }
 
-      public SetUserAppData_args() {
+      public SetUserAppDataArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  UserId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  UserId = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 2:
-                if (field.Type == TType.String) {
-                  Category = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  Category = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 3:
-                if (field.Type == TType.Map) {
+                if (field.Type == TType.Map)
+                {
                   {
                     SettingItems = new Dictionary<string, Ruyi.SDK.CommonType.SettingValue>();
-                    TMap _map14 = iprot.ReadMapBegin();
-                    for( int _i15 = 0; _i15 < _map14.Count; ++_i15)
+                    TMap _map14 = await iprot.ReadMapBeginAsync(cancellationToken);
+                    for(int _i15 = 0; _i15 < _map14.Count; ++_i15)
                     {
                       string _key16;
                       Ruyi.SDK.CommonType.SettingValue _val17;
-                      _key16 = iprot.ReadString();
+                      _key16 = await iprot.ReadStringAsync(cancellationToken);
                       _val17 = new Ruyi.SDK.CommonType.SettingValue();
-                      _val17.Read(iprot);
+                      await _val17.ReadAsync(iprot, cancellationToken);
                       SettingItems[_key16] = _val17;
                     }
-                    iprot.ReadMapEnd();
+                    await iprot.ReadMapEndAsync(cancellationToken);
                   }
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -5161,47 +4323,51 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("SetUserAppData_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (UserId != null && __isset.userId) {
+          var struc = new TStruct("SetUserAppData_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (UserId != null && __isset.userId)
+          {
             field.Name = "userId";
             field.Type = TType.String;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(UserId);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(UserId, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (Category != null && __isset.category) {
+          if (Category != null && __isset.category)
+          {
             field.Name = "category";
             field.Type = TType.String;
             field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Category);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Category, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (SettingItems != null && __isset.settingItems) {
+          if (SettingItems != null && __isset.settingItems)
+          {
             field.Name = "settingItems";
             field.Type = TType.Map;
             field.ID = 3;
-            oprot.WriteFieldBegin(field);
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
             {
-              oprot.WriteMapBegin(new TMap(TType.String, TType.Struct, SettingItems.Count));
+              await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.Struct, SettingItems.Count), cancellationToken);
               foreach (string _iter18 in SettingItems.Keys)
               {
-                oprot.WriteString(_iter18);
-                SettingItems[_iter18].Write(oprot);
+                await oprot.WriteStringAsync(_iter18, cancellationToken);
+                await SettingItems[_iter18].WriteAsync(oprot, cancellationToken);
               }
-              oprot.WriteMapEnd();
+              await oprot.WriteMapEndAsync(cancellationToken);
             }
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -5209,38 +4375,38 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("SetUserAppData_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SetUserAppData_args(");
         bool __first = true;
-        if (UserId != null && __isset.userId) {
-          if(!__first) { __sb.Append(", "); }
+        if (UserId != null && __isset.userId)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("UserId: ");
-          __sb.Append(UserId);
+          sb.Append("UserId: ");
+          sb.Append(UserId);
         }
-        if (Category != null && __isset.category) {
-          if(!__first) { __sb.Append(", "); }
+        if (Category != null && __isset.category)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Category: ");
-          __sb.Append(Category);
+          sb.Append("Category: ");
+          sb.Append(Category);
         }
-        if (SettingItems != null && __isset.settingItems) {
-          if(!__first) { __sb.Append(", "); }
+        if (SettingItems != null && __isset.settingItems)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("SettingItems: ");
-          __sb.Append(SettingItems);
+          sb.Append("SettingItems: ");
+          sb.Append(SettingItems);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class SetUserAppData_result : TBase
+    public partial class SetUserAppDataResult : TBase
     {
       private int _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -5273,54 +4439,63 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public SetUserAppData_result() {
+      public SetUserAppDataResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.I32) {
-                  Success = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.I32)
+                {
+                  Success = await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -5328,33 +4503,38 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("SetUserAppData_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("SetUserAppData_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
+          if(this.__isset.success)
+          {
             field.Name = "Success";
             field.Type = TType.I32;
             field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(Success);
-            oprot.WriteFieldEnd();
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -5362,32 +4542,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("SetUserAppData_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SetUserAppData_result(");
         bool __first = true;
-        if (__isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
+          sb.Append("Success: ");
+          sb.Append(Success);
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class GetUserAppData_args : TBase
+    public partial class GetUserAppDataArgs : TBase
     {
       private string _userId;
       private string _category;
@@ -5434,71 +4613,83 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool userId;
         public bool category;
         public bool settingKeys;
       }
 
-      public GetUserAppData_args() {
+      public GetUserAppDataArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  UserId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  UserId = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 2:
-                if (field.Type == TType.String) {
-                  Category = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  Category = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 3:
-                if (field.Type == TType.List) {
+                if (field.Type == TType.List)
+                {
                   {
                     SettingKeys = new List<string>();
-                    TList _list19 = iprot.ReadListBegin();
-                    for( int _i20 = 0; _i20 < _list19.Count; ++_i20)
+                    TList _list19 = await iprot.ReadListBeginAsync(cancellationToken);
+                    for(int _i20 = 0; _i20 < _list19.Count; ++_i20)
                     {
                       string _elem21;
-                      _elem21 = iprot.ReadString();
+                      _elem21 = await iprot.ReadStringAsync(cancellationToken);
                       SettingKeys.Add(_elem21);
                     }
-                    iprot.ReadListEnd();
+                    await iprot.ReadListEndAsync(cancellationToken);
                   }
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -5506,46 +4697,50 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("GetUserAppData_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (UserId != null && __isset.userId) {
+          var struc = new TStruct("GetUserAppData_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (UserId != null && __isset.userId)
+          {
             field.Name = "userId";
             field.Type = TType.String;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(UserId);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(UserId, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (Category != null && __isset.category) {
+          if (Category != null && __isset.category)
+          {
             field.Name = "category";
             field.Type = TType.String;
             field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Category);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Category, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (SettingKeys != null && __isset.settingKeys) {
+          if (SettingKeys != null && __isset.settingKeys)
+          {
             field.Name = "settingKeys";
             field.Type = TType.List;
             field.ID = 3;
-            oprot.WriteFieldBegin(field);
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
             {
-              oprot.WriteListBegin(new TList(TType.String, SettingKeys.Count));
+              await oprot.WriteListBeginAsync(new TList(TType.String, SettingKeys.Count), cancellationToken);
               foreach (string _iter22 in SettingKeys)
               {
-                oprot.WriteString(_iter22);
+                await oprot.WriteStringAsync(_iter22, cancellationToken);
               }
-              oprot.WriteListEnd();
+              await oprot.WriteListEndAsync(cancellationToken);
             }
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -5553,38 +4748,38 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("GetUserAppData_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetUserAppData_args(");
         bool __first = true;
-        if (UserId != null && __isset.userId) {
-          if(!__first) { __sb.Append(", "); }
+        if (UserId != null && __isset.userId)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("UserId: ");
-          __sb.Append(UserId);
+          sb.Append("UserId: ");
+          sb.Append(UserId);
         }
-        if (Category != null && __isset.category) {
-          if(!__first) { __sb.Append(", "); }
+        if (Category != null && __isset.category)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Category: ");
-          __sb.Append(Category);
+          sb.Append("Category: ");
+          sb.Append(Category);
         }
-        if (SettingKeys != null && __isset.settingKeys) {
-          if(!__first) { __sb.Append(", "); }
+        if (SettingKeys != null && __isset.settingKeys)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("SettingKeys: ");
-          __sb.Append(SettingKeys);
+          sb.Append("SettingKeys: ");
+          sb.Append(SettingKeys);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class GetUserAppData_result : TBase
+    public partial class GetUserAppDataResult : TBase
     {
       private Ruyi.SDK.CommonType.AppData _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -5617,55 +4812,64 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public GetUserAppData_result() {
+      public GetUserAppDataResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Success = new Ruyi.SDK.CommonType.AppData();
-                  Success.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Success.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -5673,35 +4877,41 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("GetUserAppData_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("GetUserAppData_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
-            if (Success != null) {
+          if(this.__isset.success)
+          {
+            if (Success != null)
+            {
               field.Name = "Success";
               field.Type = TType.Struct;
               field.ID = 0;
-              oprot.WriteFieldBegin(field);
-              Success.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Success.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -5709,32 +4919,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("GetUserAppData_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetUserAppData_result(");
         bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (Success != null && __isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success== null ? "<null>" : Success.ToString());
+          sb.Append("Success: ");
+          sb.Append(Success== null ? "<null>" : Success.ToString());
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class RemoveUserAppData_args : TBase
+    public partial class RemoveUserAppDataArgs : TBase
     {
       private string _userId;
       private string _category;
@@ -5781,71 +4990,83 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool userId;
         public bool category;
         public bool settingKeys;
       }
 
-      public RemoveUserAppData_args() {
+      public RemoveUserAppDataArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  UserId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  UserId = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 2:
-                if (field.Type == TType.String) {
-                  Category = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  Category = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 3:
-                if (field.Type == TType.List) {
+                if (field.Type == TType.List)
+                {
                   {
                     SettingKeys = new List<string>();
-                    TList _list23 = iprot.ReadListBegin();
-                    for( int _i24 = 0; _i24 < _list23.Count; ++_i24)
+                    TList _list23 = await iprot.ReadListBeginAsync(cancellationToken);
+                    for(int _i24 = 0; _i24 < _list23.Count; ++_i24)
                     {
                       string _elem25;
-                      _elem25 = iprot.ReadString();
+                      _elem25 = await iprot.ReadStringAsync(cancellationToken);
                       SettingKeys.Add(_elem25);
                     }
-                    iprot.ReadListEnd();
+                    await iprot.ReadListEndAsync(cancellationToken);
                   }
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -5853,46 +5074,50 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("RemoveUserAppData_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (UserId != null && __isset.userId) {
+          var struc = new TStruct("RemoveUserAppData_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (UserId != null && __isset.userId)
+          {
             field.Name = "userId";
             field.Type = TType.String;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(UserId);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(UserId, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (Category != null && __isset.category) {
+          if (Category != null && __isset.category)
+          {
             field.Name = "category";
             field.Type = TType.String;
             field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Category);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Category, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (SettingKeys != null && __isset.settingKeys) {
+          if (SettingKeys != null && __isset.settingKeys)
+          {
             field.Name = "settingKeys";
             field.Type = TType.List;
             field.ID = 3;
-            oprot.WriteFieldBegin(field);
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
             {
-              oprot.WriteListBegin(new TList(TType.String, SettingKeys.Count));
+              await oprot.WriteListBeginAsync(new TList(TType.String, SettingKeys.Count), cancellationToken);
               foreach (string _iter26 in SettingKeys)
               {
-                oprot.WriteString(_iter26);
+                await oprot.WriteStringAsync(_iter26, cancellationToken);
               }
-              oprot.WriteListEnd();
+              await oprot.WriteListEndAsync(cancellationToken);
             }
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -5900,38 +5125,38 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("RemoveUserAppData_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("RemoveUserAppData_args(");
         bool __first = true;
-        if (UserId != null && __isset.userId) {
-          if(!__first) { __sb.Append(", "); }
+        if (UserId != null && __isset.userId)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("UserId: ");
-          __sb.Append(UserId);
+          sb.Append("UserId: ");
+          sb.Append(UserId);
         }
-        if (Category != null && __isset.category) {
-          if(!__first) { __sb.Append(", "); }
+        if (Category != null && __isset.category)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Category: ");
-          __sb.Append(Category);
+          sb.Append("Category: ");
+          sb.Append(Category);
         }
-        if (SettingKeys != null && __isset.settingKeys) {
-          if(!__first) { __sb.Append(", "); }
+        if (SettingKeys != null && __isset.settingKeys)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("SettingKeys: ");
-          __sb.Append(SettingKeys);
+          sb.Append("SettingKeys: ");
+          sb.Append(SettingKeys);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class RemoveUserAppData_result : TBase
+    public partial class RemoveUserAppDataResult : TBase
     {
       private int _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -5964,54 +5189,63 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public RemoveUserAppData_result() {
+      public RemoveUserAppDataResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.I32) {
-                  Success = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.I32)
+                {
+                  Success = await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -6019,33 +5253,38 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("RemoveUserAppData_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("RemoveUserAppData_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
+          if(this.__isset.success)
+          {
             field.Name = "Success";
             field.Type = TType.I32;
             field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(Success);
-            oprot.WriteFieldEnd();
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -6053,32 +5292,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("RemoveUserAppData_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("RemoveUserAppData_result(");
         bool __first = true;
-        if (__isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
+          sb.Append("Success: ");
+          sb.Append(Success);
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class SettingItemNotify_args : TBase
+    public partial class SettingItemNotifyArgs : TBase
     {
       private string _key;
       private string _contents;
@@ -6117,53 +5355,62 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool key;
         public bool contents;
       }
 
-      public SettingItemNotify_args() {
+      public SettingItemNotifyArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  Key = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  Key = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 2:
-                if (field.Type == TType.String) {
-                  Contents = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  Contents = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -6171,31 +5418,34 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("SettingItemNotify_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (Key != null && __isset.key) {
+          var struc = new TStruct("SettingItemNotify_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (Key != null && __isset.key)
+          {
             field.Name = "key";
             field.Type = TType.String;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Key);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Key, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (Contents != null && __isset.contents) {
+          if (Contents != null && __isset.contents)
+          {
             field.Name = "contents";
             field.Type = TType.String;
             field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Contents);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Contents, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -6203,32 +5453,31 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("SettingItemNotify_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SettingItemNotify_args(");
         bool __first = true;
-        if (Key != null && __isset.key) {
-          if(!__first) { __sb.Append(", "); }
+        if (Key != null && __isset.key)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Key: ");
-          __sb.Append(Key);
+          sb.Append("Key: ");
+          sb.Append(Key);
         }
-        if (Contents != null && __isset.contents) {
-          if(!__first) { __sb.Append(", "); }
+        if (Contents != null && __isset.contents)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Contents: ");
-          __sb.Append(Contents);
+          sb.Append("Contents: ");
+          sb.Append(Contents);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class SettingItemNotify_result : TBase
+    public partial class SettingItemNotifyResult : TBase
     {
       private bool _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
@@ -6261,54 +5510,63 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
         public bool error1;
       }
 
-      public SettingItemNotify_result() {
+      public SettingItemNotifyResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Bool) {
-                  Success = iprot.ReadBool();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.Bool)
+                {
+                  Success = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               case 1:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  Error1.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -6316,33 +5574,38 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("SettingItemNotify_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("SettingItemNotify_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
+          if(this.__isset.success)
+          {
             field.Name = "Success";
             field.Type = TType.Bool;
             field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteBool(Success);
-            oprot.WriteFieldEnd();
-          } else if (this.__isset.error1) {
-            if (Error1 != null) {
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
               field.Name = "Error1";
               field.Type = TType.Struct;
               field.ID = 1;
-              oprot.WriteFieldBegin(field);
-              Error1.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -6350,25 +5613,27 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("SettingItemNotify_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SettingItemNotify_result(");
         bool __first = true;
-        if (__isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
+          sb.Append("Success: ");
+          sb.Append(Success);
         }
-        if (Error1 != null && __isset.error1) {
-          if(!__first) { __sb.Append(", "); }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Error1: ");
-          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
   }
