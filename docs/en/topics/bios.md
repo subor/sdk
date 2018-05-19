@@ -30,7 +30,7 @@ Check the top of the `DA220REL.txt` file:
 __Important__:
 
 - The BIOS version __must__ match the [Ruyi OS](os.md) version because the BIOS must be paired with a compatible AMD driver.
-- If updating from BIOS 0.09 (or earlier) to BIOS 0.19 (or later), you must first update to BIOS 0.13 and OS 0.6 then update to the mroe recent BIOS/OS.
+- If updating from BIOS 0.09 (or earlier) to BIOS 0.19 (or later), you must first update to BIOS 0.13 and OS 0.6 then update to the more recent BIOS/OS.
 
 | BIOS Version/Date | Ruyi OS Version | AMD Driver Stack Version/Date
 |-|-|-
@@ -100,7 +100,7 @@ Next, on the Ruyi:
 
 1. If Windows is already installed, in [Command Prompt with administrator rights](https://technet.microsoft.com/en-us/library/cc947813(v=ws.10).aspx) run: `manage-bde.exe -protectors -disable c:`
     - This temporarily disables Bitlocker.  __Failure to do this results in an unbootable OS__ due to lost encryption data in TPM chip.
-1. Plug USB flash drive into any Ruyi's USB ports and reboot it
+1. Plug USB drive into any of Ruyi's USB ports and reboot it
 1. Wait for EFI Shell prompt to appear:
 
        Shell>

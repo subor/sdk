@@ -2,7 +2,7 @@
 
 ---
 ## ![](/docs/img/warning.png) NOTICE
-The Ruyi platform is still in an __early alpha__ state.  
+The Ruyi platform is still in an __early beta__ state.  
 You may experience one or more of the following:
 
 * General brokenness
@@ -38,7 +38,23 @@ __Advanced:__
 
 ## Topics
 
-* [Platform Architecture](topics/layer0.md)
+* Development
+    * [Platform Architecture](topics/layer0.md)
+    * [Developer Tools](topics/devtool.md)
+    * [SDK](topics/sdk.md)
+        * [C++](topics/cplusplus.md)
+        * [UE4](topics/ue4.md)
+        * [Unity](topics/unity.md)
+        * [Build SDK source](topics/build_sdk_source.md) (advanced)
+    * Specialized Areas
+        * [App Manifest](topics/app_metadata.md)
+        * [Input](topics/input.md)
+        * [Overlay](topics/overlay.md)
+            * [DVR](topics/dvr.md)
+        * [Low-Power Mode](topics/lpm.md)
+    * Advanced
+        * [Optimization](topics/optimization.md)
+        * [AMD GPU Services (AGS)](topics/amd_gpu_services.md)
 * [Hardware](topics/hardware.md)
     * [Hard Drive](topics/harddrive.md)
     * [Simulation System](topics/simulation_system.md)
@@ -46,31 +62,9 @@ __Advanced:__
     * [BIOS](topics/bios.md)
     * [PC mode](topics/pc_mode.md)
     * [OS recovery](topics/os_recovery.md)
-* [Developer Tools](topics/devtool.md)
 * [Support](topics/support.md)
     * [FAQ](faq.md)
     * [Documentation](topics/docs.md)
     * [Release notes](topics/release_notes.md)
     * [MIT License](../../LICENSE.md)
-
-__General SDK__
-
-* [SDK](topics/sdk.md)
-    * [C++](topics/cplusplus.md)
-    * [UE4](topics/ue4.md)
-    * [Unity](topics/unity.md)
-
-__SDK Topics__
-
-* [App Manifest](topics/app_metadata.md)
-* [Input](topics/input.md)
-* [Overlay](topics/overlay.md)
-    * [DVR](topics/dvr.md)
-* [Low-Power Mode](topics/lpm.md)
-
-__Advanced:__
-
-* [Build SDK source](topics/build_sdk_source.md)
-* [Optimization](topics/optimization.md)
-* [AMD GPU Services (AGS)](topics/amd_gpu_services.md)
 

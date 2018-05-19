@@ -8,11 +8,11 @@
 
 1. Does it have Blueray or DVD drive?  HDD?
 
-    No, neither optical drive.  It will tentatively ship with a 128 GB SSD and 1 TB HDD.
+    No, neither optical drive.  It will tentatively ship with a 128 GB SSD and 1 TB HDD.  [Details](topics/hardware.md)
 
 1. The devkit I received has a single Toshiba HDD with wretched performance, is that final?
 
-    No, HDD performance problems with first batch of devkits are a known issue which later hardware revisions will correct.
+    No, HDD performance problems with first batch of devkits was fixed in later hardware revisions.  [Details](topics/hardware.md#Revisions)
 
 1. Input device (gamepad/keyboard/mouse)?
 
@@ -21,6 +21,11 @@
 1. What about peripherals, display/audio ports, etc.?
 
     USB, HDMI, ethernet, wifi, bluetooth, S/PDIF.  [Details](topics/hardware.md)
+
+1. Is it supposed to be so loud?
+
+    No.  This was a problem with earlier hardware revisions as a result of incomplete thermal design and PSU issues (see [hardware revisions](topics/hardware.md#Revisions)).
+    If you have the latest hardware, make sure you've installed the latest [BIOS](topics/bios.md) as it tweaks fan speed control.
 
 ## Software/SDK
 
