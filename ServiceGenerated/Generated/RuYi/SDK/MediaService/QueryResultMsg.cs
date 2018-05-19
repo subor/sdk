@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.MediaService
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class QueryResultMsg : TBase
   {
     private List<MediaFile> _files;
@@ -44,56 +47,62 @@ namespace Ruyi.SDK.MediaService
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool files;
     }
 
-    public QueryResultMsg() {
+    public QueryResultMsg()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.List) {
+              if (field.Type == TType.List)
+              {
                 {
                   Files = new List<MediaFile>();
-                  TList _list0 = iprot.ReadListBegin();
-                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
+                  TList _list0 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
                     MediaFile _elem2;
                     _elem2 = new MediaFile();
-                    _elem2.Read(iprot);
+                    await _elem2.ReadAsync(iprot, cancellationToken);
                     Files.Add(_elem2);
                   }
-                  iprot.ReadListEnd();
+                  await iprot.ReadListEndAsync(cancellationToken);
                 }
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -101,30 +110,32 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("QueryResultMsg");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (Files != null && __isset.files) {
+        var struc = new TStruct("QueryResultMsg");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (Files != null && __isset.files)
+        {
           field.Name = "files";
           field.Type = TType.List;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
-            oprot.WriteListBegin(new TList(TType.Struct, Files.Count));
+            await oprot.WriteListBeginAsync(new TList(TType.Struct, Files.Count), cancellationToken);
             foreach (MediaFile _iter3 in Files)
             {
-              _iter3.Write(oprot);
+              await _iter3.WriteAsync(oprot, cancellationToken);
             }
-            oprot.WriteListEnd();
+            await oprot.WriteListEndAsync(cancellationToken);
           }
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -132,19 +143,20 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("QueryResultMsg(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("QueryResultMsg(");
       bool __first = true;
-      if (Files != null && __isset.files) {
-        if(!__first) { __sb.Append(", "); }
+      if (Files != null && __isset.files)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Files: ");
-        __sb.Append(Files);
+        sb.Append("Files: ");
+        sb.Append(Files);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

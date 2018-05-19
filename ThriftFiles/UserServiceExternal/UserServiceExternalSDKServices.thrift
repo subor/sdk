@@ -1,8 +1,7 @@
 include "UserServiceExternalSDKDataTypes.thrift"
 include "../../../commons/Config/SDKDesc/ServiceCommon/thrift/CommonType/CommonTypeSDKDataTypes.thrift"
 
-namespace csharp Ruyi.SDK.UserServiceExternal
-namespace cpp Ruyi.SDK.UserServiceExternal
+namespace * Ruyi.SDK.UserServiceExternal
 
 
 service UserServExternal {

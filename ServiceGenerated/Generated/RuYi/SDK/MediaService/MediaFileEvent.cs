@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.MediaService
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class MediaFileEvent : TBase
   {
     private MediaFile _file;
@@ -73,62 +76,74 @@ namespace Ruyi.SDK.MediaService
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool file;
       public bool @event;
       public bool oldname;
     }
 
-    public MediaFileEvent() {
+    public MediaFileEvent()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.Struct) {
+              if (field.Type == TType.Struct)
+              {
                 File = new MediaFile();
-                File.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await File.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.I32) {
-                Event = (MediaFileEventTypes)iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I32)
+              {
+                Event = (MediaFileEventTypes)await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 3:
-              if (field.Type == TType.String) {
-                Oldname = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                Oldname = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -136,39 +151,43 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("MediaFileEvent");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (File != null && __isset.file) {
+        var struc = new TStruct("MediaFileEvent");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (File != null && __isset.file)
+        {
           field.Name = "file";
           field.Type = TType.Struct;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          File.Write(oprot);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await File.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.@event) {
+        if (__isset.@event)
+        {
           field.Name = "event";
           field.Type = TType.I32;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32((int)Event);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async((int)Event, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Oldname != null && __isset.oldname) {
+        if (Oldname != null && __isset.oldname)
+        {
           field.Name = "oldname";
           field.Type = TType.String;
           field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Oldname);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Oldname, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -176,31 +195,34 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("MediaFileEvent(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("MediaFileEvent(");
       bool __first = true;
-      if (File != null && __isset.file) {
-        if(!__first) { __sb.Append(", "); }
+      if (File != null && __isset.file)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("File: ");
-        __sb.Append(File== null ? "<null>" : File.ToString());
+        sb.Append("File: ");
+        sb.Append(File== null ? "<null>" : File.ToString());
       }
-      if (__isset.@event) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.@event)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Event: ");
-        __sb.Append(Event);
+        sb.Append("Event: ");
+        sb.Append(Event);
       }
-      if (Oldname != null && __isset.oldname) {
-        if(!__first) { __sb.Append(", "); }
+      if (Oldname != null && __isset.oldname)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Oldname: ");
-        __sb.Append(Oldname);
+        sb.Append("Oldname: ");
+        sb.Append(Oldname);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

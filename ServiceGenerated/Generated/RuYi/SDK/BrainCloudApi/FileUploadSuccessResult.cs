@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.BrainCloudApi
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class FileUploadSuccessResult : TBase
   {
     private string _fileUploadId;
@@ -55,53 +58,62 @@ namespace Ruyi.SDK.BrainCloudApi
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool fileUploadId;
       public bool jsonResponse;
     }
 
-    public FileUploadSuccessResult() {
+    public FileUploadSuccessResult()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String) {
-                FileUploadId = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                FileUploadId = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.String) {
-                JsonResponse = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                JsonResponse = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -109,31 +121,34 @@ namespace Ruyi.SDK.BrainCloudApi
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("FileUploadSuccessResult");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (FileUploadId != null && __isset.fileUploadId) {
+        var struc = new TStruct("FileUploadSuccessResult");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (FileUploadId != null && __isset.fileUploadId)
+        {
           field.Name = "fileUploadId";
           field.Type = TType.String;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(FileUploadId);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(FileUploadId, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (JsonResponse != null && __isset.jsonResponse) {
+        if (JsonResponse != null && __isset.jsonResponse)
+        {
           field.Name = "jsonResponse";
           field.Type = TType.String;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(JsonResponse);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(JsonResponse, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -141,25 +156,27 @@ namespace Ruyi.SDK.BrainCloudApi
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("FileUploadSuccessResult(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("FileUploadSuccessResult(");
       bool __first = true;
-      if (FileUploadId != null && __isset.fileUploadId) {
-        if(!__first) { __sb.Append(", "); }
+      if (FileUploadId != null && __isset.fileUploadId)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("FileUploadId: ");
-        __sb.Append(FileUploadId);
+        sb.Append("FileUploadId: ");
+        sb.Append(FileUploadId);
       }
-      if (JsonResponse != null && __isset.jsonResponse) {
-        if(!__first) { __sb.Append(", "); }
+      if (JsonResponse != null && __isset.jsonResponse)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("JsonResponse: ");
-        __sb.Append(JsonResponse);
+        sb.Append("JsonResponse: ");
+        sb.Append(JsonResponse);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.Speech
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class File : TBase
   {
     private string _filename;
@@ -41,45 +44,51 @@ namespace Ruyi.SDK.Speech
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool filename;
     }
 
-    public File() {
+    public File()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String) {
-                Filename = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                Filename = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -87,23 +96,25 @@ namespace Ruyi.SDK.Speech
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("File");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (Filename != null && __isset.filename) {
+        var struc = new TStruct("File");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (Filename != null && __isset.filename)
+        {
           field.Name = "filename";
           field.Type = TType.String;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Filename);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Filename, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -111,19 +122,20 @@ namespace Ruyi.SDK.Speech
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("File(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("File(");
       bool __first = true;
-      if (Filename != null && __isset.filename) {
-        if(!__first) { __sb.Append(", "); }
+      if (Filename != null && __isset.filename)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Filename: ");
-        __sb.Append(Filename);
+        sb.Append("Filename: ");
+        sb.Append(Filename);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

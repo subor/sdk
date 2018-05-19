@@ -9,189 +9,132 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.StorageLayer
 {
-  public partial class StorageLayerService {
-    public interface ISync {
-      Ruyi.SDK.StorageLayer.GetLocalPathResult GetLocalPath(string msg);
+  public partial class StorageLayerService
+  {
+    public interface IAsync
+    {
+      Task<Ruyi.SDK.StorageLayer.GetLocalPathResult> GetLocalPathAsync(string msg, CancellationToken cancellationToken);
+
     }
 
-    public interface IAsync {
-      Task<Ruyi.SDK.StorageLayer.GetLocalPathResult> GetLocalPathAsync(string msg);
-    }
 
-    public interface Iface : ISync, IAsync {
-      IAsyncResult Begin_GetLocalPath(AsyncCallback callback, object state, string msg);
-      Ruyi.SDK.StorageLayer.GetLocalPathResult End_GetLocalPath(IAsyncResult asyncResult);
-    }
-
-    public class Client : IDisposable, Iface {
-      public Client(TProtocol prot) : this(prot, prot)
+    public class Client : TBaseClient, IDisposable, IAsync
+    {
+      public Client(TProtocol protocol) : this(protocol, protocol)
       {
       }
 
-      public Client(TProtocol iprot, TProtocol oprot)
-      {
-        iprot_ = iprot;
-        oprot_ = oprot;
+      public Client(TProtocol inputProtocol, TProtocol outputProtocol) : base(inputProtocol, outputProtocol)      {
       }
-
-      protected TProtocol iprot_;
-      protected TProtocol oprot_;
-      protected int seqid_;
-
-      public TProtocol InputProtocol
+      public async Task<Ruyi.SDK.StorageLayer.GetLocalPathResult> GetLocalPathAsync(string msg, CancellationToken cancellationToken)
       {
-        get { return iprot_; }
-      }
-      public TProtocol OutputProtocol
-      {
-        get { return oprot_; }
-      }
-
-
-      #region " IDisposable Support "
-      private bool _IsDisposed;
-
-      // IDisposable
-      public void Dispose()
-      {
-        Dispose(true);
-      }
-      
-
-      protected virtual void Dispose(bool disposing)
-      {
-        if (!_IsDisposed)
-        {
-          if (disposing)
-          {
-            if (iprot_ != null)
-            {
-              ((IDisposable)iprot_).Dispose();
-            }
-            if (oprot_ != null)
-            {
-              ((IDisposable)oprot_).Dispose();
-            }
-          }
-        }
-        _IsDisposed = true;
-      }
-      #endregion
-
-
-      
-      public IAsyncResult Begin_GetLocalPath(AsyncCallback callback, object state, string msg)
-      {
-        return send_GetLocalPath(callback, state, msg);
-      }
-
-      public Ruyi.SDK.StorageLayer.GetLocalPathResult End_GetLocalPath(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_GetLocalPath();
-      }
-
-      public async Task<Ruyi.SDK.StorageLayer.GetLocalPathResult> GetLocalPathAsync(string msg)
-      {
-        Ruyi.SDK.StorageLayer.GetLocalPathResult retval;
-        retval = await Task.Run(() =>
-        {
-          return GetLocalPath(msg);
-        });
-        return retval;
-      }
-
-      public Ruyi.SDK.StorageLayer.GetLocalPathResult GetLocalPath(string msg)
-      {
-        var asyncResult = Begin_GetLocalPath(null, null, msg);
-        return End_GetLocalPath(asyncResult);
-
-      }
-      public IAsyncResult send_GetLocalPath(AsyncCallback callback, object state, string msg)
-      {
-        oprot_.WriteMessageBegin(new TMessage("GetLocalPath", TMessageType.Call, seqid_));
-        GetLocalPath_args args = new GetLocalPath_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetLocalPath", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new GetLocalPathArgs();
         args.Msg = msg;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public Ruyi.SDK.StorageLayer.GetLocalPathResult recv_GetLocalPath()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        GetLocalPath_result result = new GetLocalPath_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new GetLocalPathResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetLocalPath failed: unknown result");
       }
 
     }
-    public class AsyncProcessor : TAsyncProcessor {
-      public AsyncProcessor(IAsync iface)
+
+    public class AsyncProcessor : ITAsyncProcessor
+    {
+      private IAsync _iAsync;
+
+      public AsyncProcessor(IAsync iAsync)
       {
-        iface_ = iface;
+        if (iAsync == null) throw new ArgumentNullException(nameof(iAsync));
+
+        _iAsync = iAsync;
         processMap_["GetLocalPath"] = GetLocalPath_ProcessAsync;
       }
 
-      protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
-      private IAsync iface_;
+      protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken);
       protected Dictionary<string, ProcessFunction> processMap_ = new Dictionary<string, ProcessFunction>();
 
       public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot)
       {
+        return await ProcessAsync(iprot, oprot, CancellationToken.None);
+      }
+
+      public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
         try
         {
-          TMessage msg = iprot.ReadMessageBegin();
+          var msg = await iprot.ReadMessageBeginAsync(cancellationToken);
+
           ProcessFunction fn;
           processMap_.TryGetValue(msg.Name, out fn);
-          if (fn == null) {
-            TProtocolUtil.Skip(iprot, TType.Struct);
-            iprot.ReadMessageEnd();
-            TApplicationException x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
-            oprot.WriteMessageBegin(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID));
-            x.Write(oprot);
-            oprot.WriteMessageEnd();
-            oprot.Transport.Flush();
+
+          if (fn == null)
+          {
+            await TProtocolUtil.SkipAsync(iprot, TType.Struct, cancellationToken);
+            await iprot.ReadMessageEndAsync(cancellationToken);
+            var x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
+            await oprot.WriteMessageBeginAsync(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID), cancellationToken);
+            await x.WriteAsync(oprot, cancellationToken);
+            await oprot.WriteMessageEndAsync(cancellationToken);
+            await oprot.Transport.FlushAsync(cancellationToken);
             return true;
           }
-          await fn(msg.SeqID, iprot, oprot);
+
+          await fn(msg.SeqID, iprot, oprot, cancellationToken);
+
         }
         catch (IOException)
         {
           return false;
         }
+
         return true;
       }
 
-      public async Task GetLocalPath_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task GetLocalPath_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        GetLocalPath_args args = new GetLocalPath_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        GetLocalPath_result result = new GetLocalPath_result();
+        var args = new GetLocalPathArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new GetLocalPathResult();
         try
         {
-          result.Success = await iface_.GetLocalPathAsync(args.Msg);
-          oprot.WriteMessageBegin(new TMessage("GetLocalPath", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          result.Success = await _iAsync.GetLocalPathAsync(args.Msg, cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("GetLocalPath", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -201,88 +144,18 @@ namespace Ruyi.SDK.StorageLayer
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("GetLocalPath", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("GetLocalPath", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-    }
-
-    public class Processor : TProcessor {
-      public Processor(ISync iface)
-      {
-        iface_ = iface;
-        processMap_["GetLocalPath"] = GetLocalPath_Process;
-      }
-
-      protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
-      private ISync iface_;
-      protected Dictionary<string, ProcessFunction> processMap_ = new Dictionary<string, ProcessFunction>();
-
-      public bool Process(TProtocol iprot, TProtocol oprot)
-      {
-        try
-        {
-          TMessage msg = iprot.ReadMessageBegin();
-          ProcessFunction fn;
-          processMap_.TryGetValue(msg.Name, out fn);
-          if (fn == null) {
-            TProtocolUtil.Skip(iprot, TType.Struct);
-            iprot.ReadMessageEnd();
-            TApplicationException x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
-            oprot.WriteMessageBegin(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID));
-            x.Write(oprot);
-            oprot.WriteMessageEnd();
-            oprot.Transport.Flush();
-            return true;
-          }
-          fn(msg.SeqID, iprot, oprot);
-        }
-        catch (IOException)
-        {
-          return false;
-        }
-        return true;
-      }
-
-      public void GetLocalPath_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        GetLocalPath_args args = new GetLocalPath_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        GetLocalPath_result result = new GetLocalPath_result();
-        try
-        {
-          result.Success = iface_.GetLocalPath(args.Msg);
-          oprot.WriteMessageBegin(new TMessage("GetLocalPath", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("GetLocalPath", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class GetLocalPath_args : TBase
+    public partial class GetLocalPathArgs : TBase
     {
       private string _msg;
 
@@ -301,45 +174,51 @@ namespace Ruyi.SDK.StorageLayer
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool msg;
       }
 
-      public GetLocalPath_args() {
+      public GetLocalPathArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  Msg = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.String)
+                {
+                  Msg = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -347,23 +226,25 @@ namespace Ruyi.SDK.StorageLayer
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("GetLocalPath_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (Msg != null && __isset.msg) {
+          var struc = new TStruct("GetLocalPath_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (Msg != null && __isset.msg)
+          {
             field.Name = "msg";
             field.Type = TType.String;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(Msg);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Msg, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -371,26 +252,24 @@ namespace Ruyi.SDK.StorageLayer
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("GetLocalPath_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetLocalPath_args(");
         bool __first = true;
-        if (Msg != null && __isset.msg) {
-          if(!__first) { __sb.Append(", "); }
+        if (Msg != null && __isset.msg)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Msg: ");
-          __sb.Append(Msg);
+          sb.Append("Msg: ");
+          sb.Append(Msg);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class GetLocalPath_result : TBase
+    public partial class GetLocalPathResult : TBase
     {
       private Ruyi.SDK.StorageLayer.GetLocalPathResult _success;
 
@@ -409,46 +288,52 @@ namespace Ruyi.SDK.StorageLayer
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
       }
 
-      public GetLocalPath_result() {
+      public GetLocalPathResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Struct) {
+                if (field.Type == TType.Struct)
+                {
                   Success = new Ruyi.SDK.StorageLayer.GetLocalPathResult();
-                  Success.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                  await Success.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -456,26 +341,29 @@ namespace Ruyi.SDK.StorageLayer
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("GetLocalPath_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("GetLocalPath_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
-            if (Success != null) {
+          if(this.__isset.success)
+          {
+            if (Success != null)
+            {
               field.Name = "Success";
               field.Type = TType.Struct;
               field.ID = 0;
-              oprot.WriteFieldBegin(field);
-              Success.Write(oprot);
-              oprot.WriteFieldEnd();
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Success.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
             }
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -483,19 +371,20 @@ namespace Ruyi.SDK.StorageLayer
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("GetLocalPath_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetLocalPath_result(");
         bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (Success != null && __isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success== null ? "<null>" : Success.ToString());
+          sb.Append("Success: ");
+          sb.Append(Success== null ? "<null>" : Success.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
   }

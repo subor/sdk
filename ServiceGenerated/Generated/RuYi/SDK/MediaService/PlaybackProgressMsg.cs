@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.MediaService
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class PlaybackProgressMsg : TBase
   {
     private string _url;
@@ -69,61 +72,73 @@ namespace Ruyi.SDK.MediaService
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool url;
       public bool CurrentTime;
       public bool TotalTime;
     }
 
-    public PlaybackProgressMsg() {
+    public PlaybackProgressMsg()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String) {
-                Url = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                Url = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.Double) {
-                CurrentTime = iprot.ReadDouble();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.Double)
+              {
+                CurrentTime = await iprot.ReadDoubleAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 3:
-              if (field.Type == TType.Double) {
-                TotalTime = iprot.ReadDouble();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.Double)
+              {
+                TotalTime = await iprot.ReadDoubleAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -131,39 +146,43 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("PlaybackProgressMsg");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (Url != null && __isset.url) {
+        var struc = new TStruct("PlaybackProgressMsg");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (Url != null && __isset.url)
+        {
           field.Name = "url";
           field.Type = TType.String;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Url);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Url, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.CurrentTime) {
+        if (__isset.CurrentTime)
+        {
           field.Name = "CurrentTime";
           field.Type = TType.Double;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteDouble(CurrentTime);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteDoubleAsync(CurrentTime, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.TotalTime) {
+        if (__isset.TotalTime)
+        {
           field.Name = "TotalTime";
           field.Type = TType.Double;
           field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteDouble(TotalTime);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteDoubleAsync(TotalTime, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -171,31 +190,34 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("PlaybackProgressMsg(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("PlaybackProgressMsg(");
       bool __first = true;
-      if (Url != null && __isset.url) {
-        if(!__first) { __sb.Append(", "); }
+      if (Url != null && __isset.url)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Url: ");
-        __sb.Append(Url);
+        sb.Append("Url: ");
+        sb.Append(Url);
       }
-      if (__isset.CurrentTime) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.CurrentTime)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("CurrentTime: ");
-        __sb.Append(CurrentTime);
+        sb.Append("CurrentTime: ");
+        sb.Append(CurrentTime);
       }
-      if (__isset.TotalTime) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.TotalTime)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("TotalTime: ");
-        __sb.Append(TotalTime);
+        sb.Append("TotalTime: ");
+        sb.Append(TotalTime);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.CommonType
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class SettingValue : TBase
   {
     private string _dataType;
@@ -55,53 +58,62 @@ namespace Ruyi.SDK.CommonType
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool dataType;
       public bool dataValue;
     }
 
-    public SettingValue() {
+    public SettingValue()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String) {
-                DataType = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                DataType = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.String) {
-                DataValue = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                DataValue = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -109,31 +121,34 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("SettingValue");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (DataType != null && __isset.dataType) {
+        var struc = new TStruct("SettingValue");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (DataType != null && __isset.dataType)
+        {
           field.Name = "dataType";
           field.Type = TType.String;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(DataType);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(DataType, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (DataValue != null && __isset.dataValue) {
+        if (DataValue != null && __isset.dataValue)
+        {
           field.Name = "dataValue";
           field.Type = TType.String;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(DataValue);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(DataValue, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -141,25 +156,27 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("SettingValue(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("SettingValue(");
       bool __first = true;
-      if (DataType != null && __isset.dataType) {
-        if(!__first) { __sb.Append(", "); }
+      if (DataType != null && __isset.dataType)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("DataType: ");
-        __sb.Append(DataType);
+        sb.Append("DataType: ");
+        sb.Append(DataType);
       }
-      if (DataValue != null && __isset.dataValue) {
-        if(!__first) { __sb.Append(", "); }
+      if (DataValue != null && __isset.dataValue)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("DataValue: ");
-        __sb.Append(DataValue);
+        sb.Append("DataValue: ");
+        sb.Append(DataValue);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

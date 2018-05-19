@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.CommonType
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class dataListItem : TBase
   {
     private string _elementType;
@@ -69,72 +72,84 @@ namespace Ruyi.SDK.CommonType
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool elementType;
       public bool values;
       public bool removeNotification;
     }
 
-    public dataListItem() {
+    public dataListItem()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String) {
-                ElementType = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                ElementType = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.List) {
+              if (field.Type == TType.List)
+              {
                 {
                   Values = new List<string>();
-                  TList _list8 = iprot.ReadListBegin();
-                  for( int _i9 = 0; _i9 < _list8.Count; ++_i9)
+                  TList _list8 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i9 = 0; _i9 < _list8.Count; ++_i9)
                   {
                     string _elem10;
-                    _elem10 = iprot.ReadString();
+                    _elem10 = await iprot.ReadStringAsync(cancellationToken);
                     Values.Add(_elem10);
                   }
-                  iprot.ReadListEnd();
+                  await iprot.ReadListEndAsync(cancellationToken);
                 }
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 3:
-              if (field.Type == TType.Struct) {
+              if (field.Type == TType.Struct)
+              {
                 RemoveNotification = new notification();
-                RemoveNotification.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await RemoveNotification.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -142,46 +157,50 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("dataListItem");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (ElementType != null && __isset.elementType) {
+        var struc = new TStruct("dataListItem");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (ElementType != null && __isset.elementType)
+        {
           field.Name = "elementType";
           field.Type = TType.String;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(ElementType);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(ElementType, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Values != null && __isset.values) {
+        if (Values != null && __isset.values)
+        {
           field.Name = "values";
           field.Type = TType.List;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
-            oprot.WriteListBegin(new TList(TType.String, Values.Count));
+            await oprot.WriteListBeginAsync(new TList(TType.String, Values.Count), cancellationToken);
             foreach (string _iter11 in Values)
             {
-              oprot.WriteString(_iter11);
+              await oprot.WriteStringAsync(_iter11, cancellationToken);
             }
-            oprot.WriteListEnd();
+            await oprot.WriteListEndAsync(cancellationToken);
           }
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (RemoveNotification != null && __isset.removeNotification) {
+        if (RemoveNotification != null && __isset.removeNotification)
+        {
           field.Name = "removeNotification";
           field.Type = TType.Struct;
           field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          RemoveNotification.Write(oprot);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await RemoveNotification.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -189,31 +208,34 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("dataListItem(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("dataListItem(");
       bool __first = true;
-      if (ElementType != null && __isset.elementType) {
-        if(!__first) { __sb.Append(", "); }
+      if (ElementType != null && __isset.elementType)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("ElementType: ");
-        __sb.Append(ElementType);
+        sb.Append("ElementType: ");
+        sb.Append(ElementType);
       }
-      if (Values != null && __isset.values) {
-        if(!__first) { __sb.Append(", "); }
+      if (Values != null && __isset.values)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Values: ");
-        __sb.Append(Values);
+        sb.Append("Values: ");
+        sb.Append(Values);
       }
-      if (RemoveNotification != null && __isset.removeNotification) {
-        if(!__first) { __sb.Append(", "); }
+      if (RemoveNotification != null && __isset.removeNotification)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("RemoveNotification: ");
-        __sb.Append(RemoveNotification== null ? "<null>" : RemoveNotification.ToString());
+        sb.Append("RemoveNotification: ");
+        sb.Append(RemoveNotification== null ? "<null>" : RemoveNotification.ToString());
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

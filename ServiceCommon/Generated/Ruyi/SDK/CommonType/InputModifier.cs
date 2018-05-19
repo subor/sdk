@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.CommonType
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class InputModifier : TBase
   {
     private range _DeadZone;
@@ -55,54 +58,63 @@ namespace Ruyi.SDK.CommonType
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool DeadZone;
       public bool Scale;
     }
 
-    public InputModifier() {
+    public InputModifier()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.Struct) {
+              if (field.Type == TType.Struct)
+              {
                 DeadZone = new range();
-                DeadZone.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await DeadZone.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.Double) {
-                Scale = iprot.ReadDouble();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.Double)
+              {
+                Scale = await iprot.ReadDoubleAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -110,31 +122,34 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("InputModifier");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (DeadZone != null && __isset.DeadZone) {
+        var struc = new TStruct("InputModifier");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (DeadZone != null && __isset.DeadZone)
+        {
           field.Name = "DeadZone";
           field.Type = TType.Struct;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          DeadZone.Write(oprot);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await DeadZone.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.Scale) {
+        if (__isset.Scale)
+        {
           field.Name = "Scale";
           field.Type = TType.Double;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteDouble(Scale);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteDoubleAsync(Scale, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -142,25 +157,27 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("InputModifier(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("InputModifier(");
       bool __first = true;
-      if (DeadZone != null && __isset.DeadZone) {
-        if(!__first) { __sb.Append(", "); }
+      if (DeadZone != null && __isset.DeadZone)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("DeadZone: ");
-        __sb.Append(DeadZone== null ? "<null>" : DeadZone.ToString());
+        sb.Append("DeadZone: ");
+        sb.Append(DeadZone== null ? "<null>" : DeadZone.ToString());
       }
-      if (__isset.Scale) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.Scale)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Scale: ");
-        __sb.Append(Scale);
+        sb.Append("Scale: ");
+        sb.Append(Scale);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

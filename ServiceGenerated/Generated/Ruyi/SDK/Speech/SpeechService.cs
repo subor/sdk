@@ -9,189 +9,132 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.Speech
 {
-  public partial class SpeechService {
-    public interface ISync {
-      Ruyi.SDK.Speech.SpeechResult Say(Ruyi.SDK.Speech.VoiceCommand command);
+  public partial class SpeechService
+  {
+    public interface IAsync
+    {
+      Task<Ruyi.SDK.Speech.SpeechResult> SayAsync(Ruyi.SDK.Speech.VoiceCommand command, CancellationToken cancellationToken);
+
     }
 
-    public interface IAsync {
-      Task<Ruyi.SDK.Speech.SpeechResult> SayAsync(Ruyi.SDK.Speech.VoiceCommand command);
-    }
 
-    public interface Iface : ISync, IAsync {
-      IAsyncResult Begin_Say(AsyncCallback callback, object state, Ruyi.SDK.Speech.VoiceCommand command);
-      Ruyi.SDK.Speech.SpeechResult End_Say(IAsyncResult asyncResult);
-    }
-
-    public class Client : IDisposable, Iface {
-      public Client(TProtocol prot) : this(prot, prot)
+    public class Client : TBaseClient, IDisposable, IAsync
+    {
+      public Client(TProtocol protocol) : this(protocol, protocol)
       {
       }
 
-      public Client(TProtocol iprot, TProtocol oprot)
-      {
-        iprot_ = iprot;
-        oprot_ = oprot;
+      public Client(TProtocol inputProtocol, TProtocol outputProtocol) : base(inputProtocol, outputProtocol)      {
       }
-
-      protected TProtocol iprot_;
-      protected TProtocol oprot_;
-      protected int seqid_;
-
-      public TProtocol InputProtocol
+      public async Task<Ruyi.SDK.Speech.SpeechResult> SayAsync(Ruyi.SDK.Speech.VoiceCommand command, CancellationToken cancellationToken)
       {
-        get { return iprot_; }
-      }
-      public TProtocol OutputProtocol
-      {
-        get { return oprot_; }
-      }
-
-
-      #region " IDisposable Support "
-      private bool _IsDisposed;
-
-      // IDisposable
-      public void Dispose()
-      {
-        Dispose(true);
-      }
-      
-
-      protected virtual void Dispose(bool disposing)
-      {
-        if (!_IsDisposed)
-        {
-          if (disposing)
-          {
-            if (iprot_ != null)
-            {
-              ((IDisposable)iprot_).Dispose();
-            }
-            if (oprot_ != null)
-            {
-              ((IDisposable)oprot_).Dispose();
-            }
-          }
-        }
-        _IsDisposed = true;
-      }
-      #endregion
-
-
-      
-      public IAsyncResult Begin_Say(AsyncCallback callback, object state, Ruyi.SDK.Speech.VoiceCommand command)
-      {
-        return send_Say(callback, state, command);
-      }
-
-      public Ruyi.SDK.Speech.SpeechResult End_Say(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_Say();
-      }
-
-      public async Task<Ruyi.SDK.Speech.SpeechResult> SayAsync(Ruyi.SDK.Speech.VoiceCommand command)
-      {
-        Ruyi.SDK.Speech.SpeechResult retval;
-        retval = await Task.Run(() =>
-        {
-          return Say(command);
-        });
-        return retval;
-      }
-
-      public Ruyi.SDK.Speech.SpeechResult Say(Ruyi.SDK.Speech.VoiceCommand command)
-      {
-        var asyncResult = Begin_Say(null, null, command);
-        return End_Say(asyncResult);
-
-      }
-      public IAsyncResult send_Say(AsyncCallback callback, object state, Ruyi.SDK.Speech.VoiceCommand command)
-      {
-        oprot_.WriteMessageBegin(new TMessage("Say", TMessageType.Call, seqid_));
-        Say_args args = new Say_args();
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Say", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new SayArgs();
         args.Command = command;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        return oprot_.Transport.BeginFlush(callback, state);
-      }
-
-      public Ruyi.SDK.Speech.SpeechResult recv_Say()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
           throw x;
         }
-        Say_result result = new Say_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
+
+        var result = new SayResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
           return result.Success;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Say failed: unknown result");
       }
 
     }
-    public class AsyncProcessor : TAsyncProcessor {
-      public AsyncProcessor(IAsync iface)
+
+    public class AsyncProcessor : ITAsyncProcessor
+    {
+      private IAsync _iAsync;
+
+      public AsyncProcessor(IAsync iAsync)
       {
-        iface_ = iface;
+        if (iAsync == null) throw new ArgumentNullException(nameof(iAsync));
+
+        _iAsync = iAsync;
         processMap_["Say"] = Say_ProcessAsync;
       }
 
-      protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
-      private IAsync iface_;
+      protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken);
       protected Dictionary<string, ProcessFunction> processMap_ = new Dictionary<string, ProcessFunction>();
 
       public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot)
       {
+        return await ProcessAsync(iprot, oprot, CancellationToken.None);
+      }
+
+      public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
         try
         {
-          TMessage msg = iprot.ReadMessageBegin();
+          var msg = await iprot.ReadMessageBeginAsync(cancellationToken);
+
           ProcessFunction fn;
           processMap_.TryGetValue(msg.Name, out fn);
-          if (fn == null) {
-            TProtocolUtil.Skip(iprot, TType.Struct);
-            iprot.ReadMessageEnd();
-            TApplicationException x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
-            oprot.WriteMessageBegin(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID));
-            x.Write(oprot);
-            oprot.WriteMessageEnd();
-            oprot.Transport.Flush();
+
+          if (fn == null)
+          {
+            await TProtocolUtil.SkipAsync(iprot, TType.Struct, cancellationToken);
+            await iprot.ReadMessageEndAsync(cancellationToken);
+            var x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
+            await oprot.WriteMessageBeginAsync(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID), cancellationToken);
+            await x.WriteAsync(oprot, cancellationToken);
+            await oprot.WriteMessageEndAsync(cancellationToken);
+            await oprot.Transport.FlushAsync(cancellationToken);
             return true;
           }
-          await fn(msg.SeqID, iprot, oprot);
+
+          await fn(msg.SeqID, iprot, oprot, cancellationToken);
+
         }
         catch (IOException)
         {
           return false;
         }
+
         return true;
       }
 
-      public async Task Say_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      public async Task Say_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        Say_args args = new Say_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Say_result result = new Say_result();
+        var args = new SayArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new SayResult();
         try
         {
-          result.Success = await iface_.SayAsync(args.Command);
-          oprot.WriteMessageBegin(new TMessage("Say", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
+          result.Success = await _iAsync.SayAsync(args.Command, cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("Say", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
         {
@@ -201,88 +144,18 @@ namespace Ruyi.SDK.Speech
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Say", TMessageType.Exception, seqid));
-          x.Write(oprot);
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("Say", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
         }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-    }
-
-    public class Processor : TProcessor {
-      public Processor(ISync iface)
-      {
-        iface_ = iface;
-        processMap_["Say"] = Say_Process;
-      }
-
-      protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
-      private ISync iface_;
-      protected Dictionary<string, ProcessFunction> processMap_ = new Dictionary<string, ProcessFunction>();
-
-      public bool Process(TProtocol iprot, TProtocol oprot)
-      {
-        try
-        {
-          TMessage msg = iprot.ReadMessageBegin();
-          ProcessFunction fn;
-          processMap_.TryGetValue(msg.Name, out fn);
-          if (fn == null) {
-            TProtocolUtil.Skip(iprot, TType.Struct);
-            iprot.ReadMessageEnd();
-            TApplicationException x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
-            oprot.WriteMessageBegin(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID));
-            x.Write(oprot);
-            oprot.WriteMessageEnd();
-            oprot.Transport.Flush();
-            return true;
-          }
-          fn(msg.SeqID, iprot, oprot);
-        }
-        catch (IOException)
-        {
-          return false;
-        }
-        return true;
-      }
-
-      public void Say_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Say_args args = new Say_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Say_result result = new Say_result();
-        try
-        {
-          result.Success = iface_.Say(args.Command);
-          oprot.WriteMessageBegin(new TMessage("Say", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Say", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
       }
 
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Say_args : TBase
+    public partial class SayArgs : TBase
     {
       private Ruyi.SDK.Speech.VoiceCommand _command;
 
@@ -301,45 +174,51 @@ namespace Ruyi.SDK.Speech
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool command;
       }
 
-      public Say_args() {
+      public SayArgs()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.Struct) {
-                  Command = Ruyi.SDK.Speech.VoiceCommand.Read(iprot);
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.Struct)
+                {
+                  Command = await Ruyi.SDK.Speech.VoiceCommand.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -347,23 +226,25 @@ namespace Ruyi.SDK.Speech
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("Say_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (Command != null && __isset.command) {
+          var struc = new TStruct("Say_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (Command != null && __isset.command)
+          {
             field.Name = "command";
             field.Type = TType.Struct;
             field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            Command.Write(oprot);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await Command.WriteAsync(oprot, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -371,26 +252,24 @@ namespace Ruyi.SDK.Speech
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Say_args(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Say_args(");
         bool __first = true;
-        if (Command != null && __isset.command) {
-          if(!__first) { __sb.Append(", "); }
+        if (Command != null && __isset.command)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Command: ");
-          __sb.Append(Command== null ? "<null>" : Command.ToString());
+          sb.Append("Command: ");
+          sb.Append(Command== null ? "<null>" : Command.ToString());
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
 
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Say_result : TBase
+    public partial class SayResult : TBase
     {
       private Ruyi.SDK.Speech.SpeechResult _success;
 
@@ -413,45 +292,51 @@ namespace Ruyi.SDK.Speech
 
 
       public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
+      public struct Isset
+      {
         public bool success;
       }
 
-      public Say_result() {
+      public SayResult()
+      {
       }
 
-      public void Read (TProtocol iprot)
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          iprot.ReadStructBegin();
+          await iprot.ReadStructBeginAsync(cancellationToken);
           while (true)
           {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
               break;
             }
+
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.I32) {
-                  Success = (Ruyi.SDK.Speech.SpeechResult)iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
+                if (field.Type == TType.I32)
+                {
+                  Success = (Ruyi.SDK.Speech.SpeechResult)await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 }
                 break;
               default: 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
                 break;
             }
-            iprot.ReadFieldEnd();
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
           }
-          iprot.ReadStructEnd();
+
+          await iprot.ReadStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -459,24 +344,26 @@ namespace Ruyi.SDK.Speech
         }
       }
 
-      public void Write(TProtocol oprot) {
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
         oprot.IncrementRecursionDepth();
         try
         {
-          TStruct struc = new TStruct("Say_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
+          var struc = new TStruct("Say_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
 
-          if (this.__isset.success) {
+          if(this.__isset.success)
+          {
             field.Name = "Success";
             field.Type = TType.I32;
             field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32((int)Success);
-            oprot.WriteFieldEnd();
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async((int)Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
         }
         finally
         {
@@ -484,19 +371,20 @@ namespace Ruyi.SDK.Speech
         }
       }
 
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Say_result(");
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Say_result(");
         bool __first = true;
-        if (__isset.success) {
-          if(!__first) { __sb.Append(", "); }
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
           __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
+          sb.Append("Success: ");
+          sb.Append(Success);
         }
-        __sb.Append(")");
-        return __sb.ToString();
+        sb.Append(")");
+        return sb.ToString();
       }
-
     }
 
   }

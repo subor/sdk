@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.GlobalInputDefine
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class RuyiInputStateKeyboard : TBase
   {
     private int _RawOffset;
@@ -129,10 +132,8 @@ namespace Ruyi.SDK.GlobalInputDefine
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool RawOffset;
       public bool @Value;
       public bool Timestamp;
@@ -142,80 +143,106 @@ namespace Ruyi.SDK.GlobalInputDefine
       public bool IsReleased;
     }
 
-    public RuyiInputStateKeyboard() {
+    public RuyiInputStateKeyboard()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                RawOffset = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I32)
+              {
+                RawOffset = await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.I32) {
-                Value = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I32)
+              {
+                Value = await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 3:
-              if (field.Type == TType.I32) {
-                Timestamp = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I32)
+              {
+                Timestamp = await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 4:
-              if (field.Type == TType.I32) {
-                Sequence = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I32)
+              {
+                Sequence = await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 5:
-              if (field.Type == TType.I32) {
-                Key = (Key)iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I32)
+              {
+                Key = (Key)await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 6:
-              if (field.Type == TType.Bool) {
-                IsPressed = iprot.ReadBool();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.Bool)
+              {
+                IsPressed = await iprot.ReadBoolAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 7:
-              if (field.Type == TType.Bool) {
-                IsReleased = iprot.ReadBool();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.Bool)
+              {
+                IsReleased = await iprot.ReadBoolAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -223,71 +250,79 @@ namespace Ruyi.SDK.GlobalInputDefine
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("RuyiInputStateKeyboard");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (__isset.RawOffset) {
+        var struc = new TStruct("RuyiInputStateKeyboard");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (__isset.RawOffset)
+        {
           field.Name = "RawOffset";
           field.Type = TType.I32;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(RawOffset);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async(RawOffset, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.@Value) {
+        if (__isset.@Value)
+        {
           field.Name = "Value";
           field.Type = TType.I32;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Value);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async(Value, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.Timestamp) {
+        if (__isset.Timestamp)
+        {
           field.Name = "Timestamp";
           field.Type = TType.I32;
           field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Timestamp);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async(Timestamp, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.Sequence) {
+        if (__isset.Sequence)
+        {
           field.Name = "Sequence";
           field.Type = TType.I32;
           field.ID = 4;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(Sequence);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async(Sequence, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.Key) {
+        if (__isset.Key)
+        {
           field.Name = "Key";
           field.Type = TType.I32;
           field.ID = 5;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32((int)Key);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async((int)Key, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.IsPressed) {
+        if (__isset.IsPressed)
+        {
           field.Name = "IsPressed";
           field.Type = TType.Bool;
           field.ID = 6;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteBool(IsPressed);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteBoolAsync(IsPressed, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.IsReleased) {
+        if (__isset.IsReleased)
+        {
           field.Name = "IsReleased";
           field.Type = TType.Bool;
           field.ID = 7;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteBool(IsReleased);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteBoolAsync(IsReleased, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -295,55 +330,62 @@ namespace Ruyi.SDK.GlobalInputDefine
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("RuyiInputStateKeyboard(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("RuyiInputStateKeyboard(");
       bool __first = true;
-      if (__isset.RawOffset) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.RawOffset)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("RawOffset: ");
-        __sb.Append(RawOffset);
+        sb.Append("RawOffset: ");
+        sb.Append(RawOffset);
       }
-      if (__isset.@Value) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.@Value)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Value: ");
-        __sb.Append(Value);
+        sb.Append("Value: ");
+        sb.Append(Value);
       }
-      if (__isset.Timestamp) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.Timestamp)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Timestamp: ");
-        __sb.Append(Timestamp);
+        sb.Append("Timestamp: ");
+        sb.Append(Timestamp);
       }
-      if (__isset.Sequence) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.Sequence)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Sequence: ");
-        __sb.Append(Sequence);
+        sb.Append("Sequence: ");
+        sb.Append(Sequence);
       }
-      if (__isset.Key) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.Key)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Key: ");
-        __sb.Append(Key);
+        sb.Append("Key: ");
+        sb.Append(Key);
       }
-      if (__isset.IsPressed) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.IsPressed)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("IsPressed: ");
-        __sb.Append(IsPressed);
+        sb.Append("IsPressed: ");
+        sb.Append(IsPressed);
       }
-      if (__isset.IsReleased) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.IsReleased)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("IsReleased: ");
-        __sb.Append(IsReleased);
+        sb.Append("IsReleased: ");
+        sb.Append(IsReleased);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

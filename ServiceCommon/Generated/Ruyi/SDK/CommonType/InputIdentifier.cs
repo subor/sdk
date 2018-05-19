@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.CommonType
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class InputIdentifier : TBase
   {
     private string _Device;
@@ -83,70 +86,85 @@ namespace Ruyi.SDK.CommonType
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool Device;
       public bool @Value;
       public bool ActivateEvent;
       public bool Modifier;
     }
 
-    public InputIdentifier() {
+    public InputIdentifier()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String) {
-                Device = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                Device = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.String) {
-                Value = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                Value = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 3:
-              if (field.Type == TType.String) {
-                ActivateEvent = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                ActivateEvent = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 4:
-              if (field.Type == TType.Struct) {
+              if (field.Type == TType.Struct)
+              {
                 Modifier = new InputModifier();
-                Modifier.Read(iprot);
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+                await Modifier.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -154,47 +172,52 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("InputIdentifier");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (Device != null && __isset.Device) {
+        var struc = new TStruct("InputIdentifier");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (Device != null && __isset.Device)
+        {
           field.Name = "Device";
           field.Type = TType.String;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Device);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Device, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Value != null && __isset.@Value) {
+        if (Value != null && __isset.@Value)
+        {
           field.Name = "Value";
           field.Type = TType.String;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Value);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Value, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (ActivateEvent != null && __isset.ActivateEvent) {
+        if (ActivateEvent != null && __isset.ActivateEvent)
+        {
           field.Name = "ActivateEvent";
           field.Type = TType.String;
           field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(ActivateEvent);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(ActivateEvent, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Modifier != null && __isset.Modifier) {
+        if (Modifier != null && __isset.Modifier)
+        {
           field.Name = "Modifier";
           field.Type = TType.Struct;
           field.ID = 4;
-          oprot.WriteFieldBegin(field);
-          Modifier.Write(oprot);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Modifier.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -202,37 +225,41 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("InputIdentifier(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("InputIdentifier(");
       bool __first = true;
-      if (Device != null && __isset.Device) {
-        if(!__first) { __sb.Append(", "); }
+      if (Device != null && __isset.Device)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Device: ");
-        __sb.Append(Device);
+        sb.Append("Device: ");
+        sb.Append(Device);
       }
-      if (Value != null && __isset.@Value) {
-        if(!__first) { __sb.Append(", "); }
+      if (Value != null && __isset.@Value)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Value: ");
-        __sb.Append(Value);
+        sb.Append("Value: ");
+        sb.Append(Value);
       }
-      if (ActivateEvent != null && __isset.ActivateEvent) {
-        if(!__first) { __sb.Append(", "); }
+      if (ActivateEvent != null && __isset.ActivateEvent)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("ActivateEvent: ");
-        __sb.Append(ActivateEvent);
+        sb.Append("ActivateEvent: ");
+        sb.Append(ActivateEvent);
       }
-      if (Modifier != null && __isset.Modifier) {
-        if(!__first) { __sb.Append(", "); }
+      if (Modifier != null && __isset.Modifier)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Modifier: ");
-        __sb.Append(Modifier== null ? "<null>" : Modifier.ToString());
+        sb.Append("Modifier: ");
+        sb.Append(Modifier== null ? "<null>" : Modifier.ToString());
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

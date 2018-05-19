@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.BrainCloudApi
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class FileUploadFailedResult : TBase
   {
     private string _fileUploadId;
@@ -83,69 +86,84 @@ namespace Ruyi.SDK.BrainCloudApi
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool fileUploadId;
       public bool statusCode;
       public bool reasonCode;
       public bool jsonResponse;
     }
 
-    public FileUploadFailedResult() {
+    public FileUploadFailedResult()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String) {
-                FileUploadId = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                FileUploadId = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.I32) {
-                StatusCode = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I32)
+              {
+                StatusCode = await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 3:
-              if (field.Type == TType.I32) {
-                ReasonCode = iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.I32)
+              {
+                ReasonCode = await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 4:
-              if (field.Type == TType.String) {
-                JsonResponse = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                JsonResponse = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -153,47 +171,52 @@ namespace Ruyi.SDK.BrainCloudApi
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("FileUploadFailedResult");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (FileUploadId != null && __isset.fileUploadId) {
+        var struc = new TStruct("FileUploadFailedResult");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (FileUploadId != null && __isset.fileUploadId)
+        {
           field.Name = "fileUploadId";
           field.Type = TType.String;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(FileUploadId);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(FileUploadId, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.statusCode) {
+        if (__isset.statusCode)
+        {
           field.Name = "statusCode";
           field.Type = TType.I32;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(StatusCode);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async(StatusCode, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.reasonCode) {
+        if (__isset.reasonCode)
+        {
           field.Name = "reasonCode";
           field.Type = TType.I32;
           field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(ReasonCode);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async(ReasonCode, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (JsonResponse != null && __isset.jsonResponse) {
+        if (JsonResponse != null && __isset.jsonResponse)
+        {
           field.Name = "jsonResponse";
           field.Type = TType.String;
           field.ID = 4;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(JsonResponse);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(JsonResponse, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -201,37 +224,41 @@ namespace Ruyi.SDK.BrainCloudApi
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("FileUploadFailedResult(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("FileUploadFailedResult(");
       bool __first = true;
-      if (FileUploadId != null && __isset.fileUploadId) {
-        if(!__first) { __sb.Append(", "); }
+      if (FileUploadId != null && __isset.fileUploadId)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("FileUploadId: ");
-        __sb.Append(FileUploadId);
+        sb.Append("FileUploadId: ");
+        sb.Append(FileUploadId);
       }
-      if (__isset.statusCode) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.statusCode)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("StatusCode: ");
-        __sb.Append(StatusCode);
+        sb.Append("StatusCode: ");
+        sb.Append(StatusCode);
       }
-      if (__isset.reasonCode) {
-        if(!__first) { __sb.Append(", "); }
+      if (__isset.reasonCode)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("ReasonCode: ");
-        __sb.Append(ReasonCode);
+        sb.Append("ReasonCode: ");
+        sb.Append(ReasonCode);
       }
-      if (JsonResponse != null && __isset.jsonResponse) {
-        if(!__first) { __sb.Append(", "); }
+      if (JsonResponse != null && __isset.jsonResponse)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("JsonResponse: ");
-        __sb.Append(JsonResponse);
+        sb.Append("JsonResponse: ");
+        sb.Append(JsonResponse);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

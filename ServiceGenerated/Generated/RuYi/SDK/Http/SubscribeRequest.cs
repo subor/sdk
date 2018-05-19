@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.Http
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class SubscribeRequest : TBase
   {
     private string _topic;
@@ -69,61 +72,73 @@ namespace Ruyi.SDK.Http
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool topic;
       public bool appid;
       public bool msgname;
     }
 
-    public SubscribeRequest() {
+    public SubscribeRequest()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String) {
-                Topic = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                Topic = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.String) {
-                Appid = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                Appid = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 3:
-              if (field.Type == TType.String) {
-                Msgname = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                Msgname = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -131,39 +146,43 @@ namespace Ruyi.SDK.Http
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("SubscribeRequest");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (Topic != null && __isset.topic) {
+        var struc = new TStruct("SubscribeRequest");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (Topic != null && __isset.topic)
+        {
           field.Name = "topic";
           field.Type = TType.String;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Topic);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Topic, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Appid != null && __isset.appid) {
+        if (Appid != null && __isset.appid)
+        {
           field.Name = "appid";
           field.Type = TType.String;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Appid);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Appid, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Msgname != null && __isset.msgname) {
+        if (Msgname != null && __isset.msgname)
+        {
           field.Name = "msgname";
           field.Type = TType.String;
           field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Msgname);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Msgname, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -171,31 +190,34 @@ namespace Ruyi.SDK.Http
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("SubscribeRequest(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("SubscribeRequest(");
       bool __first = true;
-      if (Topic != null && __isset.topic) {
-        if(!__first) { __sb.Append(", "); }
+      if (Topic != null && __isset.topic)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Topic: ");
-        __sb.Append(Topic);
+        sb.Append("Topic: ");
+        sb.Append(Topic);
       }
-      if (Appid != null && __isset.appid) {
-        if(!__first) { __sb.Append(", "); }
+      if (Appid != null && __isset.appid)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Appid: ");
-        __sb.Append(Appid);
+        sb.Append("Appid: ");
+        sb.Append(Appid);
       }
-      if (Msgname != null && __isset.msgname) {
-        if(!__first) { __sb.Append(", "); }
+      if (Msgname != null && __isset.msgname)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Msgname: ");
-        __sb.Append(Msgname);
+        sb.Append("Msgname: ");
+        sb.Append(Msgname);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }

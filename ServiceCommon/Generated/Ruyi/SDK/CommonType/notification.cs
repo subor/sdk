@@ -9,19 +9,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-using System.Runtime.Serialization;
-using Thrift.Protocol;
-using Thrift.Transport;
+
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Protocols.Utilities;
+using Thrift.Transports;
+using Thrift.Transports.Client;
+using Thrift.Transports.Server;
+
 
 namespace Ruyi.SDK.CommonType
 {
 
-  #if !SILVERLIGHT
-  [Serializable]
-  #endif
   public partial class notification : TBase
   {
     private string _title;
@@ -69,71 +72,83 @@ namespace Ruyi.SDK.CommonType
 
 
     public Isset __isset;
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public struct Isset {
+    public struct Isset
+    {
       public bool title;
       public bool detail;
       public bool option;
     }
 
-    public notification() {
+    public notification()
+    {
     }
 
-    public void Read (TProtocol iprot)
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        iprot.ReadStructBegin();
+        await iprot.ReadStructBeginAsync(cancellationToken);
         while (true)
         {
-          field = iprot.ReadFieldBegin();
-          if (field.Type == TType.Stop) { 
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
             break;
           }
+
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String) {
-                Title = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                Title = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 2:
-              if (field.Type == TType.String) {
-                Detail = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              if (field.Type == TType.String)
+              {
+                Detail = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             case 3:
-              if (field.Type == TType.List) {
+              if (field.Type == TType.List)
+              {
                 {
                   Option = new List<string>();
-                  TList _list4 = iprot.ReadListBegin();
-                  for( int _i5 = 0; _i5 < _list4.Count; ++_i5)
+                  TList _list4 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i5 = 0; _i5 < _list4.Count; ++_i5)
                   {
                     string _elem6;
-                    _elem6 = iprot.ReadString();
+                    _elem6 = await iprot.ReadStringAsync(cancellationToken);
                     Option.Add(_elem6);
                   }
-                  iprot.ReadListEnd();
+                  await iprot.ReadListEndAsync(cancellationToken);
                 }
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
             default: 
-              TProtocolUtil.Skip(iprot, field.Type);
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
           }
-          iprot.ReadFieldEnd();
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
         }
-        iprot.ReadStructEnd();
+
+        await iprot.ReadStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -141,46 +156,50 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public void Write(TProtocol oprot) {
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("notification");
-        oprot.WriteStructBegin(struc);
-        TField field = new TField();
-        if (Title != null && __isset.title) {
+        var struc = new TStruct("notification");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (Title != null && __isset.title)
+        {
           field.Name = "title";
           field.Type = TType.String;
           field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Title);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Title, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Detail != null && __isset.detail) {
+        if (Detail != null && __isset.detail)
+        {
           field.Name = "detail";
           field.Type = TType.String;
           field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Detail);
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Detail, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Option != null && __isset.option) {
+        if (Option != null && __isset.option)
+        {
           field.Name = "option";
           field.Type = TType.List;
           field.ID = 3;
-          oprot.WriteFieldBegin(field);
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
-            oprot.WriteListBegin(new TList(TType.String, Option.Count));
+            await oprot.WriteListBeginAsync(new TList(TType.String, Option.Count), cancellationToken);
             foreach (string _iter7 in Option)
             {
-              oprot.WriteString(_iter7);
+              await oprot.WriteStringAsync(_iter7, cancellationToken);
             }
-            oprot.WriteListEnd();
+            await oprot.WriteListEndAsync(cancellationToken);
           }
-          oprot.WriteFieldEnd();
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        oprot.WriteFieldStop();
-        oprot.WriteStructEnd();
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
       finally
       {
@@ -188,31 +207,34 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public override string ToString() {
-      StringBuilder __sb = new StringBuilder("notification(");
+    public override string ToString()
+    {
+      var sb = new StringBuilder("notification(");
       bool __first = true;
-      if (Title != null && __isset.title) {
-        if(!__first) { __sb.Append(", "); }
+      if (Title != null && __isset.title)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Title: ");
-        __sb.Append(Title);
+        sb.Append("Title: ");
+        sb.Append(Title);
       }
-      if (Detail != null && __isset.detail) {
-        if(!__first) { __sb.Append(", "); }
+      if (Detail != null && __isset.detail)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Detail: ");
-        __sb.Append(Detail);
+        sb.Append("Detail: ");
+        sb.Append(Detail);
       }
-      if (Option != null && __isset.option) {
-        if(!__first) { __sb.Append(", "); }
+      if (Option != null && __isset.option)
+      {
+        if(!__first) { sb.Append(", "); }
         __first = false;
-        __sb.Append("Option: ");
-        __sb.Append(Option);
+        sb.Append("Option: ");
+        sb.Append(Option);
       }
-      __sb.Append(")");
-      return __sb.ToString();
+      sb.Append(")");
+      return sb.ToString();
     }
-
   }
 
 }
