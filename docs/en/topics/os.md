@@ -13,7 +13,7 @@ Together with our configuration, drivers, and shell it is __Ruyi OS__.
 Some key changes we make relative to a normal Windows 10 environment:
 
 * Drives (including `c:\`) encrypted with Bitlocker
-* Numerous key combinations disabled (Ctrl-Alt-Del, Alt-tab, etc.)
+* Numerous key combinations disabled (`Ctrl-Alt-Del`, `Alt-tab`, etc.)
 * _UPCOMING_ Windows desktop shell replaced with Ruyi client UI
 * _UPCOMING_ Device Guard Code Integrity enabled (now called Application Control)
 
@@ -46,11 +46,33 @@ The OS is always installed to the [primary drive](harddrive.md).
 
 Installation should take 20-40 minutes.
 
-1. Prepare USB drive with at least 6 GB space and FAT32 format
+1. Prepare bootable USB drive with at least __6__ GB space and FAT32 format
 1. Download [Ruyi OS image](http://dev.playruyi.com/uservices)
     - We only provide a link to the latest version.  If you need an older version, contact [support](support.md).
-1. Copy OS files to root of bootable USB drive and eject/unmount once finished
-1. Plug USB drive into system and reboot it
+1. Unzip OS files to root of bootable USB drive.  It should be similar to the following:  
+    ```
+    │   bootmgr
+    │   bootmgr.efi
+    │
+    ├───Boot
+    │   │   BCD
+    │   │   boot.sdi
+    │   │   bootfix.bin
+    │   │   memtest.exe
+    │   ├───Resources
+    │
+    ├───sources
+    │       boot.wim
+    │       dd.wim
+    │       install.swm
+    │       install2.swm
+    │
+    └───EFI
+        ├───Boot
+        │   │   bootx64.efi
+        │   │   RUYIboot.efi
+    ```
+1. Once copying/unzipping is finished, eject/unmount the USB drive.  Then plug the USB drive into the machine it should be installed to, and reboot that machine.
 1. A Command Prompt should appear, wait while the OS installs
 1. When prompted, remove the USB drive and press `Enter` to reboot and continue
     - During the remainder of the installation process the machine may reboot, open PowerShell/Command Prompt windows, or display a black screen several times

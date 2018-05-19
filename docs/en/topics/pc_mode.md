@@ -25,3 +25,7 @@ __As Administrator__ run `SwitchOS.cmd` (found on Windows Desktop) and restart.
 1. Click __Set as default__  
     ![](/docs/img/os_lang_default.png)
 1. Restart the machine
+
+## Development
+
+One reason for PC mode is to make developing for Ruyi easier.  You can install Visual Studio (note that [VS2017 is __not__ supported on LTSB](https://docs.microsoft.com/en-us/visualstudio/productinfo/vs2017-system-requirements-vs)) and build/debug just like it was a regular PC.  CPU/GPU/disk capabilities and performance, memory configuration and bandwidth, OS environment, and so on will be almost identical.
