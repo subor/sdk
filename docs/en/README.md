@@ -45,6 +45,7 @@ __Advanced:__
 * [Ruyi OS](topics/os.md)
     * [BIOS](topics/bios.md)
     * [PC mode](topics/pc_mode.md)
+    * [OS recovery](topics/os_recovery.md)
 * [Developer Tools](topics/devtool.md)
 * [Support](topics/support.md)
     * [FAQ](faq.md)
