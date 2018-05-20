@@ -24,147 +24,159 @@ using Thrift.Transports.Server;
 
 namespace Ruyi.SDK.Speech
 {
-  public abstract partial class VoiceCommand : TAbstractBase
+
+  public partial class VoiceCommand : TBase
   {
-    public abstract void Write(TProtocol protocol);
-    public readonly bool Isset;
-    public abstract object Data { get; }
-    protected VoiceCommand(bool isset)
+    private string _Filename;
+    private byte[] _RawData;
+
+    public string Filename
     {
-      Isset = isset;
+      get
+      {
+        return _Filename;
+      }
+      set
+      {
+        __isset.Filename = true;
+        this._Filename = value;
+      }
     }
 
-    public class ___undefined : VoiceCommand
+    public byte[] RawData
     {
-      public override object Data { get { return null; } }
-      public ___undefined() : base(false) {}
-
-      public override void Write(TProtocol protocol)
+      get
       {
-        throw new TProtocolException( TProtocolException.INVALID_DATA, "Cannot persist an union type which is not set.");
+        return _RawData;
       }
-
+      set
+      {
+        __isset.RawData = true;
+        this._RawData = value;
+      }
     }
 
-    public class Filename : VoiceCommand
+
+    public Isset __isset;
+    public struct Isset
     {
-      private string _data;
-      public override object Data { get { return _data; } }
-      public Filename(string data) : base(true)
+      public bool Filename;
+      public bool RawData;
+    }
+
+    public VoiceCommand()
+    {
+    }
+
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    {
+      iprot.IncrementRecursionDepth();
+      try
       {
-        this._data = data;
-      }
-      public override async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken) {
-        oprot.IncrementRecursionDepth();
-        try
+        TField field;
+        await iprot.ReadStructBeginAsync(cancellationToken);
+        while (true)
         {
-          var struc = new TStruct("VoiceCommand");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
+            break;
+          }
+
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.String)
+              {
+                Filename = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.String)
+              {
+                RawData = await iprot.ReadBinaryAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            default: 
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              break;
+          }
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
+        }
+
+        await iprot.ReadStructEndAsync(cancellationToken);
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        var struc = new TStruct("VoiceCommand");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (Filename != null && __isset.Filename)
+        {
           field.Name = "Filename";
           field.Type = TType.String;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(_data, cancellationToken);
+          await oprot.WriteStringAsync(Filename, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
-          await oprot.WriteFieldStop(cancellationToken);
-          await oprot.WriteStructEnd(cancellationToken);
         }
-        finally
+        if (RawData != null && __isset.RawData)
         {
-          oprot.DecrementRecursionDepth();
+          field.Name = "RawData";
+          field.Type = TType.String;
+          field.ID = 2;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteBinaryAsync(RawData, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        }
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
-
-      public class RawData : VoiceCommand
+      finally
       {
-        private byte[] _data;
-        public override object Data { get { return _data; } }
-        public RawData(byte[] data) : base(true)
-        {
-          this._data = data;
-        }
-        public override async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken) {
-          oprot.IncrementRecursionDepth();
-          try
-          {
-            var struc = new TStruct("VoiceCommand");
-            await oprot.WriteStructBeginAsync(struc, cancellationToken);
-            var field = new TField();
-            field.Name = "RawData";
-            field.Type = TType.String;
-            field.ID = 2;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteBinaryAsync(_data, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-            await oprot.WriteFieldStop(cancellationToken);
-            await oprot.WriteStructEnd(cancellationToken);
-          }
-          finally
-          {
-            oprot.DecrementRecursionDepth();
-          }
-          }
-        }
-
-        public static VoiceCommand Read(TProtocol iprot)
-        {
-          iprot.IncrementRecursionDepth();
-          try
-          {
-            VoiceCommand retval;
-            iprot.ReadStructBegin();
-            TField field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop)
-            {
-              iprot.ReadFieldEnd();
-              retval = new ___undefined();
-            }
-            else
-            {
-              switch (field.ID)
-              {
-                case 1:
-                  if (field.Type == TType.String) {
-                    string temp;
-                    temp = await iprot.ReadStringAsync(cancellationToken);
-                    retval = new Filename(temp);
-                  } else { 
-                    TProtocolUtil.Skip(iprot, field.Type);
-                    retval = new ___undefined();
-                  }
-                  break;
-                case 2:
-                  if (field.Type == TType.String) {
-                    byte[] temp;
-                    temp = await iprot.ReadBinaryAsync(cancellationToken);
-                    retval = new RawData(temp);
-                  } else { 
-                    TProtocolUtil.Skip(iprot, field.Type);
-                    retval = new ___undefined();
-                  }
-                  break;
-                default: 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                  retval = new ___undefined();
-                  break;
-              }
-              iprot.ReadFieldEnd();
-              if (iprot.ReadFieldBegin().Type != TType.Stop)
-              {
-                throw new TProtocolException(TProtocolException.INVALID_DATA);
-              }
-            }
-            iprot.ReadStructEnd();
-            return retval;
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-        }
-
+        oprot.DecrementRecursionDepth();
       }
-
     }
+
+    public override string ToString()
+    {
+      var sb = new StringBuilder("VoiceCommand(");
+      bool __first = true;
+      if (Filename != null && __isset.Filename)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Filename: ");
+        sb.Append(Filename);
+      }
+      if (RawData != null && __isset.RawData)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("RawData: ");
+        sb.Append(RawData);
+      }
+      sb.Append(")");
+      return sb.ToString();
+    }
+  }
+
+}

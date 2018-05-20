@@ -219,7 +219,8 @@ namespace Ruyi.SDK.MediaService
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Request = await Ruyi.SDK.MediaService.RequestMsg.ReadAsync(iprot, cancellationToken);
+                  Request = new Ruyi.SDK.MediaService.RequestMsg();
+                  await Request.ReadAsync(iprot, cancellationToken);
                 }
                 else
                 {

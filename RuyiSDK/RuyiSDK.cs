@@ -14,8 +14,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using Thrift.Protocol;
-using Thrift.Transport;
+using System.Threading;
+using System.Threading.Tasks;
+using Thrift.Protocols;
+using Thrift.Transports;
 
 namespace Ruyi
 {
@@ -123,14 +125,14 @@ namespace Ruyi
 
         private RuyiSDKContext context = null;
 
-        private TTransport lowLatencyTransport = null;
+        private TClientTransport lowLatencyTransport = null;
         /// <summary>
         /// Underlying transport and protocol for low-latency messages
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public TBinaryProtocolTS LowLatencyProtocol { get; private set; }
 
-        private TTransport highLatencyTransport = null;
+        private TClientTransport highLatencyTransport = null;
         /// <summary>
         /// Underlying transport and protocol for high-latency messages
         /// </summary>
@@ -180,10 +182,10 @@ namespace Ruyi
 
                 // init and open high/low latency transport, create protocols
                 var lowLatencyPort = context.LowLatencyPort == 0 ? ConstantsSDKDataTypesConstants.low_latency_socket_port : context.LowLatencyPort;
-                lowLatencyTransport = new TSocketTransportTS(context.RemoteAddress, lowLatencyPort, timeout);
+                lowLatencyTransport = new TSocketTransportTS(System.Net.IPAddress.Parse(context.RemoteAddress), lowLatencyPort, timeout);
 
                 var highLatencyPort = context.HighLatencyPort == 0 ? ConstantsSDKDataTypesConstants.high_latency_socket_port : context.HighLatencyPort;
-                highLatencyTransport = new TSocketTransportTS(context.RemoteAddress, highLatencyPort, timeout);
+                highLatencyTransport = new TSocketTransportTS(System.Net.IPAddress.Parse(context.RemoteAddress), highLatencyPort, timeout);
             }
             else
             {
@@ -194,8 +196,10 @@ namespace Ruyi
             LowLatencyProtocol = new TBinaryProtocolTS(lowLatencyTransport);
             HighLatencyProtocol = new TBinaryProtocolTS(highLatencyTransport);
 
-            lowLatencyTransport.Open();
-            highLatencyTransport.Open();
+            Task.WaitAll(
+                lowLatencyTransport.OpenAsync(),
+                highLatencyTransport.OpenAsync()
+                );
 
             if (!ValidateVersion())
                 return false;
@@ -281,7 +285,7 @@ namespace Ruyi
             Version ver = Assembly.GetAssembly(GetType()).GetName().Version;
             var validationProtocol = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.VALIDATOR.ServiceID());
             validator = new ValidatorService.Client(validationProtocol);
-            string valid = validator.ValidateSDK(ver.ToString());
+            string valid = validator.ValidateSDKAsync(ver.ToString(), CancellationToken.None).Result;
             if (valid.StartsWith("err:"))
             {
                 Logger.Log(new LoggerMessage()

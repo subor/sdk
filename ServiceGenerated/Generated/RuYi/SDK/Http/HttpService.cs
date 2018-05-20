@@ -28,7 +28,7 @@ namespace Ruyi.SDK.Http
   {
     public interface IAsync
     {
-      Task<Ruyi.SDK.Http.SubscribeReply> SubscribeAsync(Ruyi.SDK.Http.SubscribeRequest msg, CancellationToken cancellationToken);
+      Task<Ruyi.SDK.Http.SubscribeReply> SubscribeAsync(Ruyi.SDK.Http.SubscribeRequest message, CancellationToken cancellationToken);
 
     }
 
@@ -41,12 +41,12 @@ namespace Ruyi.SDK.Http
 
       public Client(TProtocol inputProtocol, TProtocol outputProtocol) : base(inputProtocol, outputProtocol)      {
       }
-      public async Task<Ruyi.SDK.Http.SubscribeReply> SubscribeAsync(Ruyi.SDK.Http.SubscribeRequest msg, CancellationToken cancellationToken)
+      public async Task<Ruyi.SDK.Http.SubscribeReply> SubscribeAsync(Ruyi.SDK.Http.SubscribeRequest message, CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("Subscribe", TMessageType.Call, SeqId), cancellationToken);
         
         var args = new SubscribeArgs();
-        args.Msg = msg;
+        args.Message = message;
         
         await args.WriteAsync(OutputProtocol, cancellationToken);
         await OutputProtocol.WriteMessageEndAsync(cancellationToken);
@@ -132,7 +132,7 @@ namespace Ruyi.SDK.Http
         var result = new SubscribeResult();
         try
         {
-          result.Success = await _iAsync.SubscribeAsync(args.Msg, cancellationToken);
+          result.Success = await _iAsync.SubscribeAsync(args.Message, cancellationToken);
           await oprot.WriteMessageBeginAsync(new TMessage("Subscribe", TMessageType.Reply, seqid), cancellationToken); 
           await result.WriteAsync(oprot, cancellationToken);
         }
@@ -157,18 +157,18 @@ namespace Ruyi.SDK.Http
 
     public partial class SubscribeArgs : TBase
     {
-      private Ruyi.SDK.Http.SubscribeRequest _msg;
+      private Ruyi.SDK.Http.SubscribeRequest _message;
 
-      public Ruyi.SDK.Http.SubscribeRequest Msg
+      public Ruyi.SDK.Http.SubscribeRequest Message
       {
         get
         {
-          return _msg;
+          return _message;
         }
         set
         {
-          __isset.msg = true;
-          this._msg = value;
+          __isset.message = true;
+          this._message = value;
         }
       }
 
@@ -176,7 +176,7 @@ namespace Ruyi.SDK.Http
       public Isset __isset;
       public struct Isset
       {
-        public bool msg;
+        public bool message;
       }
 
       public SubscribeArgs()
@@ -203,8 +203,8 @@ namespace Ruyi.SDK.Http
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Msg = new Ruyi.SDK.Http.SubscribeRequest();
-                  await Msg.ReadAsync(iprot, cancellationToken);
+                  Message = new Ruyi.SDK.Http.SubscribeRequest();
+                  await Message.ReadAsync(iprot, cancellationToken);
                 }
                 else
                 {
@@ -235,13 +235,13 @@ namespace Ruyi.SDK.Http
           var struc = new TStruct("Subscribe_args");
           await oprot.WriteStructBeginAsync(struc, cancellationToken);
           var field = new TField();
-          if (Msg != null && __isset.msg)
+          if (Message != null && __isset.message)
           {
-            field.Name = "msg";
+            field.Name = "message";
             field.Type = TType.Struct;
             field.ID = 1;
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await Msg.WriteAsync(oprot, cancellationToken);
+            await Message.WriteAsync(oprot, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
           }
           await oprot.WriteFieldStopAsync(cancellationToken);
@@ -257,12 +257,12 @@ namespace Ruyi.SDK.Http
       {
         var sb = new StringBuilder("Subscribe_args(");
         bool __first = true;
-        if (Msg != null && __isset.msg)
+        if (Message != null && __isset.message)
         {
           if(!__first) { sb.Append(", "); }
           __first = false;
-          sb.Append("Msg: ");
-          sb.Append(Msg== null ? "<null>" : Msg.ToString());
+          sb.Append("Message: ");
+          sb.Append(Message== null ? "<null>" : Message.ToString());
         }
         sb.Append(")");
         return sb.ToString();

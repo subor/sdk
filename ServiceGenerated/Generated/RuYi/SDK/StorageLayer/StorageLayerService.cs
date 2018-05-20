@@ -28,7 +28,7 @@ namespace Ruyi.SDK.StorageLayer
   {
     public interface IAsync
     {
-      Task<Ruyi.SDK.StorageLayer.GetLocalPathResult> GetLocalPathAsync(string msg, CancellationToken cancellationToken);
+      Task<Ruyi.SDK.StorageLayer.GetLocalPathResult> GetLocalPathAsync(string message, CancellationToken cancellationToken);
 
     }
 
@@ -41,12 +41,12 @@ namespace Ruyi.SDK.StorageLayer
 
       public Client(TProtocol inputProtocol, TProtocol outputProtocol) : base(inputProtocol, outputProtocol)      {
       }
-      public async Task<Ruyi.SDK.StorageLayer.GetLocalPathResult> GetLocalPathAsync(string msg, CancellationToken cancellationToken)
+      public async Task<Ruyi.SDK.StorageLayer.GetLocalPathResult> GetLocalPathAsync(string message, CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetLocalPath", TMessageType.Call, SeqId), cancellationToken);
         
         var args = new GetLocalPathArgs();
-        args.Msg = msg;
+        args.Message = message;
         
         await args.WriteAsync(OutputProtocol, cancellationToken);
         await OutputProtocol.WriteMessageEndAsync(cancellationToken);
@@ -132,7 +132,7 @@ namespace Ruyi.SDK.StorageLayer
         var result = new GetLocalPathResult();
         try
         {
-          result.Success = await _iAsync.GetLocalPathAsync(args.Msg, cancellationToken);
+          result.Success = await _iAsync.GetLocalPathAsync(args.Message, cancellationToken);
           await oprot.WriteMessageBeginAsync(new TMessage("GetLocalPath", TMessageType.Reply, seqid), cancellationToken); 
           await result.WriteAsync(oprot, cancellationToken);
         }
@@ -157,18 +157,18 @@ namespace Ruyi.SDK.StorageLayer
 
     public partial class GetLocalPathArgs : TBase
     {
-      private string _msg;
+      private string _message;
 
-      public string Msg
+      public string Message
       {
         get
         {
-          return _msg;
+          return _message;
         }
         set
         {
-          __isset.msg = true;
-          this._msg = value;
+          __isset.message = true;
+          this._message = value;
         }
       }
 
@@ -176,7 +176,7 @@ namespace Ruyi.SDK.StorageLayer
       public Isset __isset;
       public struct Isset
       {
-        public bool msg;
+        public bool message;
       }
 
       public GetLocalPathArgs()
@@ -203,7 +203,7 @@ namespace Ruyi.SDK.StorageLayer
               case 1:
                 if (field.Type == TType.String)
                 {
-                  Msg = await iprot.ReadStringAsync(cancellationToken);
+                  Message = await iprot.ReadStringAsync(cancellationToken);
                 }
                 else
                 {
@@ -234,13 +234,13 @@ namespace Ruyi.SDK.StorageLayer
           var struc = new TStruct("GetLocalPath_args");
           await oprot.WriteStructBeginAsync(struc, cancellationToken);
           var field = new TField();
-          if (Msg != null && __isset.msg)
+          if (Message != null && __isset.message)
           {
-            field.Name = "msg";
+            field.Name = "message";
             field.Type = TType.String;
             field.ID = 1;
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(Msg, cancellationToken);
+            await oprot.WriteStringAsync(Message, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
           }
           await oprot.WriteFieldStopAsync(cancellationToken);
@@ -256,12 +256,12 @@ namespace Ruyi.SDK.StorageLayer
       {
         var sb = new StringBuilder("GetLocalPath_args(");
         bool __first = true;
-        if (Msg != null && __isset.msg)
+        if (Message != null && __isset.message)
         {
           if(!__first) { sb.Append(", "); }
           __first = false;
-          sb.Append("Msg: ");
-          sb.Append(Msg);
+          sb.Append("Message: ");
+          sb.Append(Message);
         }
         sb.Append(")");
         return sb.ToString();

@@ -203,7 +203,8 @@ namespace Ruyi.SDK.Speech
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Command = await Ruyi.SDK.Speech.VoiceCommand.ReadAsync(iprot, cancellationToken);
+                  Command = new Ruyi.SDK.Speech.VoiceCommand();
+                  await Command.ReadAsync(iprot, cancellationToken);
                 }
                 else
                 {

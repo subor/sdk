@@ -1,8 +1,10 @@
 ﻿using Ruyi.Logging;
 using System;
 using System.Threading;
-using Thrift.Protocol;
-using Thrift.Transport;
+using System.Threading.Tasks;
+using Thrift.Protocols;
+using Thrift.Protocols.Entities;
+using Thrift.Transports;
 
 namespace Ruyi.Layer0
 {
@@ -16,7 +18,7 @@ namespace Ruyi.Layer0
         private int connectRetryTimes = ConnectRetryTimesMax;
         private bool needReconnect = false;
 
-        public TBinaryProtocolTS(TTransport trans) : base(trans)
+        public TBinaryProtocolTS(TClientTransport trans) : base(trans)
         {
         }
 
@@ -26,7 +28,7 @@ namespace Ruyi.Layer0
         }
 
         // begin to write the message, see if we need to create a new transport
-        public override void WriteMessageBegin(TMessage message)
+        public override async Task WriteMessageBeginAsync(TMessage message)
         {
             Monitor.Enter(locker);
 
@@ -36,7 +38,7 @@ namespace Ruyi.Layer0
                 {
                     try
                     {
-                        base.WriteMessageBegin(message);
+                        await base.WriteMessageBeginAsync(message);
 
                         // reset retry times when send succeed.
                         connectRetryTimes = ConnectRetryTimesMax;
@@ -62,9 +64,8 @@ namespace Ruyi.Layer0
                     connectRetryTimes--;
                     try
                     {
-                        if (Transport is TTransportTS)
+                        if (Transport is TTransportTS ttt)
                         {
-                            var ttt = Transport as TTransportTS;
                             ttt.Reconnect();
                         }
 
@@ -83,9 +84,9 @@ namespace Ruyi.Layer0
         }
 
         // read message end, release the transport
-        public override void ReadMessageEnd()
+        public override async Task ReadMessageEndAsync()
         {
-            base.ReadMessageEnd();
+            await base.ReadMessageEndAsync();
 
             Monitor.Exit(locker);
         }

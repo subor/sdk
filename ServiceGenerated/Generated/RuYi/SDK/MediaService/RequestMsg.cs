@@ -24,317 +24,329 @@ using Thrift.Transports.Server;
 
 namespace Ruyi.SDK.MediaService
 {
-  public abstract partial class RequestMsg : TAbstractBase
+
+  public partial class RequestMsg : TBase
   {
-    public abstract void Write(TProtocol protocol);
-    public readonly bool Isset;
-    public abstract object Data { get; }
-    protected RequestMsg(bool isset)
+    private PlayMsg _Play;
+    private PauseMsg _Pause;
+    private StopMsg _Stop;
+    private AddPathMsg _AddPath;
+    private RemovePathMsg _RemovePath;
+    private QueryMsg _Query;
+
+    public PlayMsg Play
     {
-      Isset = isset;
+      get
+      {
+        return _Play;
+      }
+      set
+      {
+        __isset.Play = true;
+        this._Play = value;
+      }
     }
 
-    public class ___undefined : RequestMsg
+    public PauseMsg Pause
     {
-      public override object Data { get { return null; } }
-      public ___undefined() : base(false) {}
-
-      public override void Write(TProtocol protocol)
+      get
       {
-        throw new TProtocolException( TProtocolException.INVALID_DATA, "Cannot persist an union type which is not set.");
+        return _Pause;
       }
-
+      set
+      {
+        __isset.Pause = true;
+        this._Pause = value;
+      }
     }
 
-    public class Play : RequestMsg
+    public StopMsg Stop
     {
-      private PlayMsg _data;
-      public override object Data { get { return _data; } }
-      public Play(PlayMsg data) : base(true)
+      get
       {
-        this._data = data;
+        return _Stop;
       }
-      public override async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken) {
-        oprot.IncrementRecursionDepth();
-        try
+      set
+      {
+        __isset.Stop = true;
+        this._Stop = value;
+      }
+    }
+
+    public AddPathMsg AddPath
+    {
+      get
+      {
+        return _AddPath;
+      }
+      set
+      {
+        __isset.AddPath = true;
+        this._AddPath = value;
+      }
+    }
+
+    public RemovePathMsg RemovePath
+    {
+      get
+      {
+        return _RemovePath;
+      }
+      set
+      {
+        __isset.RemovePath = true;
+        this._RemovePath = value;
+      }
+    }
+
+    public QueryMsg Query
+    {
+      get
+      {
+        return _Query;
+      }
+      set
+      {
+        __isset.Query = true;
+        this._Query = value;
+      }
+    }
+
+
+    public Isset __isset;
+    public struct Isset
+    {
+      public bool Play;
+      public bool Pause;
+      public bool Stop;
+      public bool AddPath;
+      public bool RemovePath;
+      public bool Query;
+    }
+
+    public RequestMsg()
+    {
+    }
+
+    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    {
+      iprot.IncrementRecursionDepth();
+      try
+      {
+        TField field;
+        await iprot.ReadStructBeginAsync(cancellationToken);
+        while (true)
         {
-          var struc = new TStruct("RequestMsg");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
+          field = await iprot.ReadFieldBeginAsync(cancellationToken);
+          if (field.Type == TType.Stop)
+          {
+            break;
+          }
+
+          switch (field.ID)
+          {
+            case 1:
+              if (field.Type == TType.Struct)
+              {
+                Play = new PlayMsg();
+                await Play.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.Struct)
+              {
+                Pause = new PauseMsg();
+                await Pause.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.Struct)
+              {
+                Stop = new StopMsg();
+                await Stop.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 4:
+              if (field.Type == TType.Struct)
+              {
+                AddPath = new AddPathMsg();
+                await AddPath.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 5:
+              if (field.Type == TType.Struct)
+              {
+                RemovePath = new RemovePathMsg();
+                await RemovePath.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 6:
+              if (field.Type == TType.Struct)
+              {
+                Query = new QueryMsg();
+                await Query.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            default: 
+              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              break;
+          }
+
+          await iprot.ReadFieldEndAsync(cancellationToken);
+        }
+
+        await iprot.ReadStructEndAsync(cancellationToken);
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
+    }
+
+    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+    {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        var struc = new TStruct("RequestMsg");
+        await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (Play != null && __isset.Play)
+        {
           field.Name = "Play";
           field.Type = TType.Struct;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await _data.WriteAsync(oprot, cancellationToken);
+          await Play.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
-          await oprot.WriteFieldStop(cancellationToken);
-          await oprot.WriteStructEnd(cancellationToken);
         }
-        finally
+        if (Pause != null && __isset.Pause)
         {
-          oprot.DecrementRecursionDepth();
+          field.Name = "Pause";
+          field.Type = TType.Struct;
+          field.ID = 2;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Pause.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
+        if (Stop != null && __isset.Stop)
+        {
+          field.Name = "Stop";
+          field.Type = TType.Struct;
+          field.ID = 3;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Stop.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
         }
+        if (AddPath != null && __isset.AddPath)
+        {
+          field.Name = "AddPath";
+          field.Type = TType.Struct;
+          field.ID = 4;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await AddPath.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (RemovePath != null && __isset.RemovePath)
+        {
+          field.Name = "RemovePath";
+          field.Type = TType.Struct;
+          field.ID = 5;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await RemovePath.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (Query != null && __isset.Query)
+        {
+          field.Name = "Query";
+          field.Type = TType.Struct;
+          field.ID = 6;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Query.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        await oprot.WriteFieldStopAsync(cancellationToken);
+        await oprot.WriteStructEndAsync(cancellationToken);
       }
-
-      public class Pause : RequestMsg
+      finally
       {
-        private PauseMsg _data;
-        public override object Data { get { return _data; } }
-        public Pause(PauseMsg data) : base(true)
-        {
-          this._data = data;
-        }
-        public override async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken) {
-          oprot.IncrementRecursionDepth();
-          try
-          {
-            var struc = new TStruct("RequestMsg");
-            await oprot.WriteStructBeginAsync(struc, cancellationToken);
-            var field = new TField();
-            field.Name = "Pause";
-            field.Type = TType.Struct;
-            field.ID = 2;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await _data.WriteAsync(oprot, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-            await oprot.WriteFieldStop(cancellationToken);
-            await oprot.WriteStructEnd(cancellationToken);
-          }
-          finally
-          {
-            oprot.DecrementRecursionDepth();
-          }
-          }
-        }
+        oprot.DecrementRecursionDepth();
+      }
+    }
 
-        public class Stop : RequestMsg
-        {
-          private StopMsg _data;
-          public override object Data { get { return _data; } }
-          public Stop(StopMsg data) : base(true)
-          {
-            this._data = data;
-          }
-          public override async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken) {
-            oprot.IncrementRecursionDepth();
-            try
-            {
-              var struc = new TStruct("RequestMsg");
-              await oprot.WriteStructBeginAsync(struc, cancellationToken);
-              var field = new TField();
-              field.Name = "Stop";
-              field.Type = TType.Struct;
-              field.ID = 3;
-              await oprot.WriteFieldBeginAsync(field, cancellationToken);
-              await _data.WriteAsync(oprot, cancellationToken);
-              await oprot.WriteFieldEndAsync(cancellationToken);
-              await oprot.WriteFieldStop(cancellationToken);
-              await oprot.WriteStructEnd(cancellationToken);
-            }
-            finally
-            {
-              oprot.DecrementRecursionDepth();
-            }
-            }
-          }
+    public override string ToString()
+    {
+      var sb = new StringBuilder("RequestMsg(");
+      bool __first = true;
+      if (Play != null && __isset.Play)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Play: ");
+        sb.Append(Play== null ? "<null>" : Play.ToString());
+      }
+      if (Pause != null && __isset.Pause)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Pause: ");
+        sb.Append(Pause== null ? "<null>" : Pause.ToString());
+      }
+      if (Stop != null && __isset.Stop)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Stop: ");
+        sb.Append(Stop== null ? "<null>" : Stop.ToString());
+      }
+      if (AddPath != null && __isset.AddPath)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("AddPath: ");
+        sb.Append(AddPath== null ? "<null>" : AddPath.ToString());
+      }
+      if (RemovePath != null && __isset.RemovePath)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("RemovePath: ");
+        sb.Append(RemovePath== null ? "<null>" : RemovePath.ToString());
+      }
+      if (Query != null && __isset.Query)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Query: ");
+        sb.Append(Query== null ? "<null>" : Query.ToString());
+      }
+      sb.Append(")");
+      return sb.ToString();
+    }
+  }
 
-          public class AddPath : RequestMsg
-          {
-            private AddPathMsg _data;
-            public override object Data { get { return _data; } }
-            public AddPath(AddPathMsg data) : base(true)
-            {
-              this._data = data;
-            }
-            public override async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken) {
-              oprot.IncrementRecursionDepth();
-              try
-              {
-                var struc = new TStruct("RequestMsg");
-                await oprot.WriteStructBeginAsync(struc, cancellationToken);
-                var field = new TField();
-                field.Name = "AddPath";
-                field.Type = TType.Struct;
-                field.ID = 4;
-                await oprot.WriteFieldBeginAsync(field, cancellationToken);
-                await _data.WriteAsync(oprot, cancellationToken);
-                await oprot.WriteFieldEndAsync(cancellationToken);
-                await oprot.WriteFieldStop(cancellationToken);
-                await oprot.WriteStructEnd(cancellationToken);
-              }
-              finally
-              {
-                oprot.DecrementRecursionDepth();
-              }
-              }
-            }
-
-            public class RemovePath : RequestMsg
-            {
-              private RemovePathMsg _data;
-              public override object Data { get { return _data; } }
-              public RemovePath(RemovePathMsg data) : base(true)
-              {
-                this._data = data;
-              }
-              public override async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken) {
-                oprot.IncrementRecursionDepth();
-                try
-                {
-                  var struc = new TStruct("RequestMsg");
-                  await oprot.WriteStructBeginAsync(struc, cancellationToken);
-                  var field = new TField();
-                  field.Name = "RemovePath";
-                  field.Type = TType.Struct;
-                  field.ID = 5;
-                  await oprot.WriteFieldBeginAsync(field, cancellationToken);
-                  await _data.WriteAsync(oprot, cancellationToken);
-                  await oprot.WriteFieldEndAsync(cancellationToken);
-                  await oprot.WriteFieldStop(cancellationToken);
-                  await oprot.WriteStructEnd(cancellationToken);
-                }
-                finally
-                {
-                  oprot.DecrementRecursionDepth();
-                }
-                }
-              }
-
-              public class Query : RequestMsg
-              {
-                private QueryMsg _data;
-                public override object Data { get { return _data; } }
-                public Query(QueryMsg data) : base(true)
-                {
-                  this._data = data;
-                }
-                public override async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken) {
-                  oprot.IncrementRecursionDepth();
-                  try
-                  {
-                    var struc = new TStruct("RequestMsg");
-                    await oprot.WriteStructBeginAsync(struc, cancellationToken);
-                    var field = new TField();
-                    field.Name = "Query";
-                    field.Type = TType.Struct;
-                    field.ID = 6;
-                    await oprot.WriteFieldBeginAsync(field, cancellationToken);
-                    await _data.WriteAsync(oprot, cancellationToken);
-                    await oprot.WriteFieldEndAsync(cancellationToken);
-                    await oprot.WriteFieldStop(cancellationToken);
-                    await oprot.WriteStructEnd(cancellationToken);
-                  }
-                  finally
-                  {
-                    oprot.DecrementRecursionDepth();
-                  }
-                  }
-                }
-
-                public static RequestMsg Read(TProtocol iprot)
-                {
-                  iprot.IncrementRecursionDepth();
-                  try
-                  {
-                    RequestMsg retval;
-                    iprot.ReadStructBegin();
-                    TField field = iprot.ReadFieldBegin();
-                    if (field.Type == TType.Stop)
-                    {
-                      iprot.ReadFieldEnd();
-                      retval = new ___undefined();
-                    }
-                    else
-                    {
-                      switch (field.ID)
-                      {
-                        case 1:
-                          if (field.Type == TType.Struct) {
-                            PlayMsg temp;
-                            temp = new PlayMsg();
-                            await temp.ReadAsync(iprot, cancellationToken);
-                            retval = new Play(temp);
-                          } else { 
-                            TProtocolUtil.Skip(iprot, field.Type);
-                            retval = new ___undefined();
-                          }
-                          break;
-                        case 2:
-                          if (field.Type == TType.Struct) {
-                            PauseMsg temp;
-                            temp = new PauseMsg();
-                            await temp.ReadAsync(iprot, cancellationToken);
-                            retval = new Pause(temp);
-                          } else { 
-                            TProtocolUtil.Skip(iprot, field.Type);
-                            retval = new ___undefined();
-                          }
-                          break;
-                        case 3:
-                          if (field.Type == TType.Struct) {
-                            StopMsg temp;
-                            temp = new StopMsg();
-                            await temp.ReadAsync(iprot, cancellationToken);
-                            retval = new Stop(temp);
-                          } else { 
-                            TProtocolUtil.Skip(iprot, field.Type);
-                            retval = new ___undefined();
-                          }
-                          break;
-                        case 4:
-                          if (field.Type == TType.Struct) {
-                            AddPathMsg temp;
-                            temp = new AddPathMsg();
-                            await temp.ReadAsync(iprot, cancellationToken);
-                            retval = new AddPath(temp);
-                          } else { 
-                            TProtocolUtil.Skip(iprot, field.Type);
-                            retval = new ___undefined();
-                          }
-                          break;
-                        case 5:
-                          if (field.Type == TType.Struct) {
-                            RemovePathMsg temp;
-                            temp = new RemovePathMsg();
-                            await temp.ReadAsync(iprot, cancellationToken);
-                            retval = new RemovePath(temp);
-                          } else { 
-                            TProtocolUtil.Skip(iprot, field.Type);
-                            retval = new ___undefined();
-                          }
-                          break;
-                        case 6:
-                          if (field.Type == TType.Struct) {
-                            QueryMsg temp;
-                            temp = new QueryMsg();
-                            await temp.ReadAsync(iprot, cancellationToken);
-                            retval = new Query(temp);
-                          } else { 
-                            TProtocolUtil.Skip(iprot, field.Type);
-                            retval = new ___undefined();
-                          }
-                          break;
-                        default: 
-                          TProtocolUtil.Skip(iprot, field.Type);
-                          retval = new ___undefined();
-                          break;
-                      }
-                      iprot.ReadFieldEnd();
-                      if (iprot.ReadFieldBegin().Type != TType.Stop)
-                      {
-                        throw new TProtocolException(TProtocolException.INVALID_DATA);
-                      }
-                    }
-                    iprot.ReadStructEnd();
-                    return retval;
-                }
-                finally
-                {
-                  iprot.DecrementRecursionDepth();
-                }
-                }
-
-              }
-
-            }
+}
