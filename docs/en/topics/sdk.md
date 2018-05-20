@@ -31,7 +31,7 @@ SDK has following directory structure (see [SDK Setup](../tutorials/setup.md)):
 |                               
 +---MainClient
 |   |   ...
-|   |   Client.exe
+|   |   WpfClient.exe
 |   \   ...
 |
 +---OverlayClient
@@ -54,13 +54,18 @@ SDK has following directory structure (see [SDK Setup](../tutorials/setup.md)):
 Folder | Path | Description
 -|-|-
 DevTools/ | RuyiDev.exe | [Developer tools](devtool.md)
-|| Ruyi/Presentation/Web/index.html | SDK API documentation (same as [online docs](http://dev.playruyi.com/api))
+| | Ruyi/Presentation/Web/index.html | SDK API documentation (same as [online docs](http://dev.playruyi.com/api))
 Layer0/ | Layer0.exe | Daemon portion of client (see [architecture](layer0.md))
-MainClient/ | Client.exe | End-user facing UI (requires layer0 already running)
+MainClient/ | WpfClient.exe | End-user facing UI (requires layer0 already running)
+MiniPower | MiniPower.exe | "Ruyi Assist"; power control and hardware information for [PC mode](pc_mode.md)
 OverlayClient/ | RuyiOverlayClient.exe | [In-game UI overlay](overlay.md) (managed by layer0)
-SDK/ | RuyiSDK/ | C# SDK
-|| RuyiSDK.nf2.0/ | C# SDK targeting .Net Framework 3.5 (for Unity)
-|| RuyiSDKCpp/ | C++ SDK
+RuyiSDK/ | | .Net/C# SDK (.Net Standard 2.0)
+RuyiSDK.nf2.0/ | | .Net/C# SDK targeting .Net Framework 3.5 (for Unity)
+RuyiSDKCpp/ | lib/RuyiSDK.lib | C++ SDK linked with /MD
+| | lib/RuyiSDK_mt.lib | C++ SDK linked with /MT
+RuyiSDKUnity/ | RuyiSDKUnity.unitypackage | SDK package for Unity 3D
+
+## API:
 
 ## Links:
 
