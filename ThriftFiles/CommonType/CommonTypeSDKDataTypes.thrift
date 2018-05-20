@@ -1,5 +1,4 @@
-namespace csharp Ruyi.SDK.CommonType
-namespace cpp Ruyi.SDK.CommonType
+namespace * Ruyi.SDK.CommonType
 
 enum LoginState {
     /** Logout state */

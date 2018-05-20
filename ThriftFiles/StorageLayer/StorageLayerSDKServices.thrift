@@ -1,7 +1,6 @@
 include "StorageLayerSDKDataTypes.thrift"
 
-namespace csharp Ruyi.SDK.StorageLayer
-namespace cpp Ruyi.SDK.StorageLayer
+namespace * Ruyi.SDK.StorageLayer
 
 
 service StorageLayerService {

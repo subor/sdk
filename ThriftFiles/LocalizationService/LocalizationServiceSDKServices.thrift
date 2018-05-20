@@ -1,7 +1,6 @@
 include "LocalizationServiceSDKDataTypes.thrift"
 
-namespace csharp Ruyi.SDK.LocalizationService
-namespace cpp Ruyi.SDK.LocalizationService
+namespace * Ruyi.SDK.LocalizationService
 
 
 service LocalizationService {

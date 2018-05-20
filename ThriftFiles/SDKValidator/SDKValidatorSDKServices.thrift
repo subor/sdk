@@ -1,7 +1,6 @@
 include "SDKValidatorSDKDataTypes.thrift"
 
-namespace csharp Ruyi.SDK.SDKValidator
-namespace cpp Ruyi.SDK.SDKValidator
+namespace * Ruyi.SDK.SDKValidator
 
 
 service ValidatorService {
