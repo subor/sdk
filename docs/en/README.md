@@ -30,12 +30,6 @@ Get __[Support](topics/support.md)__
 * [Run Unity sample on devkit](tutorials/run_unity_sample_console.md)
 * [Pack The App](tutorials/how_to_pack.md)
 
-__Advanced:__
-
-* Setup a [PC similar to Ruyi devkit](topics/simulation_system.md)
-* Devkit [OS reinstall](topics/os.md#Installation)
-* Debugging SDK
-
 ## Topics
 
 * Development

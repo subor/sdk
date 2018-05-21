@@ -1,6 +1,6 @@
 # UE4 Integration
 
-Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unrealengine.com/en-US/) for the [UE4 sample](https://bitbucket.org/playruyi/unreal_demo).
+Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unrealengine.com/en-US/) for the [UE4 demo](https://bitbucket.org/playruyi/unreal_demo) and [platformer game](https://bitbucket.org/playruyi/platformer_game).
 
 ## Prerequisites
 

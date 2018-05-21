@@ -1,8 +1,13 @@
 # Build SDK Source
 
-As discussed [here](layer0.md), the client SDK uses [Apache Thrift](https://thrift.apache.org/).  The Thrift interface definitions, C++/C# Visual Studio projects, and sourcecode for the Ruyi SDK are available [here](https://bitbucket.org/playruyi/sdk_source).
+[SDK binaries](https://dev.playruyi.com/udownloadslist/SDK) are available from the developer portal.  They should be sufficent for the majority of development scenarios (also check the [Unity](unity.md) and [UE4](ue4.md) docs).
 
-This document provides some help building the SDK libraries.
+This document discusses building the SDK yourself.  This may be necessary in the following situations:  
+
+* You use a [supported programming/scripting language](https://thrift.apache.org/docs/Languages) whose API we don't provide
+* You need libraries built with a particular toolchain or certain compiler/linker flags
+
+As discussed [here](layer0.md), the client SDK uses [Apache Thrift](https://thrift.apache.org/).  The Thrift interface definitions, C++/C# Visual Studio projects, and sourcecode for the Ruyi SDK are available from the [sdk_source repository](https://bitbucket.org/playruyi/sdk_source).
 
 ## C++
 
@@ -52,7 +57,7 @@ __Instructions__
             +...
 
 1. Build external libs
-    * If asked to retarget projects, for Windows SDK version pick 10.0.15063.0 and Platform Toolset "Upgrade to v141"
+    * If asked to retarget projects, for __Windows SDK version__ pick 10.0.15063.0 and __Platform Toolset__ "Upgrade to v141"
     * Select __Release__ and __x64__ when possible
 1. Open `sdk/SDK.sln`
     * __Release__ is for libraries compiled with `/MD`
@@ -94,7 +99,7 @@ The SDK source also includes the underlying [Thrift interface definitions](https
 
 Run `thrift.exe --help` for a full list of supported languages (generators) and options.
 
-The API Tool provided with [devtool](devtool.md) provdes some assistance working with Thrift files.
+The API Tool provided with [devtool](devtool.md) provdes some assistance working with our Thrift files.
 
 For example, to generate API similar to what we provide in SDK (see [sdk_source](https://bitbucket.org/playruyi/sdk_source)):
 ```
