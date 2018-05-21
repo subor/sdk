@@ -2,7 +2,7 @@
 
 ---
 ## ![](/docs/img/warning.png) NOTICE
-目前Ruyi平台仍在开发中，您在使用中可能会遇到：
+目前Ruyi平台仍在开发中，您在使用过程中可能会遇到以下情况：
 
 * 平台整体尚不完整
 * 功能会不时更新调整
@@ -49,7 +49,7 @@ __进阶内容:__
 * [文档](topics/docs.md)
 * [模拟系统](topics/simulation_system.md)
 * [应用配置文件](topics/app_metadata.md)
-* [支持](topics/support.md)
+* [技术支持](topics/support.md)
     * [常见问题](faq.md)
     * [版本发布说明](topics/release_notes.md)
 
