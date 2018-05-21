@@ -44,6 +44,8 @@ namespace Ruyi
 
 	RuyiNetClient::~RuyiNetClient()
 	{
+		LogoutAccount();
+
 		delete mTelemetryService;
 		mTelemetryService = nullptr;
 
@@ -139,6 +141,27 @@ namespace Ruyi
 		} catch(std::exception e)
 		{
 			throw e;
+		}
+	}
+
+	void RuyiNetClient::LogoutAccount()
+	{
+		for (int i = 0; i < MAX_PLAYERS; ++i)
+		{
+			if (nullptr != mCurrentPlayers[i])
+			{
+				std::string response;
+				BCService->Script_RunParentScript(response, "RUYI_Cleanup", "", "RUYI", i);
+				BCService->Identity_SwitchToParentProfile(response, "RUYI", i);
+				
+				auto retJson = nlohmann::json::parse(response);
+
+				if (!retJson["status"].is_null() && STATUS_OK == retJson["status"])
+				{
+					delete mCurrentPlayers[i];
+					mCurrentPlayers[i] = nullptr;
+				}
+			}
 		}
 	}
 
