@@ -92,8 +92,8 @@ namespace Ruyi
 	class RuyiSDK
 	{
 	private:
-		boost::shared_ptr<TSocket> sharedLowTrans;
-		boost::shared_ptr<TSocket> sharedHighTrans;
+		std::shared_ptr<TSocket> sharedLowTrans;
+		std::shared_ptr<TSocket> sharedHighTrans;
 
 		RuyiSDKContext* context;
 		SDK::SDKValidator::ValidatorServiceClient* validator;

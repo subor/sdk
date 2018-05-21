@@ -18,7 +18,7 @@ namespace Ruyi
 {
 	
 
-	RuyiNetClient::RuyiNetClient(const boost::shared_ptr<TProtocol1> & protocol)
+	RuyiNetClient::RuyiNetClient(const std::shared_ptr<TProtocol1> & protocol)
 		: BCService(nullptr), mCloudService(nullptr), mFriendService(nullptr), mLeaderboardService(nullptr),
 		mPartyService(nullptr), mProfileService(nullptr), 
 		mVideoService(nullptr), mMatchmakingService(nullptr), mLobbyService(nullptr), mTelemetryService(nullptr), mInitialised(false)
