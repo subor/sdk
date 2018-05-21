@@ -56,6 +56,7 @@ namespace Ruyi.Layer0
             {
                 receivingThread = new Thread(() =>
                 {
+                    Thread.CurrentThread.Name = "Subscribe: " + topic;
                     while (Receive()) ;
                 });
                 receivingThread.Name = "Subscriber: " + topic;
