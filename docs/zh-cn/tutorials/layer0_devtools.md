@@ -107,10 +107,10 @@ Usage: 'RuyiDev [<Options>+] settingtool [<args>]'
 
 	> [12/29/2017 6:26:04 PM] [         SettingTool]  [      Info]    Mute false systemsetting
 	
-1. 通过`RuyiDev.exe -v verbose SettingTool --buttonset --setkey=Mute --setvalue=true --setmodule=systemsetting`把“_静音_(_Mute_)”设置为__true__:
+1. 运行`RuyiDev.exe -v verbose SettingTool --buttonset --setkey=Mute --setvalue=true --setmodule=systemsetting`把“_静音_(_Mute_)”值设置为__true__:
 	
 	> [12/29/2017 6:26:39 PM] [         SettingTool]  [      Info]    Set Mute to true result: True
 	
-1. 验证“_静音_(_Mute_)”是否更新:
+1. 验证“_静音_(_Mute_)”值是否更新:
 	
 	> [12/29/2017 6:27:53 PM] [         SettingTool]  [      Info]    Mute true systemsetting
