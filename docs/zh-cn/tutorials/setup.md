@@ -1,8 +1,8 @@
 # SDK安装
 
-这里是关于在开发者自己的工作站或者Ruyi主机上安装管理RuyiSDK的指南.
+这里是关于开发者在自己的工作机器或者Ruyi主机上安装管理RuyiSDK的指南.
 
-如果你有收到我们发出的开发套件，其中应该已经预装有SDK(`c:\ruyi`). 当然，以下说明可以用来升级SDK。
+如果你有收到我们发出的开发套件，其中应该已经预装有SDK(`c:\ruyi`). 当然，以下说明仍可以用来升级SDK。
 
 ## 前提条件
 
@@ -11,13 +11,13 @@
 ## SDK下载及安装
 
 1. 在[开发者网站](http://dev.playruyi.com/uservices)下载以下内容:
-    - 所有SDKs
+    - 所有SDK
     - 开发工具（Devtools）
     - Layer0
     - 主机客户端（Main Client）
 1. 解压到本地硬盘
 1. 如果有需要(参照[遇到问题](https://bitbucket.org/playruyi/support/issues/3)), __解除锁定__文件:
-    - __右击exe文件, 选择属性（Properties__）, 勾选解除锁定（__Unblock__）  
+    - __右击exe文件__, 选择属性（__Properties__）, 勾选__解除锁定__（__Unblock__）  
     ![](/docs/img/exe_unblock.png)
 
     或者
@@ -101,4 +101,4 @@ __下一步:__
 
 1. 关闭客户端（Main Client）和layer0(如果有运行)
 1. 删除旧版本的SDK文件夹
-1. 参照以上的[下载&安装步骤](#SDK-Download-and-Installation)
+1. 参照之前的[SDK下载及安装]步骤升级SDK(#SDK-Download-and-Installation)
