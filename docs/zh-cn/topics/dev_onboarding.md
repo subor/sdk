@@ -23,7 +23,7 @@
 * Atlassian发送的邀请邮件，可以在[Bitbucket](https://bitbucket.org/)加入playruyi团队:  
 ![](/docs/img/bitbucket_invite.png)
 
-参照以下步骤完成一次(团队或者成员):
+按以下步骤完成一次(团队或者成员):
 
 1. 使用邀请码在[dev.playruyi.com注册](http://dev.playruyi.com/register):  
 ![](/docs/img/devportal_register.png)
