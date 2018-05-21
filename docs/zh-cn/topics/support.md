@@ -18,7 +18,7 @@
 1. 通过过滤功能（__FILTER BY__）来过滤显示的问题。
 1. 使用右上角的搜索框（__Advanced search__）来寻找相似问题。  
 ![](/docs/img/support_search.png)
-1. 点击问题名显示详细信息。
+1. 点击问题名，显示详细信息。
 ![](/docs/img/support_issue.png)
     - 为问题添加评论（__comments__）
     - 点击为该问题投票（__Vote for the issue__）引起Ruyi团队关注，加速问题解决
@@ -41,21 +41,21 @@
     - 分类（__Kind__）- 如果是bug请选“_bug_”，如果是意见/评论/需求/或者其他，请任意选择除“_bug_”外的选项。
     - 组件（__Component__）- 选择分类最接近的选项:  
     ![](/docs/img/support_issue_component.png)
-    - 版本（__Version__）- SDK版本号 (右键layer0.exe在“详细”（__Details__）页签查看)
-1. 添加附件文件，以帮助我们更快定位问题
+    - 版本（__Version__）- SDK版本号 (右键layer0.exe选择属性，在“详细”（__Details__）页签查看)
+1. 添加附件，以帮助我们更快定位问题
     - 相关截图和视频
     - Layer0的日志文件 (`layer0.log`)
-    - Main client的日志文件 (`MainClient/client.log`)
+    - Main Client的日志文件 (`MainClient/client.log`)
 1. 点击创建问题（__Create issue__）提交
 
 ## 需求/建议
 
-和[提交发现问题](support.md#Reporting-an-issue)类似, 只有在分类（__Kind__）项选择 改进（_Enhancement_） 或 建议（_Proposal_）.
+和[提交发现问题](support.md#Reporting-an-issue)类似, 除了在分类（__Kind__）项选择 改进（_Enhancement_） 或 建议（_Proposal_）.
 
 ![](/docs/img/support_suggestion.png)
 
 ### 投票
 
-如果对问题感兴趣, 可以点击右上角的为该问题投票 （__Vote for this issue__）:  
+如果对问题感兴趣, 可以点击右上角的__为该问题投票__（__Vote for this issue__）:  
 
 ![](/docs/img/support_vote.png)
