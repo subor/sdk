@@ -50,7 +50,7 @@
 
 ## 需求/建议
 
-和[提交发现问题](support.md#Reporting-an-issue)类似, 除了在分类（__Kind__）项选择 改进（_Enhancement_） 或 建议（_Proposal_）.
+和[提交发现问题](support.md#Reporting-an-issue)填写内容基本一样, 除了在分类（__Kind__）项选择 改进（_Enhancement_） 或 建议（_Proposal_）.
 
 ![](/docs/img/support_suggestion.png)
 
