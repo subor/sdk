@@ -6,12 +6,12 @@
  */
 #include "InputManagerSDKDataTypes_constants.h"
 
-
+namespace Ruyi { namespace SDK { namespace InputManager {
 
 const InputManagerSDKDataTypesConstants g_InputManagerSDKDataTypes_constants;
 
 InputManagerSDKDataTypesConstants::InputManagerSDKDataTypesConstants() {
 }
 
-
+}}} // namespace
 

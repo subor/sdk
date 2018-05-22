@@ -10,6 +10,10 @@ std::map<string, MessageCreatorFunc> MessageCreator::ccs;
 
 void MessageCreator::Initialize()
 {
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.RuyiGamePadInput", Ruyi::SDK::InputManager::RuyiGamePadInput);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.RuyiKeyboardInput", Ruyi::SDK::InputManager::RuyiKeyboardInput);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.RuyiMouseInput", Ruyi::SDK::InputManager::RuyiMouseInput);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.RuyiJoystickInput", Ruyi::SDK::InputManager::RuyiJoystickInput);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.StorageLayer.GetLocalPathResult", Ruyi::SDK::StorageLayer::GetLocalPathResult);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.CategoryNode", Ruyi::SDK::SettingSystem::Api::CategoryNode);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.SettingSearchResult", Ruyi::SDK::SettingSystem::Api::SettingSearchResult);
