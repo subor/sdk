@@ -1,8 +1,13 @@
-# 在本地PC上运行虚幻4示例程序
+# 在开发机上运行虚幻4示例程序
 
-在本文中我们将安装一个基于[虚幻4](https://www.unrealengine.com/)引擎的示例程序到您的本地PC上并运行。
+在本文中我们将安装一个基于[虚幻4](https://www.unrealengine.com/)引擎的示例程序到开发机上并运行。
 
-以下所有步骤都应在您的本地PC上完成：
+## 前期条件
+- Unreal 4.18.3
+- Visual Studio 2017 (需要Win SDK 8.1以上)
+- Ruyi主机或Win10的PC
+
+## 以下所有步骤都应在您的开发机上完成：
 
 1. [启动平台并登陆](layer0_devtools.md#Layer0)
 2. [下载示例程序源码工程](https://bitbucket.org/playruyi/unreal_demo). 我们将其解压到`c:\ue4_demo\`.
