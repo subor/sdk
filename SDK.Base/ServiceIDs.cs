@@ -20,7 +20,6 @@ namespace Ruyi.Layer0
         STORAGELAYER,
         STORAGELAYER_INTERNAL,
         SYS_REPORTER,
-        SERVICE_HOST,
         DOWNLOADMANAGER,
         HTTP_LISTENER,
         HTTP_SUBSCRIBE,
@@ -104,7 +103,6 @@ namespace Ruyi.Layer0
             {
                 case ServiceIDs.HTTP_LISTENER:
                 case ServiceIDs.SYS_REPORTER:
-                case ServiceIDs.SERVICE_HOST:
                     return false;
 
                 default:
