@@ -8,7 +8,7 @@ using System.Threading;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Layer0
+namespace Ruyi.Layer0
 {
     public class SubscribeClient : IDisposable
     {
@@ -137,9 +137,9 @@ namespace Layer0
             }
         }
 
-        void Log(string message, RuyiLogger.LogLevel level)
+        void Log(string message, Logging.LogLevel level)
         {
-            RuyiLogger.Logger.Log(message, level: level, category: RuyiLogger.MessageCategory.Subscriber);
+            Logging.Logger.Log(message, level: level, category: Logging.MessageCategory.Subscriber);
         }
 
         bool Receive()
@@ -177,18 +177,18 @@ namespace Layer0
                 if (e is TargetInvocationException)
                 {
                     var ee = e as TargetInvocationException;
-                    Log($"subscribe invoke exception: {(ee).InnerException.Message} \n {ee.InnerException.StackTrace}", RuyiLogger.LogLevel.Warn);
+                    Log($"Subscribe invoke exception: {(ee).InnerException.Message} \n {ee.InnerException.StackTrace}", Logging.LogLevel.Warn);
                     return true;
                 }
                 if (e is TerminatingException)
                 {
-                    Log($"subscribe client ternimated: {e.Message}", RuyiLogger.LogLevel.Info);
+                    Log($"Subscribe client terminated: {e.Message}", Logging.LogLevel.Info);
                     return false;
                 }
                 else
                 {
                     Log(disposing ? $"disposing exception: {e.Message}" : $"subscribe client receive exception: {e.Message} \n {e.StackTrace}",
-                        disposing ? RuyiLogger.LogLevel.Info : RuyiLogger.LogLevel.Error
+                        disposing ? Logging.LogLevel.Info : Logging.LogLevel.Error
                         );
                     return false;
                 }
@@ -210,7 +210,7 @@ namespace Layer0
                     }
                     catch (Exception e)
                     {
-                        var level = e is TerminatingException ? RuyiLogger.LogLevel.Info : RuyiLogger.LogLevel.Error;
+                        var level = e is TerminatingException ? Logging.LogLevel.Info : Logging.LogLevel.Error;
                         Log($"subscribe client terminated: { e.Message }", level);
                     }
                 }

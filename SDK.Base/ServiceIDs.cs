@@ -3,7 +3,7 @@
 #else
 using System;
 
-namespace Layer0
+namespace Ruyi.Layer0
 {
     public
 #endif
@@ -45,6 +45,7 @@ namespace Layer0
         INPUTMANAGER_EXTERNAL,
         L10NSERVICE,
         OVERLAYMANAGER_INTERNAL,
+        UPDATESERVICE,
         TEST,
 
         HIGH_POWER_END,

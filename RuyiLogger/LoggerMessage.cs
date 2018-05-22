@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RuyiLogger
+namespace Ruyi.Logging
 {
     public enum MessageCategory
     {
@@ -149,7 +149,7 @@ namespace RuyiLogger
     /// <summary>
     /// Stack frame suitable for logging.
     /// </summary>
-    /// <seealso cref="RuyiLogger.Logger"/>
+    /// <seealso cref="Logging.Logger"/>
     public class LoggerStackFrame
     {
         public string Filename { get; private set; }

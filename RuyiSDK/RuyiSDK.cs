@@ -1,5 +1,6 @@
-﻿using Layer0;
-using NetMQ;
+﻿using NetMQ;
+using Ruyi.Layer0;
+using Ruyi.Logging;
 using Ruyi.SDK.Constants;
 using Ruyi.SDK.LocalizationService;
 using Ruyi.SDK.MediaService;
@@ -8,7 +9,6 @@ using Ruyi.SDK.SDKValidator;
 using Ruyi.SDK.Speech;
 using Ruyi.SDK.StorageLayer;
 using Ruyi.SDK.UserServiceExternal;
-using RuyiLogger;
 using System;
 using System.ComponentModel;
 using System.Linq;
