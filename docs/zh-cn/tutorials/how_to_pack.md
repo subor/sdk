@@ -1,6 +1,6 @@
-# Package File Preparation
+# 打包所需的配置文件
 
-1. Create the Manifest file, It must be named RuyiManifest.json, an typical content should looks like:
+1. 创建Manifest配置文件,注意必须命名为RuyiManifest.json。文件内容格式如下所示：
 ```
      {
         appID: "app_id",
@@ -29,9 +29,9 @@
         }
     }
 ```
-2. Create an sibling folder named "res" with your manifest file
-3. create "ld" and "hd" folder in "res", put your images used in the manifest file into them according to the "high" or "low" dimension.
-4. create the i18n.json file in "res", which should contain texts in all language you're gonna support. it should looks like this:
+2. 创建一个和Manifest.json同级目录的文件夹“res”。
+3. 在“res”文件夹下创建“ld”和“hd”文件夹，里面的图片名称和Manifest文件中对应值保持一致.
+4. 在“res”文件夹下新建i18n.json，用来支持多语言，内容如下格式：
 ```
     {
         "i18n": {
@@ -47,13 +47,13 @@
         }
     }
 ```
-5. create a folder with the name of your app_id in "com.ruyi.jade.app_id" next to the manifest file, and put your app into it. the exe name must be "app_id".exe
-6. create a zip file named "app_id" and contain all the content above directly in the root
+5. 新建和Manifest同级文件夹，名称和Manifest文件中appID项的值"com.ruyi.jade.app_id"中的“app_id”一致,将生成的应用执行文件全部放在该文件夹下。运行应用的exe文件注意名称和“app_id”保持一直。
+6. 将上面所有文件使用zip压缩打包，名称和之前的“app_id”一致
 
 
-# Developer Tool Operation:
-1. open RuyiDev.exe -> select AppRunner -> file the "Host Address" blank with ip address of your console
-2. Select Working Channel List, (Always "dev" for now)
+# 开发者工具打包操作:
+1. 打开RuyiDev.exe -> 选择AppRunner -> file "Host Address"栏填写目标主机的ip地址
+2. Working Channel List选“dev”
 3. Select the folde whick contains all the file we talk about above, then click "PackApp" button, wait for a second(it depends how big your file is). Until you see the pack output info
 4. Selected the zip file in the "Select install App" blank
 5. Press "install App" button, wait until the success installed info(the length of duration depends on how big of your zip file)
