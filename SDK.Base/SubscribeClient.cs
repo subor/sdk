@@ -228,6 +228,14 @@ namespace Ruyi.Layer0
             // closing socket will throw an exception in Receive() which will be caught to end the thread.
             if (receivingThread != null)
             {
+                if (receivingThread.IsAlive)
+                {
+                    try
+                    {
+                        receivingThread.Abort();
+                    }
+                    catch { }
+                }
                 receivingThread = null;
             }
         }
