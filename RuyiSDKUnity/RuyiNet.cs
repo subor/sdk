@@ -118,7 +118,7 @@ public class RuyiNet : MonoBehaviour
     public RuyiNetUserFileService UserFileService { get { return mSDK.RuyiNetService.UserFileService; } }
     public RuyiNetVideoService VideoService { get { return mSDK.RuyiNetService.VideoService; } }
 
-    public Layer0.SubscribeClient Subscribe { get { return mSDK.Subscriber; } }
+    public Ruyi.Layer0.SubscribeClient Subscribe { get { return mSDK.Subscriber; } }
 
     private RuyiSDKContext mSDKContext;
     private RuyiSDK mSDK;
