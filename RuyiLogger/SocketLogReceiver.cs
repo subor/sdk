@@ -13,7 +13,7 @@ namespace Ruyi.DevTool
     {
         public delegate void ReceiveCallback(LoggerMessage msg);
 
-        CancellationTokenSource cancel = new CancellationTokenSource();
+        CancellationTokenSource cancel = null;
         DealerSocket subSocket = new DealerSocket();
         ReceiveCallback receiveCallback = null;
 
@@ -24,9 +24,10 @@ namespace Ruyi.DevTool
             subSocket.ReceiveReady += Receive;
             receiveCallback = cb;
 
+            cancel = new CancellationTokenSource();
             Task.Factory.StartNew(() =>
             {
-                while (true)
+                while (!cancel.IsCancellationRequested)
                 {
                     subSocket.Poll();
                 }
