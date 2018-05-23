@@ -370,8 +370,7 @@ namespace Ruyi
                 }
 
                 // not Layer0
-                var attrs = entry.GetCustomAttributes(false).OfType<GuidAttribute>();
-                if (!(attrs.Any() && attrs.First().Value.Equals("a9a38292-d200-4ee3-885c-726aa6da08ee")))
+                if(!(entry.FullName.StartsWith("Layer0,")))
                 {
                     NetMQConfig.Cleanup(false);
                     return;
