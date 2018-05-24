@@ -46,7 +46,9 @@ namespace Ruyi.Layer0
         L10NSERVICE,
         OVERLAYMANAGER_INTERNAL,
         UPDATESERVICE,
+#if DEBUG
         TEST,
+#endif
 
         HIGH_POWER_END,
         #endregion

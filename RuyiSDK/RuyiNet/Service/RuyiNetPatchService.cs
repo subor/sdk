@@ -30,7 +30,9 @@ namespace Ruyi.SDK.Online
                 }
                 catch (Exception e)
                 {
-#if DEBUG
+                    // just log it for now, otherwise layer0 will crash, it happens when no response while switching high-low power mode
+                    // throw;
+                    Logging.Logger.Log("", Logging.LogLevel.Error);
                     var response = new RuyiNetResponse()
                     {
                         status = 999,
@@ -38,9 +40,6 @@ namespace Ruyi.SDK.Online
                     };
 
                     return JsonConvert.SerializeObject(response);
-#else
-                        throw;
-#endif
                 }
             }, (RuyiNetGetGameManifestResponse response) =>
             {
