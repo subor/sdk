@@ -30,7 +30,7 @@ __[技术支持](topics/support.md)__
 __进阶内容:__
 
 * [部署一台和Ruyi开发机近似的PC](topics/simulation_system.md)
-* [设置操作系统](topics/os.md#Installation)
+* 在开发机上[安装操作系统](topics/os.md#Installation)
 * 调试SDK
 
 ## 主题
