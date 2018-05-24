@@ -46,7 +46,9 @@ namespace Ruyi.Layer0
         L10NSERVICE,
         OVERLAYMANAGER_INTERNAL,
         UPDATESERVICE,
+#if DEBUG
         TEST,
+#endif
 
         HIGH_POWER_END,
         #endregion
@@ -100,7 +102,7 @@ namespace Ruyi.Layer0
 
         public static bool ExistForwarder(this ServiceIDs swi)
         {
-            switch(swi)
+            switch (swi)
             {
                 case ServiceIDs.HTTP_LISTENER:
                 case ServiceIDs.SYS_REPORTER:
@@ -112,9 +114,19 @@ namespace Ruyi.Layer0
             }
         }
 
+        public static bool IsSplitter(this ServiceIDs sid)
+        {
+            if (sid == ServiceIDs.LOW_POWER_START || sid == ServiceIDs.LOW_POWER_END
+                || sid == ServiceIDs.HIGH_POWER_START || sid == ServiceIDs.HIGH_POWER_END
+                || sid == ServiceIDs.OPTIONAL_HIGH_POWER_START || sid == ServiceIDs.OPTIONAL_HIGH_POWER_END)
+                return true;
+
+            return false;
+        }
+
         public static bool ExistWorker(this ServiceIDs swi)
         {
-            switch(swi)
+            switch (swi)
             {
                 case ServiceIDs.VALIDATOR:
                     return false;
