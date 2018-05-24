@@ -1,55 +1,55 @@
-# Ruyi OS
+# Ruyi系统
 
-The operating system installed on the Ruyi console is a version of Windows 10 variably known as __Windows 10 IoT Enterprise__ or __Windows 10 Enterprise LTSB 2016__.  Note that this is __not__ the same as [Windows 10 IoT Core](https://developer.microsoft.com/en-us/windows/iot).   
+Ruyi主机上所安装的操作系统是Win10,版本为__Windows 10 IoT Enterprise__或__Windows 10 Enterprise LTSB 2016__。注意和[Windows 10 IoT Core](https://developer.microsoft.com/en-us/windows/iot)并非同一版本。   
 
-Essentially, it is Windows 10:
+Ruyi主机的Win10有以下特点:
 
-* Fixed to RS1 update (aka Redstone 1, Anniversary Update, version 1607)
-* With security features of Windows 10 Enterprise (i.e. [AppLocker](https://docs.microsoft.com/en-us/windows/security/threat-protection/applocker/applocker-overview), [BitLocker](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview), and [Device Guard](https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/device-guard-deployment-guide))
-* Without Microsoft Edge, Store, Cortana, and apps like Mail, Calendar, etc.
+* 更新至RS1(又称为Redstone 1，年度更新，版本号1607)
+* 拥有Win10企业版的安全保护功能(比如[AppLocker](https://docs.microsoft.com/en-us/windows/security/threat-protection/applocker/applocker-overview), [BitLocker](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview)，和[Device Guard](https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/device-guard-deployment-guide))
+* 没有Microsoft的Edge，Store，Cortana以及Mail，Calendar等应用。
 
-Together with our configuration, drivers, and shell it is __Ruyi OS__.
+这所有包括配置，驱动以及内核我们统称为__Ruyi系统__。
 
-Some key changes we make relative to a normal Windows 10 environment:
+相对于普通Win10环境的几个关键修改点：
 
-* Drives (including `c:\`) encrypted with Bitlocker
-* Numerous key combinations disabled (`Ctrl-Alt-Del`, `Alt-tab`, etc.)
-* _UPCOMING_ Windows desktop shell replaced with Ruyi client UI
-* _UPCOMING_ Device Guard Code Integrity enabled (now called Application Control)
+* 使用Bitlocker加密硬盘驱动（包括`c:\`）
+* 禁用大量组合键（`Ctrl-Alt-Del`, `Alt-tab`等等）
+* (_未来_)会使用Ruyi客户端UI取代Win桌面内核(Desktop)
+* (_UPCOMING_)提供安全保护策略(Device Guard Code)集成(目前称为应用管理(Application Control))
 
-A standard Windows Desktop environment is available via [PC mode](pc_mode.md).
+标准Win桌面环境可以在[PC模式](pc_mode.md)下使用。
 
-## Version
+## 版本
 
-__Checking Ruyi OS Version of Running Machine__
+__查看主机的Ruyi系统版本号__
 
-If version __0.7__ or later, check registry value of `HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Subor\MachineInfo`
+如果是__0.7__或之后版本, 清查看注册表`HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Subor\MachineInfo`的键值。
 
-For versions before __0.7__, check the top of `c:\windows\ad.log`:
+__0.7__前的版本，查看`c:\windows\ad.log`中:
 ```
 Initial all Process on 02-05-2018 20:03:26
 RUYI OS v0.5_20180205B
 ```
 
-__Checking Ruyi OS Version of Install Media__
+__查看Ruyi系统安装镜像的版本号__
 
 Check `<root>\sources\version.txt`:
 ```
 v0.5_20180208
 ```
 
-## Installation
+## 安装
 
-![](/docs/img/warning.png) Flash the correct BIOS version __before__ installing the corresponding OS version (see [BIOS](bios.md)).
+![](/docs/img/warning.png) 在安装对应版本系统 __之前__ ，更新当前BIOS版本(参见[BIOS](bios.md)).
 
-The OS is always installed to the [primary drive](harddrive.md).
+系统必须安装在[主硬盘驱动](harddrive.md).
 
-Installation should take 20-40 minutes.
+安装过程需要20-40分钟。
 
-1. Prepare bootable USB drive with at least __6__ GB space and FAT32 format
-1. Download [Ruyi OS image](http://dev.playruyi.com/uservices)
-    - We only provide a link to the latest version.  If you need an older version, contact [support](support.md).
-1. Unzip OS files to root of bootable USB drive.  It should be similar to the following:  
+1. 准备至少 __6__ GB空间和FAT32格式的USB驱动。
+1. 下载[Ruyi系统镜像](http://dev.playruyi.com/uservices)
+    - 我们只提供最新版本链接，如果需要更早版本，请联系[技术支持](support.md).
+1. 解压系统安装文件到USB驱动盘的根目录。结构如下所示：  
     ```
     │   bootmgr
     │   bootmgr.efi
@@ -72,13 +72,13 @@ Installation should take 20-40 minutes.
         │   │   bootx64.efi
         │   │   RUYIboot.efi
     ```
-1. Once copying/unzipping is finished, eject/unmount the USB drive.  Then plug the USB drive into the machine it should be installed to, and reboot that machine.
-1. A Command Prompt should appear, wait while the OS installs
-1. When prompted, remove the USB drive and press `Enter` to reboot and continue
+1. 复制/安装完成后，拔出USB。然后插入到需要安装的目标机器上，重启目标机器。
+1. 出现命令行窗口，等待系统安装。
+1. 出现以下提示时，移除USB，按下`Enter`键重启机器。
     - During the remainder of the installation process the machine may reboot, open PowerShell/Command Prompt windows, or display a black screen several times
-1. Once a Windows desktop with no visible applications appears, installation is complete
+1. 进入Win桌面，安装成功。
 
-## Resources
+## 来源链接
 
-* [Wikipedia article about Windows 10 editions](https://en.wikipedia.org/wiki/Windows_10_editions)
-* [Download Windows 10 IoT Enterprise ISO](https://www.microsoft.com/en-us/evalcenter/evaluate-windows-10-enterprise)
+* [关于Win10版本的维基百科](https://en.wikipedia.org/wiki/Windows_10_editions)
+* [下载Windows 10 IoT 企业版镜像](https://www.microsoft.com/en-us/evalcenter/evaluate-windows-10-enterprise)
