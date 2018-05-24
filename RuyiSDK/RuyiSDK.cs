@@ -1,14 +1,14 @@
-﻿using Ruyi.Layer0;
-using NetMQ;
-using Ruyi.SDK.Online;
+﻿using NetMQ;
+using Ruyi.Layer0;
+using Ruyi.Logging;
 using Ruyi.SDK.Constants;
 using Ruyi.SDK.LocalizationService;
 using Ruyi.SDK.MediaService;
+using Ruyi.SDK.Online;
+using Ruyi.SDK.SDKValidator;
 using Ruyi.SDK.Speech;
 using Ruyi.SDK.StorageLayer;
 using Ruyi.SDK.UserServiceExternal;
-using Ruyi.SDK.SDKValidator;
-using Ruyi.Logging;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -116,7 +116,10 @@ namespace Ruyi
 
         //public InputMgrExternal.Client InputMgr { get; private set; }
 
-        public SpeechService.Client SpeechService { get; private set;}
+        /// <summary>
+        /// the speech service
+        /// </summary>
+        public SpeechService.Client SpeechService { get; private set; }
 
         /// <summary>
         /// Media player services
@@ -176,16 +179,12 @@ namespace Ruyi
         {
             if (context.Transport == null)
             {
-                // If debugger attached don't want messages to timeout
-                var timeout = System.Diagnostics.Debugger.IsAttached ? 600000
-                    : (context.Timeout <= 0 ? 10000 : context.Timeout);
-
                 // init and open high/low latency transport, create protocols
                 var lowLatencyPort = context.LowLatencyPort == 0 ? ConstantsSDKDataTypesConstants.low_latency_socket_port : context.LowLatencyPort;
-                lowLatencyTransport = new TSocketTransportTS(System.Net.IPAddress.Parse(context.RemoteAddress), lowLatencyPort, timeout);
+                lowLatencyTransport = new TSocketTransportTS(context.RemoteAddress, lowLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.LowLatencyTimeout : context.Timeout);
 
                 var highLatencyPort = context.HighLatencyPort == 0 ? ConstantsSDKDataTypesConstants.high_latency_socket_port : context.HighLatencyPort;
-                highLatencyTransport = new TSocketTransportTS(System.Net.IPAddress.Parse(context.RemoteAddress), highLatencyPort, timeout);
+                highLatencyTransport = new TSocketTransportTS(context.RemoteAddress, highLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.HighLatencyTimeout : context.Timeout);
             }
             else
             {
@@ -375,8 +374,7 @@ namespace Ruyi
                 }
 
                 // not Layer0
-                var attrs = entry.GetCustomAttributes(false).OfType<GuidAttribute>();
-                if (!(attrs.Any() && attrs.First().Value.Equals("a9a38292-d200-4ee3-885c-726aa6da08ee")))
+                if(!(entry.FullName.StartsWith("Layer0,")))
                 {
                     NetMQConfig.Cleanup(false);
                     return;

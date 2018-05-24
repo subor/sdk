@@ -53,7 +53,7 @@ void SubscribeClient::Subscribe(string topic)
 	subscriber->setsockopt(ZMQ_SUBSCRIBE, filter, strlen(filter));
 	if (topics.size() > 0 && receivingThread == NULL)
 	{
-		receivingThread = boost::shared_ptr<boost::thread>(new boost::thread(boost::bind(&SubscribeClient::Receive, this)));
+		receivingThread = std::make_shared<boost::thread>(boost::bind(&SubscribeClient::Receive, this));
 	}
 }
 
@@ -159,7 +159,7 @@ void SubscribeClient::Receive()
 		message_t msg;
 		subscriber->recv(&msg);
 
-		auto mb = boost::shared_ptr<transport::TMemoryBuffer>(new transport::TMemoryBuffer(static_cast<uint8_t*>(msg.data()), msg.size()));
+		auto mb = std::make_shared<transport::TMemoryBuffer>(static_cast<uint8_t*>(msg.data()), (uint32_t)msg.size());
 		protocol::TBinaryProtocol bp(mb);
 
 		TBase* submsg = MessageCreator::CreateMessage(msgType);

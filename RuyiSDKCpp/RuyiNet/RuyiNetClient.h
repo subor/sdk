@@ -27,7 +27,7 @@ namespace Ruyi
 	class RuyiNetClient
 	{
 	public:
-		RuyiNetClient(const boost::shared_ptr<TProtocol1> & protocol);
+		RuyiNetClient(const std::shared_ptr<TProtocol1> & protocol);
 		~RuyiNetClient();
 
 		/// <summary>
@@ -37,6 +37,11 @@ namespace Ruyi
 		/// <param name="appSecret">The App secret of the game. NOTE: This is a password and should be treated as such.</param>
 		void Initialise(const std::string& appId, const std::string& appSecret);
 		
+		/// <summary>
+		/// log out logined account
+		/// </summary>
+		void LogoutAccount();
+
 		/**
 		* return appId of the game
 		*/

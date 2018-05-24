@@ -1,5 +1,9 @@
 #This is the open source project for RuyiSDK.
 
+__WARNING__
+
+This document will soon be retired.  Check [its replacement](https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/build_sdk_source.md).
+
 ##Dependencies:  
 * Visual studio 2017, later than 15.3   
 * Windows 10 SDK (10.0.15063.0)

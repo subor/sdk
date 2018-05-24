@@ -12,8 +12,6 @@ using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
 using namespace ::apache::thrift::server;
 
-using boost::shared_ptr;
-
 using namespace  ::Ruyi::SDK::BrainCloudApi;
 
 class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
@@ -4599,11 +4597,11 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
 
 int main(int argc, char **argv) {
   int port = 9090;
-  shared_ptr<BrainCloudServiceHandler> handler(new BrainCloudServiceHandler());
-  shared_ptr<TProcessor> processor(new BrainCloudServiceProcessor(handler));
-  shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
-  shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-  shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+  ::apache::thrift::stdcxx::shared_ptr<BrainCloudServiceHandler> handler(new BrainCloudServiceHandler());
+  ::apache::thrift::stdcxx::shared_ptr<TProcessor> processor(new BrainCloudServiceProcessor(handler));
+  ::apache::thrift::stdcxx::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
+  ::apache::thrift::stdcxx::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
+  ::apache::thrift::stdcxx::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
 
   TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
   server.serve();
