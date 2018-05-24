@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Threading;
 using Thrift.Transport;
 
-namespace Layer0
+namespace Ruyi.Layer0
 {
     public interface TTransportTS
     {

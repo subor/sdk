@@ -1,10 +1,10 @@
-﻿using RuyiLogger;
+﻿using Ruyi.Logging;
 using System;
 using System.Threading;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Layer0
+namespace Ruyi.Layer0
 {
     // only use it on thrift client side, lock when write start and unlock when read end.
     public class TBinaryProtocolTS : TBinaryProtocol

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RuyiLogger
+namespace Ruyi.Logging
 {
     public interface IRuyiLogger
     {

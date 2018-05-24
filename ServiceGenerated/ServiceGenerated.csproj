@@ -5,7 +5,7 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <StyleCopEnabled>false</StyleCopEnabled>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;Internal_Release</Configurations>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile></DocumentationFile>
@@ -15,9 +15,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile></DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Internal_Release|AnyCPU'">
-    <DocumentationFile />
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="SDKDesc\**" />
