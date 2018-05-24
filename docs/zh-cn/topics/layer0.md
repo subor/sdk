@@ -1,13 +1,13 @@
-# Platform Architecture
+# 平台架构
 
-The Ruyi platform has the following architecture:
+Ruyi平台的架构如下图所示:
 
 ![](/docs/img/platform_arch.png)
 
-Layer0 is a background [daemon](https://en.wikipedia.org/wiki/Daemon_(computing)) that exposes features of the Ruyi platform as a set of "services".  It runs atop a host OS such as Windows 10 running on your local workstation, or [Ruyi OS](os.md) running on a Ruyi console.
+Layer0是一种在系统后台运行的守护进程[daemon](https://en.wikipedia.org/wiki/Daemon_(computing))，Ruyi平台所有的“服务”功能都是通过Layer0来交互的。它运行于主机系统最上层。类似于Win10运行于工作机器，或[Ruyi系统](os.md)运行于Ruyi主机上。
 
-Client applications interact with the platform (and indirectly with eachother) via [Ruyi SDK API](http://dev.playruyi.com/api) implemented with [Apache Thrift](https://thrift.apache.org/).  This provides a consistent, versioned, well-documented, and mostly standardized way of interacting with the platform from a [wide variety of languages](https://thrift.apache.org/lib/).
+客户端程序通过[Ruyi SDK API](http://dev.playruyi.com/api)与平台（或间接相互之间）交互。RuyiSDK使用[Apache Thrift](https://thrift.apache.org/)实现。通过Apache Thrift来提供稳定的，版本可控的，可文档化的，最为标准化的[跨多语言](https://thrift.apache.org/lib/)平台服务开发。
 
-Asynchronous push messages are received by subscribing to topics published via [ZeroMQ](http://zeromq.org/).
+数据交互（异步）通过订阅[ZeroMQ](http://zeromq.org/)的消息模型来实现。 
 
-Online services are provided by a customized instance of [brainCloud](http://getbraincloud.com/) running within China.
+网络服务由定制化[brainCloud](http://getbraincloud.com/)提供。
