@@ -1,27 +1,27 @@
-# Hard Drive
+# 硬盘驱动
 
-Ruyi has two drive bays for 2.5" SATA drives (max 9.5mm height):
+Ruyi主机拥有两个支持SATA硬盘(2.5")的插槽(最大9.5mm宽):
 
-* The drive in the center of the device is the _primary_ drive and __must__ be present as Ruyi always boots from this drive.
-* The other drive is the _secondary_ drive and is optional.
+* 位置设备中央的 _主_ 驱动，Ruyi主机始终从该驱动启动。
+* 另一个为可选驱动。
 
-Early Ruyi devkits shipped with a single Toshiba HDD.
+早期的Ruyi主机搭载东芝(Toshiba)机械硬盘。
 
-Later Ruyi devkits shipped with a 128 GB SSD and 1 TB HDD.
+之后版本的Ruyi主机搭载128GB固态硬盘和1TB机械硬盘。
 
-Partitioning scheme between [RuyiOS](os.md) and [PC mode](pc_mode.md):
+[Ruyi系统](os.md)和[PC模式](pc_mode.md)的分区方案:
 
-| Ruyi OS Version | Primary Drive | Secondary Drive
+| Ruyi系统版本 | 主分区 | 次分区
 |-|-|-
-| v0.5 or lower | 100% RuyiOS | Not supported
-| v0.6 or higher | 50/50 RuyiOS/PC mode | 30/70 RuyiOS/PC mode
+| v0.5之前版本 | 100% Ruyi系统 | 不支持
+| v0.6之后版本 | 50/50 Ruyi系统/PC模式 | 30/70 Ruyi系统/PC模式
 
-## Maintenance
+## 维护
 
-1. Make sure Ruyi is powered off, and flip it over
-1. Slide switch in __Open__ direction
-1. While holding switch in open position, gently pull hard drive cover towards the front of the Ruyi:  
+1. 确保已关闭Ruyi主机电源，翻转主机机身。
+1. 向 __Open__ 字样方向 滑动开关。
+1. 将开关按住在Open位置，朝Ruyi主机前端轻拉硬盘遮挡槽:  
 ![](/docs/img/harddrive_cover_open.jpg)
-1. When installing a drive, make sure it is upright in the frame with the connector pointing out:  
+1. 安装硬盘时注意硬盘安装的方向位置如下图所示:  
 ![](/docs/img/harddrive_rail.jpg)
-1. When finished, replace hard drive cover by gently pushing it back into place
+1. 安装完成后, 将硬盘遮挡槽轻推会原处。
