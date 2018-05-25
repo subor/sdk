@@ -21,7 +21,7 @@ namespace Ruyi { namespace SDK { namespace StorageLayer {
 class StorageLayerServiceIf {
  public:
   virtual ~StorageLayerServiceIf() {}
-  virtual void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& msg) = 0;
+  virtual void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& message) = 0;
 };
 
 class StorageLayerServiceIfFactory {
@@ -51,14 +51,14 @@ class StorageLayerServiceIfSingletonFactory : virtual public StorageLayerService
 class StorageLayerServiceNull : virtual public StorageLayerServiceIf {
  public:
   virtual ~StorageLayerServiceNull() {}
-  void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& /* _return */, const std::string& /* msg */) {
+  void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& /* _return */, const std::string& /* message */) {
     return;
   }
 };
 
 typedef struct _StorageLayerService_GetLocalPath_args__isset {
-  _StorageLayerService_GetLocalPath_args__isset() : msg(false) {}
-  bool msg :1;
+  _StorageLayerService_GetLocalPath_args__isset() : message(false) {}
+  bool message :1;
 } _StorageLayerService_GetLocalPath_args__isset;
 
 class StorageLayerService_GetLocalPath_args {
@@ -66,19 +66,19 @@ class StorageLayerService_GetLocalPath_args {
 
   StorageLayerService_GetLocalPath_args(const StorageLayerService_GetLocalPath_args&);
   StorageLayerService_GetLocalPath_args& operator=(const StorageLayerService_GetLocalPath_args&);
-  StorageLayerService_GetLocalPath_args() : msg() {
+  StorageLayerService_GetLocalPath_args() : message() {
   }
 
   virtual ~StorageLayerService_GetLocalPath_args() throw();
-  std::string msg;
+  std::string message;
 
   _StorageLayerService_GetLocalPath_args__isset __isset;
 
-  void __set_msg(const std::string& val);
+  void __set_message(const std::string& val);
 
   bool operator == (const StorageLayerService_GetLocalPath_args & rhs) const
   {
-    if (!(msg == rhs.msg))
+    if (!(message == rhs.message))
       return false;
     return true;
   }
@@ -99,7 +99,7 @@ class StorageLayerService_GetLocalPath_pargs {
 
 
   virtual ~StorageLayerService_GetLocalPath_pargs() throw();
-  const std::string* msg;
+  const std::string* message;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -185,8 +185,8 @@ class StorageLayerServiceClient : virtual public StorageLayerServiceIf {
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& msg);
-  void send_GetLocalPath(const std::string& msg);
+  void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& message);
+  void send_GetLocalPath(const std::string& message);
   void recv_GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return);
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
@@ -236,13 +236,13 @@ class StorageLayerServiceMultiface : virtual public StorageLayerServiceIf {
     ifaces_.push_back(iface);
   }
  public:
-  void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& msg) {
+  void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& message) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->GetLocalPath(_return, msg);
+      ifaces_[i]->GetLocalPath(_return, message);
     }
-    ifaces_[i]->GetLocalPath(_return, msg);
+    ifaces_[i]->GetLocalPath(_return, message);
     return;
   }
 
@@ -276,8 +276,8 @@ class StorageLayerServiceConcurrentClient : virtual public StorageLayerServiceIf
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& msg);
-  int32_t send_GetLocalPath(const std::string& msg);
+  void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& message);
+  int32_t send_GetLocalPath(const std::string& message);
   void recv_GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const int32_t seqid);
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
