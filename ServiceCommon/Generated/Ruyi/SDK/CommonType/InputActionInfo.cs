@@ -9,22 +9,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.CommonType
 {
 
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
   public partial class InputActionInfo : TBase
   {
     private string _ActionName;
@@ -58,63 +55,54 @@ namespace Ruyi.SDK.CommonType
 
 
     public Isset __isset;
-    public struct Isset
-    {
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
       public bool ActionName;
       public bool TriggerInfo;
     }
 
-    public InputActionInfo()
-    {
+    public InputActionInfo() {
     }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
+        iprot.ReadStructBegin();
         while (true)
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
             break;
           }
-
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
-              {
-                ActionName = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.String) {
+                ActionName = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.Struct)
-              {
+              if (field.Type == TType.Struct) {
                 TriggerInfo = new ActionTriggerInfo();
-                await TriggerInfo.ReadAsync(iprot, cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TriggerInfo.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              TProtocolUtil.Skip(iprot, field.Type);
               break;
           }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+          iprot.ReadFieldEnd();
         }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
+        iprot.ReadStructEnd();
       }
       finally
       {
@@ -122,34 +110,31 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
+    public void Write(TProtocol oprot) {
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("InputActionInfo");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (ActionName != null && __isset.ActionName)
-        {
+        TStruct struc = new TStruct("InputActionInfo");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (ActionName != null && __isset.ActionName) {
           field.Name = "ActionName";
           field.Type = TType.String;
           field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(ActionName, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(ActionName);
+          oprot.WriteFieldEnd();
         }
-        if (TriggerInfo != null && __isset.TriggerInfo)
-        {
+        if (TriggerInfo != null && __isset.TriggerInfo) {
           field.Name = "TriggerInfo";
           field.Type = TType.Struct;
           field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await TriggerInfo.WriteAsync(oprot, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          TriggerInfo.Write(oprot);
+          oprot.WriteFieldEnd();
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
       }
       finally
       {
@@ -157,27 +142,25 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("InputActionInfo(");
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("InputActionInfo(");
       bool __first = true;
-      if (ActionName != null && __isset.ActionName)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (ActionName != null && __isset.ActionName) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("ActionName: ");
-        sb.Append(ActionName);
+        __sb.Append("ActionName: ");
+        __sb.Append(ActionName);
       }
-      if (TriggerInfo != null && __isset.TriggerInfo)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (TriggerInfo != null && __isset.TriggerInfo) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("TriggerInfo: ");
-        sb.Append(TriggerInfo== null ? "<null>" : TriggerInfo.ToString());
+        __sb.Append("TriggerInfo: ");
+        __sb.Append(TriggerInfo== null ? "<null>" : TriggerInfo.ToString());
       }
-      sb.Append(")");
-      return sb.ToString();
+      __sb.Append(")");
+      return __sb.ToString();
     }
+
   }
 
 }

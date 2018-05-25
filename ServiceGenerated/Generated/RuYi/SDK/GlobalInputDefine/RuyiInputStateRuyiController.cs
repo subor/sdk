@@ -9,22 +9,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.GlobalInputDefine
 {
 
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
   public partial class RuyiInputStateRuyiController : TBase
   {
     private long _PacketId;
@@ -170,8 +167,10 @@ namespace Ruyi.SDK.GlobalInputDefine
 
 
     public Isset __isset;
-    public struct Isset
-    {
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
       public bool PacketId;
       public bool ChannelId;
       public bool DeviceId;
@@ -184,136 +183,101 @@ namespace Ruyi.SDK.GlobalInputDefine
       public bool AnalogRightJoyY;
     }
 
-    public RuyiInputStateRuyiController()
-    {
+    public RuyiInputStateRuyiController() {
     }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
+        iprot.ReadStructBegin();
         while (true)
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
             break;
           }
-
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I64)
-              {
-                PacketId = await iprot.ReadI64Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.I64) {
+                PacketId = iprot.ReadI64();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.I32)
-              {
-                ChannelId = await iprot.ReadI32Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.I32) {
+                ChannelId = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 3:
-              if (field.Type == TType.String)
-              {
-                DeviceId = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.String) {
+                DeviceId = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 4:
-              if (field.Type == TType.I32)
-              {
-                KeyPress = await iprot.ReadI32Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.I32) {
+                KeyPress = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 5:
-              if (field.Type == TType.Byte)
-              {
-                AnalogL2 = await iprot.ReadByteAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Byte) {
+                AnalogL2 = iprot.ReadByte();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 6:
-              if (field.Type == TType.Byte)
-              {
-                AnalogR2 = await iprot.ReadByteAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Byte) {
+                AnalogR2 = iprot.ReadByte();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 7:
-              if (field.Type == TType.Byte)
-              {
-                AnalogLeftJoyX = await iprot.ReadByteAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Byte) {
+                AnalogLeftJoyX = iprot.ReadByte();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 8:
-              if (field.Type == TType.Byte)
-              {
-                AnalogLeftJoyY = await iprot.ReadByteAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Byte) {
+                AnalogLeftJoyY = iprot.ReadByte();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 9:
-              if (field.Type == TType.Byte)
-              {
-                AnalogRightJoyX = await iprot.ReadByteAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Byte) {
+                AnalogRightJoyX = iprot.ReadByte();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 10:
-              if (field.Type == TType.Byte)
-              {
-                AnalogRightJoyY = await iprot.ReadByteAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Byte) {
+                AnalogRightJoyY = iprot.ReadByte();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              TProtocolUtil.Skip(iprot, field.Type);
               break;
           }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+          iprot.ReadFieldEnd();
         }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
+        iprot.ReadStructEnd();
       }
       finally
       {
@@ -321,106 +285,95 @@ namespace Ruyi.SDK.GlobalInputDefine
       }
     }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
+    public void Write(TProtocol oprot) {
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("RuyiInputStateRuyiController");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (__isset.PacketId)
-        {
+        TStruct struc = new TStruct("RuyiInputStateRuyiController");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (__isset.PacketId) {
           field.Name = "PacketId";
           field.Type = TType.I64;
           field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI64Async(PacketId, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI64(PacketId);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.ChannelId)
-        {
+        if (__isset.ChannelId) {
           field.Name = "ChannelId";
           field.Type = TType.I32;
           field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(ChannelId, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(ChannelId);
+          oprot.WriteFieldEnd();
         }
-        if (DeviceId != null && __isset.DeviceId)
-        {
+        if (DeviceId != null && __isset.DeviceId) {
           field.Name = "DeviceId";
           field.Type = TType.String;
           field.ID = 3;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(DeviceId, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(DeviceId);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.KeyPress)
-        {
+        if (__isset.KeyPress) {
           field.Name = "KeyPress";
           field.Type = TType.I32;
           field.ID = 4;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(KeyPress, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(KeyPress);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.AnalogL2)
-        {
+        if (__isset.AnalogL2) {
           field.Name = "AnalogL2";
           field.Type = TType.Byte;
           field.ID = 5;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteByteAsync(AnalogL2, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteByte(AnalogL2);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.AnalogR2)
-        {
+        if (__isset.AnalogR2) {
           field.Name = "AnalogR2";
           field.Type = TType.Byte;
           field.ID = 6;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteByteAsync(AnalogR2, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteByte(AnalogR2);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.AnalogLeftJoyX)
-        {
+        if (__isset.AnalogLeftJoyX) {
           field.Name = "AnalogLeftJoyX";
           field.Type = TType.Byte;
           field.ID = 7;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteByteAsync(AnalogLeftJoyX, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteByte(AnalogLeftJoyX);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.AnalogLeftJoyY)
-        {
+        if (__isset.AnalogLeftJoyY) {
           field.Name = "AnalogLeftJoyY";
           field.Type = TType.Byte;
           field.ID = 8;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteByteAsync(AnalogLeftJoyY, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteByte(AnalogLeftJoyY);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.AnalogRightJoyX)
-        {
+        if (__isset.AnalogRightJoyX) {
           field.Name = "AnalogRightJoyX";
           field.Type = TType.Byte;
           field.ID = 9;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteByteAsync(AnalogRightJoyX, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteByte(AnalogRightJoyX);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.AnalogRightJoyY)
-        {
+        if (__isset.AnalogRightJoyY) {
           field.Name = "AnalogRightJoyY";
           field.Type = TType.Byte;
           field.ID = 10;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteByteAsync(AnalogRightJoyY, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteByte(AnalogRightJoyY);
+          oprot.WriteFieldEnd();
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
       }
       finally
       {
@@ -428,83 +381,73 @@ namespace Ruyi.SDK.GlobalInputDefine
       }
     }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("RuyiInputStateRuyiController(");
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("RuyiInputStateRuyiController(");
       bool __first = true;
-      if (__isset.PacketId)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.PacketId) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("PacketId: ");
-        sb.Append(PacketId);
+        __sb.Append("PacketId: ");
+        __sb.Append(PacketId);
       }
-      if (__isset.ChannelId)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.ChannelId) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("ChannelId: ");
-        sb.Append(ChannelId);
+        __sb.Append("ChannelId: ");
+        __sb.Append(ChannelId);
       }
-      if (DeviceId != null && __isset.DeviceId)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (DeviceId != null && __isset.DeviceId) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("DeviceId: ");
-        sb.Append(DeviceId);
+        __sb.Append("DeviceId: ");
+        __sb.Append(DeviceId);
       }
-      if (__isset.KeyPress)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.KeyPress) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("KeyPress: ");
-        sb.Append(KeyPress);
+        __sb.Append("KeyPress: ");
+        __sb.Append(KeyPress);
       }
-      if (__isset.AnalogL2)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.AnalogL2) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("AnalogL2: ");
-        sb.Append(AnalogL2);
+        __sb.Append("AnalogL2: ");
+        __sb.Append(AnalogL2);
       }
-      if (__isset.AnalogR2)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.AnalogR2) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("AnalogR2: ");
-        sb.Append(AnalogR2);
+        __sb.Append("AnalogR2: ");
+        __sb.Append(AnalogR2);
       }
-      if (__isset.AnalogLeftJoyX)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.AnalogLeftJoyX) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("AnalogLeftJoyX: ");
-        sb.Append(AnalogLeftJoyX);
+        __sb.Append("AnalogLeftJoyX: ");
+        __sb.Append(AnalogLeftJoyX);
       }
-      if (__isset.AnalogLeftJoyY)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.AnalogLeftJoyY) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("AnalogLeftJoyY: ");
-        sb.Append(AnalogLeftJoyY);
+        __sb.Append("AnalogLeftJoyY: ");
+        __sb.Append(AnalogLeftJoyY);
       }
-      if (__isset.AnalogRightJoyX)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.AnalogRightJoyX) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("AnalogRightJoyX: ");
-        sb.Append(AnalogRightJoyX);
+        __sb.Append("AnalogRightJoyX: ");
+        __sb.Append(AnalogRightJoyX);
       }
-      if (__isset.AnalogRightJoyY)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.AnalogRightJoyY) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("AnalogRightJoyY: ");
-        sb.Append(AnalogRightJoyY);
+        __sb.Append("AnalogRightJoyY: ");
+        __sb.Append(AnalogRightJoyY);
       }
-      sb.Append(")");
-      return sb.ToString();
+      __sb.Append(")");
+      return __sb.ToString();
     }
+
   }
 
 }

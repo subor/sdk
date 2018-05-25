@@ -9,22 +9,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.UserServiceExternal
 {
 
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
   public partial class TriggerKeys : TBase
   {
     private sbyte _DeviceType;
@@ -86,84 +83,69 @@ namespace Ruyi.SDK.UserServiceExternal
 
 
     public Isset __isset;
-    public struct Isset
-    {
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
       public bool DeviceType;
       public bool Key;
       public bool NewValue;
       public bool OldValue;
     }
 
-    public TriggerKeys()
-    {
+    public TriggerKeys() {
     }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
+        iprot.ReadStructBegin();
         while (true)
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
             break;
           }
-
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.Byte)
-              {
-                DeviceType = await iprot.ReadByteAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Byte) {
+                DeviceType = iprot.ReadByte();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.I32)
-              {
-                Key = await iprot.ReadI32Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.I32) {
+                Key = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 3:
-              if (field.Type == TType.Byte)
-              {
-                NewValue = await iprot.ReadByteAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Byte) {
+                NewValue = iprot.ReadByte();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 4:
-              if (field.Type == TType.Byte)
-              {
-                OldValue = await iprot.ReadByteAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Byte) {
+                OldValue = iprot.ReadByte();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              TProtocolUtil.Skip(iprot, field.Type);
               break;
           }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+          iprot.ReadFieldEnd();
         }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
+        iprot.ReadStructEnd();
       }
       finally
       {
@@ -171,52 +153,47 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
+    public void Write(TProtocol oprot) {
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("TriggerKeys");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (__isset.DeviceType)
-        {
+        TStruct struc = new TStruct("TriggerKeys");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (__isset.DeviceType) {
           field.Name = "DeviceType";
           field.Type = TType.Byte;
           field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteByteAsync(DeviceType, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteByte(DeviceType);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.Key)
-        {
+        if (__isset.Key) {
           field.Name = "Key";
           field.Type = TType.I32;
           field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(Key, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Key);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.NewValue)
-        {
+        if (__isset.NewValue) {
           field.Name = "NewValue";
           field.Type = TType.Byte;
           field.ID = 3;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteByteAsync(NewValue, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteByte(NewValue);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.OldValue)
-        {
+        if (__isset.OldValue) {
           field.Name = "OldValue";
           field.Type = TType.Byte;
           field.ID = 4;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteByteAsync(OldValue, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteByte(OldValue);
+          oprot.WriteFieldEnd();
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
       }
       finally
       {
@@ -224,41 +201,37 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("TriggerKeys(");
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("TriggerKeys(");
       bool __first = true;
-      if (__isset.DeviceType)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.DeviceType) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("DeviceType: ");
-        sb.Append(DeviceType);
+        __sb.Append("DeviceType: ");
+        __sb.Append(DeviceType);
       }
-      if (__isset.Key)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.Key) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Key: ");
-        sb.Append(Key);
+        __sb.Append("Key: ");
+        __sb.Append(Key);
       }
-      if (__isset.NewValue)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.NewValue) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("NewValue: ");
-        sb.Append(NewValue);
+        __sb.Append("NewValue: ");
+        __sb.Append(NewValue);
       }
-      if (__isset.OldValue)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.OldValue) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("OldValue: ");
-        sb.Append(OldValue);
+        __sb.Append("OldValue: ");
+        __sb.Append(OldValue);
       }
-      sb.Append(")");
-      return sb.ToString();
+      __sb.Append(")");
+      return __sb.ToString();
     }
+
   }
 
 }

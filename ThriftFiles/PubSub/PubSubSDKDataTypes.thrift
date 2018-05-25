@@ -1,5 +1,6 @@
 /** The data defination of PublisherSubscriber */
-namespace * Ruyi.SDK.PublisherSubscriber
+namespace cpp Ruyi.SDK.PublisherSubscriber
+namespace csharp Ruyi.SDK.PublisherSubscriber
 
 /** The event type about service start/stop. */
 enum ServiceLaunchEventType {

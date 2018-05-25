@@ -1,4 +1,5 @@
-namespace * Ruyi.SDK.BrainCloudApi
+namespace cpp Ruyi.SDK.BrainCloudApi
+namespace csharp Ruyi.SDK.BrainCloudApi
 
 typedef string JSON
 typedef i64 date

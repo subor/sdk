@@ -9,22 +9,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.UserServiceExternal
 {
 
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
   public partial class InputActionEvent : TBase
   {
     private string _userId;
@@ -86,95 +83,80 @@ namespace Ruyi.SDK.UserServiceExternal
 
 
     public Isset __isset;
-    public struct Isset
-    {
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
       public bool userId;
       public bool action;
       public bool timestamp;
       public bool Triggers;
     }
 
-    public InputActionEvent()
-    {
+    public InputActionEvent() {
     }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
+        iprot.ReadStructBegin();
         while (true)
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
             break;
           }
-
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
-              {
-                UserId = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.String) {
+                UserId = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.String)
-              {
-                Action = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.String) {
+                Action = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 3:
-              if (field.Type == TType.I64)
-              {
-                Timestamp = await iprot.ReadI64Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.I64) {
+                Timestamp = iprot.ReadI64();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 4:
-              if (field.Type == TType.List)
-              {
+              if (field.Type == TType.List) {
                 {
                   Triggers = new List<TriggerKeys>();
-                  TList _list0 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i1 = 0; _i1 < _list0.Count; ++_i1)
+                  TList _list0 = iprot.ReadListBegin();
+                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
                     TriggerKeys _elem2;
                     _elem2 = new TriggerKeys();
-                    await _elem2.ReadAsync(iprot, cancellationToken);
+                    _elem2.Read(iprot);
                     Triggers.Add(_elem2);
                   }
-                  await iprot.ReadListEndAsync(cancellationToken);
+                  iprot.ReadListEnd();
                 }
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              TProtocolUtil.Skip(iprot, field.Type);
               break;
           }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+          iprot.ReadFieldEnd();
         }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
+        iprot.ReadStructEnd();
       }
       finally
       {
@@ -182,59 +164,54 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
+    public void Write(TProtocol oprot) {
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("InputActionEvent");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (UserId != null && __isset.userId)
-        {
+        TStruct struc = new TStruct("InputActionEvent");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (UserId != null && __isset.userId) {
           field.Name = "userId";
           field.Type = TType.String;
           field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(UserId, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(UserId);
+          oprot.WriteFieldEnd();
         }
-        if (Action != null && __isset.action)
-        {
+        if (Action != null && __isset.action) {
           field.Name = "action";
           field.Type = TType.String;
           field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Action, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Action);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.timestamp)
-        {
+        if (__isset.timestamp) {
           field.Name = "timestamp";
           field.Type = TType.I64;
           field.ID = 3;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI64Async(Timestamp, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI64(Timestamp);
+          oprot.WriteFieldEnd();
         }
-        if (Triggers != null && __isset.Triggers)
-        {
+        if (Triggers != null && __isset.Triggers) {
           field.Name = "Triggers";
           field.Type = TType.List;
           field.ID = 4;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          oprot.WriteFieldBegin(field);
           {
-            await oprot.WriteListBeginAsync(new TList(TType.Struct, Triggers.Count), cancellationToken);
+            oprot.WriteListBegin(new TList(TType.Struct, Triggers.Count));
             foreach (TriggerKeys _iter3 in Triggers)
             {
-              await _iter3.WriteAsync(oprot, cancellationToken);
+              _iter3.Write(oprot);
             }
-            await oprot.WriteListEndAsync(cancellationToken);
+            oprot.WriteListEnd();
           }
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldEnd();
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
       }
       finally
       {
@@ -242,41 +219,37 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("InputActionEvent(");
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("InputActionEvent(");
       bool __first = true;
-      if (UserId != null && __isset.userId)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (UserId != null && __isset.userId) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("UserId: ");
-        sb.Append(UserId);
+        __sb.Append("UserId: ");
+        __sb.Append(UserId);
       }
-      if (Action != null && __isset.action)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Action != null && __isset.action) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Action: ");
-        sb.Append(Action);
+        __sb.Append("Action: ");
+        __sb.Append(Action);
       }
-      if (__isset.timestamp)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.timestamp) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Timestamp: ");
-        sb.Append(Timestamp);
+        __sb.Append("Timestamp: ");
+        __sb.Append(Timestamp);
       }
-      if (Triggers != null && __isset.Triggers)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Triggers != null && __isset.Triggers) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Triggers: ");
-        sb.Append(Triggers);
+        __sb.Append("Triggers: ");
+        __sb.Append(Triggers);
       }
-      sb.Append(")");
-      return sb.ToString();
+      __sb.Append(")");
+      return __sb.ToString();
     }
+
   }
 
 }

@@ -9,22 +9,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.InputManager
 {
 
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
   public partial class InputDeviceConnectionChanged : TBase
   {
     private InputDeviceEventHeader _header;
@@ -58,63 +55,54 @@ namespace Ruyi.SDK.InputManager
 
 
     public Isset __isset;
-    public struct Isset
-    {
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
       public bool header;
       public bool isConnected;
     }
 
-    public InputDeviceConnectionChanged()
-    {
+    public InputDeviceConnectionChanged() {
     }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
+        iprot.ReadStructBegin();
         while (true)
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
             break;
           }
-
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.Struct)
-              {
+              if (field.Type == TType.Struct) {
                 Header = new InputDeviceEventHeader();
-                await Header.ReadAsync(iprot, cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                Header.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.Bool)
-              {
-                IsConnected = await iprot.ReadBoolAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Bool) {
+                IsConnected = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              TProtocolUtil.Skip(iprot, field.Type);
               break;
           }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+          iprot.ReadFieldEnd();
         }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
+        iprot.ReadStructEnd();
       }
       finally
       {
@@ -122,34 +110,31 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
+    public void Write(TProtocol oprot) {
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("InputDeviceConnectionChanged");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (Header != null && __isset.header)
-        {
+        TStruct struc = new TStruct("InputDeviceConnectionChanged");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Header != null && __isset.header) {
           field.Name = "header";
           field.Type = TType.Struct;
           field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Header.WriteAsync(oprot, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          Header.Write(oprot);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.isConnected)
-        {
+        if (__isset.isConnected) {
           field.Name = "isConnected";
           field.Type = TType.Bool;
           field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(IsConnected, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(IsConnected);
+          oprot.WriteFieldEnd();
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
       }
       finally
       {
@@ -157,27 +142,25 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("InputDeviceConnectionChanged(");
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("InputDeviceConnectionChanged(");
       bool __first = true;
-      if (Header != null && __isset.header)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Header != null && __isset.header) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Header: ");
-        sb.Append(Header== null ? "<null>" : Header.ToString());
+        __sb.Append("Header: ");
+        __sb.Append(Header== null ? "<null>" : Header.ToString());
       }
-      if (__isset.isConnected)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.isConnected) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("IsConnected: ");
-        sb.Append(IsConnected);
+        __sb.Append("IsConnected: ");
+        __sb.Append(IsConnected);
       }
-      sb.Append(")");
-      return sb.ToString();
+      __sb.Append(")");
+      return __sb.ToString();
     }
+
   }
 
 }

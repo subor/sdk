@@ -9,11 +9,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
+using System.Runtime.Serialization;
 
 namespace Ruyi.SDK.Constants
 {

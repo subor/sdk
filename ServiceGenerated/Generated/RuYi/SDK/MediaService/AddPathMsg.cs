@@ -9,22 +9,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.MediaService
 {
 
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
   public partial class AddPathMsg : TBase
   {
     private string _path;
@@ -58,62 +55,53 @@ namespace Ruyi.SDK.MediaService
 
 
     public Isset __isset;
-    public struct Isset
-    {
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
       public bool path;
       public bool pattern;
     }
 
-    public AddPathMsg()
-    {
+    public AddPathMsg() {
     }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
+        iprot.ReadStructBegin();
         while (true)
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
             break;
           }
-
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
-              {
-                Path = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.String) {
+                Path = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.String)
-              {
-                Pattern = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.String) {
+                Pattern = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              TProtocolUtil.Skip(iprot, field.Type);
               break;
           }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+          iprot.ReadFieldEnd();
         }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
+        iprot.ReadStructEnd();
       }
       finally
       {
@@ -121,34 +109,31 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
+    public void Write(TProtocol oprot) {
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("AddPathMsg");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (Path != null && __isset.path)
-        {
+        TStruct struc = new TStruct("AddPathMsg");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Path != null && __isset.path) {
           field.Name = "path";
           field.Type = TType.String;
           field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Path, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Path);
+          oprot.WriteFieldEnd();
         }
-        if (Pattern != null && __isset.pattern)
-        {
+        if (Pattern != null && __isset.pattern) {
           field.Name = "pattern";
           field.Type = TType.String;
           field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Pattern, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Pattern);
+          oprot.WriteFieldEnd();
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
       }
       finally
       {
@@ -156,27 +141,25 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("AddPathMsg(");
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("AddPathMsg(");
       bool __first = true;
-      if (Path != null && __isset.path)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Path != null && __isset.path) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Path: ");
-        sb.Append(Path);
+        __sb.Append("Path: ");
+        __sb.Append(Path);
       }
-      if (Pattern != null && __isset.pattern)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Pattern != null && __isset.pattern) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Pattern: ");
-        sb.Append(Pattern);
+        __sb.Append("Pattern: ");
+        __sb.Append(Pattern);
       }
-      sb.Append(")");
-      return sb.ToString();
+      __sb.Append(")");
+      return __sb.ToString();
     }
+
   }
 
 }

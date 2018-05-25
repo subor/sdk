@@ -9,22 +9,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.InputManager
 {
 
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
   public partial class RuyiInputStateChanged : TBase
   {
     private List<RuyiInputEvent> _keyPressEvent;
@@ -58,84 +55,75 @@ namespace Ruyi.SDK.InputManager
 
 
     public Isset __isset;
-    public struct Isset
-    {
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
       public bool keyPressEvent;
       public bool analogEvent;
     }
 
-    public RuyiInputStateChanged()
-    {
+    public RuyiInputStateChanged() {
     }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
+        iprot.ReadStructBegin();
         while (true)
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
             break;
           }
-
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.List)
-              {
+              if (field.Type == TType.List) {
                 {
                   KeyPressEvent = new List<RuyiInputEvent>();
-                  TList _list0 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i1 = 0; _i1 < _list0.Count; ++_i1)
+                  TList _list0 = iprot.ReadListBegin();
+                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
                     RuyiInputEvent _elem2;
                     _elem2 = new RuyiInputEvent();
-                    await _elem2.ReadAsync(iprot, cancellationToken);
+                    _elem2.Read(iprot);
                     KeyPressEvent.Add(_elem2);
                   }
-                  await iprot.ReadListEndAsync(cancellationToken);
+                  iprot.ReadListEnd();
                 }
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.List)
-              {
+              if (field.Type == TType.List) {
                 {
                   AnalogEvent = new List<RuyiInputEvent>();
-                  TList _list3 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i4 = 0; _i4 < _list3.Count; ++_i4)
+                  TList _list3 = iprot.ReadListBegin();
+                  for( int _i4 = 0; _i4 < _list3.Count; ++_i4)
                   {
                     RuyiInputEvent _elem5;
                     _elem5 = new RuyiInputEvent();
-                    await _elem5.ReadAsync(iprot, cancellationToken);
+                    _elem5.Read(iprot);
                     AnalogEvent.Add(_elem5);
                   }
-                  await iprot.ReadListEndAsync(cancellationToken);
+                  iprot.ReadListEnd();
                 }
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              TProtocolUtil.Skip(iprot, field.Type);
               break;
           }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+          iprot.ReadFieldEnd();
         }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
+        iprot.ReadStructEnd();
       }
       finally
       {
@@ -143,48 +131,45 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
+    public void Write(TProtocol oprot) {
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("RuyiInputStateChanged");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (KeyPressEvent != null && __isset.keyPressEvent)
-        {
+        TStruct struc = new TStruct("RuyiInputStateChanged");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (KeyPressEvent != null && __isset.keyPressEvent) {
           field.Name = "keyPressEvent";
           field.Type = TType.List;
           field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          oprot.WriteFieldBegin(field);
           {
-            await oprot.WriteListBeginAsync(new TList(TType.Struct, KeyPressEvent.Count), cancellationToken);
+            oprot.WriteListBegin(new TList(TType.Struct, KeyPressEvent.Count));
             foreach (RuyiInputEvent _iter6 in KeyPressEvent)
             {
-              await _iter6.WriteAsync(oprot, cancellationToken);
+              _iter6.Write(oprot);
             }
-            await oprot.WriteListEndAsync(cancellationToken);
+            oprot.WriteListEnd();
           }
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldEnd();
         }
-        if (AnalogEvent != null && __isset.analogEvent)
-        {
+        if (AnalogEvent != null && __isset.analogEvent) {
           field.Name = "analogEvent";
           field.Type = TType.List;
           field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          oprot.WriteFieldBegin(field);
           {
-            await oprot.WriteListBeginAsync(new TList(TType.Struct, AnalogEvent.Count), cancellationToken);
+            oprot.WriteListBegin(new TList(TType.Struct, AnalogEvent.Count));
             foreach (RuyiInputEvent _iter7 in AnalogEvent)
             {
-              await _iter7.WriteAsync(oprot, cancellationToken);
+              _iter7.Write(oprot);
             }
-            await oprot.WriteListEndAsync(cancellationToken);
+            oprot.WriteListEnd();
           }
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldEnd();
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
       }
       finally
       {
@@ -192,27 +177,25 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("RuyiInputStateChanged(");
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("RuyiInputStateChanged(");
       bool __first = true;
-      if (KeyPressEvent != null && __isset.keyPressEvent)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (KeyPressEvent != null && __isset.keyPressEvent) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("KeyPressEvent: ");
-        sb.Append(KeyPressEvent);
+        __sb.Append("KeyPressEvent: ");
+        __sb.Append(KeyPressEvent);
       }
-      if (AnalogEvent != null && __isset.analogEvent)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (AnalogEvent != null && __isset.analogEvent) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("AnalogEvent: ");
-        sb.Append(AnalogEvent);
+        __sb.Append("AnalogEvent: ");
+        __sb.Append(AnalogEvent);
       }
-      sb.Append(")");
-      return sb.ToString();
+      __sb.Append(")");
+      return __sb.ToString();
     }
+
   }
 
 }

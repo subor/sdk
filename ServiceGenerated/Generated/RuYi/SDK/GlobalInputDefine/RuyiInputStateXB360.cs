@@ -9,22 +9,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.GlobalInputDefine
 {
 
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
   public partial class RuyiInputStateXB360 : TBase
   {
     private int _PacketNumber;
@@ -58,63 +55,54 @@ namespace Ruyi.SDK.GlobalInputDefine
 
 
     public Isset __isset;
-    public struct Isset
-    {
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
       public bool PacketNumber;
       public bool gamepad;
     }
 
-    public RuyiInputStateXB360()
-    {
+    public RuyiInputStateXB360() {
     }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
+        iprot.ReadStructBegin();
         while (true)
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
             break;
           }
-
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32)
-              {
-                PacketNumber = await iprot.ReadI32Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.I32) {
+                PacketNumber = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.Struct)
-              {
+              if (field.Type == TType.Struct) {
                 Gamepad = new Gamepad();
-                await Gamepad.ReadAsync(iprot, cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                Gamepad.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              TProtocolUtil.Skip(iprot, field.Type);
               break;
           }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+          iprot.ReadFieldEnd();
         }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
+        iprot.ReadStructEnd();
       }
       finally
       {
@@ -122,34 +110,31 @@ namespace Ruyi.SDK.GlobalInputDefine
       }
     }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
+    public void Write(TProtocol oprot) {
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("RuyiInputStateXB360");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (__isset.PacketNumber)
-        {
+        TStruct struc = new TStruct("RuyiInputStateXB360");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (__isset.PacketNumber) {
           field.Name = "PacketNumber";
           field.Type = TType.I32;
           field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(PacketNumber, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(PacketNumber);
+          oprot.WriteFieldEnd();
         }
-        if (Gamepad != null && __isset.gamepad)
-        {
+        if (Gamepad != null && __isset.gamepad) {
           field.Name = "gamepad";
           field.Type = TType.Struct;
           field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Gamepad.WriteAsync(oprot, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          Gamepad.Write(oprot);
+          oprot.WriteFieldEnd();
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
       }
       finally
       {
@@ -157,27 +142,25 @@ namespace Ruyi.SDK.GlobalInputDefine
       }
     }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("RuyiInputStateXB360(");
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("RuyiInputStateXB360(");
       bool __first = true;
-      if (__isset.PacketNumber)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.PacketNumber) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("PacketNumber: ");
-        sb.Append(PacketNumber);
+        __sb.Append("PacketNumber: ");
+        __sb.Append(PacketNumber);
       }
-      if (Gamepad != null && __isset.gamepad)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Gamepad != null && __isset.gamepad) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Gamepad: ");
-        sb.Append(Gamepad== null ? "<null>" : Gamepad.ToString());
+        __sb.Append("Gamepad: ");
+        __sb.Append(Gamepad== null ? "<null>" : Gamepad.ToString());
       }
-      sb.Append(")");
-      return sb.ToString();
+      __sb.Append(")");
+      return __sb.ToString();
     }
+
   }
 
 }

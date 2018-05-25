@@ -9,132 +9,189 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.Http
 {
-  public partial class HttpService
-  {
-    public interface IAsync
-    {
-      Task<Ruyi.SDK.Http.SubscribeReply> SubscribeAsync(Ruyi.SDK.Http.SubscribeRequest message, CancellationToken cancellationToken);
-
+  public partial class HttpService {
+    public interface ISync {
+      Ruyi.SDK.Http.SubscribeReply Subscribe(Ruyi.SDK.Http.SubscribeRequest message);
     }
 
+    public interface IAsync {
+      Task<Ruyi.SDK.Http.SubscribeReply> SubscribeAsync(Ruyi.SDK.Http.SubscribeRequest message);
+    }
 
-    public class Client : TBaseClient, IDisposable, IAsync
-    {
-      public Client(TProtocol protocol) : this(protocol, protocol)
+    public interface Iface : ISync, IAsync {
+      IAsyncResult Begin_Subscribe(AsyncCallback callback, object state, Ruyi.SDK.Http.SubscribeRequest message);
+      Ruyi.SDK.Http.SubscribeReply End_Subscribe(IAsyncResult asyncResult);
+    }
+
+    public class Client : IDisposable, Iface {
+      public Client(TProtocol prot) : this(prot, prot)
       {
       }
 
-      public Client(TProtocol inputProtocol, TProtocol outputProtocol) : base(inputProtocol, outputProtocol)      {
-      }
-      public async Task<Ruyi.SDK.Http.SubscribeReply> SubscribeAsync(Ruyi.SDK.Http.SubscribeRequest message, CancellationToken cancellationToken)
+      public Client(TProtocol iprot, TProtocol oprot)
       {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Subscribe", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new SubscribeArgs();
-        args.Message = message;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
+        iprot_ = iprot;
+        oprot_ = oprot;
+      }
+
+      protected TProtocol iprot_;
+      protected TProtocol oprot_;
+      protected int seqid_;
+
+      public TProtocol InputProtocol
+      {
+        get { return iprot_; }
+      }
+      public TProtocol OutputProtocol
+      {
+        get { return oprot_; }
+      }
+
+
+      #region " IDisposable Support "
+      private bool _IsDisposed;
+
+      // IDisposable
+      public void Dispose()
+      {
+        Dispose(true);
+      }
+      
+
+      protected virtual void Dispose(bool disposing)
+      {
+        if (!_IsDisposed)
         {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          if (disposing)
+          {
+            if (iprot_ != null)
+            {
+              ((IDisposable)iprot_).Dispose();
+            }
+            if (oprot_ != null)
+            {
+              ((IDisposable)oprot_).Dispose();
+            }
+          }
+        }
+        _IsDisposed = true;
+      }
+      #endregion
+
+
+      
+      public IAsyncResult Begin_Subscribe(AsyncCallback callback, object state, Ruyi.SDK.Http.SubscribeRequest message)
+      {
+        return send_Subscribe(callback, state, message);
+      }
+
+      public Ruyi.SDK.Http.SubscribeReply End_Subscribe(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Subscribe();
+      }
+
+      public async Task<Ruyi.SDK.Http.SubscribeReply> SubscribeAsync(Ruyi.SDK.Http.SubscribeRequest message)
+      {
+        Ruyi.SDK.Http.SubscribeReply retval;
+        retval = await Task.Run(() =>
+        {
+          return Subscribe(message);
+        });
+        return retval;
+      }
+
+      public Ruyi.SDK.Http.SubscribeReply Subscribe(Ruyi.SDK.Http.SubscribeRequest message)
+      {
+        var asyncResult = Begin_Subscribe(null, null, message);
+        return End_Subscribe(asyncResult);
+
+      }
+      public IAsyncResult send_Subscribe(AsyncCallback callback, object state, Ruyi.SDK.Http.SubscribeRequest message)
+      {
+        oprot_.WriteMessageBegin(new TMessage("Subscribe", TMessageType.Call, seqid_));
+        Subscribe_args args = new Subscribe_args();
+        args.Message = message;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public Ruyi.SDK.Http.SubscribeReply recv_Subscribe()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
           throw x;
         }
-
-        var result = new SubscribeResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        if (result.__isset.success)
-        {
+        Subscribe_result result = new Subscribe_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
           return result.Success;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Subscribe failed: unknown result");
       }
 
     }
-
-    public class AsyncProcessor : ITAsyncProcessor
-    {
-      private IAsync _iAsync;
-
-      public AsyncProcessor(IAsync iAsync)
+    public class AsyncProcessor : TAsyncProcessor {
+      public AsyncProcessor(IAsync iface)
       {
-        if (iAsync == null) throw new ArgumentNullException(nameof(iAsync));
-
-        _iAsync = iAsync;
+        iface_ = iface;
         processMap_["Subscribe"] = Subscribe_ProcessAsync;
       }
 
-      protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken);
+      protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
+      private IAsync iface_;
       protected Dictionary<string, ProcessFunction> processMap_ = new Dictionary<string, ProcessFunction>();
 
       public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot)
       {
-        return await ProcessAsync(iprot, oprot, CancellationToken.None);
-      }
-
-      public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
-      {
         try
         {
-          var msg = await iprot.ReadMessageBeginAsync(cancellationToken);
-
+          TMessage msg = iprot.ReadMessageBegin();
           ProcessFunction fn;
           processMap_.TryGetValue(msg.Name, out fn);
-
-          if (fn == null)
-          {
-            await TProtocolUtil.SkipAsync(iprot, TType.Struct, cancellationToken);
-            await iprot.ReadMessageEndAsync(cancellationToken);
-            var x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
-            await oprot.WriteMessageBeginAsync(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID), cancellationToken);
-            await x.WriteAsync(oprot, cancellationToken);
-            await oprot.WriteMessageEndAsync(cancellationToken);
-            await oprot.Transport.FlushAsync(cancellationToken);
+          if (fn == null) {
+            TProtocolUtil.Skip(iprot, TType.Struct);
+            iprot.ReadMessageEnd();
+            TApplicationException x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
+            oprot.WriteMessageBegin(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID));
+            x.Write(oprot);
+            oprot.WriteMessageEnd();
+            oprot.Transport.Flush();
             return true;
           }
-
-          await fn(msg.SeqID, iprot, oprot, cancellationToken);
-
+          await fn(msg.SeqID, iprot, oprot);
         }
         catch (IOException)
         {
           return false;
         }
-
         return true;
       }
 
-      public async Task Subscribe_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      public async Task Subscribe_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
       {
-        var args = new SubscribeArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new SubscribeResult();
+        Subscribe_args args = new Subscribe_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Subscribe_result result = new Subscribe_result();
         try
         {
-          result.Success = await _iAsync.SubscribeAsync(args.Message, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("Subscribe", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
+          result.Success = await iface_.SubscribeAsync(args.Message);
+          oprot.WriteMessageBegin(new TMessage("Subscribe", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
         }
         catch (TTransportException)
         {
@@ -144,18 +201,88 @@ namespace Ruyi.SDK.Http
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("Subscribe", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Subscribe", TMessageType.Exception, seqid));
+          x.Write(oprot);
         }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+    }
+
+    public class Processor : TProcessor {
+      public Processor(ISync iface)
+      {
+        iface_ = iface;
+        processMap_["Subscribe"] = Subscribe_Process;
+      }
+
+      protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
+      private ISync iface_;
+      protected Dictionary<string, ProcessFunction> processMap_ = new Dictionary<string, ProcessFunction>();
+
+      public bool Process(TProtocol iprot, TProtocol oprot)
+      {
+        try
+        {
+          TMessage msg = iprot.ReadMessageBegin();
+          ProcessFunction fn;
+          processMap_.TryGetValue(msg.Name, out fn);
+          if (fn == null) {
+            TProtocolUtil.Skip(iprot, TType.Struct);
+            iprot.ReadMessageEnd();
+            TApplicationException x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
+            oprot.WriteMessageBegin(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID));
+            x.Write(oprot);
+            oprot.WriteMessageEnd();
+            oprot.Transport.Flush();
+            return true;
+          }
+          fn(msg.SeqID, iprot, oprot);
+        }
+        catch (IOException)
+        {
+          return false;
+        }
+        return true;
+      }
+
+      public void Subscribe_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Subscribe_args args = new Subscribe_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Subscribe_result result = new Subscribe_result();
+        try
+        {
+          result.Success = iface_.Subscribe(args.Message);
+          oprot.WriteMessageBegin(new TMessage("Subscribe", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Subscribe", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
       }
 
     }
 
 
-    public partial class SubscribeArgs : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Subscribe_args : TBase
     {
       private Ruyi.SDK.Http.SubscribeRequest _message;
 
@@ -174,52 +301,46 @@ namespace Ruyi.SDK.Http
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool message;
       }
 
-      public SubscribeArgs()
-      {
+      public Subscribe_args() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.Struct)
-                {
+                if (field.Type == TType.Struct) {
                   Message = new Ruyi.SDK.Http.SubscribeRequest();
-                  await Message.ReadAsync(iprot, cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                  Message.Read(iprot);
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -227,25 +348,23 @@ namespace Ruyi.SDK.Http
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("Subscribe_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (Message != null && __isset.message)
-          {
+          TStruct struc = new TStruct("Subscribe_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (Message != null && __isset.message) {
             field.Name = "message";
             field.Type = TType.Struct;
             field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await Message.WriteAsync(oprot, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            Message.Write(oprot);
+            oprot.WriteFieldEnd();
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -253,24 +372,26 @@ namespace Ruyi.SDK.Http
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Subscribe_args(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Subscribe_args(");
         bool __first = true;
-        if (Message != null && __isset.message)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Message != null && __isset.message) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Message: ");
-          sb.Append(Message== null ? "<null>" : Message.ToString());
+          __sb.Append("Message: ");
+          __sb.Append(Message== null ? "<null>" : Message.ToString());
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class SubscribeResult : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Subscribe_result : TBase
     {
       private Ruyi.SDK.Http.SubscribeReply _success;
 
@@ -289,52 +410,46 @@ namespace Ruyi.SDK.Http
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool success;
       }
 
-      public SubscribeResult()
-      {
+      public Subscribe_result() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Struct)
-                {
+                if (field.Type == TType.Struct) {
                   Success = new Ruyi.SDK.Http.SubscribeReply();
-                  await Success.ReadAsync(iprot, cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                  Success.Read(iprot);
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -342,29 +457,26 @@ namespace Ruyi.SDK.Http
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("Subscribe_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
+          TStruct struc = new TStruct("Subscribe_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
 
-          if(this.__isset.success)
-          {
-            if (Success != null)
-            {
+          if (this.__isset.success) {
+            if (Success != null) {
               field.Name = "Success";
               field.Type = TType.Struct;
               field.ID = 0;
-              await oprot.WriteFieldBeginAsync(field, cancellationToken);
-              await Success.WriteAsync(oprot, cancellationToken);
-              await oprot.WriteFieldEndAsync(cancellationToken);
+              oprot.WriteFieldBegin(field);
+              Success.Write(oprot);
+              oprot.WriteFieldEnd();
             }
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -372,20 +484,19 @@ namespace Ruyi.SDK.Http
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Subscribe_result(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Subscribe_result(");
         bool __first = true;
-        if (Success != null && __isset.success)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Success: ");
-          sb.Append(Success== null ? "<null>" : Success.ToString());
+          __sb.Append("Success: ");
+          __sb.Append(Success== null ? "<null>" : Success.ToString());
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
   }

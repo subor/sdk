@@ -1,6 +1,7 @@
 include "../../../commons/Config/SDKDesc/ServiceCommon/thrift/CommonType/CommonTypeSDKDataTypes.thrift"
 
-namespace * Ruyi.SDK.UserServiceExternal
+namespace cpp Ruyi.SDK.UserServiceExternal
+namespace csharp Ruyi.SDK.UserServiceExternal
 
 typedef string JSON
 

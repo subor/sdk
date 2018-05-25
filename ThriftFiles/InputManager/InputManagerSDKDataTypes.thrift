@@ -1,4 +1,5 @@
-namespace * Ruyi.SDK.InputManager
+namespace cpp Ruyi.SDK.InputManager
+namespace csharp Ruyi.SDK.InputManager
 
 struct InputDeviceEventHeader {
     1: i32 headerType,

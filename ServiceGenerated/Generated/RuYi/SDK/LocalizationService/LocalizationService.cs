@@ -9,49 +9,482 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.LocalizationService
 {
-  public partial class LocalizationService
-  {
-    public interface IAsync
-    {
+  public partial class LocalizationService {
+    public interface ISync {
       /// <summary>
       /// Switch language to specified one.
       /// </summary>
       /// <param name="language">Which language to switch to. Should be the name of language code. Eg. en-US, zh-CN</param>
       /// <param name="loadAllContext">Whether or not to load all context of the language</param>
       /// <param name="removeOld">Whether or not to remove old language</param>
-      Task<bool> SwitchLanguageAsync(string language, bool loadAllContext, bool removeOld, CancellationToken cancellationToken);
+      bool SwitchLanguage(string language, bool loadAllContext, bool removeOld);
+      /// <summary>
+      /// Get currently active language
+      /// </summary>
+      string GetCurrentLanguage();
+      /// <summary>
+      /// Switch a context of the language.
+      /// </summary>
+      /// <param name="context">Which context to switch to.</param>
+      /// <param name="language">Which language that the context belong to</param>
+      bool SwitchContext(string context, string language);
+      /// <summary>
+      /// Get currently active context.
+      /// </summary>
+      string HintContext();
+      /// <summary>
+      /// Get a localization string.
+      /// Return: localization string.
+      /// </summary>
+      /// <param name="key">The key of the string</param>
+      /// <param name="context">The context that the string belong to. Null indicate find the first matching string throughout all contexts in the language.</param>
+      /// <param name="language">The language to search</param>
+      string GetString(string key, string context, string language);
+      /// <summary>
+      /// Get a set of localization string.
+      /// </summary>
+      /// <param name="filter">A regular expresion used to filter the strings</param>
+      /// <param name="context">The context that the string belong to. Null indicate find the first matching string throughout all contexts in the language.</param>
+      /// <param name="language">The language to search</param>
+      Dictionary<string, string> GetStrings(string filter, string context, string language);
+      /// <summary>
+      /// Get the file name/path in the language.
+      /// 
+      /// The search will go through the context and its sub context to find the file name. Eg. If file name is not found in context com.ruyi, then the search will go on to find it in com.ruyi.moduleA and com.ruyi.moduleB.
+      /// </summary>
+      /// <param name="filename">File name with the path to the language pack root.</param>
+      /// <param name="isVirtualPath">True to get the virtual path, false to get the exact path to the file.</param>
+      /// <param name="context">The context of the file. If null, then while use system context "com.ruyi"</param>
+      string GetFileName(string filename, bool isVirtualPath, string context);
+    }
+
+    public interface IAsync {
+      /// <summary>
+      /// Switch language to specified one.
+      /// </summary>
+      /// <param name="language">Which language to switch to. Should be the name of language code. Eg. en-US, zh-CN</param>
+      /// <param name="loadAllContext">Whether or not to load all context of the language</param>
+      /// <param name="removeOld">Whether or not to remove old language</param>
+      Task<bool> SwitchLanguageAsync(string language, bool loadAllContext, bool removeOld);
+      /// <summary>
+      /// Get currently active language
+      /// </summary>
+      Task<string> GetCurrentLanguageAsync();
+      /// <summary>
+      /// Switch a context of the language.
+      /// </summary>
+      /// <param name="context">Which context to switch to.</param>
+      /// <param name="language">Which language that the context belong to</param>
+      Task<bool> SwitchContextAsync(string context, string language);
+      /// <summary>
+      /// Get currently active context.
+      /// </summary>
+      Task<string> HintContextAsync();
+      /// <summary>
+      /// Get a localization string.
+      /// Return: localization string.
+      /// </summary>
+      /// <param name="key">The key of the string</param>
+      /// <param name="context">The context that the string belong to. Null indicate find the first matching string throughout all contexts in the language.</param>
+      /// <param name="language">The language to search</param>
+      Task<string> GetStringAsync(string key, string context, string language);
+      /// <summary>
+      /// Get a set of localization string.
+      /// </summary>
+      /// <param name="filter">A regular expresion used to filter the strings</param>
+      /// <param name="context">The context that the string belong to. Null indicate find the first matching string throughout all contexts in the language.</param>
+      /// <param name="language">The language to search</param>
+      Task<Dictionary<string, string>> GetStringsAsync(string filter, string context, string language);
+      /// <summary>
+      /// Get the file name/path in the language.
+      /// 
+      /// The search will go through the context and its sub context to find the file name. Eg. If file name is not found in context com.ruyi, then the search will go on to find it in com.ruyi.moduleA and com.ruyi.moduleB.
+      /// </summary>
+      /// <param name="filename">File name with the path to the language pack root.</param>
+      /// <param name="isVirtualPath">True to get the virtual path, false to get the exact path to the file.</param>
+      /// <param name="context">The context of the file. If null, then while use system context "com.ruyi"</param>
+      Task<string> GetFileNameAsync(string filename, bool isVirtualPath, string context);
+    }
+
+    public interface Iface : ISync, IAsync {
+      /// <summary>
+      /// Switch language to specified one.
+      /// </summary>
+      /// <param name="language">Which language to switch to. Should be the name of language code. Eg. en-US, zh-CN</param>
+      /// <param name="loadAllContext">Whether or not to load all context of the language</param>
+      /// <param name="removeOld">Whether or not to remove old language</param>
+      IAsyncResult Begin_SwitchLanguage(AsyncCallback callback, object state, string language, bool loadAllContext, bool removeOld);
+      bool End_SwitchLanguage(IAsyncResult asyncResult);
+      /// <summary>
+      /// Get currently active language
+      /// </summary>
+      IAsyncResult Begin_GetCurrentLanguage(AsyncCallback callback, object state);
+      string End_GetCurrentLanguage(IAsyncResult asyncResult);
+      /// <summary>
+      /// Switch a context of the language.
+      /// </summary>
+      /// <param name="context">Which context to switch to.</param>
+      /// <param name="language">Which language that the context belong to</param>
+      IAsyncResult Begin_SwitchContext(AsyncCallback callback, object state, string context, string language);
+      bool End_SwitchContext(IAsyncResult asyncResult);
+      /// <summary>
+      /// Get currently active context.
+      /// </summary>
+      IAsyncResult Begin_HintContext(AsyncCallback callback, object state);
+      string End_HintContext(IAsyncResult asyncResult);
+      /// <summary>
+      /// Get a localization string.
+      /// Return: localization string.
+      /// </summary>
+      /// <param name="key">The key of the string</param>
+      /// <param name="context">The context that the string belong to. Null indicate find the first matching string throughout all contexts in the language.</param>
+      /// <param name="language">The language to search</param>
+      IAsyncResult Begin_GetString(AsyncCallback callback, object state, string key, string context, string language);
+      string End_GetString(IAsyncResult asyncResult);
+      /// <summary>
+      /// Get a set of localization string.
+      /// </summary>
+      /// <param name="filter">A regular expresion used to filter the strings</param>
+      /// <param name="context">The context that the string belong to. Null indicate find the first matching string throughout all contexts in the language.</param>
+      /// <param name="language">The language to search</param>
+      IAsyncResult Begin_GetStrings(AsyncCallback callback, object state, string filter, string context, string language);
+      Dictionary<string, string> End_GetStrings(IAsyncResult asyncResult);
+      /// <summary>
+      /// Get the file name/path in the language.
+      /// 
+      /// The search will go through the context and its sub context to find the file name. Eg. If file name is not found in context com.ruyi, then the search will go on to find it in com.ruyi.moduleA and com.ruyi.moduleB.
+      /// </summary>
+      /// <param name="filename">File name with the path to the language pack root.</param>
+      /// <param name="isVirtualPath">True to get the virtual path, false to get the exact path to the file.</param>
+      /// <param name="context">The context of the file. If null, then while use system context "com.ruyi"</param>
+      IAsyncResult Begin_GetFileName(AsyncCallback callback, object state, string filename, bool isVirtualPath, string context);
+      string End_GetFileName(IAsyncResult asyncResult);
+    }
+
+    public class Client : IDisposable, Iface {
+      public Client(TProtocol prot) : this(prot, prot)
+      {
+      }
+
+      public Client(TProtocol iprot, TProtocol oprot)
+      {
+        iprot_ = iprot;
+        oprot_ = oprot;
+      }
+
+      protected TProtocol iprot_;
+      protected TProtocol oprot_;
+      protected int seqid_;
+
+      public TProtocol InputProtocol
+      {
+        get { return iprot_; }
+      }
+      public TProtocol OutputProtocol
+      {
+        get { return oprot_; }
+      }
+
+
+      #region " IDisposable Support "
+      private bool _IsDisposed;
+
+      // IDisposable
+      public void Dispose()
+      {
+        Dispose(true);
+      }
+      
+
+      protected virtual void Dispose(bool disposing)
+      {
+        if (!_IsDisposed)
+        {
+          if (disposing)
+          {
+            if (iprot_ != null)
+            {
+              ((IDisposable)iprot_).Dispose();
+            }
+            if (oprot_ != null)
+            {
+              ((IDisposable)oprot_).Dispose();
+            }
+          }
+        }
+        _IsDisposed = true;
+      }
+      #endregion
+
+
+      
+      public IAsyncResult Begin_SwitchLanguage(AsyncCallback callback, object state, string language, bool loadAllContext, bool removeOld)
+      {
+        return send_SwitchLanguage(callback, state, language, loadAllContext, removeOld);
+      }
+
+      public bool End_SwitchLanguage(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_SwitchLanguage();
+      }
+
+      public async Task<bool> SwitchLanguageAsync(string language, bool loadAllContext, bool removeOld)
+      {
+        bool retval;
+        retval = await Task.Run(() =>
+        {
+          return SwitchLanguage(language, loadAllContext, removeOld);
+        });
+        return retval;
+      }
+
+      /// <summary>
+      /// Switch language to specified one.
+      /// </summary>
+      /// <param name="language">Which language to switch to. Should be the name of language code. Eg. en-US, zh-CN</param>
+      /// <param name="loadAllContext">Whether or not to load all context of the language</param>
+      /// <param name="removeOld">Whether or not to remove old language</param>
+      public bool SwitchLanguage(string language, bool loadAllContext, bool removeOld)
+      {
+        var asyncResult = Begin_SwitchLanguage(null, null, language, loadAllContext, removeOld);
+        return End_SwitchLanguage(asyncResult);
+
+      }
+      public IAsyncResult send_SwitchLanguage(AsyncCallback callback, object state, string language, bool loadAllContext, bool removeOld)
+      {
+        oprot_.WriteMessageBegin(new TMessage("SwitchLanguage", TMessageType.Call, seqid_));
+        SwitchLanguage_args args = new SwitchLanguage_args();
+        args.Language = language;
+        args.LoadAllContext = loadAllContext;
+        args.RemoveOld = removeOld;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public bool recv_SwitchLanguage()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        SwitchLanguage_result result = new SwitchLanguage_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SwitchLanguage failed: unknown result");
+      }
+
+      
+      public IAsyncResult Begin_GetCurrentLanguage(AsyncCallback callback, object state)
+      {
+        return send_GetCurrentLanguage(callback, state);
+      }
+
+      public string End_GetCurrentLanguage(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_GetCurrentLanguage();
+      }
+
+      public async Task<string> GetCurrentLanguageAsync()
+      {
+        string retval;
+        retval = await Task.Run(() =>
+        {
+          return GetCurrentLanguage();
+        });
+        return retval;
+      }
 
       /// <summary>
       /// Get currently active language
       /// </summary>
-      Task<string> GetCurrentLanguageAsync(CancellationToken cancellationToken);
+      public string GetCurrentLanguage()
+      {
+        var asyncResult = Begin_GetCurrentLanguage(null, null);
+        return End_GetCurrentLanguage(asyncResult);
+
+      }
+      public IAsyncResult send_GetCurrentLanguage(AsyncCallback callback, object state)
+      {
+        oprot_.WriteMessageBegin(new TMessage("GetCurrentLanguage", TMessageType.Call, seqid_));
+        GetCurrentLanguage_args args = new GetCurrentLanguage_args();
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public string recv_GetCurrentLanguage()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        GetCurrentLanguage_result result = new GetCurrentLanguage_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetCurrentLanguage failed: unknown result");
+      }
+
+      
+      public IAsyncResult Begin_SwitchContext(AsyncCallback callback, object state, string context, string language)
+      {
+        return send_SwitchContext(callback, state, context, language);
+      }
+
+      public bool End_SwitchContext(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_SwitchContext();
+      }
+
+      public async Task<bool> SwitchContextAsync(string context, string language)
+      {
+        bool retval;
+        retval = await Task.Run(() =>
+        {
+          return SwitchContext(context, language);
+        });
+        return retval;
+      }
 
       /// <summary>
       /// Switch a context of the language.
       /// </summary>
       /// <param name="context">Which context to switch to.</param>
       /// <param name="language">Which language that the context belong to</param>
-      Task<bool> SwitchContextAsync(string context, string language, CancellationToken cancellationToken);
+      public bool SwitchContext(string context, string language)
+      {
+        var asyncResult = Begin_SwitchContext(null, null, context, language);
+        return End_SwitchContext(asyncResult);
+
+      }
+      public IAsyncResult send_SwitchContext(AsyncCallback callback, object state, string context, string language)
+      {
+        oprot_.WriteMessageBegin(new TMessage("SwitchContext", TMessageType.Call, seqid_));
+        SwitchContext_args args = new SwitchContext_args();
+        args.Context = context;
+        args.Language = language;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public bool recv_SwitchContext()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        SwitchContext_result result = new SwitchContext_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SwitchContext failed: unknown result");
+      }
+
+      
+      public IAsyncResult Begin_HintContext(AsyncCallback callback, object state)
+      {
+        return send_HintContext(callback, state);
+      }
+
+      public string End_HintContext(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_HintContext();
+      }
+
+      public async Task<string> HintContextAsync()
+      {
+        string retval;
+        retval = await Task.Run(() =>
+        {
+          return HintContext();
+        });
+        return retval;
+      }
 
       /// <summary>
       /// Get currently active context.
       /// </summary>
-      Task<string> HintContextAsync(CancellationToken cancellationToken);
+      public string HintContext()
+      {
+        var asyncResult = Begin_HintContext(null, null);
+        return End_HintContext(asyncResult);
+
+      }
+      public IAsyncResult send_HintContext(AsyncCallback callback, object state)
+      {
+        oprot_.WriteMessageBegin(new TMessage("HintContext", TMessageType.Call, seqid_));
+        HintContext_args args = new HintContext_args();
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public string recv_HintContext()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        HintContext_result result = new HintContext_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "HintContext failed: unknown result");
+      }
+
+      
+      public IAsyncResult Begin_GetString(AsyncCallback callback, object state, string key, string context, string language)
+      {
+        return send_GetString(callback, state, key, context, language);
+      }
+
+      public string End_GetString(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_GetString();
+      }
+
+      public async Task<string> GetStringAsync(string key, string context, string language)
+      {
+        string retval;
+        retval = await Task.Run(() =>
+        {
+          return GetString(key, context, language);
+        });
+        return retval;
+      }
 
       /// <summary>
       /// Get a localization string.
@@ -60,7 +493,62 @@ namespace Ruyi.SDK.LocalizationService
       /// <param name="key">The key of the string</param>
       /// <param name="context">The context that the string belong to. Null indicate find the first matching string throughout all contexts in the language.</param>
       /// <param name="language">The language to search</param>
-      Task<string> GetStringAsync(string key, string context, string language, CancellationToken cancellationToken);
+      public string GetString(string key, string context, string language)
+      {
+        var asyncResult = Begin_GetString(null, null, key, context, language);
+        return End_GetString(asyncResult);
+
+      }
+      public IAsyncResult send_GetString(AsyncCallback callback, object state, string key, string context, string language)
+      {
+        oprot_.WriteMessageBegin(new TMessage("GetString", TMessageType.Call, seqid_));
+        GetString_args args = new GetString_args();
+        args.Key = key;
+        args.Context = context;
+        args.Language = language;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public string recv_GetString()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        GetString_result result = new GetString_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetString failed: unknown result");
+      }
+
+      
+      public IAsyncResult Begin_GetStrings(AsyncCallback callback, object state, string filter, string context, string language)
+      {
+        return send_GetStrings(callback, state, filter, context, language);
+      }
+
+      public Dictionary<string, string> End_GetStrings(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_GetStrings();
+      }
+
+      public async Task<Dictionary<string, string>> GetStringsAsync(string filter, string context, string language)
+      {
+        Dictionary<string, string> retval;
+        retval = await Task.Run(() =>
+        {
+          return GetStrings(filter, context, language);
+        });
+        return retval;
+      }
 
       /// <summary>
       /// Get a set of localization string.
@@ -68,7 +556,62 @@ namespace Ruyi.SDK.LocalizationService
       /// <param name="filter">A regular expresion used to filter the strings</param>
       /// <param name="context">The context that the string belong to. Null indicate find the first matching string throughout all contexts in the language.</param>
       /// <param name="language">The language to search</param>
-      Task<Dictionary<string, string>> GetStringsAsync(string filter, string context, string language, CancellationToken cancellationToken);
+      public Dictionary<string, string> GetStrings(string filter, string context, string language)
+      {
+        var asyncResult = Begin_GetStrings(null, null, filter, context, language);
+        return End_GetStrings(asyncResult);
+
+      }
+      public IAsyncResult send_GetStrings(AsyncCallback callback, object state, string filter, string context, string language)
+      {
+        oprot_.WriteMessageBegin(new TMessage("GetStrings", TMessageType.Call, seqid_));
+        GetStrings_args args = new GetStrings_args();
+        args.Filter = filter;
+        args.Context = context;
+        args.Language = language;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public Dictionary<string, string> recv_GetStrings()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        GetStrings_result result = new GetStrings_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetStrings failed: unknown result");
+      }
+
+      
+      public IAsyncResult Begin_GetFileName(AsyncCallback callback, object state, string filename, bool isVirtualPath, string context)
+      {
+        return send_GetFileName(callback, state, filename, isVirtualPath, context);
+      }
+
+      public string End_GetFileName(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_GetFileName();
+      }
+
+      public async Task<string> GetFileNameAsync(string filename, bool isVirtualPath, string context)
+      {
+        string retval;
+        retval = await Task.Run(() =>
+        {
+          return GetFileName(filename, isVirtualPath, context);
+        });
+        return retval;
+      }
 
       /// <summary>
       /// Get the file name/path in the language.
@@ -78,240 +621,46 @@ namespace Ruyi.SDK.LocalizationService
       /// <param name="filename">File name with the path to the language pack root.</param>
       /// <param name="isVirtualPath">True to get the virtual path, false to get the exact path to the file.</param>
       /// <param name="context">The context of the file. If null, then while use system context "com.ruyi"</param>
-      Task<string> GetFileNameAsync(string filename, bool isVirtualPath, string context, CancellationToken cancellationToken);
-
-    }
-
-
-    public class Client : TBaseClient, IDisposable, IAsync
-    {
-      public Client(TProtocol protocol) : this(protocol, protocol)
+      public string GetFileName(string filename, bool isVirtualPath, string context)
       {
-      }
+        var asyncResult = Begin_GetFileName(null, null, filename, isVirtualPath, context);
+        return End_GetFileName(asyncResult);
 
-      public Client(TProtocol inputProtocol, TProtocol outputProtocol) : base(inputProtocol, outputProtocol)      {
       }
-      public async Task<bool> SwitchLanguageAsync(string language, bool loadAllContext, bool removeOld, CancellationToken cancellationToken)
+      public IAsyncResult send_GetFileName(AsyncCallback callback, object state, string filename, bool isVirtualPath, string context)
       {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("SwitchLanguage", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new SwitchLanguageArgs();
-        args.Language = language;
-        args.LoadAllContext = loadAllContext;
-        args.RemoveOld = removeOld;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
-          throw x;
-        }
-
-        var result = new SwitchLanguageResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        if (result.__isset.success)
-        {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SwitchLanguage failed: unknown result");
-      }
-
-      public async Task<string> GetCurrentLanguageAsync(CancellationToken cancellationToken)
-      {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetCurrentLanguage", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new GetCurrentLanguageArgs();
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
-          throw x;
-        }
-
-        var result = new GetCurrentLanguageResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        if (result.__isset.success)
-        {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetCurrentLanguage failed: unknown result");
-      }
-
-      public async Task<bool> SwitchContextAsync(string context, string language, CancellationToken cancellationToken)
-      {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("SwitchContext", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new SwitchContextArgs();
-        args.Context = context;
-        args.Language = language;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
-          throw x;
-        }
-
-        var result = new SwitchContextResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        if (result.__isset.success)
-        {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SwitchContext failed: unknown result");
-      }
-
-      public async Task<string> HintContextAsync(CancellationToken cancellationToken)
-      {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("HintContext", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new HintContextArgs();
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
-          throw x;
-        }
-
-        var result = new HintContextResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        if (result.__isset.success)
-        {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "HintContext failed: unknown result");
-      }
-
-      public async Task<string> GetStringAsync(string key, string context, string language, CancellationToken cancellationToken)
-      {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetString", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new GetStringArgs();
-        args.Key = key;
-        args.Context = context;
-        args.Language = language;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
-          throw x;
-        }
-
-        var result = new GetStringResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        if (result.__isset.success)
-        {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetString failed: unknown result");
-      }
-
-      public async Task<Dictionary<string, string>> GetStringsAsync(string filter, string context, string language, CancellationToken cancellationToken)
-      {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetStrings", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new GetStringsArgs();
-        args.Filter = filter;
-        args.Context = context;
-        args.Language = language;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
-          throw x;
-        }
-
-        var result = new GetStringsResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        if (result.__isset.success)
-        {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetStrings failed: unknown result");
-      }
-
-      public async Task<string> GetFileNameAsync(string filename, bool isVirtualPath, string context, CancellationToken cancellationToken)
-      {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetFileName", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new GetFileNameArgs();
+        oprot_.WriteMessageBegin(new TMessage("GetFileName", TMessageType.Call, seqid_));
+        GetFileName_args args = new GetFileName_args();
         args.Filename = filename;
         args.IsVirtualPath = isVirtualPath;
         args.Context = context;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public string recv_GetFileName()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
           throw x;
         }
-
-        var result = new GetFileNameResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        if (result.__isset.success)
-        {
+        GetFileName_result result = new GetFileName_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
           return result.Success;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetFileName failed: unknown result");
       }
 
     }
-
-    public class AsyncProcessor : ITAsyncProcessor
-    {
-      private IAsync _iAsync;
-
-      public AsyncProcessor(IAsync iAsync)
+    public class AsyncProcessor : TAsyncProcessor {
+      public AsyncProcessor(IAsync iface)
       {
-        if (iAsync == null) throw new ArgumentNullException(nameof(iAsync));
-
-        _iAsync = iAsync;
+        iface_ = iface;
         processMap_["SwitchLanguage"] = SwitchLanguage_ProcessAsync;
         processMap_["GetCurrentLanguage"] = GetCurrentLanguage_ProcessAsync;
         processMap_["SwitchContext"] = SwitchContext_ProcessAsync;
@@ -321,57 +670,47 @@ namespace Ruyi.SDK.LocalizationService
         processMap_["GetFileName"] = GetFileName_ProcessAsync;
       }
 
-      protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken);
+      protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
+      private IAsync iface_;
       protected Dictionary<string, ProcessFunction> processMap_ = new Dictionary<string, ProcessFunction>();
 
       public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot)
       {
-        return await ProcessAsync(iprot, oprot, CancellationToken.None);
-      }
-
-      public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
-      {
         try
         {
-          var msg = await iprot.ReadMessageBeginAsync(cancellationToken);
-
+          TMessage msg = iprot.ReadMessageBegin();
           ProcessFunction fn;
           processMap_.TryGetValue(msg.Name, out fn);
-
-          if (fn == null)
-          {
-            await TProtocolUtil.SkipAsync(iprot, TType.Struct, cancellationToken);
-            await iprot.ReadMessageEndAsync(cancellationToken);
-            var x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
-            await oprot.WriteMessageBeginAsync(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID), cancellationToken);
-            await x.WriteAsync(oprot, cancellationToken);
-            await oprot.WriteMessageEndAsync(cancellationToken);
-            await oprot.Transport.FlushAsync(cancellationToken);
+          if (fn == null) {
+            TProtocolUtil.Skip(iprot, TType.Struct);
+            iprot.ReadMessageEnd();
+            TApplicationException x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
+            oprot.WriteMessageBegin(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID));
+            x.Write(oprot);
+            oprot.WriteMessageEnd();
+            oprot.Transport.Flush();
             return true;
           }
-
-          await fn(msg.SeqID, iprot, oprot, cancellationToken);
-
+          await fn(msg.SeqID, iprot, oprot);
         }
         catch (IOException)
         {
           return false;
         }
-
         return true;
       }
 
-      public async Task SwitchLanguage_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      public async Task SwitchLanguage_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
       {
-        var args = new SwitchLanguageArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new SwitchLanguageResult();
+        SwitchLanguage_args args = new SwitchLanguage_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        SwitchLanguage_result result = new SwitchLanguage_result();
         try
         {
-          result.Success = await _iAsync.SwitchLanguageAsync(args.Language, args.LoadAllContext, args.RemoveOld, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("SwitchLanguage", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
+          result.Success = await iface_.SwitchLanguageAsync(args.Language, args.LoadAllContext, args.RemoveOld);
+          oprot.WriteMessageBegin(new TMessage("SwitchLanguage", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
         }
         catch (TTransportException)
         {
@@ -381,25 +720,25 @@ namespace Ruyi.SDK.LocalizationService
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("SwitchLanguage", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("SwitchLanguage", TMessageType.Exception, seqid));
+          x.Write(oprot);
         }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
       }
 
-      public async Task GetCurrentLanguage_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      public async Task GetCurrentLanguage_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
       {
-        var args = new GetCurrentLanguageArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new GetCurrentLanguageResult();
+        GetCurrentLanguage_args args = new GetCurrentLanguage_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetCurrentLanguage_result result = new GetCurrentLanguage_result();
         try
         {
-          result.Success = await _iAsync.GetCurrentLanguageAsync(cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("GetCurrentLanguage", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
+          result.Success = await iface_.GetCurrentLanguageAsync();
+          oprot.WriteMessageBegin(new TMessage("GetCurrentLanguage", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
         }
         catch (TTransportException)
         {
@@ -409,25 +748,25 @@ namespace Ruyi.SDK.LocalizationService
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("GetCurrentLanguage", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetCurrentLanguage", TMessageType.Exception, seqid));
+          x.Write(oprot);
         }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
       }
 
-      public async Task SwitchContext_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      public async Task SwitchContext_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
       {
-        var args = new SwitchContextArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new SwitchContextResult();
+        SwitchContext_args args = new SwitchContext_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        SwitchContext_result result = new SwitchContext_result();
         try
         {
-          result.Success = await _iAsync.SwitchContextAsync(args.Context, args.Language, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("SwitchContext", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
+          result.Success = await iface_.SwitchContextAsync(args.Context, args.Language);
+          oprot.WriteMessageBegin(new TMessage("SwitchContext", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
         }
         catch (TTransportException)
         {
@@ -437,25 +776,25 @@ namespace Ruyi.SDK.LocalizationService
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("SwitchContext", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("SwitchContext", TMessageType.Exception, seqid));
+          x.Write(oprot);
         }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
       }
 
-      public async Task HintContext_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      public async Task HintContext_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
       {
-        var args = new HintContextArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new HintContextResult();
+        HintContext_args args = new HintContext_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        HintContext_result result = new HintContext_result();
         try
         {
-          result.Success = await _iAsync.HintContextAsync(cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("HintContext", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
+          result.Success = await iface_.HintContextAsync();
+          oprot.WriteMessageBegin(new TMessage("HintContext", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
         }
         catch (TTransportException)
         {
@@ -465,25 +804,25 @@ namespace Ruyi.SDK.LocalizationService
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("HintContext", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("HintContext", TMessageType.Exception, seqid));
+          x.Write(oprot);
         }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
       }
 
-      public async Task GetString_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      public async Task GetString_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
       {
-        var args = new GetStringArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new GetStringResult();
+        GetString_args args = new GetString_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetString_result result = new GetString_result();
         try
         {
-          result.Success = await _iAsync.GetStringAsync(args.Key, args.Context, args.Language, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("GetString", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
+          result.Success = await iface_.GetStringAsync(args.Key, args.Context, args.Language);
+          oprot.WriteMessageBegin(new TMessage("GetString", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
         }
         catch (TTransportException)
         {
@@ -493,25 +832,25 @@ namespace Ruyi.SDK.LocalizationService
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("GetString", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetString", TMessageType.Exception, seqid));
+          x.Write(oprot);
         }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
       }
 
-      public async Task GetStrings_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      public async Task GetStrings_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
       {
-        var args = new GetStringsArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new GetStringsResult();
+        GetStrings_args args = new GetStrings_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetStrings_result result = new GetStrings_result();
         try
         {
-          result.Success = await _iAsync.GetStringsAsync(args.Filter, args.Context, args.Language, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("GetStrings", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
+          result.Success = await iface_.GetStringsAsync(args.Filter, args.Context, args.Language);
+          oprot.WriteMessageBegin(new TMessage("GetStrings", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
         }
         catch (TTransportException)
         {
@@ -521,25 +860,25 @@ namespace Ruyi.SDK.LocalizationService
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("GetStrings", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetStrings", TMessageType.Exception, seqid));
+          x.Write(oprot);
         }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
       }
 
-      public async Task GetFileName_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      public async Task GetFileName_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
       {
-        var args = new GetFileNameArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new GetFileNameResult();
+        GetFileName_args args = new GetFileName_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetFileName_result result = new GetFileName_result();
         try
         {
-          result.Success = await _iAsync.GetFileNameAsync(args.Filename, args.IsVirtualPath, args.Context, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("GetFileName", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
+          result.Success = await iface_.GetFileNameAsync(args.Filename, args.IsVirtualPath, args.Context);
+          oprot.WriteMessageBegin(new TMessage("GetFileName", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
         }
         catch (TTransportException)
         {
@@ -549,18 +888,262 @@ namespace Ruyi.SDK.LocalizationService
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("GetFileName", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetFileName", TMessageType.Exception, seqid));
+          x.Write(oprot);
         }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+    }
+
+    public class Processor : TProcessor {
+      public Processor(ISync iface)
+      {
+        iface_ = iface;
+        processMap_["SwitchLanguage"] = SwitchLanguage_Process;
+        processMap_["GetCurrentLanguage"] = GetCurrentLanguage_Process;
+        processMap_["SwitchContext"] = SwitchContext_Process;
+        processMap_["HintContext"] = HintContext_Process;
+        processMap_["GetString"] = GetString_Process;
+        processMap_["GetStrings"] = GetStrings_Process;
+        processMap_["GetFileName"] = GetFileName_Process;
+      }
+
+      protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
+      private ISync iface_;
+      protected Dictionary<string, ProcessFunction> processMap_ = new Dictionary<string, ProcessFunction>();
+
+      public bool Process(TProtocol iprot, TProtocol oprot)
+      {
+        try
+        {
+          TMessage msg = iprot.ReadMessageBegin();
+          ProcessFunction fn;
+          processMap_.TryGetValue(msg.Name, out fn);
+          if (fn == null) {
+            TProtocolUtil.Skip(iprot, TType.Struct);
+            iprot.ReadMessageEnd();
+            TApplicationException x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
+            oprot.WriteMessageBegin(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID));
+            x.Write(oprot);
+            oprot.WriteMessageEnd();
+            oprot.Transport.Flush();
+            return true;
+          }
+          fn(msg.SeqID, iprot, oprot);
+        }
+        catch (IOException)
+        {
+          return false;
+        }
+        return true;
+      }
+
+      public void SwitchLanguage_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        SwitchLanguage_args args = new SwitchLanguage_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        SwitchLanguage_result result = new SwitchLanguage_result();
+        try
+        {
+          result.Success = iface_.SwitchLanguage(args.Language, args.LoadAllContext, args.RemoveOld);
+          oprot.WriteMessageBegin(new TMessage("SwitchLanguage", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("SwitchLanguage", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void GetCurrentLanguage_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetCurrentLanguage_args args = new GetCurrentLanguage_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetCurrentLanguage_result result = new GetCurrentLanguage_result();
+        try
+        {
+          result.Success = iface_.GetCurrentLanguage();
+          oprot.WriteMessageBegin(new TMessage("GetCurrentLanguage", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetCurrentLanguage", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void SwitchContext_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        SwitchContext_args args = new SwitchContext_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        SwitchContext_result result = new SwitchContext_result();
+        try
+        {
+          result.Success = iface_.SwitchContext(args.Context, args.Language);
+          oprot.WriteMessageBegin(new TMessage("SwitchContext", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("SwitchContext", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void HintContext_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        HintContext_args args = new HintContext_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        HintContext_result result = new HintContext_result();
+        try
+        {
+          result.Success = iface_.HintContext();
+          oprot.WriteMessageBegin(new TMessage("HintContext", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("HintContext", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void GetString_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetString_args args = new GetString_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetString_result result = new GetString_result();
+        try
+        {
+          result.Success = iface_.GetString(args.Key, args.Context, args.Language);
+          oprot.WriteMessageBegin(new TMessage("GetString", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetString", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void GetStrings_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetStrings_args args = new GetStrings_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetStrings_result result = new GetStrings_result();
+        try
+        {
+          result.Success = iface_.GetStrings(args.Filter, args.Context, args.Language);
+          oprot.WriteMessageBegin(new TMessage("GetStrings", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetStrings", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void GetFileName_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetFileName_args args = new GetFileName_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetFileName_result result = new GetFileName_result();
+        try
+        {
+          result.Success = iface_.GetFileName(args.Filename, args.IsVirtualPath, args.Context);
+          oprot.WriteMessageBegin(new TMessage("GetFileName", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetFileName", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
       }
 
     }
 
 
-    public partial class SwitchLanguageArgs : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class SwitchLanguage_args : TBase
     {
       private string _language;
       private bool _loadAllContext;
@@ -616,73 +1199,61 @@ namespace Ruyi.SDK.LocalizationService
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool language;
         public bool loadAllContext;
         public bool removeOld;
       }
 
-      public SwitchLanguageArgs()
-      {
+      public SwitchLanguage_args() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String)
-                {
-                  Language = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Language = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 2:
-                if (field.Type == TType.Bool)
-                {
-                  LoadAllContext = await iprot.ReadBoolAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.Bool) {
+                  LoadAllContext = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 3:
-                if (field.Type == TType.Bool)
-                {
-                  RemoveOld = await iprot.ReadBoolAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.Bool) {
+                  RemoveOld = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -690,43 +1261,39 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("SwitchLanguage_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (Language != null && __isset.language)
-          {
+          TStruct struc = new TStruct("SwitchLanguage_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (Language != null && __isset.language) {
             field.Name = "language";
             field.Type = TType.String;
             field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(Language, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Language);
+            oprot.WriteFieldEnd();
           }
-          if (__isset.loadAllContext)
-          {
+          if (__isset.loadAllContext) {
             field.Name = "loadAllContext";
             field.Type = TType.Bool;
             field.ID = 2;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteBoolAsync(LoadAllContext, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(LoadAllContext);
+            oprot.WriteFieldEnd();
           }
-          if (__isset.removeOld)
-          {
+          if (__isset.removeOld) {
             field.Name = "removeOld";
             field.Type = TType.Bool;
             field.ID = 3;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteBoolAsync(RemoveOld, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(RemoveOld);
+            oprot.WriteFieldEnd();
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -734,38 +1301,38 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("SwitchLanguage_args(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("SwitchLanguage_args(");
         bool __first = true;
-        if (Language != null && __isset.language)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Language != null && __isset.language) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Language: ");
-          sb.Append(Language);
+          __sb.Append("Language: ");
+          __sb.Append(Language);
         }
-        if (__isset.loadAllContext)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (__isset.loadAllContext) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("LoadAllContext: ");
-          sb.Append(LoadAllContext);
+          __sb.Append("LoadAllContext: ");
+          __sb.Append(LoadAllContext);
         }
-        if (__isset.removeOld)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (__isset.removeOld) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("RemoveOld: ");
-          sb.Append(RemoveOld);
+          __sb.Append("RemoveOld: ");
+          __sb.Append(RemoveOld);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class SwitchLanguageResult : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class SwitchLanguage_result : TBase
     {
       private bool _success;
 
@@ -784,51 +1351,45 @@ namespace Ruyi.SDK.LocalizationService
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool success;
       }
 
-      public SwitchLanguageResult()
-      {
+      public SwitchLanguage_result() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Bool)
-                {
-                  Success = await iprot.ReadBoolAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.Bool) {
+                  Success = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -836,26 +1397,24 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("SwitchLanguage_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
+          TStruct struc = new TStruct("SwitchLanguage_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
 
-          if(this.__isset.success)
-          {
+          if (this.__isset.success) {
             field.Name = "Success";
             field.Type = TType.Bool;
             field.ID = 0;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteBoolAsync(Success, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(Success);
+            oprot.WriteFieldEnd();
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -863,56 +1422,53 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("SwitchLanguage_result(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("SwitchLanguage_result(");
         bool __first = true;
-        if (__isset.success)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (__isset.success) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Success: ");
-          sb.Append(Success);
+          __sb.Append("Success: ");
+          __sb.Append(Success);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class GetCurrentLanguageArgs : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetCurrentLanguage_args : TBase
     {
 
-      public GetCurrentLanguageArgs()
-      {
+      public GetCurrentLanguage_args() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -920,15 +1476,14 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("GetCurrentLanguage_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          TStruct struc = new TStruct("GetCurrentLanguage_args");
+          oprot.WriteStructBegin(struc);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -936,16 +1491,19 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("GetCurrentLanguage_args(");
-        sb.Append(")");
-        return sb.ToString();
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetCurrentLanguage_args(");
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class GetCurrentLanguageResult : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetCurrentLanguage_result : TBase
     {
       private string _success;
 
@@ -964,51 +1522,45 @@ namespace Ruyi.SDK.LocalizationService
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool success;
       }
 
-      public GetCurrentLanguageResult()
-      {
+      public GetCurrentLanguage_result() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.String)
-                {
-                  Success = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -1016,29 +1568,26 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("GetCurrentLanguage_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
+          TStruct struc = new TStruct("GetCurrentLanguage_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
 
-          if(this.__isset.success)
-          {
-            if (Success != null)
-            {
+          if (this.__isset.success) {
+            if (Success != null) {
               field.Name = "Success";
               field.Type = TType.String;
               field.ID = 0;
-              await oprot.WriteFieldBeginAsync(field, cancellationToken);
-              await oprot.WriteStringAsync(Success, cancellationToken);
-              await oprot.WriteFieldEndAsync(cancellationToken);
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
             }
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -1046,24 +1595,26 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("GetCurrentLanguage_result(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetCurrentLanguage_result(");
         bool __first = true;
-        if (Success != null && __isset.success)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Success: ");
-          sb.Append(Success);
+          __sb.Append("Success: ");
+          __sb.Append(Success);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class SwitchContextArgs : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class SwitchContext_args : TBase
     {
       private string _context;
       private string _language;
@@ -1102,62 +1653,53 @@ namespace Ruyi.SDK.LocalizationService
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool context;
         public bool language;
       }
 
-      public SwitchContextArgs()
-      {
+      public SwitchContext_args() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String)
-                {
-                  Context = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Context = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 2:
-                if (field.Type == TType.String)
-                {
-                  Language = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Language = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -1165,34 +1707,31 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("SwitchContext_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (Context != null && __isset.context)
-          {
+          TStruct struc = new TStruct("SwitchContext_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (Context != null && __isset.context) {
             field.Name = "context";
             field.Type = TType.String;
             field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(Context, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Context);
+            oprot.WriteFieldEnd();
           }
-          if (Language != null && __isset.language)
-          {
+          if (Language != null && __isset.language) {
             field.Name = "language";
             field.Type = TType.String;
             field.ID = 2;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(Language, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Language);
+            oprot.WriteFieldEnd();
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -1200,31 +1739,32 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("SwitchContext_args(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("SwitchContext_args(");
         bool __first = true;
-        if (Context != null && __isset.context)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Context != null && __isset.context) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Context: ");
-          sb.Append(Context);
+          __sb.Append("Context: ");
+          __sb.Append(Context);
         }
-        if (Language != null && __isset.language)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Language != null && __isset.language) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Language: ");
-          sb.Append(Language);
+          __sb.Append("Language: ");
+          __sb.Append(Language);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class SwitchContextResult : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class SwitchContext_result : TBase
     {
       private bool _success;
 
@@ -1243,51 +1783,45 @@ namespace Ruyi.SDK.LocalizationService
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool success;
       }
 
-      public SwitchContextResult()
-      {
+      public SwitchContext_result() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Bool)
-                {
-                  Success = await iprot.ReadBoolAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.Bool) {
+                  Success = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -1295,26 +1829,24 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("SwitchContext_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
+          TStruct struc = new TStruct("SwitchContext_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
 
-          if(this.__isset.success)
-          {
+          if (this.__isset.success) {
             field.Name = "Success";
             field.Type = TType.Bool;
             field.ID = 0;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteBoolAsync(Success, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(Success);
+            oprot.WriteFieldEnd();
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -1322,56 +1854,53 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("SwitchContext_result(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("SwitchContext_result(");
         bool __first = true;
-        if (__isset.success)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (__isset.success) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Success: ");
-          sb.Append(Success);
+          __sb.Append("Success: ");
+          __sb.Append(Success);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class HintContextArgs : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class HintContext_args : TBase
     {
 
-      public HintContextArgs()
-      {
+      public HintContext_args() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -1379,15 +1908,14 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("HintContext_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          TStruct struc = new TStruct("HintContext_args");
+          oprot.WriteStructBegin(struc);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -1395,16 +1923,19 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("HintContext_args(");
-        sb.Append(")");
-        return sb.ToString();
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("HintContext_args(");
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class HintContextResult : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class HintContext_result : TBase
     {
       private string _success;
 
@@ -1423,51 +1954,45 @@ namespace Ruyi.SDK.LocalizationService
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool success;
       }
 
-      public HintContextResult()
-      {
+      public HintContext_result() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.String)
-                {
-                  Success = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -1475,29 +2000,26 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("HintContext_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
+          TStruct struc = new TStruct("HintContext_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
 
-          if(this.__isset.success)
-          {
-            if (Success != null)
-            {
+          if (this.__isset.success) {
+            if (Success != null) {
               field.Name = "Success";
               field.Type = TType.String;
               field.ID = 0;
-              await oprot.WriteFieldBeginAsync(field, cancellationToken);
-              await oprot.WriteStringAsync(Success, cancellationToken);
-              await oprot.WriteFieldEndAsync(cancellationToken);
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
             }
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -1505,24 +2027,26 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("HintContext_result(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("HintContext_result(");
         bool __first = true;
-        if (Success != null && __isset.success)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Success: ");
-          sb.Append(Success);
+          __sb.Append("Success: ");
+          __sb.Append(Success);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class GetStringArgs : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetString_args : TBase
     {
       private string _key;
       private string _context;
@@ -1578,73 +2102,61 @@ namespace Ruyi.SDK.LocalizationService
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool key;
         public bool context;
         public bool language;
       }
 
-      public GetStringArgs()
-      {
+      public GetString_args() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String)
-                {
-                  Key = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Key = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 2:
-                if (field.Type == TType.String)
-                {
-                  Context = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Context = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 3:
-                if (field.Type == TType.String)
-                {
-                  Language = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Language = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -1652,43 +2164,39 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("GetString_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (Key != null && __isset.key)
-          {
+          TStruct struc = new TStruct("GetString_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (Key != null && __isset.key) {
             field.Name = "key";
             field.Type = TType.String;
             field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(Key, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Key);
+            oprot.WriteFieldEnd();
           }
-          if (Context != null && __isset.context)
-          {
+          if (Context != null && __isset.context) {
             field.Name = "context";
             field.Type = TType.String;
             field.ID = 2;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(Context, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Context);
+            oprot.WriteFieldEnd();
           }
-          if (Language != null && __isset.language)
-          {
+          if (Language != null && __isset.language) {
             field.Name = "language";
             field.Type = TType.String;
             field.ID = 3;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(Language, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Language);
+            oprot.WriteFieldEnd();
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -1696,38 +2204,38 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("GetString_args(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetString_args(");
         bool __first = true;
-        if (Key != null && __isset.key)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Key != null && __isset.key) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Key: ");
-          sb.Append(Key);
+          __sb.Append("Key: ");
+          __sb.Append(Key);
         }
-        if (Context != null && __isset.context)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Context != null && __isset.context) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Context: ");
-          sb.Append(Context);
+          __sb.Append("Context: ");
+          __sb.Append(Context);
         }
-        if (Language != null && __isset.language)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Language != null && __isset.language) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Language: ");
-          sb.Append(Language);
+          __sb.Append("Language: ");
+          __sb.Append(Language);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class GetStringResult : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetString_result : TBase
     {
       private string _success;
 
@@ -1746,51 +2254,45 @@ namespace Ruyi.SDK.LocalizationService
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool success;
       }
 
-      public GetStringResult()
-      {
+      public GetString_result() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.String)
-                {
-                  Success = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -1798,29 +2300,26 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("GetString_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
+          TStruct struc = new TStruct("GetString_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
 
-          if(this.__isset.success)
-          {
-            if (Success != null)
-            {
+          if (this.__isset.success) {
+            if (Success != null) {
               field.Name = "Success";
               field.Type = TType.String;
               field.ID = 0;
-              await oprot.WriteFieldBeginAsync(field, cancellationToken);
-              await oprot.WriteStringAsync(Success, cancellationToken);
-              await oprot.WriteFieldEndAsync(cancellationToken);
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
             }
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -1828,24 +2327,26 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("GetString_result(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetString_result(");
         bool __first = true;
-        if (Success != null && __isset.success)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Success: ");
-          sb.Append(Success);
+          __sb.Append("Success: ");
+          __sb.Append(Success);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class GetStringsArgs : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetStrings_args : TBase
     {
       private string _filter;
       private string _context;
@@ -1901,73 +2402,61 @@ namespace Ruyi.SDK.LocalizationService
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool filter;
         public bool context;
         public bool language;
       }
 
-      public GetStringsArgs()
-      {
+      public GetStrings_args() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String)
-                {
-                  Filter = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Filter = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 2:
-                if (field.Type == TType.String)
-                {
-                  Context = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Context = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 3:
-                if (field.Type == TType.String)
-                {
-                  Language = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Language = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -1975,43 +2464,39 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("GetStrings_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (Filter != null && __isset.filter)
-          {
+          TStruct struc = new TStruct("GetStrings_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (Filter != null && __isset.filter) {
             field.Name = "filter";
             field.Type = TType.String;
             field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(Filter, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Filter);
+            oprot.WriteFieldEnd();
           }
-          if (Context != null && __isset.context)
-          {
+          if (Context != null && __isset.context) {
             field.Name = "context";
             field.Type = TType.String;
             field.ID = 2;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(Context, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Context);
+            oprot.WriteFieldEnd();
           }
-          if (Language != null && __isset.language)
-          {
+          if (Language != null && __isset.language) {
             field.Name = "language";
             field.Type = TType.String;
             field.ID = 3;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(Language, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Language);
+            oprot.WriteFieldEnd();
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -2019,38 +2504,38 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("GetStrings_args(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetStrings_args(");
         bool __first = true;
-        if (Filter != null && __isset.filter)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Filter != null && __isset.filter) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Filter: ");
-          sb.Append(Filter);
+          __sb.Append("Filter: ");
+          __sb.Append(Filter);
         }
-        if (Context != null && __isset.context)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Context != null && __isset.context) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Context: ");
-          sb.Append(Context);
+          __sb.Append("Context: ");
+          __sb.Append(Context);
         }
-        if (Language != null && __isset.language)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Language != null && __isset.language) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Language: ");
-          sb.Append(Language);
+          __sb.Append("Language: ");
+          __sb.Append(Language);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class GetStringsResult : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetStrings_result : TBase
     {
       private Dictionary<string, string> _success;
 
@@ -2069,63 +2554,57 @@ namespace Ruyi.SDK.LocalizationService
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool success;
       }
 
-      public GetStringsResult()
-      {
+      public GetStrings_result() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Map)
-                {
+                if (field.Type == TType.Map) {
                   {
                     Success = new Dictionary<string, string>();
-                    TMap _map0 = await iprot.ReadMapBeginAsync(cancellationToken);
-                    for(int _i1 = 0; _i1 < _map0.Count; ++_i1)
+                    TMap _map0 = iprot.ReadMapBegin();
+                    for( int _i1 = 0; _i1 < _map0.Count; ++_i1)
                     {
                       string _key2;
                       string _val3;
-                      _key2 = await iprot.ReadStringAsync(cancellationToken);
-                      _val3 = await iprot.ReadStringAsync(cancellationToken);
+                      _key2 = iprot.ReadString();
+                      _val3 = iprot.ReadString();
                       Success[_key2] = _val3;
                     }
-                    await iprot.ReadMapEndAsync(cancellationToken);
+                    iprot.ReadMapEnd();
                   }
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -2133,37 +2612,34 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("GetStrings_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
+          TStruct struc = new TStruct("GetStrings_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
 
-          if(this.__isset.success)
-          {
-            if (Success != null)
-            {
+          if (this.__isset.success) {
+            if (Success != null) {
               field.Name = "Success";
               field.Type = TType.Map;
               field.ID = 0;
-              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              oprot.WriteFieldBegin(field);
               {
-                await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.String, Success.Count), cancellationToken);
+                oprot.WriteMapBegin(new TMap(TType.String, TType.String, Success.Count));
                 foreach (string _iter4 in Success.Keys)
                 {
-                  await oprot.WriteStringAsync(_iter4, cancellationToken);
-                  await oprot.WriteStringAsync(Success[_iter4], cancellationToken);
+                  oprot.WriteString(_iter4);
+                  oprot.WriteString(Success[_iter4]);
                 }
-                await oprot.WriteMapEndAsync(cancellationToken);
+                oprot.WriteMapEnd();
               }
-              await oprot.WriteFieldEndAsync(cancellationToken);
+              oprot.WriteFieldEnd();
             }
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -2171,24 +2647,26 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("GetStrings_result(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetStrings_result(");
         bool __first = true;
-        if (Success != null && __isset.success)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Success: ");
-          sb.Append(Success);
+          __sb.Append("Success: ");
+          __sb.Append(Success);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class GetFileNameArgs : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetFileName_args : TBase
     {
       private string _filename;
       private bool _isVirtualPath;
@@ -2244,73 +2722,61 @@ namespace Ruyi.SDK.LocalizationService
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool filename;
         public bool isVirtualPath;
         public bool context;
       }
 
-      public GetFileNameArgs()
-      {
+      public GetFileName_args() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String)
-                {
-                  Filename = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Filename = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 2:
-                if (field.Type == TType.Bool)
-                {
-                  IsVirtualPath = await iprot.ReadBoolAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.Bool) {
+                  IsVirtualPath = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 3:
-                if (field.Type == TType.String)
-                {
-                  Context = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Context = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -2318,43 +2784,39 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("GetFileName_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (Filename != null && __isset.filename)
-          {
+          TStruct struc = new TStruct("GetFileName_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (Filename != null && __isset.filename) {
             field.Name = "filename";
             field.Type = TType.String;
             field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(Filename, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Filename);
+            oprot.WriteFieldEnd();
           }
-          if (__isset.isVirtualPath)
-          {
+          if (__isset.isVirtualPath) {
             field.Name = "isVirtualPath";
             field.Type = TType.Bool;
             field.ID = 2;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteBoolAsync(IsVirtualPath, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(IsVirtualPath);
+            oprot.WriteFieldEnd();
           }
-          if (Context != null && __isset.context)
-          {
+          if (Context != null && __isset.context) {
             field.Name = "context";
             field.Type = TType.String;
             field.ID = 3;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(Context, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Context);
+            oprot.WriteFieldEnd();
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -2362,38 +2824,38 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("GetFileName_args(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetFileName_args(");
         bool __first = true;
-        if (Filename != null && __isset.filename)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Filename != null && __isset.filename) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Filename: ");
-          sb.Append(Filename);
+          __sb.Append("Filename: ");
+          __sb.Append(Filename);
         }
-        if (__isset.isVirtualPath)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (__isset.isVirtualPath) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("IsVirtualPath: ");
-          sb.Append(IsVirtualPath);
+          __sb.Append("IsVirtualPath: ");
+          __sb.Append(IsVirtualPath);
         }
-        if (Context != null && __isset.context)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Context != null && __isset.context) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Context: ");
-          sb.Append(Context);
+          __sb.Append("Context: ");
+          __sb.Append(Context);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class GetFileNameResult : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetFileName_result : TBase
     {
       private string _success;
 
@@ -2412,51 +2874,45 @@ namespace Ruyi.SDK.LocalizationService
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool success;
       }
 
-      public GetFileNameResult()
-      {
+      public GetFileName_result() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.String)
-                {
-                  Success = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -2464,29 +2920,26 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("GetFileName_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
+          TStruct struc = new TStruct("GetFileName_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
 
-          if(this.__isset.success)
-          {
-            if (Success != null)
-            {
+          if (this.__isset.success) {
+            if (Success != null) {
               field.Name = "Success";
               field.Type = TType.String;
               field.ID = 0;
-              await oprot.WriteFieldBeginAsync(field, cancellationToken);
-              await oprot.WriteStringAsync(Success, cancellationToken);
-              await oprot.WriteFieldEndAsync(cancellationToken);
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
             }
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -2494,20 +2947,19 @@ namespace Ruyi.SDK.LocalizationService
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("GetFileName_result(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetFileName_result(");
         bool __first = true;
-        if (Success != null && __isset.success)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Success: ");
-          sb.Append(Success);
+          __sb.Append("Success: ");
+          __sb.Append(Success);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
   }

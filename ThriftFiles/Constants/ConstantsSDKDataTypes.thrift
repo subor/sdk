@@ -1,4 +1,5 @@
-namespace * Ruyi.SDK.Constants
+namespace cpp Ruyi.SDK.Constants
+namespace csharp Ruyi.SDK.Constants
 
 const i32 low_latency_socket_port = 11290
 

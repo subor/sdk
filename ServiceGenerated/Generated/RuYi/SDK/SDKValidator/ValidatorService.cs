@@ -9,132 +9,189 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.SDKValidator
 {
-  public partial class ValidatorService
-  {
-    public interface IAsync
-    {
-      Task<string> ValidateSDKAsync(string version, CancellationToken cancellationToken);
-
+  public partial class ValidatorService {
+    public interface ISync {
+      string ValidateSDK(string version);
     }
 
+    public interface IAsync {
+      Task<string> ValidateSDKAsync(string version);
+    }
 
-    public class Client : TBaseClient, IDisposable, IAsync
-    {
-      public Client(TProtocol protocol) : this(protocol, protocol)
+    public interface Iface : ISync, IAsync {
+      IAsyncResult Begin_ValidateSDK(AsyncCallback callback, object state, string version);
+      string End_ValidateSDK(IAsyncResult asyncResult);
+    }
+
+    public class Client : IDisposable, Iface {
+      public Client(TProtocol prot) : this(prot, prot)
       {
       }
 
-      public Client(TProtocol inputProtocol, TProtocol outputProtocol) : base(inputProtocol, outputProtocol)      {
-      }
-      public async Task<string> ValidateSDKAsync(string version, CancellationToken cancellationToken)
+      public Client(TProtocol iprot, TProtocol oprot)
       {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("ValidateSDK", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new ValidateSDKArgs();
-        args.Version = version;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
+        iprot_ = iprot;
+        oprot_ = oprot;
+      }
+
+      protected TProtocol iprot_;
+      protected TProtocol oprot_;
+      protected int seqid_;
+
+      public TProtocol InputProtocol
+      {
+        get { return iprot_; }
+      }
+      public TProtocol OutputProtocol
+      {
+        get { return oprot_; }
+      }
+
+
+      #region " IDisposable Support "
+      private bool _IsDisposed;
+
+      // IDisposable
+      public void Dispose()
+      {
+        Dispose(true);
+      }
+      
+
+      protected virtual void Dispose(bool disposing)
+      {
+        if (!_IsDisposed)
         {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          if (disposing)
+          {
+            if (iprot_ != null)
+            {
+              ((IDisposable)iprot_).Dispose();
+            }
+            if (oprot_ != null)
+            {
+              ((IDisposable)oprot_).Dispose();
+            }
+          }
+        }
+        _IsDisposed = true;
+      }
+      #endregion
+
+
+      
+      public IAsyncResult Begin_ValidateSDK(AsyncCallback callback, object state, string version)
+      {
+        return send_ValidateSDK(callback, state, version);
+      }
+
+      public string End_ValidateSDK(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_ValidateSDK();
+      }
+
+      public async Task<string> ValidateSDKAsync(string version)
+      {
+        string retval;
+        retval = await Task.Run(() =>
+        {
+          return ValidateSDK(version);
+        });
+        return retval;
+      }
+
+      public string ValidateSDK(string version)
+      {
+        var asyncResult = Begin_ValidateSDK(null, null, version);
+        return End_ValidateSDK(asyncResult);
+
+      }
+      public IAsyncResult send_ValidateSDK(AsyncCallback callback, object state, string version)
+      {
+        oprot_.WriteMessageBegin(new TMessage("ValidateSDK", TMessageType.Call, seqid_));
+        ValidateSDK_args args = new ValidateSDK_args();
+        args.Version = version;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public string recv_ValidateSDK()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
           throw x;
         }
-
-        var result = new ValidateSDKResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        if (result.__isset.success)
-        {
+        ValidateSDK_result result = new ValidateSDK_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
           return result.Success;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "ValidateSDK failed: unknown result");
       }
 
     }
-
-    public class AsyncProcessor : ITAsyncProcessor
-    {
-      private IAsync _iAsync;
-
-      public AsyncProcessor(IAsync iAsync)
+    public class AsyncProcessor : TAsyncProcessor {
+      public AsyncProcessor(IAsync iface)
       {
-        if (iAsync == null) throw new ArgumentNullException(nameof(iAsync));
-
-        _iAsync = iAsync;
+        iface_ = iface;
         processMap_["ValidateSDK"] = ValidateSDK_ProcessAsync;
       }
 
-      protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken);
+      protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
+      private IAsync iface_;
       protected Dictionary<string, ProcessFunction> processMap_ = new Dictionary<string, ProcessFunction>();
 
       public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot)
       {
-        return await ProcessAsync(iprot, oprot, CancellationToken.None);
-      }
-
-      public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
-      {
         try
         {
-          var msg = await iprot.ReadMessageBeginAsync(cancellationToken);
-
+          TMessage msg = iprot.ReadMessageBegin();
           ProcessFunction fn;
           processMap_.TryGetValue(msg.Name, out fn);
-
-          if (fn == null)
-          {
-            await TProtocolUtil.SkipAsync(iprot, TType.Struct, cancellationToken);
-            await iprot.ReadMessageEndAsync(cancellationToken);
-            var x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
-            await oprot.WriteMessageBeginAsync(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID), cancellationToken);
-            await x.WriteAsync(oprot, cancellationToken);
-            await oprot.WriteMessageEndAsync(cancellationToken);
-            await oprot.Transport.FlushAsync(cancellationToken);
+          if (fn == null) {
+            TProtocolUtil.Skip(iprot, TType.Struct);
+            iprot.ReadMessageEnd();
+            TApplicationException x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
+            oprot.WriteMessageBegin(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID));
+            x.Write(oprot);
+            oprot.WriteMessageEnd();
+            oprot.Transport.Flush();
             return true;
           }
-
-          await fn(msg.SeqID, iprot, oprot, cancellationToken);
-
+          await fn(msg.SeqID, iprot, oprot);
         }
         catch (IOException)
         {
           return false;
         }
-
         return true;
       }
 
-      public async Task ValidateSDK_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      public async Task ValidateSDK_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
       {
-        var args = new ValidateSDKArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new ValidateSDKResult();
+        ValidateSDK_args args = new ValidateSDK_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        ValidateSDK_result result = new ValidateSDK_result();
         try
         {
-          result.Success = await _iAsync.ValidateSDKAsync(args.Version, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("ValidateSDK", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
+          result.Success = await iface_.ValidateSDKAsync(args.Version);
+          oprot.WriteMessageBegin(new TMessage("ValidateSDK", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
         }
         catch (TTransportException)
         {
@@ -144,18 +201,88 @@ namespace Ruyi.SDK.SDKValidator
         {
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("ValidateSDK", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("ValidateSDK", TMessageType.Exception, seqid));
+          x.Write(oprot);
         }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+    }
+
+    public class Processor : TProcessor {
+      public Processor(ISync iface)
+      {
+        iface_ = iface;
+        processMap_["ValidateSDK"] = ValidateSDK_Process;
+      }
+
+      protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
+      private ISync iface_;
+      protected Dictionary<string, ProcessFunction> processMap_ = new Dictionary<string, ProcessFunction>();
+
+      public bool Process(TProtocol iprot, TProtocol oprot)
+      {
+        try
+        {
+          TMessage msg = iprot.ReadMessageBegin();
+          ProcessFunction fn;
+          processMap_.TryGetValue(msg.Name, out fn);
+          if (fn == null) {
+            TProtocolUtil.Skip(iprot, TType.Struct);
+            iprot.ReadMessageEnd();
+            TApplicationException x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
+            oprot.WriteMessageBegin(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID));
+            x.Write(oprot);
+            oprot.WriteMessageEnd();
+            oprot.Transport.Flush();
+            return true;
+          }
+          fn(msg.SeqID, iprot, oprot);
+        }
+        catch (IOException)
+        {
+          return false;
+        }
+        return true;
+      }
+
+      public void ValidateSDK_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        ValidateSDK_args args = new ValidateSDK_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        ValidateSDK_result result = new ValidateSDK_result();
+        try
+        {
+          result.Success = iface_.ValidateSDK(args.Version);
+          oprot.WriteMessageBegin(new TMessage("ValidateSDK", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("ValidateSDK", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
       }
 
     }
 
 
-    public partial class ValidateSDKArgs : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class ValidateSDK_args : TBase
     {
       private string _version;
 
@@ -174,51 +301,45 @@ namespace Ruyi.SDK.SDKValidator
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool version;
       }
 
-      public ValidateSDKArgs()
-      {
+      public ValidateSDK_args() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String)
-                {
-                  Version = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Version = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -226,25 +347,23 @@ namespace Ruyi.SDK.SDKValidator
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("ValidateSDK_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (Version != null && __isset.version)
-          {
+          TStruct struc = new TStruct("ValidateSDK_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (Version != null && __isset.version) {
             field.Name = "version";
             field.Type = TType.String;
             field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(Version, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Version);
+            oprot.WriteFieldEnd();
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -252,24 +371,26 @@ namespace Ruyi.SDK.SDKValidator
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("ValidateSDK_args(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("ValidateSDK_args(");
         bool __first = true;
-        if (Version != null && __isset.version)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Version != null && __isset.version) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Version: ");
-          sb.Append(Version);
+          __sb.Append("Version: ");
+          __sb.Append(Version);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
 
-    public partial class ValidateSDKResult : TBase
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class ValidateSDK_result : TBase
     {
       private string _success;
 
@@ -288,51 +409,45 @@ namespace Ruyi.SDK.SDKValidator
 
 
       public Isset __isset;
-      public struct Isset
-      {
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
         public bool success;
       }
 
-      public ValidateSDKResult()
-      {
+      public ValidateSDK_result() {
       }
 
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      public void Read (TProtocol iprot)
       {
         iprot.IncrementRecursionDepth();
         try
         {
           TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
+          iprot.ReadStructBegin();
           while (true)
           {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
               break;
             }
-
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.String)
-                {
-                  Success = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                TProtocolUtil.Skip(iprot, field.Type);
                 break;
             }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
+            iprot.ReadFieldEnd();
           }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
+          iprot.ReadStructEnd();
         }
         finally
         {
@@ -340,29 +455,26 @@ namespace Ruyi.SDK.SDKValidator
         }
       }
 
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
+      public void Write(TProtocol oprot) {
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("ValidateSDK_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
+          TStruct struc = new TStruct("ValidateSDK_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
 
-          if(this.__isset.success)
-          {
-            if (Success != null)
-            {
+          if (this.__isset.success) {
+            if (Success != null) {
               field.Name = "Success";
               field.Type = TType.String;
               field.ID = 0;
-              await oprot.WriteFieldBeginAsync(field, cancellationToken);
-              await oprot.WriteStringAsync(Success, cancellationToken);
-              await oprot.WriteFieldEndAsync(cancellationToken);
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
             }
           }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
         }
         finally
         {
@@ -370,20 +482,19 @@ namespace Ruyi.SDK.SDKValidator
         }
       }
 
-      public override string ToString()
-      {
-        var sb = new StringBuilder("ValidateSDK_result(");
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("ValidateSDK_result(");
         bool __first = true;
-        if (Success != null && __isset.success)
-        {
-          if(!__first) { sb.Append(", "); }
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
           __first = false;
-          sb.Append("Success: ");
-          sb.Append(Success);
+          __sb.Append("Success: ");
+          __sb.Append(Success);
         }
-        sb.Append(")");
-        return sb.ToString();
+        __sb.Append(")");
+        return __sb.ToString();
       }
+
     }
 
   }

@@ -9,18 +9,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.SettingSystem.Api
 {
@@ -28,6 +22,9 @@ namespace Ruyi.SDK.SettingSystem.Api
   /// <summary>
   /// Notification of setting item from layer0
   /// </summary>
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
   public partial class SettingItemNotification : TBase
   {
     private string _key;
@@ -67,64 +64,55 @@ namespace Ruyi.SDK.SettingSystem.Api
 
 
     public Isset __isset;
-    public struct Isset
-    {
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
       public bool key;
       public bool contents;
     }
 
-    public SettingItemNotification()
-    {
+    public SettingItemNotification() {
       this._contents = "{}";
       this.__isset.contents = true;
     }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
+        iprot.ReadStructBegin();
         while (true)
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
             break;
           }
-
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
-              {
-                Key = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.String) {
+                Key = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.String)
-              {
-                Contents = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.String) {
+                Contents = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              TProtocolUtil.Skip(iprot, field.Type);
               break;
           }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+          iprot.ReadFieldEnd();
         }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
+        iprot.ReadStructEnd();
       }
       finally
       {
@@ -132,34 +120,31 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
+    public void Write(TProtocol oprot) {
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("SettingItemNotification");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (Key != null && __isset.key)
-        {
+        TStruct struc = new TStruct("SettingItemNotification");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Key != null && __isset.key) {
           field.Name = "key";
           field.Type = TType.String;
           field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Key, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Key);
+          oprot.WriteFieldEnd();
         }
-        if (Contents != null && __isset.contents)
-        {
+        if (Contents != null && __isset.contents) {
           field.Name = "contents";
           field.Type = TType.String;
           field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Contents, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Contents);
+          oprot.WriteFieldEnd();
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
       }
       finally
       {
@@ -167,27 +152,25 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("SettingItemNotification(");
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("SettingItemNotification(");
       bool __first = true;
-      if (Key != null && __isset.key)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Key != null && __isset.key) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Key: ");
-        sb.Append(Key);
+        __sb.Append("Key: ");
+        __sb.Append(Key);
       }
-      if (Contents != null && __isset.contents)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Contents != null && __isset.contents) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Contents: ");
-        sb.Append(Contents);
+        __sb.Append("Contents: ");
+        __sb.Append(Contents);
       }
-      sb.Append(")");
-      return sb.ToString();
+      __sb.Append(")");
+      return __sb.ToString();
     }
+
   }
 
 }

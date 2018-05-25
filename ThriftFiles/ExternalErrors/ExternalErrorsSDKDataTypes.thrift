@@ -1,4 +1,5 @@
-namespace * Ruyi.SDK.ExternalErrors
+namespace cpp Ruyi.SDK.ExternalErrors
+namespace csharp Ruyi.SDK.ExternalErrors
 
 enum ExternalErrorCode {
     Err_0 = 0,

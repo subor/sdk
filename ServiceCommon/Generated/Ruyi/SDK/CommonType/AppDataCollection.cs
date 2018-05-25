@@ -9,22 +9,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.CommonType
 {
 
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
   public partial class AppDataCollection : TBase
   {
     private string _category;
@@ -64,73 +61,64 @@ namespace Ruyi.SDK.CommonType
 
 
     public Isset __isset;
-    public struct Isset
-    {
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
       public bool category;
       public bool records;
     }
 
-    public AppDataCollection()
-    {
+    public AppDataCollection() {
     }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
+        iprot.ReadStructBegin();
         while (true)
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
             break;
           }
-
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
-              {
-                Category = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.String) {
+                Category = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.List)
-              {
+              if (field.Type == TType.List) {
                 {
                   Records = new List<AppDataRecord>();
-                  TList _list29 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i30 = 0; _i30 < _list29.Count; ++_i30)
+                  TList _list29 = iprot.ReadListBegin();
+                  for( int _i30 = 0; _i30 < _list29.Count; ++_i30)
                   {
                     AppDataRecord _elem31;
                     _elem31 = new AppDataRecord();
-                    await _elem31.ReadAsync(iprot, cancellationToken);
+                    _elem31.Read(iprot);
                     Records.Add(_elem31);
                   }
-                  await iprot.ReadListEndAsync(cancellationToken);
+                  iprot.ReadListEnd();
                 }
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              TProtocolUtil.Skip(iprot, field.Type);
               break;
           }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+          iprot.ReadFieldEnd();
         }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
+        iprot.ReadStructEnd();
       }
       finally
       {
@@ -138,41 +126,38 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
+    public void Write(TProtocol oprot) {
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("AppDataCollection");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (Category != null && __isset.category)
-        {
+        TStruct struc = new TStruct("AppDataCollection");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Category != null && __isset.category) {
           field.Name = "category";
           field.Type = TType.String;
           field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Category, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Category);
+          oprot.WriteFieldEnd();
         }
-        if (Records != null && __isset.records)
-        {
+        if (Records != null && __isset.records) {
           field.Name = "records";
           field.Type = TType.List;
           field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          oprot.WriteFieldBegin(field);
           {
-            await oprot.WriteListBeginAsync(new TList(TType.Struct, Records.Count), cancellationToken);
+            oprot.WriteListBegin(new TList(TType.Struct, Records.Count));
             foreach (AppDataRecord _iter32 in Records)
             {
-              await _iter32.WriteAsync(oprot, cancellationToken);
+              _iter32.Write(oprot);
             }
-            await oprot.WriteListEndAsync(cancellationToken);
+            oprot.WriteListEnd();
           }
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldEnd();
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
       }
       finally
       {
@@ -180,27 +165,25 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("AppDataCollection(");
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("AppDataCollection(");
       bool __first = true;
-      if (Category != null && __isset.category)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Category != null && __isset.category) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Category: ");
-        sb.Append(Category);
+        __sb.Append("Category: ");
+        __sb.Append(Category);
       }
-      if (Records != null && __isset.records)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Records != null && __isset.records) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Records: ");
-        sb.Append(Records);
+        __sb.Append("Records: ");
+        __sb.Append(Records);
       }
-      sb.Append(")");
-      return sb.ToString();
+      __sb.Append(")");
+      return __sb.ToString();
     }
+
   }
 
 }

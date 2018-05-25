@@ -9,22 +9,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.CommonType
 {
 
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
   public partial class SettingCategory : TBase
   {
     private string _id;
@@ -156,8 +153,10 @@ namespace Ruyi.SDK.CommonType
 
 
     public Isset __isset;
-    public struct Isset
-    {
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
       public bool id;
       public bool display;
       public bool summary;
@@ -169,138 +168,106 @@ namespace Ruyi.SDK.CommonType
       public bool showInUI;
     }
 
-    public SettingCategory()
-    {
+    public SettingCategory() {
     }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
+        iprot.ReadStructBegin();
         while (true)
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
             break;
           }
-
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
-              {
-                Id = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.String) {
+                Id = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.String)
-              {
-                Display = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.String) {
+                Display = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 3:
-              if (field.Type == TType.String)
-              {
-                Summary = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.String) {
+                Summary = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 4:
-              if (field.Type == TType.String)
-              {
-                Description = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.String) {
+                Description = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 5:
-              if (field.Type == TType.I32)
-              {
-                SortingPriority = await iprot.ReadI32Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.I32) {
+                SortingPriority = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 6:
-              if (field.Type == TType.Bool)
-              {
-                IsSystemCategory = await iprot.ReadBoolAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Bool) {
+                IsSystemCategory = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 7:
-              if (field.Type == TType.Map)
-              {
+              if (field.Type == TType.Map) {
                 {
                   Items = new Dictionary<string, int>();
-                  TMap _map16 = await iprot.ReadMapBeginAsync(cancellationToken);
-                  for(int _i17 = 0; _i17 < _map16.Count; ++_i17)
+                  TMap _map16 = iprot.ReadMapBegin();
+                  for( int _i17 = 0; _i17 < _map16.Count; ++_i17)
                   {
                     string _key18;
                     int _val19;
-                    _key18 = await iprot.ReadStringAsync(cancellationToken);
-                    _val19 = await iprot.ReadI32Async(cancellationToken);
+                    _key18 = iprot.ReadString();
+                    _val19 = iprot.ReadI32();
                     Items[_key18] = _val19;
                   }
-                  await iprot.ReadMapEndAsync(cancellationToken);
+                  iprot.ReadMapEnd();
                 }
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 8:
-              if (field.Type == TType.Bool)
-              {
-                Enable = await iprot.ReadBoolAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Bool) {
+                Enable = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 9:
-              if (field.Type == TType.Bool)
-              {
-                ShowInUI = await iprot.ReadBoolAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Bool) {
+                ShowInUI = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              TProtocolUtil.Skip(iprot, field.Type);
               break;
           }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+          iprot.ReadFieldEnd();
         }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
+        iprot.ReadStructEnd();
       }
       finally
       {
@@ -308,105 +275,95 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
+    public void Write(TProtocol oprot) {
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("SettingCategory");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (Id != null && __isset.id)
-        {
+        TStruct struc = new TStruct("SettingCategory");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Id != null && __isset.id) {
           field.Name = "id";
           field.Type = TType.String;
           field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Id, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Id);
+          oprot.WriteFieldEnd();
         }
-        if (Display != null && __isset.display)
-        {
+        if (Display != null && __isset.display) {
           field.Name = "display";
           field.Type = TType.String;
           field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Display, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Display);
+          oprot.WriteFieldEnd();
         }
-        if (Summary != null && __isset.summary)
-        {
+        if (Summary != null && __isset.summary) {
           field.Name = "summary";
           field.Type = TType.String;
           field.ID = 3;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Summary, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Summary);
+          oprot.WriteFieldEnd();
         }
-        if (Description != null && __isset.description)
-        {
+        if (Description != null && __isset.description) {
           field.Name = "description";
           field.Type = TType.String;
           field.ID = 4;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Description, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Description);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.sortingPriority)
-        {
+        if (__isset.sortingPriority) {
           field.Name = "sortingPriority";
           field.Type = TType.I32;
           field.ID = 5;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(SortingPriority, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(SortingPriority);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.isSystemCategory)
-        {
+        if (__isset.isSystemCategory) {
           field.Name = "isSystemCategory";
           field.Type = TType.Bool;
           field.ID = 6;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(IsSystemCategory, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(IsSystemCategory);
+          oprot.WriteFieldEnd();
         }
-        if (Items != null && __isset.items)
-        {
+        if (Items != null && __isset.items) {
           field.Name = "items";
           field.Type = TType.Map;
           field.ID = 7;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          oprot.WriteFieldBegin(field);
           {
-            await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.I32, Items.Count), cancellationToken);
+            oprot.WriteMapBegin(new TMap(TType.String, TType.I32, Items.Count));
             foreach (string _iter20 in Items.Keys)
             {
-              await oprot.WriteStringAsync(_iter20, cancellationToken);
-              await oprot.WriteI32Async(Items[_iter20], cancellationToken);
+              oprot.WriteString(_iter20);
+              oprot.WriteI32(Items[_iter20]);
             }
-            await oprot.WriteMapEndAsync(cancellationToken);
+            oprot.WriteMapEnd();
           }
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.enable)
-        {
+        if (__isset.enable) {
           field.Name = "enable";
           field.Type = TType.Bool;
           field.ID = 8;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(Enable, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(Enable);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.showInUI)
-        {
+        if (__isset.showInUI) {
           field.Name = "showInUI";
           field.Type = TType.Bool;
           field.ID = 9;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(ShowInUI, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(ShowInUI);
+          oprot.WriteFieldEnd();
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
       }
       finally
       {
@@ -414,76 +371,67 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("SettingCategory(");
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("SettingCategory(");
       bool __first = true;
-      if (Id != null && __isset.id)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Id != null && __isset.id) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Id: ");
-        sb.Append(Id);
+        __sb.Append("Id: ");
+        __sb.Append(Id);
       }
-      if (Display != null && __isset.display)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Display != null && __isset.display) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Display: ");
-        sb.Append(Display);
+        __sb.Append("Display: ");
+        __sb.Append(Display);
       }
-      if (Summary != null && __isset.summary)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Summary != null && __isset.summary) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Summary: ");
-        sb.Append(Summary);
+        __sb.Append("Summary: ");
+        __sb.Append(Summary);
       }
-      if (Description != null && __isset.description)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Description != null && __isset.description) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Description: ");
-        sb.Append(Description);
+        __sb.Append("Description: ");
+        __sb.Append(Description);
       }
-      if (__isset.sortingPriority)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.sortingPriority) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("SortingPriority: ");
-        sb.Append(SortingPriority);
+        __sb.Append("SortingPriority: ");
+        __sb.Append(SortingPriority);
       }
-      if (__isset.isSystemCategory)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.isSystemCategory) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("IsSystemCategory: ");
-        sb.Append(IsSystemCategory);
+        __sb.Append("IsSystemCategory: ");
+        __sb.Append(IsSystemCategory);
       }
-      if (Items != null && __isset.items)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (Items != null && __isset.items) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Items: ");
-        sb.Append(Items);
+        __sb.Append("Items: ");
+        __sb.Append(Items);
       }
-      if (__isset.enable)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.enable) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("Enable: ");
-        sb.Append(Enable);
+        __sb.Append("Enable: ");
+        __sb.Append(Enable);
       }
-      if (__isset.showInUI)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.showInUI) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("ShowInUI: ");
-        sb.Append(ShowInUI);
+        __sb.Append("ShowInUI: ");
+        __sb.Append(ShowInUI);
       }
-      sb.Append(")");
-      return sb.ToString();
+      __sb.Append(")");
+      return __sb.ToString();
     }
+
   }
 
 }

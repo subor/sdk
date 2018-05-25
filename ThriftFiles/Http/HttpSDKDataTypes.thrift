@@ -1,4 +1,5 @@
-namespace * Ruyi.SDK.Http
+namespace cpp Ruyi.SDK.Http
+namespace csharp Ruyi.SDK.Http
 
 struct SubscribeRequest {
     1: string topic,

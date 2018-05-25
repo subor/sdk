@@ -1,6 +1,7 @@
 include "HttpSDKDataTypes.thrift"
 
-namespace * Ruyi.SDK.Http
+namespace cpp Ruyi.SDK.Http
+namespace csharp Ruyi.SDK.Http
 
 
 service HttpService {

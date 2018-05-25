@@ -9,22 +9,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
-
-using Thrift.Protocols;
-using Thrift.Protocols.Entities;
-using Thrift.Protocols.Utilities;
-using Thrift.Transports;
-using Thrift.Transports.Client;
-using Thrift.Transports.Server;
-
+using System.Runtime.Serialization;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.SDK.CommonType
 {
 
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
   public partial class ActionTriggerInfo : TBase
   {
     private InputCagetory _InputCagetory;
@@ -90,95 +87,80 @@ namespace Ruyi.SDK.CommonType
 
 
     public Isset __isset;
-    public struct Isset
-    {
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
       public bool InputCagetory;
       public bool TriggerConditions;
       public bool AutoTrigger;
       public bool TriggerInterval;
     }
 
-    public ActionTriggerInfo()
-    {
+    public ActionTriggerInfo() {
     }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
         TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
+        iprot.ReadStructBegin();
         while (true)
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
             break;
           }
-
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32)
-              {
-                InputCagetory = (InputCagetory)await iprot.ReadI32Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.I32) {
+                InputCagetory = (InputCagetory)iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.List)
-              {
+              if (field.Type == TType.List) {
                 {
                   TriggerConditions = new List<InputIdentifier>();
-                  TList _list0 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i1 = 0; _i1 < _list0.Count; ++_i1)
+                  TList _list0 = iprot.ReadListBegin();
+                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
                     InputIdentifier _elem2;
                     _elem2 = new InputIdentifier();
-                    await _elem2.ReadAsync(iprot, cancellationToken);
+                    _elem2.Read(iprot);
                     TriggerConditions.Add(_elem2);
                   }
-                  await iprot.ReadListEndAsync(cancellationToken);
+                  iprot.ReadListEnd();
                 }
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 3:
-              if (field.Type == TType.Bool)
-              {
-                AutoTrigger = await iprot.ReadBoolAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.Bool) {
+                AutoTrigger = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 4:
-              if (field.Type == TType.I32)
-              {
-                TriggerInterval = await iprot.ReadI32Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              if (field.Type == TType.I32) {
+                TriggerInterval = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              TProtocolUtil.Skip(iprot, field.Type);
               break;
           }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+          iprot.ReadFieldEnd();
         }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
+        iprot.ReadStructEnd();
       }
       finally
       {
@@ -186,59 +168,54 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
+    public void Write(TProtocol oprot) {
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("ActionTriggerInfo");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (__isset.InputCagetory)
-        {
+        TStruct struc = new TStruct("ActionTriggerInfo");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (__isset.InputCagetory) {
           field.Name = "InputCagetory";
           field.Type = TType.I32;
           field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async((int)InputCagetory, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32((int)InputCagetory);
+          oprot.WriteFieldEnd();
         }
-        if (TriggerConditions != null && __isset.TriggerConditions)
-        {
+        if (TriggerConditions != null && __isset.TriggerConditions) {
           field.Name = "TriggerConditions";
           field.Type = TType.List;
           field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          oprot.WriteFieldBegin(field);
           {
-            await oprot.WriteListBeginAsync(new TList(TType.Struct, TriggerConditions.Count), cancellationToken);
+            oprot.WriteListBegin(new TList(TType.Struct, TriggerConditions.Count));
             foreach (InputIdentifier _iter3 in TriggerConditions)
             {
-              await _iter3.WriteAsync(oprot, cancellationToken);
+              _iter3.Write(oprot);
             }
-            await oprot.WriteListEndAsync(cancellationToken);
+            oprot.WriteListEnd();
           }
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.AutoTrigger)
-        {
+        if (__isset.AutoTrigger) {
           field.Name = "AutoTrigger";
           field.Type = TType.Bool;
           field.ID = 3;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(AutoTrigger, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(AutoTrigger);
+          oprot.WriteFieldEnd();
         }
-        if (__isset.TriggerInterval)
-        {
+        if (__isset.TriggerInterval) {
           field.Name = "TriggerInterval";
           field.Type = TType.I32;
           field.ID = 4;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(TriggerInterval, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(TriggerInterval);
+          oprot.WriteFieldEnd();
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
       }
       finally
       {
@@ -246,41 +223,37 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("ActionTriggerInfo(");
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("ActionTriggerInfo(");
       bool __first = true;
-      if (__isset.InputCagetory)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.InputCagetory) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("InputCagetory: ");
-        sb.Append(InputCagetory);
+        __sb.Append("InputCagetory: ");
+        __sb.Append(InputCagetory);
       }
-      if (TriggerConditions != null && __isset.TriggerConditions)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (TriggerConditions != null && __isset.TriggerConditions) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("TriggerConditions: ");
-        sb.Append(TriggerConditions);
+        __sb.Append("TriggerConditions: ");
+        __sb.Append(TriggerConditions);
       }
-      if (__isset.AutoTrigger)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.AutoTrigger) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("AutoTrigger: ");
-        sb.Append(AutoTrigger);
+        __sb.Append("AutoTrigger: ");
+        __sb.Append(AutoTrigger);
       }
-      if (__isset.TriggerInterval)
-      {
-        if(!__first) { sb.Append(", "); }
+      if (__isset.TriggerInterval) {
+        if(!__first) { __sb.Append(", "); }
         __first = false;
-        sb.Append("TriggerInterval: ");
-        sb.Append(TriggerInterval);
+        __sb.Append("TriggerInterval: ");
+        __sb.Append(TriggerInterval);
       }
-      sb.Append(")");
-      return sb.ToString();
+      __sb.Append(")");
+      return __sb.ToString();
     }
+
   }
 
 }
