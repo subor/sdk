@@ -9,8 +9,8 @@ namespace Ruyi.SDK.CommonType
 {
   public enum InputCagetory
   {
-    RuyiGamePad = 0,
+    GamePad = 0,
     KeyboardMouse = 1,
-    XBox360 = 2,
+    JoyStick = 2,
   }
 }

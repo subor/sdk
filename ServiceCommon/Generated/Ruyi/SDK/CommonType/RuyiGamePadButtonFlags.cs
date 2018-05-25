@@ -5,11 +5,10 @@
  *  @generated
  */
 
-namespace Ruyi.SDK.InputManager
+namespace Ruyi.SDK.CommonType
 {
   public enum RuyiGamePadButtonFlags
   {
-    GamePad_None = 0,
     GamePad_Up = 1,
     GamePad_Down = 2,
     GamePad_Left = 4,
