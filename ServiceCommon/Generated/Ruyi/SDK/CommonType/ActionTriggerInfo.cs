@@ -24,25 +24,25 @@ namespace Ruyi.SDK.CommonType
   #endif
   public partial class ActionTriggerInfo : TBase
   {
-    private InputCagetory _InputCagetory;
+    private InputCategory _InputCategory;
     private List<InputIdentifier> _TriggerConditions;
     private bool _AutoTrigger;
     private int _TriggerInterval;
 
     /// <summary>
     /// 
-    /// <seealso cref="InputCagetory"/>
+    /// <seealso cref="InputCategory"/>
     /// </summary>
-    public InputCagetory InputCagetory
+    public InputCategory InputCategory
     {
       get
       {
-        return _InputCagetory;
+        return _InputCategory;
       }
       set
       {
-        __isset.InputCagetory = true;
-        this._InputCagetory = value;
+        __isset.InputCategory = true;
+        this._InputCategory = value;
       }
     }
 
@@ -91,7 +91,7 @@ namespace Ruyi.SDK.CommonType
     [Serializable]
     #endif
     public struct Isset {
-      public bool InputCagetory;
+      public bool InputCategory;
       public bool TriggerConditions;
       public bool AutoTrigger;
       public bool TriggerInterval;
@@ -117,7 +117,7 @@ namespace Ruyi.SDK.CommonType
           {
             case 1:
               if (field.Type == TType.I32) {
-                InputCagetory = (InputCagetory)iprot.ReadI32();
+                InputCategory = (InputCategory)iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -175,12 +175,12 @@ namespace Ruyi.SDK.CommonType
         TStruct struc = new TStruct("ActionTriggerInfo");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (__isset.InputCagetory) {
-          field.Name = "InputCagetory";
+        if (__isset.InputCategory) {
+          field.Name = "InputCategory";
           field.Type = TType.I32;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32((int)InputCagetory);
+          oprot.WriteI32((int)InputCategory);
           oprot.WriteFieldEnd();
         }
         if (TriggerConditions != null && __isset.TriggerConditions) {
@@ -226,11 +226,11 @@ namespace Ruyi.SDK.CommonType
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("ActionTriggerInfo(");
       bool __first = true;
-      if (__isset.InputCagetory) {
+      if (__isset.InputCategory) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("InputCagetory: ");
-        __sb.Append(InputCagetory);
+        __sb.Append("InputCategory: ");
+        __sb.Append(InputCategory);
       }
       if (TriggerConditions != null && __isset.TriggerConditions) {
         if(!__first) { __sb.Append(", "); }
