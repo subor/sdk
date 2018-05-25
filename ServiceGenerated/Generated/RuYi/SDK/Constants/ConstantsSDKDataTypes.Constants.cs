@@ -20,7 +20,7 @@ namespace Ruyi.SDK.Constants
   {
     public const int low_latency_socket_port = 11290;
     public const int high_latency_socket_port = 11390;
-    public const string layer0_broker_address = "inproc://{addr}:5555";
+    public const string layer0_broker_address = "tcp://{addr}:5555";
     public const string layer0_publisher_in_uri = "tcp://{addr}:5567";
     public const string layer0_publisher_out_uri = "tcp://{addr}:5568";
     public const string setting_config_folder = "resources/configs/";

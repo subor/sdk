@@ -5,14 +5,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
-using Thrift.Protocols;
-using Thrift.Transports.Client;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi.Layer0
 {
     public class SubscribeClient : IDisposable
     {
+        public const char ThreadNameToken = '|';
+
         static Dictionary<string, Type> cachedTypes = new Dictionary<string, Type>();
         static object typeLocker = new object();
 
@@ -26,7 +27,7 @@ namespace Ruyi.Layer0
 #pragma warning restore 414
         List<string> topics = new List<string>();
 
-        Task receivingThread = null;
+        Thread receivingThread = null;
 
         Dictionary<string, Delegate> MsgHandlers = new Dictionary<string, Delegate>();
 
@@ -55,10 +56,13 @@ namespace Ruyi.Layer0
             socket.Subscribe(topic);
             if (topics.Count > 0 && receivingThread == null)
             {
-                receivingThread = Task.Factory.StartNew(async () =>
+                receivingThread = new Thread(() =>
                 {
-                    while (await Receive()) ;
+                    while (Receive()) ;
                 });
+                var tokens = Thread.CurrentThread.Name?.Split(ThreadNameToken);
+                receivingThread.Name = ((tokens == null || tokens.Length == 0) ? topic : tokens[0]) + ThreadNameToken + "Subscriber";
+                receivingThread.Start();
             }
         }
 
@@ -141,7 +145,7 @@ namespace Ruyi.Layer0
             Logging.Logger.Log(message, level: level, category: Logging.MessageCategory.Subscriber);
         }
 
-        async Task<bool> Receive()
+        bool Receive()
         {
             try
             {
@@ -158,14 +162,14 @@ namespace Ruyi.Layer0
                 {
                     var respBytes = msg[2].Buffer;
                     var stream = new MemoryStream(respBytes, 0, respBytes.Length);
-                    using (var trans = new TStreamClientTransport(stream, stream))
-                    using (var proto = new TBinaryProtocol(trans))
+                    using (TStreamTransport trans = new TStreamTransport(stream, stream))
+                    using (TBinaryProtocol proto = new TBinaryProtocol(trans))
                     {
                         Type t = GetType(msgType);
                         if (t == null)
                             throw new TargetInvocationException(new Exception($"can't get type for: {msgType}"));
                         TBase ret = Activator.CreateInstance(t) as TBase;
-                        await ret.ReadAsync(proto, cts.Token);
+                        ret.Read(proto);
                         mh.DynamicInvoke(topic, ret);
                     }
                 }
@@ -194,13 +198,10 @@ namespace Ruyi.Layer0
             }
         }
 
-        CancellationTokenSource cts = new CancellationTokenSource();
-
         #region IDisposable
         public void Dispose()
         {
             disposing = true;
-            cts.Cancel();
             MsgHandlers.Clear();
             if (socket != null)
             {
