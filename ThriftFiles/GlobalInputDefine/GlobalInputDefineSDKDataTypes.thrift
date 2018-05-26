@@ -1,5 +1,8 @@
 namespace cpp Ruyi.SDK.GlobalInputDefine
 namespace csharp Ruyi.SDK.GlobalInputDefine
+namespace java Ruyi.SDK.GlobalInputDefine
+namespace netcore Ruyi.SDK.GlobalInputDefine
+namespace rs Ruyi.SDK.GlobalInputDefine
 
 enum RuyiInputDeviceType {
     XB360 = 0,

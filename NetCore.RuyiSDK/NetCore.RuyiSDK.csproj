@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NetMQ" Version="4.0.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\externals\thrift.netcore\Thrift.csproj" />
+    <ProjectReference Include="..\NetCore.Base\NetCore.Base.csproj" />
+    <ProjectReference Include="..\netcore\NetCore.Gen.Common\NetCore.Gen.Common.csproj" />
+    <ProjectReference Include="..\netcore\NetCore.Gen.Service\NetCore.Gen.Service.csproj" />
+    <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj" />
+  </ItemGroup>
+
+</Project>

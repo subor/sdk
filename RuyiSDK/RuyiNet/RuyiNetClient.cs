@@ -4,7 +4,7 @@ using Ruyi.SDK.StorageLayer;
 using System;
 using System.Net;
 using System.Net.Sockets;
-using Thrift.Protocols;
+using Thrift.Protocol;
 
 namespace Ruyi.SDK.Online
 {
@@ -49,7 +49,7 @@ namespace Ruyi.SDK.Online
                 for (int i = 0; i < MAX_PLAYERS; ++i)
                 {
                     CurrentPlayers[i] = null;
-                    var jsonResponse = BCService.Identity_SwitchToSingletonChildProfileAsync(AppId, true, i);
+                    var jsonResponse = BCService.Identity_SwitchToSingletonChildProfile(AppId, true, i);
                     var childProfile = JsonConvert.DeserializeObject<RuyiNetSwitchToChildProfileResponse>(jsonResponse);
                     if (childProfile.status != RuyiNetHttpStatus.OK)
                     {

@@ -15,9 +15,8 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Threading.Tasks;
-using Thrift.Protocols;
-using Thrift.Transports;
+using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi
 {
@@ -128,14 +127,14 @@ namespace Ruyi
 
         private RuyiSDKContext context = null;
 
-        private TClientTransport lowLatencyTransport = null;
+        private TTransport lowLatencyTransport = null;
         /// <summary>
         /// Underlying transport and protocol for low-latency messages
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public TBinaryProtocolTS LowLatencyProtocol { get; private set; }
 
-        private TClientTransport highLatencyTransport = null;
+        private TTransport highLatencyTransport = null;
         /// <summary>
         /// Underlying transport and protocol for high-latency messages
         /// </summary>
@@ -195,10 +194,8 @@ namespace Ruyi
             LowLatencyProtocol = new TBinaryProtocolTS(lowLatencyTransport);
             HighLatencyProtocol = new TBinaryProtocolTS(highLatencyTransport);
 
-            Task.WaitAll(
-                lowLatencyTransport.OpenAsync(),
-                highLatencyTransport.OpenAsync()
-                );
+            lowLatencyTransport.Open();
+            highLatencyTransport.Open();
 
             if (!ValidateVersion())
                 return false;
@@ -284,7 +281,7 @@ namespace Ruyi
             Version ver = Assembly.GetAssembly(GetType()).GetName().Version;
             var validationProtocol = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.VALIDATOR.ServiceID());
             validator = new ValidatorService.Client(validationProtocol);
-            string valid = validator.ValidateSDKAsync(ver.ToString(), CancellationToken.None).Result;
+            string valid = validator.ValidateSDK(ver.ToString());
             if (valid.StartsWith("err:"))
             {
                 Logger.Log(new LoggerMessage()

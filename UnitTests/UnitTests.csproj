@@ -54,16 +54,6 @@
     <Compile Include="Trueskill\TwoTeamTrueSkillCalculatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RuyiSDK\RuyiSDK.csproj">
-      <Project>{6636a711-7919-419c-90c1-c633aa63a8b8}</Project>
-      <Name>RuyiSDK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ServiceGenerated\ServiceGenerated.csproj">
-      <Project>{542AC8D4-8058-4E1D-9ED2-BC0B4CA04956}</Project>
-      <Name>ServiceGenerated</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk">
       <Version>15.5.0</Version>
     </PackageReference>

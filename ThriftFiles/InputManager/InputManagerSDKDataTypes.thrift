@@ -1,5 +1,8 @@
 namespace cpp Ruyi.SDK.InputManager
 namespace csharp Ruyi.SDK.InputManager
+namespace java Ruyi.SDK.InputManager
+namespace netcore Ruyi.SDK.InputManager
+namespace rs Ruyi.SDK.InputManager
 
 struct InputDeviceEventHeader {
     1: i32 headerType,

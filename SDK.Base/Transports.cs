@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Threading;
-using System.Threading.Tasks;
-using Thrift.Transports.Client;
+using Thrift.Transport;
 
 namespace Ruyi.Layer0
 {
     public interface TTransportTS
     {
         void SetWriteLocker(object locker);
-        Task Reconnect();
+        void Reconnect();
     }
 
-    public class TStreamTransportTS : TStreamClientTransport, TTransportTS
+    public class TStreamTransportTS : TStreamTransport, TTransportTS
     {
         object writeLocker = null;
 
@@ -21,32 +20,43 @@ namespace Ruyi.Layer0
             writeLocker = locker;
         }
 
-        public override async Task FlushAsync()
+        public override void Flush()
         {
-            await base.FlushAsync();
+            base.Flush();
 
             if (writeLocker != null)
                 Monitor.Exit(writeLocker);
         }
-        
-        public Task Reconnect()
+
+        public override IAsyncResult BeginFlush(AsyncCallback callback, object state)
+        {
+            return null;
+        }
+
+        public override void EndFlush(IAsyncResult asyncResult)
+        {
+            if (writeLocker != null)
+                Monitor.Exit(writeLocker);
+        }
+
+        public void Reconnect()
         {
             Close();
-            return OpenAsync();
+            Open();
         }
     }
 
-    public class TSocketTransportTS : TSocketClientTransport, TTransportTS
+    public class TSocketTransportTS : TSocket, TTransportTS
     {
         object writeLocker = null;
 
         public TSocketTransportTS(TcpClient client) : base(client)
         { }
 
-        public TSocketTransportTS(System.Net.IPAddress host, int port) : base(host, port)
+        public TSocketTransportTS(string host, int port) : base(host, port)
         { }
 
-        public TSocketTransportTS(System.Net.IPAddress host, int port, int timeout) : base(host, port, timeout)
+        public TSocketTransportTS(string host, int port, int timeout) : base(host, port, timeout)
         { }
 
         public void SetWriteLocker(object locker)
@@ -54,18 +64,29 @@ namespace Ruyi.Layer0
             writeLocker = locker;
         }
 
-        public override async Task FlushAsync()
+        public override void Flush()
         {
-            await base.FlushAsync();
+            base.Flush();
 
             if (writeLocker != null)
                 Monitor.Exit(writeLocker);
         }
-        
-        public Task Reconnect()
+
+        public override IAsyncResult BeginFlush(AsyncCallback callback, object state)
+        {
+            return null;
+        }
+
+        public override void EndFlush(IAsyncResult asyncResult)
+        {
+            if (writeLocker != null)
+                Monitor.Exit(writeLocker);
+        }
+
+        public void Reconnect()
         {
             Close();
-            return OpenAsync();
+            Open();
         }
     }
 
@@ -84,18 +105,29 @@ namespace Ruyi.Layer0
             writeLocker = locker;
         }
 
-        public override async Task FlushAsync()
+        public override void Flush()
         {
-            await base.FlushAsync();
+            base.Flush();
 
             if (writeLocker != null)
                 Monitor.Exit(writeLocker);
         }
-        
-        public Task Reconnect()
+
+        public override IAsyncResult BeginFlush(AsyncCallback callback, object state)
+        {
+            return null;
+        }
+
+        public override void EndFlush(IAsyncResult asyncResult)
+        {
+            if (writeLocker != null)
+                Monitor.Exit(writeLocker);
+        }
+
+        public void Reconnect()
         {
             Close();
-            return OpenAsync();
+            Open();
         }
     }
 

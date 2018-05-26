@@ -2,6 +2,9 @@ include "../../../commons/Config/SDKDesc/ServiceCommon/thrift/CommonType/CommonT
 
 namespace cpp Ruyi.SDK.UserServiceExternal
 namespace csharp Ruyi.SDK.UserServiceExternal
+namespace java Ruyi.SDK.UserServiceExternal
+namespace netcore Ruyi.SDK.UserServiceExternal
+namespace rs Ruyi.SDK.UserServiceExternal
 
 typedef string JSON
 

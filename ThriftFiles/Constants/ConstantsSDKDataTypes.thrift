@@ -1,11 +1,14 @@
 namespace cpp Ruyi.SDK.Constants
 namespace csharp Ruyi.SDK.Constants
+namespace java Ruyi.SDK.Constants
+namespace netcore Ruyi.SDK.Constants
+namespace rs Ruyi.SDK.Constants
 
 const i32 low_latency_socket_port = 11290
 
 const i32 high_latency_socket_port = 11390
 
-const string layer0_broker_address = "inproc://{addr}:5555"
+const string layer0_broker_address = "tcp://{addr}:5555"
 
 const string layer0_publisher_in_uri = "tcp://{addr}:5567"
 

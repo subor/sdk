@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using Thrift.Transports;
+using Thrift.Transport;
 
 namespace Ruyi
 {
@@ -65,7 +65,7 @@ namespace Ruyi
         /// Thrift transport to use.  If null will initialize default.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public TClientTransport Transport;
+        public TTransport Transport;
 
         /// <summary>
         /// Timeout (in ms) for connections.  If less than or equal to 0, use default.
