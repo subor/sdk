@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\externals\thrift.netcore\Thrift.csproj" />
-    <ProjectReference Include="..\NetCore.Gen.Common\NetCore.Gen.Common.csproj" />
+    <ProjectReference Include="..\..\externals\thrift.netcore\Thrift.csproj" />
+    <ProjectReference Include="..\SDK.Gen.CommonAsync\SDK.Gen.CommonAsync.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,10 +10,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\externals\thrift.netcore\Thrift.csproj" />
-    <ProjectReference Include="..\NetCore.Base\NetCore.Base.csproj" />
-    <ProjectReference Include="..\netcore\NetCore.Gen.Common\NetCore.Gen.Common.csproj" />
-    <ProjectReference Include="..\netcore\NetCore.Gen.Service\NetCore.Gen.Service.csproj" />
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj" />
+    <ProjectReference Include="..\SDK.BaseAsync\SDK.BaseAsync.csproj" />
+    <ProjectReference Include="..\SDK.Gen.CommonAsync\SDK.Gen.CommonAsync.csproj" />
+    <ProjectReference Include="..\SDK.Gen.ServiceAsync\SDK.Gen.ServiceAsync.csproj" />
   </ItemGroup>
 
 </Project>
