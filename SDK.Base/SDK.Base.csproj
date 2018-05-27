@@ -6,7 +6,7 @@
     <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\externals\thrift.netcore\Thrift.csproj" />
+    <ProjectReference Include="..\..\externals\thrift.csharp\Thrift.ns2.0.csproj" />
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj" />
   </ItemGroup>
 
