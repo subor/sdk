@@ -1,38 +1,38 @@
 # BIOS
 
-Similar to other devices, Ruyi has BIOS firmware.
+和其他设备一样，Ruyi主机也有自己的BIOS固件。
 
-## Version
+## 版本
 
-__Checking BIOS version of Running Machine__
+__查看主机BIOS版本__
 
-- When machine starts
-    1. Press `F2` to enter BIOS setup
-    1. Enter __Setup Utility -> Main -> BIOS Version__
+- 开机时
+    1. 按`F2`进入BIOS设置界面
+    1. 进入__Setup Utility -> Main -> BIOS Version__
 
-OR
+或者
 
-- In Windows
-    1. Run `msinfo32.exe`
-    1. Inspect __System Summary -> BIOS Version/Date__ value  
+- 已进入系统情况下
+    1. 使用命令行(cmd)运行`msinfo32.exe`
+    1. 查看__System Summary -> BIOS Version/Date__的值  
     ![](/docs/img/msinfo32_bios.png)
 
-__Checking BIOS version of Install Media__
+__查看安装镜像的BIOS版本__
 
-If archive is named `DA220013.zip` then it is version __0.13__.
+如果安装文件是`DA220013.zip`那么版本号是__0.13__。
 
-Check the top of the `DA220REL.txt` file:
+查看`DA220REL.txt`文件顶部:
 ```
 *   [Version]:
 *   BIOS Version:  DA220013.rom (V0.13)
 ```
 
-__Important__:
+__重要__:
 
-- The BIOS version __must__ match the [Ruyi OS](os.md) version because the BIOS must be paired with a compatible AMD driver.
-- If updating from BIOS 0.09 (or earlier) to BIOS 0.19 (or later), you must first update to BIOS 0.13 and OS 0.6 then update to the more recent BIOS/OS.
+- BIOS版本 __必须__ 和[Ruyi系统](os.md)相匹配，因为BIOS是和相兼容的AMD驱动配对的。
+- 如果要从BIOS 0.09(或更低)版本升级到0.19(或更高)版本，必须先升级到BIOS版本号0.13和Ruyi系统版本号0.6，然后再升级到更高版本。
 
-| BIOS Version/Date | Ruyi OS Version | AMD Driver Stack Version/Date
+| BIOS 版本/日期 | Ruyi系统版本 | AMD驱动栈版本/日期
 |-|-|-
 | [0.20](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220020.zip) | 0.11 | 1.0.1.0 2018/5/2
 | [0.19](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220019.zip) | 0.10 | 1.0.1.0 2018/4/17
@@ -42,46 +42,46 @@ __Important__:
 | [0.09](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220009.zip) 2018/1/8 | 0.3 | 0.0.7.2 2017/12/15
 | 0.08 2018/1/2 | 0.3 | 0.0.7.2 2017/12/15
 
-Also see:
+参考:
 
-- How to check the [Ruyi OS verison](os.md#Version)
-- [OS Image download](http://dev.playruyi.com/uservices)
+- 怎样查看[Ruyi系统版本](os.md#Version)
+- [操作系统镜像下载](http://dev.playruyi.com/uservices)
 
-## Flashing the BIOS
+## 刷新BIOS
 
-The BIOS can be flashed from Windows (the preferred method) or via EFI shell with thumb drive.
+可以在Windows系统下(推荐方法)，或使用装有EFI(Extensible Firmware Interface可扩展固件接口)内核的U盘刷新BIOS。
 
-![](/docs/img/warning.png) [BIOS](bios.md) updates should only be done from [Ruyi OS](os.md).  Make sure you are __not__ in [PC mode](pc_mode.md) before updating the BIOS.
+![](/docs/img/warning.png) 必须且仅能在[Ruyi系统](os.md)下更新[BIOS](bios.md)。在更新之前保证在[主机模式]而非[PC模式](pc_mode.md)。
 
-__Flash under Windows__
+__在Windows下刷新BIOS__
 
-Available BIOS v0.13 and later:
+BIOS v0.13或更高版本可参考以下步骤:
 
-1. In [Command Prompt with administrator rights](https://technet.microsoft.com/en-us/library/cc947813(v=ws.10).aspx) run: `manage-bde.exe -protectors -disable c:`
-    - This temporarily disables Bitlocker.  __Failure to do this results in an unbootable OS__ due to lost encryption data in TPM chip.
-1. Download the [latest BIOS zip file](https://bitbucket.org/playruyi/support/src/master/files/bios/)
-1. Extract the zip file and locate \Winflash\ folder
-1. Run DA22XXXX.exe to flash BIOS
+1. 在[拥有管理员(administrator)权限的命令行](https://technet.microsoft.com/en-us/library/cc947813(v=ws.10).aspx)下运行: `manage-bde.exe -protectors -disable c:`
+    - 这条命令会暂时禁用Bitlocker。  __不执行这一步会导致操作系统无法启动__，这是由于TPM芯片里的加密数据丢失造成的。
+1. 下载[最新版本BIOS的zip压缩文件](https://bitbucket.org/playruyi/support/src/master/files/bios/)
+1. 解压文件，放到\Winflash\文件夹
+1. 运行DA22XXXX.exe来刷新BIOS
 
-Flashing will progress as follows:
+刷新过程如下：
 
-| Installed BIOS | BIOS to Flash | Process
+| 安装的BIOS版本 | 刷新BIOS版本 | 过程
 |-|-|-
-| 0.16 and up | | Machine will reboot, BIOS install screen will appear, machine will reboot when finished.
-| 0.15 or lower | 0.16 or higher | Machine will freeze for a few minutes and become responsive when finished.  Manually restart the machine.
-| 0.15 or lower | 0.13 to 0.15 | A GUI window will appear
+| 0.16以上 | | 机器回重启，出现BIOS安装界面，完成后机器重启。
+| 0.15以下 | 0.16以上 | 机器会卡住几分钟，完成后可以正常响应。手动重启机器。
+| 0.15以下 | 0.13到0.15 | 会出现一个图像界面
 
-__Flash with EFI shell__
+__使用EFI内核刷新__
 
-_This approach is only needed in situations where no OS is installed.  We recommend flashing the BIOS under Windows._
+_这种方法仅适合在没有任何已安装操作系统的情况下使用。我们推荐在Windows下刷新BIOS。_
 
-First, create USB flash drive:
+首先，准备一个有刷新BIOS安装文件的USB安装盘：
 
-1. Create bootable USB drive formatted with FAT32 filesystem
-1. Unzip [EFI shell files](https://bitbucket.org/playruyi/support/raw/master/files/bios/efi.zip) to root of USB drive
-1. Unzip [BIOS binaries](https://bitbucket.org/playruyi/support/src/master/files/bios/) to root of USB drive
+1. 设置U盘文件格式为FAT32文件系统
+1. 解压[EFI内核文件](https://bitbucket.org/playruyi/support/raw/master/files/bios/efi.zip)到U盘根目录
+1. 解压[BIOS文件](https://bitbucket.org/playruyi/support/src/master/files/bios/)到U盘根目录
 
-Resulting directory structure should be similar to the following:
+文件结构应该如下所示:
 ```
 <USB root>
 │
@@ -96,30 +96,30 @@ Resulting directory structure should be similar to the following:
             BOOTX64.efi
 ```
 
-Next, on the Ruyi:
+然后，在Ruyi主机上:
 
-1. If Windows is already installed, in [Command Prompt with administrator rights](https://technet.microsoft.com/en-us/library/cc947813(v=ws.10).aspx) run: `manage-bde.exe -protectors -disable c:`
-    - This temporarily disables Bitlocker.  __Failure to do this results in an unbootable OS__ due to lost encryption data in TPM chip.
-1. Plug USB drive into any of Ruyi's USB ports and reboot it
-1. Wait for EFI Shell prompt to appear:
+1. 如果已经安装Windows， 在[拥有管理员(administrator)权限的命令行](https://technet.microsoft.com/en-us/library/cc947813(v=ws.10).aspx)下运行: `manage-bde.exe -protectors -disable c:`
+    - 这条命令会暂时禁用Bitlocker。  __不执行这一步会导致操作系统无法启动__，这是由于TPM芯片里的加密数据丢失造成的。
+1. 把U盘插入Ruyi主机的任意U盘插口，重启主机
+1. 等待EFI内核提示命令行界面:
 
        Shell>
 
-1. Consult the _Device mapping table_ for the name of the USB drive
-    - It should be `fs0` or `fs1`
-    - Type `fs0:` (or `fs1:`) and press `Enter` then run `dir` to locate the _Shell_ folder on the USB drive
-1. Change to USB drive with `fs0:` (or `fs1:`), then enter _Shell_ folder with `cd shell`
-1. Start flashing the BIOS by running `flash.nsh`
-    - A progress bar should be displayed during the flashing process
-1. Wait around 1 minute for the flashing to complete
-1. Remove the USB stick and reboot machine
+1. U盘盘符名参考_设备映射表_
+    - 盘符名应为`fs0`或`fs1`
+    - 输入`fs0:`(或者`fs1:`)，按`Enter`，然后运行`dir`显示_Shell_文件夹在U盘上的位置
+1. 修改U盘盘符名为`fs0:`(或者`fs1:`)，然后运行`cd shell`进入 _Shell_ 文件夹
+1. 运行命令`flash.nsh`，开始刷新BIOS
+    - 安装过程中会显示进度条
+1. 安装过程应该在1分钟左右
+1. 拔出U盘，重启机器
 
-## Installing Ruyi OS
+## 安装Ruyi系统
 
-![](/docs/img/warning.png) Flash the correct BIOS version __before__ installing the corresponding OS version.
+![](/docs/img/warning.png)安装Ruyi系统 __之前__ 请先确认与之匹配的BIOS版本。
 
-See [Ruyi OS installation instructions](os.md#Installation).
+参考[Ruyi系统安装说明](os.md#Installation).
 
-## Resources
+## 资源文件
 
-- [Support files](https://bitbucket.org/playruyi/support/src/master/files/)
+- [相关文件](https://bitbucket.org/playruyi/support/src/master/files/)
