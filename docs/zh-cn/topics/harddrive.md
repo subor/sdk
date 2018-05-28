@@ -24,4 +24,4 @@ Ruyi主机拥有两个支持SATA硬盘(2.5")的插槽(最大9.5mm宽):
 ![](/docs/img/harddrive_cover_open.jpg)
 1. 安装硬盘时注意硬盘安装的方向位置如下图所示:  
 ![](/docs/img/harddrive_rail.jpg)
-1. 安装完成后, 将硬盘遮挡槽轻推会原处。
+1. 安装完成后, 将硬盘遮挡槽轻推回原处。
