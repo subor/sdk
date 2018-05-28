@@ -19,6 +19,8 @@ This document will soon be retired.  Check [its replacement](https://bitbucket.o
 * [jsoncpp](https://github.com/open-source-parsers/jsoncpp), used by cpp unit test, version 1.8.3    
 * [zeromq](http://zeromq.org/), version 4.2
 
+If you don't want to build the libs above, you can use [the one we provide](https://bitbucket.org/playruyi/sdk_source/downloads/externals.zip)
+
 ##Build Guide
 1. Clone the repo, or download it, put them under the folder named ___sdk___
 1. Build the libs mentioned above, each one should have their own folder, put them in ___externals___, beside ___sdk___
