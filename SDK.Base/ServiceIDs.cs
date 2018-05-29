@@ -10,6 +10,8 @@ namespace Ruyi.Layer0
 
     enum ServiceIDs
     {
+        LAYER0,
+
         #region Low power services
         LOW_POWER_START = 101,
 
@@ -20,7 +22,6 @@ namespace Ruyi.Layer0
         STORAGELAYER,
         STORAGELAYER_INTERNAL,
         SYS_REPORTER,
-        SERVICE_HOST,
         DOWNLOADMANAGER,
         HTTP_LISTENER,
         HTTP_SUBSCRIBE,
@@ -29,6 +30,7 @@ namespace Ruyi.Layer0
         IOT_BLUETOOTH,
         SPEECH,
         MEDIA,
+        LAYER1,
 
         LOW_POWER_END,
         #endregion
@@ -106,7 +108,6 @@ namespace Ruyi.Layer0
             {
                 case ServiceIDs.HTTP_LISTENER:
                 case ServiceIDs.SYS_REPORTER:
-                case ServiceIDs.SERVICE_HOST:
                     return false;
 
                 default:

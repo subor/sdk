@@ -12,6 +12,11 @@ namespace Ruyi.Layer0
 {
     public class SubscribeClient : IDisposable
     {
+        public const char ThreadNameToken = '|';
+
+        static Dictionary<string, Type> cachedTypes = new Dictionary<string, Type>();
+        static object typeLocker = new object();
+
         public delegate void MessageHandler<T>(string topic, T msg) where T : TBase;
 
         SubscriberSocket socket = new SubscriberSocket();
@@ -55,7 +60,8 @@ namespace Ruyi.Layer0
                 {
                     while (Receive()) ;
                 });
-                receivingThread.Name = "Subscriber: " + topic;
+                var tokens = Thread.CurrentThread.Name?.Split(ThreadNameToken);
+                receivingThread.Name = ((tokens == null || tokens.Length == 0) ? topic : tokens[0]) + ThreadNameToken + "Subscriber";
                 receivingThread.Start();
             }
         }
