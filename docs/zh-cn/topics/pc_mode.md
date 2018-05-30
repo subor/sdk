@@ -1,31 +1,31 @@
-# PC Mode
+# PC模式
 
-Starting [Ruyi OS](os.md) v0.6, Ruyi can be booted to a regular PC desktop.  This is referred to as "PC mode".
+从[Ruyi系统](os.md)v0.6开始, Ruyi主机可以开机启动进入Win10的桌面系统，这就是“PC模式”。
 
-PC mode is similar to Ruyi OS- same version of Windows- but many of the security features have been turned off (Bitlocker, Device Guard Code Integrity, etc.).
+PC模式和Ruyi模式很接近。相同版本的Windows，只不过部分安全性相关的软件被禁用了(Bitlocker, Device Guard Code Integrity等等)。
 
-![](/docs/img/warning.png) [BIOS](bios.md) updates should only be done from [Ruyi OS](os.md).  Make sure you are __not__ in [PC mode](pc_mode.md) before updating the BIOS.
+![](/docs/img/warning.png) [BIOS](bios.md)升级只能在[Ruyi系统](os.md)下进行。确保在升级BIOS之前 __不在__ [PC模式](pc_mode.md)。
 
-## Switching
+## 模式切换
 
-It is possible to switch back and forth between Ruyi OS and PC mode.
+可以在Ruyi模式和PC模式之前相互切换。
 
-__As Administrator__ run `SwitchOS.cmd` (found on Windows Desktop) and restart.
+__使用 Administrator__账户 运行 `SwitchOS.cmd` (可以在桌面上找到)，然后重启。
 
-## Changing Default Language
+## 设置默认语言
 
-1. Open __Start Menu__ then __Settings__  
+1. 打开 __开始菜单(Start Menu)__ 选择 __设置(Settings)__   
     ![](/docs/img/os_lang_settings.png)
-1. Select __Time & Language__  
+1. 选择 __时间&语言(Time & Language)__  
     ![](/docs/img/os_lang_time_lang.png)
-1. Select __Region & Language__ and __Add a language__  
+1. 选择 __区域&语言(Region & Language)__ 和 __添加语言(Add a language)__  
     ![](/docs/img/os_lang_region_add.png)
-1. Select desired language  
+1. 选择需要的语言  
     ![](/docs/img/os_lang_add.png)
-1. Click __Set as default__  
+1. 点击 __设置为默认(Set as default)__  
     ![](/docs/img/os_lang_default.png)
-1. Restart the machine
+1. 重启机器
 
-## Development
+## 开发
 
-One reason for PC mode is to make developing for Ruyi easier.  You can install Visual Studio (note that [VS2017 is __not__ supported on LTSB](https://docs.microsoft.com/en-us/visualstudio/productinfo/vs2017-system-requirements-vs)) and build/debug just like it was a regular PC.  CPU/GPU/disk capabilities and performance, memory configuration and bandwidth, OS environment, and so on will be almost identical.
+PC模式的存在使得在Ruyi主机上开发游戏更为方便。安装Visual Studio(注意[VS2017无法在LTSB上使用](https://docs.microsoft.com/en-us/visualstudio/productinfo/vs2017-system-requirements-vs))，编译/调试和在普通PC上使用很接近。CPU/GPU/硬盘性能，内存配置，带宽，系统环境等等都和主机环境完全一样。
