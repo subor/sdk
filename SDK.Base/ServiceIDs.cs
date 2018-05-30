@@ -106,11 +106,25 @@ namespace Ruyi.Layer0
             {
                 case ServiceIDs.HTTP_LISTENER:
                 case ServiceIDs.SYS_REPORTER:
+                case ServiceIDs.L2FORWARDER:
+                case ServiceIDs.LAYER1:
                     return false;
 
                 default:
                     return true;
             }
+        }
+
+        public static bool IsLayer1Service(this ServiceIDs sid)
+        {
+            switch(sid)
+            {
+                case ServiceIDs.INPUTMANAGER_INTERNAL:
+                case ServiceIDs.INPUTMANAGER_EXTERNAL:
+                case ServiceIDs.LAUNCHER:
+                    return true;
+            }
+            return false;
         }
 
         public static bool IsSplitter(this ServiceIDs sid)
