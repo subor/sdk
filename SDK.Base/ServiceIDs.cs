@@ -10,8 +10,6 @@ namespace Ruyi.Layer0
 
     enum ServiceIDs
     {
-        LAYER0,
-
         #region Low power services
         LOW_POWER_START = 101,
 
