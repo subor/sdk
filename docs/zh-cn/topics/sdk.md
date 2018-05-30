@@ -5,7 +5,7 @@
 
 - __重要__ 用户必须通过客户端(main client)登陆后才能使用大部分SDK的API功能
 - 目前`Ruyi.SDK.BrainCloudApi`命名空间的许多方法还无法工作
-	- 总体来说，只有在在`RuyiNet`命名空间的API可以正常使用
+	- 总体来说，只有在`RuyiNet`命名空间的API可以正常使用
     - 这不是[brainCloud](http://getbraincloud.com/)造成的, 目前由于种种原因我们暂时这样设计。
 
 ---
