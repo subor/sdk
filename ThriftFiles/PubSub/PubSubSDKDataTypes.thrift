@@ -12,6 +12,11 @@ enum ServiceLaunchEventType {
 	BackToLowerPowerOver = 2,
 }
 
+enum UserShellEventType {
+    Login = 0,
+    Logout = 1,
+}
+
 
 /** The event will be fired when service state changed. */
 struct ServiceLaunchEvent {
@@ -19,6 +24,10 @@ struct ServiceLaunchEvent {
 	1: i32 EventType,
     /** The last service that cause the state change. */
 	2: string LastServiceID,
+}
+
+struct UserShellEvent {
+    1: UserShellEventType EventType,
 }
 
 
