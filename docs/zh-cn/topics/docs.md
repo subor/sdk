@@ -12,8 +12,8 @@ GIT仓库地址`git clone https://your_username_here@bitbucket.org/playruyi/docs
 	- __界面 -> 菜单 -> 子菜单等__ 的标题 
 	- 特指 __文件/路径/__ 或 __文件名.txt__.
 - _斜体(Italics)_
-	- 特强某段 _内容区域_
-	- __任何粗体__  内容 _已经_ __无法再使用斜体__
+	- _内容区域_ 需要引起注意
+	- __任何粗体内容__ _已经_ __无法再使用斜体__
 - `代码块(code)`
 	- 单个关键字(词)或组合，比如: `Enter`, `Ctrl+Alt+Del`
 	- 命令行语句或者其他打印文字
@@ -40,7 +40,7 @@ GIT仓库地址`git clone https://your_username_here@bitbucket.org/playruyi/docs
 - 我们使用[Visual Studio Code](https://code.visualstudio.com/)。查看相应的[下标编辑提示](https://code.visualstudio.com/Docs/languages/markdown):  
 ![](/docs/img/docs_vs_code_preview.png)
 
-- 配置VS Code，更改插入制表符(tab)为空白(spaces):
+- 配置VS Code，更改插入制表符(tab)为空白符(spaces):
 
 	1. 点击__View -> Command Palette...__ (或者按`Ctrl+Shift+P`)  
 	![](/docs/img/vscode_command.png)
