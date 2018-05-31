@@ -9,6 +9,7 @@ using Ruyi.SDK.SDKValidator;
 using Ruyi.SDK.Speech;
 using Ruyi.SDK.StorageLayer;
 using Ruyi.SDK.UserServiceExternal;
+using Ruyi.SDK.InputManager;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -112,7 +113,10 @@ namespace Ruyi
         /// </summary>
         public UserServExternal.Client UserService { get; private set; }
 
-        //public InputMgrExternal.Client InputMgr { get; private set; }
+        /// <summary>
+        /// Input related services
+        /// </summary>
+        public InputManagerService.Client InputMgr { get; private set; }
 
         /// <summary>
         /// the speech service
@@ -242,12 +246,12 @@ namespace Ruyi
                 UserService = new UserServExternal.Client(proto);
             }
 
-            //// input manger
-            //if ( IsFeatureEnabled(Features.Input) )
-            //{
-            //    var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.INPUTMANAGER_EXTERNAL.ServiceID());
-            //    InputMgr = new InputMgrExternal.Client(proto);
-            //}
+            // input manger
+            if (IsFeatureEnabled(SDKFeatures.Input))
+            {
+                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.INPUTMANAGER_EXTERNAL.ServiceID());
+                InputMgr = new InputManagerService.Client(proto);
+            }
 
             if (IsFeatureEnabled(SDKFeatures.Speech))
             {
@@ -344,8 +348,8 @@ namespace Ruyi
             UserService?.Dispose();
             UserService = null;
 
-            //InputMgr?.Dispose();
-            //InputMgr = null;
+            InputMgr?.Dispose();
+            InputMgr = null;
 
             lowLatencyTransport?.Close();
             LowLatencyProtocol?.Dispose();

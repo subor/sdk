@@ -22,18 +22,16 @@ namespace Ruyi.SDK.CommonType
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class ActionTriggerInfo : TBase
+  public partial class ActionTrigger : TBase
   {
-    private InputCagetory _InputCagetory;
-    private List<InputIdentifier> _TriggerConditions;
-    private bool _AutoTrigger;
-    private int _TriggerInterval;
+    private InputCategory _InputCagetory;
+    private List<int> _TriggerConditions;
 
     /// <summary>
     /// 
-    /// <seealso cref="InputCagetory"/>
+    /// <seealso cref="InputCategory"/>
     /// </summary>
-    public InputCagetory InputCagetory
+    public InputCategory InputCagetory
     {
       get
       {
@@ -46,7 +44,7 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public List<InputIdentifier> TriggerConditions
+    public List<int> TriggerConditions
     {
       get
       {
@@ -59,32 +57,6 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public bool AutoTrigger
-    {
-      get
-      {
-        return _AutoTrigger;
-      }
-      set
-      {
-        __isset.AutoTrigger = true;
-        this._AutoTrigger = value;
-      }
-    }
-
-    public int TriggerInterval
-    {
-      get
-      {
-        return _TriggerInterval;
-      }
-      set
-      {
-        __isset.TriggerInterval = true;
-        this._TriggerInterval = value;
-      }
-    }
-
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -93,11 +65,9 @@ namespace Ruyi.SDK.CommonType
     public struct Isset {
       public bool InputCagetory;
       public bool TriggerConditions;
-      public bool AutoTrigger;
-      public bool TriggerInterval;
     }
 
-    public ActionTriggerInfo() {
+    public ActionTrigger() {
     }
 
     public void Read (TProtocol iprot)
@@ -117,7 +87,7 @@ namespace Ruyi.SDK.CommonType
           {
             case 1:
               if (field.Type == TType.I32) {
-                InputCagetory = (InputCagetory)iprot.ReadI32();
+                InputCagetory = (InputCategory)iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -125,31 +95,16 @@ namespace Ruyi.SDK.CommonType
             case 2:
               if (field.Type == TType.List) {
                 {
-                  TriggerConditions = new List<InputIdentifier>();
+                  TriggerConditions = new List<int>();
                   TList _list0 = iprot.ReadListBegin();
                   for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
-                    InputIdentifier _elem2;
-                    _elem2 = new InputIdentifier();
-                    _elem2.Read(iprot);
+                    int _elem2;
+                    _elem2 = iprot.ReadI32();
                     TriggerConditions.Add(_elem2);
                   }
                   iprot.ReadListEnd();
                 }
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 3:
-              if (field.Type == TType.Bool) {
-                AutoTrigger = iprot.ReadBool();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 4:
-              if (field.Type == TType.I32) {
-                TriggerInterval = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -172,7 +127,7 @@ namespace Ruyi.SDK.CommonType
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("ActionTriggerInfo");
+        TStruct struc = new TStruct("ActionTrigger");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
         if (__isset.InputCagetory) {
@@ -189,29 +144,13 @@ namespace Ruyi.SDK.CommonType
           field.ID = 2;
           oprot.WriteFieldBegin(field);
           {
-            oprot.WriteListBegin(new TList(TType.Struct, TriggerConditions.Count));
-            foreach (InputIdentifier _iter3 in TriggerConditions)
+            oprot.WriteListBegin(new TList(TType.I32, TriggerConditions.Count));
+            foreach (int _iter3 in TriggerConditions)
             {
-              _iter3.Write(oprot);
+              oprot.WriteI32(_iter3);
             }
             oprot.WriteListEnd();
           }
-          oprot.WriteFieldEnd();
-        }
-        if (__isset.AutoTrigger) {
-          field.Name = "AutoTrigger";
-          field.Type = TType.Bool;
-          field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteBool(AutoTrigger);
-          oprot.WriteFieldEnd();
-        }
-        if (__isset.TriggerInterval) {
-          field.Name = "TriggerInterval";
-          field.Type = TType.I32;
-          field.ID = 4;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteI32(TriggerInterval);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -224,7 +163,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("ActionTriggerInfo(");
+      StringBuilder __sb = new StringBuilder("ActionTrigger(");
       bool __first = true;
       if (__isset.InputCagetory) {
         if(!__first) { __sb.Append(", "); }
@@ -237,18 +176,6 @@ namespace Ruyi.SDK.CommonType
         __first = false;
         __sb.Append("TriggerConditions: ");
         __sb.Append(TriggerConditions);
-      }
-      if (__isset.AutoTrigger) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("AutoTrigger: ");
-        __sb.Append(AutoTrigger);
-      }
-      if (__isset.TriggerInterval) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("TriggerInterval: ");
-        __sb.Append(TriggerInterval);
       }
       __sb.Append(")");
       return __sb.ToString();
