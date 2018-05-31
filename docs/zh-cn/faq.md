@@ -1,106 +1,105 @@
-# FAQ
+# 常见问题
 
-## Hardware
+## 硬件
 
-1. What CPU/GPU/memory?
+1. 主机的芯片/显卡/内存?
 
-    [Hardware specs](topics/hardware.md)
+    [硬件说明](topics/hardware.md)
 
-1. Does it have Blueray or DVD drive?  HDD?
+1. 主机搭载蓝光还是DVD光驱?有HDD吗?
 
-    No, neither optical drive.  It will tentatively ship with a 128 GB SSD and 1 TB HDD.  [Details](topics/hardware.md)
+    都不支持。主机之后会尝试搭载128GB的固态硬盘(SSD)和1TB的机械硬盘(HDD)。[详细](topics/hardware.md)
 
-1. The devkit I received has a single Toshiba HDD with wretched performance, is that final?
+1. 我收到的主机只有一个东芝(Toshiba)机械硬盘，性能糟糕，这个是最终版吗?
 
-    No, HDD performance problems with first batch of devkits was fixed in later hardware revisions.  [Details](topics/hardware.md#Revisions)
+    不是，机械硬盘的性能问题是第一批开发机的问题。之后生产的机器已修正该问题。[详细](topics/hardware.md#Revisions)
 
-1. Input device (gamepad/keyboard/mouse)?
+1. 输入设备(游戏手柄/键盘/鼠标)?
 
-    It will include a gamepad eerily similar to Xbox.  Keyboard/mouse are also supported.  [Details](topics/input.md)
+    早期会搭配一个类似XBox主机的手柄。键盘/鼠标是支持的。[详细](topics/input.md)
 
-1. What about peripherals, display/audio ports, etc.?
+1. 具体的外部设备，比如视频/音频插口等等?
 
-    USB, HDMI, ethernet, wifi, bluetooth, S/PDIF.  [Details](topics/hardware.md)
+    USB, HDMI, 以太网口, wifi, 蓝牙, S/PDIF.  [详细](topics/hardware.md)
 
-1. Is it supposed to be so loud?
+1. 主机运行时会比较声音比较嘈杂吗?
 
-    No.  This was a problem with earlier hardware revisions as a result of incomplete thermal design and PSU issues (see [hardware revisions](topics/hardware.md#Revisions)).
-    If you have the latest hardware, make sure you've installed the latest [BIOS](topics/bios.md) as it tweaks fan speed control.
+    不会。早期生产的主机(由于设计和PSU问题)，可能有这个问题。(参考[硬件审核](topics/hardware.md#Revisions)).
+    如果你拿到的是最新硬件，确保你升级了最新版[BIOS](topics/bios.md)(对风扇控制等做了调整)。
 
-## Software/SDK
+## 软件/SDK
 
-1. What operating system?
+1. 主机运行的操作系统?
 
-    __Windows 10 IoT Enterprise__.  Also known as Windows 10 Enterprise LTSB 2016.  [Details](topics/os.md)
+    __Windows 10 IoT 企业版__。也称为Windows 10 企业版 LTSB 2016。[详细](topics/os.md)
 
-1. What graphics APIs are supported?
+1. 支持的图像API接口?
 
-    Vulkan, OpenGL, and DirectX (9-12).  Basically, anything you can use on Windows 10.  [Details](topics/hardware.md)
+    Vulkan, OpenGL, and DirectX (9-12)。基本上在Windows10上使用的都支持。[详细](topics/hardware.md)
 
-1. What programming languages are supported?
+1. 支持的编程语言?
 
-    Lots; everything supported by [Apache Thrift](https://thrift.apache.org/docs/features).
+    很多。基本[Apache Thrift](https://thrift.apache.org/docs/features)所支持的都能使用。
 
-1. Which (C++) compiler toolchain?  Is Visual Studio supported?
+1. 具体的C++编译器?支持Visual Studio吗?
 
-    Yes, you can use Visual Studio.  You can use any toolchain with which you can create programs for Windows 10.
+    可以使用Visual Studio。你可以使用任何能在Windows10上使用的编译器。
 
-1. Is API/SDK/middle-ware XYZ supported?
+1. 支持API/SDK/各类中间件吗?
 
-    If it works on AMD hardware and Windows 10 RS1, it probably works on Ruyi.
+    如果可以在AMD硬件和Windows 10 RS1正常使用,应该就可以在Ruyi主机上使用。
 
-1. Is Unreal Engine (UE4)/Unity3D supported?  What about engine XYZ?
+1. 支持虚幻/U3d引擎吗?各种自研引擎呢?
 
-    Yes.  If it works on AMD hardware and Windows 10 RS1, it probably works on Ruyi.
+    支持。如果能在AMD硬件和Windows 10 RS1上使用,应该就可以在Ruyi主机上使用。
 
-1. How do I get started?
+1. 怎么开始?
 
-    - Take a look at the [tutorials](https://bitbucket.org/playruyi/docs/src/master/docs/en/tutorials/)
-    - Try [profiling](https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/optimization.md) your game on the hardware
+    - 参考这里[指引](https://bitbucket.org/playruyi/docs/src/master/docs/en/tutorials/)
+    - 尝试在主机上[调试观察](https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/optimization.md)你的游戏
 
-1. My question isn't answered here, I need help, what do I do?
+1. 我的问题在这里找不到答案，怎么办?
 
-    There's [more documentation](README.md), [forums](http://dev.playruyi.com/forum/), and [dev support](https://bitbucket.org/playruyi/support) (including [tickets](https://bitbucket.org/playruyi/support/issues?status=new&status=open)).
+    [更多文档](README.md), [论坛](http://dev.playruyi.com/forum/), 和[开发支持](https://bitbucket.org/playruyi/support) (包括[问题解决](https://bitbucket.org/playruyi/support/issues?status=new&status=open)).
 
-## Platform/Publishing
+## 平台/发布
 
-1. What features will be available?
+1. 支持的功能?
 
-    We plan to eventually have a feature list similar to Xbox Live, PSN, Steam, GoG, etc.
+    我们最终会提供一系列和XBox Live，PSN，Steam，GoG等近似的功能服务。
 
-1. Can you be more specific?
+1. 能具体点吗?
 
-    Achievments, friends, chat, leaderboards, match making, tournaments, cloud saves, screenshot/video sharing, live-streaming, IAP, etc.
+    成就，好友，聊天，分数版，比赛匹配，竞赛，云存档，截屏/视频分享，直播，IAP等等。
 
-1. How are games distributed?
+1. 游戏怎样发售?
 
-    Primarily digital download.  We're also considering ways to do offline install via USB storage.
+    主要是数字版下载。我们也考虑支持通过USB线下安装。
 
-1. What about security?
+1. 安全性问题?
 
-    [Ruyi OS](topics/os.md) provides security measures comparable to other consoles.  Premium content is protected against un-authorized copying.  Cheating is prevented by blocking bots, disallowing content tampering, etc..  [Details](topics/security.md)
+    [Ruyi系统](topics/os.md)提供了和其他平台相似的安全保护措施。重要内容不会被非授权方复制。作弊行为会被机器人阻止，不允许内容篡改等等。[详细](topics/security.md)
 
-1. Does [PC mode](topics/pc_mode.md) have DRM or anti-copy technology similar to Steam?  What about other security, anti-cheat, etc.?
+1. [PC模式](topics/pc_mode.md)有DRM或者类似Steam的反拷贝技术吗?其他方面的安全问题，比如反外挂等等?
 
-    PC mode is similar to a regular desktop PC environment; there is no DRM, anti-copy, anti-cheat, etc.  We are investigating providing some solution, but there is currently no roadmap.
+    PC模式类似普通的PC桌面系统;没有DRM，反拷贝，反外挂等功能。我们会考虑提供部分解决方案，但目前还没有计划表。
 
-1. Will there be TRC/TCR?
+1. 有TRC/TCR吗?
 
-    Yes.  We are well aware how much developers hate them despite them being for the benefit of consumers.  [Details](topics/trc.md)
+    有。我们了解开发者非常讨厌TRC，尽管它们有利于玩家[详细](topics/trc.md)
 
-1. What is the submission process and how long will it take?
+1. 审核具体过程?需要多长时间?
 
-    We will have more details by summer/fall 2018.
+    更多细节会在2018第三季度公布。
 
-1. What about government censorship for China?
+1. 目前中国大陆的政府审查规范是怎样的?
 
-    For early titles that will be handled offline/manually by our content/publishing team.
-
+    早期审核是由我们的内容发布团队线下手动处理。
 
 
 ## Layer0
 
-1. layer0 crashes on devkit when using version downloaded from [dev portal](http://dev.playruyi.com/) (see [issue](https://bitbucket.org/playruyi/support/issues/3))
+1. 在开发机上使用从[dev portal](http://dev.playruyi.com/)下载的Layer0会崩溃 (参考[问题](https://bitbucket.org/playruyi/support/issues/3))
     
-    > Due to IE security, untrusted files downloaded from the Internet will be in __Blocked__ state.  Right-click the executable (such as Layer0.exe), enable __Unblock file__, then __Apply__.  
-    Alternatively, you can use PowerShell command `Get-ChildItem c:\\ruyi\\*.* -Recurse | Unblock-File` to unblock all files.
+    > 由于IE浏览器的安全性问题，不被信任的文件会被 __阻止__ 。右击可执行文件(比如Layer0.exe)，勾选 __Unblock file__, 然后点 __Apply__.  
+    也可以使用PowerShell命令`Get-ChildItem c:\\ruyi\\*.* -Recurse | Unblock-File`来解锁所有文件。
