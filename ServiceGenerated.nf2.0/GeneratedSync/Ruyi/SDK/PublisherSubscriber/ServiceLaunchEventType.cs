@@ -24,5 +24,13 @@ namespace Ruyi.SDK.PublisherSubscriber
     /// Back to low power from high power mode over.
     /// </summary>
     BackToLowerPowerOver = 2,
+    /// <summary>
+    /// A Service connected to the broker, it's ready to process messages.
+    /// </summary>
+    SingleServiceStarted = 3,
+    /// <summary>
+    /// A Service been removed from the broker.
+    /// </summary>
+    SingleServiceStopped = 4,
   }
 }
