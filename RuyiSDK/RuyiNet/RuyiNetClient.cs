@@ -115,6 +115,8 @@ namespace Ruyi.SDK.Online
         /// </summary>
         public RuyiNetFriendService FriendService { get; private set; }
 
+        public RuyiNetGamificationService GamificationService { get; private set; }
+
         /// <summary>
         /// Provides operations to retrieve leaderboard data and submit scores.
         /// </summary>
@@ -251,6 +253,7 @@ namespace Ruyi.SDK.Online
 
             CloudService = new RuyiNetCloudService(this, storageLayerService);
             FriendService = new RuyiNetFriendService(this);
+            GamificationService = new RuyiNetGamificationService(this);
             LeaderboardService = new RuyiNetLeaderboardService(this);
             LobbyService = new RuyiNetLobbyService(this);
             PartyService = new RuyiNetPartyService(this);
