@@ -1,15 +1,15 @@
-# Overlay
+# 游戏呼出界面
 
-Ruyi's overlay is based off technology licensed from [Evolve](www.evolvehq.com) and provides the following functionality:  
+Ruyi的游戏内呼出界面基于[Evolve](www.evolvehq.com)提供的技术实现，提供以下功能:  
 
-* "Overlay" UI displayed on top of apps (including pop-up notifications for achievements, etc.)
-* Recording video (see [DVR](dvr.md))
-* Taking screenshots
-* __Coming soon:__ [Input](input.md) from devices
+* 游戏内呼出界面位于应用上层(包括弹出的成就通知信息等等)
+* 录制游戏视屏(参考[DVR](dvr.md))
+* 游戏截图
+* __之后会提供:__ 从外部设备[输入](input.md)功能
 
-![](/docs/img/warning.png) The following are not (yet) supported:  
+![](/docs/img/warning.png) 以下尚未支持:  
 
-* Vulkan and DirectX 12 (__Coming soon__)
-* HDR10 (not coming soon; see [hardware](hardware.md))
+* Vulkan和DirectX 12 (__之后会支持__)
+* HDR10 (不会支持，参考[硬件](hardware.md))
 
-It is implemented by dll hooking (also called dll injection) so it can work without any modifications to compatible applications.  Compatible apps are listed in `RuyiOverlay/Resources/DeployRes/gamesdb.xml`.
+使用dll注入技术实现，不需要更改应用程序即可兼容大部分(应用)。适用程序列表在`RuyiOverlay/Resources/DeployRes/gamesdb.xml`中查看。
