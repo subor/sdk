@@ -224,7 +224,7 @@ namespace Ruyi
             // init setting system
             if (IsFeatureEnabled(SDKFeatures.Settings))
             {
-                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.L0SETTINGSYSTEM_EXTERNAL.ServiceID());
+                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.SETTINGSYSTEM_EXTERNAL.ServiceID());
                 SettingSys = new SDK.SettingSystem.Api.SettingSystemService.Client(proto);
             }
 
