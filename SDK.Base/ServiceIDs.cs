@@ -2,7 +2,7 @@
 #pragma once
 #else
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace Ruyi.Layer0
 {
@@ -66,7 +66,7 @@ namespace Ruyi.Layer0
 #if !__cplusplus            // C#, some helper functions
     public static class ServiceHelper
     {
-        static Dictionary<ServiceIDs, string> shortNames = new Dictionary<ServiceIDs, string>();
+        static ConcurrentDictionary<ServiceIDs, string> shortNames = new ConcurrentDictionary<ServiceIDs, string>();
 
         // Notice: we treat worker and service as the same mostly in layer0 because currently one service only got one worker.
         public static string WorkerID(this ServiceIDs swi)
@@ -105,16 +105,12 @@ namespace Ruyi.Layer0
 
         public static string ShortString(this ServiceIDs swi)
         {
-            if(!shortNames.ContainsKey(swi))
-            {
-                shortNames.Add(swi, swi.ToString()
-                    .Replace("INTERNAL", "Int")
-                    .Replace("EXTERNAL", "Ext")
-                    .Replace("MANAGER", "Mgr")
-                    .Replace("SERVICE", "Serv")
-                    .Replace("SYSTEM", "Sys"));
-            }
-            return shortNames[swi];
+            return shortNames.GetOrAdd(swi, swi.ToString()
+                .Replace("INTERNAL", "Int")
+                .Replace("EXTERNAL", "Ext")
+                .Replace("MANAGER", "Mgr")
+                .Replace("SERVICE", "Serv")
+                .Replace("SYSTEM", "Sys"));
         }
 
         public static bool ExistForwarder(this ServiceIDs swi)
@@ -134,7 +130,7 @@ namespace Ruyi.Layer0
 
         public static bool IsLayer1Service(this ServiceIDs sid)
         {
-            switch(sid)
+            switch (sid)
             {
                 case ServiceIDs.INPUTMANAGER_INTERNAL:
                 case ServiceIDs.INPUTMANAGER_EXTERNAL:
