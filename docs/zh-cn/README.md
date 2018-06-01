@@ -54,7 +54,7 @@ __进阶内容:__
     * [版本发布说明](topics/release_notes.md)
 
 * [外设输入](topics/input.md)
-* [游戏界面](topics/overlay.md)
+* [游戏呼出界面](topics/overlay.md)
     * [DVR](topics/dvr.md)
 * [省电模式](topics/lpm.md)
 
