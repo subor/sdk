@@ -2,7 +2,7 @@
 #pragma once
 #else
 using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace Ruyi.Layer0
 {
@@ -66,7 +66,8 @@ namespace Ruyi.Layer0
 #if !__cplusplus            // C#, some helper functions
     public static class ServiceHelper
     {
-        static ConcurrentDictionary<ServiceIDs, string> shortNames = new ConcurrentDictionary<ServiceIDs, string>();
+        static Dictionary<ServiceIDs, string> shortNames = new Dictionary<ServiceIDs, string>();
+        static object locker = new object();
 
         // Notice: we treat worker and service as the same mostly in layer0 because currently one service only got one worker.
         public static string WorkerID(this ServiceIDs swi)
@@ -105,12 +106,20 @@ namespace Ruyi.Layer0
 
         public static string ShortString(this ServiceIDs swi)
         {
-            return shortNames.GetOrAdd(swi, swi.ToString()
-                .Replace("INTERNAL", "Int")
-                .Replace("EXTERNAL", "Ext")
-                .Replace("MANAGER", "Mgr")
-                .Replace("SERVICE", "Serv")
-                .Replace("SYSTEM", "Sys"));
+            lock (locker)
+            {
+                if (!shortNames.ContainsKey(swi))
+                {
+                    shortNames.Add(swi, swi.ToString()
+                        .Replace("INTERNAL", "Int")
+                        .Replace("EXTERNAL", "Ext")
+                        .Replace("MANAGER", "Mgr")
+                        .Replace("SERVICE", "Serv")
+                        .Replace("SYSTEM", "Sys"));
+                }
+                return shortNames[swi];
+            }
+
         }
 
         public static bool ExistForwarder(this ServiceIDs swi)
