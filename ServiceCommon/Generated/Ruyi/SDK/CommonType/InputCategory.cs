@@ -13,5 +13,6 @@ namespace Ruyi.SDK.CommonType
     Keyboard = 1,
     Mouse = 2,
     JoyStick = 3,
+    MaxCount = 4,
   }
 }

@@ -25,7 +25,8 @@ namespace Ruyi.SDK.CommonType
   public partial class ActionTrigger : TBase
   {
     private InputCategory _InputCagetory;
-    private List<int> _TriggerConditions;
+    private List<int> _TriggerButtons;
+    private List<int> _TriggerValue;
 
     /// <summary>
     /// 
@@ -44,16 +45,29 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public List<int> TriggerConditions
+    public List<int> TriggerButtons
     {
       get
       {
-        return _TriggerConditions;
+        return _TriggerButtons;
       }
       set
       {
-        __isset.TriggerConditions = true;
-        this._TriggerConditions = value;
+        __isset.TriggerButtons = true;
+        this._TriggerButtons = value;
+      }
+    }
+
+    public List<int> TriggerValue
+    {
+      get
+      {
+        return _TriggerValue;
+      }
+      set
+      {
+        __isset.TriggerValue = true;
+        this._TriggerValue = value;
       }
     }
 
@@ -64,7 +78,8 @@ namespace Ruyi.SDK.CommonType
     #endif
     public struct Isset {
       public bool InputCagetory;
-      public bool TriggerConditions;
+      public bool TriggerButtons;
+      public bool TriggerValue;
     }
 
     public ActionTrigger() {
@@ -95,13 +110,30 @@ namespace Ruyi.SDK.CommonType
             case 2:
               if (field.Type == TType.List) {
                 {
-                  TriggerConditions = new List<int>();
+                  TriggerButtons = new List<int>();
                   TList _list0 = iprot.ReadListBegin();
                   for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
                     int _elem2;
                     _elem2 = iprot.ReadI32();
-                    TriggerConditions.Add(_elem2);
+                    TriggerButtons.Add(_elem2);
+                  }
+                  iprot.ReadListEnd();
+                }
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.List) {
+                {
+                  TriggerValue = new List<int>();
+                  TList _list3 = iprot.ReadListBegin();
+                  for( int _i4 = 0; _i4 < _list3.Count; ++_i4)
+                  {
+                    int _elem5;
+                    _elem5 = iprot.ReadI32();
+                    TriggerValue.Add(_elem5);
                   }
                   iprot.ReadListEnd();
                 }
@@ -138,16 +170,31 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteI32((int)InputCagetory);
           oprot.WriteFieldEnd();
         }
-        if (TriggerConditions != null && __isset.TriggerConditions) {
-          field.Name = "TriggerConditions";
+        if (TriggerButtons != null && __isset.TriggerButtons) {
+          field.Name = "TriggerButtons";
           field.Type = TType.List;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
           {
-            oprot.WriteListBegin(new TList(TType.I32, TriggerConditions.Count));
-            foreach (int _iter3 in TriggerConditions)
+            oprot.WriteListBegin(new TList(TType.I32, TriggerButtons.Count));
+            foreach (int _iter6 in TriggerButtons)
             {
-              oprot.WriteI32(_iter3);
+              oprot.WriteI32(_iter6);
+            }
+            oprot.WriteListEnd();
+          }
+          oprot.WriteFieldEnd();
+        }
+        if (TriggerValue != null && __isset.TriggerValue) {
+          field.Name = "TriggerValue";
+          field.Type = TType.List;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          {
+            oprot.WriteListBegin(new TList(TType.I32, TriggerValue.Count));
+            foreach (int _iter7 in TriggerValue)
+            {
+              oprot.WriteI32(_iter7);
             }
             oprot.WriteListEnd();
           }
@@ -171,11 +218,17 @@ namespace Ruyi.SDK.CommonType
         __sb.Append("InputCagetory: ");
         __sb.Append(InputCagetory);
       }
-      if (TriggerConditions != null && __isset.TriggerConditions) {
+      if (TriggerButtons != null && __isset.TriggerButtons) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("TriggerConditions: ");
-        __sb.Append(TriggerConditions);
+        __sb.Append("TriggerButtons: ");
+        __sb.Append(TriggerButtons);
+      }
+      if (TriggerValue != null && __isset.TriggerValue) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("TriggerValue: ");
+        __sb.Append(TriggerValue);
       }
       __sb.Append(")");
       return __sb.ToString();

@@ -119,8 +119,8 @@ namespace Ruyi.Layer0
         {
             switch(sid)
             {
-                //case ServiceIDs.INPUTMANAGER_INTERNAL:
-                //case ServiceIDs.INPUTMANAGER_EXTERNAL:
+                case ServiceIDs.INPUTMANAGER_INTERNAL:
+                case ServiceIDs.INPUTMANAGER_EXTERNAL:
                 case ServiceIDs.LAUNCHER:
                     return true;
             }
