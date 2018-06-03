@@ -10,6 +10,10 @@ enum ServiceLaunchEventType {
 	HighPowerStartOver = 1,
     /** Back to low power from high power mode over. */
 	BackToLowerPowerOver = 2,
+    /** A Service connected to the broker, it's ready to process messages. */
+	SingleServiceStarted = 3,
+    /** A Service been removed from the broker. */
+	SingleServiceStopped = 4,
 }
 
 enum UserShellEventType {

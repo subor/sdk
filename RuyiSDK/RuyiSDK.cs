@@ -228,7 +228,7 @@ namespace Ruyi
             // init setting system
             if (IsFeatureEnabled(SDKFeatures.Settings))
             {
-                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.L0SETTINGSYSTEM_EXTERNAL.ServiceID());
+                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.SETTINGSYSTEM_EXTERNAL.ServiceID());
                 SettingSys = new SDK.SettingSystem.Api.SettingSystemService.Client(proto);
             }
 
@@ -373,8 +373,9 @@ namespace Ruyi
                     return;
                 }
 
-                // not Layer0
-                if(!(entry.FullName.StartsWith("Layer0,")))
+                // not Layer0 & not Layer1
+                if(!entry.FullName.StartsWith("Layer0,", StringComparison.OrdinalIgnoreCase) 
+                    && !entry.FullName.StartsWith("Layer1,", StringComparison.OrdinalIgnoreCase))
                 {
                     NetMQConfig.Cleanup(false);
                     return;

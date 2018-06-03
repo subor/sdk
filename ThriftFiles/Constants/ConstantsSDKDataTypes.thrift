@@ -29,6 +29,4 @@ const string debugger_publisher_out_uri = "tcp://{addr}:8868"
 
 const string broker_playback_message = "mmi.developer.playback"
 
-const string broker_power_message = "mmi.power.operation"
-
 

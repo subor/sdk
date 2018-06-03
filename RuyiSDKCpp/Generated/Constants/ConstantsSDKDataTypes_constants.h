@@ -29,7 +29,6 @@ class ConstantsSDKDataTypesConstants {
   std::string debugger_publisher_in_uri;
   std::string debugger_publisher_out_uri;
   std::string broker_playback_message;
-  std::string broker_power_message;
 };
 
 extern const ConstantsSDKDataTypesConstants g_ConstantsSDKDataTypes_constants;
