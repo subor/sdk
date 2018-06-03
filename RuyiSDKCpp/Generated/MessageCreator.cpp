@@ -14,12 +14,15 @@ void MessageCreator::Initialize()
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.RuyiKeyboardInput", Ruyi::SDK::InputManager::RuyiKeyboardInput);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.RuyiMouseInput", Ruyi::SDK::InputManager::RuyiMouseInput);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.RuyiJoystickInput", Ruyi::SDK::InputManager::RuyiJoystickInput);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.InputActionTriggered", Ruyi::SDK::InputManager::InputActionTriggered);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.AxisActionTriggered", Ruyi::SDK::InputManager::AxisActionTriggered);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.StorageLayer.GetLocalPathResult", Ruyi::SDK::StorageLayer::GetLocalPathResult);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.CategoryNode", Ruyi::SDK::SettingSystem::Api::CategoryNode);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.SettingSearchResult", Ruyi::SDK::SettingSystem::Api::SettingSearchResult);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.SettingTree", Ruyi::SDK::SettingSystem::Api::SettingTree);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.NodeList", Ruyi::SDK::SettingSystem::Api::NodeList);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.SettingItemNotification", Ruyi::SDK::SettingSystem::Api::SettingItemNotification);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.BrainCloudApi.BCServiceStartedNotification", Ruyi::SDK::BrainCloudApi::BCServiceStartedNotification);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.BrainCloudApi.FileUploadSuccessResult", Ruyi::SDK::BrainCloudApi::FileUploadSuccessResult);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.BrainCloudApi.FileUploadFailedResult", Ruyi::SDK::BrainCloudApi::FileUploadFailedResult);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.LocalizationService.LanguageChangedMsg", Ruyi::SDK::LocalizationService::LanguageChangedMsg);

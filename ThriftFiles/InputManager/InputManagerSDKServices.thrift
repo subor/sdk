@@ -1,4 +1,5 @@
 include "InputManagerSDKDataTypes.thrift"
+include "../../../commons/Config/SDKDesc/ServiceCommon/thrift/CommonType/CommonTypeSDKDataTypes.thrift"
 
 namespace csharp Ruyi.SDK.InputManager
 namespace cpp Ruyi.SDK.InputManager

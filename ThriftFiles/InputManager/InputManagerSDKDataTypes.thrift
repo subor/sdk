@@ -1,5 +1,9 @@
+include "../../../commons/Config/SDKDesc/ServiceCommon/thrift/CommonType/CommonTypeSDKDataTypes.thrift"
+
 namespace csharp Ruyi.SDK.InputManager
 namespace cpp Ruyi.SDK.InputManager
+
+typedef double _float
 
 enum Key {
     Unknown = 0,
@@ -375,6 +379,22 @@ struct RuyiJoystickInput {
     5: i32 Timestamp,
     6: i32 Sequence,
     7: JoystickOffset Offset,
+}
+
+struct InputActionTriggered {
+    1: string deviceId,
+    2: string userId,
+    3: string name,
+    4: i64 timestamp,
+    5: CommonTypeSDKDataTypes.ActionTrigger trigger,
+}
+
+struct AxisActionTriggered {
+    1: string deviceId,
+    2: string userId,
+    3: string name,
+    4: i64 timestamp,
+    5: _float scale,
 }
 
 

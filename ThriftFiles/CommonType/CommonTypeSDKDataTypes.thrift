@@ -13,6 +13,7 @@ enum InputCategory {
     Keyboard = 1,
     Mouse = 2,
     JoyStick = 3,
+    MaxCount = 4,
 }
 
 enum RuyiGamePadButtonFlags {
@@ -74,7 +75,8 @@ struct InputModifier {
 
 struct ActionTrigger {
     1: InputCategory InputCagetory,
-    2: list<i32> TriggerConditions,
+    2: list<i32> TriggerButtons,
+    3: list<i32> TriggerValue,
 }
 
 struct notification {

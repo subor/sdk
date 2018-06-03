@@ -45,7 +45,7 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\RotationType.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\SocialLeaderboardType.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\SortOrder.cs" />
-    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ActionTriggerInfo.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ActionTrigger.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\activeDependency.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\AppData.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\AppDataCollection.cs" />
@@ -54,13 +54,13 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ePlatform.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ErrorException.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\eUIType.cs" />
-    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\InputActionInfo.cs" />
-    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\InputCagetory.cs" />
-    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\InputIdentifier.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\InputCategory.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\InputModifier.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\LoginState.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ModuleSetting.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\notification.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\range.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\RuyiGamePadButtonFlags.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingCategory.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingItem.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\SettingValue.cs" />
@@ -68,6 +68,14 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorCode.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorInfos.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorsSDKDataTypes.Constants.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\InputManagerService.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\JoystickOffset.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\Key.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\MouseOffset.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\RuyiGamePadInput.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\RuyiJoystickInput.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\RuyiKeyboardInput.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\RuyiMouseInput.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\AddPathMsg.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\MediaFile.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\MediaFileEvent.cs" />
@@ -117,9 +125,7 @@
       <Name>Thrift</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GeneratedSync\Ruyi\SDK\InputManager\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\BuildCommon.targets" />
 </Project>
