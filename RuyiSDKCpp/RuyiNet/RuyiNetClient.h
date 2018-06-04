@@ -21,6 +21,8 @@ namespace Ruyi
 	class RuyiNetUserFileService;
 	class RuyiNetVideoService;
 	class RuyiNetMatchmakingService;
+	class RuyiNetLobbyService;
+	class RuyiNetTelemetryService;
 
 	class RuyiNetClient
 	{
@@ -35,6 +37,11 @@ namespace Ruyi
 		/// <param name="appSecret">The App secret of the game. NOTE: This is a password and should be treated as such.</param>
 		void Initialise(const std::string& appId, const std::string& appSecret);
 		
+		/// <summary>
+		/// log out logined account
+		/// </summary>
+		void LogoutAccount();
+
 		/**
 		* return appId of the game
 		*/
@@ -57,6 +64,11 @@ namespace Ruyi
 			if (index < 0 || index > 3) index = 0;
 			return mCurrentPlayers[index]; 
 		}
+
+		/// <summary>
+		/// Returns the index of the first active player available.
+		/// </summary>
+		int ActivePlayerIndex();
 
 		SDK::BrainCloudApi::BrainCloudServiceClient * const GetBCService() { return BCService; }
 		/// <summary>
@@ -87,6 +99,14 @@ namespace Ruyi
 		/// Allows users to locate players to play against each other.
 		/// </summary>
 		RuyiNetMatchmakingService* const GetMatchmakingService() { return mMatchmakingService; }
+		/// <summary>
+		/// Manages lobbies for network games.
+		/// </summary>
+		RuyiNetLobbyService* const GetLobbyService() { return mLobbyService; }
+		/// <summary>
+		/// Handles pushing telemetry data to the cloud.
+		/// </summary>
+		RuyiNetTelemetryService* const GetTelemetryService() { return mTelemetryService; }
 
 		static const int MAX_PLAYERS = 4;
 
@@ -133,6 +153,8 @@ namespace Ruyi
 		RuyiNetUserFileService* mUserFileService;
 		RuyiNetVideoService* mVideoService;
 		RuyiNetMatchmakingService* mMatchmakingService;
+		RuyiNetLobbyService* mLobbyService;
+		RuyiNetTelemetryService* mTelemetryService;
 
 		struct RuyiNetProfile* mCurrentPlayers[MAX_PLAYERS];
 

@@ -17,16 +17,16 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>..\..\output\Debug\RuyiSDK.nf2.0\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET20</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>..\..\output\Release\RuyiSDK.nf2.0\</OutputPath>
+    <DefineConstants>TRACE;NET20</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -60,6 +60,12 @@
     <Compile Include="..\RuyiSDK\RuyiNet\Request\RuyiNetProfileIdRequest.cs">
       <Link>RuyiNet\Request\RuyiNetProfileIdRequest.cs</Link>
     </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Response\RuyiNetAchievementResponse.cs">
+      <Link>RuyiNet\Response\RuyiNetAchievementResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Response\RuyiNetGetGameManifestResponse.cs">
+      <Link>RuyiNet\Response\RuyiNetGetGameManifestResponse.cs</Link>
+    </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Response\RuyiNetGetProfileResponse.cs">
       <Link>RuyiNet\Response\RuyiNetGetProfileResponse.cs</Link>
     </Compile>
@@ -84,50 +90,68 @@
     <Compile Include="..\RuyiSDK\RuyiNet\RuyiNetException.cs">
       <Link>RuyiNet\RuyiNetException.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetCloudService.cs">
-      <Link>RuyiNet\Service\RuyiNetCloudService.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\RuyiNetHttpStatus.cs">
+      <Link>RuyiNet\RuyiNetHttpStatus.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetFriendService.cs">
-      <Link>RuyiNet\Service\RuyiNetFriendService.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Cloud\RuyiNetCloudService.cs">
+      <Link>RuyiNet\Service\Cloud\RuyiNetCloudService.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetLeaderboardService.cs">
-      <Link>RuyiNet\Service\RuyiNetLeaderboardService.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\RuyiNetFriendService.cs">
+      <Link>RuyiNet\Service\Friend\RuyiNetFriendService.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetLeaderboardType.cs">
-      <Link>RuyiNet\Service\RuyiNetLeaderboardType.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Gamification\RuyiNetAchievement.cs">
+      <Link>RuyiNet\Service\Gamification\RuyiNetAchievement.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetLobby.cs">
-      <Link>RuyiNet\Service\RuyiNetLobby.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Gamification\RuyiNetAchievementStatus.cs">
+      <Link>RuyiNet\Service\Gamification\RuyiNetAchievementStatus.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetLobbyService.cs">
-      <Link>RuyiNet\Service\RuyiNetLobbyService.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Gamification\RuyiNetGamificationService.cs">
+      <Link>RuyiNet\Service\Gamification\RuyiNetGamificationService.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetLobbyType.cs">
-      <Link>RuyiNet\Service\RuyiNetLobbyType.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\RuyiNetLeaderboardService.cs">
+      <Link>RuyiNet\Service\Leaderboard\RuyiNetLeaderboardService.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetPartyService.cs">
-      <Link>RuyiNet\Service\RuyiNetPartyService.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\RuyiNetLeaderboardType.cs">
+      <Link>RuyiNet\Service\Leaderboard\RuyiNetLeaderboardType.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetProfileService.cs">
-      <Link>RuyiNet\Service\RuyiNetProfileService.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\RuyiNetRotationType.cs">
+      <Link>RuyiNet\Service\Leaderboard\RuyiNetRotationType.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetRotationType.cs">
-      <Link>RuyiNet\Service\RuyiNetRotationType.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Lobby\RuyiNetLobby.cs">
+      <Link>RuyiNet\Service\Lobby\RuyiNetLobby.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Lobby\RuyiNetLobbyService.cs">
+      <Link>RuyiNet\Service\Lobby\RuyiNetLobbyService.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Lobby\RuyiNetLobbyType.cs">
+      <Link>RuyiNet\Service\Lobby\RuyiNetLobbyType.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Party\RuyiNetPartyService.cs">
+      <Link>RuyiNet\Service\Party\RuyiNetPartyService.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Patch\RuyiNetGameManifest.cs">
+      <Link>RuyiNet\Service\Patch\RuyiNetGameManifest.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Patch\RuyiNetPatchService.cs">
+      <Link>RuyiNet\Service\Patch\RuyiNetPatchService.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Profile\RuyiNetProfileService.cs">
+      <Link>RuyiNet\Service\Profile\RuyiNetProfileService.cs</Link>
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetService.cs">
       <Link>RuyiNet\Service\RuyiNetService.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetTelemetryService.cs">
-      <Link>RuyiNet\Service\RuyiNetTelemetryService.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Telemetry\RuyiNetTelemetryService.cs">
+      <Link>RuyiNet\Service\Telemetry\RuyiNetTelemetryService.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetTelemetrySession.cs">
-      <Link>RuyiNet\Service\RuyiNetTelemetrySession.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Telemetry\RuyiNetTelemetrySession.cs">
+      <Link>RuyiNet\Service\Telemetry\RuyiNetTelemetrySession.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetUserFileService.cs">
-      <Link>RuyiNet\Service\RuyiNetUserFileService.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\UserFile\RuyiNetUserFileService.cs">
+      <Link>RuyiNet\Service\UserFile\RuyiNetUserFileService.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Service\RuyiNetVideoService.cs">
-      <Link>RuyiNet\Service\RuyiNetVideoService.cs</Link>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Video\RuyiNetVideoService.cs">
+      <Link>RuyiNet\Service\Video\RuyiNetVideoService.cs</Link>
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Task\RuyiNetTask.cs">
       <Link>RuyiNet\Task\RuyiNetTask.cs</Link>

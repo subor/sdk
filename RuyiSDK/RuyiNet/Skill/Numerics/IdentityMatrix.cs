@@ -1,4 +1,4 @@
-﻿namespace Ruyi
+﻿namespace Ruyi.SDK.Online
 {
     public class IdentityMatrix : DiagonalMatrix
     {

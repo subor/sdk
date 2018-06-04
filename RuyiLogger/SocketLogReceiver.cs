@@ -1,4 +1,4 @@
-﻿using RuyiLogger;
+﻿using Ruyi.Logging;
 using NetMQ;
 using NetMQ.Sockets;
 using Newtonsoft.Json;
@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RuyiDevTools
+namespace Ruyi.DevTool
 {
     public class SocketLogReceiver
     {
         public delegate void ReceiveCallback(LoggerMessage msg);
 
-        CancellationTokenSource cancel = new CancellationTokenSource();
+        CancellationTokenSource cancel = null;
         DealerSocket subSocket = new DealerSocket();
         ReceiveCallback receiveCallback = null;
 
@@ -24,9 +24,10 @@ namespace RuyiDevTools
             subSocket.ReceiveReady += Receive;
             receiveCallback = cb;
 
+            cancel = new CancellationTokenSource();
             Task.Factory.StartNew(() =>
             {
-                while (true)
+                while (!cancel.IsCancellationRequested)
                 {
                     subSocket.Poll();
                 }

@@ -24,6 +24,8 @@ class InputDeviceEventHeader;
 
 class InputDeviceConnectionChanged;
 
+class RuyiInputStateChanged;
+
 class InputDeviceStateChangedX360;
 
 class InputDeviceStateChangedGamepad;
@@ -37,8 +39,6 @@ class InputDeviceStateChangedMouse;
 class InputActionTriggered;
 
 class RuyiInputEvent;
-
-class RuyiInputStateChanged;
 
 class InputDeviceStateChangedRuyiController;
 
@@ -154,9 +154,62 @@ inline std::ostream& operator<<(std::ostream& out, const InputDeviceConnectionCh
   return out;
 }
 
+typedef struct _RuyiInputStateChanged__isset {
+  _RuyiInputStateChanged__isset() : keyPressEvent(false), analogEvent(false) {}
+  bool keyPressEvent :1;
+  bool analogEvent :1;
+} _RuyiInputStateChanged__isset;
+
+class RuyiInputStateChanged : public virtual ::apache::thrift::TBase {
+ public:
+
+  RuyiInputStateChanged(const RuyiInputStateChanged&);
+  RuyiInputStateChanged& operator=(const RuyiInputStateChanged&);
+  RuyiInputStateChanged() {
+  }
+
+  virtual ~RuyiInputStateChanged() throw();
+  std::vector<RuyiInputEvent>  keyPressEvent;
+  std::vector<RuyiInputEvent>  analogEvent;
+
+  _RuyiInputStateChanged__isset __isset;
+
+  void __set_keyPressEvent(const std::vector<RuyiInputEvent> & val);
+
+  void __set_analogEvent(const std::vector<RuyiInputEvent> & val);
+
+  bool operator == (const RuyiInputStateChanged & rhs) const
+  {
+    if (!(keyPressEvent == rhs.keyPressEvent))
+      return false;
+    if (!(analogEvent == rhs.analogEvent))
+      return false;
+    return true;
+  }
+  bool operator != (const RuyiInputStateChanged &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const RuyiInputStateChanged & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(RuyiInputStateChanged &a, RuyiInputStateChanged &b);
+
+inline std::ostream& operator<<(std::ostream& out, const RuyiInputStateChanged& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
 typedef struct _InputDeviceStateChangedX360__isset {
-  _InputDeviceStateChangedX360__isset() : PacketNumber(false), LeftThumbDeadZone(false), RightThumbDeadZone(false), Buttons(false), LeftTrigger(false), RightTrigger(false), LeftThumbX(false), LeftThumbY(false), RightThumbX(false), RightThumbY(false) {}
+  _InputDeviceStateChangedX360__isset() : PacketNumber(false), DeviceId(false), LeftThumbDeadZone(false), RightThumbDeadZone(false), Buttons(false), LeftTrigger(false), RightTrigger(false), LeftThumbX(false), LeftThumbY(false), RightThumbX(false), RightThumbY(false), Changed(false) {}
   bool PacketNumber :1;
+  bool DeviceId :1;
   bool LeftThumbDeadZone :1;
   bool RightThumbDeadZone :1;
   bool Buttons :1;
@@ -166,6 +219,7 @@ typedef struct _InputDeviceStateChangedX360__isset {
   bool LeftThumbY :1;
   bool RightThumbX :1;
   bool RightThumbY :1;
+  bool Changed :1;
 } _InputDeviceStateChangedX360__isset;
 
 class InputDeviceStateChangedX360 : public virtual ::apache::thrift::TBase {
@@ -173,11 +227,12 @@ class InputDeviceStateChangedX360 : public virtual ::apache::thrift::TBase {
 
   InputDeviceStateChangedX360(const InputDeviceStateChangedX360&);
   InputDeviceStateChangedX360& operator=(const InputDeviceStateChangedX360&);
-  InputDeviceStateChangedX360() : PacketNumber(0), LeftThumbDeadZone(0), RightThumbDeadZone(0), Buttons(0), LeftTrigger(0), RightTrigger(0), LeftThumbX(0), LeftThumbY(0), RightThumbX(0), RightThumbY(0) {
+  InputDeviceStateChangedX360() : PacketNumber(0), DeviceId(), LeftThumbDeadZone(0), RightThumbDeadZone(0), Buttons(0), LeftTrigger(0), RightTrigger(0), LeftThumbX(0), LeftThumbY(0), RightThumbX(0), RightThumbY(0) {
   }
 
   virtual ~InputDeviceStateChangedX360() throw();
   int64_t PacketNumber;
+  std::string DeviceId;
   int16_t LeftThumbDeadZone;
   int16_t RightThumbDeadZone;
   int32_t Buttons;
@@ -187,10 +242,13 @@ class InputDeviceStateChangedX360 : public virtual ::apache::thrift::TBase {
   int16_t LeftThumbY;
   int16_t RightThumbX;
   int16_t RightThumbY;
+  RuyiInputStateChanged Changed;
 
   _InputDeviceStateChangedX360__isset __isset;
 
   void __set_PacketNumber(const int64_t val);
+
+  void __set_DeviceId(const std::string& val);
 
   void __set_LeftThumbDeadZone(const int16_t val);
 
@@ -210,9 +268,13 @@ class InputDeviceStateChangedX360 : public virtual ::apache::thrift::TBase {
 
   void __set_RightThumbY(const int16_t val);
 
+  void __set_Changed(const RuyiInputStateChanged& val);
+
   bool operator == (const InputDeviceStateChangedX360 & rhs) const
   {
     if (!(PacketNumber == rhs.PacketNumber))
+      return false;
+    if (!(DeviceId == rhs.DeviceId))
       return false;
     if (!(LeftThumbDeadZone == rhs.LeftThumbDeadZone))
       return false;
@@ -231,6 +293,8 @@ class InputDeviceStateChangedX360 : public virtual ::apache::thrift::TBase {
     if (!(RightThumbX == rhs.RightThumbX))
       return false;
     if (!(RightThumbY == rhs.RightThumbY))
+      return false;
+    if (!(Changed == rhs.Changed))
       return false;
     return true;
   }
@@ -395,7 +459,8 @@ inline std::ostream& operator<<(std::ostream& out, const InputDeviceStateChanged
 }
 
 typedef struct _InputDeviceStateChangedKeyboard__isset {
-  _InputDeviceStateChangedKeyboard__isset() : RawOffset(false), Value(false), Timestamp(false), Sequence(false), Key(false), IsPressed(false), IsReleased(false) {}
+  _InputDeviceStateChangedKeyboard__isset() : DeviceId(false), RawOffset(false), Value(false), Timestamp(false), Sequence(false), Key(false), IsPressed(false), IsReleased(false) {}
+  bool DeviceId :1;
   bool RawOffset :1;
   bool Value :1;
   bool Timestamp :1;
@@ -410,10 +475,11 @@ class InputDeviceStateChangedKeyboard : public virtual ::apache::thrift::TBase {
 
   InputDeviceStateChangedKeyboard(const InputDeviceStateChangedKeyboard&);
   InputDeviceStateChangedKeyboard& operator=(const InputDeviceStateChangedKeyboard&);
-  InputDeviceStateChangedKeyboard() : RawOffset(0), Value(0), Timestamp(0), Sequence(0), Key(0), IsPressed(0), IsReleased(0) {
+  InputDeviceStateChangedKeyboard() : DeviceId(), RawOffset(0), Value(0), Timestamp(0), Sequence(0), Key(0), IsPressed(0), IsReleased(0) {
   }
 
   virtual ~InputDeviceStateChangedKeyboard() throw();
+  std::string DeviceId;
   int32_t RawOffset;
   int32_t Value;
   int32_t Timestamp;
@@ -423,6 +489,8 @@ class InputDeviceStateChangedKeyboard : public virtual ::apache::thrift::TBase {
   bool IsReleased;
 
   _InputDeviceStateChangedKeyboard__isset __isset;
+
+  void __set_DeviceId(const std::string& val);
 
   void __set_RawOffset(const int32_t val);
 
@@ -440,6 +508,8 @@ class InputDeviceStateChangedKeyboard : public virtual ::apache::thrift::TBase {
 
   bool operator == (const InputDeviceStateChangedKeyboard & rhs) const
   {
+    if (!(DeviceId == rhs.DeviceId))
+      return false;
     if (!(RawOffset == rhs.RawOffset))
       return false;
     if (!(Value == rhs.Value))
@@ -686,63 +756,11 @@ inline std::ostream& operator<<(std::ostream& out, const RuyiInputEvent& obj)
   return out;
 }
 
-typedef struct _RuyiInputStateChanged__isset {
-  _RuyiInputStateChanged__isset() : keyPressEvent(false), analogEvent(false) {}
-  bool keyPressEvent :1;
-  bool analogEvent :1;
-} _RuyiInputStateChanged__isset;
-
-class RuyiInputStateChanged : public virtual ::apache::thrift::TBase {
- public:
-
-  RuyiInputStateChanged(const RuyiInputStateChanged&);
-  RuyiInputStateChanged& operator=(const RuyiInputStateChanged&);
-  RuyiInputStateChanged() {
-  }
-
-  virtual ~RuyiInputStateChanged() throw();
-  std::vector<RuyiInputEvent>  keyPressEvent;
-  std::vector<RuyiInputEvent>  analogEvent;
-
-  _RuyiInputStateChanged__isset __isset;
-
-  void __set_keyPressEvent(const std::vector<RuyiInputEvent> & val);
-
-  void __set_analogEvent(const std::vector<RuyiInputEvent> & val);
-
-  bool operator == (const RuyiInputStateChanged & rhs) const
-  {
-    if (!(keyPressEvent == rhs.keyPressEvent))
-      return false;
-    if (!(analogEvent == rhs.analogEvent))
-      return false;
-    return true;
-  }
-  bool operator != (const RuyiInputStateChanged &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const RuyiInputStateChanged & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-  virtual void printTo(std::ostream& out) const;
-};
-
-void swap(RuyiInputStateChanged &a, RuyiInputStateChanged &b);
-
-inline std::ostream& operator<<(std::ostream& out, const RuyiInputStateChanged& obj)
-{
-  obj.printTo(out);
-  return out;
-}
-
 typedef struct _InputDeviceStateChangedRuyiController__isset {
-  _InputDeviceStateChangedRuyiController__isset() : PacketId(false), ChannelId(false), UID(false), KeyPress(false), AnalogL2(false), AnalogR2(false), AnalogLeftJoyX(false), AnalogLeftJoyY(false), AnalogRightJoyX(false), AnalogRightJoyY(false), Changed(false) {}
+  _InputDeviceStateChangedRuyiController__isset() : PacketId(false), ChannelId(false), DeviceId(false), KeyPress(false), AnalogL2(false), AnalogR2(false), AnalogLeftJoyX(false), AnalogLeftJoyY(false), AnalogRightJoyX(false), AnalogRightJoyY(false), Changed(false) {}
   bool PacketId :1;
   bool ChannelId :1;
-  bool UID :1;
+  bool DeviceId :1;
   bool KeyPress :1;
   bool AnalogL2 :1;
   bool AnalogR2 :1;
@@ -758,14 +776,14 @@ class InputDeviceStateChangedRuyiController : public virtual ::apache::thrift::T
 
   InputDeviceStateChangedRuyiController(const InputDeviceStateChangedRuyiController&);
   InputDeviceStateChangedRuyiController& operator=(const InputDeviceStateChangedRuyiController&);
-  InputDeviceStateChangedRuyiController() : PacketId(0), ChannelId(0), UID(), KeyPress(0), AnalogL2(0), AnalogR2(0), AnalogLeftJoyX(0), AnalogLeftJoyY(0), AnalogRightJoyX(0), AnalogRightJoyY(0) {
+  InputDeviceStateChangedRuyiController() : PacketId(0), ChannelId(0), DeviceId(), KeyPress(0), AnalogL2(0), AnalogR2(0), AnalogLeftJoyX(0), AnalogLeftJoyY(0), AnalogRightJoyX(0), AnalogRightJoyY(0) {
   }
 
   virtual ~InputDeviceStateChangedRuyiController() throw();
   int64_t PacketId;
   int32_t ChannelId;
-  std::string UID;
-  int64_t KeyPress;
+  std::string DeviceId;
+  int32_t KeyPress;
   int8_t AnalogL2;
   int8_t AnalogR2;
   int8_t AnalogLeftJoyX;
@@ -780,9 +798,9 @@ class InputDeviceStateChangedRuyiController : public virtual ::apache::thrift::T
 
   void __set_ChannelId(const int32_t val);
 
-  void __set_UID(const std::string& val);
+  void __set_DeviceId(const std::string& val);
 
-  void __set_KeyPress(const int64_t val);
+  void __set_KeyPress(const int32_t val);
 
   void __set_AnalogL2(const int8_t val);
 
@@ -804,7 +822,7 @@ class InputDeviceStateChangedRuyiController : public virtual ::apache::thrift::T
       return false;
     if (!(ChannelId == rhs.ChannelId))
       return false;
-    if (!(UID == rhs.UID))
+    if (!(DeviceId == rhs.DeviceId))
       return false;
     if (!(KeyPress == rhs.KeyPress))
       return false;

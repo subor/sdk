@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using Thrift.Protocol;
 
-namespace Ruyi
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// The main client for accessing Ruyi Net Services
@@ -25,10 +25,7 @@ namespace Ruyi
         {
             if (Initialised)
             {
-                if (onInitialised != null)
-                {
-                    onInitialised();
-                }
+                onInitialised?.Invoke();
 
                 return;
             }
@@ -54,7 +51,7 @@ namespace Ruyi
                     CurrentPlayers[i] = null;
                     var jsonResponse = BCService.Identity_SwitchToSingletonChildProfile(AppId, true, i);
                     var childProfile = JsonConvert.DeserializeObject<RuyiNetSwitchToChildProfileResponse>(jsonResponse);
-                    if (childProfile.status != 200)
+                    if (childProfile.status != RuyiNetHttpStatus.OK)
                     {
                         continue;
                     }
@@ -68,7 +65,7 @@ namespace Ruyi
                     jsonResponse = BCService.Script_RunParentScript("GetProfile", JsonConvert.SerializeObject(payload), "RUYI", i);
 
                     var profileData = JsonConvert.DeserializeObject<RuyiNetGetProfileResponse>(jsonResponse);
-                    if (profileData.status != 200 ||
+                    if (profileData.status != RuyiNetHttpStatus.OK ||
                         profileData.data.success == false)
                     {
                         continue;
@@ -79,7 +76,7 @@ namespace Ruyi
 
                 var response = new RuyiNetResponse()
                 {
-                    status = 200
+                    status = RuyiNetHttpStatus.OK
                 };
 
                 return JsonConvert.SerializeObject(response);
@@ -87,10 +84,7 @@ namespace Ruyi
             {
                 Initialised = true;
 
-                if (onInitialised != null)
-                {
-                    onInitialised();
-                }
+                onInitialised?.Invoke();
             });
         }
 
@@ -121,6 +115,8 @@ namespace Ruyi
         /// </summary>
         public RuyiNetFriendService FriendService { get; private set; }
 
+        public RuyiNetGamificationService GamificationService { get; private set; }
+
         /// <summary>
         /// Provides operations to retrieve leaderboard data and submit scores.
         /// </summary>
@@ -135,6 +131,11 @@ namespace Ruyi
         /// Allows players to gather together in a party.
         /// </summary>
         public RuyiNetPartyService PartyService { get; private set; }
+
+        /// <summary>
+        /// Get manifest info for a game.
+        /// </summary>
+        public RuyiNetPatchService PatchService { get; private set; }
 
         /// <summary>
         /// Allows users to upload files to their individual accounts
@@ -218,7 +219,7 @@ namespace Ruyi
         /// Returns TRUE while there are tasks in the queue.
         /// </summary>
         public bool IsWorking { get { return mTaskQueue.Work > 0; } }
-
+        
         /// <summary>
         /// Cleanup native resources before destruction.
         /// </summary>
@@ -252,9 +253,11 @@ namespace Ruyi
 
             CloudService = new RuyiNetCloudService(this, storageLayerService);
             FriendService = new RuyiNetFriendService(this);
+            GamificationService = new RuyiNetGamificationService(this);
             LeaderboardService = new RuyiNetLeaderboardService(this);
             LobbyService = new RuyiNetLobbyService(this);
             PartyService = new RuyiNetPartyService(this);
+            PatchService = new RuyiNetPatchService(this);
             ProfileService = new RuyiNetProfileService(this);
             TelemetryService = new RuyiNetTelemetryService(this);
             UserFileService = new RuyiNetUserFileService(this);

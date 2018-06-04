@@ -1338,6 +1338,15 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="clientIndex"></param>
       string Identity_RefreshIdentity(string externalId, string authenticationToken, string authenticationType, int clientIndex);
       /// <summary>
+      /// Allows email identity email address to be changed
+      /// </summary>
+      /// <param name="oldEmailAddress">Old email address</param>
+      /// <param name="password">Password for identity</param>
+      /// <param name="newEmailAddress">New email address</param>
+      /// <param name="updateContactEmail">Whether to update contact email in profile</param>
+      /// <param name="clientIndex"></param>
+      string Identity_ChangeEmailIdentity(string oldEmailAddress, string password, string newEmailAddress, bool updateContactEmail, int clientIndex);
+      /// <summary>
       /// Attaches a peer identity to this user's profile
       /// </summary>
       /// <param name="peer">Name of the peer to connect to</param>
@@ -2263,6 +2272,7 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="versionId">Version of the tournament. Use -1 for the latest version.</param>
       /// <param name="clientIndex"></param>
       string Tournament_ViewReward(string leaderboardId, int versionId, int clientIndex);
+      string Patch_GetGameManifest(string gameId, int clientIndex);
       string SocialFeed_ShareVideo(int timestamp, string resource, List<string> tagged, List<string> show, List<string> block, int clientIndex);
       string SocialFeed_ShareScreenshot(int timestamp, string resource, List<string> tagged, List<string> show, List<string> block, int clientIndex);
       string SocialFeed_ShareAchievement(int timestamp, string resource, List<string> tagged, List<string> show, List<string> block, int clientIndex);
@@ -4150,6 +4160,18 @@ namespace Ruyi.SDK.BrainCloudApi
       string End_Identity_RefreshIdentity(IAsyncResult asyncResult);
       #endif
       /// <summary>
+      /// Allows email identity email address to be changed
+      /// </summary>
+      /// <param name="oldEmailAddress">Old email address</param>
+      /// <param name="password">Password for identity</param>
+      /// <param name="newEmailAddress">New email address</param>
+      /// <param name="updateContactEmail">Whether to update contact email in profile</param>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Identity_ChangeEmailIdentity(AsyncCallback callback, object state, string oldEmailAddress, string password, string newEmailAddress, bool updateContactEmail, int clientIndex);
+      string End_Identity_ChangeEmailIdentity(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
       /// Attaches a peer identity to this user's profile
       /// </summary>
       /// <param name="peer">Name of the peer to connect to</param>
@@ -5425,6 +5447,10 @@ namespace Ruyi.SDK.BrainCloudApi
       #if SILVERLIGHT
       IAsyncResult Begin_Tournament_ViewReward(AsyncCallback callback, object state, string leaderboardId, int versionId, int clientIndex);
       string End_Tournament_ViewReward(IAsyncResult asyncResult);
+      #endif
+      #if SILVERLIGHT
+      IAsyncResult Begin_Patch_GetGameManifest(AsyncCallback callback, object state, string gameId, int clientIndex);
+      string End_Patch_GetGameManifest(IAsyncResult asyncResult);
       #endif
       #if SILVERLIGHT
       IAsyncResult Begin_SocialFeed_ShareVideo(AsyncCallback callback, object state, int timestamp, string resource, List<string> tagged, List<string> show, List<string> block, int clientIndex);
@@ -18044,6 +18070,80 @@ namespace Ruyi.SDK.BrainCloudApi
 
       
       #if SILVERLIGHT
+      public IAsyncResult Begin_Identity_ChangeEmailIdentity(AsyncCallback callback, object state, string oldEmailAddress, string password, string newEmailAddress, bool updateContactEmail, int clientIndex)
+      {
+        return send_Identity_ChangeEmailIdentity(callback, state, oldEmailAddress, password, newEmailAddress, updateContactEmail, clientIndex);
+      }
+
+      public string End_Identity_ChangeEmailIdentity(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Identity_ChangeEmailIdentity();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Allows email identity email address to be changed
+      /// </summary>
+      /// <param name="oldEmailAddress">Old email address</param>
+      /// <param name="password">Password for identity</param>
+      /// <param name="newEmailAddress">New email address</param>
+      /// <param name="updateContactEmail">Whether to update contact email in profile</param>
+      /// <param name="clientIndex"></param>
+      public string Identity_ChangeEmailIdentity(string oldEmailAddress, string password, string newEmailAddress, bool updateContactEmail, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Identity_ChangeEmailIdentity(oldEmailAddress, password, newEmailAddress, updateContactEmail, clientIndex);
+        return recv_Identity_ChangeEmailIdentity();
+
+        #else
+        var asyncResult = Begin_Identity_ChangeEmailIdentity(null, null, oldEmailAddress, password, newEmailAddress, updateContactEmail, clientIndex);
+        return End_Identity_ChangeEmailIdentity(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Identity_ChangeEmailIdentity(AsyncCallback callback, object state, string oldEmailAddress, string password, string newEmailAddress, bool updateContactEmail, int clientIndex)
+      #else
+      public void send_Identity_ChangeEmailIdentity(string oldEmailAddress, string password, string newEmailAddress, bool updateContactEmail, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Identity_ChangeEmailIdentity", TMessageType.Call, seqid_));
+        Identity_ChangeEmailIdentity_args args = new Identity_ChangeEmailIdentity_args();
+        args.OldEmailAddress = oldEmailAddress;
+        args.Password = password;
+        args.NewEmailAddress = newEmailAddress;
+        args.UpdateContactEmail = updateContactEmail;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public string recv_Identity_ChangeEmailIdentity()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Identity_ChangeEmailIdentity_result result = new Identity_ChangeEmailIdentity_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Identity_ChangeEmailIdentity failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
       public IAsyncResult Begin_Identity_AttachPeerProfile(AsyncCallback callback, object state, string peer, string externalId, string authenticationToken, string authenticationType, string externalAuthName, bool forceCreate, int clientIndex)
       {
         return send_Identity_AttachPeerProfile(callback, state, peer, externalId, authenticationToken, authenticationType, externalAuthName, forceCreate, clientIndex);
@@ -26351,6 +26451,69 @@ namespace Ruyi.SDK.BrainCloudApi
 
       
       #if SILVERLIGHT
+      public IAsyncResult Begin_Patch_GetGameManifest(AsyncCallback callback, object state, string gameId, int clientIndex)
+      {
+        return send_Patch_GetGameManifest(callback, state, gameId, clientIndex);
+      }
+
+      public string End_Patch_GetGameManifest(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Patch_GetGameManifest();
+      }
+
+      #endif
+
+      public string Patch_GetGameManifest(string gameId, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Patch_GetGameManifest(gameId, clientIndex);
+        return recv_Patch_GetGameManifest();
+
+        #else
+        var asyncResult = Begin_Patch_GetGameManifest(null, null, gameId, clientIndex);
+        return End_Patch_GetGameManifest(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Patch_GetGameManifest(AsyncCallback callback, object state, string gameId, int clientIndex)
+      #else
+      public void send_Patch_GetGameManifest(string gameId, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Patch_GetGameManifest", TMessageType.Call, seqid_));
+        Patch_GetGameManifest_args args = new Patch_GetGameManifest_args();
+        args.GameId = gameId;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public string recv_Patch_GetGameManifest()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Patch_GetGameManifest_result result = new Patch_GetGameManifest_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Patch_GetGameManifest failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
       public IAsyncResult Begin_SocialFeed_ShareVideo(AsyncCallback callback, object state, int timestamp, string resource, List<string> tagged, List<string> show, List<string> block, int clientIndex)
       {
         return send_SocialFeed_ShareVideo(callback, state, timestamp, resource, tagged, show, block, clientIndex);
@@ -28542,6 +28705,7 @@ namespace Ruyi.SDK.BrainCloudApi
         processMap_["Identity_GetIdentities"] = Identity_GetIdentities_Process;
         processMap_["Identity_GetExpiredIdentities"] = Identity_GetExpiredIdentities_Process;
         processMap_["Identity_RefreshIdentity"] = Identity_RefreshIdentity_Process;
+        processMap_["Identity_ChangeEmailIdentity"] = Identity_ChangeEmailIdentity_Process;
         processMap_["Identity_AttachPeerProfile"] = Identity_AttachPeerProfile_Process;
         processMap_["Identity_DetachPeer"] = Identity_DetachPeer_Process;
         processMap_["Identity_GetPeerProfiles"] = Identity_GetPeerProfiles_Process;
@@ -28659,6 +28823,7 @@ namespace Ruyi.SDK.BrainCloudApi
         processMap_["Tournament_PostTournamentScoreWithResults"] = Tournament_PostTournamentScoreWithResults_Process;
         processMap_["Tournament_ViewCurrentReward"] = Tournament_ViewCurrentReward_Process;
         processMap_["Tournament_ViewReward"] = Tournament_ViewReward_Process;
+        processMap_["Patch_GetGameManifest"] = Patch_GetGameManifest_Process;
         processMap_["SocialFeed_ShareVideo"] = SocialFeed_ShareVideo_Process;
         processMap_["SocialFeed_ShareScreenshot"] = SocialFeed_ShareScreenshot_Process;
         processMap_["SocialFeed_ShareAchievement"] = SocialFeed_ShareAchievement_Process;
@@ -33706,6 +33871,34 @@ namespace Ruyi.SDK.BrainCloudApi
         oprot.Transport.Flush();
       }
 
+      public void Identity_ChangeEmailIdentity_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Identity_ChangeEmailIdentity_args args = new Identity_ChangeEmailIdentity_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Identity_ChangeEmailIdentity_result result = new Identity_ChangeEmailIdentity_result();
+        try
+        {
+          result.Success = iface_.Identity_ChangeEmailIdentity(args.OldEmailAddress, args.Password, args.NewEmailAddress, args.UpdateContactEmail, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Identity_ChangeEmailIdentity", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Identity_ChangeEmailIdentity", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
       public void Identity_AttachPeerProfile_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
         Identity_AttachPeerProfile_args args = new Identity_AttachPeerProfile_args();
@@ -36976,6 +37169,34 @@ namespace Ruyi.SDK.BrainCloudApi
           Console.Error.WriteLine(ex.ToString());
           TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
           oprot.WriteMessageBegin(new TMessage("Tournament_ViewReward", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Patch_GetGameManifest_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Patch_GetGameManifest_args args = new Patch_GetGameManifest_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Patch_GetGameManifest_result result = new Patch_GetGameManifest_result();
+        try
+        {
+          result.Success = iface_.Patch_GetGameManifest(args.GameId, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Patch_GetGameManifest", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Patch_GetGameManifest", TMessageType.Exception, seqid));
           x.Write(oprot);
         }
         oprot.WriteMessageEnd();
@@ -88439,6 +88660,381 @@ namespace Ruyi.SDK.BrainCloudApi
     #if !SILVERLIGHT
     [Serializable]
     #endif
+    public partial class Identity_ChangeEmailIdentity_args : TBase
+    {
+      private string _oldEmailAddress;
+      private string _password;
+      private string _newEmailAddress;
+      private bool _updateContactEmail;
+      private int _clientIndex;
+
+      /// <summary>
+      /// Old email address
+      /// </summary>
+      public string OldEmailAddress
+      {
+        get
+        {
+          return _oldEmailAddress;
+        }
+        set
+        {
+          __isset.oldEmailAddress = true;
+          this._oldEmailAddress = value;
+        }
+      }
+
+      /// <summary>
+      /// Password for identity
+      /// </summary>
+      public string Password
+      {
+        get
+        {
+          return _password;
+        }
+        set
+        {
+          __isset.password = true;
+          this._password = value;
+        }
+      }
+
+      /// <summary>
+      /// New email address
+      /// </summary>
+      public string NewEmailAddress
+      {
+        get
+        {
+          return _newEmailAddress;
+        }
+        set
+        {
+          __isset.newEmailAddress = true;
+          this._newEmailAddress = value;
+        }
+      }
+
+      /// <summary>
+      /// Whether to update contact email in profile
+      /// </summary>
+      public bool UpdateContactEmail
+      {
+        get
+        {
+          return _updateContactEmail;
+        }
+        set
+        {
+          __isset.updateContactEmail = true;
+          this._updateContactEmail = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool oldEmailAddress;
+        public bool password;
+        public bool newEmailAddress;
+        public bool updateContactEmail;
+        public bool clientIndex;
+      }
+
+      public Identity_ChangeEmailIdentity_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  OldEmailAddress = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String) {
+                  Password = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.String) {
+                  NewEmailAddress = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.Bool) {
+                  UpdateContactEmail = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 5:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Identity_ChangeEmailIdentity_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (OldEmailAddress != null && __isset.oldEmailAddress) {
+            field.Name = "oldEmailAddress";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(OldEmailAddress);
+            oprot.WriteFieldEnd();
+          }
+          if (Password != null && __isset.password) {
+            field.Name = "password";
+            field.Type = TType.String;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Password);
+            oprot.WriteFieldEnd();
+          }
+          if (NewEmailAddress != null && __isset.newEmailAddress) {
+            field.Name = "newEmailAddress";
+            field.Type = TType.String;
+            field.ID = 3;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(NewEmailAddress);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.updateContactEmail) {
+            field.Name = "updateContactEmail";
+            field.Type = TType.Bool;
+            field.ID = 4;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(UpdateContactEmail);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 5;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Identity_ChangeEmailIdentity_args(");
+        bool __first = true;
+        if (OldEmailAddress != null && __isset.oldEmailAddress) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("OldEmailAddress: ");
+          __sb.Append(OldEmailAddress);
+        }
+        if (Password != null && __isset.password) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Password: ");
+          __sb.Append(Password);
+        }
+        if (NewEmailAddress != null && __isset.newEmailAddress) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("NewEmailAddress: ");
+          __sb.Append(NewEmailAddress);
+        }
+        if (__isset.updateContactEmail) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("UpdateContactEmail: ");
+          __sb.Append(UpdateContactEmail);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Identity_ChangeEmailIdentity_result : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Identity_ChangeEmailIdentity_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Identity_ChangeEmailIdentity_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Identity_ChangeEmailIdentity_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
     public partial class Identity_AttachPeerProfile_args : TBase
     {
       private string _peer;
@@ -123781,6 +124377,261 @@ namespace Ruyi.SDK.BrainCloudApi
 
       public override string ToString() {
         StringBuilder __sb = new StringBuilder("Tournament_ViewReward_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Patch_GetGameManifest_args : TBase
+    {
+      private string _gameId;
+      private int _clientIndex;
+
+      public string GameId
+      {
+        get
+        {
+          return _gameId;
+        }
+        set
+        {
+          __isset.gameId = true;
+          this._gameId = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool gameId;
+        public bool clientIndex;
+      }
+
+      public Patch_GetGameManifest_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  GameId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Patch_GetGameManifest_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (GameId != null && __isset.gameId) {
+            field.Name = "gameId";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(GameId);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Patch_GetGameManifest_args(");
+        bool __first = true;
+        if (GameId != null && __isset.gameId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("GameId: ");
+          __sb.Append(GameId);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Patch_GetGameManifest_result : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Patch_GetGameManifest_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Patch_GetGameManifest_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Patch_GetGameManifest_result(");
         bool __first = true;
         if (Success != null && __isset.success) {
           if(!__first) { __sb.Append(", "); }

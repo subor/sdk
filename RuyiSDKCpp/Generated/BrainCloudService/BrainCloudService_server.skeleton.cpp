@@ -2600,6 +2600,24 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   }
 
   /**
+   * Allows email identity email address to be changed
+   * 
+   * @param oldEmailAddress Old email address
+   * 
+   * @param password Password for identity
+   * 
+   * @param newEmailAddress New email address
+   * 
+   * @param updateContactEmail Whether to update contact email in profile
+   * 
+   * @param clientIndex
+   */
+  void Identity_ChangeEmailIdentity(std::string& _return, const std::string& oldEmailAddress, const std::string& password, const std::string& newEmailAddress, const bool updateContactEmail, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Identity_ChangeEmailIdentity\n");
+  }
+
+  /**
    * Attaches a peer identity to this user's profile
    * 
    * @param peer Name of the peer to connect to
@@ -4415,6 +4433,11 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Tournament_ViewReward(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Tournament_ViewReward\n");
+  }
+
+  void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Patch_GetGameManifest\n");
   }
 
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {
