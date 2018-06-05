@@ -15,40 +15,30 @@ using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.CommonType
+namespace Ruyi.SDK.PublisherSubscriber
 {
 
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class InputActionInfo : TBase
+  public partial class UserShellEvent : TBase
   {
-    private string _ActionName;
-    private ActionTriggerInfo _TriggerInfo;
+    private UserShellEventType _EventType;
 
-    public string ActionName
+    /// <summary>
+    /// 
+    /// <seealso cref="UserShellEventType"/>
+    /// </summary>
+    public UserShellEventType EventType
     {
       get
       {
-        return _ActionName;
+        return _EventType;
       }
       set
       {
-        __isset.ActionName = true;
-        this._ActionName = value;
-      }
-    }
-
-    public ActionTriggerInfo TriggerInfo
-    {
-      get
-      {
-        return _TriggerInfo;
-      }
-      set
-      {
-        __isset.TriggerInfo = true;
-        this._TriggerInfo = value;
+        __isset.EventType = true;
+        this._EventType = value;
       }
     }
 
@@ -58,11 +48,10 @@ namespace Ruyi.SDK.CommonType
     [Serializable]
     #endif
     public struct Isset {
-      public bool ActionName;
-      public bool TriggerInfo;
+      public bool EventType;
     }
 
-    public InputActionInfo() {
+    public UserShellEvent() {
     }
 
     public void Read (TProtocol iprot)
@@ -81,16 +70,8 @@ namespace Ruyi.SDK.CommonType
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String) {
-                ActionName = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.Struct) {
-                TriggerInfo = new ActionTriggerInfo();
-                TriggerInfo.Read(iprot);
+              if (field.Type == TType.I32) {
+                EventType = (UserShellEventType)iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -113,23 +94,15 @@ namespace Ruyi.SDK.CommonType
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("InputActionInfo");
+        TStruct struc = new TStruct("UserShellEvent");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (ActionName != null && __isset.ActionName) {
-          field.Name = "ActionName";
-          field.Type = TType.String;
+        if (__isset.EventType) {
+          field.Name = "EventType";
+          field.Type = TType.I32;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(ActionName);
-          oprot.WriteFieldEnd();
-        }
-        if (TriggerInfo != null && __isset.TriggerInfo) {
-          field.Name = "TriggerInfo";
-          field.Type = TType.Struct;
-          field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          TriggerInfo.Write(oprot);
+          oprot.WriteI32((int)EventType);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -142,19 +115,13 @@ namespace Ruyi.SDK.CommonType
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("InputActionInfo(");
+      StringBuilder __sb = new StringBuilder("UserShellEvent(");
       bool __first = true;
-      if (ActionName != null && __isset.ActionName) {
+      if (__isset.EventType) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("ActionName: ");
-        __sb.Append(ActionName);
-      }
-      if (TriggerInfo != null && __isset.TriggerInfo) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("TriggerInfo: ");
-        __sb.Append(TriggerInfo== null ? "<null>" : TriggerInfo.ToString());
+        __sb.Append("EventType: ");
+        __sb.Append(EventType);
       }
       __sb.Append(")");
       return __sb.ToString();

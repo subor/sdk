@@ -8,14 +8,15 @@ enum LoginState {
 	Login = 1,
 }
 
-enum InputCagetory {
+enum InputCategory {
     GamePad = 0,
-    KeyboardMouse = 1,
-    JoyStick = 2,
+    Keyboard = 1,
+    Mouse = 2,
+    JoyStick = 3,
+    MaxCount = 4,
 }
 
 enum RuyiGamePadButtonFlags {
-    GamePad_None = 0,
     GamePad_Up = 1,
     GamePad_Down = 2,
     GamePad_Left = 4,
@@ -72,23 +73,10 @@ struct InputModifier {
     2: double Scale,
 }
 
-struct InputIdentifier {
-    1: string Device,
-    2: string Value,
-    3: optional string ActivateEvent,
-    4: optional InputModifier Modifier,
-}
-
-struct ActionTriggerInfo {
-    1: InputCagetory InputCagetory,
-    2: list<InputIdentifier> TriggerConditions,
-    3: optional bool AutoTrigger,
-    4: optional i32 TriggerInterval,
-}
-
-struct InputActionInfo {
-    1: string ActionName,
-    2: ActionTriggerInfo TriggerInfo,
+struct ActionTrigger {
+    1: InputCategory InputCagetory,
+    2: list<i32> TriggerButtons,
+    3: list<i32> TriggerValue,
 }
 
 struct notification {

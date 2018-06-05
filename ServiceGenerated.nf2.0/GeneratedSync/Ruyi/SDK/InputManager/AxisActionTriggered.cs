@@ -9,75 +9,88 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.CommonType
+namespace Ruyi.SDK.InputManager
 {
 
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class InputIdentifier : TBase
+  public partial class AxisActionTriggered : TBase
   {
-    private string _Device;
-    private string _Value;
-    private string _ActivateEvent;
-    private InputModifier _Modifier;
+    private string _deviceId;
+    private string _userId;
+    private string _name;
+    private long _timestamp;
+    private double _scale;
 
-    public string Device
+    public string DeviceId
     {
       get
       {
-        return _Device;
+        return _deviceId;
       }
       set
       {
-        __isset.Device = true;
-        this._Device = value;
+        __isset.deviceId = true;
+        this._deviceId = value;
       }
     }
 
-    public string Value
+    public string UserId
     {
       get
       {
-        return _Value;
+        return _userId;
       }
       set
       {
-        __isset.@Value = true;
-        this._Value = value;
+        __isset.userId = true;
+        this._userId = value;
       }
     }
 
-    public string ActivateEvent
+    public string Name
     {
       get
       {
-        return _ActivateEvent;
+        return _name;
       }
       set
       {
-        __isset.ActivateEvent = true;
-        this._ActivateEvent = value;
+        __isset.name = true;
+        this._name = value;
       }
     }
 
-    public InputModifier Modifier
+    public long Timestamp
     {
       get
       {
-        return _Modifier;
+        return _timestamp;
       }
       set
       {
-        __isset.Modifier = true;
-        this._Modifier = value;
+        __isset.timestamp = true;
+        this._timestamp = value;
+      }
+    }
+
+    public double Scale
+    {
+      get
+      {
+        return _scale;
+      }
+      set
+      {
+        __isset.scale = true;
+        this._scale = value;
       }
     }
 
@@ -87,13 +100,14 @@ namespace Ruyi.SDK.CommonType
     [Serializable]
     #endif
     public struct Isset {
-      public bool Device;
-      public bool @Value;
-      public bool ActivateEvent;
-      public bool Modifier;
+      public bool deviceId;
+      public bool userId;
+      public bool name;
+      public bool timestamp;
+      public bool scale;
     }
 
-    public InputIdentifier() {
+    public AxisActionTriggered() {
     }
 
     public void Read (TProtocol iprot)
@@ -113,29 +127,35 @@ namespace Ruyi.SDK.CommonType
           {
             case 1:
               if (field.Type == TType.String) {
-                Device = iprot.ReadString();
+                DeviceId = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
               if (field.Type == TType.String) {
-                Value = iprot.ReadString();
+                UserId = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 3:
               if (field.Type == TType.String) {
-                ActivateEvent = iprot.ReadString();
+                Name = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 4:
-              if (field.Type == TType.Struct) {
-                Modifier = new InputModifier();
-                Modifier.Read(iprot);
+              if (field.Type == TType.I64) {
+                Timestamp = iprot.ReadI64();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 5:
+              if (field.Type == TType.Double) {
+                Scale = iprot.ReadDouble();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -158,39 +178,47 @@ namespace Ruyi.SDK.CommonType
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("InputIdentifier");
+        TStruct struc = new TStruct("AxisActionTriggered");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (Device != null && __isset.Device) {
-          field.Name = "Device";
+        if (DeviceId != null && __isset.deviceId) {
+          field.Name = "deviceId";
           field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Device);
+          oprot.WriteString(DeviceId);
           oprot.WriteFieldEnd();
         }
-        if (Value != null && __isset.@Value) {
-          field.Name = "Value";
+        if (UserId != null && __isset.userId) {
+          field.Name = "userId";
           field.Type = TType.String;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Value);
+          oprot.WriteString(UserId);
           oprot.WriteFieldEnd();
         }
-        if (ActivateEvent != null && __isset.ActivateEvent) {
-          field.Name = "ActivateEvent";
+        if (Name != null && __isset.name) {
+          field.Name = "name";
           field.Type = TType.String;
           field.ID = 3;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(ActivateEvent);
+          oprot.WriteString(Name);
           oprot.WriteFieldEnd();
         }
-        if (Modifier != null && __isset.Modifier) {
-          field.Name = "Modifier";
-          field.Type = TType.Struct;
+        if (__isset.timestamp) {
+          field.Name = "timestamp";
+          field.Type = TType.I64;
           field.ID = 4;
           oprot.WriteFieldBegin(field);
-          Modifier.Write(oprot);
+          oprot.WriteI64(Timestamp);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.scale) {
+          field.Name = "scale";
+          field.Type = TType.Double;
+          field.ID = 5;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteDouble(Scale);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -203,31 +231,37 @@ namespace Ruyi.SDK.CommonType
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("InputIdentifier(");
+      StringBuilder __sb = new StringBuilder("AxisActionTriggered(");
       bool __first = true;
-      if (Device != null && __isset.Device) {
+      if (DeviceId != null && __isset.deviceId) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Device: ");
-        __sb.Append(Device);
+        __sb.Append("DeviceId: ");
+        __sb.Append(DeviceId);
       }
-      if (Value != null && __isset.@Value) {
+      if (UserId != null && __isset.userId) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Value: ");
-        __sb.Append(Value);
+        __sb.Append("UserId: ");
+        __sb.Append(UserId);
       }
-      if (ActivateEvent != null && __isset.ActivateEvent) {
+      if (Name != null && __isset.name) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("ActivateEvent: ");
-        __sb.Append(ActivateEvent);
+        __sb.Append("Name: ");
+        __sb.Append(Name);
       }
-      if (Modifier != null && __isset.Modifier) {
+      if (__isset.timestamp) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Modifier: ");
-        __sb.Append(Modifier== null ? "<null>" : Modifier.ToString());
+        __sb.Append("Timestamp: ");
+        __sb.Append(Timestamp);
+      }
+      if (__isset.scale) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Scale: ");
+        __sb.Append(Scale);
       }
       __sb.Append(")");
       return __sb.ToString();

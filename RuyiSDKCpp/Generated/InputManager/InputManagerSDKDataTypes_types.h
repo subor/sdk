@@ -16,37 +16,10 @@
 #include <thrift/transport/TTransport.h>
 
 #include <thrift/cxxfunctional.h>
+#include "CommonTypeSDKDataTypes_types.h"
 
 
 namespace Ruyi { namespace SDK { namespace InputManager {
-
-struct RuyiGamePadButtonFlags {
-  enum type {
-    GamePad_None = 0,
-    GamePad_Up = 1,
-    GamePad_Down = 2,
-    GamePad_Left = 4,
-    GamePad_Right = 8,
-    GamePad_Start = 16,
-    GamePad_Back = 32,
-    GamePad_L3 = 64,
-    GamePad_R3 = 128,
-    GamePad_LB = 256,
-    GamePad_RB = 512,
-    GamePad_A = 4096,
-    GamePad_B = 8192,
-    GamePad_X = 16384,
-    GamePad_Y = 32768,
-    GamePad_LT = 131072,
-    GamePad_RT = 262144,
-    GamePad_LJoyX = 524288,
-    GamePad_LJoyY = 1048576,
-    GamePad_RJoyX = 2097152,
-    GamePad_RJoyY = 4194304
-  };
-};
-
-extern const std::map<int, const char*> _RuyiGamePadButtonFlags_VALUES_TO_NAMES;
 
 struct Key {
   enum type {
@@ -389,6 +362,8 @@ struct JoystickOffset {
 
 extern const std::map<int, const char*> _JoystickOffset_VALUES_TO_NAMES;
 
+typedef double _float;
+
 class RuyiGamePadInput;
 
 class RuyiKeyboardInput;
@@ -396,6 +371,10 @@ class RuyiKeyboardInput;
 class RuyiMouseInput;
 
 class RuyiJoystickInput;
+
+class InputActionTriggered;
+
+class AxisActionTriggered;
 
 typedef struct _RuyiGamePadInput__isset {
   _RuyiGamePadInput__isset() : DeviceId(false), UserId(false), ButtonFlags(false), LeftTrigger(false), RightTrigger(false), LeftThumbX(false), LeftThumbY(false), RightThumbX(false), RightThumbY(false) {}
@@ -750,6 +729,146 @@ class RuyiJoystickInput : public virtual ::apache::thrift::TBase {
 void swap(RuyiJoystickInput &a, RuyiJoystickInput &b);
 
 inline std::ostream& operator<<(std::ostream& out, const RuyiJoystickInput& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _InputActionTriggered__isset {
+  _InputActionTriggered__isset() : deviceId(false), userId(false), name(false), timestamp(false), trigger(false) {}
+  bool deviceId :1;
+  bool userId :1;
+  bool name :1;
+  bool timestamp :1;
+  bool trigger :1;
+} _InputActionTriggered__isset;
+
+class InputActionTriggered : public virtual ::apache::thrift::TBase {
+ public:
+
+  InputActionTriggered(const InputActionTriggered&);
+  InputActionTriggered& operator=(const InputActionTriggered&);
+  InputActionTriggered() : deviceId(), userId(), name(), timestamp(0) {
+  }
+
+  virtual ~InputActionTriggered() throw();
+  std::string deviceId;
+  std::string userId;
+  std::string name;
+  int64_t timestamp;
+   ::Ruyi::SDK::CommonType::ActionTrigger trigger;
+
+  _InputActionTriggered__isset __isset;
+
+  void __set_deviceId(const std::string& val);
+
+  void __set_userId(const std::string& val);
+
+  void __set_name(const std::string& val);
+
+  void __set_timestamp(const int64_t val);
+
+  void __set_trigger(const  ::Ruyi::SDK::CommonType::ActionTrigger& val);
+
+  bool operator == (const InputActionTriggered & rhs) const
+  {
+    if (!(deviceId == rhs.deviceId))
+      return false;
+    if (!(userId == rhs.userId))
+      return false;
+    if (!(name == rhs.name))
+      return false;
+    if (!(timestamp == rhs.timestamp))
+      return false;
+    if (!(trigger == rhs.trigger))
+      return false;
+    return true;
+  }
+  bool operator != (const InputActionTriggered &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const InputActionTriggered & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(InputActionTriggered &a, InputActionTriggered &b);
+
+inline std::ostream& operator<<(std::ostream& out, const InputActionTriggered& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _AxisActionTriggered__isset {
+  _AxisActionTriggered__isset() : deviceId(false), userId(false), name(false), timestamp(false), scale(false) {}
+  bool deviceId :1;
+  bool userId :1;
+  bool name :1;
+  bool timestamp :1;
+  bool scale :1;
+} _AxisActionTriggered__isset;
+
+class AxisActionTriggered : public virtual ::apache::thrift::TBase {
+ public:
+
+  AxisActionTriggered(const AxisActionTriggered&);
+  AxisActionTriggered& operator=(const AxisActionTriggered&);
+  AxisActionTriggered() : deviceId(), userId(), name(), timestamp(0), scale(0) {
+  }
+
+  virtual ~AxisActionTriggered() throw();
+  std::string deviceId;
+  std::string userId;
+  std::string name;
+  int64_t timestamp;
+  _float scale;
+
+  _AxisActionTriggered__isset __isset;
+
+  void __set_deviceId(const std::string& val);
+
+  void __set_userId(const std::string& val);
+
+  void __set_name(const std::string& val);
+
+  void __set_timestamp(const int64_t val);
+
+  void __set_scale(const _float val);
+
+  bool operator == (const AxisActionTriggered & rhs) const
+  {
+    if (!(deviceId == rhs.deviceId))
+      return false;
+    if (!(userId == rhs.userId))
+      return false;
+    if (!(name == rhs.name))
+      return false;
+    if (!(timestamp == rhs.timestamp))
+      return false;
+    if (!(scale == rhs.scale))
+      return false;
+    return true;
+  }
+  bool operator != (const AxisActionTriggered &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AxisActionTriggered & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(AxisActionTriggered &a, AxisActionTriggered &b);
+
+inline std::ostream& operator<<(std::ostream& out, const AxisActionTriggered& obj)
 {
   obj.printTo(out);
   return out;

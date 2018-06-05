@@ -13,54 +13,6 @@
 
 namespace Ruyi { namespace SDK { namespace InputManager {
 
-int _kRuyiGamePadButtonFlagsValues[] = {
-  RuyiGamePadButtonFlags::GamePad_None,
-  RuyiGamePadButtonFlags::GamePad_Up,
-  RuyiGamePadButtonFlags::GamePad_Down,
-  RuyiGamePadButtonFlags::GamePad_Left,
-  RuyiGamePadButtonFlags::GamePad_Right,
-  RuyiGamePadButtonFlags::GamePad_Start,
-  RuyiGamePadButtonFlags::GamePad_Back,
-  RuyiGamePadButtonFlags::GamePad_L3,
-  RuyiGamePadButtonFlags::GamePad_R3,
-  RuyiGamePadButtonFlags::GamePad_LB,
-  RuyiGamePadButtonFlags::GamePad_RB,
-  RuyiGamePadButtonFlags::GamePad_A,
-  RuyiGamePadButtonFlags::GamePad_B,
-  RuyiGamePadButtonFlags::GamePad_X,
-  RuyiGamePadButtonFlags::GamePad_Y,
-  RuyiGamePadButtonFlags::GamePad_LT,
-  RuyiGamePadButtonFlags::GamePad_RT,
-  RuyiGamePadButtonFlags::GamePad_LJoyX,
-  RuyiGamePadButtonFlags::GamePad_LJoyY,
-  RuyiGamePadButtonFlags::GamePad_RJoyX,
-  RuyiGamePadButtonFlags::GamePad_RJoyY
-};
-const char* _kRuyiGamePadButtonFlagsNames[] = {
-  "GamePad_None",
-  "GamePad_Up",
-  "GamePad_Down",
-  "GamePad_Left",
-  "GamePad_Right",
-  "GamePad_Start",
-  "GamePad_Back",
-  "GamePad_L3",
-  "GamePad_R3",
-  "GamePad_LB",
-  "GamePad_RB",
-  "GamePad_A",
-  "GamePad_B",
-  "GamePad_X",
-  "GamePad_Y",
-  "GamePad_LT",
-  "GamePad_RT",
-  "GamePad_LJoyX",
-  "GamePad_LJoyY",
-  "GamePad_RJoyX",
-  "GamePad_RJoyY"
-};
-const std::map<int, const char*> _RuyiGamePadButtonFlags_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(21, _kRuyiGamePadButtonFlagsValues, _kRuyiGamePadButtonFlagsNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
-
 int _kKeyValues[] = {
   Key::Unknown,
   Key::Escape,
@@ -1646,6 +1598,338 @@ void RuyiJoystickInput::printTo(std::ostream& out) const {
   out << ", " << "Timestamp=" << to_string(Timestamp);
   out << ", " << "Sequence=" << to_string(Sequence);
   out << ", " << "Offset=" << to_string(Offset);
+  out << ")";
+}
+
+
+InputActionTriggered::~InputActionTriggered() throw() {
+}
+
+
+void InputActionTriggered::__set_deviceId(const std::string& val) {
+  this->deviceId = val;
+}
+
+void InputActionTriggered::__set_userId(const std::string& val) {
+  this->userId = val;
+}
+
+void InputActionTriggered::__set_name(const std::string& val) {
+  this->name = val;
+}
+
+void InputActionTriggered::__set_timestamp(const int64_t val) {
+  this->timestamp = val;
+}
+
+void InputActionTriggered::__set_trigger(const  ::Ruyi::SDK::CommonType::ActionTrigger& val) {
+  this->trigger = val;
+}
+
+uint32_t InputActionTriggered::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->deviceId);
+          this->__isset.deviceId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->userId);
+          this->__isset.userId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->name);
+          this->__isset.name = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->timestamp);
+          this->__isset.timestamp = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->trigger.read(iprot);
+          this->__isset.trigger = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t InputActionTriggered::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("InputActionTriggered");
+
+  xfer += oprot->writeFieldBegin("deviceId", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->deviceId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("userId", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->userId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString(this->name);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("timestamp", ::apache::thrift::protocol::T_I64, 4);
+  xfer += oprot->writeI64(this->timestamp);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("trigger", ::apache::thrift::protocol::T_STRUCT, 5);
+  xfer += this->trigger.write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(InputActionTriggered &a, InputActionTriggered &b) {
+  using ::std::swap;
+  swap(a.deviceId, b.deviceId);
+  swap(a.userId, b.userId);
+  swap(a.name, b.name);
+  swap(a.timestamp, b.timestamp);
+  swap(a.trigger, b.trigger);
+  swap(a.__isset, b.__isset);
+}
+
+InputActionTriggered::InputActionTriggered(const InputActionTriggered& other11) {
+  deviceId = other11.deviceId;
+  userId = other11.userId;
+  name = other11.name;
+  timestamp = other11.timestamp;
+  trigger = other11.trigger;
+  __isset = other11.__isset;
+}
+InputActionTriggered& InputActionTriggered::operator=(const InputActionTriggered& other12) {
+  deviceId = other12.deviceId;
+  userId = other12.userId;
+  name = other12.name;
+  timestamp = other12.timestamp;
+  trigger = other12.trigger;
+  __isset = other12.__isset;
+  return *this;
+}
+void InputActionTriggered::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "InputActionTriggered(";
+  out << "deviceId=" << to_string(deviceId);
+  out << ", " << "userId=" << to_string(userId);
+  out << ", " << "name=" << to_string(name);
+  out << ", " << "timestamp=" << to_string(timestamp);
+  out << ", " << "trigger=" << to_string(trigger);
+  out << ")";
+}
+
+
+AxisActionTriggered::~AxisActionTriggered() throw() {
+}
+
+
+void AxisActionTriggered::__set_deviceId(const std::string& val) {
+  this->deviceId = val;
+}
+
+void AxisActionTriggered::__set_userId(const std::string& val) {
+  this->userId = val;
+}
+
+void AxisActionTriggered::__set_name(const std::string& val) {
+  this->name = val;
+}
+
+void AxisActionTriggered::__set_timestamp(const int64_t val) {
+  this->timestamp = val;
+}
+
+void AxisActionTriggered::__set_scale(const _float val) {
+  this->scale = val;
+}
+
+uint32_t AxisActionTriggered::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->deviceId);
+          this->__isset.deviceId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->userId);
+          this->__isset.userId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->name);
+          this->__isset.name = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->timestamp);
+          this->__isset.timestamp = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->scale);
+          this->__isset.scale = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AxisActionTriggered::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("AxisActionTriggered");
+
+  xfer += oprot->writeFieldBegin("deviceId", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->deviceId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("userId", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->userId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString(this->name);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("timestamp", ::apache::thrift::protocol::T_I64, 4);
+  xfer += oprot->writeI64(this->timestamp);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("scale", ::apache::thrift::protocol::T_DOUBLE, 5);
+  xfer += oprot->writeDouble(this->scale);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(AxisActionTriggered &a, AxisActionTriggered &b) {
+  using ::std::swap;
+  swap(a.deviceId, b.deviceId);
+  swap(a.userId, b.userId);
+  swap(a.name, b.name);
+  swap(a.timestamp, b.timestamp);
+  swap(a.scale, b.scale);
+  swap(a.__isset, b.__isset);
+}
+
+AxisActionTriggered::AxisActionTriggered(const AxisActionTriggered& other13) {
+  deviceId = other13.deviceId;
+  userId = other13.userId;
+  name = other13.name;
+  timestamp = other13.timestamp;
+  scale = other13.scale;
+  __isset = other13.__isset;
+}
+AxisActionTriggered& AxisActionTriggered::operator=(const AxisActionTriggered& other14) {
+  deviceId = other14.deviceId;
+  userId = other14.userId;
+  name = other14.name;
+  timestamp = other14.timestamp;
+  scale = other14.scale;
+  __isset = other14.__isset;
+  return *this;
+}
+void AxisActionTriggered::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "AxisActionTriggered(";
+  out << "deviceId=" << to_string(deviceId);
+  out << ", " << "userId=" << to_string(userId);
+  out << ", " << "name=" << to_string(name);
+  out << ", " << "timestamp=" << to_string(timestamp);
+  out << ", " << "scale=" << to_string(scale);
   out << ")";
 }
 
