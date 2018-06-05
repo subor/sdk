@@ -454,13 +454,13 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.List) {
                 {
                   ActiveDependencies = new List<activeDependency>();
-                  TList _list12 = iprot.ReadListBegin();
-                  for( int _i13 = 0; _i13 < _list12.Count; ++_i13)
+                  TList _list16 = iprot.ReadListBegin();
+                  for( int _i17 = 0; _i17 < _list16.Count; ++_i17)
                   {
-                    activeDependency _elem14;
-                    _elem14 = new activeDependency();
-                    _elem14.Read(iprot);
-                    ActiveDependencies.Add(_elem14);
+                    activeDependency _elem18;
+                    _elem18 = new activeDependency();
+                    _elem18.Read(iprot);
+                    ActiveDependencies.Add(_elem18);
                   }
                   iprot.ReadListEnd();
                 }
@@ -637,9 +637,9 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, ActiveDependencies.Count));
-            foreach (activeDependency _iter15 in ActiveDependencies)
+            foreach (activeDependency _iter19 in ActiveDependencies)
             {
-              _iter15.Write(oprot);
+              _iter19.Write(oprot);
             }
             oprot.WriteListEnd();
           }
