@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RuyiLogger
+namespace Ruyi.Logging
 {
     public class ConsoleLogger : IRuyiLogger
     {

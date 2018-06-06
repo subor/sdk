@@ -43,6 +43,9 @@ enum RotationType {
 }
 
 
+struct BCServiceStartedNotification {
+}
+
 struct FileUploadSuccessResult {
     1: string fileUploadId,
     2: string jsonResponse,

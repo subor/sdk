@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RuyiLogger
+namespace Ruyi.Logging
 {
     public enum MessageCategory
     {
@@ -93,7 +93,7 @@ namespace RuyiLogger
 
         override public string ToString()
         {
-            return $"[{Category,10}]\t[{MsgSource,10}]\t[{MsgTarget,10}]\t{Message}";
+            return $"[{Category,12}]\t[{MsgSource,25}]\t[{MsgTarget,10}]\t{Message}";
         }
 
         public string ToPluginString()
@@ -149,7 +149,7 @@ namespace RuyiLogger
     /// <summary>
     /// Stack frame suitable for logging.
     /// </summary>
-    /// <seealso cref="RuyiLogger.Logger"/>
+    /// <seealso cref="Logging.Logger"/>
     public class LoggerStackFrame
     {
         public string Filename { get; private set; }

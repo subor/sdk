@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace RuyiLogger
+namespace Ruyi.Logging
 {
     public interface IFilter
     {

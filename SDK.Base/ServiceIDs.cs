@@ -2,8 +2,9 @@
 #pragma once
 #else
 using System;
+using System.Collections.Generic;
 
-namespace Layer0
+namespace Ruyi.Layer0
 {
     public
 #endif
@@ -20,7 +21,6 @@ namespace Layer0
         STORAGELAYER,
         STORAGELAYER_INTERNAL,
         SYS_REPORTER,
-        SERVICE_HOST,
         DOWNLOADMANAGER,
         HTTP_LISTENER,
         HTTP_SUBSCRIBE,
@@ -29,6 +29,7 @@ namespace Layer0
         IOT_BLUETOOTH,
         SPEECH,
         MEDIA,
+        LAYER1,
 
         LOW_POWER_END,
         #endregion
@@ -36,8 +37,8 @@ namespace Layer0
         #region High power services
         HIGH_POWER_START = 1001,
 
-        L0SETTINGSYSTEM_EXTERNAL,
-        L0SETTINGSYSTEM_INTERNAL,
+        SETTINGSYSTEM_EXTERNAL,
+        SETTINGSYSTEM_INTERNAL,
         USER_SERVICE_INTERNAL,
         USER_SERVICE_EXTERNAL,
         BCSERVICE,
@@ -45,7 +46,10 @@ namespace Layer0
         INPUTMANAGER_EXTERNAL,
         L10NSERVICE,
         OVERLAYMANAGER_INTERNAL,
+        UPDATESERVICE,
+#if DEBUG
         TEST,
+#endif
 
         HIGH_POWER_END,
         #endregion
@@ -62,15 +66,18 @@ namespace Layer0
 #if !__cplusplus            // C#, some helper functions
     public static class ServiceHelper
     {
+        static Dictionary<ServiceIDs, string> shortNames = new Dictionary<ServiceIDs, string>();
+        static object locker = new object();
+
         // Notice: we treat worker and service as the same mostly in layer0 because currently one service only got one worker.
         public static string WorkerID(this ServiceIDs swi)
         {
-            return "WRK_" + swi.ToString();
+            return "WRK_" + swi.ShortString();
         }
 
         public static string ForwarderID(this ServiceIDs swi)
         {
-            return "FWD_" + swi.ToString();
+            return "FWD_" + swi.ShortString();
         }
 
         #region string <-> serviceID convertion
@@ -94,16 +101,35 @@ namespace Layer0
 
         public static string PubChannelID(this ServiceIDs swi)
         {
-            return "service/" + swi.ToString().ToLower();
+            return "service/" + swi.ShortString().ToLower();
+        }
+
+        public static string ShortString(this ServiceIDs swi)
+        {
+            lock (locker)
+            {
+                if (!shortNames.ContainsKey(swi))
+                {
+                    shortNames.Add(swi, swi.ToString()
+                        .Replace("INTERNAL", "Int")
+                        .Replace("EXTERNAL", "Ext")
+                        .Replace("MANAGER", "Mgr")
+                        .Replace("SERVICE", "Serv")
+                        .Replace("SYSTEM", "Sys"));
+                }
+                return shortNames[swi];
+            }
+
         }
 
         public static bool ExistForwarder(this ServiceIDs swi)
         {
-            switch(swi)
+            switch (swi)
             {
                 case ServiceIDs.HTTP_LISTENER:
                 case ServiceIDs.SYS_REPORTER:
-                case ServiceIDs.SERVICE_HOST:
+                case ServiceIDs.L2FORWARDER:
+                case ServiceIDs.LAYER1:
                     return false;
 
                 default:
@@ -111,9 +137,31 @@ namespace Layer0
             }
         }
 
+        public static bool IsLayer1Service(this ServiceIDs sid)
+        {
+            switch (sid)
+            {
+                case ServiceIDs.INPUTMANAGER_INTERNAL:
+                case ServiceIDs.INPUTMANAGER_EXTERNAL:
+                case ServiceIDs.LAUNCHER:
+                    return true;
+            }
+            return false;
+        }
+
+        public static bool IsSplitter(this ServiceIDs sid)
+        {
+            if (sid == ServiceIDs.LOW_POWER_START || sid == ServiceIDs.LOW_POWER_END
+                || sid == ServiceIDs.HIGH_POWER_START || sid == ServiceIDs.HIGH_POWER_END
+                || sid == ServiceIDs.OPTIONAL_HIGH_POWER_START || sid == ServiceIDs.OPTIONAL_HIGH_POWER_END)
+                return true;
+
+            return false;
+        }
+
         public static bool ExistWorker(this ServiceIDs swi)
         {
-            switch(swi)
+            switch (swi)
             {
                 case ServiceIDs.VALIDATOR:
                     return false;
