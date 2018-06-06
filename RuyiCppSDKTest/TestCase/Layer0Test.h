@@ -44,18 +44,18 @@ std::string GetLocalCurrentDirectory();
 
 bool FileCopy(const char* src, const char* dst);
 
-//temporay
-//turn object instance into json string
-//json example "{\"Jump\":[{\"TriggerConditions\":[{\"Device\":\"XB360\",\"Value\":\"C\"}],\"AutoTrigger\":false},{\"TriggerConditions\":[{\"Device\":\"XB360\",\"Value\":\"B\"}],\"AutoTrigger\":false}]}"
-std::string doserializeActionTriggerInfo(std::vector<Ruyi::SDK::CommonType::ActionTriggerInfo*>& vec);
-
-//turn json string into object instance
-//json example:"[{\"TriggerConditions\":[{\"Device\":\"XB360\",\"Value\":\"C\"}],\"AutoTrigger\":false},{\"TriggerConditions\":[{\"Device\":\"XB360\",\"Value\":\"B\"}],\"AutoTrigger\":false}]"
-void deserializeActionTriggerInfo(std::vector<Ruyi::SDK::CommonType::ActionTriggerInfo*>& vec, std::string json);
-
-//turn one ActionTriggerInfo json string into object instance
-//json example:"{\"TriggerConditions\":[{\"Device\":\"XB360\",\"Value\":\"B\"}],\"AutoTrigger\":false}"
-void deserializeSingleActionTriggerInfo(Ruyi::SDK::CommonType::ActionTriggerInfo& ati, std::string json);
+////temporay
+////turn object instance into json string
+////json example "{\"Jump\":[{\"TriggerConditions\":[{\"Device\":\"XB360\",\"Value\":\"C\"}],\"AutoTrigger\":false},{\"TriggerConditions\":[{\"Device\":\"XB360\",\"Value\":\"B\"}],\"AutoTrigger\":false}]}"
+//std::string doserializeActionTriggerInfo(std::vector<Ruyi::SDK::CommonType::ActionTriggerInfo*>& vec);
+//
+////turn json string into object instance
+////json example:"[{\"TriggerConditions\":[{\"Device\":\"XB360\",\"Value\":\"C\"}],\"AutoTrigger\":false},{\"TriggerConditions\":[{\"Device\":\"XB360\",\"Value\":\"B\"}],\"AutoTrigger\":false}]"
+//void deserializeActionTriggerInfo(std::vector<Ruyi::SDK::CommonType::ActionTriggerInfo*>& vec, std::string json);
+//
+////turn one ActionTriggerInfo json string into object instance
+////json example:"{\"TriggerConditions\":[{\"Device\":\"XB360\",\"Value\":\"B\"}],\"AutoTrigger\":false}"
+//void deserializeSingleActionTriggerInfo(Ruyi::SDK::CommonType::ActionTriggerInfo& ati, std::string json);
 
 //TChar to std::string
 std::string TCHAR2STRING(TCHAR *STR);
