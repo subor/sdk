@@ -1,14 +1,14 @@
-# Security
+# 安全保护
 
-This document covers security aspects of the platform.
+本文是关于Ruyi平台安全方面的说明
 
-## Ruyi OS
+## Ruyi系统
 
-[Ruyi OS](os.md) takes advantage of several Windows 10 security features, the most notable being:
+[Ruyi系统](os.md)利用Windows10的安全机制功能，最主要包括:
 
-- [BitLocker](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview) drive encryption; files on the hard drive cannot be copied or tampered with
-- [Device Guard](https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/device-guard-deployment-guide) code integrity; only signed applications can be executed
+- [BitLocker](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview)驱动加密;硬件驱动上的文件无法被复制或篡改
+- [Device Guard](https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/device-guard-deployment-guide)签名完整性;只有Windows信任的程序才能运行
 
-## PC mode
+## PC模式
 
-[PC mode](pc_mode.md) currently provides no security of any kind.  We are investigating potential solutions however there is currently no roadmap.
+[PC模式](pc_mode.md) 目前不提供安全保护机制。我们正在研究潜在方案，不过目前还没有详细规划。
