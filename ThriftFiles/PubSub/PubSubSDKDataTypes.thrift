@@ -10,6 +10,15 @@ enum ServiceLaunchEventType {
 	HighPowerStartOver = 1,
     /** Back to low power from high power mode over. */
 	BackToLowerPowerOver = 2,
+    /** A Service connected to the broker, it's ready to process messages. */
+	SingleServiceStarted = 3,
+    /** A Service been removed from the broker. */
+	SingleServiceStopped = 4,
+}
+
+enum UserShellEventType {
+    Login = 0,
+    Logout = 1,
 }
 
 
@@ -19,6 +28,10 @@ struct ServiceLaunchEvent {
 	1: i32 EventType,
     /** The last service that cause the state change. */
 	2: string LastServiceID,
+}
+
+struct UserShellEvent {
+    1: UserShellEventType EventType,
 }
 
 

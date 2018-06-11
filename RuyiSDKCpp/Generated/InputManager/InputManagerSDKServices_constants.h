@@ -9,7 +9,7 @@
 
 #include "InputManagerSDKServices_types.h"
 
-
+namespace Ruyi { namespace SDK { namespace InputManager {
 
 class InputManagerSDKServicesConstants {
  public:
@@ -19,6 +19,6 @@ class InputManagerSDKServicesConstants {
 
 extern const InputManagerSDKServicesConstants g_InputManagerSDKServices_constants;
 
-
+}}} // namespace
 
 #endif

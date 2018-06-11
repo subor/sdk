@@ -20,8 +20,7 @@ public:
 
 	void SettingSys_SimulateAppAInstalled(); //order(10)
 	//void SettingSys_SimulateAppAStarted(); //order(20)
-	void SettingSys_SimulateLoginAndChangeSettings(); //order(30)
-	void SettingSys_SimulateRestoreSettings(); //order(40)
+	void SettingSys_SimulateChangeAndRestoreSettings(); //order(40)
 	//void SettingSys_SimulateAppAStopped(); //order(50)
 	//void SettingSys_SimulateAppAUninstalled(); //order(60)
 	void SettingSys_GetSettingTree(); //order(70)
@@ -40,9 +39,6 @@ private:
 	string moduleName;
 
 	void LoginTestUser(Json::Value& ret, string user, string pass);
-	void PlayerLoginAndChangeSettings_0(std::map<string, string>& settings);
-	void PlayerLoginAndChangeSettings_1(std::map<string, string>& settings);
-	void PlayerLoginAndChangeSettings_2(std::map<string, string>& settings);
 
 	void PrintTree(Ruyi::SDK::SettingSystem::Api::SettingTree tree);
 	void PrintTreeNode(Ruyi::SDK::SettingSystem::Api::CategoryNode node, string prefix,
