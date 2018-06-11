@@ -232,14 +232,14 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.Map) {
                 {
                   Items = new Dictionary<string, int>();
-                  TMap _map16 = iprot.ReadMapBegin();
-                  for( int _i17 = 0; _i17 < _map16.Count; ++_i17)
+                  TMap _map20 = iprot.ReadMapBegin();
+                  for( int _i21 = 0; _i21 < _map20.Count; ++_i21)
                   {
-                    string _key18;
-                    int _val19;
-                    _key18 = iprot.ReadString();
-                    _val19 = iprot.ReadI32();
-                    Items[_key18] = _val19;
+                    string _key22;
+                    int _val23;
+                    _key22 = iprot.ReadString();
+                    _val23 = iprot.ReadI32();
+                    Items[_key22] = _val23;
                   }
                   iprot.ReadMapEnd();
                 }
@@ -337,10 +337,10 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteMapBegin(new TMap(TType.String, TType.I32, Items.Count));
-            foreach (string _iter20 in Items.Keys)
+            foreach (string _iter24 in Items.Keys)
             {
-              oprot.WriteString(_iter20);
-              oprot.WriteI32(Items[_iter20]);
+              oprot.WriteString(_iter24);
+              oprot.WriteI32(Items[_iter24]);
             }
             oprot.WriteMapEnd();
           }

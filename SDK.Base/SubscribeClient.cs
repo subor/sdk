@@ -198,7 +198,7 @@ namespace Ruyi.Layer0
             }
         }
 
-        #region IDisposable
+#region IDisposable
         public void Dispose()
         {
             disposing = true;
@@ -239,5 +239,5 @@ namespace Ruyi.Layer0
             }
         }
     }
-    #endregion
+#endregion
 }
