@@ -11,6 +11,6 @@
 
 #include <thrift/TToString.h>
 
+namespace Ruyi { namespace SDK { namespace InputManager {
 
-
-
+}}} // namespace
