@@ -169,53 +169,6 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="clientIndex"></param>
       string Authentication_ResetEmailPassword(string externalId, int clientIndex);
       /// <summary>
-      /// Returns the sessionId or empty string if no session present.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      string Client_GetSessionId(int clientIndex);
-      /// <summary>
-      /// Returns true if the user is currently authenticated.
-      /// If a session time out or session invalidation is returned from executing a
-      /// sever API call, this flag will reset back to false.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      bool Client_IsAuthenticated(int clientIndex);
-      /// <summary>
-      /// Returns true if brainCloud has been initialized.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      bool Client_IsInitialized(int clientIndex);
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId"></param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      void Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex);
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="serverURL">The URL to the brainCloud server</param>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId">The app id</param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      void Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex);
-      /// <summary>
-      /// Initialize the identity aspects of brainCloud.
-      /// </summary>
-      /// <param name="profileId">The profile id</param>
-      /// <param name="anonymousId">The anonymous id</param>
-      /// <param name="clientIndex"></param>
-      void Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex);
-      /// <summary>
-      /// Update method needs to be called regularly in order
-      /// to process incoming and outgoing messages.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      void Client_Update(int clientIndex);
-      /// <summary>
       /// Enable logging of brainCloud transactions (comms etc)
       /// </summary>
       /// <param name="enable">True if logging is to be enabled</param>
@@ -373,6 +326,53 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="languageCode">ISO 639-1 two-letter language code</param>
       /// <param name="clientIndex"></param>
       void Client_OverrideLanguageCode(string languageCode, int clientIndex);
+      /// <summary>
+      /// Returns the sessionId or empty string if no session present.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      string Client_GetSessionId(int clientIndex);
+      /// <summary>
+      /// Returns true if the user is currently authenticated.
+      /// If a session time out or session invalidation is returned from executing a
+      /// sever API call, this flag will reset back to false.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      bool Client_IsAuthenticated(int clientIndex);
+      /// <summary>
+      /// Returns true if brainCloud has been initialized.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      bool Client_IsInitialized(int clientIndex);
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId"></param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      void Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex);
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="serverURL">The URL to the brainCloud server</param>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId">The app id</param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      void Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex);
+      /// <summary>
+      /// Initialize the identity aspects of brainCloud.
+      /// </summary>
+      /// <param name="profileId">The profile id</param>
+      /// <param name="anonymousId">The anonymous id</param>
+      /// <param name="clientIndex"></param>
+      void Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex);
+      /// <summary>
+      /// Update method needs to be called regularly in order
+      /// to process incoming and outgoing messages.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      void Client_Update(int clientIndex);
       /// <summary>
       /// Creates custom data stream page event
       /// </summary>
@@ -2514,74 +2514,6 @@ namespace Ruyi.SDK.BrainCloudApi
       string End_Authentication_ResetEmailPassword(IAsyncResult asyncResult);
       #endif
       /// <summary>
-      /// Returns the sessionId or empty string if no session present.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_GetSessionId(AsyncCallback callback, object state, int clientIndex);
-      string End_Client_GetSessionId(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Returns true if the user is currently authenticated.
-      /// If a session time out or session invalidation is returned from executing a
-      /// sever API call, this flag will reset back to false.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_IsAuthenticated(AsyncCallback callback, object state, int clientIndex);
-      bool End_Client_IsAuthenticated(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Returns true if brainCloud has been initialized.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex);
-      bool End_Client_IsInitialized(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId"></param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex);
-      void End_Client_Initialize_SSS(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="serverURL">The URL to the brainCloud server</param>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId">The app id</param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex);
-      void End_Client_Initialize_SSSS(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Initialize the identity aspects of brainCloud.
-      /// </summary>
-      /// <param name="profileId">The profile id</param>
-      /// <param name="anonymousId">The anonymous id</param>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_InitializeIdentity(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex);
-      void End_Client_InitializeIdentity(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Update method needs to be called regularly in order
-      /// to process incoming and outgoing messages.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_Update(AsyncCallback callback, object state, int clientIndex);
-      void End_Client_Update(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
       /// Enable logging of brainCloud transactions (comms etc)
       /// </summary>
       /// <param name="enable">True if logging is to be enabled</param>
@@ -2789,6 +2721,74 @@ namespace Ruyi.SDK.BrainCloudApi
       #if SILVERLIGHT
       IAsyncResult Begin_Client_OverrideLanguageCode(AsyncCallback callback, object state, string languageCode, int clientIndex);
       void End_Client_OverrideLanguageCode(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Returns the sessionId or empty string if no session present.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_GetSessionId(AsyncCallback callback, object state, int clientIndex);
+      string End_Client_GetSessionId(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Returns true if the user is currently authenticated.
+      /// If a session time out or session invalidation is returned from executing a
+      /// sever API call, this flag will reset back to false.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_IsAuthenticated(AsyncCallback callback, object state, int clientIndex);
+      bool End_Client_IsAuthenticated(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Returns true if brainCloud has been initialized.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex);
+      bool End_Client_IsInitialized(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId"></param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex);
+      void End_Client_Initialize_SSS(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="serverURL">The URL to the brainCloud server</param>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId">The app id</param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex);
+      void End_Client_Initialize_SSSS(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Initialize the identity aspects of brainCloud.
+      /// </summary>
+      /// <param name="profileId">The profile id</param>
+      /// <param name="anonymousId">The anonymous id</param>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_InitializeIdentity(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex);
+      void End_Client_InitializeIdentity(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Update method needs to be called regularly in order
+      /// to process incoming and outgoing messages.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_Update(AsyncCallback callback, object state, int clientIndex);
+      void End_Client_Update(IAsyncResult asyncResult);
       #endif
       /// <summary>
       /// Creates custom data stream page event
@@ -6981,477 +6981,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       
       #if SILVERLIGHT
-      public IAsyncResult Begin_Client_GetSessionId(AsyncCallback callback, object state, int clientIndex)
-      {
-        return send_Client_GetSessionId(callback, state, clientIndex);
-      }
-
-      public string End_Client_GetSessionId(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_Client_GetSessionId();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Returns the sessionId or empty string if no session present.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      public string Client_GetSessionId(int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_GetSessionId(clientIndex);
-        return recv_Client_GetSessionId();
-
-        #else
-        var asyncResult = Begin_Client_GetSessionId(null, null, clientIndex);
-        return End_Client_GetSessionId(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_GetSessionId(AsyncCallback callback, object state, int clientIndex)
-      #else
-      public void send_Client_GetSessionId(int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_GetSessionId", TMessageType.Call, seqid_));
-        Client_GetSessionId_args args = new Client_GetSessionId_args();
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public string recv_Client_GetSessionId()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_GetSessionId_result result = new Client_GetSessionId_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_GetSessionId failed: unknown result");
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Client_IsAuthenticated(AsyncCallback callback, object state, int clientIndex)
-      {
-        return send_Client_IsAuthenticated(callback, state, clientIndex);
-      }
-
-      public bool End_Client_IsAuthenticated(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_Client_IsAuthenticated();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Returns true if the user is currently authenticated.
-      /// If a session time out or session invalidation is returned from executing a
-      /// sever API call, this flag will reset back to false.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      public bool Client_IsAuthenticated(int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_IsAuthenticated(clientIndex);
-        return recv_Client_IsAuthenticated();
-
-        #else
-        var asyncResult = Begin_Client_IsAuthenticated(null, null, clientIndex);
-        return End_Client_IsAuthenticated(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_IsAuthenticated(AsyncCallback callback, object state, int clientIndex)
-      #else
-      public void send_Client_IsAuthenticated(int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_IsAuthenticated", TMessageType.Call, seqid_));
-        Client_IsAuthenticated_args args = new Client_IsAuthenticated_args();
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public bool recv_Client_IsAuthenticated()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_IsAuthenticated_result result = new Client_IsAuthenticated_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_IsAuthenticated failed: unknown result");
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex)
-      {
-        return send_Client_IsInitialized(callback, state, clientIndex);
-      }
-
-      public bool End_Client_IsInitialized(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_Client_IsInitialized();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Returns true if brainCloud has been initialized.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      public bool Client_IsInitialized(int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_IsInitialized(clientIndex);
-        return recv_Client_IsInitialized();
-
-        #else
-        var asyncResult = Begin_Client_IsInitialized(null, null, clientIndex);
-        return End_Client_IsInitialized(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex)
-      #else
-      public void send_Client_IsInitialized(int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_IsInitialized", TMessageType.Call, seqid_));
-        Client_IsInitialized_args args = new Client_IsInitialized_args();
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public bool recv_Client_IsInitialized()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_IsInitialized_result result = new Client_IsInitialized_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_IsInitialized failed: unknown result");
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex)
-      {
-        return send_Client_Initialize_SSS(callback, state, secretKey, appId, appVersion, clientIndex);
-      }
-
-      public void End_Client_Initialize_SSS(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        recv_Client_Initialize_SSS();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId"></param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      public void Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_Initialize_SSS(secretKey, appId, appVersion, clientIndex);
-        recv_Client_Initialize_SSS();
-
-        #else
-        var asyncResult = Begin_Client_Initialize_SSS(null, null, secretKey, appId, appVersion, clientIndex);
-        End_Client_Initialize_SSS(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex)
-      #else
-      public void send_Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_Initialize_SSS", TMessageType.Call, seqid_));
-        Client_Initialize_SSS_args args = new Client_Initialize_SSS_args();
-        args.SecretKey = secretKey;
-        args.AppId = appId;
-        args.AppVersion = appVersion;
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public void recv_Client_Initialize_SSS()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_Initialize_SSS_result result = new Client_Initialize_SSS_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        return;
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
-      {
-        return send_Client_Initialize_SSSS(callback, state, serverURL, secretKey, appId, appVersion, clientIndex);
-      }
-
-      public void End_Client_Initialize_SSSS(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        recv_Client_Initialize_SSSS();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="serverURL">The URL to the brainCloud server</param>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId">The app id</param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      public void Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_Initialize_SSSS(serverURL, secretKey, appId, appVersion, clientIndex);
-        recv_Client_Initialize_SSSS();
-
-        #else
-        var asyncResult = Begin_Client_Initialize_SSSS(null, null, serverURL, secretKey, appId, appVersion, clientIndex);
-        End_Client_Initialize_SSSS(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
-      #else
-      public void send_Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_Initialize_SSSS", TMessageType.Call, seqid_));
-        Client_Initialize_SSSS_args args = new Client_Initialize_SSSS_args();
-        args.ServerURL = serverURL;
-        args.SecretKey = secretKey;
-        args.AppId = appId;
-        args.AppVersion = appVersion;
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public void recv_Client_Initialize_SSSS()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_Initialize_SSSS_result result = new Client_Initialize_SSSS_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        return;
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Client_InitializeIdentity(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex)
-      {
-        return send_Client_InitializeIdentity(callback, state, profileId, anonymousId, clientIndex);
-      }
-
-      public void End_Client_InitializeIdentity(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        recv_Client_InitializeIdentity();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Initialize the identity aspects of brainCloud.
-      /// </summary>
-      /// <param name="profileId">The profile id</param>
-      /// <param name="anonymousId">The anonymous id</param>
-      /// <param name="clientIndex"></param>
-      public void Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_InitializeIdentity(profileId, anonymousId, clientIndex);
-        recv_Client_InitializeIdentity();
-
-        #else
-        var asyncResult = Begin_Client_InitializeIdentity(null, null, profileId, anonymousId, clientIndex);
-        End_Client_InitializeIdentity(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_InitializeIdentity(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex)
-      #else
-      public void send_Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_InitializeIdentity", TMessageType.Call, seqid_));
-        Client_InitializeIdentity_args args = new Client_InitializeIdentity_args();
-        args.ProfileId = profileId;
-        args.AnonymousId = anonymousId;
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public void recv_Client_InitializeIdentity()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_InitializeIdentity_result result = new Client_InitializeIdentity_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        return;
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Client_Update(AsyncCallback callback, object state, int clientIndex)
-      {
-        return send_Client_Update(callback, state, clientIndex);
-      }
-
-      public void End_Client_Update(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        recv_Client_Update();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Update method needs to be called regularly in order
-      /// to process incoming and outgoing messages.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      public void Client_Update(int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_Update(clientIndex);
-        recv_Client_Update();
-
-        #else
-        var asyncResult = Begin_Client_Update(null, null, clientIndex);
-        End_Client_Update(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_Update(AsyncCallback callback, object state, int clientIndex)
-      #else
-      public void send_Client_Update(int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_Update", TMessageType.Call, seqid_));
-        Client_Update_args args = new Client_Update_args();
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public void recv_Client_Update()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_Update_result result = new Client_Update_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        return;
-      }
-
-      
-      #if SILVERLIGHT
       public IAsyncResult Begin_Client_EnableLogging(AsyncCallback callback, object state, bool enable, int clientIndex)
       {
         return send_Client_EnableLogging(callback, state, enable, clientIndex);
@@ -8610,6 +8139,477 @@ namespace Ruyi.SDK.BrainCloudApi
           throw x;
         }
         Client_OverrideLanguageCode_result result = new Client_OverrideLanguageCode_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        return;
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Client_GetSessionId(AsyncCallback callback, object state, int clientIndex)
+      {
+        return send_Client_GetSessionId(callback, state, clientIndex);
+      }
+
+      public string End_Client_GetSessionId(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Client_GetSessionId();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Returns the sessionId or empty string if no session present.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      public string Client_GetSessionId(int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_GetSessionId(clientIndex);
+        return recv_Client_GetSessionId();
+
+        #else
+        var asyncResult = Begin_Client_GetSessionId(null, null, clientIndex);
+        return End_Client_GetSessionId(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_GetSessionId(AsyncCallback callback, object state, int clientIndex)
+      #else
+      public void send_Client_GetSessionId(int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_GetSessionId", TMessageType.Call, seqid_));
+        Client_GetSessionId_args args = new Client_GetSessionId_args();
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public string recv_Client_GetSessionId()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_GetSessionId_result result = new Client_GetSessionId_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_GetSessionId failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Client_IsAuthenticated(AsyncCallback callback, object state, int clientIndex)
+      {
+        return send_Client_IsAuthenticated(callback, state, clientIndex);
+      }
+
+      public bool End_Client_IsAuthenticated(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Client_IsAuthenticated();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Returns true if the user is currently authenticated.
+      /// If a session time out or session invalidation is returned from executing a
+      /// sever API call, this flag will reset back to false.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      public bool Client_IsAuthenticated(int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_IsAuthenticated(clientIndex);
+        return recv_Client_IsAuthenticated();
+
+        #else
+        var asyncResult = Begin_Client_IsAuthenticated(null, null, clientIndex);
+        return End_Client_IsAuthenticated(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_IsAuthenticated(AsyncCallback callback, object state, int clientIndex)
+      #else
+      public void send_Client_IsAuthenticated(int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_IsAuthenticated", TMessageType.Call, seqid_));
+        Client_IsAuthenticated_args args = new Client_IsAuthenticated_args();
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public bool recv_Client_IsAuthenticated()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_IsAuthenticated_result result = new Client_IsAuthenticated_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_IsAuthenticated failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex)
+      {
+        return send_Client_IsInitialized(callback, state, clientIndex);
+      }
+
+      public bool End_Client_IsInitialized(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Client_IsInitialized();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Returns true if brainCloud has been initialized.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      public bool Client_IsInitialized(int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_IsInitialized(clientIndex);
+        return recv_Client_IsInitialized();
+
+        #else
+        var asyncResult = Begin_Client_IsInitialized(null, null, clientIndex);
+        return End_Client_IsInitialized(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex)
+      #else
+      public void send_Client_IsInitialized(int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_IsInitialized", TMessageType.Call, seqid_));
+        Client_IsInitialized_args args = new Client_IsInitialized_args();
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public bool recv_Client_IsInitialized()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_IsInitialized_result result = new Client_IsInitialized_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_IsInitialized failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex)
+      {
+        return send_Client_Initialize_SSS(callback, state, secretKey, appId, appVersion, clientIndex);
+      }
+
+      public void End_Client_Initialize_SSS(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        recv_Client_Initialize_SSS();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId"></param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      public void Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_Initialize_SSS(secretKey, appId, appVersion, clientIndex);
+        recv_Client_Initialize_SSS();
+
+        #else
+        var asyncResult = Begin_Client_Initialize_SSS(null, null, secretKey, appId, appVersion, clientIndex);
+        End_Client_Initialize_SSS(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex)
+      #else
+      public void send_Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_Initialize_SSS", TMessageType.Call, seqid_));
+        Client_Initialize_SSS_args args = new Client_Initialize_SSS_args();
+        args.SecretKey = secretKey;
+        args.AppId = appId;
+        args.AppVersion = appVersion;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public void recv_Client_Initialize_SSS()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_Initialize_SSS_result result = new Client_Initialize_SSS_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        return;
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
+      {
+        return send_Client_Initialize_SSSS(callback, state, serverURL, secretKey, appId, appVersion, clientIndex);
+      }
+
+      public void End_Client_Initialize_SSSS(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        recv_Client_Initialize_SSSS();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="serverURL">The URL to the brainCloud server</param>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId">The app id</param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      public void Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_Initialize_SSSS(serverURL, secretKey, appId, appVersion, clientIndex);
+        recv_Client_Initialize_SSSS();
+
+        #else
+        var asyncResult = Begin_Client_Initialize_SSSS(null, null, serverURL, secretKey, appId, appVersion, clientIndex);
+        End_Client_Initialize_SSSS(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
+      #else
+      public void send_Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_Initialize_SSSS", TMessageType.Call, seqid_));
+        Client_Initialize_SSSS_args args = new Client_Initialize_SSSS_args();
+        args.ServerURL = serverURL;
+        args.SecretKey = secretKey;
+        args.AppId = appId;
+        args.AppVersion = appVersion;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public void recv_Client_Initialize_SSSS()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_Initialize_SSSS_result result = new Client_Initialize_SSSS_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        return;
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Client_InitializeIdentity(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex)
+      {
+        return send_Client_InitializeIdentity(callback, state, profileId, anonymousId, clientIndex);
+      }
+
+      public void End_Client_InitializeIdentity(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        recv_Client_InitializeIdentity();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Initialize the identity aspects of brainCloud.
+      /// </summary>
+      /// <param name="profileId">The profile id</param>
+      /// <param name="anonymousId">The anonymous id</param>
+      /// <param name="clientIndex"></param>
+      public void Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_InitializeIdentity(profileId, anonymousId, clientIndex);
+        recv_Client_InitializeIdentity();
+
+        #else
+        var asyncResult = Begin_Client_InitializeIdentity(null, null, profileId, anonymousId, clientIndex);
+        End_Client_InitializeIdentity(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_InitializeIdentity(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex)
+      #else
+      public void send_Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_InitializeIdentity", TMessageType.Call, seqid_));
+        Client_InitializeIdentity_args args = new Client_InitializeIdentity_args();
+        args.ProfileId = profileId;
+        args.AnonymousId = anonymousId;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public void recv_Client_InitializeIdentity()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_InitializeIdentity_result result = new Client_InitializeIdentity_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        return;
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Client_Update(AsyncCallback callback, object state, int clientIndex)
+      {
+        return send_Client_Update(callback, state, clientIndex);
+      }
+
+      public void End_Client_Update(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        recv_Client_Update();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Update method needs to be called regularly in order
+      /// to process incoming and outgoing messages.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      public void Client_Update(int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_Update(clientIndex);
+        recv_Client_Update();
+
+        #else
+        var asyncResult = Begin_Client_Update(null, null, clientIndex);
+        End_Client_Update(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_Update(AsyncCallback callback, object state, int clientIndex)
+      #else
+      public void send_Client_Update(int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_Update", TMessageType.Call, seqid_));
+        Client_Update_args args = new Client_Update_args();
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public void recv_Client_Update()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_Update_result result = new Client_Update_result();
         result.Read(iprot_);
         iprot_.ReadMessageEnd();
         return;
@@ -28546,13 +28546,6 @@ namespace Ruyi.SDK.BrainCloudApi
         processMap_["Authentication_AuthenticateUniversal"] = Authentication_AuthenticateUniversal_Process;
         processMap_["Authentication_AuthenticateExternal"] = Authentication_AuthenticateExternal_Process;
         processMap_["Authentication_ResetEmailPassword"] = Authentication_ResetEmailPassword_Process;
-        processMap_["Client_GetSessionId"] = Client_GetSessionId_Process;
-        processMap_["Client_IsAuthenticated"] = Client_IsAuthenticated_Process;
-        processMap_["Client_IsInitialized"] = Client_IsInitialized_Process;
-        processMap_["Client_Initialize_SSS"] = Client_Initialize_SSS_Process;
-        processMap_["Client_Initialize_SSSS"] = Client_Initialize_SSSS_Process;
-        processMap_["Client_InitializeIdentity"] = Client_InitializeIdentity_Process;
-        processMap_["Client_Update"] = Client_Update_Process;
         processMap_["Client_EnableLogging"] = Client_EnableLogging_Process;
         processMap_["Client_ResetCommunication"] = Client_ResetCommunication_Process;
         processMap_["Client_SetPacketTimeouts"] = Client_SetPacketTimeouts_Process;
@@ -28570,6 +28563,13 @@ namespace Ruyi.SDK.BrainCloudApi
         processMap_["Client_InsertEndOfMessageBundleMarker"] = Client_InsertEndOfMessageBundleMarker_Process;
         processMap_["Client_OverrideCountryCode"] = Client_OverrideCountryCode_Process;
         processMap_["Client_OverrideLanguageCode"] = Client_OverrideLanguageCode_Process;
+        processMap_["Client_GetSessionId"] = Client_GetSessionId_Process;
+        processMap_["Client_IsAuthenticated"] = Client_IsAuthenticated_Process;
+        processMap_["Client_IsInitialized"] = Client_IsInitialized_Process;
+        processMap_["Client_Initialize_SSS"] = Client_Initialize_SSS_Process;
+        processMap_["Client_Initialize_SSSS"] = Client_Initialize_SSSS_Process;
+        processMap_["Client_InitializeIdentity"] = Client_InitializeIdentity_Process;
+        processMap_["Client_Update"] = Client_Update_Process;
         processMap_["DataStream_CustomPageEvent"] = DataStream_CustomPageEvent_Process;
         processMap_["DataStream_CustomScreenEvent"] = DataStream_CustomScreenEvent_Process;
         processMap_["DataStream_CustomTrackEvent"] = DataStream_CustomTrackEvent_Process;
@@ -29419,202 +29419,6 @@ namespace Ruyi.SDK.BrainCloudApi
         oprot.Transport.Flush();
       }
 
-      public void Client_GetSessionId_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_GetSessionId_args args = new Client_GetSessionId_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_GetSessionId_result result = new Client_GetSessionId_result();
-        try
-        {
-          result.Success = iface_.Client_GetSessionId(args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_GetSessionId", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_GetSessionId", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_IsAuthenticated_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_IsAuthenticated_args args = new Client_IsAuthenticated_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_IsAuthenticated_result result = new Client_IsAuthenticated_result();
-        try
-        {
-          result.Success = iface_.Client_IsAuthenticated(args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_IsAuthenticated", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_IsAuthenticated", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_IsInitialized_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_IsInitialized_args args = new Client_IsInitialized_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_IsInitialized_result result = new Client_IsInitialized_result();
-        try
-        {
-          result.Success = iface_.Client_IsInitialized(args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_IsInitialized", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_IsInitialized", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_Initialize_SSS_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_Initialize_SSS_args args = new Client_Initialize_SSS_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_Initialize_SSS_result result = new Client_Initialize_SSS_result();
-        try
-        {
-          iface_.Client_Initialize_SSS(args.SecretKey, args.AppId, args.AppVersion, args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSS", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSS", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_Initialize_SSSS_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_Initialize_SSSS_args args = new Client_Initialize_SSSS_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_Initialize_SSSS_result result = new Client_Initialize_SSSS_result();
-        try
-        {
-          iface_.Client_Initialize_SSSS(args.ServerURL, args.SecretKey, args.AppId, args.AppVersion, args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSSS", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSSS", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_InitializeIdentity_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_InitializeIdentity_args args = new Client_InitializeIdentity_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_InitializeIdentity_result result = new Client_InitializeIdentity_result();
-        try
-        {
-          iface_.Client_InitializeIdentity(args.ProfileId, args.AnonymousId, args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_InitializeIdentity", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_InitializeIdentity", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_Update_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_Update_args args = new Client_Update_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_Update_result result = new Client_Update_result();
-        try
-        {
-          iface_.Client_Update(args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_Update", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_Update", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
       public void Client_EnableLogging_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
         Client_EnableLogging_args args = new Client_EnableLogging_args();
@@ -30085,6 +29889,202 @@ namespace Ruyi.SDK.BrainCloudApi
           Console.Error.WriteLine(ex.ToString());
           TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
           oprot.WriteMessageBegin(new TMessage("Client_OverrideLanguageCode", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Client_GetSessionId_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_GetSessionId_args args = new Client_GetSessionId_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_GetSessionId_result result = new Client_GetSessionId_result();
+        try
+        {
+          result.Success = iface_.Client_GetSessionId(args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_GetSessionId", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_GetSessionId", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Client_IsAuthenticated_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_IsAuthenticated_args args = new Client_IsAuthenticated_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_IsAuthenticated_result result = new Client_IsAuthenticated_result();
+        try
+        {
+          result.Success = iface_.Client_IsAuthenticated(args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_IsAuthenticated", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_IsAuthenticated", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Client_IsInitialized_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_IsInitialized_args args = new Client_IsInitialized_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_IsInitialized_result result = new Client_IsInitialized_result();
+        try
+        {
+          result.Success = iface_.Client_IsInitialized(args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_IsInitialized", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_IsInitialized", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Client_Initialize_SSS_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_Initialize_SSS_args args = new Client_Initialize_SSS_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_Initialize_SSS_result result = new Client_Initialize_SSS_result();
+        try
+        {
+          iface_.Client_Initialize_SSS(args.SecretKey, args.AppId, args.AppVersion, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSS", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSS", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Client_Initialize_SSSS_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_Initialize_SSSS_args args = new Client_Initialize_SSSS_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_Initialize_SSSS_result result = new Client_Initialize_SSSS_result();
+        try
+        {
+          iface_.Client_Initialize_SSSS(args.ServerURL, args.SecretKey, args.AppId, args.AppVersion, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSSS", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSSS", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Client_InitializeIdentity_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_InitializeIdentity_args args = new Client_InitializeIdentity_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_InitializeIdentity_result result = new Client_InitializeIdentity_result();
+        try
+        {
+          iface_.Client_InitializeIdentity(args.ProfileId, args.AnonymousId, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_InitializeIdentity", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_InitializeIdentity", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Client_Update_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_Update_args args = new Client_Update_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_Update_result result = new Client_Update_result();
+        try
+        {
+          iface_.Client_Update(args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_Update", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_Update", TMessageType.Exception, seqid));
           x.Write(oprot);
         }
         oprot.WriteMessageEnd();
@@ -43851,1691 +43851,6 @@ namespace Ruyi.SDK.BrainCloudApi
     #if !SILVERLIGHT
     [Serializable]
     #endif
-    public partial class Client_GetSessionId_args : TBase
-    {
-      private int _clientIndex;
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool clientIndex;
-      }
-
-      public Client_GetSessionId_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_GetSessionId_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_GetSessionId_args(");
-        bool __first = true;
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_GetSessionId_result : TBase
-    {
-      private string _success;
-
-      public string Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool success;
-      }
-
-      public Client_GetSessionId_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.String) {
-                  Success = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_GetSessionId_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-
-          if (this.__isset.success) {
-            if (Success != null) {
-              field.Name = "Success";
-              field.Type = TType.String;
-              field.ID = 0;
-              oprot.WriteFieldBegin(field);
-              oprot.WriteString(Success);
-              oprot.WriteFieldEnd();
-            }
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_GetSessionId_result(");
-        bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_IsAuthenticated_args : TBase
-    {
-      private int _clientIndex;
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool clientIndex;
-      }
-
-      public Client_IsAuthenticated_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_IsAuthenticated_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_IsAuthenticated_args(");
-        bool __first = true;
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_IsAuthenticated_result : TBase
-    {
-      private bool _success;
-
-      public bool Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool success;
-      }
-
-      public Client_IsAuthenticated_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.Bool) {
-                  Success = iprot.ReadBool();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_IsAuthenticated_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-
-          if (this.__isset.success) {
-            field.Name = "Success";
-            field.Type = TType.Bool;
-            field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteBool(Success);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_IsAuthenticated_result(");
-        bool __first = true;
-        if (__isset.success) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_IsInitialized_args : TBase
-    {
-      private int _clientIndex;
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool clientIndex;
-      }
-
-      public Client_IsInitialized_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_IsInitialized_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_IsInitialized_args(");
-        bool __first = true;
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_IsInitialized_result : TBase
-    {
-      private bool _success;
-
-      public bool Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool success;
-      }
-
-      public Client_IsInitialized_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.Bool) {
-                  Success = iprot.ReadBool();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_IsInitialized_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-
-          if (this.__isset.success) {
-            field.Name = "Success";
-            field.Type = TType.Bool;
-            field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteBool(Success);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_IsInitialized_result(");
-        bool __first = true;
-        if (__isset.success) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_Initialize_SSS_args : TBase
-    {
-      private string _secretKey;
-      private string _appId;
-      private string _appVersion;
-      private int _clientIndex;
-
-      /// <summary>
-      /// The secret key for your app
-      /// </summary>
-      public string SecretKey
-      {
-        get
-        {
-          return _secretKey;
-        }
-        set
-        {
-          __isset.secretKey = true;
-          this._secretKey = value;
-        }
-      }
-
-      public string AppId
-      {
-        get
-        {
-          return _appId;
-        }
-        set
-        {
-          __isset.appId = true;
-          this._appId = value;
-        }
-      }
-
-      /// <summary>
-      /// The app version
-      /// </summary>
-      public string AppVersion
-      {
-        get
-        {
-          return _appVersion;
-        }
-        set
-        {
-          __isset.appVersion = true;
-          this._appVersion = value;
-        }
-      }
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool secretKey;
-        public bool appId;
-        public bool appVersion;
-        public bool clientIndex;
-      }
-
-      public Client_Initialize_SSS_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.String) {
-                  SecretKey = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String) {
-                  AppId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 3:
-                if (field.Type == TType.String) {
-                  AppVersion = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 4:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_Initialize_SSS_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (SecretKey != null && __isset.secretKey) {
-            field.Name = "secretKey";
-            field.Type = TType.String;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(SecretKey);
-            oprot.WriteFieldEnd();
-          }
-          if (AppId != null && __isset.appId) {
-            field.Name = "appId";
-            field.Type = TType.String;
-            field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(AppId);
-            oprot.WriteFieldEnd();
-          }
-          if (AppVersion != null && __isset.appVersion) {
-            field.Name = "appVersion";
-            field.Type = TType.String;
-            field.ID = 3;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(AppVersion);
-            oprot.WriteFieldEnd();
-          }
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 4;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_Initialize_SSS_args(");
-        bool __first = true;
-        if (SecretKey != null && __isset.secretKey) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("SecretKey: ");
-          __sb.Append(SecretKey);
-        }
-        if (AppId != null && __isset.appId) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("AppId: ");
-          __sb.Append(AppId);
-        }
-        if (AppVersion != null && __isset.appVersion) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("AppVersion: ");
-          __sb.Append(AppVersion);
-        }
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_Initialize_SSS_result : TBase
-    {
-
-      public Client_Initialize_SSS_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_Initialize_SSS_result");
-          oprot.WriteStructBegin(struc);
-
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_Initialize_SSS_result(");
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_Initialize_SSSS_args : TBase
-    {
-      private string _serverURL;
-      private string _secretKey;
-      private string _appId;
-      private string _appVersion;
-      private int _clientIndex;
-
-      /// <summary>
-      /// The URL to the brainCloud server
-      /// </summary>
-      public string ServerURL
-      {
-        get
-        {
-          return _serverURL;
-        }
-        set
-        {
-          __isset.serverURL = true;
-          this._serverURL = value;
-        }
-      }
-
-      /// <summary>
-      /// The secret key for your app
-      /// </summary>
-      public string SecretKey
-      {
-        get
-        {
-          return _secretKey;
-        }
-        set
-        {
-          __isset.secretKey = true;
-          this._secretKey = value;
-        }
-      }
-
-      /// <summary>
-      /// The app id
-      /// </summary>
-      public string AppId
-      {
-        get
-        {
-          return _appId;
-        }
-        set
-        {
-          __isset.appId = true;
-          this._appId = value;
-        }
-      }
-
-      /// <summary>
-      /// The app version
-      /// </summary>
-      public string AppVersion
-      {
-        get
-        {
-          return _appVersion;
-        }
-        set
-        {
-          __isset.appVersion = true;
-          this._appVersion = value;
-        }
-      }
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool serverURL;
-        public bool secretKey;
-        public bool appId;
-        public bool appVersion;
-        public bool clientIndex;
-      }
-
-      public Client_Initialize_SSSS_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.String) {
-                  ServerURL = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String) {
-                  SecretKey = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 3:
-                if (field.Type == TType.String) {
-                  AppId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 4:
-                if (field.Type == TType.String) {
-                  AppVersion = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 5:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_Initialize_SSSS_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (ServerURL != null && __isset.serverURL) {
-            field.Name = "serverURL";
-            field.Type = TType.String;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(ServerURL);
-            oprot.WriteFieldEnd();
-          }
-          if (SecretKey != null && __isset.secretKey) {
-            field.Name = "secretKey";
-            field.Type = TType.String;
-            field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(SecretKey);
-            oprot.WriteFieldEnd();
-          }
-          if (AppId != null && __isset.appId) {
-            field.Name = "appId";
-            field.Type = TType.String;
-            field.ID = 3;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(AppId);
-            oprot.WriteFieldEnd();
-          }
-          if (AppVersion != null && __isset.appVersion) {
-            field.Name = "appVersion";
-            field.Type = TType.String;
-            field.ID = 4;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(AppVersion);
-            oprot.WriteFieldEnd();
-          }
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 5;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_Initialize_SSSS_args(");
-        bool __first = true;
-        if (ServerURL != null && __isset.serverURL) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ServerURL: ");
-          __sb.Append(ServerURL);
-        }
-        if (SecretKey != null && __isset.secretKey) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("SecretKey: ");
-          __sb.Append(SecretKey);
-        }
-        if (AppId != null && __isset.appId) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("AppId: ");
-          __sb.Append(AppId);
-        }
-        if (AppVersion != null && __isset.appVersion) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("AppVersion: ");
-          __sb.Append(AppVersion);
-        }
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_Initialize_SSSS_result : TBase
-    {
-
-      public Client_Initialize_SSSS_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_Initialize_SSSS_result");
-          oprot.WriteStructBegin(struc);
-
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_Initialize_SSSS_result(");
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_InitializeIdentity_args : TBase
-    {
-      private string _profileId;
-      private string _anonymousId;
-      private int _clientIndex;
-
-      /// <summary>
-      /// The profile id
-      /// </summary>
-      public string ProfileId
-      {
-        get
-        {
-          return _profileId;
-        }
-        set
-        {
-          __isset.profileId = true;
-          this._profileId = value;
-        }
-      }
-
-      /// <summary>
-      /// The anonymous id
-      /// </summary>
-      public string AnonymousId
-      {
-        get
-        {
-          return _anonymousId;
-        }
-        set
-        {
-          __isset.anonymousId = true;
-          this._anonymousId = value;
-        }
-      }
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool profileId;
-        public bool anonymousId;
-        public bool clientIndex;
-      }
-
-      public Client_InitializeIdentity_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.String) {
-                  ProfileId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String) {
-                  AnonymousId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 3:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_InitializeIdentity_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (ProfileId != null && __isset.profileId) {
-            field.Name = "profileId";
-            field.Type = TType.String;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(ProfileId);
-            oprot.WriteFieldEnd();
-          }
-          if (AnonymousId != null && __isset.anonymousId) {
-            field.Name = "anonymousId";
-            field.Type = TType.String;
-            field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(AnonymousId);
-            oprot.WriteFieldEnd();
-          }
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 3;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_InitializeIdentity_args(");
-        bool __first = true;
-        if (ProfileId != null && __isset.profileId) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ProfileId: ");
-          __sb.Append(ProfileId);
-        }
-        if (AnonymousId != null && __isset.anonymousId) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("AnonymousId: ");
-          __sb.Append(AnonymousId);
-        }
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_InitializeIdentity_result : TBase
-    {
-
-      public Client_InitializeIdentity_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_InitializeIdentity_result");
-          oprot.WriteStructBegin(struc);
-
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_InitializeIdentity_result(");
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_Update_args : TBase
-    {
-      private int _clientIndex;
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool clientIndex;
-      }
-
-      public Client_Update_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_Update_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_Update_args(");
-        bool __first = true;
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_Update_result : TBase
-    {
-
-      public Client_Update_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_Update_result");
-          oprot.WriteStructBegin(struc);
-
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_Update_result(");
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
     public partial class Client_EnableLogging_args : TBase
     {
       private bool _enable;
@@ -48999,6 +47314,1691 @@ namespace Ruyi.SDK.BrainCloudApi
 
       public override string ToString() {
         StringBuilder __sb = new StringBuilder("Client_OverrideLanguageCode_result(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_GetSessionId_args : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool clientIndex;
+      }
+
+      public Client_GetSessionId_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_GetSessionId_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_GetSessionId_args(");
+        bool __first = true;
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_GetSessionId_result : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Client_GetSessionId_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_GetSessionId_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_GetSessionId_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_IsAuthenticated_args : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool clientIndex;
+      }
+
+      public Client_IsAuthenticated_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_IsAuthenticated_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_IsAuthenticated_args(");
+        bool __first = true;
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_IsAuthenticated_result : TBase
+    {
+      private bool _success;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Client_IsAuthenticated_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool) {
+                  Success = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_IsAuthenticated_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(Success);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_IsAuthenticated_result(");
+        bool __first = true;
+        if (__isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_IsInitialized_args : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool clientIndex;
+      }
+
+      public Client_IsInitialized_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_IsInitialized_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_IsInitialized_args(");
+        bool __first = true;
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_IsInitialized_result : TBase
+    {
+      private bool _success;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Client_IsInitialized_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool) {
+                  Success = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_IsInitialized_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(Success);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_IsInitialized_result(");
+        bool __first = true;
+        if (__isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_Initialize_SSS_args : TBase
+    {
+      private string _secretKey;
+      private string _appId;
+      private string _appVersion;
+      private int _clientIndex;
+
+      /// <summary>
+      /// The secret key for your app
+      /// </summary>
+      public string SecretKey
+      {
+        get
+        {
+          return _secretKey;
+        }
+        set
+        {
+          __isset.secretKey = true;
+          this._secretKey = value;
+        }
+      }
+
+      public string AppId
+      {
+        get
+        {
+          return _appId;
+        }
+        set
+        {
+          __isset.appId = true;
+          this._appId = value;
+        }
+      }
+
+      /// <summary>
+      /// The app version
+      /// </summary>
+      public string AppVersion
+      {
+        get
+        {
+          return _appVersion;
+        }
+        set
+        {
+          __isset.appVersion = true;
+          this._appVersion = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool secretKey;
+        public bool appId;
+        public bool appVersion;
+        public bool clientIndex;
+      }
+
+      public Client_Initialize_SSS_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  SecretKey = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String) {
+                  AppId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.String) {
+                  AppVersion = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_Initialize_SSS_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (SecretKey != null && __isset.secretKey) {
+            field.Name = "secretKey";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(SecretKey);
+            oprot.WriteFieldEnd();
+          }
+          if (AppId != null && __isset.appId) {
+            field.Name = "appId";
+            field.Type = TType.String;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(AppId);
+            oprot.WriteFieldEnd();
+          }
+          if (AppVersion != null && __isset.appVersion) {
+            field.Name = "appVersion";
+            field.Type = TType.String;
+            field.ID = 3;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(AppVersion);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 4;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_Initialize_SSS_args(");
+        bool __first = true;
+        if (SecretKey != null && __isset.secretKey) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("SecretKey: ");
+          __sb.Append(SecretKey);
+        }
+        if (AppId != null && __isset.appId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("AppId: ");
+          __sb.Append(AppId);
+        }
+        if (AppVersion != null && __isset.appVersion) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("AppVersion: ");
+          __sb.Append(AppVersion);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_Initialize_SSS_result : TBase
+    {
+
+      public Client_Initialize_SSS_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_Initialize_SSS_result");
+          oprot.WriteStructBegin(struc);
+
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_Initialize_SSS_result(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_Initialize_SSSS_args : TBase
+    {
+      private string _serverURL;
+      private string _secretKey;
+      private string _appId;
+      private string _appVersion;
+      private int _clientIndex;
+
+      /// <summary>
+      /// The URL to the brainCloud server
+      /// </summary>
+      public string ServerURL
+      {
+        get
+        {
+          return _serverURL;
+        }
+        set
+        {
+          __isset.serverURL = true;
+          this._serverURL = value;
+        }
+      }
+
+      /// <summary>
+      /// The secret key for your app
+      /// </summary>
+      public string SecretKey
+      {
+        get
+        {
+          return _secretKey;
+        }
+        set
+        {
+          __isset.secretKey = true;
+          this._secretKey = value;
+        }
+      }
+
+      /// <summary>
+      /// The app id
+      /// </summary>
+      public string AppId
+      {
+        get
+        {
+          return _appId;
+        }
+        set
+        {
+          __isset.appId = true;
+          this._appId = value;
+        }
+      }
+
+      /// <summary>
+      /// The app version
+      /// </summary>
+      public string AppVersion
+      {
+        get
+        {
+          return _appVersion;
+        }
+        set
+        {
+          __isset.appVersion = true;
+          this._appVersion = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool serverURL;
+        public bool secretKey;
+        public bool appId;
+        public bool appVersion;
+        public bool clientIndex;
+      }
+
+      public Client_Initialize_SSSS_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  ServerURL = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String) {
+                  SecretKey = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.String) {
+                  AppId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.String) {
+                  AppVersion = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 5:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_Initialize_SSSS_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (ServerURL != null && __isset.serverURL) {
+            field.Name = "serverURL";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(ServerURL);
+            oprot.WriteFieldEnd();
+          }
+          if (SecretKey != null && __isset.secretKey) {
+            field.Name = "secretKey";
+            field.Type = TType.String;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(SecretKey);
+            oprot.WriteFieldEnd();
+          }
+          if (AppId != null && __isset.appId) {
+            field.Name = "appId";
+            field.Type = TType.String;
+            field.ID = 3;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(AppId);
+            oprot.WriteFieldEnd();
+          }
+          if (AppVersion != null && __isset.appVersion) {
+            field.Name = "appVersion";
+            field.Type = TType.String;
+            field.ID = 4;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(AppVersion);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 5;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_Initialize_SSSS_args(");
+        bool __first = true;
+        if (ServerURL != null && __isset.serverURL) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ServerURL: ");
+          __sb.Append(ServerURL);
+        }
+        if (SecretKey != null && __isset.secretKey) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("SecretKey: ");
+          __sb.Append(SecretKey);
+        }
+        if (AppId != null && __isset.appId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("AppId: ");
+          __sb.Append(AppId);
+        }
+        if (AppVersion != null && __isset.appVersion) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("AppVersion: ");
+          __sb.Append(AppVersion);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_Initialize_SSSS_result : TBase
+    {
+
+      public Client_Initialize_SSSS_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_Initialize_SSSS_result");
+          oprot.WriteStructBegin(struc);
+
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_Initialize_SSSS_result(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_InitializeIdentity_args : TBase
+    {
+      private string _profileId;
+      private string _anonymousId;
+      private int _clientIndex;
+
+      /// <summary>
+      /// The profile id
+      /// </summary>
+      public string ProfileId
+      {
+        get
+        {
+          return _profileId;
+        }
+        set
+        {
+          __isset.profileId = true;
+          this._profileId = value;
+        }
+      }
+
+      /// <summary>
+      /// The anonymous id
+      /// </summary>
+      public string AnonymousId
+      {
+        get
+        {
+          return _anonymousId;
+        }
+        set
+        {
+          __isset.anonymousId = true;
+          this._anonymousId = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool profileId;
+        public bool anonymousId;
+        public bool clientIndex;
+      }
+
+      public Client_InitializeIdentity_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  ProfileId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String) {
+                  AnonymousId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_InitializeIdentity_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (ProfileId != null && __isset.profileId) {
+            field.Name = "profileId";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(ProfileId);
+            oprot.WriteFieldEnd();
+          }
+          if (AnonymousId != null && __isset.anonymousId) {
+            field.Name = "anonymousId";
+            field.Type = TType.String;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(AnonymousId);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 3;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_InitializeIdentity_args(");
+        bool __first = true;
+        if (ProfileId != null && __isset.profileId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ProfileId: ");
+          __sb.Append(ProfileId);
+        }
+        if (AnonymousId != null && __isset.anonymousId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("AnonymousId: ");
+          __sb.Append(AnonymousId);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_InitializeIdentity_result : TBase
+    {
+
+      public Client_InitializeIdentity_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_InitializeIdentity_result");
+          oprot.WriteStructBegin(struc);
+
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_InitializeIdentity_result(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_Update_args : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool clientIndex;
+      }
+
+      public Client_Update_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_Update_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_Update_args(");
+        bool __first = true;
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_Update_result : TBase
+    {
+
+      public Client_Update_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_Update_result");
+          oprot.WriteStructBegin(struc);
+
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_Update_result(");
         __sb.Append(")");
         return __sb.ToString();
       }
