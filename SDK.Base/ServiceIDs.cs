@@ -130,6 +130,7 @@ namespace Ruyi.Layer0
                 case ServiceIDs.SYS_REPORTER:
                 case ServiceIDs.L2FORWARDER:
                 case ServiceIDs.LAYER1:
+                case ServiceIDs.UPDATESERVICE:
                     return false;
 
                 default:
