@@ -49,12 +49,12 @@ namespace Ruyi.SDK.ExternalErrors
       tmp6.ErrorCode = ExternalErrorCode.Err_6;
       EXTERNALERRORLIST.Add(tmp6);
       ExternalErrorInfos tmp7 = new ExternalErrorInfos();
-      tmp7.ErrorCode = ExternalErrorCode.Err_7;
       tmp7.Description = "can not find configuration file: {0}.";
+      tmp7.ErrorCode = ExternalErrorCode.Err_7;
       EXTERNALERRORLIST.Add(tmp7);
       ExternalErrorInfos tmp8 = new ExternalErrorInfos();
-      tmp8.Description = "specified user {0} is not playing app {1}";
       tmp8.ErrorCode = ExternalErrorCode.Err_8;
+      tmp8.Description = "specified user {0} is not playing app {1}";
       EXTERNALERRORLIST.Add(tmp8);
       ExternalErrorInfos tmp9 = new ExternalErrorInfos();
       tmp9.Description = "user is not found by id {0}";
@@ -65,8 +65,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp10.ErrorCode = ExternalErrorCode.Err_10;
       EXTERNALERRORLIST.Add(tmp10);
       ExternalErrorInfos tmp11 = new ExternalErrorInfos();
-      tmp11.ErrorCode = ExternalErrorCode.Err_11;
       tmp11.Description = "";
+      tmp11.ErrorCode = ExternalErrorCode.Err_11;
       EXTERNALERRORLIST.Add(tmp11);
       ExternalErrorInfos tmp12 = new ExternalErrorInfos();
       tmp12.ErrorCode = ExternalErrorCode.Err_12;
@@ -77,8 +77,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp13.Description = "";
       EXTERNALERRORLIST.Add(tmp13);
       ExternalErrorInfos tmp14 = new ExternalErrorInfos();
-      tmp14.ErrorCode = ExternalErrorCode.Err_14;
       tmp14.Description = "";
+      tmp14.ErrorCode = ExternalErrorCode.Err_14;
       EXTERNALERRORLIST.Add(tmp14);
       ExternalErrorInfos tmp15 = new ExternalErrorInfos();
       tmp15.ErrorCode = ExternalErrorCode.Err_15;
@@ -89,12 +89,12 @@ namespace Ruyi.SDK.ExternalErrors
       tmp16.ErrorCode = ExternalErrorCode.Err_16;
       EXTERNALERRORLIST.Add(tmp16);
       ExternalErrorInfos tmp17 = new ExternalErrorInfos();
-      tmp17.ErrorCode = ExternalErrorCode.Err_17;
       tmp17.Description = "";
+      tmp17.ErrorCode = ExternalErrorCode.Err_17;
       EXTERNALERRORLIST.Add(tmp17);
       ExternalErrorInfos tmp18 = new ExternalErrorInfos();
-      tmp18.ErrorCode = ExternalErrorCode.Err_18;
       tmp18.Description = "trigger action failed when changing setting {0}!";
+      tmp18.ErrorCode = ExternalErrorCode.Err_18;
       EXTERNALERRORLIST.Add(tmp18);
     }
   }
