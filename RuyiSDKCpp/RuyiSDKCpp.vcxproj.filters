@@ -11,9 +11,6 @@
     <Filter Include="Generated">
       <UniqueIdentifier>{fa1594ab-8dcf-42eb-86a0-ec288ea9c1f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Generated\GlobalInputDefine">
-      <UniqueIdentifier>{ca59a1bd-18e5-4d91-a731-879af51a33ec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Generated\InputManager">
       <UniqueIdentifier>{d799f84a-dc76-452e-b774-45940599aacc}</UniqueIdentifier>
     </Filter>
@@ -55,18 +52,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Generated\GlobalInputDefine\GlobalInputDefineSDKDataTypes_constants.cpp">
-      <Filter>Generated\GlobalInputDefine</Filter>
-    </ClCompile>
-    <ClCompile Include="Generated\GlobalInputDefine\GlobalInputDefineSDKDataTypes_types.cpp">
-      <Filter>Generated\GlobalInputDefine</Filter>
-    </ClCompile>
-    <ClCompile Include="Generated\GlobalInputDefine\GlobalInputDefineSDKServices_constants.cpp">
-      <Filter>Generated\GlobalInputDefine</Filter>
-    </ClCompile>
-    <ClCompile Include="Generated\GlobalInputDefine\GlobalInputDefineSDKServices_types.cpp">
-      <Filter>Generated\GlobalInputDefine</Filter>
-    </ClCompile>
     <ClCompile Include="Generated\InputManager\InputManagerSDKDataTypes_constants.cpp">
       <Filter>Generated\InputManager</Filter>
     </ClCompile>
@@ -243,18 +228,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Generated\GlobalInputDefine\GlobalInputDefineSDKDataTypes_constants.h">
-      <Filter>Generated\GlobalInputDefine</Filter>
-    </ClInclude>
-    <ClInclude Include="Generated\GlobalInputDefine\GlobalInputDefineSDKDataTypes_types.h">
-      <Filter>Generated\GlobalInputDefine</Filter>
-    </ClInclude>
-    <ClInclude Include="Generated\GlobalInputDefine\GlobalInputDefineSDKServices_constants.h">
-      <Filter>Generated\GlobalInputDefine</Filter>
-    </ClInclude>
-    <ClInclude Include="Generated\GlobalInputDefine\GlobalInputDefineSDKServices_types.h">
-      <Filter>Generated\GlobalInputDefine</Filter>
-    </ClInclude>
     <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_constants.h">
       <Filter>Generated\InputManager</Filter>
     </ClInclude>
