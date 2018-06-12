@@ -35,5 +35,6 @@ It is implemented by dll hooking (also called dll injection) so it can work with
 
     * `id` is unique number
     * Replace `YourGameName.exe` with the name of your game's executable in `<conditions>` and `<detection>`
+    
 1. Save `gamesdb.xml`
 1. Restart layer0
