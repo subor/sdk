@@ -1,0 +1,480 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{bf015054-9560-435c-a922-5af90185693b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated">
+      <UniqueIdentifier>{fa1594ab-8dcf-42eb-86a0-ec288ea9c1f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated\InputManager">
+      <UniqueIdentifier>{d799f84a-dc76-452e-b774-45940599aacc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated\SDKValidator">
+      <UniqueIdentifier>{6dd67115-5f3d-4d4c-bd9b-05ff2ff11018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated\SettingSystem">
+      <UniqueIdentifier>{1d1cc0c6-e151-4543-82d0-d410c2565df8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated\StorageLayer">
+      <UniqueIdentifier>{52de1886-ac1b-48bf-80fa-7c9fdf2b163f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated\BrainCloudService">
+      <UniqueIdentifier>{fc7751a2-bbbc-4695-8e64-2fbfcd819054}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PubSub">
+      <UniqueIdentifier>{783206ad-1d57-455e-8548-cf77edf15f7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated\Constants">
+      <UniqueIdentifier>{9f54d7e8-47fb-4c16-a9aa-d4fcee17a7e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated\LocalizationService">
+      <UniqueIdentifier>{bf89903a-fd8b-4c57-927a-33cf81c6c57d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\RuyiNet">
+      <UniqueIdentifier>{0fa638a9-45bf-42e0-8208-a0a4c01c87eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated\UserServiceExternal">
+      <UniqueIdentifier>{c879b670-82a4-4001-b514-02794e99b641}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\RuyiNet\Response">
+      <UniqueIdentifier>{35e737e6-2a13-41e7-8295-0c1cc15626be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\RuyiNet\Service">
+      <UniqueIdentifier>{463ff2fc-b4c8-4075-a623-d8364185a6d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated\CommonType">
+      <UniqueIdentifier>{776c8dbb-1613-4255-a6f7-895f0bc7b711}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Generated\InputManager\InputManagerSDKDataTypes_constants.cpp">
+      <Filter>Generated\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\InputManager\InputManagerSDKDataTypes_types.cpp">
+      <Filter>Generated\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\InputManager\InputManagerSDKServices_constants.cpp">
+      <Filter>Generated\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\InputManager\InputManagerSDKServices_types.cpp">
+      <Filter>Generated\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\SDKValidator\SDKValidatorSDKDataTypes_constants.cpp">
+      <Filter>Generated\SDKValidator</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\SDKValidator\SDKValidatorSDKDataTypes_types.cpp">
+      <Filter>Generated\SDKValidator</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\SDKValidator\SDKValidatorSDKServices_constants.cpp">
+      <Filter>Generated\SDKValidator</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\SDKValidator\SDKValidatorSDKServices_types.cpp">
+      <Filter>Generated\SDKValidator</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\SDKValidator\ValidatorService.cpp">
+      <Filter>Generated\SDKValidator</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\StorageLayer\StorageLayerSDKDataTypes_constants.cpp">
+      <Filter>Generated\StorageLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\StorageLayer\StorageLayerSDKDataTypes_types.cpp">
+      <Filter>Generated\StorageLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\StorageLayer\StorageLayerSDKServices_constants.cpp">
+      <Filter>Generated\StorageLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\StorageLayer\StorageLayerSDKServices_types.cpp">
+      <Filter>Generated\StorageLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\StorageLayer\StorageLayerService.cpp">
+      <Filter>Generated\StorageLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\BrainCloudService\BrainCloudService.cpp">
+      <Filter>Generated\BrainCloudService</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\BrainCloudService\BrainCloudServiceSDKDataTypes_constants.cpp">
+      <Filter>Generated\BrainCloudService</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\BrainCloudService\BrainCloudServiceSDKDataTypes_types.cpp">
+      <Filter>Generated\BrainCloudService</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\BrainCloudService\BrainCloudServiceSDKServices_constants.cpp">
+      <Filter>Generated\BrainCloudService</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\BrainCloudService\BrainCloudServiceSDKServices_types.cpp">
+      <Filter>Generated\BrainCloudService</Filter>
+    </ClCompile>
+    <ClCompile Include="PubSub\SubscribeClient.cpp">
+      <Filter>PubSub</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\MessageCreator.cpp">
+      <Filter>Generated</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\Constants\ConstantsSDKDataTypes_constants.cpp">
+      <Filter>Generated\Constants</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\Constants\ConstantsSDKDataTypes_types.cpp">
+      <Filter>Generated\Constants</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\Constants\ConstantsSDKServices_constants.cpp">
+      <Filter>Generated\Constants</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\Constants\ConstantsSDKServices_types.cpp">
+      <Filter>Generated\Constants</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiSDK.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\SettingSystem\SettingSystemSDKDataTypes_constants.cpp">
+      <Filter>Generated\SettingSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\SettingSystem\SettingSystemSDKDataTypes_types.cpp">
+      <Filter>Generated\SettingSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\SettingSystem\SettingSystemSDKServices_constants.cpp">
+      <Filter>Generated\SettingSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\SettingSystem\SettingSystemSDKServices_types.cpp">
+      <Filter>Generated\SettingSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\SettingSystem\SettingSystemService.cpp">
+      <Filter>Generated\SettingSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\LocalizationService\LocalizationService.cpp">
+      <Filter>Generated\LocalizationService</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKDataTypes_constants.cpp">
+      <Filter>Generated\LocalizationService</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKDataTypes_types.cpp">
+      <Filter>Generated\LocalizationService</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKServices_constants.cpp">
+      <Filter>Generated\LocalizationService</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKServices_types.cpp">
+      <Filter>Generated\LocalizationService</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\UserServiceExternal\UserServExternal.cpp">
+      <Filter>Generated\UserServiceExternal</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\UserServiceExternal\UserServiceExternalSDKDataTypes_constants.cpp">
+      <Filter>Generated\UserServiceExternal</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\UserServiceExternal\UserServiceExternalSDKDataTypes_types.cpp">
+      <Filter>Generated\UserServiceExternal</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\UserServiceExternal\UserServiceExternalSDKServices_constants.cpp">
+      <Filter>Generated\UserServiceExternal</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\UserServiceExternal\UserServiceExternalSDKServices_types.cpp">
+      <Filter>Generated\UserServiceExternal</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\RuyiNetClient.cpp">
+      <Filter>Sources\RuyiNet</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetCloudService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetFriendService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetLeaderboardService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetPartyService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetProfileService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetUserFileService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetVideoService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\CommonType\CommonTypeSDKDataTypes_constants.cpp">
+      <Filter>Generated\CommonType</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\CommonType\CommonTypeSDKDataTypes_types.cpp">
+      <Filter>Generated\CommonType</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\CommonType\CommonTypeSDKServices_constants.cpp">
+      <Filter>Generated\CommonType</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\CommonType\CommonTypeSDKServices_types.cpp">
+      <Filter>Generated\CommonType</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetMatchmakingService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetLobby.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetLobbyService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\RuyiNetTelemetryService.cpp">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_constants.h">
+      <Filter>Generated\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_types.h">
+      <Filter>Generated\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\InputManager\InputManagerSDKServices_constants.h">
+      <Filter>Generated\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\InputManager\InputManagerSDKServices_types.h">
+      <Filter>Generated\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\SDKValidator\SDKValidatorSDKDataTypes_constants.h">
+      <Filter>Generated\SDKValidator</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\SDKValidator\SDKValidatorSDKDataTypes_types.h">
+      <Filter>Generated\SDKValidator</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\SDKValidator\SDKValidatorSDKServices_constants.h">
+      <Filter>Generated\SDKValidator</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\SDKValidator\SDKValidatorSDKServices_types.h">
+      <Filter>Generated\SDKValidator</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\SDKValidator\ValidatorService.h">
+      <Filter>Generated\SDKValidator</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\StorageLayer\StorageLayerSDKDataTypes_constants.h">
+      <Filter>Generated\StorageLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\StorageLayer\StorageLayerSDKDataTypes_types.h">
+      <Filter>Generated\StorageLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\StorageLayer\StorageLayerSDKServices_constants.h">
+      <Filter>Generated\StorageLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\StorageLayer\StorageLayerSDKServices_types.h">
+      <Filter>Generated\StorageLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\StorageLayer\StorageLayerService.h">
+      <Filter>Generated\StorageLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\BrainCloudService\BrainCloudService.h">
+      <Filter>Generated\BrainCloudService</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\BrainCloudService\BrainCloudServiceSDKDataTypes_constants.h">
+      <Filter>Generated\BrainCloudService</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\BrainCloudService\BrainCloudServiceSDKDataTypes_types.h">
+      <Filter>Generated\BrainCloudService</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\BrainCloudService\BrainCloudServiceSDKServices_constants.h">
+      <Filter>Generated\BrainCloudService</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\BrainCloudService\BrainCloudServiceSDKServices_types.h">
+      <Filter>Generated\BrainCloudService</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="PubSub\SubscribeClient.h">
+      <Filter>PubSub</Filter>
+    </ClInclude>
+    <ClInclude Include="PubSub\MessageCreator.h">
+      <Filter>PubSub</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\Constants\ConstantsSDKDataTypes_constants.h">
+      <Filter>Generated\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\Constants\ConstantsSDKDataTypes_types.h">
+      <Filter>Generated\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\Constants\ConstantsSDKServices_constants.h">
+      <Filter>Generated\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\Constants\ConstantsSDKServices_types.h">
+      <Filter>Generated\Constants</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiSDK.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\SettingSystem\SettingSystemSDKDataTypes_constants.h">
+      <Filter>Generated\SettingSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\SettingSystem\SettingSystemSDKDataTypes_types.h">
+      <Filter>Generated\SettingSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\SettingSystem\SettingSystemSDKServices_constants.h">
+      <Filter>Generated\SettingSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\SettingSystem\SettingSystemSDKServices_types.h">
+      <Filter>Generated\SettingSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\SettingSystem\SettingSystemService.h">
+      <Filter>Generated\SettingSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\LocalizationService\LocalizationService.h">
+      <Filter>Generated\LocalizationService</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\LocalizationService\LocalizationServiceSDKDataTypes_constants.h">
+      <Filter>Generated\LocalizationService</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\LocalizationService\LocalizationServiceSDKDataTypes_types.h">
+      <Filter>Generated\LocalizationService</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\LocalizationService\LocalizationServiceSDKServices_constants.h">
+      <Filter>Generated\LocalizationService</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\LocalizationService\LocalizationServiceSDKServices_types.h">
+      <Filter>Generated\LocalizationService</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\UserServiceExternal\UserServExternal.h">
+      <Filter>Generated\UserServiceExternal</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\UserServiceExternal\UserServiceExternalSDKDataTypes_constants.h">
+      <Filter>Generated\UserServiceExternal</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\UserServiceExternal\UserServiceExternalSDKDataTypes_types.h">
+      <Filter>Generated\UserServiceExternal</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\UserServiceExternal\UserServiceExternalSDKServices_constants.h">
+      <Filter>Generated\UserServiceExternal</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\UserServiceExternal\UserServiceExternalSDKServices_types.h">
+      <Filter>Generated\UserServiceExternal</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiString.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Enum.h">
+      <Filter>Sources\RuyiNet</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\RuyiNetClient.h">
+      <Filter>Sources\RuyiNet</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\RuyiNetException.h">
+      <Filter>Sources\RuyiNet</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetCloudService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetFriendService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetLeaderboardService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetLeaderboardType.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetPartyService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetRotationType.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetGetPartyInfoResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetGetProfileResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetLeaderboardResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetListUserFilesResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetProfile.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetSocialLeaderboardResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetSummaryFriendData.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetGetProfilesResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetProfileService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetGetCDNResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetUploadFileResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetUserFileService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetVideoService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetGetFriendsVideosResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\CommonType\CommonTypeSDKDataTypes_constants.h">
+      <Filter>Generated\CommonType</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\CommonType\CommonTypeSDKDataTypes_types.h">
+      <Filter>Generated\CommonType</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\CommonType\CommonTypeSDKServices_constants.h">
+      <Filter>Generated\CommonType</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\CommonType\CommonTypeSDKServices_types.h">
+      <Filter>Generated\CommonType</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetFriendResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetMatchmakingService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetFindPlayersResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetLobbyResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetLobby.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetLobbyService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetTelemetrySessionResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\RuyiNetTelemetryService.h">
+      <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Version.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="version.info">
+      <Filter>Sources</Filter>
+    </None>
+  </ItemGroup>
+</Project>
