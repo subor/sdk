@@ -50,6 +50,7 @@ Format is: `<cond name="CONDITION_NAME" type="TYPE" TYPE_ATTR="ADDITIONAL_ARG" /
 Where `CONDITION_NAME` is the unique name of the condition.
 
 And `TYPE`, `TYPE_ATTR`, and `ADDITIONAL_ARG` are defined as follows:
+
 | TYPE | Description | TYPE_ATTR | ADDITIONAL_ARG
 |-|-|-|-
 | exe-present | Matches name of executable | `exe` | Name of running executable
@@ -60,6 +61,7 @@ And `TYPE`, `TYPE_ATTR`, and `ADDITIONAL_ARG` are defined as follows:
 | reg-value-op | Deprecated | 
 
 If __TYPE__ is `file-present` or `file-absent`, the `file` attribute may use the following macros:
+
 | Macro | Description
 |-|-|-
 | `{exedir}` | Directory containing running executable
@@ -79,6 +81,7 @@ The following rules are supported:
 When the overlay attaches to an application, `<runtime>` configures some aspect of the hooking or rendering.
 
 All are similar to `<ELEMENT ATTR="VALUE" />`:
+
 | ELEMENT | ATTR | VALUE | Description | Default
 |-|-|-|-|-
 | overlay | enabled | true/false |
