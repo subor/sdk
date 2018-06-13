@@ -84,13 +84,13 @@ All are similar to `<ELEMENT ATTR="VALUE" />`:
 
 | ELEMENT | ATTR | VALUE | Description | Default
 |-|-|-|-|-
-| overlay | enabled | true/false |
-| forcebind | enabled | true/false |
-| forcetopmost | enabled | true/false |
-| opengl-vbo-rendering | enabled | true/false |
-| opengl-state-hooking | enabled | true/false |
-| game-window-subclassing | enabled | true/false | Deprecated
-| forcerenderer | type | direct3d/opengl | Force overlay to use specified rendering API | Auto-detect
-| forcecursor | type | software/hardware | Force overlay to use hardware/software cursor |
-| renderer-hooking | method | intrusive/factory | Deprecated
+| overlay | enabled | true/false | | true
+| forcebind | enabled | true/false | | false
+| forcetopmost | enabled | true/false | | false
+| opengl-vbo-rendering | enabled | true/false | | true
+| opengl-state-hooking | enabled | true/false | | true
+| game-window-subclassing | enabled | true/false | Deprecated | true
+| forcerenderer | type | direct3d/opengl | Force overlay to use specified rendering API | `""`; Auto-detect
+| forcecursor | type | software/hardware | Force overlay to use hardware/software cursor | `""`; Auto
+| renderer-hooking | method | normal/intrusive/factory | Deprecated | normal
 | party-network | | | Deprecated
