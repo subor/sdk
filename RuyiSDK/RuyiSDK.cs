@@ -23,11 +23,9 @@ namespace Ruyi
     /// <summary>
     /// the main class used to communicate with the Ruyi platform
     /// </summary>
-    /// <example>
     /// [!code[](../../../../sdk/UnitTests/Elo/DuellingEloTest.cs#example)]
-    /// </example>
     /// <example>
-    /// <code source="../../../../../sdk/UnitTests/Elo/DuellingEloTest.cs" region="example"></code>
+    /// <code source="Elo/DuellingEloTest.cs" region="example"></code>
     /// </example>
     public class RuyiSDK : IDisposable
     {
@@ -54,7 +52,7 @@ namespace Ruyi
             /// </summary>
             RuyiNet = 1 << 2,
             /// <summary>
-            /// See <see cref="Features.RuyiNet"/>
+            /// See <see cref="SDKFeatures.RuyiNet"/>
             /// </summary>
             Online = RuyiNet,
             /// <summary>
