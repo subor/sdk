@@ -46,6 +46,7 @@ Get __[Support](topics/support.md)__
         * [Input](topics/input.md)
         * [Overlay](topics/overlay.md)
             * [DVR](topics/dvr.md)
+            * [Gamesdb.xml Format](topics/gamesdb_format.md) (advanced)
         * [Low-Power Mode](topics/lpm.md)
     * Advanced
         * [Optimization](topics/optimization.md)
