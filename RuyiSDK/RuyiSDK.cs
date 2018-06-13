@@ -1,16 +1,22 @@
-﻿using Layer0;
-using NetMQ;
+﻿using NetMQ;
+using Ruyi.Layer0;
+using Ruyi.Logging;
 using Ruyi.SDK.Constants;
 using Ruyi.SDK.LocalizationService;
+using Ruyi.SDK.MediaService;
+using Ruyi.SDK.Online;
 using Ruyi.SDK.SDKValidator;
+using Ruyi.SDK.Speech;
 using Ruyi.SDK.StorageLayer;
 using Ruyi.SDK.UserServiceExternal;
-using RuyiLogger;
+using Ruyi.SDK.InputManager;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Thrift.Protocol;
+using Thrift.Transport;
 
 namespace Ruyi
 {
@@ -29,7 +35,7 @@ namespace Ruyi
         /// Flags specifying which SDK features to initialize
         /// </summary>
         [Flags]
-        public enum Features
+        public enum SDKFeatures
         {
             /// <summary>
             /// No SDK features
@@ -63,11 +69,28 @@ namespace Ruyi
             /// Input Manager
             /// </summary>
             Input = 1 << 5,
+            /// <summary>
+            /// Speech
+            /// </summary>
+            Speech = 1 << 6,
+            /// <summary>
+            /// Media player service
+            /// </summary>
+            Media = 1 << 7,
+            /// <summary>
+            /// Initialize subscriber for publisher/subscriber messaging
+            /// </summary>
+            Subscriber = 1 << 16,
+
+            /// <summary>
+            /// Most important SDK features (key layer0 services)
+            /// </summary>
+            Basic = Online | Settings | Users | Input | Subscriber,
 
             /// <summary>
             /// All SDK features
             /// </summary>
-            All = Storage | L10N | Online | Settings | Users | Input,
+            All = Basic | Storage | L10N | Speech | Media,
         }
 
         /// <summary>
@@ -100,20 +123,35 @@ namespace Ruyi
         /// </summary>
         public UserServExternal.Client UserService { get; private set; }
 
-        //public InputMgrExternal.Client InputMgr { get; private set; }
+        /// <summary>
+        /// Input related services
+        /// </summary>
+        public InputManagerService.Client InputMgr { get; private set; }
+
+        /// <summary>
+        /// the speech service
+        /// </summary>
+        public SpeechService.Client SpeechService { get; private set; }
+
+        /// <summary>
+        /// Media player services
+        /// </summary>
+        public MediaService.Client Media { get; private set; }
 
         private RuyiSDKContext context = null;
 
-        private TSocketTransportTS lowLatencyTransport = null;
+        private TTransport lowLatencyTransport = null;
         /// <summary>
         /// Underlying transport and protocol for low-latency messages
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public TBinaryProtocolTS LowLatencyProtocol { get; private set; }
 
-        private TSocketTransportTS highLatencyTransport = null;
+        private TTransport highLatencyTransport = null;
         /// <summary>
         /// Underlying transport and protocol for high-latency messages
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
         public TBinaryProtocolTS HighLatencyProtocol { get; private set; }
 
         private ValidatorService.Client validator = null;
@@ -151,16 +189,22 @@ namespace Ruyi
 
         bool Init()
         {
-            // If debugger attached don't want messages to timeout
-            var timeout = System.Diagnostics.Debugger.IsAttached ? 600000 : 10000;
+            if (context.Transport == null)
+            {
+                // init and open high/low latency transport, create protocols
+                var lowLatencyPort = context.LowLatencyPort == 0 ? ConstantsSDKDataTypesConstants.low_latency_socket_port : context.LowLatencyPort;
+                lowLatencyTransport = new TSocketTransportTS(context.RemoteAddress, lowLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.LowLatencyTimeout : context.Timeout);
 
-            // init and open high/low latency transport, create protocols
-            var lowLatencyPort = context.LowLatencyPort == 0 ? ConstantsSDKDataTypesConstants.low_latency_socket_port : context.LowLatencyPort;
-            lowLatencyTransport = new TSocketTransportTS(context.RemoteAddress, lowLatencyPort, timeout);
+                var highLatencyPort = context.HighLatencyPort == 0 ? ConstantsSDKDataTypesConstants.high_latency_socket_port : context.HighLatencyPort;
+                highLatencyTransport = new TSocketTransportTS(context.RemoteAddress, highLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.HighLatencyTimeout : context.Timeout);
+            }
+            else
+            {
+                lowLatencyTransport = context.Transport;
+                highLatencyTransport = context.Transport;
+            }
+
             LowLatencyProtocol = new TBinaryProtocolTS(lowLatencyTransport);
-
-            var highLatencyPort = context.HighLatencyPort == 0 ? ConstantsSDKDataTypesConstants.high_latency_socket_port : context.HighLatencyPort;
-            highLatencyTransport = new TSocketTransportTS(context.RemoteAddress, highLatencyPort, timeout);
             HighLatencyProtocol = new TBinaryProtocolTS(highLatencyTransport);
 
             lowLatencyTransport.Open();
@@ -170,18 +214,21 @@ namespace Ruyi
                 return false;
 
             // init subscriber
-            var pubout = ConstantsSDKDataTypesConstants.layer0_publisher_out_uri.SetAddress(context.RemoteAddress);
-            Subscriber = SubscribeClient.CreateInstance(pubout);
+            if (IsFeatureEnabled(SDKFeatures.Subscriber))
+            {
+                var pubout = ConstantsSDKDataTypesConstants.layer0_publisher_out_uri.SetAddress(context.RemoteAddress);
+                Subscriber = SubscribeClient.CreateInstance(pubout);
+            }
 
             // init storage layer
-            if (IsFeatureEnabled(Features.Storage))
+            if (IsFeatureEnabled(SDKFeatures.Storage))
             {
                 var stoProtocol = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.STORAGELAYER.ServiceID());
                 Storage = new StorageLayerService.Client(stoProtocol);
             }
 
             // init braincloud service
-            if (IsFeatureEnabled(Features.Online))
+            if (IsFeatureEnabled(SDKFeatures.Online))
             {
                 var bcProtocol = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.BCSERVICE.ServiceID());
                 RuyiNetService = new RuyiNetClient(bcProtocol, Storage);
@@ -189,39 +236,56 @@ namespace Ruyi
             }
 
             // init setting system
-            if (IsFeatureEnabled(Features.Settings))
+            if (IsFeatureEnabled(SDKFeatures.Settings))
             {
-                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.L0SETTINGSYSTEM_EXTERNAL.ServiceID());
-                SettingSys = new Ruyi.SDK.SettingSystem.Api.SettingSystemService.Client(proto);
+                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.SETTINGSYSTEM_EXTERNAL.ServiceID());
+                SettingSys = new SDK.SettingSystem.Api.SettingSystemService.Client(proto);
             }
 
             // init L10N
-            if (IsFeatureEnabled(Features.L10N))
+            if (IsFeatureEnabled(SDKFeatures.L10N))
             {
                 var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.L10NSERVICE.ServiceID());
                 L10NService = new LocalizationService.Client(proto);
             }
 
             // user manager
-            if (IsFeatureEnabled(Features.Users))
+            if (IsFeatureEnabled(SDKFeatures.Users))
             {
                 var proto = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.USER_SERVICE_EXTERNAL.ServiceID());
                 UserService = new UserServExternal.Client(proto);
             }
 
-            //// input manger
-            //if ( IsFeatureEnabled(Features.Input) )
-            //{
-            //    var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.INPUTMANAGER_EXTERNAL.ServiceID());
-            //    InputMgr = new InputMgrExternal.Client(proto);
-            //}
+            // input manger
+            if (IsFeatureEnabled(SDKFeatures.Input))
+            {
+                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.INPUTMANAGER_EXTERNAL.ServiceID());
+                InputMgr = new InputManagerService.Client(proto);
+            }
+
+            if (IsFeatureEnabled(SDKFeatures.Speech))
+            {
+                var proto = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.SPEECH.ServiceID());
+                SpeechService = new SpeechService.Client(proto);
+            }
+
+            if (IsFeatureEnabled(SDKFeatures.Media))
+            {
+                var proto = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.MEDIA.ServiceID());
+                Media = new MediaService.Client(proto);
+            }
 
             return true;
         }
 
-        bool IsFeatureEnabled(Features fea)
+        bool IsFeatureEnabled(SDKFeatures fea)
         {
+
+#if NET20
             return ((int)context.EnabledFeatures & (int)fea) != 0;
+#else
+            return context.EnabledFeatures.HasFlag(fea);
+#endif
         }
 
         bool ValidateVersion()
@@ -294,8 +358,8 @@ namespace Ruyi
             UserService?.Dispose();
             UserService = null;
 
-            //InputMgr?.Dispose();
-            //InputMgr = null;
+            InputMgr?.Dispose();
+            InputMgr = null;
 
             lowLatencyTransport?.Close();
             LowLatencyProtocol?.Dispose();
@@ -319,9 +383,9 @@ namespace Ruyi
                     return;
                 }
 
-                // not Layer0
-                var attrs = entry.GetCustomAttributes(false).OfType<GuidAttribute>();
-                if (!(attrs.Any() && attrs.First().Value.Equals("a9a38292-d200-4ee3-885c-726aa6da08ee")))
+                // not Layer0 & not Layer1
+                if(!entry.FullName.StartsWith("Layer0,", StringComparison.OrdinalIgnoreCase) 
+                    && !entry.FullName.StartsWith("Layer1,", StringComparison.OrdinalIgnoreCase))
                 {
                     NetMQConfig.Cleanup(false);
                     return;

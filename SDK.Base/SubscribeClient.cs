@@ -8,10 +8,12 @@ using System.Threading;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Layer0
+namespace Ruyi.Layer0
 {
     public class SubscribeClient : IDisposable
     {
+        public const char ThreadNameToken = '|';
+
         static Dictionary<string, Type> cachedTypes = new Dictionary<string, Type>();
         static object typeLocker = new object();
 
@@ -56,10 +58,10 @@ namespace Layer0
             {
                 receivingThread = new Thread(() =>
                 {
-                    while (Receive()) { }
-
-                    PublisherLogger.Info("... Subscriber Stopped");
+                    while (Receive()) ;
                 });
+                var tokens = Thread.CurrentThread.Name?.Split(ThreadNameToken);
+                receivingThread.Name = ((tokens == null || tokens.Length == 0) ? topic : tokens[0]) + ThreadNameToken + "Subscriber";
                 receivingThread.Start();
             }
         }
@@ -138,9 +140,9 @@ namespace Layer0
             }
         }
 
-        void Log(string message, RuyiLogger.LogLevel level)
+        void Log(string message, Logging.LogLevel level)
         {
-            RuyiLogger.Logger.Log(message, level: level, category: RuyiLogger.MessageCategory.Subscriber);
+            Logging.Logger.Log(message, level: level, category: Logging.MessageCategory.Subscriber);
         }
 
         bool Receive()
@@ -150,6 +152,7 @@ namespace Layer0
                 var msg = socket?.ReceiveMultipartMessage();
                 if (msg == null || PubsubUtil.IsStoppingMessage(msg))
                 {
+                    PublisherLogger.Info("subscribe client stopped by stpping message!");
                     return false;
                 }
 
@@ -177,25 +180,25 @@ namespace Layer0
                 if (e is TargetInvocationException)
                 {
                     var ee = e as TargetInvocationException;
-                    Log($"subscribe invoke exception: {(ee).InnerException.Message} \n {ee.InnerException.StackTrace}", RuyiLogger.LogLevel.Warn);
+                    Log($"SubscribeClient, invoke exception: {(ee).InnerException.Message} \n {ee.InnerException.StackTrace}", Logging.LogLevel.Warn);
                     return true;
                 }
                 if (e is TerminatingException)
                 {
-                    Log($"subscribe client ternimated: {e.Message}", RuyiLogger.LogLevel.Info);
+                    Log($"SubscribeClient, terminated: {e.Message}", Logging.LogLevel.Info);
                     return false;
                 }
                 else
                 {
-                    Log(disposing ? $"disposing exception: {e.Message}" : $"subscribe client receive exception: {e.Message} \n {e.StackTrace}",
-                        disposing ? RuyiLogger.LogLevel.Info : RuyiLogger.LogLevel.Error
+                    Log(disposing ? $"SubscribeClient, disposing exception: {e.Message}" : $"subscribe client receive exception: {e.Message} \n {e.StackTrace}",
+                        disposing ? Logging.LogLevel.Info : Logging.LogLevel.Error
                         );
                     return false;
                 }
             }
         }
 
-        #region IDisposable
+#region IDisposable
         public void Dispose()
         {
             disposing = true;
@@ -210,20 +213,31 @@ namespace Layer0
                     }
                     catch (Exception e)
                     {
-                        var level = e is TerminatingException ? RuyiLogger.LogLevel.Info : RuyiLogger.LogLevel.Error;
+                        var level = e is TerminatingException ? Logging.LogLevel.Info : Logging.LogLevel.Error;
                         Log($"subscribe client terminated: { e.Message }", level);
                     }
                 }
-                socket.Dispose();
-                socket = null;
+                try
+                {
+                    socket.Dispose();
+                    socket = null;
+                }
+                catch { }
             }
 
             // closing socket will throw an exception in Receive() which will be caught to end the thread.
-            if (receivingThread != null)
+            try
             {
-                receivingThread = null;
+                if (receivingThread != null && receivingThread.IsAlive)
+                {
+                    receivingThread.Abort();
+                    receivingThread = null;
+                }
+            }
+            catch {
+                Log($"receiving thread aborted", Logging.LogLevel.Info);
             }
         }
-        #endregion
     }
+#endregion
 }

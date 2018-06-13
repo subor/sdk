@@ -101,6 +101,8 @@ namespace Ruyi
 			{
 				nlohmann::json dataJson = j["data"];
 
+				if (!dataJson.is_object()) return;
+
 				if (!dataJson["success"].is_null())
 				{
 					data.success = dataJson["success"];
@@ -110,54 +112,57 @@ namespace Ruyi
 				{
 					nlohmann::json responseJson = dataJson["response"];
 
-					if (!responseJson["server_time"].is_null())
+					if (responseJson.is_object())
 					{
-						data.response.server_time = responseJson["server_time"];
-					}
-					if (!responseJson["leaderboardId"].is_null())
-					{
-						data.response.leaderboardId = responseJson["leaderboardId"];
-					}
-					if (!responseJson["timeBeforeReset"].is_null())
-					{
-						data.response.timeBeforeReset = responseJson["timeBeforeReset"];
-					}
-					if (!responseJson["leaderboard"].is_null())
-					{
-						nlohmann::json leaderboardJson = responseJson["social_leaderboard"];
-
-						if (leaderboardJson.is_array())
+						if (!responseJson["server_time"].is_null())
 						{
-							for(auto leaderboardDataJson : leaderboardJson)
-							{
-								Data::Response::LeaderboardData leaderboardData;
-								
-								if (!leaderboardDataJson["playerId"].is_null())
-								{
-									leaderboardData.playerId = leaderboardDataJson["playerId"];
-								}
-								if (!leaderboardDataJson["score"].is_null())
-								{
-									leaderboardData.score = leaderboardDataJson["score"];
-								}
-								if (!leaderboardDataJson["createdAt"].is_null())
-								{
-									leaderboardData.createdAt = leaderboardDataJson["createdAt"];
-								}
-								if (!leaderboardDataJson["updatedAt"].is_null())
-								{
-									leaderboardData.updatedAt = leaderboardDataJson["updatedAt"];
-								}
-								if (!leaderboardDataJson["playerName"].is_null())
-								{
-									leaderboardData.playerName = leaderboardDataJson["playerName"];
-								}
-								if (!leaderboardDataJson["pictureUrl"].is_null())
-								{
-									leaderboardData.pictureUrl = leaderboardDataJson["pictureUrl"];
-								}
+							data.response.server_time = responseJson["server_time"];
+						}
+						if (!responseJson["leaderboardId"].is_null())
+						{
+							data.response.leaderboardId = responseJson["leaderboardId"];
+						}
+						if (!responseJson["timeBeforeReset"].is_null())
+						{
+							data.response.timeBeforeReset = responseJson["timeBeforeReset"];
+						}
+						if (!responseJson["leaderboard"].is_null())
+						{
+							nlohmann::json leaderboardJson = responseJson["social_leaderboard"];
 
-								data.response.social_leaderboard.push_back(leaderboardData);
+							if (leaderboardJson.is_array())
+							{
+								for (auto leaderboardDataJson : leaderboardJson)
+								{
+									Data::Response::LeaderboardData leaderboardData;
+
+									if (!leaderboardDataJson["playerId"].is_null())
+									{
+										leaderboardData.playerId = leaderboardDataJson["playerId"];
+									}
+									if (!leaderboardDataJson["score"].is_null())
+									{
+										leaderboardData.score = leaderboardDataJson["score"];
+									}
+									if (!leaderboardDataJson["createdAt"].is_null())
+									{
+										leaderboardData.createdAt = leaderboardDataJson["createdAt"];
+									}
+									if (!leaderboardDataJson["updatedAt"].is_null())
+									{
+										leaderboardData.updatedAt = leaderboardDataJson["updatedAt"];
+									}
+									if (!leaderboardDataJson["playerName"].is_null())
+									{
+										leaderboardData.playerName = leaderboardDataJson["playerName"];
+									}
+									if (!leaderboardDataJson["pictureUrl"].is_null())
+									{
+										leaderboardData.pictureUrl = leaderboardDataJson["pictureUrl"];
+									}
+
+									data.response.social_leaderboard.push_back(leaderboardData);
+								}
 							}
 						}
 					}

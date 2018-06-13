@@ -5,10 +5,10 @@ using namespace Ruyi::SDK::CommonType;
 
 void SubscribeHandler(std::string topic, apache::thrift::TBase* msg)
 {
-	InputManager::InputDeviceStateChanged* idsc = dynamic_cast<InputManager::InputDeviceStateChanged*>(msg);
-	if (idsc != NULL)
+	InputManager::RuyiGamePadInput* rgpi = dynamic_cast<InputManager::RuyiGamePadInput*>(msg);
+	if (rgpi != NULL)
 	{
-		idsc->printTo(std::cout);
+		rgpi->printTo(std::cout);
 	}
 }
 
@@ -75,7 +75,7 @@ SettingSystemTest::~SettingSystemTest()
 //order(10)
 void SettingSystemTest::SettingSys_SimulateAppAInstalled() 
 {
-	string appaConfig = testDirectory + "..\\..\\..\\Resources\\Configs\\AppA.cfg";
+	string appaConfig = testDirectory + "..\\..\\..\\..\\commons\\Resources\\Configs\\AppA.cfg";
 	string targetFile;
 	
 	StorageLayer::GetLocalPathResult result;
@@ -129,38 +129,8 @@ void SettingSystemTest::SettingSys_SimulateAppAStarted()
 }
 */
 
-//order(30)
-void SettingSystemTest::SettingSys_SimulateLoginAndChangeSettings() 
-{
-	std::vector<SettingItem> vecSetting;
-	ruyiSDK->SettingSys->GetSettingItems(vecSetting, "ActionMapping", true);
-
-	std::map<string, string> settings;
-	for (std::vector<SettingItem>::iterator it = vecSetting.begin(); it != vecSetting.end(); ++it) 
-	{
-		if (0 == it->dataType.compare("dataList")) 
-		{
-			string jsonData = "[";
-			for (std::vector<string>::iterator sub_it = it->dataList.values.begin(); sub_it != it->dataList.values.end(); ++sub_it) 
-			{
-				//std::cout << "eess:" << *sub_it  << std::endl;
-				jsonData.append(*sub_it);
-				if ( sub_it != (it->dataList.values.end() - 1) )
-				{ jsonData.append(","); }
-			}
-			jsonData.append("]");
-			Logger::WriteMessage(("SettingSys_SimulateLoginAndChangeSettings jsonData:" + jsonData).c_str());
-			settings.insert(make_pair(it->id, jsonData));
-		}
-	}
-
-	PlayerLoginAndChangeSettings_0(settings);
-	//PlayerLoginAndChangeSettings_1(settings);
-	//PlayerLoginAndChangeSettings_2(settings);
-}
-
 //order(40)
-void SettingSystemTest::SettingSys_SimulateRestoreSettings()
+void SettingSystemTest::SettingSys_SimulateChangeAndRestoreSettings()
 {
 	LoginTestUser(_playerInfos[0], "ray.t001@163.com", "111");
 
@@ -180,6 +150,10 @@ void SettingSystemTest::SettingSys_SimulateRestoreSettings()
 
 	bRet = ruyiSDK->SettingSys->RestoreDefault("AppA", "GameSettings");
 	Assert::IsTrue(bRet);
+
+	::Ruyi::SDK::CommonType::SettingItem setting;
+	ruyiSDK->SettingSys->GetSettingItem(setting, "ShowBlood");
+	Assert::IsTrue(setting.dataValue == "False");
 }
 
 //order(50) internal so, No Test in cpp
@@ -218,115 +192,6 @@ void SettingSystemTest::LoginTestUser(Json::Value& ret, string user, string pass
 	{
 		Assert::IsTrue(200 == ret["status"].asInt64());
 	}
-}
-
-void SettingSystemTest::PlayerLoginAndChangeSettings_0(std::map<string, string>& settings) 
-{
-	string username = "ray.t001@163.com";
-	LoginTestUser(_playerInfos[0], username, "111");
-
-	string userId = _playerInfos[0]["data"]["profileId"].asString();
-
-	std::map<string, string> updateSettings;
-
-	std::map<string, string>::iterator settingsIt = settings.find("Jump");
-	if (settingsIt != settings.end()) 
-	{
-		string strSetting = settingsIt->second;
-
-		vector<ActionTriggerInfo*> vecATI;
-		deserializeActionTriggerInfo(vecATI, strSetting);
-		
-		ActionTriggerInfo* atInfo = new ActionTriggerInfo();
-		if (nullptr != atInfo) 
-		{
-			InputIdentifier ii;
-			ii.Device = "XB360"; //Ruyi::SDK::GlobalInputDefine::RuyiInputDeviceType::XB360
-			ii.Value = "B"; //Ruyi::SDK::GlobalInputDefine::GamepadButtonFlags::B;
-			atInfo->TriggerConditions.push_back(ii);
-			atInfo->AutoTrigger = false;
-		}
-
-		delete vecATI[1];
-		vecATI[1] = atInfo;
-		
-		string strSettingModified = doserializeActionTriggerInfo(vecATI);
-
-		ptree pt;
-		std::stringstream ss(strSettingModified);
-		try { read_json(ss, pt); }
-		catch (ptree_error& e) { Logger::WriteMessage("PlayerLoginAndChangeSettings_0 Parse Json Error"); }
-		updateSettings["Jump"] = pt.get<string>("Jump");
-	}
-
-	int count = 0;
-	try 
-	{
-		count = ruyiSDK->SettingSys->SetUserAppData(userId, "ActionMapping", updateSettings);
-	} catch (exception e) 
-	{ 
-		Logger::WriteMessage("PlayerLoginAndChangeSettings_0 SetUserSetting Error !!!"); 
-	}
-	Assert::IsTrue(1 == count);
-
-	std::vector<string> settingsToGet{ "Jump" };
-	AppData* appData = nullptr;
-	ruyiSDK->SettingSys->GetUserAppData(*appData, userId, "ActionMapping", settingsToGet);
-	Assert::IsTrue(appData != nullptr);
-}
-
-void SettingSystemTest::PlayerLoginAndChangeSettings_1(std::map<string, string>& settings) 
-{
-	string username = "ray.t002@163.com";
-	LoginTestUser(_playerInfos[1], username, "111");
-
-	string userId = _playerInfos[1]["data"]["profileId"].asString();
-
-	std::map<string, string> updateSettings;
-	std::map<string, string>::iterator settingsIt = settings.find("Shot");
-	if (settingsIt != settings.end()) 
-	{
-		string strSetting = settingsIt->second;
-
-		std::vector<ActionTriggerInfo*> vecATI;
-		deserializeActionTriggerInfo(vecATI, strSetting);
-
-		ActionTriggerInfo* atiModify = new ActionTriggerInfo();
-		deserializeSingleActionTriggerInfo(*atiModify, "{\"TriggerConditions\":[{\"Device\":\"XB360\",\"Value\":\"RightTrigger\"}],\"AutoTrigger\":false}");
-		delete vecATI[1];
-		vecATI[1] = atiModify;
-
-		string shotJsonModified = doserializeActionTriggerInfo(vecATI);
-		updateSettings["Shot"] = shotJsonModified;
-	}
-
-	int count = 0;
-	try 
-	{
-		count = ruyiSDK->SettingSys->SetUserAppData(userId, "ActionMapping", updateSettings);
-	} catch(exception e)
-	{
-		Logger::WriteMessage("PlayerLoginAndChangeSettings_1 SetUserSettings exception !!!");
-	}
-	Assert::IsTrue(count == 1);
-}
-
-void SettingSystemTest::PlayerLoginAndChangeSettings_2(std::map<string, string>& settings) 
-{
-	string username = "ray.t003@163.com";
-	LoginTestUser(_playerInfos[2], username, "111");
-
-	string key = "AudioVolume";
-	Ruyi::SDK::CommonType::SettingItem setting;
-	ruyiSDK->SettingSys->GetSettingItem(setting, key);
-	float value = atof(setting.dataValue.c_str());
-	value += 10;
-	if (value >= 10)
-	{
-		value = 0;
-	}
-	bool bRet = ruyiSDK->SettingSys->SetSettingItem(key, to_string(value));
-	Assert::IsTrue(bRet);
 }
 
 void SettingSystemTest::PrintTree(Ruyi::SDK::SettingSystem::Api::SettingTree tree)

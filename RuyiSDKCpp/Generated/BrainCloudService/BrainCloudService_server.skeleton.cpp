@@ -344,96 +344,6 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   }
 
   /**
-   * Returns the sessionId or empty string if no session present.
-   * 
-   * @param clientIndex
-   */
-  void Client_GetSessionId(std::string& _return, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_GetSessionId\n");
-  }
-
-  /**
-   * Returns true if the user is currently authenticated.
-   * If a session time out or session invalidation is returned from executing a
-   * sever API call, this flag will reset back to false.
-   * 
-   * @param clientIndex
-   */
-  bool Client_IsAuthenticated(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_IsAuthenticated\n");
-  }
-
-  /**
-   * Returns true if brainCloud has been initialized.
-   * 
-   * @param clientIndex
-   */
-  bool Client_IsInitialized(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_IsInitialized\n");
-  }
-
-  /**
-   * Method initializes the BrainCloudClient.
-   * 
-   * @param secretKey The secret key for your app
-   * 
-   * @param appId
-   * @param appVersion The app version
-   * 
-   * @param clientIndex
-   */
-  void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_Initialize_SSS\n");
-  }
-
-  /**
-   * Method initializes the BrainCloudClient.
-   * 
-   * @param serverURL The URL to the brainCloud server
-   * 
-   * @param secretKey The secret key for your app
-   * 
-   * @param appId The app id
-   * 
-   * @param appVersion The app version
-   * 
-   * @param clientIndex
-   */
-  void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_Initialize_SSSS\n");
-  }
-
-  /**
-   * Initialize the identity aspects of brainCloud.
-   * 
-   * @param profileId The profile id
-   * 
-   * @param anonymousId The anonymous id
-   * 
-   * @param clientIndex
-   */
-  void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_InitializeIdentity\n");
-  }
-
-  /**
-   * Update method needs to be called regularly in order
-   * to process incoming and outgoing messages.
-   * 
-   * @param clientIndex
-   */
-  void Client_Update(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_Update\n");
-  }
-
-  /**
    * Enable logging of brainCloud transactions (comms etc)
    * 
    * @param enable True if logging is to be enabled
@@ -682,6 +592,96 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Client_OverrideLanguageCode(const std::string& languageCode, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Client_OverrideLanguageCode\n");
+  }
+
+  /**
+   * Returns the sessionId or empty string if no session present.
+   * 
+   * @param clientIndex
+   */
+  void Client_GetSessionId(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_GetSessionId\n");
+  }
+
+  /**
+   * Returns true if the user is currently authenticated.
+   * If a session time out or session invalidation is returned from executing a
+   * sever API call, this flag will reset back to false.
+   * 
+   * @param clientIndex
+   */
+  bool Client_IsAuthenticated(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_IsAuthenticated\n");
+  }
+
+  /**
+   * Returns true if brainCloud has been initialized.
+   * 
+   * @param clientIndex
+   */
+  bool Client_IsInitialized(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_IsInitialized\n");
+  }
+
+  /**
+   * Method initializes the BrainCloudClient.
+   * 
+   * @param secretKey The secret key for your app
+   * 
+   * @param appId
+   * @param appVersion The app version
+   * 
+   * @param clientIndex
+   */
+  void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_Initialize_SSS\n");
+  }
+
+  /**
+   * Method initializes the BrainCloudClient.
+   * 
+   * @param serverURL The URL to the brainCloud server
+   * 
+   * @param secretKey The secret key for your app
+   * 
+   * @param appId The app id
+   * 
+   * @param appVersion The app version
+   * 
+   * @param clientIndex
+   */
+  void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_Initialize_SSSS\n");
+  }
+
+  /**
+   * Initialize the identity aspects of brainCloud.
+   * 
+   * @param profileId The profile id
+   * 
+   * @param anonymousId The anonymous id
+   * 
+   * @param clientIndex
+   */
+  void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_InitializeIdentity\n");
+  }
+
+  /**
+   * Update method needs to be called regularly in order
+   * to process incoming and outgoing messages.
+   * 
+   * @param clientIndex
+   */
+  void Client_Update(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_Update\n");
   }
 
   /**
@@ -2600,6 +2600,24 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   }
 
   /**
+   * Allows email identity email address to be changed
+   * 
+   * @param oldEmailAddress Old email address
+   * 
+   * @param password Password for identity
+   * 
+   * @param newEmailAddress New email address
+   * 
+   * @param updateContactEmail Whether to update contact email in profile
+   * 
+   * @param clientIndex
+   */
+  void Identity_ChangeEmailIdentity(std::string& _return, const std::string& oldEmailAddress, const std::string& password, const std::string& newEmailAddress, const bool updateContactEmail, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Identity_ChangeEmailIdentity\n");
+  }
+
+  /**
    * Attaches a peer identity to this user's profile
    * 
    * @param peer Name of the peer to connect to
@@ -4415,6 +4433,11 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Tournament_ViewReward(std::string& _return, const std::string& leaderboardId, const int32_t versionId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Tournament_ViewReward\n");
+  }
+
+  void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Patch_GetGameManifest\n");
   }
 
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {

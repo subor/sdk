@@ -20,15 +20,53 @@
 
 namespace Ruyi { namespace SDK { namespace CommonType {
 
-struct InputCagetory {
+struct LoginState {
   enum type {
-    RuyiGamePad = 0,
-    KeyboardMouse = 1,
-    XBox360 = 2
+    Logout = 0,
+    Login = 1
   };
 };
 
-extern const std::map<int, const char*> _InputCagetory_VALUES_TO_NAMES;
+extern const std::map<int, const char*> _LoginState_VALUES_TO_NAMES;
+
+struct InputCategory {
+  enum type {
+    GamePad = 0,
+    Keyboard = 1,
+    Mouse = 2,
+    JoyStick = 3,
+    MaxCount = 4
+  };
+};
+
+extern const std::map<int, const char*> _InputCategory_VALUES_TO_NAMES;
+
+struct RuyiGamePadButtonFlags {
+  enum type {
+    GamePad_Up = 1,
+    GamePad_Down = 2,
+    GamePad_Left = 4,
+    GamePad_Right = 8,
+    GamePad_Start = 16,
+    GamePad_Back = 32,
+    GamePad_L3 = 64,
+    GamePad_R3 = 128,
+    GamePad_LB = 256,
+    GamePad_RB = 512,
+    GamePad_A = 4096,
+    GamePad_B = 8192,
+    GamePad_X = 16384,
+    GamePad_Y = 32768,
+    GamePad_LT = 131072,
+    GamePad_RT = 262144,
+    GamePad_LJoyX = 524288,
+    GamePad_LJoyY = 1048576,
+    GamePad_RJoyX = 2097152,
+    GamePad_RJoyY = 4194304
+  };
+};
+
+extern const std::map<int, const char*> _RuyiGamePadButtonFlags_VALUES_TO_NAMES;
 
 struct ePlatform {
   enum type {
@@ -62,11 +100,7 @@ class range;
 
 class InputModifier;
 
-class InputIdentifier;
-
-class ActionTriggerInfo;
-
-class InputActionInfo;
+class ActionTrigger;
 
 class notification;
 
@@ -74,11 +108,19 @@ class dataListItem;
 
 class activeDependency;
 
+class SettingValue;
+
 class SettingItem;
 
 class SettingCategory;
 
 class ModuleSetting;
+
+class AppDataRecord;
+
+class AppDataCollection;
+
+class AppData;
 
 typedef struct _ErrorException__isset {
   _ErrorException__isset() : errId(false), errMsg(false) {}
@@ -240,127 +282,49 @@ inline std::ostream& operator<<(std::ostream& out, const InputModifier& obj)
   return out;
 }
 
-typedef struct _InputIdentifier__isset {
-  _InputIdentifier__isset() : Device(false), Value(false), ActivateEvent(false), Modifier(false) {}
-  bool Device :1;
-  bool Value :1;
-  bool ActivateEvent :1;
-  bool Modifier :1;
-} _InputIdentifier__isset;
-
-class InputIdentifier : public virtual ::apache::thrift::TBase {
- public:
-
-  InputIdentifier(const InputIdentifier&);
-  InputIdentifier& operator=(const InputIdentifier&);
-  InputIdentifier() : Device(), Value(), ActivateEvent() {
-  }
-
-  virtual ~InputIdentifier() throw();
-  std::string Device;
-  std::string Value;
-  std::string ActivateEvent;
-  InputModifier Modifier;
-
-  _InputIdentifier__isset __isset;
-
-  void __set_Device(const std::string& val);
-
-  void __set_Value(const std::string& val);
-
-  void __set_ActivateEvent(const std::string& val);
-
-  void __set_Modifier(const InputModifier& val);
-
-  bool operator == (const InputIdentifier & rhs) const
-  {
-    if (!(Device == rhs.Device))
-      return false;
-    if (!(Value == rhs.Value))
-      return false;
-    if (__isset.ActivateEvent != rhs.__isset.ActivateEvent)
-      return false;
-    else if (__isset.ActivateEvent && !(ActivateEvent == rhs.ActivateEvent))
-      return false;
-    if (__isset.Modifier != rhs.__isset.Modifier)
-      return false;
-    else if (__isset.Modifier && !(Modifier == rhs.Modifier))
-      return false;
-    return true;
-  }
-  bool operator != (const InputIdentifier &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const InputIdentifier & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-  virtual void printTo(std::ostream& out) const;
-};
-
-void swap(InputIdentifier &a, InputIdentifier &b);
-
-inline std::ostream& operator<<(std::ostream& out, const InputIdentifier& obj)
-{
-  obj.printTo(out);
-  return out;
-}
-
-typedef struct _ActionTriggerInfo__isset {
-  _ActionTriggerInfo__isset() : InputCagetory(false), TriggerConditions(false), AutoTrigger(false), TriggerInterval(false) {}
+typedef struct _ActionTrigger__isset {
+  _ActionTrigger__isset() : InputCagetory(false), TriggerButtons(false), TriggerValue(false) {}
   bool InputCagetory :1;
-  bool TriggerConditions :1;
-  bool AutoTrigger :1;
-  bool TriggerInterval :1;
-} _ActionTriggerInfo__isset;
+  bool TriggerButtons :1;
+  bool TriggerValue :1;
+} _ActionTrigger__isset;
 
-class ActionTriggerInfo : public virtual ::apache::thrift::TBase {
+class ActionTrigger : public virtual ::apache::thrift::TBase {
  public:
 
-  ActionTriggerInfo(const ActionTriggerInfo&);
-  ActionTriggerInfo& operator=(const ActionTriggerInfo&);
-  ActionTriggerInfo() : InputCagetory((InputCagetory::type)0), AutoTrigger(0), TriggerInterval(0) {
+  ActionTrigger(const ActionTrigger&);
+  ActionTrigger& operator=(const ActionTrigger&);
+  ActionTrigger() : InputCagetory((InputCategory::type)0) {
   }
 
-  virtual ~ActionTriggerInfo() throw();
-  InputCagetory::type InputCagetory;
-  std::vector<InputIdentifier>  TriggerConditions;
-  bool AutoTrigger;
-  int32_t TriggerInterval;
+  virtual ~ActionTrigger() throw();
+  InputCategory::type InputCagetory;
+  std::vector<int32_t>  TriggerButtons;
+  std::vector<int32_t>  TriggerValue;
 
-  _ActionTriggerInfo__isset __isset;
+  _ActionTrigger__isset __isset;
 
-  void __set_InputCagetory(const InputCagetory::type val);
+  void __set_InputCagetory(const InputCategory::type val);
 
-  void __set_TriggerConditions(const std::vector<InputIdentifier> & val);
+  void __set_TriggerButtons(const std::vector<int32_t> & val);
 
-  void __set_AutoTrigger(const bool val);
+  void __set_TriggerValue(const std::vector<int32_t> & val);
 
-  void __set_TriggerInterval(const int32_t val);
-
-  bool operator == (const ActionTriggerInfo & rhs) const
+  bool operator == (const ActionTrigger & rhs) const
   {
     if (!(InputCagetory == rhs.InputCagetory))
       return false;
-    if (!(TriggerConditions == rhs.TriggerConditions))
+    if (!(TriggerButtons == rhs.TriggerButtons))
       return false;
-    if (__isset.AutoTrigger != rhs.__isset.AutoTrigger)
-      return false;
-    else if (__isset.AutoTrigger && !(AutoTrigger == rhs.AutoTrigger))
-      return false;
-    if (__isset.TriggerInterval != rhs.__isset.TriggerInterval)
-      return false;
-    else if (__isset.TriggerInterval && !(TriggerInterval == rhs.TriggerInterval))
+    if (!(TriggerValue == rhs.TriggerValue))
       return false;
     return true;
   }
-  bool operator != (const ActionTriggerInfo &rhs) const {
+  bool operator != (const ActionTrigger &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const ActionTriggerInfo & ) const;
+  bool operator < (const ActionTrigger & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -368,61 +332,9 @@ class ActionTriggerInfo : public virtual ::apache::thrift::TBase {
   virtual void printTo(std::ostream& out) const;
 };
 
-void swap(ActionTriggerInfo &a, ActionTriggerInfo &b);
+void swap(ActionTrigger &a, ActionTrigger &b);
 
-inline std::ostream& operator<<(std::ostream& out, const ActionTriggerInfo& obj)
-{
-  obj.printTo(out);
-  return out;
-}
-
-typedef struct _InputActionInfo__isset {
-  _InputActionInfo__isset() : ActionName(false), TriggerInfo(false) {}
-  bool ActionName :1;
-  bool TriggerInfo :1;
-} _InputActionInfo__isset;
-
-class InputActionInfo : public virtual ::apache::thrift::TBase {
- public:
-
-  InputActionInfo(const InputActionInfo&);
-  InputActionInfo& operator=(const InputActionInfo&);
-  InputActionInfo() : ActionName() {
-  }
-
-  virtual ~InputActionInfo() throw();
-  std::string ActionName;
-  ActionTriggerInfo TriggerInfo;
-
-  _InputActionInfo__isset __isset;
-
-  void __set_ActionName(const std::string& val);
-
-  void __set_TriggerInfo(const ActionTriggerInfo& val);
-
-  bool operator == (const InputActionInfo & rhs) const
-  {
-    if (!(ActionName == rhs.ActionName))
-      return false;
-    if (!(TriggerInfo == rhs.TriggerInfo))
-      return false;
-    return true;
-  }
-  bool operator != (const InputActionInfo &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const InputActionInfo & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-  virtual void printTo(std::ostream& out) const;
-};
-
-void swap(InputActionInfo &a, InputActionInfo &b);
-
-inline std::ostream& operator<<(std::ostream& out, const InputActionInfo& obj)
+inline std::ostream& operator<<(std::ostream& out, const ActionTrigger& obj)
 {
   obj.printTo(out);
   return out;
@@ -591,6 +503,58 @@ class activeDependency : public virtual ::apache::thrift::TBase {
 void swap(activeDependency &a, activeDependency &b);
 
 inline std::ostream& operator<<(std::ostream& out, const activeDependency& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _SettingValue__isset {
+  _SettingValue__isset() : dataType(false), dataValue(false) {}
+  bool dataType :1;
+  bool dataValue :1;
+} _SettingValue__isset;
+
+class SettingValue : public virtual ::apache::thrift::TBase {
+ public:
+
+  SettingValue(const SettingValue&);
+  SettingValue& operator=(const SettingValue&);
+  SettingValue() : dataType(), dataValue() {
+  }
+
+  virtual ~SettingValue() throw();
+  std::string dataType;
+  std::string dataValue;
+
+  _SettingValue__isset __isset;
+
+  void __set_dataType(const std::string& val);
+
+  void __set_dataValue(const std::string& val);
+
+  bool operator == (const SettingValue & rhs) const
+  {
+    if (!(dataType == rhs.dataType))
+      return false;
+    if (!(dataValue == rhs.dataValue))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingValue &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingValue & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(SettingValue &a, SettingValue &b);
+
+inline std::ostream& operator<<(std::ostream& out, const SettingValue& obj)
 {
   obj.printTo(out);
   return out;
@@ -927,6 +891,162 @@ class ModuleSetting : public virtual ::apache::thrift::TBase {
 void swap(ModuleSetting &a, ModuleSetting &b);
 
 inline std::ostream& operator<<(std::ostream& out, const ModuleSetting& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _AppDataRecord__isset {
+  _AppDataRecord__isset() : id(false), content(false) {}
+  bool id :1;
+  bool content :1;
+} _AppDataRecord__isset;
+
+class AppDataRecord : public virtual ::apache::thrift::TBase {
+ public:
+
+  AppDataRecord(const AppDataRecord&);
+  AppDataRecord& operator=(const AppDataRecord&);
+  AppDataRecord() : id() {
+  }
+
+  virtual ~AppDataRecord() throw();
+  std::string id;
+  SettingValue content;
+
+  _AppDataRecord__isset __isset;
+
+  void __set_id(const std::string& val);
+
+  void __set_content(const SettingValue& val);
+
+  bool operator == (const AppDataRecord & rhs) const
+  {
+    if (!(id == rhs.id))
+      return false;
+    if (!(content == rhs.content))
+      return false;
+    return true;
+  }
+  bool operator != (const AppDataRecord &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AppDataRecord & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(AppDataRecord &a, AppDataRecord &b);
+
+inline std::ostream& operator<<(std::ostream& out, const AppDataRecord& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _AppDataCollection__isset {
+  _AppDataCollection__isset() : category(false), records(false) {}
+  bool category :1;
+  bool records :1;
+} _AppDataCollection__isset;
+
+class AppDataCollection : public virtual ::apache::thrift::TBase {
+ public:
+
+  AppDataCollection(const AppDataCollection&);
+  AppDataCollection& operator=(const AppDataCollection&);
+  AppDataCollection() : category() {
+  }
+
+  virtual ~AppDataCollection() throw();
+  std::string category;
+  std::vector<AppDataRecord>  records;
+
+  _AppDataCollection__isset __isset;
+
+  void __set_category(const std::string& val);
+
+  void __set_records(const std::vector<AppDataRecord> & val);
+
+  bool operator == (const AppDataCollection & rhs) const
+  {
+    if (!(category == rhs.category))
+      return false;
+    if (!(records == rhs.records))
+      return false;
+    return true;
+  }
+  bool operator != (const AppDataCollection &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AppDataCollection & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(AppDataCollection &a, AppDataCollection &b);
+
+inline std::ostream& operator<<(std::ostream& out, const AppDataCollection& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+typedef struct _AppData__isset {
+  _AppData__isset() : appId(false), data(false) {}
+  bool appId :1;
+  bool data :1;
+} _AppData__isset;
+
+class AppData : public virtual ::apache::thrift::TBase {
+ public:
+
+  AppData(const AppData&);
+  AppData& operator=(const AppData&);
+  AppData() : appId() {
+  }
+
+  virtual ~AppData() throw();
+  std::string appId;
+  std::vector<AppDataCollection>  data;
+
+  _AppData__isset __isset;
+
+  void __set_appId(const std::string& val);
+
+  void __set_data(const std::vector<AppDataCollection> & val);
+
+  bool operator == (const AppData & rhs) const
+  {
+    if (!(appId == rhs.appId))
+      return false;
+    if (!(data == rhs.data))
+      return false;
+    return true;
+  }
+  bool operator != (const AppData &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AppData & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(AppData &a, AppData &b);
+
+inline std::ostream& operator<<(std::ostream& out, const AppData& obj)
 {
   obj.printTo(out);
   return out;

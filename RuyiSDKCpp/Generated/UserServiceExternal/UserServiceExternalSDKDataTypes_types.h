@@ -33,17 +33,84 @@ extern const std::map<int, const char*> _UserGender_VALUES_TO_NAMES;
 
 typedef std::string JSON;
 
+class TriggerKeys;
+
 class InputActionEvent;
 
 class UserEvent;
 
 class UserInfo_Public;
 
+typedef struct _TriggerKeys__isset {
+  _TriggerKeys__isset() : DeviceType(false), Key(false), NewValue(false), OldValue(false) {}
+  bool DeviceType :1;
+  bool Key :1;
+  bool NewValue :1;
+  bool OldValue :1;
+} _TriggerKeys__isset;
+
+class TriggerKeys : public virtual ::apache::thrift::TBase {
+ public:
+
+  TriggerKeys(const TriggerKeys&);
+  TriggerKeys& operator=(const TriggerKeys&);
+  TriggerKeys() : DeviceType(0), Key(0), NewValue(0), OldValue(0) {
+  }
+
+  virtual ~TriggerKeys() throw();
+  int8_t DeviceType;
+  int32_t Key;
+  int8_t NewValue;
+  int8_t OldValue;
+
+  _TriggerKeys__isset __isset;
+
+  void __set_DeviceType(const int8_t val);
+
+  void __set_Key(const int32_t val);
+
+  void __set_NewValue(const int8_t val);
+
+  void __set_OldValue(const int8_t val);
+
+  bool operator == (const TriggerKeys & rhs) const
+  {
+    if (!(DeviceType == rhs.DeviceType))
+      return false;
+    if (!(Key == rhs.Key))
+      return false;
+    if (!(NewValue == rhs.NewValue))
+      return false;
+    if (!(OldValue == rhs.OldValue))
+      return false;
+    return true;
+  }
+  bool operator != (const TriggerKeys &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const TriggerKeys & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(TriggerKeys &a, TriggerKeys &b);
+
+inline std::ostream& operator<<(std::ostream& out, const TriggerKeys& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
 typedef struct _InputActionEvent__isset {
-  _InputActionEvent__isset() : userId(false), action(false), timestamp(false) {}
+  _InputActionEvent__isset() : userId(false), action(false), timestamp(false), Triggers(false) {}
   bool userId :1;
   bool action :1;
   bool timestamp :1;
+  bool Triggers :1;
 } _InputActionEvent__isset;
 
 class InputActionEvent : public virtual ::apache::thrift::TBase {
@@ -58,6 +125,7 @@ class InputActionEvent : public virtual ::apache::thrift::TBase {
   std::string userId;
   std::string action;
   int64_t timestamp;
+  std::vector<TriggerKeys>  Triggers;
 
   _InputActionEvent__isset __isset;
 
@@ -67,6 +135,8 @@ class InputActionEvent : public virtual ::apache::thrift::TBase {
 
   void __set_timestamp(const int64_t val);
 
+  void __set_Triggers(const std::vector<TriggerKeys> & val);
+
   bool operator == (const InputActionEvent & rhs) const
   {
     if (!(userId == rhs.userId))
@@ -74,6 +144,8 @@ class InputActionEvent : public virtual ::apache::thrift::TBase {
     if (!(action == rhs.action))
       return false;
     if (!(timestamp == rhs.timestamp))
+      return false;
+    if (!(Triggers == rhs.Triggers))
       return false;
     return true;
   }

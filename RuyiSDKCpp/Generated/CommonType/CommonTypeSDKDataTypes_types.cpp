@@ -13,17 +13,77 @@
 
 namespace Ruyi { namespace SDK { namespace CommonType {
 
-int _kInputCagetoryValues[] = {
-  InputCagetory::RuyiGamePad,
-  InputCagetory::KeyboardMouse,
-  InputCagetory::XBox360
+int _kLoginStateValues[] = {
+  LoginState::Logout,
+  LoginState::Login
 };
-const char* _kInputCagetoryNames[] = {
-  "RuyiGamePad",
-  "KeyboardMouse",
-  "XBox360"
+const char* _kLoginStateNames[] = {
+  "Logout",
+  "Login"
 };
-const std::map<int, const char*> _InputCagetory_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(3, _kInputCagetoryValues, _kInputCagetoryNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+const std::map<int, const char*> _LoginState_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(2, _kLoginStateValues, _kLoginStateNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
+int _kInputCategoryValues[] = {
+  InputCategory::GamePad,
+  InputCategory::Keyboard,
+  InputCategory::Mouse,
+  InputCategory::JoyStick,
+  InputCategory::MaxCount
+};
+const char* _kInputCategoryNames[] = {
+  "GamePad",
+  "Keyboard",
+  "Mouse",
+  "JoyStick",
+  "MaxCount"
+};
+const std::map<int, const char*> _InputCategory_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(5, _kInputCategoryValues, _kInputCategoryNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
+int _kRuyiGamePadButtonFlagsValues[] = {
+  RuyiGamePadButtonFlags::GamePad_Up,
+  RuyiGamePadButtonFlags::GamePad_Down,
+  RuyiGamePadButtonFlags::GamePad_Left,
+  RuyiGamePadButtonFlags::GamePad_Right,
+  RuyiGamePadButtonFlags::GamePad_Start,
+  RuyiGamePadButtonFlags::GamePad_Back,
+  RuyiGamePadButtonFlags::GamePad_L3,
+  RuyiGamePadButtonFlags::GamePad_R3,
+  RuyiGamePadButtonFlags::GamePad_LB,
+  RuyiGamePadButtonFlags::GamePad_RB,
+  RuyiGamePadButtonFlags::GamePad_A,
+  RuyiGamePadButtonFlags::GamePad_B,
+  RuyiGamePadButtonFlags::GamePad_X,
+  RuyiGamePadButtonFlags::GamePad_Y,
+  RuyiGamePadButtonFlags::GamePad_LT,
+  RuyiGamePadButtonFlags::GamePad_RT,
+  RuyiGamePadButtonFlags::GamePad_LJoyX,
+  RuyiGamePadButtonFlags::GamePad_LJoyY,
+  RuyiGamePadButtonFlags::GamePad_RJoyX,
+  RuyiGamePadButtonFlags::GamePad_RJoyY
+};
+const char* _kRuyiGamePadButtonFlagsNames[] = {
+  "GamePad_Up",
+  "GamePad_Down",
+  "GamePad_Left",
+  "GamePad_Right",
+  "GamePad_Start",
+  "GamePad_Back",
+  "GamePad_L3",
+  "GamePad_R3",
+  "GamePad_LB",
+  "GamePad_RB",
+  "GamePad_A",
+  "GamePad_B",
+  "GamePad_X",
+  "GamePad_Y",
+  "GamePad_LT",
+  "GamePad_RT",
+  "GamePad_LJoyX",
+  "GamePad_LJoyY",
+  "GamePad_RJoyX",
+  "GamePad_RJoyY"
+};
+const std::map<int, const char*> _RuyiGamePadButtonFlags_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(20, _kRuyiGamePadButtonFlagsValues, _kRuyiGamePadButtonFlagsNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
 
 int _kePlatformValues[] = {
   ePlatform::None,
@@ -393,179 +453,23 @@ void InputModifier::printTo(std::ostream& out) const {
 }
 
 
-InputIdentifier::~InputIdentifier() throw() {
+ActionTrigger::~ActionTrigger() throw() {
 }
 
 
-void InputIdentifier::__set_Device(const std::string& val) {
-  this->Device = val;
-}
-
-void InputIdentifier::__set_Value(const std::string& val) {
-  this->Value = val;
-}
-
-void InputIdentifier::__set_ActivateEvent(const std::string& val) {
-  this->ActivateEvent = val;
-__isset.ActivateEvent = true;
-}
-
-void InputIdentifier::__set_Modifier(const InputModifier& val) {
-  this->Modifier = val;
-__isset.Modifier = true;
-}
-
-uint32_t InputIdentifier::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->Device);
-          this->__isset.Device = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->Value);
-          this->__isset.Value = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 3:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->ActivateEvent);
-          this->__isset.ActivateEvent = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 4:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->Modifier.read(iprot);
-          this->__isset.Modifier = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t InputIdentifier::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("InputIdentifier");
-
-  xfer += oprot->writeFieldBegin("Device", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->Device);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("Value", ::apache::thrift::protocol::T_STRING, 2);
-  xfer += oprot->writeString(this->Value);
-  xfer += oprot->writeFieldEnd();
-
-  if (this->__isset.ActivateEvent) {
-    xfer += oprot->writeFieldBegin("ActivateEvent", ::apache::thrift::protocol::T_STRING, 3);
-    xfer += oprot->writeString(this->ActivateEvent);
-    xfer += oprot->writeFieldEnd();
-  }
-  if (this->__isset.Modifier) {
-    xfer += oprot->writeFieldBegin("Modifier", ::apache::thrift::protocol::T_STRUCT, 4);
-    xfer += this->Modifier.write(oprot);
-    xfer += oprot->writeFieldEnd();
-  }
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-void swap(InputIdentifier &a, InputIdentifier &b) {
-  using ::std::swap;
-  swap(a.Device, b.Device);
-  swap(a.Value, b.Value);
-  swap(a.ActivateEvent, b.ActivateEvent);
-  swap(a.Modifier, b.Modifier);
-  swap(a.__isset, b.__isset);
-}
-
-InputIdentifier::InputIdentifier(const InputIdentifier& other6) {
-  Device = other6.Device;
-  Value = other6.Value;
-  ActivateEvent = other6.ActivateEvent;
-  Modifier = other6.Modifier;
-  __isset = other6.__isset;
-}
-InputIdentifier& InputIdentifier::operator=(const InputIdentifier& other7) {
-  Device = other7.Device;
-  Value = other7.Value;
-  ActivateEvent = other7.ActivateEvent;
-  Modifier = other7.Modifier;
-  __isset = other7.__isset;
-  return *this;
-}
-void InputIdentifier::printTo(std::ostream& out) const {
-  using ::apache::thrift::to_string;
-  out << "InputIdentifier(";
-  out << "Device=" << to_string(Device);
-  out << ", " << "Value=" << to_string(Value);
-  out << ", " << "ActivateEvent="; (__isset.ActivateEvent ? (out << to_string(ActivateEvent)) : (out << "<null>"));
-  out << ", " << "Modifier="; (__isset.Modifier ? (out << to_string(Modifier)) : (out << "<null>"));
-  out << ")";
-}
-
-
-ActionTriggerInfo::~ActionTriggerInfo() throw() {
-}
-
-
-void ActionTriggerInfo::__set_InputCagetory(const InputCagetory::type val) {
+void ActionTrigger::__set_InputCagetory(const InputCategory::type val) {
   this->InputCagetory = val;
 }
 
-void ActionTriggerInfo::__set_TriggerConditions(const std::vector<InputIdentifier> & val) {
-  this->TriggerConditions = val;
+void ActionTrigger::__set_TriggerButtons(const std::vector<int32_t> & val) {
+  this->TriggerButtons = val;
 }
 
-void ActionTriggerInfo::__set_AutoTrigger(const bool val) {
-  this->AutoTrigger = val;
-__isset.AutoTrigger = true;
+void ActionTrigger::__set_TriggerValue(const std::vector<int32_t> & val) {
+  this->TriggerValue = val;
 }
 
-void ActionTriggerInfo::__set_TriggerInterval(const int32_t val) {
-  this->TriggerInterval = val;
-__isset.TriggerInterval = true;
-}
-
-uint32_t ActionTriggerInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t ActionTrigger::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -588,9 +492,9 @@ uint32_t ActionTriggerInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast8;
-          xfer += iprot->readI32(ecast8);
-          this->InputCagetory = (InputCagetory::type)ecast8;
+          int32_t ecast6;
+          xfer += iprot->readI32(ecast6);
+          this->InputCagetory = (InputCategory::type)ecast6;
           this->__isset.InputCagetory = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -599,35 +503,39 @@ uint32_t ActionTriggerInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
       case 2:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
-            this->TriggerConditions.clear();
-            uint32_t _size9;
-            ::apache::thrift::protocol::TType _etype12;
-            xfer += iprot->readListBegin(_etype12, _size9);
-            this->TriggerConditions.resize(_size9);
-            uint32_t _i13;
-            for (_i13 = 0; _i13 < _size9; ++_i13)
+            this->TriggerButtons.clear();
+            uint32_t _size7;
+            ::apache::thrift::protocol::TType _etype10;
+            xfer += iprot->readListBegin(_etype10, _size7);
+            this->TriggerButtons.resize(_size7);
+            uint32_t _i11;
+            for (_i11 = 0; _i11 < _size7; ++_i11)
             {
-              xfer += this->TriggerConditions[_i13].read(iprot);
+              xfer += iprot->readI32(this->TriggerButtons[_i11]);
             }
             xfer += iprot->readListEnd();
           }
-          this->__isset.TriggerConditions = true;
+          this->__isset.TriggerButtons = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 3:
-        if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool(this->AutoTrigger);
-          this->__isset.AutoTrigger = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 4:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->TriggerInterval);
-          this->__isset.TriggerInterval = true;
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->TriggerValue.clear();
+            uint32_t _size12;
+            ::apache::thrift::protocol::TType _etype15;
+            xfer += iprot->readListBegin(_etype15, _size12);
+            this->TriggerValue.resize(_size12);
+            uint32_t _i16;
+            for (_i16 = 0; _i16 < _size12; ++_i16)
+            {
+              xfer += iprot->readI32(this->TriggerValue[_i16]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.TriggerValue = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -644,179 +552,71 @@ uint32_t ActionTriggerInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
   return xfer;
 }
 
-uint32_t ActionTriggerInfo::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t ActionTrigger::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("ActionTriggerInfo");
+  xfer += oprot->writeStructBegin("ActionTrigger");
 
   xfer += oprot->writeFieldBegin("InputCagetory", ::apache::thrift::protocol::T_I32, 1);
   xfer += oprot->writeI32((int32_t)this->InputCagetory);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("TriggerConditions", ::apache::thrift::protocol::T_LIST, 2);
+  xfer += oprot->writeFieldBegin("TriggerButtons", ::apache::thrift::protocol::T_LIST, 2);
   {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->TriggerConditions.size()));
-    std::vector<InputIdentifier> ::const_iterator _iter14;
-    for (_iter14 = this->TriggerConditions.begin(); _iter14 != this->TriggerConditions.end(); ++_iter14)
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I32, static_cast<uint32_t>(this->TriggerButtons.size()));
+    std::vector<int32_t> ::const_iterator _iter17;
+    for (_iter17 = this->TriggerButtons.begin(); _iter17 != this->TriggerButtons.end(); ++_iter17)
     {
-      xfer += (*_iter14).write(oprot);
+      xfer += oprot->writeI32((*_iter17));
     }
     xfer += oprot->writeListEnd();
   }
   xfer += oprot->writeFieldEnd();
 
-  if (this->__isset.AutoTrigger) {
-    xfer += oprot->writeFieldBegin("AutoTrigger", ::apache::thrift::protocol::T_BOOL, 3);
-    xfer += oprot->writeBool(this->AutoTrigger);
-    xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeFieldBegin("TriggerValue", ::apache::thrift::protocol::T_LIST, 3);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I32, static_cast<uint32_t>(this->TriggerValue.size()));
+    std::vector<int32_t> ::const_iterator _iter18;
+    for (_iter18 = this->TriggerValue.begin(); _iter18 != this->TriggerValue.end(); ++_iter18)
+    {
+      xfer += oprot->writeI32((*_iter18));
+    }
+    xfer += oprot->writeListEnd();
   }
-  if (this->__isset.TriggerInterval) {
-    xfer += oprot->writeFieldBegin("TriggerInterval", ::apache::thrift::protocol::T_I32, 4);
-    xfer += oprot->writeI32(this->TriggerInterval);
-    xfer += oprot->writeFieldEnd();
-  }
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
 }
 
-void swap(ActionTriggerInfo &a, ActionTriggerInfo &b) {
+void swap(ActionTrigger &a, ActionTrigger &b) {
   using ::std::swap;
   swap(a.InputCagetory, b.InputCagetory);
-  swap(a.TriggerConditions, b.TriggerConditions);
-  swap(a.AutoTrigger, b.AutoTrigger);
-  swap(a.TriggerInterval, b.TriggerInterval);
+  swap(a.TriggerButtons, b.TriggerButtons);
+  swap(a.TriggerValue, b.TriggerValue);
   swap(a.__isset, b.__isset);
 }
 
-ActionTriggerInfo::ActionTriggerInfo(const ActionTriggerInfo& other15) {
-  InputCagetory = other15.InputCagetory;
-  TriggerConditions = other15.TriggerConditions;
-  AutoTrigger = other15.AutoTrigger;
-  TriggerInterval = other15.TriggerInterval;
-  __isset = other15.__isset;
+ActionTrigger::ActionTrigger(const ActionTrigger& other19) {
+  InputCagetory = other19.InputCagetory;
+  TriggerButtons = other19.TriggerButtons;
+  TriggerValue = other19.TriggerValue;
+  __isset = other19.__isset;
 }
-ActionTriggerInfo& ActionTriggerInfo::operator=(const ActionTriggerInfo& other16) {
-  InputCagetory = other16.InputCagetory;
-  TriggerConditions = other16.TriggerConditions;
-  AutoTrigger = other16.AutoTrigger;
-  TriggerInterval = other16.TriggerInterval;
-  __isset = other16.__isset;
+ActionTrigger& ActionTrigger::operator=(const ActionTrigger& other20) {
+  InputCagetory = other20.InputCagetory;
+  TriggerButtons = other20.TriggerButtons;
+  TriggerValue = other20.TriggerValue;
+  __isset = other20.__isset;
   return *this;
 }
-void ActionTriggerInfo::printTo(std::ostream& out) const {
+void ActionTrigger::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
-  out << "ActionTriggerInfo(";
+  out << "ActionTrigger(";
   out << "InputCagetory=" << to_string(InputCagetory);
-  out << ", " << "TriggerConditions=" << to_string(TriggerConditions);
-  out << ", " << "AutoTrigger="; (__isset.AutoTrigger ? (out << to_string(AutoTrigger)) : (out << "<null>"));
-  out << ", " << "TriggerInterval="; (__isset.TriggerInterval ? (out << to_string(TriggerInterval)) : (out << "<null>"));
-  out << ")";
-}
-
-
-InputActionInfo::~InputActionInfo() throw() {
-}
-
-
-void InputActionInfo::__set_ActionName(const std::string& val) {
-  this->ActionName = val;
-}
-
-void InputActionInfo::__set_TriggerInfo(const ActionTriggerInfo& val) {
-  this->TriggerInfo = val;
-}
-
-uint32_t InputActionInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->ActionName);
-          this->__isset.ActionName = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->TriggerInfo.read(iprot);
-          this->__isset.TriggerInfo = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t InputActionInfo::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("InputActionInfo");
-
-  xfer += oprot->writeFieldBegin("ActionName", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->ActionName);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("TriggerInfo", ::apache::thrift::protocol::T_STRUCT, 2);
-  xfer += this->TriggerInfo.write(oprot);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-void swap(InputActionInfo &a, InputActionInfo &b) {
-  using ::std::swap;
-  swap(a.ActionName, b.ActionName);
-  swap(a.TriggerInfo, b.TriggerInfo);
-  swap(a.__isset, b.__isset);
-}
-
-InputActionInfo::InputActionInfo(const InputActionInfo& other17) {
-  ActionName = other17.ActionName;
-  TriggerInfo = other17.TriggerInfo;
-  __isset = other17.__isset;
-}
-InputActionInfo& InputActionInfo::operator=(const InputActionInfo& other18) {
-  ActionName = other18.ActionName;
-  TriggerInfo = other18.TriggerInfo;
-  __isset = other18.__isset;
-  return *this;
-}
-void InputActionInfo::printTo(std::ostream& out) const {
-  using ::apache::thrift::to_string;
-  out << "InputActionInfo(";
-  out << "ActionName=" << to_string(ActionName);
-  out << ", " << "TriggerInfo=" << to_string(TriggerInfo);
+  out << ", " << "TriggerButtons=" << to_string(TriggerButtons);
+  out << ", " << "TriggerValue=" << to_string(TriggerValue);
   out << ")";
 }
 
@@ -878,14 +678,14 @@ uint32_t notification::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->option.clear();
-            uint32_t _size19;
-            ::apache::thrift::protocol::TType _etype22;
-            xfer += iprot->readListBegin(_etype22, _size19);
-            this->option.resize(_size19);
-            uint32_t _i23;
-            for (_i23 = 0; _i23 < _size19; ++_i23)
+            uint32_t _size21;
+            ::apache::thrift::protocol::TType _etype24;
+            xfer += iprot->readListBegin(_etype24, _size21);
+            this->option.resize(_size21);
+            uint32_t _i25;
+            for (_i25 = 0; _i25 < _size21; ++_i25)
             {
-              xfer += iprot->readString(this->option[_i23]);
+              xfer += iprot->readString(this->option[_i25]);
             }
             xfer += iprot->readListEnd();
           }
@@ -922,10 +722,10 @@ uint32_t notification::write(::apache::thrift::protocol::TProtocol* oprot) const
   xfer += oprot->writeFieldBegin("option", ::apache::thrift::protocol::T_LIST, 3);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->option.size()));
-    std::vector<std::string> ::const_iterator _iter24;
-    for (_iter24 = this->option.begin(); _iter24 != this->option.end(); ++_iter24)
+    std::vector<std::string> ::const_iterator _iter26;
+    for (_iter26 = this->option.begin(); _iter26 != this->option.end(); ++_iter26)
     {
-      xfer += oprot->writeString((*_iter24));
+      xfer += oprot->writeString((*_iter26));
     }
     xfer += oprot->writeListEnd();
   }
@@ -944,17 +744,17 @@ void swap(notification &a, notification &b) {
   swap(a.__isset, b.__isset);
 }
 
-notification::notification(const notification& other25) {
-  title = other25.title;
-  detail = other25.detail;
-  option = other25.option;
-  __isset = other25.__isset;
+notification::notification(const notification& other27) {
+  title = other27.title;
+  detail = other27.detail;
+  option = other27.option;
+  __isset = other27.__isset;
 }
-notification& notification::operator=(const notification& other26) {
-  title = other26.title;
-  detail = other26.detail;
-  option = other26.option;
-  __isset = other26.__isset;
+notification& notification::operator=(const notification& other28) {
+  title = other28.title;
+  detail = other28.detail;
+  option = other28.option;
+  __isset = other28.__isset;
   return *this;
 }
 void notification::printTo(std::ostream& out) const {
@@ -1016,14 +816,14 @@ uint32_t dataListItem::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->values.clear();
-            uint32_t _size27;
-            ::apache::thrift::protocol::TType _etype30;
-            xfer += iprot->readListBegin(_etype30, _size27);
-            this->values.resize(_size27);
-            uint32_t _i31;
-            for (_i31 = 0; _i31 < _size27; ++_i31)
+            uint32_t _size29;
+            ::apache::thrift::protocol::TType _etype32;
+            xfer += iprot->readListBegin(_etype32, _size29);
+            this->values.resize(_size29);
+            uint32_t _i33;
+            for (_i33 = 0; _i33 < _size29; ++_i33)
             {
-              xfer += iprot->readString(this->values[_i31]);
+              xfer += iprot->readString(this->values[_i33]);
             }
             xfer += iprot->readListEnd();
           }
@@ -1064,10 +864,10 @@ uint32_t dataListItem::write(::apache::thrift::protocol::TProtocol* oprot) const
   xfer += oprot->writeFieldBegin("values", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->values.size()));
-    std::vector<std::string> ::const_iterator _iter32;
-    for (_iter32 = this->values.begin(); _iter32 != this->values.end(); ++_iter32)
+    std::vector<std::string> ::const_iterator _iter34;
+    for (_iter34 = this->values.begin(); _iter34 != this->values.end(); ++_iter34)
     {
-      xfer += oprot->writeString((*_iter32));
+      xfer += oprot->writeString((*_iter34));
     }
     xfer += oprot->writeListEnd();
   }
@@ -1090,17 +890,17 @@ void swap(dataListItem &a, dataListItem &b) {
   swap(a.__isset, b.__isset);
 }
 
-dataListItem::dataListItem(const dataListItem& other33) {
-  elementType = other33.elementType;
-  values = other33.values;
-  removeNotification = other33.removeNotification;
-  __isset = other33.__isset;
+dataListItem::dataListItem(const dataListItem& other35) {
+  elementType = other35.elementType;
+  values = other35.values;
+  removeNotification = other35.removeNotification;
+  __isset = other35.__isset;
 }
-dataListItem& dataListItem::operator=(const dataListItem& other34) {
-  elementType = other34.elementType;
-  values = other34.values;
-  removeNotification = other34.removeNotification;
-  __isset = other34.__isset;
+dataListItem& dataListItem::operator=(const dataListItem& other36) {
+  elementType = other36.elementType;
+  values = other36.values;
+  removeNotification = other36.removeNotification;
+  __isset = other36.__isset;
   return *this;
 }
 void dataListItem::printTo(std::ostream& out) const {
@@ -1199,15 +999,15 @@ void swap(activeDependency &a, activeDependency &b) {
   swap(a.__isset, b.__isset);
 }
 
-activeDependency::activeDependency(const activeDependency& other35) {
-  name = other35.name;
-  condition = other35.condition;
-  __isset = other35.__isset;
+activeDependency::activeDependency(const activeDependency& other37) {
+  name = other37.name;
+  condition = other37.condition;
+  __isset = other37.__isset;
 }
-activeDependency& activeDependency::operator=(const activeDependency& other36) {
-  name = other36.name;
-  condition = other36.condition;
-  __isset = other36.__isset;
+activeDependency& activeDependency::operator=(const activeDependency& other38) {
+  name = other38.name;
+  condition = other38.condition;
+  __isset = other38.__isset;
   return *this;
 }
 void activeDependency::printTo(std::ostream& out) const {
@@ -1215,6 +1015,112 @@ void activeDependency::printTo(std::ostream& out) const {
   out << "activeDependency(";
   out << "name=" << to_string(name);
   out << ", " << "condition=" << to_string(condition);
+  out << ")";
+}
+
+
+SettingValue::~SettingValue() throw() {
+}
+
+
+void SettingValue::__set_dataType(const std::string& val) {
+  this->dataType = val;
+}
+
+void SettingValue::__set_dataValue(const std::string& val) {
+  this->dataValue = val;
+}
+
+uint32_t SettingValue::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->dataType);
+          this->__isset.dataType = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->dataValue);
+          this->__isset.dataValue = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingValue::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingValue");
+
+  xfer += oprot->writeFieldBegin("dataType", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->dataType);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("dataValue", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->dataValue);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(SettingValue &a, SettingValue &b) {
+  using ::std::swap;
+  swap(a.dataType, b.dataType);
+  swap(a.dataValue, b.dataValue);
+  swap(a.__isset, b.__isset);
+}
+
+SettingValue::SettingValue(const SettingValue& other39) {
+  dataType = other39.dataType;
+  dataValue = other39.dataValue;
+  __isset = other39.__isset;
+}
+SettingValue& SettingValue::operator=(const SettingValue& other40) {
+  dataType = other40.dataType;
+  dataValue = other40.dataValue;
+  __isset = other40.__isset;
+  return *this;
+}
+void SettingValue::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "SettingValue(";
+  out << "dataType=" << to_string(dataType);
+  out << ", " << "dataValue=" << to_string(dataValue);
   out << ")";
 }
 
@@ -1372,9 +1278,9 @@ uint32_t SettingItem::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 6:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast37;
-          xfer += iprot->readI32(ecast37);
-          this->platform = (ePlatform::type)ecast37;
+          int32_t ecast41;
+          xfer += iprot->readI32(ecast41);
+          this->platform = (ePlatform::type)ecast41;
           this->__isset.platform = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -1398,9 +1304,9 @@ uint32_t SettingItem::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 9:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast38;
-          xfer += iprot->readI32(ecast38);
-          this->UIType = (eUIType::type)ecast38;
+          int32_t ecast42;
+          xfer += iprot->readI32(ecast42);
+          this->UIType = (eUIType::type)ecast42;
           this->__isset.UIType = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -1458,14 +1364,14 @@ uint32_t SettingItem::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->activeDependencies.clear();
-            uint32_t _size39;
-            ::apache::thrift::protocol::TType _etype42;
-            xfer += iprot->readListBegin(_etype42, _size39);
-            this->activeDependencies.resize(_size39);
-            uint32_t _i43;
-            for (_i43 = 0; _i43 < _size39; ++_i43)
+            uint32_t _size43;
+            ::apache::thrift::protocol::TType _etype46;
+            xfer += iprot->readListBegin(_etype46, _size43);
+            this->activeDependencies.resize(_size43);
+            uint32_t _i47;
+            for (_i47 = 0; _i47 < _size43; ++_i47)
             {
-              xfer += this->activeDependencies[_i43].read(iprot);
+              xfer += this->activeDependencies[_i47].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1588,10 +1494,10 @@ uint32_t SettingItem::write(::apache::thrift::protocol::TProtocol* oprot) const 
     xfer += oprot->writeFieldBegin("activeDependencies", ::apache::thrift::protocol::T_LIST, 16);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->activeDependencies.size()));
-      std::vector<activeDependency> ::const_iterator _iter44;
-      for (_iter44 = this->activeDependencies.begin(); _iter44 != this->activeDependencies.end(); ++_iter44)
+      std::vector<activeDependency> ::const_iterator _iter48;
+      for (_iter48 = this->activeDependencies.begin(); _iter48 != this->activeDependencies.end(); ++_iter48)
       {
-        xfer += (*_iter44).write(oprot);
+        xfer += (*_iter48).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -1638,49 +1544,49 @@ void swap(SettingItem &a, SettingItem &b) {
   swap(a.__isset, b.__isset);
 }
 
-SettingItem::SettingItem(const SettingItem& other45) {
-  id = other45.id;
-  display = other45.display;
-  dataType = other45.dataType;
-  dataValue = other45.dataValue;
-  dataList = other45.dataList;
-  platform = other45.platform;
-  summary = other45.summary;
-  description = other45.description;
-  UIType = other45.UIType;
-  devModeOnly = other45.devModeOnly;
-  internalOnly = other45.internalOnly;
-  readOnly = other45.readOnly;
-  isValid = other45.isValid;
-  isActive = other45.isActive;
-  validation = other45.validation;
-  activeDependencies = other45.activeDependencies;
-  ActionName = other45.ActionName;
-  ActionObject = other45.ActionObject;
-  ActionMethodName = other45.ActionMethodName;
-  __isset = other45.__isset;
+SettingItem::SettingItem(const SettingItem& other49) {
+  id = other49.id;
+  display = other49.display;
+  dataType = other49.dataType;
+  dataValue = other49.dataValue;
+  dataList = other49.dataList;
+  platform = other49.platform;
+  summary = other49.summary;
+  description = other49.description;
+  UIType = other49.UIType;
+  devModeOnly = other49.devModeOnly;
+  internalOnly = other49.internalOnly;
+  readOnly = other49.readOnly;
+  isValid = other49.isValid;
+  isActive = other49.isActive;
+  validation = other49.validation;
+  activeDependencies = other49.activeDependencies;
+  ActionName = other49.ActionName;
+  ActionObject = other49.ActionObject;
+  ActionMethodName = other49.ActionMethodName;
+  __isset = other49.__isset;
 }
-SettingItem& SettingItem::operator=(const SettingItem& other46) {
-  id = other46.id;
-  display = other46.display;
-  dataType = other46.dataType;
-  dataValue = other46.dataValue;
-  dataList = other46.dataList;
-  platform = other46.platform;
-  summary = other46.summary;
-  description = other46.description;
-  UIType = other46.UIType;
-  devModeOnly = other46.devModeOnly;
-  internalOnly = other46.internalOnly;
-  readOnly = other46.readOnly;
-  isValid = other46.isValid;
-  isActive = other46.isActive;
-  validation = other46.validation;
-  activeDependencies = other46.activeDependencies;
-  ActionName = other46.ActionName;
-  ActionObject = other46.ActionObject;
-  ActionMethodName = other46.ActionMethodName;
-  __isset = other46.__isset;
+SettingItem& SettingItem::operator=(const SettingItem& other50) {
+  id = other50.id;
+  display = other50.display;
+  dataType = other50.dataType;
+  dataValue = other50.dataValue;
+  dataList = other50.dataList;
+  platform = other50.platform;
+  summary = other50.summary;
+  description = other50.description;
+  UIType = other50.UIType;
+  devModeOnly = other50.devModeOnly;
+  internalOnly = other50.internalOnly;
+  readOnly = other50.readOnly;
+  isValid = other50.isValid;
+  isActive = other50.isActive;
+  validation = other50.validation;
+  activeDependencies = other50.activeDependencies;
+  ActionName = other50.ActionName;
+  ActionObject = other50.ActionObject;
+  ActionMethodName = other50.ActionMethodName;
+  __isset = other50.__isset;
   return *this;
 }
 void SettingItem::printTo(std::ostream& out) const {
@@ -1824,17 +1730,17 @@ uint32_t SettingCategory::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->items.clear();
-            uint32_t _size47;
-            ::apache::thrift::protocol::TType _ktype48;
-            ::apache::thrift::protocol::TType _vtype49;
-            xfer += iprot->readMapBegin(_ktype48, _vtype49, _size47);
-            uint32_t _i51;
-            for (_i51 = 0; _i51 < _size47; ++_i51)
+            uint32_t _size51;
+            ::apache::thrift::protocol::TType _ktype52;
+            ::apache::thrift::protocol::TType _vtype53;
+            xfer += iprot->readMapBegin(_ktype52, _vtype53, _size51);
+            uint32_t _i55;
+            for (_i55 = 0; _i55 < _size51; ++_i55)
             {
-              std::string _key52;
-              xfer += iprot->readString(_key52);
-              int32_t& _val53 = this->items[_key52];
-              xfer += iprot->readI32(_val53);
+              std::string _key56;
+              xfer += iprot->readString(_key56);
+              int32_t& _val57 = this->items[_key56];
+              xfer += iprot->readI32(_val57);
             }
             xfer += iprot->readMapEnd();
           }
@@ -1905,11 +1811,11 @@ uint32_t SettingCategory::write(::apache::thrift::protocol::TProtocol* oprot) co
   xfer += oprot->writeFieldBegin("items", ::apache::thrift::protocol::T_MAP, 7);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_I32, static_cast<uint32_t>(this->items.size()));
-    std::map<std::string, int32_t> ::const_iterator _iter54;
-    for (_iter54 = this->items.begin(); _iter54 != this->items.end(); ++_iter54)
+    std::map<std::string, int32_t> ::const_iterator _iter58;
+    for (_iter58 = this->items.begin(); _iter58 != this->items.end(); ++_iter58)
     {
-      xfer += oprot->writeString(_iter54->first);
-      xfer += oprot->writeI32(_iter54->second);
+      xfer += oprot->writeString(_iter58->first);
+      xfer += oprot->writeI32(_iter58->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -1942,29 +1848,29 @@ void swap(SettingCategory &a, SettingCategory &b) {
   swap(a.__isset, b.__isset);
 }
 
-SettingCategory::SettingCategory(const SettingCategory& other55) {
-  id = other55.id;
-  display = other55.display;
-  summary = other55.summary;
-  description = other55.description;
-  sortingPriority = other55.sortingPriority;
-  isSystemCategory = other55.isSystemCategory;
-  items = other55.items;
-  enable = other55.enable;
-  showInUI = other55.showInUI;
-  __isset = other55.__isset;
+SettingCategory::SettingCategory(const SettingCategory& other59) {
+  id = other59.id;
+  display = other59.display;
+  summary = other59.summary;
+  description = other59.description;
+  sortingPriority = other59.sortingPriority;
+  isSystemCategory = other59.isSystemCategory;
+  items = other59.items;
+  enable = other59.enable;
+  showInUI = other59.showInUI;
+  __isset = other59.__isset;
 }
-SettingCategory& SettingCategory::operator=(const SettingCategory& other56) {
-  id = other56.id;
-  display = other56.display;
-  summary = other56.summary;
-  description = other56.description;
-  sortingPriority = other56.sortingPriority;
-  isSystemCategory = other56.isSystemCategory;
-  items = other56.items;
-  enable = other56.enable;
-  showInUI = other56.showInUI;
-  __isset = other56.__isset;
+SettingCategory& SettingCategory::operator=(const SettingCategory& other60) {
+  id = other60.id;
+  display = other60.display;
+  summary = other60.summary;
+  description = other60.description;
+  sortingPriority = other60.sortingPriority;
+  isSystemCategory = other60.isSystemCategory;
+  items = other60.items;
+  enable = other60.enable;
+  showInUI = other60.showInUI;
+  __isset = other60.__isset;
   return *this;
 }
 void SettingCategory::printTo(std::ostream& out) const {
@@ -2044,14 +1950,14 @@ uint32_t ModuleSetting::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->settings.clear();
-            uint32_t _size57;
-            ::apache::thrift::protocol::TType _etype60;
-            xfer += iprot->readListBegin(_etype60, _size57);
-            this->settings.resize(_size57);
-            uint32_t _i61;
-            for (_i61 = 0; _i61 < _size57; ++_i61)
+            uint32_t _size61;
+            ::apache::thrift::protocol::TType _etype64;
+            xfer += iprot->readListBegin(_etype64, _size61);
+            this->settings.resize(_size61);
+            uint32_t _i65;
+            for (_i65 = 0; _i65 < _size61; ++_i65)
             {
-              xfer += this->settings[_i61].read(iprot);
+              xfer += this->settings[_i65].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -2064,14 +1970,14 @@ uint32_t ModuleSetting::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->categories.clear();
-            uint32_t _size62;
-            ::apache::thrift::protocol::TType _etype65;
-            xfer += iprot->readListBegin(_etype65, _size62);
-            this->categories.resize(_size62);
-            uint32_t _i66;
-            for (_i66 = 0; _i66 < _size62; ++_i66)
+            uint32_t _size66;
+            ::apache::thrift::protocol::TType _etype69;
+            xfer += iprot->readListBegin(_etype69, _size66);
+            this->categories.resize(_size66);
+            uint32_t _i70;
+            for (_i70 = 0; _i70 < _size66; ++_i70)
             {
-              xfer += this->categories[_i66].read(iprot);
+              xfer += this->categories[_i70].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -2108,10 +2014,10 @@ uint32_t ModuleSetting::write(::apache::thrift::protocol::TProtocol* oprot) cons
   xfer += oprot->writeFieldBegin("settings", ::apache::thrift::protocol::T_LIST, 3);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->settings.size()));
-    std::vector<SettingItem> ::const_iterator _iter67;
-    for (_iter67 = this->settings.begin(); _iter67 != this->settings.end(); ++_iter67)
+    std::vector<SettingItem> ::const_iterator _iter71;
+    for (_iter71 = this->settings.begin(); _iter71 != this->settings.end(); ++_iter71)
     {
-      xfer += (*_iter67).write(oprot);
+      xfer += (*_iter71).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -2120,10 +2026,10 @@ uint32_t ModuleSetting::write(::apache::thrift::protocol::TProtocol* oprot) cons
   xfer += oprot->writeFieldBegin("categories", ::apache::thrift::protocol::T_LIST, 4);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->categories.size()));
-    std::vector<SettingCategory> ::const_iterator _iter68;
-    for (_iter68 = this->categories.begin(); _iter68 != this->categories.end(); ++_iter68)
+    std::vector<SettingCategory> ::const_iterator _iter72;
+    for (_iter72 = this->categories.begin(); _iter72 != this->categories.end(); ++_iter72)
     {
-      xfer += (*_iter68).write(oprot);
+      xfer += (*_iter72).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -2143,19 +2049,19 @@ void swap(ModuleSetting &a, ModuleSetting &b) {
   swap(a.__isset, b.__isset);
 }
 
-ModuleSetting::ModuleSetting(const ModuleSetting& other69) {
-  name = other69.name;
-  version = other69.version;
-  settings = other69.settings;
-  categories = other69.categories;
-  __isset = other69.__isset;
+ModuleSetting::ModuleSetting(const ModuleSetting& other73) {
+  name = other73.name;
+  version = other73.version;
+  settings = other73.settings;
+  categories = other73.categories;
+  __isset = other73.__isset;
 }
-ModuleSetting& ModuleSetting::operator=(const ModuleSetting& other70) {
-  name = other70.name;
-  version = other70.version;
-  settings = other70.settings;
-  categories = other70.categories;
-  __isset = other70.__isset;
+ModuleSetting& ModuleSetting::operator=(const ModuleSetting& other74) {
+  name = other74.name;
+  version = other74.version;
+  settings = other74.settings;
+  categories = other74.categories;
+  __isset = other74.__isset;
   return *this;
 }
 void ModuleSetting::printTo(std::ostream& out) const {
@@ -2165,6 +2071,364 @@ void ModuleSetting::printTo(std::ostream& out) const {
   out << ", " << "version=" << to_string(version);
   out << ", " << "settings=" << to_string(settings);
   out << ", " << "categories=" << to_string(categories);
+  out << ")";
+}
+
+
+AppDataRecord::~AppDataRecord() throw() {
+}
+
+
+void AppDataRecord::__set_id(const std::string& val) {
+  this->id = val;
+}
+
+void AppDataRecord::__set_content(const SettingValue& val) {
+  this->content = val;
+}
+
+uint32_t AppDataRecord::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->id);
+          this->__isset.id = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->content.read(iprot);
+          this->__isset.content = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AppDataRecord::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("AppDataRecord");
+
+  xfer += oprot->writeFieldBegin("id", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->id);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("content", ::apache::thrift::protocol::T_STRUCT, 2);
+  xfer += this->content.write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(AppDataRecord &a, AppDataRecord &b) {
+  using ::std::swap;
+  swap(a.id, b.id);
+  swap(a.content, b.content);
+  swap(a.__isset, b.__isset);
+}
+
+AppDataRecord::AppDataRecord(const AppDataRecord& other75) {
+  id = other75.id;
+  content = other75.content;
+  __isset = other75.__isset;
+}
+AppDataRecord& AppDataRecord::operator=(const AppDataRecord& other76) {
+  id = other76.id;
+  content = other76.content;
+  __isset = other76.__isset;
+  return *this;
+}
+void AppDataRecord::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "AppDataRecord(";
+  out << "id=" << to_string(id);
+  out << ", " << "content=" << to_string(content);
+  out << ")";
+}
+
+
+AppDataCollection::~AppDataCollection() throw() {
+}
+
+
+void AppDataCollection::__set_category(const std::string& val) {
+  this->category = val;
+}
+
+void AppDataCollection::__set_records(const std::vector<AppDataRecord> & val) {
+  this->records = val;
+}
+
+uint32_t AppDataCollection::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->category);
+          this->__isset.category = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->records.clear();
+            uint32_t _size77;
+            ::apache::thrift::protocol::TType _etype80;
+            xfer += iprot->readListBegin(_etype80, _size77);
+            this->records.resize(_size77);
+            uint32_t _i81;
+            for (_i81 = 0; _i81 < _size77; ++_i81)
+            {
+              xfer += this->records[_i81].read(iprot);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.records = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AppDataCollection::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("AppDataCollection");
+
+  xfer += oprot->writeFieldBegin("category", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->category);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("records", ::apache::thrift::protocol::T_LIST, 2);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->records.size()));
+    std::vector<AppDataRecord> ::const_iterator _iter82;
+    for (_iter82 = this->records.begin(); _iter82 != this->records.end(); ++_iter82)
+    {
+      xfer += (*_iter82).write(oprot);
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(AppDataCollection &a, AppDataCollection &b) {
+  using ::std::swap;
+  swap(a.category, b.category);
+  swap(a.records, b.records);
+  swap(a.__isset, b.__isset);
+}
+
+AppDataCollection::AppDataCollection(const AppDataCollection& other83) {
+  category = other83.category;
+  records = other83.records;
+  __isset = other83.__isset;
+}
+AppDataCollection& AppDataCollection::operator=(const AppDataCollection& other84) {
+  category = other84.category;
+  records = other84.records;
+  __isset = other84.__isset;
+  return *this;
+}
+void AppDataCollection::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "AppDataCollection(";
+  out << "category=" << to_string(category);
+  out << ", " << "records=" << to_string(records);
+  out << ")";
+}
+
+
+AppData::~AppData() throw() {
+}
+
+
+void AppData::__set_appId(const std::string& val) {
+  this->appId = val;
+}
+
+void AppData::__set_data(const std::vector<AppDataCollection> & val) {
+  this->data = val;
+}
+
+uint32_t AppData::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->appId);
+          this->__isset.appId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->data.clear();
+            uint32_t _size85;
+            ::apache::thrift::protocol::TType _etype88;
+            xfer += iprot->readListBegin(_etype88, _size85);
+            this->data.resize(_size85);
+            uint32_t _i89;
+            for (_i89 = 0; _i89 < _size85; ++_i89)
+            {
+              xfer += this->data[_i89].read(iprot);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.data = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AppData::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("AppData");
+
+  xfer += oprot->writeFieldBegin("appId", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->appId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("data", ::apache::thrift::protocol::T_LIST, 2);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->data.size()));
+    std::vector<AppDataCollection> ::const_iterator _iter90;
+    for (_iter90 = this->data.begin(); _iter90 != this->data.end(); ++_iter90)
+    {
+      xfer += (*_iter90).write(oprot);
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(AppData &a, AppData &b) {
+  using ::std::swap;
+  swap(a.appId, b.appId);
+  swap(a.data, b.data);
+  swap(a.__isset, b.__isset);
+}
+
+AppData::AppData(const AppData& other91) {
+  appId = other91.appId;
+  data = other91.data;
+  __isset = other91.__isset;
+}
+AppData& AppData::operator=(const AppData& other92) {
+  appId = other92.appId;
+  data = other92.data;
+  __isset = other92.__isset;
+  return *this;
+}
+void AppData::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "AppData(";
+  out << "appId=" << to_string(appId);
+  out << ", " << "data=" << to_string(data);
   out << ")";
 }
 

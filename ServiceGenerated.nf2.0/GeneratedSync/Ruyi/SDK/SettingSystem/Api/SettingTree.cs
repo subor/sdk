@@ -107,15 +107,15 @@ namespace Ruyi.SDK.SettingSystem.Api
               if (field.Type == TType.Map) {
                 {
                   SettingCategories = new Dictionary<string, Ruyi.SDK.CommonType.SettingCategory>();
-                  TMap _map16 = iprot.ReadMapBegin();
-                  for( int _i17 = 0; _i17 < _map16.Count; ++_i17)
+                  TMap _map8 = iprot.ReadMapBegin();
+                  for( int _i9 = 0; _i9 < _map8.Count; ++_i9)
                   {
-                    string _key18;
-                    Ruyi.SDK.CommonType.SettingCategory _val19;
-                    _key18 = iprot.ReadString();
-                    _val19 = new Ruyi.SDK.CommonType.SettingCategory();
-                    _val19.Read(iprot);
-                    SettingCategories[_key18] = _val19;
+                    string _key10;
+                    Ruyi.SDK.CommonType.SettingCategory _val11;
+                    _key10 = iprot.ReadString();
+                    _val11 = new Ruyi.SDK.CommonType.SettingCategory();
+                    _val11.Read(iprot);
+                    SettingCategories[_key10] = _val11;
                   }
                   iprot.ReadMapEnd();
                 }
@@ -127,15 +127,15 @@ namespace Ruyi.SDK.SettingSystem.Api
               if (field.Type == TType.Map) {
                 {
                   SettingItems = new Dictionary<string, Ruyi.SDK.CommonType.SettingItem>();
-                  TMap _map20 = iprot.ReadMapBegin();
-                  for( int _i21 = 0; _i21 < _map20.Count; ++_i21)
+                  TMap _map12 = iprot.ReadMapBegin();
+                  for( int _i13 = 0; _i13 < _map12.Count; ++_i13)
                   {
-                    string _key22;
-                    Ruyi.SDK.CommonType.SettingItem _val23;
-                    _key22 = iprot.ReadString();
-                    _val23 = new Ruyi.SDK.CommonType.SettingItem();
-                    _val23.Read(iprot);
-                    SettingItems[_key22] = _val23;
+                    string _key14;
+                    Ruyi.SDK.CommonType.SettingItem _val15;
+                    _key14 = iprot.ReadString();
+                    _val15 = new Ruyi.SDK.CommonType.SettingItem();
+                    _val15.Read(iprot);
+                    SettingItems[_key14] = _val15;
                   }
                   iprot.ReadMapEnd();
                 }
@@ -179,10 +179,10 @@ namespace Ruyi.SDK.SettingSystem.Api
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteMapBegin(new TMap(TType.String, TType.Struct, SettingCategories.Count));
-            foreach (string _iter24 in SettingCategories.Keys)
+            foreach (string _iter16 in SettingCategories.Keys)
             {
-              oprot.WriteString(_iter24);
-              SettingCategories[_iter24].Write(oprot);
+              oprot.WriteString(_iter16);
+              SettingCategories[_iter16].Write(oprot);
             }
             oprot.WriteMapEnd();
           }
@@ -195,10 +195,10 @@ namespace Ruyi.SDK.SettingSystem.Api
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteMapBegin(new TMap(TType.String, TType.Struct, SettingItems.Count));
-            foreach (string _iter25 in SettingItems.Keys)
+            foreach (string _iter17 in SettingItems.Keys)
             {
-              oprot.WriteString(_iter25);
-              SettingItems[_iter25].Write(oprot);
+              oprot.WriteString(_iter17);
+              SettingItems[_iter17].Write(oprot);
             }
             oprot.WriteMapEnd();
           }

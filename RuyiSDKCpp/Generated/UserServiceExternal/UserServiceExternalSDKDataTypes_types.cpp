@@ -26,6 +26,152 @@ const char* _kUserGenderNames[] = {
 const std::map<int, const char*> _UserGender_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(3, _kUserGenderValues, _kUserGenderNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
 
 
+TriggerKeys::~TriggerKeys() throw() {
+}
+
+
+void TriggerKeys::__set_DeviceType(const int8_t val) {
+  this->DeviceType = val;
+}
+
+void TriggerKeys::__set_Key(const int32_t val) {
+  this->Key = val;
+}
+
+void TriggerKeys::__set_NewValue(const int8_t val) {
+  this->NewValue = val;
+}
+
+void TriggerKeys::__set_OldValue(const int8_t val) {
+  this->OldValue = val;
+}
+
+uint32_t TriggerKeys::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_BYTE) {
+          xfer += iprot->readByte(this->DeviceType);
+          this->__isset.DeviceType = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->Key);
+          this->__isset.Key = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_BYTE) {
+          xfer += iprot->readByte(this->NewValue);
+          this->__isset.NewValue = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_BYTE) {
+          xfer += iprot->readByte(this->OldValue);
+          this->__isset.OldValue = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t TriggerKeys::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("TriggerKeys");
+
+  xfer += oprot->writeFieldBegin("DeviceType", ::apache::thrift::protocol::T_BYTE, 1);
+  xfer += oprot->writeByte(this->DeviceType);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Key", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->Key);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("NewValue", ::apache::thrift::protocol::T_BYTE, 3);
+  xfer += oprot->writeByte(this->NewValue);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("OldValue", ::apache::thrift::protocol::T_BYTE, 4);
+  xfer += oprot->writeByte(this->OldValue);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(TriggerKeys &a, TriggerKeys &b) {
+  using ::std::swap;
+  swap(a.DeviceType, b.DeviceType);
+  swap(a.Key, b.Key);
+  swap(a.NewValue, b.NewValue);
+  swap(a.OldValue, b.OldValue);
+  swap(a.__isset, b.__isset);
+}
+
+TriggerKeys::TriggerKeys(const TriggerKeys& other0) {
+  DeviceType = other0.DeviceType;
+  Key = other0.Key;
+  NewValue = other0.NewValue;
+  OldValue = other0.OldValue;
+  __isset = other0.__isset;
+}
+TriggerKeys& TriggerKeys::operator=(const TriggerKeys& other1) {
+  DeviceType = other1.DeviceType;
+  Key = other1.Key;
+  NewValue = other1.NewValue;
+  OldValue = other1.OldValue;
+  __isset = other1.__isset;
+  return *this;
+}
+void TriggerKeys::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "TriggerKeys(";
+  out << "DeviceType=" << to_string(DeviceType);
+  out << ", " << "Key=" << to_string(Key);
+  out << ", " << "NewValue=" << to_string(NewValue);
+  out << ", " << "OldValue=" << to_string(OldValue);
+  out << ")";
+}
+
+
 InputActionEvent::~InputActionEvent() throw() {
 }
 
@@ -40,6 +186,10 @@ void InputActionEvent::__set_action(const std::string& val) {
 
 void InputActionEvent::__set_timestamp(const int64_t val) {
   this->timestamp = val;
+}
+
+void InputActionEvent::__set_Triggers(const std::vector<TriggerKeys> & val) {
+  this->Triggers = val;
 }
 
 uint32_t InputActionEvent::read(::apache::thrift::protocol::TProtocol* iprot) {
@@ -87,6 +237,26 @@ uint32_t InputActionEvent::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->Triggers.clear();
+            uint32_t _size2;
+            ::apache::thrift::protocol::TType _etype5;
+            xfer += iprot->readListBegin(_etype5, _size2);
+            this->Triggers.resize(_size2);
+            uint32_t _i6;
+            for (_i6 = 0; _i6 < _size2; ++_i6)
+            {
+              xfer += this->Triggers[_i6].read(iprot);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.Triggers = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -116,6 +286,18 @@ uint32_t InputActionEvent::write(::apache::thrift::protocol::TProtocol* oprot) c
   xfer += oprot->writeI64(this->timestamp);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("Triggers", ::apache::thrift::protocol::T_LIST, 4);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->Triggers.size()));
+    std::vector<TriggerKeys> ::const_iterator _iter7;
+    for (_iter7 = this->Triggers.begin(); _iter7 != this->Triggers.end(); ++_iter7)
+    {
+      xfer += (*_iter7).write(oprot);
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -126,20 +308,23 @@ void swap(InputActionEvent &a, InputActionEvent &b) {
   swap(a.userId, b.userId);
   swap(a.action, b.action);
   swap(a.timestamp, b.timestamp);
+  swap(a.Triggers, b.Triggers);
   swap(a.__isset, b.__isset);
 }
 
-InputActionEvent::InputActionEvent(const InputActionEvent& other0) {
-  userId = other0.userId;
-  action = other0.action;
-  timestamp = other0.timestamp;
-  __isset = other0.__isset;
+InputActionEvent::InputActionEvent(const InputActionEvent& other8) {
+  userId = other8.userId;
+  action = other8.action;
+  timestamp = other8.timestamp;
+  Triggers = other8.Triggers;
+  __isset = other8.__isset;
 }
-InputActionEvent& InputActionEvent::operator=(const InputActionEvent& other1) {
-  userId = other1.userId;
-  action = other1.action;
-  timestamp = other1.timestamp;
-  __isset = other1.__isset;
+InputActionEvent& InputActionEvent::operator=(const InputActionEvent& other9) {
+  userId = other9.userId;
+  action = other9.action;
+  timestamp = other9.timestamp;
+  Triggers = other9.Triggers;
+  __isset = other9.__isset;
   return *this;
 }
 void InputActionEvent::printTo(std::ostream& out) const {
@@ -148,6 +333,7 @@ void InputActionEvent::printTo(std::ostream& out) const {
   out << "userId=" << to_string(userId);
   out << ", " << "action=" << to_string(action);
   out << ", " << "timestamp=" << to_string(timestamp);
+  out << ", " << "Triggers=" << to_string(Triggers);
   out << ")";
 }
 
@@ -255,17 +441,17 @@ void swap(UserEvent &a, UserEvent &b) {
   swap(a.__isset, b.__isset);
 }
 
-UserEvent::UserEvent(const UserEvent& other2) {
-  userId = other2.userId;
-  action = other2.action;
-  jsonData = other2.jsonData;
-  __isset = other2.__isset;
+UserEvent::UserEvent(const UserEvent& other10) {
+  userId = other10.userId;
+  action = other10.action;
+  jsonData = other10.jsonData;
+  __isset = other10.__isset;
 }
-UserEvent& UserEvent::operator=(const UserEvent& other3) {
-  userId = other3.userId;
-  action = other3.action;
-  jsonData = other3.jsonData;
-  __isset = other3.__isset;
+UserEvent& UserEvent::operator=(const UserEvent& other11) {
+  userId = other11.userId;
+  action = other11.action;
+  jsonData = other11.jsonData;
+  __isset = other11.__isset;
   return *this;
 }
 void UserEvent::printTo(std::ostream& out) const {
@@ -345,9 +531,9 @@ uint32_t UserInfo_Public::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 4:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast4;
-          xfer += iprot->readI32(ecast4);
-          this->gender = (UserGender::type)ecast4;
+          int32_t ecast12;
+          xfer += iprot->readI32(ecast12);
+          this->gender = (UserGender::type)ecast12;
           this->__isset.gender = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -400,19 +586,19 @@ void swap(UserInfo_Public &a, UserInfo_Public &b) {
   swap(a.__isset, b.__isset);
 }
 
-UserInfo_Public::UserInfo_Public(const UserInfo_Public& other5) {
-  userId = other5.userId;
-  nickname = other5.nickname;
-  portrait = other5.portrait;
-  gender = other5.gender;
-  __isset = other5.__isset;
+UserInfo_Public::UserInfo_Public(const UserInfo_Public& other13) {
+  userId = other13.userId;
+  nickname = other13.nickname;
+  portrait = other13.portrait;
+  gender = other13.gender;
+  __isset = other13.__isset;
 }
-UserInfo_Public& UserInfo_Public::operator=(const UserInfo_Public& other6) {
-  userId = other6.userId;
-  nickname = other6.nickname;
-  portrait = other6.portrait;
-  gender = other6.gender;
-  __isset = other6.__isset;
+UserInfo_Public& UserInfo_Public::operator=(const UserInfo_Public& other14) {
+  userId = other14.userId;
+  nickname = other14.nickname;
+  portrait = other14.portrait;
+  gender = other14.gender;
+  __isset = other14.__isset;
   return *this;
 }
 void UserInfo_Public::printTo(std::ostream& out) const {

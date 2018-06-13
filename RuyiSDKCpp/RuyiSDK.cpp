@@ -1,14 +1,16 @@
+#include "RuyiSDK.h"
 #include <iostream>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string/replace.hpp>
 
 #include "resource.h"
-#include "RuyiSDK.h"
 
-#include "PubSub\MessageCreator.h"
+#include "PubSub/MessageCreator.h"
 
 #include "version.info"
+
+#pragma comment(lib,"version.lib")
 
 using namespace Ruyi;
 using namespace Ruyi::SDK;
@@ -120,7 +122,7 @@ bool RuyiSDK::Init()
 	Storage = new SDK::StorageLayer::StorageLayerServiceClient(stoProtocol);
 
 	// init setting system
-	boost::shared_ptr<TMultiplexedProtocol> proto = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedLowProto, "SER_L0SETTINGSYSTEM_EXTERNAL"));
+	boost::shared_ptr<TMultiplexedProtocol> proto = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedLowProto, "SER_SETTINGSYSTEM_EXTERNAL"));
 	SettingSys = new SDK::SettingSystem::Api::SettingSystemServiceClient(proto);
 
 	// init localization service

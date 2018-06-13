@@ -1,9 +1,14 @@
 ﻿using NetMQ;
 
-namespace Layer0
+namespace Ruyi.Layer0
 {
     public class PubsubUtil
     {
+        /// <summary>
+        /// Pub/sub topic used by the SDK
+        /// </summary>
+        public static string SDKTopic = "sdk";
+
         static string stoppingKey = "AKXBIHKE334KLEI0CVNLKEWDFITEWSD89LKFE8DKNVE8FEAF9043JG3KG83SJGF8";
 
         #region helper methods

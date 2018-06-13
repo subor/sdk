@@ -21,7 +21,8 @@ unsigned int InputManagerTest::SubscriberMessage()
 	string* modifier = const_cast<string*>(pChar);
 	replace_all(*modifier, "{addr}", "localhost");
 
-	ruyiSDK->Subscriber->Subscribe("service/inputmanager_internal");
+	ruyiSDK->Subscriber->Subscribe("service/inputmgr_int");
+	//ruyiSDK->Subscriber->Subscribe("service/user_service_external");
 	ruyiSDK->Subscriber->AddMessageHandler(this, &InputManagerTest::SubStateChangeHandler2);
 
 	return 0;
@@ -29,12 +30,17 @@ unsigned int InputManagerTest::SubscriberMessage()
 
 void InputManagerTest::SubStateChangeHandler2(std::string topic, apache::thrift::TBase* msg)
 {
-	auto idsc = dynamic_cast<InputManager::InputDeviceStateChanged*>(msg);
-	auto idcc = dynamic_cast<InputManager::InputDeviceConnectionChanged*>(msg);
-	if (idsc == NULL && idcc == NULL)
+	//auto idsc = dynamic_cast<InputManager::InputDeviceStateChanged*>(msg);
+	//auto idcc = dynamic_cast<InputManager::InputDeviceConnectionChanged*>(msg);
+	//if (idsc == NULL && idcc == NULL)
+	//	return;
+	auto rgpi = dynamic_cast<InputManager::RuyiGamePadInput*>(msg);
+	if (rgpi == NULL)
 		return;
 
-	Logger::WriteMessage("SubStateChangeHandler\n");
+	std::string output = "SubStateChangeHandler ";
+	output += rgpi->DeviceId + "\n";
+	Logger::WriteMessage(output.c_str());
 	SetEvent(ResetHandles[STATE_CHANGED]);
 }
 

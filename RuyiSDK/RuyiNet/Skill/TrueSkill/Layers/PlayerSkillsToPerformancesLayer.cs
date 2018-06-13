@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Ruyi
+namespace Ruyi.SDK.Online
 {
     internal class PlayerSkillsToPerformancesLayer<TPlayer> :
         TrueSkillFactorGraphLayer<TPlayer, KeyedVariable<TPlayer, GaussianDistribution>, GaussianLikelihoodFactor, KeyedVariable<TPlayer, GaussianDistribution>>

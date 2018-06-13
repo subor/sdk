@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RuyiLogger
+namespace Ruyi.Logging
 {
     public class ConsoleLogger : IRuyiLogger
     {
@@ -35,7 +35,7 @@ namespace RuyiLogger
                 logLevelStr = lvl.ToLower();
             if (lvl != null && logLevelStr != silent && logLevelStr != verbose)
             {
-                logLevel = (LogLevel)Enum.Parse(typeof(LogLevel), lvl);
+                logLevel = (LogLevel)Enum.Parse(typeof(LogLevel), lvl, true);
             }
         }
 

@@ -13,24 +13,706 @@
 
 namespace Ruyi { namespace SDK { namespace InputManager {
 
+int _kKeyValues[] = {
+  Key::Unknown,
+  Key::Escape,
+  Key::D1,
+  Key::D2,
+  Key::D3,
+  Key::D4,
+  Key::D5,
+  Key::D6,
+  Key::D7,
+  Key::D8,
+  Key::D9,
+  Key::D0,
+  Key::Minus,
+  Key::Equals,
+  Key::Back,
+  Key::Tab,
+  Key::Q,
+  Key::W,
+  Key::E,
+  Key::R,
+  Key::T,
+  Key::Y,
+  Key::U,
+  Key::I,
+  Key::O,
+  Key::P,
+  Key::LeftBracket,
+  Key::RightBracket,
+  Key::Return,
+  Key::LeftControl,
+  Key::A,
+  Key::S,
+  Key::D,
+  Key::F,
+  Key::G,
+  Key::H,
+  Key::J,
+  Key::K,
+  Key::L,
+  Key::Semicolon,
+  Key::Apostrophe,
+  Key::Grave,
+  Key::LeftShift,
+  Key::Backslash,
+  Key::Z,
+  Key::X,
+  Key::C,
+  Key::V,
+  Key::B,
+  Key::N,
+  Key::M,
+  Key::Comma,
+  Key::Period,
+  Key::Slash,
+  Key::RightShift,
+  Key::Multiply,
+  Key::LeftAlt,
+  Key::Space,
+  Key::Capital,
+  Key::F1,
+  Key::F2,
+  Key::F3,
+  Key::F4,
+  Key::F5,
+  Key::F6,
+  Key::F7,
+  Key::F8,
+  Key::F9,
+  Key::F10,
+  Key::NumberLock,
+  Key::ScrollLock,
+  Key::NumberPad7,
+  Key::NumberPad8,
+  Key::NumberPad9,
+  Key::Subtract,
+  Key::NumberPad4,
+  Key::NumberPad5,
+  Key::NumberPad6,
+  Key::Add,
+  Key::NumberPad1,
+  Key::NumberPad2,
+  Key::NumberPad3,
+  Key::NumberPad0,
+  Key::Decimal,
+  Key::Oem102,
+  Key::F11,
+  Key::F12,
+  Key::F13,
+  Key::F14,
+  Key::F15,
+  Key::Kana,
+  Key::AbntC1,
+  Key::Convert,
+  Key::NoConvert,
+  Key::Yen,
+  Key::AbntC2,
+  Key::NumberPadEquals,
+  Key::PreviousTrack,
+  Key::AT,
+  Key::Colon,
+  Key::Underline,
+  Key::Kanji,
+  Key::Stop,
+  Key::AX,
+  Key::Unlabeled,
+  Key::NextTrack,
+  Key::NumberPadEnter,
+  Key::RightControl,
+  Key::Mute,
+  Key::Calculator,
+  Key::PlayPause,
+  Key::MediaStop,
+  Key::VolumeDown,
+  Key::VolumeUp,
+  Key::WebHome,
+  Key::NumberPadComma,
+  Key::Divide,
+  Key::PrintScreen,
+  Key::RightAlt,
+  Key::Pause,
+  Key::Home,
+  Key::Up,
+  Key::PageUp,
+  Key::Left,
+  Key::Right,
+  Key::End,
+  Key::Down,
+  Key::PageDown,
+  Key::Insert,
+  Key::Delete,
+  Key::LeftWindowsKey,
+  Key::RightWindowsKey,
+  Key::Applications,
+  Key::Power,
+  Key::Sleep,
+  Key::Wake,
+  Key::WebSearch,
+  Key::WebFavorites,
+  Key::WebRefresh,
+  Key::WebStop,
+  Key::WebForward,
+  Key::WebBack,
+  Key::MyComputer,
+  Key::Mail,
+  Key::MediaSelect
+};
+const char* _kKeyNames[] = {
+  "Unknown",
+  "Escape",
+  "D1",
+  "D2",
+  "D3",
+  "D4",
+  "D5",
+  "D6",
+  "D7",
+  "D8",
+  "D9",
+  "D0",
+  "Minus",
+  "Equals",
+  "Back",
+  "Tab",
+  "Q",
+  "W",
+  "E",
+  "R",
+  "T",
+  "Y",
+  "U",
+  "I",
+  "O",
+  "P",
+  "LeftBracket",
+  "RightBracket",
+  "Return",
+  "LeftControl",
+  "A",
+  "S",
+  "D",
+  "F",
+  "G",
+  "H",
+  "J",
+  "K",
+  "L",
+  "Semicolon",
+  "Apostrophe",
+  "Grave",
+  "LeftShift",
+  "Backslash",
+  "Z",
+  "X",
+  "C",
+  "V",
+  "B",
+  "N",
+  "M",
+  "Comma",
+  "Period",
+  "Slash",
+  "RightShift",
+  "Multiply",
+  "LeftAlt",
+  "Space",
+  "Capital",
+  "F1",
+  "F2",
+  "F3",
+  "F4",
+  "F5",
+  "F6",
+  "F7",
+  "F8",
+  "F9",
+  "F10",
+  "NumberLock",
+  "ScrollLock",
+  "NumberPad7",
+  "NumberPad8",
+  "NumberPad9",
+  "Subtract",
+  "NumberPad4",
+  "NumberPad5",
+  "NumberPad6",
+  "Add",
+  "NumberPad1",
+  "NumberPad2",
+  "NumberPad3",
+  "NumberPad0",
+  "Decimal",
+  "Oem102",
+  "F11",
+  "F12",
+  "F13",
+  "F14",
+  "F15",
+  "Kana",
+  "AbntC1",
+  "Convert",
+  "NoConvert",
+  "Yen",
+  "AbntC2",
+  "NumberPadEquals",
+  "PreviousTrack",
+  "AT",
+  "Colon",
+  "Underline",
+  "Kanji",
+  "Stop",
+  "AX",
+  "Unlabeled",
+  "NextTrack",
+  "NumberPadEnter",
+  "RightControl",
+  "Mute",
+  "Calculator",
+  "PlayPause",
+  "MediaStop",
+  "VolumeDown",
+  "VolumeUp",
+  "WebHome",
+  "NumberPadComma",
+  "Divide",
+  "PrintScreen",
+  "RightAlt",
+  "Pause",
+  "Home",
+  "Up",
+  "PageUp",
+  "Left",
+  "Right",
+  "End",
+  "Down",
+  "PageDown",
+  "Insert",
+  "Delete",
+  "LeftWindowsKey",
+  "RightWindowsKey",
+  "Applications",
+  "Power",
+  "Sleep",
+  "Wake",
+  "WebSearch",
+  "WebFavorites",
+  "WebRefresh",
+  "WebStop",
+  "WebForward",
+  "WebBack",
+  "MyComputer",
+  "Mail",
+  "MediaSelect"
+};
+const std::map<int, const char*> _Key_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(145, _kKeyValues, _kKeyNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
 
-InputDeviceEventHeader::~InputDeviceEventHeader() throw() {
+int _kMouseOffsetValues[] = {
+  MouseOffset::X,
+  MouseOffset::Y,
+  MouseOffset::Z,
+  MouseOffset::Buttons0,
+  MouseOffset::Buttons1,
+  MouseOffset::Buttons2,
+  MouseOffset::Buttons3,
+  MouseOffset::Buttons4,
+  MouseOffset::Buttons5,
+  MouseOffset::Buttons6,
+  MouseOffset::Buttons7
+};
+const char* _kMouseOffsetNames[] = {
+  "X",
+  "Y",
+  "Z",
+  "Buttons0",
+  "Buttons1",
+  "Buttons2",
+  "Buttons3",
+  "Buttons4",
+  "Buttons5",
+  "Buttons6",
+  "Buttons7"
+};
+const std::map<int, const char*> _MouseOffset_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(11, _kMouseOffsetValues, _kMouseOffsetNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
+int _kJoystickOffsetValues[] = {
+  JoystickOffset::X,
+  JoystickOffset::Y,
+  JoystickOffset::Z,
+  JoystickOffset::RotationX,
+  JoystickOffset::RotationY,
+  JoystickOffset::RotationZ,
+  JoystickOffset::Sliders0,
+  JoystickOffset::Sliders1,
+  JoystickOffset::PointOfViewControllers0,
+  JoystickOffset::PointOfViewControllers1,
+  JoystickOffset::PointOfViewControllers2,
+  JoystickOffset::PointOfViewControllers3,
+  JoystickOffset::Buttons0,
+  JoystickOffset::Buttons1,
+  JoystickOffset::Buttons2,
+  JoystickOffset::Buttons3,
+  JoystickOffset::Buttons4,
+  JoystickOffset::Buttons5,
+  JoystickOffset::Buttons6,
+  JoystickOffset::Buttons7,
+  JoystickOffset::Buttons8,
+  JoystickOffset::Buttons9,
+  JoystickOffset::Buttons10,
+  JoystickOffset::Buttons11,
+  JoystickOffset::Buttons12,
+  JoystickOffset::Buttons13,
+  JoystickOffset::Buttons14,
+  JoystickOffset::Buttons15,
+  JoystickOffset::Buttons16,
+  JoystickOffset::Buttons17,
+  JoystickOffset::Buttons18,
+  JoystickOffset::Buttons19,
+  JoystickOffset::Buttons20,
+  JoystickOffset::Buttons21,
+  JoystickOffset::Buttons22,
+  JoystickOffset::Buttons23,
+  JoystickOffset::Buttons24,
+  JoystickOffset::Buttons25,
+  JoystickOffset::Buttons26,
+  JoystickOffset::Buttons27,
+  JoystickOffset::Buttons28,
+  JoystickOffset::Buttons29,
+  JoystickOffset::Buttons30,
+  JoystickOffset::Buttons31,
+  JoystickOffset::Buttons32,
+  JoystickOffset::Buttons33,
+  JoystickOffset::Buttons34,
+  JoystickOffset::Buttons35,
+  JoystickOffset::Buttons36,
+  JoystickOffset::Buttons37,
+  JoystickOffset::Buttons38,
+  JoystickOffset::Buttons39,
+  JoystickOffset::Buttons40,
+  JoystickOffset::Buttons41,
+  JoystickOffset::Buttons42,
+  JoystickOffset::Buttons43,
+  JoystickOffset::Buttons44,
+  JoystickOffset::Buttons45,
+  JoystickOffset::Buttons46,
+  JoystickOffset::Buttons47,
+  JoystickOffset::Buttons48,
+  JoystickOffset::Buttons49,
+  JoystickOffset::Buttons50,
+  JoystickOffset::Buttons51,
+  JoystickOffset::Buttons52,
+  JoystickOffset::Buttons53,
+  JoystickOffset::Buttons54,
+  JoystickOffset::Buttons55,
+  JoystickOffset::Buttons56,
+  JoystickOffset::Buttons57,
+  JoystickOffset::Buttons58,
+  JoystickOffset::Buttons59,
+  JoystickOffset::Buttons60,
+  JoystickOffset::Buttons61,
+  JoystickOffset::Buttons62,
+  JoystickOffset::Buttons63,
+  JoystickOffset::Buttons64,
+  JoystickOffset::Buttons65,
+  JoystickOffset::Buttons66,
+  JoystickOffset::Buttons67,
+  JoystickOffset::Buttons68,
+  JoystickOffset::Buttons69,
+  JoystickOffset::Buttons70,
+  JoystickOffset::Buttons71,
+  JoystickOffset::Buttons72,
+  JoystickOffset::Buttons73,
+  JoystickOffset::Buttons74,
+  JoystickOffset::Buttons75,
+  JoystickOffset::Buttons76,
+  JoystickOffset::Buttons77,
+  JoystickOffset::Buttons78,
+  JoystickOffset::Buttons79,
+  JoystickOffset::Buttons80,
+  JoystickOffset::Buttons81,
+  JoystickOffset::Buttons82,
+  JoystickOffset::Buttons83,
+  JoystickOffset::Buttons84,
+  JoystickOffset::Buttons85,
+  JoystickOffset::Buttons86,
+  JoystickOffset::Buttons87,
+  JoystickOffset::Buttons88,
+  JoystickOffset::Buttons89,
+  JoystickOffset::Buttons90,
+  JoystickOffset::Buttons91,
+  JoystickOffset::Buttons92,
+  JoystickOffset::Buttons93,
+  JoystickOffset::Buttons94,
+  JoystickOffset::Buttons95,
+  JoystickOffset::Buttons96,
+  JoystickOffset::Buttons97,
+  JoystickOffset::Buttons98,
+  JoystickOffset::Buttons99,
+  JoystickOffset::Buttons100,
+  JoystickOffset::Buttons101,
+  JoystickOffset::Buttons102,
+  JoystickOffset::Buttons103,
+  JoystickOffset::Buttons104,
+  JoystickOffset::Buttons105,
+  JoystickOffset::Buttons106,
+  JoystickOffset::Buttons107,
+  JoystickOffset::Buttons108,
+  JoystickOffset::Buttons109,
+  JoystickOffset::Buttons110,
+  JoystickOffset::Buttons111,
+  JoystickOffset::Buttons112,
+  JoystickOffset::Buttons113,
+  JoystickOffset::Buttons114,
+  JoystickOffset::Buttons115,
+  JoystickOffset::Buttons116,
+  JoystickOffset::Buttons117,
+  JoystickOffset::Buttons118,
+  JoystickOffset::Buttons119,
+  JoystickOffset::Buttons120,
+  JoystickOffset::Buttons121,
+  JoystickOffset::Buttons122,
+  JoystickOffset::Buttons123,
+  JoystickOffset::Buttons124,
+  JoystickOffset::Buttons125,
+  JoystickOffset::Buttons126,
+  JoystickOffset::Buttons127,
+  JoystickOffset::VelocityX,
+  JoystickOffset::VelocityY,
+  JoystickOffset::VelocityZ,
+  JoystickOffset::AngularVelocityX,
+  JoystickOffset::AngularVelocityY,
+  JoystickOffset::AngularVelocityZ,
+  JoystickOffset::VelocitySliders0,
+  JoystickOffset::VelocitySliders1,
+  JoystickOffset::AccelerationX,
+  JoystickOffset::AccelerationY,
+  JoystickOffset::AccelerationZ,
+  JoystickOffset::AngularAccelerationX,
+  JoystickOffset::AngularAccelerationY,
+  JoystickOffset::AngularAccelerationZ,
+  JoystickOffset::AccelerationSliders0,
+  JoystickOffset::AccelerationSliders1,
+  JoystickOffset::ForceX,
+  JoystickOffset::ForceY,
+  JoystickOffset::ForceZ,
+  JoystickOffset::TorqueX,
+  JoystickOffset::TorqueY,
+  JoystickOffset::TorqueZ,
+  JoystickOffset::ForceSliders0,
+  JoystickOffset::ForceSliders1
+};
+const char* _kJoystickOffsetNames[] = {
+  "X",
+  "Y",
+  "Z",
+  "RotationX",
+  "RotationY",
+  "RotationZ",
+  "Sliders0",
+  "Sliders1",
+  "PointOfViewControllers0",
+  "PointOfViewControllers1",
+  "PointOfViewControllers2",
+  "PointOfViewControllers3",
+  "Buttons0",
+  "Buttons1",
+  "Buttons2",
+  "Buttons3",
+  "Buttons4",
+  "Buttons5",
+  "Buttons6",
+  "Buttons7",
+  "Buttons8",
+  "Buttons9",
+  "Buttons10",
+  "Buttons11",
+  "Buttons12",
+  "Buttons13",
+  "Buttons14",
+  "Buttons15",
+  "Buttons16",
+  "Buttons17",
+  "Buttons18",
+  "Buttons19",
+  "Buttons20",
+  "Buttons21",
+  "Buttons22",
+  "Buttons23",
+  "Buttons24",
+  "Buttons25",
+  "Buttons26",
+  "Buttons27",
+  "Buttons28",
+  "Buttons29",
+  "Buttons30",
+  "Buttons31",
+  "Buttons32",
+  "Buttons33",
+  "Buttons34",
+  "Buttons35",
+  "Buttons36",
+  "Buttons37",
+  "Buttons38",
+  "Buttons39",
+  "Buttons40",
+  "Buttons41",
+  "Buttons42",
+  "Buttons43",
+  "Buttons44",
+  "Buttons45",
+  "Buttons46",
+  "Buttons47",
+  "Buttons48",
+  "Buttons49",
+  "Buttons50",
+  "Buttons51",
+  "Buttons52",
+  "Buttons53",
+  "Buttons54",
+  "Buttons55",
+  "Buttons56",
+  "Buttons57",
+  "Buttons58",
+  "Buttons59",
+  "Buttons60",
+  "Buttons61",
+  "Buttons62",
+  "Buttons63",
+  "Buttons64",
+  "Buttons65",
+  "Buttons66",
+  "Buttons67",
+  "Buttons68",
+  "Buttons69",
+  "Buttons70",
+  "Buttons71",
+  "Buttons72",
+  "Buttons73",
+  "Buttons74",
+  "Buttons75",
+  "Buttons76",
+  "Buttons77",
+  "Buttons78",
+  "Buttons79",
+  "Buttons80",
+  "Buttons81",
+  "Buttons82",
+  "Buttons83",
+  "Buttons84",
+  "Buttons85",
+  "Buttons86",
+  "Buttons87",
+  "Buttons88",
+  "Buttons89",
+  "Buttons90",
+  "Buttons91",
+  "Buttons92",
+  "Buttons93",
+  "Buttons94",
+  "Buttons95",
+  "Buttons96",
+  "Buttons97",
+  "Buttons98",
+  "Buttons99",
+  "Buttons100",
+  "Buttons101",
+  "Buttons102",
+  "Buttons103",
+  "Buttons104",
+  "Buttons105",
+  "Buttons106",
+  "Buttons107",
+  "Buttons108",
+  "Buttons109",
+  "Buttons110",
+  "Buttons111",
+  "Buttons112",
+  "Buttons113",
+  "Buttons114",
+  "Buttons115",
+  "Buttons116",
+  "Buttons117",
+  "Buttons118",
+  "Buttons119",
+  "Buttons120",
+  "Buttons121",
+  "Buttons122",
+  "Buttons123",
+  "Buttons124",
+  "Buttons125",
+  "Buttons126",
+  "Buttons127",
+  "VelocityX",
+  "VelocityY",
+  "VelocityZ",
+  "AngularVelocityX",
+  "AngularVelocityY",
+  "AngularVelocityZ",
+  "VelocitySliders0",
+  "VelocitySliders1",
+  "AccelerationX",
+  "AccelerationY",
+  "AccelerationZ",
+  "AngularAccelerationX",
+  "AngularAccelerationY",
+  "AngularAccelerationZ",
+  "AccelerationSliders0",
+  "AccelerationSliders1",
+  "ForceX",
+  "ForceY",
+  "ForceZ",
+  "TorqueX",
+  "TorqueY",
+  "TorqueZ",
+  "ForceSliders0",
+  "ForceSliders1"
+};
+const std::map<int, const char*> _JoystickOffset_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(164, _kJoystickOffsetValues, _kJoystickOffsetNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
+
+RuyiGamePadInput::~RuyiGamePadInput() throw() {
 }
 
 
-void InputDeviceEventHeader::__set_headerType(const int32_t val) {
-  this->headerType = val;
+void RuyiGamePadInput::__set_DeviceId(const std::string& val) {
+  this->DeviceId = val;
 }
 
-void InputDeviceEventHeader::__set_deviceId(const std::string& val) {
-  this->deviceId = val;
+void RuyiGamePadInput::__set_UserId(const std::string& val) {
+  this->UserId = val;
 }
 
-void InputDeviceEventHeader::__set_deviceType(const int32_t val) {
-  this->deviceType = val;
+void RuyiGamePadInput::__set_ButtonFlags(const int32_t val) {
+  this->ButtonFlags = val;
 }
 
-uint32_t InputDeviceEventHeader::read(::apache::thrift::protocol::TProtocol* iprot) {
+void RuyiGamePadInput::__set_LeftTrigger(const int8_t val) {
+  this->LeftTrigger = val;
+}
+
+void RuyiGamePadInput::__set_RightTrigger(const int8_t val) {
+  this->RightTrigger = val;
+}
+
+void RuyiGamePadInput::__set_LeftThumbX(const int16_t val) {
+  this->LeftThumbX = val;
+}
+
+void RuyiGamePadInput::__set_LeftThumbY(const int16_t val) {
+  this->LeftThumbY = val;
+}
+
+void RuyiGamePadInput::__set_RightThumbX(const int16_t val) {
+  this->RightThumbX = val;
+}
+
+void RuyiGamePadInput::__set_RightThumbY(const int16_t val) {
+  this->RightThumbY = val;
+}
+
+uint32_t RuyiGamePadInput::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -52,298 +734,30 @@ uint32_t InputDeviceEventHeader::read(::apache::thrift::protocol::TProtocol* ipr
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->headerType);
-          this->__isset.headerType = true;
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceId);
+          this->__isset.DeviceId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->deviceId);
-          this->__isset.deviceId = true;
+          xfer += iprot->readString(this->UserId);
+          this->__isset.UserId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 3:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->deviceType);
-          this->__isset.deviceType = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t InputDeviceEventHeader::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("InputDeviceEventHeader");
-
-  xfer += oprot->writeFieldBegin("headerType", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->headerType);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("deviceId", ::apache::thrift::protocol::T_STRING, 2);
-  xfer += oprot->writeString(this->deviceId);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("deviceType", ::apache::thrift::protocol::T_I32, 3);
-  xfer += oprot->writeI32(this->deviceType);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-void swap(InputDeviceEventHeader &a, InputDeviceEventHeader &b) {
-  using ::std::swap;
-  swap(a.headerType, b.headerType);
-  swap(a.deviceId, b.deviceId);
-  swap(a.deviceType, b.deviceType);
-  swap(a.__isset, b.__isset);
-}
-
-InputDeviceEventHeader::InputDeviceEventHeader(const InputDeviceEventHeader& other0) {
-  headerType = other0.headerType;
-  deviceId = other0.deviceId;
-  deviceType = other0.deviceType;
-  __isset = other0.__isset;
-}
-InputDeviceEventHeader& InputDeviceEventHeader::operator=(const InputDeviceEventHeader& other1) {
-  headerType = other1.headerType;
-  deviceId = other1.deviceId;
-  deviceType = other1.deviceType;
-  __isset = other1.__isset;
-  return *this;
-}
-void InputDeviceEventHeader::printTo(std::ostream& out) const {
-  using ::apache::thrift::to_string;
-  out << "InputDeviceEventHeader(";
-  out << "headerType=" << to_string(headerType);
-  out << ", " << "deviceId=" << to_string(deviceId);
-  out << ", " << "deviceType=" << to_string(deviceType);
-  out << ")";
-}
-
-
-InputDeviceConnectionChanged::~InputDeviceConnectionChanged() throw() {
-}
-
-
-void InputDeviceConnectionChanged::__set_header(const InputDeviceEventHeader& val) {
-  this->header = val;
-}
-
-void InputDeviceConnectionChanged::__set_isConnected(const bool val) {
-  this->isConnected = val;
-}
-
-uint32_t InputDeviceConnectionChanged::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->header.read(iprot);
-          this->__isset.header = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool(this->isConnected);
-          this->__isset.isConnected = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t InputDeviceConnectionChanged::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("InputDeviceConnectionChanged");
-
-  xfer += oprot->writeFieldBegin("header", ::apache::thrift::protocol::T_STRUCT, 1);
-  xfer += this->header.write(oprot);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("isConnected", ::apache::thrift::protocol::T_BOOL, 2);
-  xfer += oprot->writeBool(this->isConnected);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-void swap(InputDeviceConnectionChanged &a, InputDeviceConnectionChanged &b) {
-  using ::std::swap;
-  swap(a.header, b.header);
-  swap(a.isConnected, b.isConnected);
-  swap(a.__isset, b.__isset);
-}
-
-InputDeviceConnectionChanged::InputDeviceConnectionChanged(const InputDeviceConnectionChanged& other2) {
-  header = other2.header;
-  isConnected = other2.isConnected;
-  __isset = other2.__isset;
-}
-InputDeviceConnectionChanged& InputDeviceConnectionChanged::operator=(const InputDeviceConnectionChanged& other3) {
-  header = other3.header;
-  isConnected = other3.isConnected;
-  __isset = other3.__isset;
-  return *this;
-}
-void InputDeviceConnectionChanged::printTo(std::ostream& out) const {
-  using ::apache::thrift::to_string;
-  out << "InputDeviceConnectionChanged(";
-  out << "header=" << to_string(header);
-  out << ", " << "isConnected=" << to_string(isConnected);
-  out << ")";
-}
-
-
-InputDeviceStateChangedX360::~InputDeviceStateChangedX360() throw() {
-}
-
-
-void InputDeviceStateChangedX360::__set_PacketNumber(const int64_t val) {
-  this->PacketNumber = val;
-}
-
-void InputDeviceStateChangedX360::__set_LeftThumbDeadZone(const int16_t val) {
-  this->LeftThumbDeadZone = val;
-}
-
-void InputDeviceStateChangedX360::__set_RightThumbDeadZone(const int16_t val) {
-  this->RightThumbDeadZone = val;
-}
-
-void InputDeviceStateChangedX360::__set_Buttons(const int32_t val) {
-  this->Buttons = val;
-}
-
-void InputDeviceStateChangedX360::__set_LeftTrigger(const int8_t val) {
-  this->LeftTrigger = val;
-}
-
-void InputDeviceStateChangedX360::__set_RightTrigger(const int8_t val) {
-  this->RightTrigger = val;
-}
-
-void InputDeviceStateChangedX360::__set_LeftThumbX(const int16_t val) {
-  this->LeftThumbX = val;
-}
-
-void InputDeviceStateChangedX360::__set_LeftThumbY(const int16_t val) {
-  this->LeftThumbY = val;
-}
-
-void InputDeviceStateChangedX360::__set_RightThumbX(const int16_t val) {
-  this->RightThumbX = val;
-}
-
-void InputDeviceStateChangedX360::__set_RightThumbY(const int16_t val) {
-  this->RightThumbY = val;
-}
-
-uint32_t InputDeviceStateChangedX360::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->PacketNumber);
-          this->__isset.PacketNumber = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_I16) {
-          xfer += iprot->readI16(this->LeftThumbDeadZone);
-          this->__isset.LeftThumbDeadZone = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 3:
-        if (ftype == ::apache::thrift::protocol::T_I16) {
-          xfer += iprot->readI16(this->RightThumbDeadZone);
-          this->__isset.RightThumbDeadZone = true;
+          xfer += iprot->readI32(this->ButtonFlags);
+          this->__isset.ButtonFlags = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 4:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->Buttons);
-          this->__isset.Buttons = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 5:
         if (ftype == ::apache::thrift::protocol::T_BYTE) {
           xfer += iprot->readByte(this->LeftTrigger);
           this->__isset.LeftTrigger = true;
@@ -351,7 +765,7 @@ uint32_t InputDeviceStateChangedX360::read(::apache::thrift::protocol::TProtocol
           xfer += iprot->skip(ftype);
         }
         break;
-      case 6:
+      case 5:
         if (ftype == ::apache::thrift::protocol::T_BYTE) {
           xfer += iprot->readByte(this->RightTrigger);
           this->__isset.RightTrigger = true;
@@ -359,7 +773,7 @@ uint32_t InputDeviceStateChangedX360::read(::apache::thrift::protocol::TProtocol
           xfer += iprot->skip(ftype);
         }
         break;
-      case 7:
+      case 6:
         if (ftype == ::apache::thrift::protocol::T_I16) {
           xfer += iprot->readI16(this->LeftThumbX);
           this->__isset.LeftThumbX = true;
@@ -367,7 +781,7 @@ uint32_t InputDeviceStateChangedX360::read(::apache::thrift::protocol::TProtocol
           xfer += iprot->skip(ftype);
         }
         break;
-      case 8:
+      case 7:
         if (ftype == ::apache::thrift::protocol::T_I16) {
           xfer += iprot->readI16(this->LeftThumbY);
           this->__isset.LeftThumbY = true;
@@ -375,7 +789,7 @@ uint32_t InputDeviceStateChangedX360::read(::apache::thrift::protocol::TProtocol
           xfer += iprot->skip(ftype);
         }
         break;
-      case 9:
+      case 8:
         if (ftype == ::apache::thrift::protocol::T_I16) {
           xfer += iprot->readI16(this->RightThumbX);
           this->__isset.RightThumbX = true;
@@ -383,7 +797,7 @@ uint32_t InputDeviceStateChangedX360::read(::apache::thrift::protocol::TProtocol
           xfer += iprot->skip(ftype);
         }
         break;
-      case 10:
+      case 9:
         if (ftype == ::apache::thrift::protocol::T_I16) {
           xfer += iprot->readI16(this->RightThumbY);
           this->__isset.RightThumbY = true;
@@ -403,48 +817,44 @@ uint32_t InputDeviceStateChangedX360::read(::apache::thrift::protocol::TProtocol
   return xfer;
 }
 
-uint32_t InputDeviceStateChangedX360::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t RuyiGamePadInput::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("InputDeviceStateChangedX360");
+  xfer += oprot->writeStructBegin("RuyiGamePadInput");
 
-  xfer += oprot->writeFieldBegin("PacketNumber", ::apache::thrift::protocol::T_I64, 1);
-  xfer += oprot->writeI64(this->PacketNumber);
+  xfer += oprot->writeFieldBegin("DeviceId", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->DeviceId);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("LeftThumbDeadZone", ::apache::thrift::protocol::T_I16, 2);
-  xfer += oprot->writeI16(this->LeftThumbDeadZone);
+  xfer += oprot->writeFieldBegin("UserId", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->UserId);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("RightThumbDeadZone", ::apache::thrift::protocol::T_I16, 3);
-  xfer += oprot->writeI16(this->RightThumbDeadZone);
+  xfer += oprot->writeFieldBegin("ButtonFlags", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->ButtonFlags);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Buttons", ::apache::thrift::protocol::T_I32, 4);
-  xfer += oprot->writeI32(this->Buttons);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("LeftTrigger", ::apache::thrift::protocol::T_BYTE, 5);
+  xfer += oprot->writeFieldBegin("LeftTrigger", ::apache::thrift::protocol::T_BYTE, 4);
   xfer += oprot->writeByte(this->LeftTrigger);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("RightTrigger", ::apache::thrift::protocol::T_BYTE, 6);
+  xfer += oprot->writeFieldBegin("RightTrigger", ::apache::thrift::protocol::T_BYTE, 5);
   xfer += oprot->writeByte(this->RightTrigger);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("LeftThumbX", ::apache::thrift::protocol::T_I16, 7);
+  xfer += oprot->writeFieldBegin("LeftThumbX", ::apache::thrift::protocol::T_I16, 6);
   xfer += oprot->writeI16(this->LeftThumbX);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("LeftThumbY", ::apache::thrift::protocol::T_I16, 8);
+  xfer += oprot->writeFieldBegin("LeftThumbY", ::apache::thrift::protocol::T_I16, 7);
   xfer += oprot->writeI16(this->LeftThumbY);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("RightThumbX", ::apache::thrift::protocol::T_I16, 9);
+  xfer += oprot->writeFieldBegin("RightThumbX", ::apache::thrift::protocol::T_I16, 8);
   xfer += oprot->writeI16(this->RightThumbX);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("RightThumbY", ::apache::thrift::protocol::T_I16, 10);
+  xfer += oprot->writeFieldBegin("RightThumbY", ::apache::thrift::protocol::T_I16, 9);
   xfer += oprot->writeI16(this->RightThumbY);
   xfer += oprot->writeFieldEnd();
 
@@ -453,12 +863,11 @@ uint32_t InputDeviceStateChangedX360::write(::apache::thrift::protocol::TProtoco
   return xfer;
 }
 
-void swap(InputDeviceStateChangedX360 &a, InputDeviceStateChangedX360 &b) {
+void swap(RuyiGamePadInput &a, RuyiGamePadInput &b) {
   using ::std::swap;
-  swap(a.PacketNumber, b.PacketNumber);
-  swap(a.LeftThumbDeadZone, b.LeftThumbDeadZone);
-  swap(a.RightThumbDeadZone, b.RightThumbDeadZone);
-  swap(a.Buttons, b.Buttons);
+  swap(a.DeviceId, b.DeviceId);
+  swap(a.UserId, b.UserId);
+  swap(a.ButtonFlags, b.ButtonFlags);
   swap(a.LeftTrigger, b.LeftTrigger);
   swap(a.RightTrigger, b.RightTrigger);
   swap(a.LeftThumbX, b.LeftThumbX);
@@ -468,40 +877,37 @@ void swap(InputDeviceStateChangedX360 &a, InputDeviceStateChangedX360 &b) {
   swap(a.__isset, b.__isset);
 }
 
-InputDeviceStateChangedX360::InputDeviceStateChangedX360(const InputDeviceStateChangedX360& other4) {
-  PacketNumber = other4.PacketNumber;
-  LeftThumbDeadZone = other4.LeftThumbDeadZone;
-  RightThumbDeadZone = other4.RightThumbDeadZone;
-  Buttons = other4.Buttons;
-  LeftTrigger = other4.LeftTrigger;
-  RightTrigger = other4.RightTrigger;
-  LeftThumbX = other4.LeftThumbX;
-  LeftThumbY = other4.LeftThumbY;
-  RightThumbX = other4.RightThumbX;
-  RightThumbY = other4.RightThumbY;
-  __isset = other4.__isset;
+RuyiGamePadInput::RuyiGamePadInput(const RuyiGamePadInput& other0) {
+  DeviceId = other0.DeviceId;
+  UserId = other0.UserId;
+  ButtonFlags = other0.ButtonFlags;
+  LeftTrigger = other0.LeftTrigger;
+  RightTrigger = other0.RightTrigger;
+  LeftThumbX = other0.LeftThumbX;
+  LeftThumbY = other0.LeftThumbY;
+  RightThumbX = other0.RightThumbX;
+  RightThumbY = other0.RightThumbY;
+  __isset = other0.__isset;
 }
-InputDeviceStateChangedX360& InputDeviceStateChangedX360::operator=(const InputDeviceStateChangedX360& other5) {
-  PacketNumber = other5.PacketNumber;
-  LeftThumbDeadZone = other5.LeftThumbDeadZone;
-  RightThumbDeadZone = other5.RightThumbDeadZone;
-  Buttons = other5.Buttons;
-  LeftTrigger = other5.LeftTrigger;
-  RightTrigger = other5.RightTrigger;
-  LeftThumbX = other5.LeftThumbX;
-  LeftThumbY = other5.LeftThumbY;
-  RightThumbX = other5.RightThumbX;
-  RightThumbY = other5.RightThumbY;
-  __isset = other5.__isset;
+RuyiGamePadInput& RuyiGamePadInput::operator=(const RuyiGamePadInput& other1) {
+  DeviceId = other1.DeviceId;
+  UserId = other1.UserId;
+  ButtonFlags = other1.ButtonFlags;
+  LeftTrigger = other1.LeftTrigger;
+  RightTrigger = other1.RightTrigger;
+  LeftThumbX = other1.LeftThumbX;
+  LeftThumbY = other1.LeftThumbY;
+  RightThumbX = other1.RightThumbX;
+  RightThumbY = other1.RightThumbY;
+  __isset = other1.__isset;
   return *this;
 }
-void InputDeviceStateChangedX360::printTo(std::ostream& out) const {
+void RuyiGamePadInput::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
-  out << "InputDeviceStateChangedX360(";
-  out << "PacketNumber=" << to_string(PacketNumber);
-  out << ", " << "LeftThumbDeadZone=" << to_string(LeftThumbDeadZone);
-  out << ", " << "RightThumbDeadZone=" << to_string(RightThumbDeadZone);
-  out << ", " << "Buttons=" << to_string(Buttons);
+  out << "RuyiGamePadInput(";
+  out << "DeviceId=" << to_string(DeviceId);
+  out << ", " << "UserId=" << to_string(UserId);
+  out << ", " << "ButtonFlags=" << to_string(ButtonFlags);
   out << ", " << "LeftTrigger=" << to_string(LeftTrigger);
   out << ", " << "RightTrigger=" << to_string(RightTrigger);
   out << ", " << "LeftThumbX=" << to_string(LeftThumbX);
@@ -512,371 +918,47 @@ void InputDeviceStateChangedX360::printTo(std::ostream& out) const {
 }
 
 
-InputDeviceStateChangedGamepad::~InputDeviceStateChangedGamepad() throw() {
+RuyiKeyboardInput::~RuyiKeyboardInput() throw() {
 }
 
 
-void InputDeviceStateChangedGamepad::__set_RawOffset(const int32_t val) {
+void RuyiKeyboardInput::__set_DeviceId(const std::string& val) {
+  this->DeviceId = val;
+}
+
+void RuyiKeyboardInput::__set_UserId(const std::string& val) {
+  this->UserId = val;
+}
+
+void RuyiKeyboardInput::__set_RawOffset(const int32_t val) {
   this->RawOffset = val;
 }
 
-void InputDeviceStateChangedGamepad::__set_Value(const int32_t val) {
+void RuyiKeyboardInput::__set_Value(const int32_t val) {
   this->Value = val;
 }
 
-void InputDeviceStateChangedGamepad::__set_Timestamp(const int32_t val) {
+void RuyiKeyboardInput::__set_Timestamp(const int32_t val) {
   this->Timestamp = val;
 }
 
-void InputDeviceStateChangedGamepad::__set_Sequence(const int32_t val) {
+void RuyiKeyboardInput::__set_Sequence(const int32_t val) {
   this->Sequence = val;
 }
 
-void InputDeviceStateChangedGamepad::__set_Offset(const int16_t val) {
-  this->Offset = val;
-}
-
-uint32_t InputDeviceStateChangedGamepad::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->RawOffset);
-          this->__isset.RawOffset = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->Value);
-          this->__isset.Value = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 3:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->Timestamp);
-          this->__isset.Timestamp = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 4:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->Sequence);
-          this->__isset.Sequence = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 5:
-        if (ftype == ::apache::thrift::protocol::T_I16) {
-          xfer += iprot->readI16(this->Offset);
-          this->__isset.Offset = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t InputDeviceStateChangedGamepad::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("InputDeviceStateChangedGamepad");
-
-  xfer += oprot->writeFieldBegin("RawOffset", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->RawOffset);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("Value", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32(this->Value);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("Timestamp", ::apache::thrift::protocol::T_I32, 3);
-  xfer += oprot->writeI32(this->Timestamp);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("Sequence", ::apache::thrift::protocol::T_I32, 4);
-  xfer += oprot->writeI32(this->Sequence);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("Offset", ::apache::thrift::protocol::T_I16, 5);
-  xfer += oprot->writeI16(this->Offset);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-void swap(InputDeviceStateChangedGamepad &a, InputDeviceStateChangedGamepad &b) {
-  using ::std::swap;
-  swap(a.RawOffset, b.RawOffset);
-  swap(a.Value, b.Value);
-  swap(a.Timestamp, b.Timestamp);
-  swap(a.Sequence, b.Sequence);
-  swap(a.Offset, b.Offset);
-  swap(a.__isset, b.__isset);
-}
-
-InputDeviceStateChangedGamepad::InputDeviceStateChangedGamepad(const InputDeviceStateChangedGamepad& other6) {
-  RawOffset = other6.RawOffset;
-  Value = other6.Value;
-  Timestamp = other6.Timestamp;
-  Sequence = other6.Sequence;
-  Offset = other6.Offset;
-  __isset = other6.__isset;
-}
-InputDeviceStateChangedGamepad& InputDeviceStateChangedGamepad::operator=(const InputDeviceStateChangedGamepad& other7) {
-  RawOffset = other7.RawOffset;
-  Value = other7.Value;
-  Timestamp = other7.Timestamp;
-  Sequence = other7.Sequence;
-  Offset = other7.Offset;
-  __isset = other7.__isset;
-  return *this;
-}
-void InputDeviceStateChangedGamepad::printTo(std::ostream& out) const {
-  using ::apache::thrift::to_string;
-  out << "InputDeviceStateChangedGamepad(";
-  out << "RawOffset=" << to_string(RawOffset);
-  out << ", " << "Value=" << to_string(Value);
-  out << ", " << "Timestamp=" << to_string(Timestamp);
-  out << ", " << "Sequence=" << to_string(Sequence);
-  out << ", " << "Offset=" << to_string(Offset);
-  out << ")";
-}
-
-
-InputDeviceStateChangedJoystick::~InputDeviceStateChangedJoystick() throw() {
-}
-
-
-void InputDeviceStateChangedJoystick::__set_RawOffset(const int32_t val) {
-  this->RawOffset = val;
-}
-
-void InputDeviceStateChangedJoystick::__set_Value(const int32_t val) {
-  this->Value = val;
-}
-
-void InputDeviceStateChangedJoystick::__set_Timestamp(const int32_t val) {
-  this->Timestamp = val;
-}
-
-void InputDeviceStateChangedJoystick::__set_Sequence(const int32_t val) {
-  this->Sequence = val;
-}
-
-void InputDeviceStateChangedJoystick::__set_Offset(const int16_t val) {
-  this->Offset = val;
-}
-
-uint32_t InputDeviceStateChangedJoystick::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->RawOffset);
-          this->__isset.RawOffset = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->Value);
-          this->__isset.Value = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 3:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->Timestamp);
-          this->__isset.Timestamp = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 4:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->Sequence);
-          this->__isset.Sequence = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 5:
-        if (ftype == ::apache::thrift::protocol::T_I16) {
-          xfer += iprot->readI16(this->Offset);
-          this->__isset.Offset = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t InputDeviceStateChangedJoystick::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("InputDeviceStateChangedJoystick");
-
-  xfer += oprot->writeFieldBegin("RawOffset", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->RawOffset);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("Value", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32(this->Value);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("Timestamp", ::apache::thrift::protocol::T_I32, 3);
-  xfer += oprot->writeI32(this->Timestamp);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("Sequence", ::apache::thrift::protocol::T_I32, 4);
-  xfer += oprot->writeI32(this->Sequence);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("Offset", ::apache::thrift::protocol::T_I16, 5);
-  xfer += oprot->writeI16(this->Offset);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-void swap(InputDeviceStateChangedJoystick &a, InputDeviceStateChangedJoystick &b) {
-  using ::std::swap;
-  swap(a.RawOffset, b.RawOffset);
-  swap(a.Value, b.Value);
-  swap(a.Timestamp, b.Timestamp);
-  swap(a.Sequence, b.Sequence);
-  swap(a.Offset, b.Offset);
-  swap(a.__isset, b.__isset);
-}
-
-InputDeviceStateChangedJoystick::InputDeviceStateChangedJoystick(const InputDeviceStateChangedJoystick& other8) {
-  RawOffset = other8.RawOffset;
-  Value = other8.Value;
-  Timestamp = other8.Timestamp;
-  Sequence = other8.Sequence;
-  Offset = other8.Offset;
-  __isset = other8.__isset;
-}
-InputDeviceStateChangedJoystick& InputDeviceStateChangedJoystick::operator=(const InputDeviceStateChangedJoystick& other9) {
-  RawOffset = other9.RawOffset;
-  Value = other9.Value;
-  Timestamp = other9.Timestamp;
-  Sequence = other9.Sequence;
-  Offset = other9.Offset;
-  __isset = other9.__isset;
-  return *this;
-}
-void InputDeviceStateChangedJoystick::printTo(std::ostream& out) const {
-  using ::apache::thrift::to_string;
-  out << "InputDeviceStateChangedJoystick(";
-  out << "RawOffset=" << to_string(RawOffset);
-  out << ", " << "Value=" << to_string(Value);
-  out << ", " << "Timestamp=" << to_string(Timestamp);
-  out << ", " << "Sequence=" << to_string(Sequence);
-  out << ", " << "Offset=" << to_string(Offset);
-  out << ")";
-}
-
-
-InputDeviceStateChangedKeyboard::~InputDeviceStateChangedKeyboard() throw() {
-}
-
-
-void InputDeviceStateChangedKeyboard::__set_RawOffset(const int32_t val) {
-  this->RawOffset = val;
-}
-
-void InputDeviceStateChangedKeyboard::__set_Value(const int32_t val) {
-  this->Value = val;
-}
-
-void InputDeviceStateChangedKeyboard::__set_Timestamp(const int32_t val) {
-  this->Timestamp = val;
-}
-
-void InputDeviceStateChangedKeyboard::__set_Sequence(const int32_t val) {
-  this->Sequence = val;
-}
-
-void InputDeviceStateChangedKeyboard::__set_Key(const int8_t val) {
+void RuyiKeyboardInput::__set_Key(const Key::type val) {
   this->Key = val;
 }
 
-void InputDeviceStateChangedKeyboard::__set_IsPressed(const bool val) {
+void RuyiKeyboardInput::__set_IsPressed(const bool val) {
   this->IsPressed = val;
 }
 
-void InputDeviceStateChangedKeyboard::__set_IsReleased(const bool val) {
+void RuyiKeyboardInput::__set_IsReleased(const bool val) {
   this->IsReleased = val;
 }
 
-uint32_t InputDeviceStateChangedKeyboard::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t RuyiKeyboardInput::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -898,6 +980,22 @@ uint32_t InputDeviceStateChangedKeyboard::read(::apache::thrift::protocol::TProt
     switch (fid)
     {
       case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceId);
+          this->__isset.DeviceId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->UserId);
+          this->__isset.UserId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->RawOffset);
           this->__isset.RawOffset = true;
@@ -905,7 +1003,7 @@ uint32_t InputDeviceStateChangedKeyboard::read(::apache::thrift::protocol::TProt
           xfer += iprot->skip(ftype);
         }
         break;
-      case 2:
+      case 4:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->Value);
           this->__isset.Value = true;
@@ -913,31 +1011,33 @@ uint32_t InputDeviceStateChangedKeyboard::read(::apache::thrift::protocol::TProt
           xfer += iprot->skip(ftype);
         }
         break;
-      case 3:
+      case 5:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->Timestamp);
           this->__isset.Timestamp = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 4:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->Sequence);
-          this->__isset.Sequence = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 5:
-        if (ftype == ::apache::thrift::protocol::T_BYTE) {
-          xfer += iprot->readByte(this->Key);
-          this->__isset.Key = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 6:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->Sequence);
+          this->__isset.Sequence = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 7:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          int32_t ecast2;
+          xfer += iprot->readI32(ecast2);
+          this->Key = (Key::type)ecast2;
+          this->__isset.Key = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 8:
         if (ftype == ::apache::thrift::protocol::T_BOOL) {
           xfer += iprot->readBool(this->IsPressed);
           this->__isset.IsPressed = true;
@@ -945,7 +1045,7 @@ uint32_t InputDeviceStateChangedKeyboard::read(::apache::thrift::protocol::TProt
           xfer += iprot->skip(ftype);
         }
         break;
-      case 7:
+      case 9:
         if (ftype == ::apache::thrift::protocol::T_BOOL) {
           xfer += iprot->readBool(this->IsReleased);
           this->__isset.IsReleased = true;
@@ -965,36 +1065,44 @@ uint32_t InputDeviceStateChangedKeyboard::read(::apache::thrift::protocol::TProt
   return xfer;
 }
 
-uint32_t InputDeviceStateChangedKeyboard::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t RuyiKeyboardInput::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("InputDeviceStateChangedKeyboard");
+  xfer += oprot->writeStructBegin("RuyiKeyboardInput");
 
-  xfer += oprot->writeFieldBegin("RawOffset", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeFieldBegin("DeviceId", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->DeviceId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("UserId", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->UserId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("RawOffset", ::apache::thrift::protocol::T_I32, 3);
   xfer += oprot->writeI32(this->RawOffset);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Value", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("Value", ::apache::thrift::protocol::T_I32, 4);
   xfer += oprot->writeI32(this->Value);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Timestamp", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeFieldBegin("Timestamp", ::apache::thrift::protocol::T_I32, 5);
   xfer += oprot->writeI32(this->Timestamp);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Sequence", ::apache::thrift::protocol::T_I32, 4);
+  xfer += oprot->writeFieldBegin("Sequence", ::apache::thrift::protocol::T_I32, 6);
   xfer += oprot->writeI32(this->Sequence);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Key", ::apache::thrift::protocol::T_BYTE, 5);
-  xfer += oprot->writeByte(this->Key);
+  xfer += oprot->writeFieldBegin("Key", ::apache::thrift::protocol::T_I32, 7);
+  xfer += oprot->writeI32((int32_t)this->Key);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("IsPressed", ::apache::thrift::protocol::T_BOOL, 6);
+  xfer += oprot->writeFieldBegin("IsPressed", ::apache::thrift::protocol::T_BOOL, 8);
   xfer += oprot->writeBool(this->IsPressed);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("IsReleased", ::apache::thrift::protocol::T_BOOL, 7);
+  xfer += oprot->writeFieldBegin("IsReleased", ::apache::thrift::protocol::T_BOOL, 9);
   xfer += oprot->writeBool(this->IsReleased);
   xfer += oprot->writeFieldEnd();
 
@@ -1003,8 +1111,10 @@ uint32_t InputDeviceStateChangedKeyboard::write(::apache::thrift::protocol::TPro
   return xfer;
 }
 
-void swap(InputDeviceStateChangedKeyboard &a, InputDeviceStateChangedKeyboard &b) {
+void swap(RuyiKeyboardInput &a, RuyiKeyboardInput &b) {
   using ::std::swap;
+  swap(a.DeviceId, b.DeviceId);
+  swap(a.UserId, b.UserId);
   swap(a.RawOffset, b.RawOffset);
   swap(a.Value, b.Value);
   swap(a.Timestamp, b.Timestamp);
@@ -1015,31 +1125,37 @@ void swap(InputDeviceStateChangedKeyboard &a, InputDeviceStateChangedKeyboard &b
   swap(a.__isset, b.__isset);
 }
 
-InputDeviceStateChangedKeyboard::InputDeviceStateChangedKeyboard(const InputDeviceStateChangedKeyboard& other10) {
-  RawOffset = other10.RawOffset;
-  Value = other10.Value;
-  Timestamp = other10.Timestamp;
-  Sequence = other10.Sequence;
-  Key = other10.Key;
-  IsPressed = other10.IsPressed;
-  IsReleased = other10.IsReleased;
-  __isset = other10.__isset;
+RuyiKeyboardInput::RuyiKeyboardInput(const RuyiKeyboardInput& other3) {
+  DeviceId = other3.DeviceId;
+  UserId = other3.UserId;
+  RawOffset = other3.RawOffset;
+  Value = other3.Value;
+  Timestamp = other3.Timestamp;
+  Sequence = other3.Sequence;
+  Key = other3.Key;
+  IsPressed = other3.IsPressed;
+  IsReleased = other3.IsReleased;
+  __isset = other3.__isset;
 }
-InputDeviceStateChangedKeyboard& InputDeviceStateChangedKeyboard::operator=(const InputDeviceStateChangedKeyboard& other11) {
-  RawOffset = other11.RawOffset;
-  Value = other11.Value;
-  Timestamp = other11.Timestamp;
-  Sequence = other11.Sequence;
-  Key = other11.Key;
-  IsPressed = other11.IsPressed;
-  IsReleased = other11.IsReleased;
-  __isset = other11.__isset;
+RuyiKeyboardInput& RuyiKeyboardInput::operator=(const RuyiKeyboardInput& other4) {
+  DeviceId = other4.DeviceId;
+  UserId = other4.UserId;
+  RawOffset = other4.RawOffset;
+  Value = other4.Value;
+  Timestamp = other4.Timestamp;
+  Sequence = other4.Sequence;
+  Key = other4.Key;
+  IsPressed = other4.IsPressed;
+  IsReleased = other4.IsReleased;
+  __isset = other4.__isset;
   return *this;
 }
-void InputDeviceStateChangedKeyboard::printTo(std::ostream& out) const {
+void RuyiKeyboardInput::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
-  out << "InputDeviceStateChangedKeyboard(";
-  out << "RawOffset=" << to_string(RawOffset);
+  out << "RuyiKeyboardInput(";
+  out << "DeviceId=" << to_string(DeviceId);
+  out << ", " << "UserId=" << to_string(UserId);
+  out << ", " << "RawOffset=" << to_string(RawOffset);
   out << ", " << "Value=" << to_string(Value);
   out << ", " << "Timestamp=" << to_string(Timestamp);
   out << ", " << "Sequence=" << to_string(Sequence);
@@ -1050,35 +1166,43 @@ void InputDeviceStateChangedKeyboard::printTo(std::ostream& out) const {
 }
 
 
-InputDeviceStateChangedMouse::~InputDeviceStateChangedMouse() throw() {
+RuyiMouseInput::~RuyiMouseInput() throw() {
 }
 
 
-void InputDeviceStateChangedMouse::__set_RawOffset(const int32_t val) {
+void RuyiMouseInput::__set_DeviceId(const std::string& val) {
+  this->DeviceId = val;
+}
+
+void RuyiMouseInput::__set_UserId(const std::string& val) {
+  this->UserId = val;
+}
+
+void RuyiMouseInput::__set_RawOffset(const int32_t val) {
   this->RawOffset = val;
 }
 
-void InputDeviceStateChangedMouse::__set_Value(const int32_t val) {
+void RuyiMouseInput::__set_Value(const int32_t val) {
   this->Value = val;
 }
 
-void InputDeviceStateChangedMouse::__set_Timestamp(const int32_t val) {
+void RuyiMouseInput::__set_Timestamp(const int32_t val) {
   this->Timestamp = val;
 }
 
-void InputDeviceStateChangedMouse::__set_Sequence(const int32_t val) {
+void RuyiMouseInput::__set_Sequence(const int32_t val) {
   this->Sequence = val;
 }
 
-void InputDeviceStateChangedMouse::__set_Offset(const int8_t val) {
+void RuyiMouseInput::__set_Offset(const MouseOffset::type val) {
   this->Offset = val;
 }
 
-void InputDeviceStateChangedMouse::__set_IsButton(const bool val) {
+void RuyiMouseInput::__set_IsButton(const bool val) {
   this->IsButton = val;
 }
 
-uint32_t InputDeviceStateChangedMouse::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t RuyiMouseInput::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -1100,6 +1224,22 @@ uint32_t InputDeviceStateChangedMouse::read(::apache::thrift::protocol::TProtoco
     switch (fid)
     {
       case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceId);
+          this->__isset.DeviceId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->UserId);
+          this->__isset.UserId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->RawOffset);
           this->__isset.RawOffset = true;
@@ -1107,7 +1247,7 @@ uint32_t InputDeviceStateChangedMouse::read(::apache::thrift::protocol::TProtoco
           xfer += iprot->skip(ftype);
         }
         break;
-      case 2:
+      case 4:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->Value);
           this->__isset.Value = true;
@@ -1115,7 +1255,7 @@ uint32_t InputDeviceStateChangedMouse::read(::apache::thrift::protocol::TProtoco
           xfer += iprot->skip(ftype);
         }
         break;
-      case 3:
+      case 5:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->Timestamp);
           this->__isset.Timestamp = true;
@@ -1123,7 +1263,7 @@ uint32_t InputDeviceStateChangedMouse::read(::apache::thrift::protocol::TProtoco
           xfer += iprot->skip(ftype);
         }
         break;
-      case 4:
+      case 6:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->Sequence);
           this->__isset.Sequence = true;
@@ -1131,15 +1271,17 @@ uint32_t InputDeviceStateChangedMouse::read(::apache::thrift::protocol::TProtoco
           xfer += iprot->skip(ftype);
         }
         break;
-      case 5:
-        if (ftype == ::apache::thrift::protocol::T_BYTE) {
-          xfer += iprot->readByte(this->Offset);
+      case 7:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          int32_t ecast5;
+          xfer += iprot->readI32(ecast5);
+          this->Offset = (MouseOffset::type)ecast5;
           this->__isset.Offset = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 6:
+      case 8:
         if (ftype == ::apache::thrift::protocol::T_BOOL) {
           xfer += iprot->readBool(this->IsButton);
           this->__isset.IsButton = true;
@@ -1159,32 +1301,40 @@ uint32_t InputDeviceStateChangedMouse::read(::apache::thrift::protocol::TProtoco
   return xfer;
 }
 
-uint32_t InputDeviceStateChangedMouse::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t RuyiMouseInput::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("InputDeviceStateChangedMouse");
+  xfer += oprot->writeStructBegin("RuyiMouseInput");
 
-  xfer += oprot->writeFieldBegin("RawOffset", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeFieldBegin("DeviceId", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->DeviceId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("UserId", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->UserId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("RawOffset", ::apache::thrift::protocol::T_I32, 3);
   xfer += oprot->writeI32(this->RawOffset);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Value", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("Value", ::apache::thrift::protocol::T_I32, 4);
   xfer += oprot->writeI32(this->Value);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Timestamp", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeFieldBegin("Timestamp", ::apache::thrift::protocol::T_I32, 5);
   xfer += oprot->writeI32(this->Timestamp);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Sequence", ::apache::thrift::protocol::T_I32, 4);
+  xfer += oprot->writeFieldBegin("Sequence", ::apache::thrift::protocol::T_I32, 6);
   xfer += oprot->writeI32(this->Sequence);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Offset", ::apache::thrift::protocol::T_BYTE, 5);
-  xfer += oprot->writeByte(this->Offset);
+  xfer += oprot->writeFieldBegin("Offset", ::apache::thrift::protocol::T_I32, 7);
+  xfer += oprot->writeI32((int32_t)this->Offset);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("IsButton", ::apache::thrift::protocol::T_BOOL, 6);
+  xfer += oprot->writeFieldBegin("IsButton", ::apache::thrift::protocol::T_BOOL, 8);
   xfer += oprot->writeBool(this->IsButton);
   xfer += oprot->writeFieldEnd();
 
@@ -1193,8 +1343,10 @@ uint32_t InputDeviceStateChangedMouse::write(::apache::thrift::protocol::TProtoc
   return xfer;
 }
 
-void swap(InputDeviceStateChangedMouse &a, InputDeviceStateChangedMouse &b) {
+void swap(RuyiMouseInput &a, RuyiMouseInput &b) {
   using ::std::swap;
+  swap(a.DeviceId, b.DeviceId);
+  swap(a.UserId, b.UserId);
   swap(a.RawOffset, b.RawOffset);
   swap(a.Value, b.Value);
   swap(a.Timestamp, b.Timestamp);
@@ -1204,34 +1356,248 @@ void swap(InputDeviceStateChangedMouse &a, InputDeviceStateChangedMouse &b) {
   swap(a.__isset, b.__isset);
 }
 
-InputDeviceStateChangedMouse::InputDeviceStateChangedMouse(const InputDeviceStateChangedMouse& other12) {
-  RawOffset = other12.RawOffset;
-  Value = other12.Value;
-  Timestamp = other12.Timestamp;
-  Sequence = other12.Sequence;
-  Offset = other12.Offset;
-  IsButton = other12.IsButton;
-  __isset = other12.__isset;
+RuyiMouseInput::RuyiMouseInput(const RuyiMouseInput& other6) {
+  DeviceId = other6.DeviceId;
+  UserId = other6.UserId;
+  RawOffset = other6.RawOffset;
+  Value = other6.Value;
+  Timestamp = other6.Timestamp;
+  Sequence = other6.Sequence;
+  Offset = other6.Offset;
+  IsButton = other6.IsButton;
+  __isset = other6.__isset;
 }
-InputDeviceStateChangedMouse& InputDeviceStateChangedMouse::operator=(const InputDeviceStateChangedMouse& other13) {
-  RawOffset = other13.RawOffset;
-  Value = other13.Value;
-  Timestamp = other13.Timestamp;
-  Sequence = other13.Sequence;
-  Offset = other13.Offset;
-  IsButton = other13.IsButton;
-  __isset = other13.__isset;
+RuyiMouseInput& RuyiMouseInput::operator=(const RuyiMouseInput& other7) {
+  DeviceId = other7.DeviceId;
+  UserId = other7.UserId;
+  RawOffset = other7.RawOffset;
+  Value = other7.Value;
+  Timestamp = other7.Timestamp;
+  Sequence = other7.Sequence;
+  Offset = other7.Offset;
+  IsButton = other7.IsButton;
+  __isset = other7.__isset;
   return *this;
 }
-void InputDeviceStateChangedMouse::printTo(std::ostream& out) const {
+void RuyiMouseInput::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
-  out << "InputDeviceStateChangedMouse(";
-  out << "RawOffset=" << to_string(RawOffset);
+  out << "RuyiMouseInput(";
+  out << "DeviceId=" << to_string(DeviceId);
+  out << ", " << "UserId=" << to_string(UserId);
+  out << ", " << "RawOffset=" << to_string(RawOffset);
   out << ", " << "Value=" << to_string(Value);
   out << ", " << "Timestamp=" << to_string(Timestamp);
   out << ", " << "Sequence=" << to_string(Sequence);
   out << ", " << "Offset=" << to_string(Offset);
   out << ", " << "IsButton=" << to_string(IsButton);
+  out << ")";
+}
+
+
+RuyiJoystickInput::~RuyiJoystickInput() throw() {
+}
+
+
+void RuyiJoystickInput::__set_DeviceId(const std::string& val) {
+  this->DeviceId = val;
+}
+
+void RuyiJoystickInput::__set_UserId(const std::string& val) {
+  this->UserId = val;
+}
+
+void RuyiJoystickInput::__set_RawOffset(const int32_t val) {
+  this->RawOffset = val;
+}
+
+void RuyiJoystickInput::__set_Value(const int32_t val) {
+  this->Value = val;
+}
+
+void RuyiJoystickInput::__set_Timestamp(const int32_t val) {
+  this->Timestamp = val;
+}
+
+void RuyiJoystickInput::__set_Sequence(const int32_t val) {
+  this->Sequence = val;
+}
+
+void RuyiJoystickInput::__set_Offset(const JoystickOffset::type val) {
+  this->Offset = val;
+}
+
+uint32_t RuyiJoystickInput::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceId);
+          this->__isset.DeviceId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->UserId);
+          this->__isset.UserId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->RawOffset);
+          this->__isset.RawOffset = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->Value);
+          this->__isset.Value = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->Timestamp);
+          this->__isset.Timestamp = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 6:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->Sequence);
+          this->__isset.Sequence = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 7:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          int32_t ecast8;
+          xfer += iprot->readI32(ecast8);
+          this->Offset = (JoystickOffset::type)ecast8;
+          this->__isset.Offset = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t RuyiJoystickInput::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("RuyiJoystickInput");
+
+  xfer += oprot->writeFieldBegin("DeviceId", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->DeviceId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("UserId", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->UserId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("RawOffset", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->RawOffset);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Value", ::apache::thrift::protocol::T_I32, 4);
+  xfer += oprot->writeI32(this->Value);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Timestamp", ::apache::thrift::protocol::T_I32, 5);
+  xfer += oprot->writeI32(this->Timestamp);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Sequence", ::apache::thrift::protocol::T_I32, 6);
+  xfer += oprot->writeI32(this->Sequence);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Offset", ::apache::thrift::protocol::T_I32, 7);
+  xfer += oprot->writeI32((int32_t)this->Offset);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(RuyiJoystickInput &a, RuyiJoystickInput &b) {
+  using ::std::swap;
+  swap(a.DeviceId, b.DeviceId);
+  swap(a.UserId, b.UserId);
+  swap(a.RawOffset, b.RawOffset);
+  swap(a.Value, b.Value);
+  swap(a.Timestamp, b.Timestamp);
+  swap(a.Sequence, b.Sequence);
+  swap(a.Offset, b.Offset);
+  swap(a.__isset, b.__isset);
+}
+
+RuyiJoystickInput::RuyiJoystickInput(const RuyiJoystickInput& other9) {
+  DeviceId = other9.DeviceId;
+  UserId = other9.UserId;
+  RawOffset = other9.RawOffset;
+  Value = other9.Value;
+  Timestamp = other9.Timestamp;
+  Sequence = other9.Sequence;
+  Offset = other9.Offset;
+  __isset = other9.__isset;
+}
+RuyiJoystickInput& RuyiJoystickInput::operator=(const RuyiJoystickInput& other10) {
+  DeviceId = other10.DeviceId;
+  UserId = other10.UserId;
+  RawOffset = other10.RawOffset;
+  Value = other10.Value;
+  Timestamp = other10.Timestamp;
+  Sequence = other10.Sequence;
+  Offset = other10.Offset;
+  __isset = other10.__isset;
+  return *this;
+}
+void RuyiJoystickInput::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "RuyiJoystickInput(";
+  out << "DeviceId=" << to_string(DeviceId);
+  out << ", " << "UserId=" << to_string(UserId);
+  out << ", " << "RawOffset=" << to_string(RawOffset);
+  out << ", " << "Value=" << to_string(Value);
+  out << ", " << "Timestamp=" << to_string(Timestamp);
+  out << ", " << "Sequence=" << to_string(Sequence);
+  out << ", " << "Offset=" << to_string(Offset);
   out << ")";
 }
 
@@ -1244,6 +1610,10 @@ void InputActionTriggered::__set_deviceId(const std::string& val) {
   this->deviceId = val;
 }
 
+void InputActionTriggered::__set_userId(const std::string& val) {
+  this->userId = val;
+}
+
 void InputActionTriggered::__set_name(const std::string& val) {
   this->name = val;
 }
@@ -1252,8 +1622,8 @@ void InputActionTriggered::__set_timestamp(const int64_t val) {
   this->timestamp = val;
 }
 
-void InputActionTriggered::__set_events(const std::vector<RuyiInputEvent> & val) {
-  this->events = val;
+void InputActionTriggered::__set_trigger(const  ::Ruyi::SDK::CommonType::ActionTrigger& val) {
+  this->trigger = val;
 }
 
 uint32_t InputActionTriggered::read(::apache::thrift::protocol::TProtocol* iprot) {
@@ -1287,13 +1657,21 @@ uint32_t InputActionTriggered::read(::apache::thrift::protocol::TProtocol* iprot
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->userId);
+          this->__isset.userId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->name);
           this->__isset.name = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 3:
+      case 4:
         if (ftype == ::apache::thrift::protocol::T_I64) {
           xfer += iprot->readI64(this->timestamp);
           this->__isset.timestamp = true;
@@ -1301,22 +1679,10 @@ uint32_t InputActionTriggered::read(::apache::thrift::protocol::TProtocol* iprot
           xfer += iprot->skip(ftype);
         }
         break;
-      case 4:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->events.clear();
-            uint32_t _size14;
-            ::apache::thrift::protocol::TType _etype17;
-            xfer += iprot->readListBegin(_etype17, _size14);
-            this->events.resize(_size14);
-            uint32_t _i18;
-            for (_i18 = 0; _i18 < _size14; ++_i18)
-            {
-              xfer += this->events[_i18].read(iprot);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.events = true;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->trigger.read(iprot);
+          this->__isset.trigger = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1342,24 +1708,20 @@ uint32_t InputActionTriggered::write(::apache::thrift::protocol::TProtocol* opro
   xfer += oprot->writeString(this->deviceId);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("userId", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->userId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 3);
   xfer += oprot->writeString(this->name);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("timestamp", ::apache::thrift::protocol::T_I64, 3);
+  xfer += oprot->writeFieldBegin("timestamp", ::apache::thrift::protocol::T_I64, 4);
   xfer += oprot->writeI64(this->timestamp);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("events", ::apache::thrift::protocol::T_LIST, 4);
-  {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->events.size()));
-    std::vector<RuyiInputEvent> ::const_iterator _iter19;
-    for (_iter19 = this->events.begin(); _iter19 != this->events.end(); ++_iter19)
-    {
-      xfer += (*_iter19).write(oprot);
-    }
-    xfer += oprot->writeListEnd();
-  }
+  xfer += oprot->writeFieldBegin("trigger", ::apache::thrift::protocol::T_STRUCT, 5);
+  xfer += this->trigger.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -1370,63 +1732,67 @@ uint32_t InputActionTriggered::write(::apache::thrift::protocol::TProtocol* opro
 void swap(InputActionTriggered &a, InputActionTriggered &b) {
   using ::std::swap;
   swap(a.deviceId, b.deviceId);
+  swap(a.userId, b.userId);
   swap(a.name, b.name);
   swap(a.timestamp, b.timestamp);
-  swap(a.events, b.events);
+  swap(a.trigger, b.trigger);
   swap(a.__isset, b.__isset);
 }
 
-InputActionTriggered::InputActionTriggered(const InputActionTriggered& other20) {
-  deviceId = other20.deviceId;
-  name = other20.name;
-  timestamp = other20.timestamp;
-  events = other20.events;
-  __isset = other20.__isset;
+InputActionTriggered::InputActionTriggered(const InputActionTriggered& other11) {
+  deviceId = other11.deviceId;
+  userId = other11.userId;
+  name = other11.name;
+  timestamp = other11.timestamp;
+  trigger = other11.trigger;
+  __isset = other11.__isset;
 }
-InputActionTriggered& InputActionTriggered::operator=(const InputActionTriggered& other21) {
-  deviceId = other21.deviceId;
-  name = other21.name;
-  timestamp = other21.timestamp;
-  events = other21.events;
-  __isset = other21.__isset;
+InputActionTriggered& InputActionTriggered::operator=(const InputActionTriggered& other12) {
+  deviceId = other12.deviceId;
+  userId = other12.userId;
+  name = other12.name;
+  timestamp = other12.timestamp;
+  trigger = other12.trigger;
+  __isset = other12.__isset;
   return *this;
 }
 void InputActionTriggered::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
   out << "InputActionTriggered(";
   out << "deviceId=" << to_string(deviceId);
+  out << ", " << "userId=" << to_string(userId);
   out << ", " << "name=" << to_string(name);
   out << ", " << "timestamp=" << to_string(timestamp);
-  out << ", " << "events=" << to_string(events);
+  out << ", " << "trigger=" << to_string(trigger);
   out << ")";
 }
 
 
-RuyiInputEvent::~RuyiInputEvent() throw() {
+AxisActionTriggered::~AxisActionTriggered() throw() {
 }
 
 
-void RuyiInputEvent::__set_EventId(const int64_t val) {
-  this->EventId = val;
+void AxisActionTriggered::__set_deviceId(const std::string& val) {
+  this->deviceId = val;
 }
 
-void RuyiInputEvent::__set_DeviceType(const int8_t val) {
-  this->DeviceType = val;
+void AxisActionTriggered::__set_userId(const std::string& val) {
+  this->userId = val;
 }
 
-void RuyiInputEvent::__set_Key(const int32_t val) {
-  this->Key = val;
+void AxisActionTriggered::__set_name(const std::string& val) {
+  this->name = val;
 }
 
-void RuyiInputEvent::__set_NewValue(const int8_t val) {
-  this->NewValue = val;
+void AxisActionTriggered::__set_timestamp(const int64_t val) {
+  this->timestamp = val;
 }
 
-void RuyiInputEvent::__set_LastValue(const int8_t val) {
-  this->LastValue = val;
+void AxisActionTriggered::__set_scale(const _float val) {
+  this->scale = val;
 }
 
-uint32_t RuyiInputEvent::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t AxisActionTriggered::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -1448,425 +1814,41 @@ uint32_t RuyiInputEvent::read(::apache::thrift::protocol::TProtocol* iprot) {
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->EventId);
-          this->__isset.EventId = true;
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->deviceId);
+          this->__isset.deviceId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 2:
-        if (ftype == ::apache::thrift::protocol::T_BYTE) {
-          xfer += iprot->readByte(this->DeviceType);
-          this->__isset.DeviceType = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 3:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->Key);
-          this->__isset.Key = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 4:
-        if (ftype == ::apache::thrift::protocol::T_BYTE) {
-          xfer += iprot->readByte(this->NewValue);
-          this->__isset.NewValue = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 5:
-        if (ftype == ::apache::thrift::protocol::T_BYTE) {
-          xfer += iprot->readByte(this->LastValue);
-          this->__isset.LastValue = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t RuyiInputEvent::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("RuyiInputEvent");
-
-  xfer += oprot->writeFieldBegin("EventId", ::apache::thrift::protocol::T_I64, 1);
-  xfer += oprot->writeI64(this->EventId);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("DeviceType", ::apache::thrift::protocol::T_BYTE, 2);
-  xfer += oprot->writeByte(this->DeviceType);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("Key", ::apache::thrift::protocol::T_I32, 3);
-  xfer += oprot->writeI32(this->Key);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("NewValue", ::apache::thrift::protocol::T_BYTE, 4);
-  xfer += oprot->writeByte(this->NewValue);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("LastValue", ::apache::thrift::protocol::T_BYTE, 5);
-  xfer += oprot->writeByte(this->LastValue);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-void swap(RuyiInputEvent &a, RuyiInputEvent &b) {
-  using ::std::swap;
-  swap(a.EventId, b.EventId);
-  swap(a.DeviceType, b.DeviceType);
-  swap(a.Key, b.Key);
-  swap(a.NewValue, b.NewValue);
-  swap(a.LastValue, b.LastValue);
-  swap(a.__isset, b.__isset);
-}
-
-RuyiInputEvent::RuyiInputEvent(const RuyiInputEvent& other22) {
-  EventId = other22.EventId;
-  DeviceType = other22.DeviceType;
-  Key = other22.Key;
-  NewValue = other22.NewValue;
-  LastValue = other22.LastValue;
-  __isset = other22.__isset;
-}
-RuyiInputEvent& RuyiInputEvent::operator=(const RuyiInputEvent& other23) {
-  EventId = other23.EventId;
-  DeviceType = other23.DeviceType;
-  Key = other23.Key;
-  NewValue = other23.NewValue;
-  LastValue = other23.LastValue;
-  __isset = other23.__isset;
-  return *this;
-}
-void RuyiInputEvent::printTo(std::ostream& out) const {
-  using ::apache::thrift::to_string;
-  out << "RuyiInputEvent(";
-  out << "EventId=" << to_string(EventId);
-  out << ", " << "DeviceType=" << to_string(DeviceType);
-  out << ", " << "Key=" << to_string(Key);
-  out << ", " << "NewValue=" << to_string(NewValue);
-  out << ", " << "LastValue=" << to_string(LastValue);
-  out << ")";
-}
-
-
-RuyiInputStateChanged::~RuyiInputStateChanged() throw() {
-}
-
-
-void RuyiInputStateChanged::__set_keyPressEvent(const std::vector<RuyiInputEvent> & val) {
-  this->keyPressEvent = val;
-}
-
-void RuyiInputStateChanged::__set_analogEvent(const std::vector<RuyiInputEvent> & val) {
-  this->analogEvent = val;
-}
-
-uint32_t RuyiInputStateChanged::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->keyPressEvent.clear();
-            uint32_t _size24;
-            ::apache::thrift::protocol::TType _etype27;
-            xfer += iprot->readListBegin(_etype27, _size24);
-            this->keyPressEvent.resize(_size24);
-            uint32_t _i28;
-            for (_i28 = 0; _i28 < _size24; ++_i28)
-            {
-              xfer += this->keyPressEvent[_i28].read(iprot);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.keyPressEvent = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->analogEvent.clear();
-            uint32_t _size29;
-            ::apache::thrift::protocol::TType _etype32;
-            xfer += iprot->readListBegin(_etype32, _size29);
-            this->analogEvent.resize(_size29);
-            uint32_t _i33;
-            for (_i33 = 0; _i33 < _size29; ++_i33)
-            {
-              xfer += this->analogEvent[_i33].read(iprot);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.analogEvent = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t RuyiInputStateChanged::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("RuyiInputStateChanged");
-
-  xfer += oprot->writeFieldBegin("keyPressEvent", ::apache::thrift::protocol::T_LIST, 1);
-  {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->keyPressEvent.size()));
-    std::vector<RuyiInputEvent> ::const_iterator _iter34;
-    for (_iter34 = this->keyPressEvent.begin(); _iter34 != this->keyPressEvent.end(); ++_iter34)
-    {
-      xfer += (*_iter34).write(oprot);
-    }
-    xfer += oprot->writeListEnd();
-  }
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("analogEvent", ::apache::thrift::protocol::T_LIST, 2);
-  {
-    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->analogEvent.size()));
-    std::vector<RuyiInputEvent> ::const_iterator _iter35;
-    for (_iter35 = this->analogEvent.begin(); _iter35 != this->analogEvent.end(); ++_iter35)
-    {
-      xfer += (*_iter35).write(oprot);
-    }
-    xfer += oprot->writeListEnd();
-  }
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-void swap(RuyiInputStateChanged &a, RuyiInputStateChanged &b) {
-  using ::std::swap;
-  swap(a.keyPressEvent, b.keyPressEvent);
-  swap(a.analogEvent, b.analogEvent);
-  swap(a.__isset, b.__isset);
-}
-
-RuyiInputStateChanged::RuyiInputStateChanged(const RuyiInputStateChanged& other36) {
-  keyPressEvent = other36.keyPressEvent;
-  analogEvent = other36.analogEvent;
-  __isset = other36.__isset;
-}
-RuyiInputStateChanged& RuyiInputStateChanged::operator=(const RuyiInputStateChanged& other37) {
-  keyPressEvent = other37.keyPressEvent;
-  analogEvent = other37.analogEvent;
-  __isset = other37.__isset;
-  return *this;
-}
-void RuyiInputStateChanged::printTo(std::ostream& out) const {
-  using ::apache::thrift::to_string;
-  out << "RuyiInputStateChanged(";
-  out << "keyPressEvent=" << to_string(keyPressEvent);
-  out << ", " << "analogEvent=" << to_string(analogEvent);
-  out << ")";
-}
-
-
-InputDeviceStateChangedRuyiController::~InputDeviceStateChangedRuyiController() throw() {
-}
-
-
-void InputDeviceStateChangedRuyiController::__set_PacketId(const int64_t val) {
-  this->PacketId = val;
-}
-
-void InputDeviceStateChangedRuyiController::__set_ChannelId(const int32_t val) {
-  this->ChannelId = val;
-}
-
-void InputDeviceStateChangedRuyiController::__set_UID(const std::string& val) {
-  this->UID = val;
-}
-
-void InputDeviceStateChangedRuyiController::__set_KeyPress(const int64_t val) {
-  this->KeyPress = val;
-}
-
-void InputDeviceStateChangedRuyiController::__set_AnalogL2(const int8_t val) {
-  this->AnalogL2 = val;
-}
-
-void InputDeviceStateChangedRuyiController::__set_AnalogR2(const int8_t val) {
-  this->AnalogR2 = val;
-}
-
-void InputDeviceStateChangedRuyiController::__set_AnalogLeftJoyX(const int8_t val) {
-  this->AnalogLeftJoyX = val;
-}
-
-void InputDeviceStateChangedRuyiController::__set_AnalogLeftJoyY(const int8_t val) {
-  this->AnalogLeftJoyY = val;
-}
-
-void InputDeviceStateChangedRuyiController::__set_AnalogRightJoyX(const int8_t val) {
-  this->AnalogRightJoyX = val;
-}
-
-void InputDeviceStateChangedRuyiController::__set_AnalogRightJoyY(const int8_t val) {
-  this->AnalogRightJoyY = val;
-}
-
-void InputDeviceStateChangedRuyiController::__set_Changed(const RuyiInputStateChanged& val) {
-  this->Changed = val;
-}
-
-uint32_t InputDeviceStateChangedRuyiController::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->PacketId);
-          this->__isset.PacketId = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->ChannelId);
-          this->__isset.ChannelId = true;
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->userId);
+          this->__isset.userId = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 3:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->UID);
-          this->__isset.UID = true;
+          xfer += iprot->readString(this->name);
+          this->__isset.name = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 4:
         if (ftype == ::apache::thrift::protocol::T_I64) {
-          xfer += iprot->readI64(this->KeyPress);
-          this->__isset.KeyPress = true;
+          xfer += iprot->readI64(this->timestamp);
+          this->__isset.timestamp = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 5:
-        if (ftype == ::apache::thrift::protocol::T_BYTE) {
-          xfer += iprot->readByte(this->AnalogL2);
-          this->__isset.AnalogL2 = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 6:
-        if (ftype == ::apache::thrift::protocol::T_BYTE) {
-          xfer += iprot->readByte(this->AnalogR2);
-          this->__isset.AnalogR2 = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 7:
-        if (ftype == ::apache::thrift::protocol::T_BYTE) {
-          xfer += iprot->readByte(this->AnalogLeftJoyX);
-          this->__isset.AnalogLeftJoyX = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 8:
-        if (ftype == ::apache::thrift::protocol::T_BYTE) {
-          xfer += iprot->readByte(this->AnalogLeftJoyY);
-          this->__isset.AnalogLeftJoyY = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 9:
-        if (ftype == ::apache::thrift::protocol::T_BYTE) {
-          xfer += iprot->readByte(this->AnalogRightJoyX);
-          this->__isset.AnalogRightJoyX = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 10:
-        if (ftype == ::apache::thrift::protocol::T_BYTE) {
-          xfer += iprot->readByte(this->AnalogRightJoyY);
-          this->__isset.AnalogRightJoyY = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 11:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->Changed.read(iprot);
-          this->__isset.Changed = true;
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->scale);
+          this->__isset.scale = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1883,53 +1865,29 @@ uint32_t InputDeviceStateChangedRuyiController::read(::apache::thrift::protocol:
   return xfer;
 }
 
-uint32_t InputDeviceStateChangedRuyiController::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t AxisActionTriggered::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("InputDeviceStateChangedRuyiController");
+  xfer += oprot->writeStructBegin("AxisActionTriggered");
 
-  xfer += oprot->writeFieldBegin("PacketId", ::apache::thrift::protocol::T_I64, 1);
-  xfer += oprot->writeI64(this->PacketId);
+  xfer += oprot->writeFieldBegin("deviceId", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->deviceId);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("ChannelId", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32(this->ChannelId);
+  xfer += oprot->writeFieldBegin("userId", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->userId);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("UID", ::apache::thrift::protocol::T_STRING, 3);
-  xfer += oprot->writeString(this->UID);
+  xfer += oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString(this->name);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("KeyPress", ::apache::thrift::protocol::T_I64, 4);
-  xfer += oprot->writeI64(this->KeyPress);
+  xfer += oprot->writeFieldBegin("timestamp", ::apache::thrift::protocol::T_I64, 4);
+  xfer += oprot->writeI64(this->timestamp);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("AnalogL2", ::apache::thrift::protocol::T_BYTE, 5);
-  xfer += oprot->writeByte(this->AnalogL2);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("AnalogR2", ::apache::thrift::protocol::T_BYTE, 6);
-  xfer += oprot->writeByte(this->AnalogR2);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("AnalogLeftJoyX", ::apache::thrift::protocol::T_BYTE, 7);
-  xfer += oprot->writeByte(this->AnalogLeftJoyX);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("AnalogLeftJoyY", ::apache::thrift::protocol::T_BYTE, 8);
-  xfer += oprot->writeByte(this->AnalogLeftJoyY);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("AnalogRightJoyX", ::apache::thrift::protocol::T_BYTE, 9);
-  xfer += oprot->writeByte(this->AnalogRightJoyX);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("AnalogRightJoyY", ::apache::thrift::protocol::T_BYTE, 10);
-  xfer += oprot->writeByte(this->AnalogRightJoyY);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("Changed", ::apache::thrift::protocol::T_STRUCT, 11);
-  xfer += this->Changed.write(oprot);
+  xfer += oprot->writeFieldBegin("scale", ::apache::thrift::protocol::T_DOUBLE, 5);
+  xfer += oprot->writeDouble(this->scale);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -1937,271 +1895,41 @@ uint32_t InputDeviceStateChangedRuyiController::write(::apache::thrift::protocol
   return xfer;
 }
 
-void swap(InputDeviceStateChangedRuyiController &a, InputDeviceStateChangedRuyiController &b) {
+void swap(AxisActionTriggered &a, AxisActionTriggered &b) {
   using ::std::swap;
-  swap(a.PacketId, b.PacketId);
-  swap(a.ChannelId, b.ChannelId);
-  swap(a.UID, b.UID);
-  swap(a.KeyPress, b.KeyPress);
-  swap(a.AnalogL2, b.AnalogL2);
-  swap(a.AnalogR2, b.AnalogR2);
-  swap(a.AnalogLeftJoyX, b.AnalogLeftJoyX);
-  swap(a.AnalogLeftJoyY, b.AnalogLeftJoyY);
-  swap(a.AnalogRightJoyX, b.AnalogRightJoyX);
-  swap(a.AnalogRightJoyY, b.AnalogRightJoyY);
-  swap(a.Changed, b.Changed);
+  swap(a.deviceId, b.deviceId);
+  swap(a.userId, b.userId);
+  swap(a.name, b.name);
+  swap(a.timestamp, b.timestamp);
+  swap(a.scale, b.scale);
   swap(a.__isset, b.__isset);
 }
 
-InputDeviceStateChangedRuyiController::InputDeviceStateChangedRuyiController(const InputDeviceStateChangedRuyiController& other38) {
-  PacketId = other38.PacketId;
-  ChannelId = other38.ChannelId;
-  UID = other38.UID;
-  KeyPress = other38.KeyPress;
-  AnalogL2 = other38.AnalogL2;
-  AnalogR2 = other38.AnalogR2;
-  AnalogLeftJoyX = other38.AnalogLeftJoyX;
-  AnalogLeftJoyY = other38.AnalogLeftJoyY;
-  AnalogRightJoyX = other38.AnalogRightJoyX;
-  AnalogRightJoyY = other38.AnalogRightJoyY;
-  Changed = other38.Changed;
-  __isset = other38.__isset;
+AxisActionTriggered::AxisActionTriggered(const AxisActionTriggered& other13) {
+  deviceId = other13.deviceId;
+  userId = other13.userId;
+  name = other13.name;
+  timestamp = other13.timestamp;
+  scale = other13.scale;
+  __isset = other13.__isset;
 }
-InputDeviceStateChangedRuyiController& InputDeviceStateChangedRuyiController::operator=(const InputDeviceStateChangedRuyiController& other39) {
-  PacketId = other39.PacketId;
-  ChannelId = other39.ChannelId;
-  UID = other39.UID;
-  KeyPress = other39.KeyPress;
-  AnalogL2 = other39.AnalogL2;
-  AnalogR2 = other39.AnalogR2;
-  AnalogLeftJoyX = other39.AnalogLeftJoyX;
-  AnalogLeftJoyY = other39.AnalogLeftJoyY;
-  AnalogRightJoyX = other39.AnalogRightJoyX;
-  AnalogRightJoyY = other39.AnalogRightJoyY;
-  Changed = other39.Changed;
-  __isset = other39.__isset;
+AxisActionTriggered& AxisActionTriggered::operator=(const AxisActionTriggered& other14) {
+  deviceId = other14.deviceId;
+  userId = other14.userId;
+  name = other14.name;
+  timestamp = other14.timestamp;
+  scale = other14.scale;
+  __isset = other14.__isset;
   return *this;
 }
-void InputDeviceStateChangedRuyiController::printTo(std::ostream& out) const {
+void AxisActionTriggered::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
-  out << "InputDeviceStateChangedRuyiController(";
-  out << "PacketId=" << to_string(PacketId);
-  out << ", " << "ChannelId=" << to_string(ChannelId);
-  out << ", " << "UID=" << to_string(UID);
-  out << ", " << "KeyPress=" << to_string(KeyPress);
-  out << ", " << "AnalogL2=" << to_string(AnalogL2);
-  out << ", " << "AnalogR2=" << to_string(AnalogR2);
-  out << ", " << "AnalogLeftJoyX=" << to_string(AnalogLeftJoyX);
-  out << ", " << "AnalogLeftJoyY=" << to_string(AnalogLeftJoyY);
-  out << ", " << "AnalogRightJoyX=" << to_string(AnalogRightJoyX);
-  out << ", " << "AnalogRightJoyY=" << to_string(AnalogRightJoyY);
-  out << ", " << "Changed=" << to_string(Changed);
-  out << ")";
-}
-
-
-InputDeviceStateChanged::~InputDeviceStateChanged() throw() {
-}
-
-
-void InputDeviceStateChanged::__set_header(const InputDeviceEventHeader& val) {
-  this->header = val;
-}
-
-void InputDeviceStateChanged::__set_x360(const InputDeviceStateChangedX360& val) {
-  this->x360 = val;
-}
-
-void InputDeviceStateChanged::__set_dgamepad(const InputDeviceStateChangedGamepad& val) {
-  this->dgamepad = val;
-}
-
-void InputDeviceStateChanged::__set_djoystick(const InputDeviceStateChangedJoystick& val) {
-  this->djoystick = val;
-}
-
-void InputDeviceStateChanged::__set_dkeyboard(const InputDeviceStateChangedKeyboard& val) {
-  this->dkeyboard = val;
-}
-
-void InputDeviceStateChanged::__set_dmouse(const InputDeviceStateChangedMouse& val) {
-  this->dmouse = val;
-}
-
-void InputDeviceStateChanged::__set_ruyicontroller(const InputDeviceStateChangedRuyiController& val) {
-  this->ruyicontroller = val;
-}
-
-uint32_t InputDeviceStateChanged::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->header.read(iprot);
-          this->__isset.header = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->x360.read(iprot);
-          this->__isset.x360 = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 3:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->dgamepad.read(iprot);
-          this->__isset.dgamepad = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 4:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->djoystick.read(iprot);
-          this->__isset.djoystick = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 5:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->dkeyboard.read(iprot);
-          this->__isset.dkeyboard = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 6:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->dmouse.read(iprot);
-          this->__isset.dmouse = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 7:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->ruyicontroller.read(iprot);
-          this->__isset.ruyicontroller = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t InputDeviceStateChanged::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("InputDeviceStateChanged");
-
-  xfer += oprot->writeFieldBegin("header", ::apache::thrift::protocol::T_STRUCT, 1);
-  xfer += this->header.write(oprot);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("x360", ::apache::thrift::protocol::T_STRUCT, 2);
-  xfer += this->x360.write(oprot);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("dgamepad", ::apache::thrift::protocol::T_STRUCT, 3);
-  xfer += this->dgamepad.write(oprot);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("djoystick", ::apache::thrift::protocol::T_STRUCT, 4);
-  xfer += this->djoystick.write(oprot);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("dkeyboard", ::apache::thrift::protocol::T_STRUCT, 5);
-  xfer += this->dkeyboard.write(oprot);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("dmouse", ::apache::thrift::protocol::T_STRUCT, 6);
-  xfer += this->dmouse.write(oprot);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("ruyicontroller", ::apache::thrift::protocol::T_STRUCT, 7);
-  xfer += this->ruyicontroller.write(oprot);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-void swap(InputDeviceStateChanged &a, InputDeviceStateChanged &b) {
-  using ::std::swap;
-  swap(a.header, b.header);
-  swap(a.x360, b.x360);
-  swap(a.dgamepad, b.dgamepad);
-  swap(a.djoystick, b.djoystick);
-  swap(a.dkeyboard, b.dkeyboard);
-  swap(a.dmouse, b.dmouse);
-  swap(a.ruyicontroller, b.ruyicontroller);
-  swap(a.__isset, b.__isset);
-}
-
-InputDeviceStateChanged::InputDeviceStateChanged(const InputDeviceStateChanged& other40) {
-  header = other40.header;
-  x360 = other40.x360;
-  dgamepad = other40.dgamepad;
-  djoystick = other40.djoystick;
-  dkeyboard = other40.dkeyboard;
-  dmouse = other40.dmouse;
-  ruyicontroller = other40.ruyicontroller;
-  __isset = other40.__isset;
-}
-InputDeviceStateChanged& InputDeviceStateChanged::operator=(const InputDeviceStateChanged& other41) {
-  header = other41.header;
-  x360 = other41.x360;
-  dgamepad = other41.dgamepad;
-  djoystick = other41.djoystick;
-  dkeyboard = other41.dkeyboard;
-  dmouse = other41.dmouse;
-  ruyicontroller = other41.ruyicontroller;
-  __isset = other41.__isset;
-  return *this;
-}
-void InputDeviceStateChanged::printTo(std::ostream& out) const {
-  using ::apache::thrift::to_string;
-  out << "InputDeviceStateChanged(";
-  out << "header=" << to_string(header);
-  out << ", " << "x360=" << to_string(x360);
-  out << ", " << "dgamepad=" << to_string(dgamepad);
-  out << ", " << "djoystick=" << to_string(djoystick);
-  out << ", " << "dkeyboard=" << to_string(dkeyboard);
-  out << ", " << "dmouse=" << to_string(dmouse);
-  out << ", " << "ruyicontroller=" << to_string(ruyicontroller);
+  out << "AxisActionTriggered(";
+  out << "deviceId=" << to_string(deviceId);
+  out << ", " << "userId=" << to_string(userId);
+  out << ", " << "name=" << to_string(name);
+  out << ", " << "timestamp=" << to_string(timestamp);
+  out << ", " << "scale=" << to_string(scale);
   out << ")";
 }
 

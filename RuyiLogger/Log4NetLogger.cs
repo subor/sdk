@@ -6,7 +6,7 @@ using System.Xml;
 
 [assembly: log4net.Config.Repository("Layer0")]
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
-namespace RuyiLogger
+namespace Ruyi.Logging
 {
     public class Log4NetLogger : IRuyiLogger
     {
