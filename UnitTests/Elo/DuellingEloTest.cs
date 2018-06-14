@@ -40,12 +40,9 @@ namespace Ruyi.SDK.Online.Tests.Elo
             Assert.AreEqual(1.0, quality, 0.001);
         }
 
-        
         private static void AssertRating(double expected, Rating actual)
         {
-            #region example
             Assert.AreEqual(expected, actual.Mean, ErrorTolerance);
-            #endregion
         }
     }
 }
