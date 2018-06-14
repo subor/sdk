@@ -3093,6 +3093,26 @@ service BrainCloudService {
 		3: i32 clientIndex
 	),
 
+	string Lobby_CreateLobby(1: BrainCloudServiceSDKDataTypes.LobbyType lobbyType, 2: i32 maxSlots, 3: bool isOpen, 4: string jsonAttributes, 5: i32 clientIndex),
+
+	string Lobby_OpenLobby(1: string lobbyId, 2: i32 clientIndex),
+
+	string Lobby_CloseLobby(1: string lobbyId, 2: i32 clientIndex),
+
+	string Lobby_FindLobbies(1: string jsonAttributes, 2: i32 clientIndex),
+
+	string Lobby_FindFriendsLobbies(1: i32 clientIndex),
+
+	string Lobby_JoinLobby(1: string lobbyId, 2: i32 clientIndex),
+
+	string Lobby_LeaveLobby(1: string lobbyId, 2: i32 clientIndex),
+
+	string Lobby_DestroyLobby(1: string lobbyId, 2: i32 clientIndex),
+
+	string Lobby_StartGame(1: string lobbyId, 2: string connectionString, 3: i32 clientIndex),
+
+	string Lobby_GetMyLobbies(1: i32 clientIndex),
+
 	string Patch_GetGameManifest(1: string gameId, 2: i32 clientIndex),
 
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),

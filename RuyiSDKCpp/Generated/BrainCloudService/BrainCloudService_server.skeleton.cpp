@@ -4435,6 +4435,56 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Tournament_ViewReward\n");
   }
 
+  void Lobby_CreateLobby(std::string& _return, const  ::Ruyi::SDK::BrainCloudApi::LobbyType::type lobbyType, const int32_t maxSlots, const bool isOpen, const std::string& jsonAttributes, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_CreateLobby\n");
+  }
+
+  void Lobby_OpenLobby(std::string& _return, const std::string& lobbyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_OpenLobby\n");
+  }
+
+  void Lobby_CloseLobby(std::string& _return, const std::string& lobbyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_CloseLobby\n");
+  }
+
+  void Lobby_FindLobbies(std::string& _return, const std::string& jsonAttributes, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_FindLobbies\n");
+  }
+
+  void Lobby_FindFriendsLobbies(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_FindFriendsLobbies\n");
+  }
+
+  void Lobby_JoinLobby(std::string& _return, const std::string& lobbyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_JoinLobby\n");
+  }
+
+  void Lobby_LeaveLobby(std::string& _return, const std::string& lobbyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_LeaveLobby\n");
+  }
+
+  void Lobby_DestroyLobby(std::string& _return, const std::string& lobbyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_DestroyLobby\n");
+  }
+
+  void Lobby_StartGame(std::string& _return, const std::string& lobbyId, const std::string& connectionString, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_StartGame\n");
+  }
+
+  void Lobby_GetMyLobbies(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_GetMyLobbies\n");
+  }
+
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Patch_GetGameManifest\n");
