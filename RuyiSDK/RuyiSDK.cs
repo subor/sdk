@@ -14,18 +14,16 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using Thrift.Protocol;
 using Thrift.Transport;
 
 namespace Ruyi
 {
     /// <summary>
-    /// the main class used to communicate with the Ruyi platform
+    /// The main class used to communicate with the Ruyi platform.
     /// </summary>
-    /// [!code[](../../../../sdk/UnitTests/Elo/DuellingEloTest.cs#example)]
     /// <example>
-    /// <code source="Elo/DuellingEloTest.cs" region="example"></code>
+    /// <code source="layer0/sdktest/doctests.cs" region="RuyiSDK"></code>
     /// </example>
     public class RuyiSDK : IDisposable
     {
@@ -92,48 +90,75 @@ namespace Ruyi
         }
 
         /// <summary>
-        /// to subscribe to a topic
+        /// To subscribe to published topics.
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.Subscriber"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public SubscribeClient Subscriber { get; private set; }
 
         /// <summary>
-        /// to access the ruyi platform storage interface
+        /// Storage service
+        /// Must set <see cref="SDKFeatures.Storage"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
         /// </summary>
         public StorageLayerService.Client Storage { get; private set; }
 
         /// <summary>
-        /// to access the l10n service from Ruyi
+        /// Localization service
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.L10N"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public LocalizationService.Client L10NService { get; private set; }
 
         /// <summary>
-        /// to access the ruyi platform back end service interface
+        /// Online functionality
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.Online"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public RuyiNetClient RuyiNetService { get; private set; }
 
         /// <summary>
-        /// to access the setting system
+        /// Setting system
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.Settings"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public SDK.SettingSystem.Api.SettingSystemService.Client SettingSys { get; private set; }
 
         /// <summary>
         /// User-related services
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.Users"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public UserServExternal.Client UserService { get; private set; }
 
         /// <summary>
-        /// Input related services
+        /// Input-related services
         /// </summary>
+        /// <remarks>
+        /// To get gamepad/controller input events use <see cref="SubscribeClient"/> instance via <see cref="Subscriber"/> property.
+        /// 
+        /// Must set <see cref="SDKFeatures.Input"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public InputManagerService.Client InputMgr { get; private set; }
 
         /// <summary>
-        /// the speech service
+        /// Speech service
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.Speech"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public SpeechService.Client SpeechService { get; private set; }
 
         /// <summary>
-        /// Media player services
+        /// Multimedia-related services
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.Media"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public MediaService.Client Media { get; private set; }
 
         private RuyiSDKContext context = null;
@@ -142,6 +167,7 @@ namespace Ruyi
         /// <summary>
         /// Underlying transport and protocol for low-latency messages
         /// </summary>
+        /// <exclude/>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public TBinaryProtocolTS LowLatencyProtocol { get; private set; }
 
@@ -149,6 +175,7 @@ namespace Ruyi
         /// <summary>
         /// Underlying transport and protocol for high-latency messages
         /// </summary>
+        /// <exclude/>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public TBinaryProtocolTS HighLatencyProtocol { get; private set; }
 
