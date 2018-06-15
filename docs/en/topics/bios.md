@@ -34,6 +34,8 @@ __Important__:
 
 | BIOS Version/Date | Ruyi OS Version | AMD Driver Stack Version/Date
 |-|-|-
+| [1.01](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220101.zip) | 1.00 | 1.0.2.0 2018/5/31
+| [1.00](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220100.zip) | 0.11 | 1.0.1.0 2018/5/2
 | [0.20](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220020.zip) | 0.11 | 1.0.1.0 2018/5/2
 | [0.19](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220019.zip) | 0.10 | 1.0.1.0 2018/4/17
 | [0.13](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220013.zip) | 0.6 | 0.0.9.0 2018/2/2
@@ -67,6 +69,7 @@ Flashing will progress as follows:
 
 | Installed BIOS | BIOS to Flash | Process
 |-|-|-
+| 1.00 and below | 1.01 | Must update to 1.00 first, then to 1.01. Machine will reboot, BIOS install screen will appear, machine will reboot when finished.
 | 0.16 and up | | Machine will reboot, BIOS install screen will appear, machine will reboot when finished.
 | 0.15 or lower | 0.16 or higher | Machine will freeze for a few minutes and become responsive when finished.  Manually restart the machine.
 | 0.15 or lower | 0.13 to 0.15 | A GUI window will appear
