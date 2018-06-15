@@ -130,6 +130,7 @@ namespace Ruyi.Layer0
                 case ServiceIDs.SYS_REPORTER:
                 case ServiceIDs.L2FORWARDER:
                 case ServiceIDs.LAYER1:
+                case ServiceIDs.UPDATESERVICE:
                     return false;
 
                 default:
@@ -145,6 +146,7 @@ namespace Ruyi.Layer0
                 case ServiceIDs.INPUTMANAGER_EXTERNAL:
                 case ServiceIDs.LAUNCHER:
                 case ServiceIDs.UPDATESERVICE:
+                case ServiceIDs.POWERMANAGER:
                     return true;
             }
             return false;
