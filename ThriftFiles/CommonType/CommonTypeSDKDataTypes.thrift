@@ -121,9 +121,10 @@ struct SettingItem {
     14: bool isActive,
     15: optional string validation,
     16: optional list<activeDependency> activeDependencies,
-    17: string ActionName,
-    18: string ActionObject,
-    19: string ActionMethodName,
+    17: optional string ActionName,
+    18: optional string ActionObject,
+    19: optional string ActionOnSetValue,
+    20: optional string ActionOnGetValue,
 }
 
 struct SettingCategory {
