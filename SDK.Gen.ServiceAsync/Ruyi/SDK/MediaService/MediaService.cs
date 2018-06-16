@@ -22,13 +22,13 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.UserServiceExternal
+namespace Ruyi.SDK.MediaService
 {
-  public partial class UserServExternal
+  public partial class MediaService
   {
     public interface IAsync
     {
-      Task<Ruyi.SDK.UserServiceExternal.UserInfo_Public> GetPlayingUserInfoAsync(string appId, string userId, CancellationToken cancellationToken);
+      Task<int> SendMsgAsync(Ruyi.SDK.MediaService.RequestMsg request, bool broadcast, CancellationToken cancellationToken);
 
     }
 
@@ -41,13 +41,13 @@ namespace Ruyi.SDK.UserServiceExternal
 
       public Client(TProtocol inputProtocol, TProtocol outputProtocol) : base(inputProtocol, outputProtocol)      {
       }
-      public async Task<Ruyi.SDK.UserServiceExternal.UserInfo_Public> GetPlayingUserInfoAsync(string appId, string userId, CancellationToken cancellationToken)
+      public async Task<int> SendMsgAsync(Ruyi.SDK.MediaService.RequestMsg request, bool broadcast, CancellationToken cancellationToken)
       {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetPlayingUserInfo", TMessageType.Call, SeqId), cancellationToken);
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("SendMsg", TMessageType.Call, SeqId), cancellationToken);
         
-        var args = new GetPlayingUserInfoArgs();
-        args.AppId = appId;
-        args.UserId = userId;
+        var args = new SendMsgArgs();
+        args.Request = request;
+        args.Broadcast = broadcast;
         
         await args.WriteAsync(OutputProtocol, cancellationToken);
         await OutputProtocol.WriteMessageEndAsync(cancellationToken);
@@ -61,18 +61,14 @@ namespace Ruyi.SDK.UserServiceExternal
           throw x;
         }
 
-        var result = new GetPlayingUserInfoResult();
+        var result = new SendMsgResult();
         await result.ReadAsync(InputProtocol, cancellationToken);
         await InputProtocol.ReadMessageEndAsync(cancellationToken);
         if (result.__isset.success)
         {
           return result.Success;
         }
-        if (result.__isset.error1)
-        {
-          throw result.Error1;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetPlayingUserInfo failed: unknown result");
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SendMsg failed: unknown result");
       }
 
     }
@@ -86,7 +82,7 @@ namespace Ruyi.SDK.UserServiceExternal
         if (iAsync == null) throw new ArgumentNullException(nameof(iAsync));
 
         _iAsync = iAsync;
-        processMap_["GetPlayingUserInfo"] = GetPlayingUserInfo_ProcessAsync;
+        processMap_["SendMsg"] = SendMsg_ProcessAsync;
       }
 
       protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken);
@@ -129,23 +125,16 @@ namespace Ruyi.SDK.UserServiceExternal
         return true;
       }
 
-      public async Task GetPlayingUserInfo_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      public async Task SendMsg_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        var args = new GetPlayingUserInfoArgs();
+        var args = new SendMsgArgs();
         await args.ReadAsync(iprot, cancellationToken);
         await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new GetPlayingUserInfoResult();
+        var result = new SendMsgResult();
         try
         {
-          try
-          {
-            result.Success = await _iAsync.GetPlayingUserInfoAsync(args.AppId, args.UserId, cancellationToken);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          await oprot.WriteMessageBeginAsync(new TMessage("GetPlayingUserInfo", TMessageType.Reply, seqid), cancellationToken); 
+          result.Success = await _iAsync.SendMsgAsync(args.Request, args.Broadcast, cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("SendMsg", TMessageType.Reply, seqid), cancellationToken); 
           await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
@@ -157,7 +146,7 @@ namespace Ruyi.SDK.UserServiceExternal
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
           var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("GetPlayingUserInfo", TMessageType.Exception, seqid), cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("SendMsg", TMessageType.Exception, seqid), cancellationToken);
           await x.WriteAsync(oprot, cancellationToken);
         }
         await oprot.WriteMessageEndAsync(cancellationToken);
@@ -167,34 +156,34 @@ namespace Ruyi.SDK.UserServiceExternal
     }
 
 
-    public partial class GetPlayingUserInfoArgs : TBase
+    public partial class SendMsgArgs : TBase
     {
-      private string _appId;
-      private string _userId;
+      private Ruyi.SDK.MediaService.RequestMsg _request;
+      private bool _broadcast;
 
-      public string AppId
+      public Ruyi.SDK.MediaService.RequestMsg Request
       {
         get
         {
-          return _appId;
+          return _request;
         }
         set
         {
-          __isset.appId = true;
-          this._appId = value;
+          __isset.request = true;
+          this._request = value;
         }
       }
 
-      public string UserId
+      public bool Broadcast
       {
         get
         {
-          return _userId;
+          return _broadcast;
         }
         set
         {
-          __isset.userId = true;
-          this._userId = value;
+          __isset.broadcast = true;
+          this._broadcast = value;
         }
       }
 
@@ -202,11 +191,11 @@ namespace Ruyi.SDK.UserServiceExternal
       public Isset __isset;
       public struct Isset
       {
-        public bool appId;
-        public bool userId;
+        public bool request;
+        public bool broadcast;
       }
 
-      public GetPlayingUserInfoArgs()
+      public SendMsgArgs()
       {
       }
 
@@ -228,9 +217,10 @@ namespace Ruyi.SDK.UserServiceExternal
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String)
+                if (field.Type == TType.Struct)
                 {
-                  AppId = await iprot.ReadStringAsync(cancellationToken);
+                  Request = new Ruyi.SDK.MediaService.RequestMsg();
+                  await Request.ReadAsync(iprot, cancellationToken);
                 }
                 else
                 {
@@ -238,9 +228,9 @@ namespace Ruyi.SDK.UserServiceExternal
                 }
                 break;
               case 2:
-                if (field.Type == TType.String)
+                if (field.Type == TType.Bool)
                 {
-                  UserId = await iprot.ReadStringAsync(cancellationToken);
+                  Broadcast = await iprot.ReadBoolAsync(cancellationToken);
                 }
                 else
                 {
@@ -268,25 +258,25 @@ namespace Ruyi.SDK.UserServiceExternal
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("GetPlayingUserInfo_args");
+          var struc = new TStruct("SendMsg_args");
           await oprot.WriteStructBeginAsync(struc, cancellationToken);
           var field = new TField();
-          if (AppId != null && __isset.appId)
+          if (Request != null && __isset.request)
           {
-            field.Name = "appId";
-            field.Type = TType.String;
+            field.Name = "request";
+            field.Type = TType.Struct;
             field.ID = 1;
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(AppId, cancellationToken);
+            await Request.WriteAsync(oprot, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
           }
-          if (UserId != null && __isset.userId)
+          if (__isset.broadcast)
           {
-            field.Name = "userId";
-            field.Type = TType.String;
+            field.Name = "broadcast";
+            field.Type = TType.Bool;
             field.ID = 2;
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(UserId, cancellationToken);
+            await oprot.WriteBoolAsync(Broadcast, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
           }
           await oprot.WriteFieldStopAsync(cancellationToken);
@@ -300,21 +290,21 @@ namespace Ruyi.SDK.UserServiceExternal
 
       public override string ToString()
       {
-        var sb = new StringBuilder("GetPlayingUserInfo_args(");
+        var sb = new StringBuilder("SendMsg_args(");
         bool __first = true;
-        if (AppId != null && __isset.appId)
+        if (Request != null && __isset.request)
         {
           if(!__first) { sb.Append(", "); }
           __first = false;
-          sb.Append("AppId: ");
-          sb.Append(AppId);
+          sb.Append("Request: ");
+          sb.Append(Request== null ? "<null>" : Request.ToString());
         }
-        if (UserId != null && __isset.userId)
+        if (__isset.broadcast)
         {
           if(!__first) { sb.Append(", "); }
           __first = false;
-          sb.Append("UserId: ");
-          sb.Append(UserId);
+          sb.Append("Broadcast: ");
+          sb.Append(Broadcast);
         }
         sb.Append(")");
         return sb.ToString();
@@ -322,12 +312,11 @@ namespace Ruyi.SDK.UserServiceExternal
     }
 
 
-    public partial class GetPlayingUserInfoResult : TBase
+    public partial class SendMsgResult : TBase
     {
-      private Ruyi.SDK.UserServiceExternal.UserInfo_Public _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private int _success;
 
-      public Ruyi.SDK.UserServiceExternal.UserInfo_Public Success
+      public int Success
       {
         get
         {
@@ -340,28 +329,14 @@ namespace Ruyi.SDK.UserServiceExternal
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
-      {
-        get
-        {
-          return _error1;
-        }
-        set
-        {
-          __isset.error1 = true;
-          this._error1 = value;
-        }
-      }
-
 
       public Isset __isset;
       public struct Isset
       {
         public bool success;
-        public bool error1;
       }
 
-      public GetPlayingUserInfoResult()
+      public SendMsgResult()
       {
       }
 
@@ -383,21 +358,9 @@ namespace Ruyi.SDK.UserServiceExternal
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Struct)
+                if (field.Type == TType.I32)
                 {
-                  Success = new Ruyi.SDK.UserServiceExternal.UserInfo_Public();
-                  await Success.ReadAsync(iprot, cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              case 1:
-                if (field.Type == TType.Struct)
-                {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  await Error1.ReadAsync(iprot, cancellationToken);
+                  Success = await iprot.ReadI32Async(cancellationToken);
                 }
                 else
                 {
@@ -425,33 +388,18 @@ namespace Ruyi.SDK.UserServiceExternal
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("GetPlayingUserInfo_result");
+          var struc = new TStruct("SendMsg_result");
           await oprot.WriteStructBeginAsync(struc, cancellationToken);
           var field = new TField();
 
           if(this.__isset.success)
           {
-            if (Success != null)
-            {
-              field.Name = "Success";
-              field.Type = TType.Struct;
-              field.ID = 0;
-              await oprot.WriteFieldBeginAsync(field, cancellationToken);
-              await Success.WriteAsync(oprot, cancellationToken);
-              await oprot.WriteFieldEndAsync(cancellationToken);
-            }
-          }
-          else if(this.__isset.error1)
-          {
-            if (Error1 != null)
-            {
-              field.Name = "Error1";
-              field.Type = TType.Struct;
-              field.ID = 1;
-              await oprot.WriteFieldBeginAsync(field, cancellationToken);
-              await Error1.WriteAsync(oprot, cancellationToken);
-              await oprot.WriteFieldEndAsync(cancellationToken);
-            }
+            field.Name = "Success";
+            field.Type = TType.I32;
+            field.ID = 0;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
           await oprot.WriteFieldStopAsync(cancellationToken);
           await oprot.WriteStructEndAsync(cancellationToken);
@@ -464,21 +412,14 @@ namespace Ruyi.SDK.UserServiceExternal
 
       public override string ToString()
       {
-        var sb = new StringBuilder("GetPlayingUserInfo_result(");
+        var sb = new StringBuilder("SendMsg_result(");
         bool __first = true;
-        if (Success != null && __isset.success)
+        if (__isset.success)
         {
           if(!__first) { sb.Append(", "); }
           __first = false;
           sb.Append("Success: ");
-          sb.Append(Success== null ? "<null>" : Success.ToString());
-        }
-        if (Error1 != null && __isset.error1)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("Error1: ");
-          sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append(Success);
         }
         sb.Append(")");
         return sb.ToString();

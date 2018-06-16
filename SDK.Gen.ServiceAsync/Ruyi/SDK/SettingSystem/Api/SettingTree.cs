@@ -28,8 +28,8 @@ namespace Ruyi.SDK.SettingSystem.Api
   public partial class SettingTree : TBase
   {
     private CategoryNode _CateNode;
-    private Dictionary<string, SettingCategory> _SettingCategories;
-    private Dictionary<string, SettingItem> _SettingItems;
+    private Dictionary<string, Ruyi.SDK.CommonType.SettingCategory> _SettingCategories;
+    private Dictionary<string, Ruyi.SDK.CommonType.SettingItem> _SettingItems;
 
     public CategoryNode CateNode
     {
@@ -44,7 +44,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public Dictionary<string, SettingCategory> SettingCategories
+    public Dictionary<string, Ruyi.SDK.CommonType.SettingCategory> SettingCategories
     {
       get
       {
@@ -57,7 +57,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public Dictionary<string, SettingItem> SettingItems
+    public Dictionary<string, Ruyi.SDK.CommonType.SettingItem> SettingItems
     {
       get
       {
@@ -115,14 +115,14 @@ namespace Ruyi.SDK.SettingSystem.Api
               if (field.Type == TType.Map)
               {
                 {
-                  SettingCategories = new Dictionary<string, SettingCategory>();
+                  SettingCategories = new Dictionary<string, Ruyi.SDK.CommonType.SettingCategory>();
                   TMap _map8 = await iprot.ReadMapBeginAsync(cancellationToken);
                   for(int _i9 = 0; _i9 < _map8.Count; ++_i9)
                   {
                     string _key10;
-                    SettingCategory _val11;
+                    Ruyi.SDK.CommonType.SettingCategory _val11;
                     _key10 = await iprot.ReadStringAsync(cancellationToken);
-                    _val11 = new SettingCategory();
+                    _val11 = new Ruyi.SDK.CommonType.SettingCategory();
                     await _val11.ReadAsync(iprot, cancellationToken);
                     SettingCategories[_key10] = _val11;
                   }
@@ -138,14 +138,14 @@ namespace Ruyi.SDK.SettingSystem.Api
               if (field.Type == TType.Map)
               {
                 {
-                  SettingItems = new Dictionary<string, SettingItem>();
+                  SettingItems = new Dictionary<string, Ruyi.SDK.CommonType.SettingItem>();
                   TMap _map12 = await iprot.ReadMapBeginAsync(cancellationToken);
                   for(int _i13 = 0; _i13 < _map12.Count; ++_i13)
                   {
                     string _key14;
-                    SettingItem _val15;
+                    Ruyi.SDK.CommonType.SettingItem _val15;
                     _key14 = await iprot.ReadStringAsync(cancellationToken);
-                    _val15 = new SettingItem();
+                    _val15 = new Ruyi.SDK.CommonType.SettingItem();
                     await _val15.ReadAsync(iprot, cancellationToken);
                     SettingItems[_key14] = _val15;
                   }

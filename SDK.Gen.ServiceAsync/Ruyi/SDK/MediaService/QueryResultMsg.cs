@@ -22,37 +22,26 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.MediaService
 {
 
-  public partial class SettingSearchResult : TBase
+  public partial class QueryResultMsg : TBase
   {
-    private string _Version;
-    private List<Ruyi.SDK.CommonType.SettingItem> _SettingItems;
+    private List<MediaFile> _files;
 
-    public string Version
+    /// <summary>
+    /// Query results.  If empty it means query has completed.
+    /// </summary>
+    public List<MediaFile> Files
     {
       get
       {
-        return _Version;
+        return _files;
       }
       set
       {
-        __isset.Version = true;
-        this._Version = value;
-      }
-    }
-
-    public List<Ruyi.SDK.CommonType.SettingItem> SettingItems
-    {
-      get
-      {
-        return _SettingItems;
-      }
-      set
-      {
-        __isset.SettingItems = true;
-        this._SettingItems = value;
+        __isset.files = true;
+        this._files = value;
       }
     }
 
@@ -60,11 +49,10 @@ namespace Ruyi.SDK.SettingSystem.Api
     public Isset __isset;
     public struct Isset
     {
-      public bool Version;
-      public bool SettingItems;
+      public bool files;
     }
 
-    public SettingSearchResult()
+    public QueryResultMsg()
     {
     }
 
@@ -86,27 +74,17 @@ namespace Ruyi.SDK.SettingSystem.Api
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
-              {
-                Version = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 2:
               if (field.Type == TType.List)
               {
                 {
-                  SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
-                  TList _list4 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i5 = 0; _i5 < _list4.Count; ++_i5)
+                  Files = new List<MediaFile>();
+                  TList _list0 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
-                    Ruyi.SDK.CommonType.SettingItem _elem6;
-                    _elem6 = new Ruyi.SDK.CommonType.SettingItem();
-                    await _elem6.ReadAsync(iprot, cancellationToken);
-                    SettingItems.Add(_elem6);
+                    MediaFile _elem2;
+                    _elem2 = new MediaFile();
+                    await _elem2.ReadAsync(iprot, cancellationToken);
+                    Files.Add(_elem2);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -137,29 +115,20 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("SettingSearchResult");
+        var struc = new TStruct("QueryResultMsg");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Version != null && __isset.Version)
+        if (Files != null && __isset.files)
         {
-          field.Name = "Version";
-          field.Type = TType.String;
+          field.Name = "files";
+          field.Type = TType.List;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Version, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (SettingItems != null && __isset.SettingItems)
-        {
-          field.Name = "SettingItems";
-          field.Type = TType.List;
-          field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
-            await oprot.WriteListBeginAsync(new TList(TType.Struct, SettingItems.Count), cancellationToken);
-            foreach (Ruyi.SDK.CommonType.SettingItem _iter7 in SettingItems)
+            await oprot.WriteListBeginAsync(new TList(TType.Struct, Files.Count), cancellationToken);
+            foreach (MediaFile _iter3 in Files)
             {
-              await _iter7.WriteAsync(oprot, cancellationToken);
+              await _iter3.WriteAsync(oprot, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }
@@ -176,21 +145,14 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("SettingSearchResult(");
+      var sb = new StringBuilder("QueryResultMsg(");
       bool __first = true;
-      if (Version != null && __isset.Version)
+      if (Files != null && __isset.files)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Version: ");
-        sb.Append(Version);
-      }
-      if (SettingItems != null && __isset.SettingItems)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("SettingItems: ");
-        sb.Append(SettingItems);
+        sb.Append("Files: ");
+        sb.Append(Files);
       }
       sb.Append(")");
       return sb.ToString();

@@ -22,37 +22,55 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.MediaService
 {
 
-  public partial class SettingSearchResult : TBase
+  public partial class MediaFileEvent : TBase
   {
-    private string _Version;
-    private List<Ruyi.SDK.CommonType.SettingItem> _SettingItems;
+    private MediaFile _file;
+    private MediaFileEventTypes _event;
+    private string _oldname;
 
-    public string Version
+    public MediaFile File
     {
       get
       {
-        return _Version;
+        return _file;
       }
       set
       {
-        __isset.Version = true;
-        this._Version = value;
+        __isset.file = true;
+        this._file = value;
       }
     }
 
-    public List<Ruyi.SDK.CommonType.SettingItem> SettingItems
+    /// <summary>
+    /// 
+    /// <seealso cref="MediaFileEventTypes"/>
+    /// </summary>
+    public MediaFileEventTypes Event
     {
       get
       {
-        return _SettingItems;
+        return _event;
       }
       set
       {
-        __isset.SettingItems = true;
-        this._SettingItems = value;
+        __isset.@event = true;
+        this._event = value;
+      }
+    }
+
+    public string Oldname
+    {
+      get
+      {
+        return _oldname;
+      }
+      set
+      {
+        __isset.oldname = true;
+        this._oldname = value;
       }
     }
 
@@ -60,11 +78,12 @@ namespace Ruyi.SDK.SettingSystem.Api
     public Isset __isset;
     public struct Isset
     {
-      public bool Version;
-      public bool SettingItems;
+      public bool file;
+      public bool @event;
+      public bool oldname;
     }
 
-    public SettingSearchResult()
+    public MediaFileEvent()
     {
     }
 
@@ -86,9 +105,10 @@ namespace Ruyi.SDK.SettingSystem.Api
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                Version = await iprot.ReadStringAsync(cancellationToken);
+                File = new MediaFile();
+                await File.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -96,20 +116,19 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 2:
-              if (field.Type == TType.List)
+              if (field.Type == TType.I32)
               {
-                {
-                  SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
-                  TList _list4 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i5 = 0; _i5 < _list4.Count; ++_i5)
-                  {
-                    Ruyi.SDK.CommonType.SettingItem _elem6;
-                    _elem6 = new Ruyi.SDK.CommonType.SettingItem();
-                    await _elem6.ReadAsync(iprot, cancellationToken);
-                    SettingItems.Add(_elem6);
-                  }
-                  await iprot.ReadListEndAsync(cancellationToken);
-                }
+                Event = (MediaFileEventTypes)await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.String)
+              {
+                Oldname = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -137,32 +156,34 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("SettingSearchResult");
+        var struc = new TStruct("MediaFileEvent");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Version != null && __isset.Version)
+        if (File != null && __isset.file)
         {
-          field.Name = "Version";
-          field.Type = TType.String;
+          field.Name = "file";
+          field.Type = TType.Struct;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Version, cancellationToken);
+          await File.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (SettingItems != null && __isset.SettingItems)
+        if (__isset.@event)
         {
-          field.Name = "SettingItems";
-          field.Type = TType.List;
+          field.Name = "event";
+          field.Type = TType.I32;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          {
-            await oprot.WriteListBeginAsync(new TList(TType.Struct, SettingItems.Count), cancellationToken);
-            foreach (Ruyi.SDK.CommonType.SettingItem _iter7 in SettingItems)
-            {
-              await _iter7.WriteAsync(oprot, cancellationToken);
-            }
-            await oprot.WriteListEndAsync(cancellationToken);
-          }
+          await oprot.WriteI32Async((int)Event, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (Oldname != null && __isset.oldname)
+        {
+          field.Name = "oldname";
+          field.Type = TType.String;
+          field.ID = 3;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Oldname, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -176,21 +197,28 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("SettingSearchResult(");
+      var sb = new StringBuilder("MediaFileEvent(");
       bool __first = true;
-      if (Version != null && __isset.Version)
+      if (File != null && __isset.file)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Version: ");
-        sb.Append(Version);
+        sb.Append("File: ");
+        sb.Append(File== null ? "<null>" : File.ToString());
       }
-      if (SettingItems != null && __isset.SettingItems)
+      if (__isset.@event)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("SettingItems: ");
-        sb.Append(SettingItems);
+        sb.Append("Event: ");
+        sb.Append(Event);
+      }
+      if (Oldname != null && __isset.oldname)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Oldname: ");
+        sb.Append(Oldname);
       }
       sb.Append(")");
       return sb.ToString();

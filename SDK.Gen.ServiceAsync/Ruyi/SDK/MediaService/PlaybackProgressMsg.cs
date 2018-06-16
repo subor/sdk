@@ -22,37 +22,51 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.MediaService
 {
 
-  public partial class SettingSearchResult : TBase
+  public partial class PlaybackProgressMsg : TBase
   {
-    private string _Version;
-    private List<Ruyi.SDK.CommonType.SettingItem> _SettingItems;
+    private string _url;
+    private double _CurrentTime;
+    private double _TotalTime;
 
-    public string Version
+    public string Url
     {
       get
       {
-        return _Version;
+        return _url;
       }
       set
       {
-        __isset.Version = true;
-        this._Version = value;
+        __isset.url = true;
+        this._url = value;
       }
     }
 
-    public List<Ruyi.SDK.CommonType.SettingItem> SettingItems
+    public double CurrentTime
     {
       get
       {
-        return _SettingItems;
+        return _CurrentTime;
       }
       set
       {
-        __isset.SettingItems = true;
-        this._SettingItems = value;
+        __isset.CurrentTime = true;
+        this._CurrentTime = value;
+      }
+    }
+
+    public double TotalTime
+    {
+      get
+      {
+        return _TotalTime;
+      }
+      set
+      {
+        __isset.TotalTime = true;
+        this._TotalTime = value;
       }
     }
 
@@ -60,11 +74,12 @@ namespace Ruyi.SDK.SettingSystem.Api
     public Isset __isset;
     public struct Isset
     {
-      public bool Version;
-      public bool SettingItems;
+      public bool url;
+      public bool CurrentTime;
+      public bool TotalTime;
     }
 
-    public SettingSearchResult()
+    public PlaybackProgressMsg()
     {
     }
 
@@ -88,7 +103,7 @@ namespace Ruyi.SDK.SettingSystem.Api
             case 1:
               if (field.Type == TType.String)
               {
-                Version = await iprot.ReadStringAsync(cancellationToken);
+                Url = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -96,20 +111,19 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 2:
-              if (field.Type == TType.List)
+              if (field.Type == TType.Double)
               {
-                {
-                  SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
-                  TList _list4 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i5 = 0; _i5 < _list4.Count; ++_i5)
-                  {
-                    Ruyi.SDK.CommonType.SettingItem _elem6;
-                    _elem6 = new Ruyi.SDK.CommonType.SettingItem();
-                    await _elem6.ReadAsync(iprot, cancellationToken);
-                    SettingItems.Add(_elem6);
-                  }
-                  await iprot.ReadListEndAsync(cancellationToken);
-                }
+                CurrentTime = await iprot.ReadDoubleAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.Double)
+              {
+                TotalTime = await iprot.ReadDoubleAsync(cancellationToken);
               }
               else
               {
@@ -137,32 +151,34 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("SettingSearchResult");
+        var struc = new TStruct("PlaybackProgressMsg");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Version != null && __isset.Version)
+        if (Url != null && __isset.url)
         {
-          field.Name = "Version";
+          field.Name = "url";
           field.Type = TType.String;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Version, cancellationToken);
+          await oprot.WriteStringAsync(Url, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (SettingItems != null && __isset.SettingItems)
+        if (__isset.CurrentTime)
         {
-          field.Name = "SettingItems";
-          field.Type = TType.List;
+          field.Name = "CurrentTime";
+          field.Type = TType.Double;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          {
-            await oprot.WriteListBeginAsync(new TList(TType.Struct, SettingItems.Count), cancellationToken);
-            foreach (Ruyi.SDK.CommonType.SettingItem _iter7 in SettingItems)
-            {
-              await _iter7.WriteAsync(oprot, cancellationToken);
-            }
-            await oprot.WriteListEndAsync(cancellationToken);
-          }
+          await oprot.WriteDoubleAsync(CurrentTime, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (__isset.TotalTime)
+        {
+          field.Name = "TotalTime";
+          field.Type = TType.Double;
+          field.ID = 3;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteDoubleAsync(TotalTime, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -176,21 +192,28 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("SettingSearchResult(");
+      var sb = new StringBuilder("PlaybackProgressMsg(");
       bool __first = true;
-      if (Version != null && __isset.Version)
+      if (Url != null && __isset.url)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Version: ");
-        sb.Append(Version);
+        sb.Append("Url: ");
+        sb.Append(Url);
       }
-      if (SettingItems != null && __isset.SettingItems)
+      if (__isset.CurrentTime)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("SettingItems: ");
-        sb.Append(SettingItems);
+        sb.Append("CurrentTime: ");
+        sb.Append(CurrentTime);
+      }
+      if (__isset.TotalTime)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("TotalTime: ");
+        sb.Append(TotalTime);
       }
       sb.Append(")");
       return sb.ToString();

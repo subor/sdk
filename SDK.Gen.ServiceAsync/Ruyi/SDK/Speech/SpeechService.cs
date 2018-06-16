@@ -22,13 +22,13 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.UserServiceExternal
+namespace Ruyi.SDK.Speech
 {
-  public partial class UserServExternal
+  public partial class SpeechService
   {
     public interface IAsync
     {
-      Task<Ruyi.SDK.UserServiceExternal.UserInfo_Public> GetPlayingUserInfoAsync(string appId, string userId, CancellationToken cancellationToken);
+      Task<Ruyi.SDK.Speech.SpeechResult> SayAsync(Ruyi.SDK.Speech.VoiceCommand command, CancellationToken cancellationToken);
 
     }
 
@@ -41,13 +41,12 @@ namespace Ruyi.SDK.UserServiceExternal
 
       public Client(TProtocol inputProtocol, TProtocol outputProtocol) : base(inputProtocol, outputProtocol)      {
       }
-      public async Task<Ruyi.SDK.UserServiceExternal.UserInfo_Public> GetPlayingUserInfoAsync(string appId, string userId, CancellationToken cancellationToken)
+      public async Task<Ruyi.SDK.Speech.SpeechResult> SayAsync(Ruyi.SDK.Speech.VoiceCommand command, CancellationToken cancellationToken)
       {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetPlayingUserInfo", TMessageType.Call, SeqId), cancellationToken);
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Say", TMessageType.Call, SeqId), cancellationToken);
         
-        var args = new GetPlayingUserInfoArgs();
-        args.AppId = appId;
-        args.UserId = userId;
+        var args = new SayArgs();
+        args.Command = command;
         
         await args.WriteAsync(OutputProtocol, cancellationToken);
         await OutputProtocol.WriteMessageEndAsync(cancellationToken);
@@ -61,18 +60,14 @@ namespace Ruyi.SDK.UserServiceExternal
           throw x;
         }
 
-        var result = new GetPlayingUserInfoResult();
+        var result = new SayResult();
         await result.ReadAsync(InputProtocol, cancellationToken);
         await InputProtocol.ReadMessageEndAsync(cancellationToken);
         if (result.__isset.success)
         {
           return result.Success;
         }
-        if (result.__isset.error1)
-        {
-          throw result.Error1;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetPlayingUserInfo failed: unknown result");
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Say failed: unknown result");
       }
 
     }
@@ -86,7 +81,7 @@ namespace Ruyi.SDK.UserServiceExternal
         if (iAsync == null) throw new ArgumentNullException(nameof(iAsync));
 
         _iAsync = iAsync;
-        processMap_["GetPlayingUserInfo"] = GetPlayingUserInfo_ProcessAsync;
+        processMap_["Say"] = Say_ProcessAsync;
       }
 
       protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken);
@@ -129,23 +124,16 @@ namespace Ruyi.SDK.UserServiceExternal
         return true;
       }
 
-      public async Task GetPlayingUserInfo_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      public async Task Say_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
-        var args = new GetPlayingUserInfoArgs();
+        var args = new SayArgs();
         await args.ReadAsync(iprot, cancellationToken);
         await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new GetPlayingUserInfoResult();
+        var result = new SayResult();
         try
         {
-          try
-          {
-            result.Success = await _iAsync.GetPlayingUserInfoAsync(args.AppId, args.UserId, cancellationToken);
-          }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
-          {
-            result.Error1 = error1;
-          }
-          await oprot.WriteMessageBeginAsync(new TMessage("GetPlayingUserInfo", TMessageType.Reply, seqid), cancellationToken); 
+          result.Success = await _iAsync.SayAsync(args.Command, cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("Say", TMessageType.Reply, seqid), cancellationToken); 
           await result.WriteAsync(oprot, cancellationToken);
         }
         catch (TTransportException)
@@ -157,7 +145,7 @@ namespace Ruyi.SDK.UserServiceExternal
           Console.Error.WriteLine("Error occurred in processor:");
           Console.Error.WriteLine(ex.ToString());
           var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("GetPlayingUserInfo", TMessageType.Exception, seqid), cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("Say", TMessageType.Exception, seqid), cancellationToken);
           await x.WriteAsync(oprot, cancellationToken);
         }
         await oprot.WriteMessageEndAsync(cancellationToken);
@@ -167,34 +155,20 @@ namespace Ruyi.SDK.UserServiceExternal
     }
 
 
-    public partial class GetPlayingUserInfoArgs : TBase
+    public partial class SayArgs : TBase
     {
-      private string _appId;
-      private string _userId;
+      private Ruyi.SDK.Speech.VoiceCommand _command;
 
-      public string AppId
+      public Ruyi.SDK.Speech.VoiceCommand Command
       {
         get
         {
-          return _appId;
+          return _command;
         }
         set
         {
-          __isset.appId = true;
-          this._appId = value;
-        }
-      }
-
-      public string UserId
-      {
-        get
-        {
-          return _userId;
-        }
-        set
-        {
-          __isset.userId = true;
-          this._userId = value;
+          __isset.command = true;
+          this._command = value;
         }
       }
 
@@ -202,11 +176,10 @@ namespace Ruyi.SDK.UserServiceExternal
       public Isset __isset;
       public struct Isset
       {
-        public bool appId;
-        public bool userId;
+        public bool command;
       }
 
-      public GetPlayingUserInfoArgs()
+      public SayArgs()
       {
       }
 
@@ -228,19 +201,10 @@ namespace Ruyi.SDK.UserServiceExternal
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String)
+                if (field.Type == TType.Struct)
                 {
-                  AppId = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String)
-                {
-                  UserId = await iprot.ReadStringAsync(cancellationToken);
+                  Command = new Ruyi.SDK.Speech.VoiceCommand();
+                  await Command.ReadAsync(iprot, cancellationToken);
                 }
                 else
                 {
@@ -268,25 +232,16 @@ namespace Ruyi.SDK.UserServiceExternal
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("GetPlayingUserInfo_args");
+          var struc = new TStruct("Say_args");
           await oprot.WriteStructBeginAsync(struc, cancellationToken);
           var field = new TField();
-          if (AppId != null && __isset.appId)
+          if (Command != null && __isset.command)
           {
-            field.Name = "appId";
-            field.Type = TType.String;
+            field.Name = "command";
+            field.Type = TType.Struct;
             field.ID = 1;
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(AppId, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          if (UserId != null && __isset.userId)
-          {
-            field.Name = "userId";
-            field.Type = TType.String;
-            field.ID = 2;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(UserId, cancellationToken);
+            await Command.WriteAsync(oprot, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
           }
           await oprot.WriteFieldStopAsync(cancellationToken);
@@ -300,21 +255,14 @@ namespace Ruyi.SDK.UserServiceExternal
 
       public override string ToString()
       {
-        var sb = new StringBuilder("GetPlayingUserInfo_args(");
+        var sb = new StringBuilder("Say_args(");
         bool __first = true;
-        if (AppId != null && __isset.appId)
+        if (Command != null && __isset.command)
         {
           if(!__first) { sb.Append(", "); }
           __first = false;
-          sb.Append("AppId: ");
-          sb.Append(AppId);
-        }
-        if (UserId != null && __isset.userId)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("UserId: ");
-          sb.Append(UserId);
+          sb.Append("Command: ");
+          sb.Append(Command== null ? "<null>" : Command.ToString());
         }
         sb.Append(")");
         return sb.ToString();
@@ -322,12 +270,15 @@ namespace Ruyi.SDK.UserServiceExternal
     }
 
 
-    public partial class GetPlayingUserInfoResult : TBase
+    public partial class SayResult : TBase
     {
-      private Ruyi.SDK.UserServiceExternal.UserInfo_Public _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private Ruyi.SDK.Speech.SpeechResult _success;
 
-      public Ruyi.SDK.UserServiceExternal.UserInfo_Public Success
+      /// <summary>
+      /// 
+      /// <seealso cref="Ruyi.SDK.Speech.SpeechResult"/>
+      /// </summary>
+      public Ruyi.SDK.Speech.SpeechResult Success
       {
         get
         {
@@ -340,28 +291,14 @@ namespace Ruyi.SDK.UserServiceExternal
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
-      {
-        get
-        {
-          return _error1;
-        }
-        set
-        {
-          __isset.error1 = true;
-          this._error1 = value;
-        }
-      }
-
 
       public Isset __isset;
       public struct Isset
       {
         public bool success;
-        public bool error1;
       }
 
-      public GetPlayingUserInfoResult()
+      public SayResult()
       {
       }
 
@@ -383,21 +320,9 @@ namespace Ruyi.SDK.UserServiceExternal
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Struct)
+                if (field.Type == TType.I32)
                 {
-                  Success = new Ruyi.SDK.UserServiceExternal.UserInfo_Public();
-                  await Success.ReadAsync(iprot, cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              case 1:
-                if (field.Type == TType.Struct)
-                {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
-                  await Error1.ReadAsync(iprot, cancellationToken);
+                  Success = (Ruyi.SDK.Speech.SpeechResult)await iprot.ReadI32Async(cancellationToken);
                 }
                 else
                 {
@@ -425,33 +350,18 @@ namespace Ruyi.SDK.UserServiceExternal
         oprot.IncrementRecursionDepth();
         try
         {
-          var struc = new TStruct("GetPlayingUserInfo_result");
+          var struc = new TStruct("Say_result");
           await oprot.WriteStructBeginAsync(struc, cancellationToken);
           var field = new TField();
 
           if(this.__isset.success)
           {
-            if (Success != null)
-            {
-              field.Name = "Success";
-              field.Type = TType.Struct;
-              field.ID = 0;
-              await oprot.WriteFieldBeginAsync(field, cancellationToken);
-              await Success.WriteAsync(oprot, cancellationToken);
-              await oprot.WriteFieldEndAsync(cancellationToken);
-            }
-          }
-          else if(this.__isset.error1)
-          {
-            if (Error1 != null)
-            {
-              field.Name = "Error1";
-              field.Type = TType.Struct;
-              field.ID = 1;
-              await oprot.WriteFieldBeginAsync(field, cancellationToken);
-              await Error1.WriteAsync(oprot, cancellationToken);
-              await oprot.WriteFieldEndAsync(cancellationToken);
-            }
+            field.Name = "Success";
+            field.Type = TType.I32;
+            field.ID = 0;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async((int)Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
           }
           await oprot.WriteFieldStopAsync(cancellationToken);
           await oprot.WriteStructEndAsync(cancellationToken);
@@ -464,21 +374,14 @@ namespace Ruyi.SDK.UserServiceExternal
 
       public override string ToString()
       {
-        var sb = new StringBuilder("GetPlayingUserInfo_result(");
+        var sb = new StringBuilder("Say_result(");
         bool __first = true;
-        if (Success != null && __isset.success)
+        if (__isset.success)
         {
           if(!__first) { sb.Append(", "); }
           __first = false;
           sb.Append("Success: ");
-          sb.Append(Success== null ? "<null>" : Success.ToString());
-        }
-        if (Error1 != null && __isset.error1)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("Error1: ");
-          sb.Append(Error1== null ? "<null>" : Error1.ToString());
+          sb.Append(Success);
         }
         sb.Append(")");
         return sb.ToString();

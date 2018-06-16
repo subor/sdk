@@ -22,37 +22,37 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.MediaService
 {
 
-  public partial class SettingSearchResult : TBase
+  public partial class QueryMsg : TBase
   {
-    private string _Version;
-    private List<Ruyi.SDK.CommonType.SettingItem> _SettingItems;
+    private string _path;
+    private string _pattern;
 
-    public string Version
+    public string Path
     {
       get
       {
-        return _Version;
+        return _path;
       }
       set
       {
-        __isset.Version = true;
-        this._Version = value;
+        __isset.path = true;
+        this._path = value;
       }
     }
 
-    public List<Ruyi.SDK.CommonType.SettingItem> SettingItems
+    public string Pattern
     {
       get
       {
-        return _SettingItems;
+        return _pattern;
       }
       set
       {
-        __isset.SettingItems = true;
-        this._SettingItems = value;
+        __isset.pattern = true;
+        this._pattern = value;
       }
     }
 
@@ -60,11 +60,11 @@ namespace Ruyi.SDK.SettingSystem.Api
     public Isset __isset;
     public struct Isset
     {
-      public bool Version;
-      public bool SettingItems;
+      public bool path;
+      public bool pattern;
     }
 
-    public SettingSearchResult()
+    public QueryMsg()
     {
     }
 
@@ -88,7 +88,7 @@ namespace Ruyi.SDK.SettingSystem.Api
             case 1:
               if (field.Type == TType.String)
               {
-                Version = await iprot.ReadStringAsync(cancellationToken);
+                Path = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -96,20 +96,9 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 2:
-              if (field.Type == TType.List)
+              if (field.Type == TType.String)
               {
-                {
-                  SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
-                  TList _list4 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i5 = 0; _i5 < _list4.Count; ++_i5)
-                  {
-                    Ruyi.SDK.CommonType.SettingItem _elem6;
-                    _elem6 = new Ruyi.SDK.CommonType.SettingItem();
-                    await _elem6.ReadAsync(iprot, cancellationToken);
-                    SettingItems.Add(_elem6);
-                  }
-                  await iprot.ReadListEndAsync(cancellationToken);
-                }
+                Pattern = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -137,32 +126,25 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("SettingSearchResult");
+        var struc = new TStruct("QueryMsg");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Version != null && __isset.Version)
+        if (Path != null && __isset.path)
         {
-          field.Name = "Version";
+          field.Name = "path";
           field.Type = TType.String;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Version, cancellationToken);
+          await oprot.WriteStringAsync(Path, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (SettingItems != null && __isset.SettingItems)
+        if (Pattern != null && __isset.pattern)
         {
-          field.Name = "SettingItems";
-          field.Type = TType.List;
+          field.Name = "pattern";
+          field.Type = TType.String;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          {
-            await oprot.WriteListBeginAsync(new TList(TType.Struct, SettingItems.Count), cancellationToken);
-            foreach (Ruyi.SDK.CommonType.SettingItem _iter7 in SettingItems)
-            {
-              await _iter7.WriteAsync(oprot, cancellationToken);
-            }
-            await oprot.WriteListEndAsync(cancellationToken);
-          }
+          await oprot.WriteStringAsync(Pattern, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -176,21 +158,21 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("SettingSearchResult(");
+      var sb = new StringBuilder("QueryMsg(");
       bool __first = true;
-      if (Version != null && __isset.Version)
+      if (Path != null && __isset.path)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Version: ");
-        sb.Append(Version);
+        sb.Append("Path: ");
+        sb.Append(Path);
       }
-      if (SettingItems != null && __isset.SettingItems)
+      if (Pattern != null && __isset.pattern)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("SettingItems: ");
-        sb.Append(SettingItems);
+        sb.Append("Pattern: ");
+        sb.Append(Pattern);
       }
       sb.Append(")");
       return sb.ToString();

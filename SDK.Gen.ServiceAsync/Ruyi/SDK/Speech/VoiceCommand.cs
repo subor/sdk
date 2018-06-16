@@ -22,37 +22,37 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.Speech
 {
 
-  public partial class SettingSearchResult : TBase
+  public partial class VoiceCommand : TBase
   {
-    private string _Version;
-    private List<Ruyi.SDK.CommonType.SettingItem> _SettingItems;
+    private string _Filename;
+    private byte[] _RawData;
 
-    public string Version
+    public string Filename
     {
       get
       {
-        return _Version;
+        return _Filename;
       }
       set
       {
-        __isset.Version = true;
-        this._Version = value;
+        __isset.Filename = true;
+        this._Filename = value;
       }
     }
 
-    public List<Ruyi.SDK.CommonType.SettingItem> SettingItems
+    public byte[] RawData
     {
       get
       {
-        return _SettingItems;
+        return _RawData;
       }
       set
       {
-        __isset.SettingItems = true;
-        this._SettingItems = value;
+        __isset.RawData = true;
+        this._RawData = value;
       }
     }
 
@@ -60,11 +60,11 @@ namespace Ruyi.SDK.SettingSystem.Api
     public Isset __isset;
     public struct Isset
     {
-      public bool Version;
-      public bool SettingItems;
+      public bool Filename;
+      public bool RawData;
     }
 
-    public SettingSearchResult()
+    public VoiceCommand()
     {
     }
 
@@ -88,7 +88,7 @@ namespace Ruyi.SDK.SettingSystem.Api
             case 1:
               if (field.Type == TType.String)
               {
-                Version = await iprot.ReadStringAsync(cancellationToken);
+                Filename = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -96,20 +96,9 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 2:
-              if (field.Type == TType.List)
+              if (field.Type == TType.String)
               {
-                {
-                  SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
-                  TList _list4 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i5 = 0; _i5 < _list4.Count; ++_i5)
-                  {
-                    Ruyi.SDK.CommonType.SettingItem _elem6;
-                    _elem6 = new Ruyi.SDK.CommonType.SettingItem();
-                    await _elem6.ReadAsync(iprot, cancellationToken);
-                    SettingItems.Add(_elem6);
-                  }
-                  await iprot.ReadListEndAsync(cancellationToken);
-                }
+                RawData = await iprot.ReadBinaryAsync(cancellationToken);
               }
               else
               {
@@ -137,32 +126,25 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("SettingSearchResult");
+        var struc = new TStruct("VoiceCommand");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Version != null && __isset.Version)
+        if (Filename != null && __isset.Filename)
         {
-          field.Name = "Version";
+          field.Name = "Filename";
           field.Type = TType.String;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Version, cancellationToken);
+          await oprot.WriteStringAsync(Filename, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (SettingItems != null && __isset.SettingItems)
+        if (RawData != null && __isset.RawData)
         {
-          field.Name = "SettingItems";
-          field.Type = TType.List;
+          field.Name = "RawData";
+          field.Type = TType.String;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          {
-            await oprot.WriteListBeginAsync(new TList(TType.Struct, SettingItems.Count), cancellationToken);
-            foreach (Ruyi.SDK.CommonType.SettingItem _iter7 in SettingItems)
-            {
-              await _iter7.WriteAsync(oprot, cancellationToken);
-            }
-            await oprot.WriteListEndAsync(cancellationToken);
-          }
+          await oprot.WriteBinaryAsync(RawData, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -176,21 +158,21 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("SettingSearchResult(");
+      var sb = new StringBuilder("VoiceCommand(");
       bool __first = true;
-      if (Version != null && __isset.Version)
+      if (Filename != null && __isset.Filename)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Version: ");
-        sb.Append(Version);
+        sb.Append("Filename: ");
+        sb.Append(Filename);
       }
-      if (SettingItems != null && __isset.SettingItems)
+      if (RawData != null && __isset.RawData)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("SettingItems: ");
-        sb.Append(SettingItems);
+        sb.Append("RawData: ");
+        sb.Append(RawData);
       }
       sb.Append(")");
       return sb.ToString();
