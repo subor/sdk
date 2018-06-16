@@ -133,11 +133,7 @@ class BCServiceStartedNotification : public virtual ::apache::thrift::TBase {
 
 void swap(BCServiceStartedNotification &a, BCServiceStartedNotification &b);
 
-inline std::ostream& operator<<(std::ostream& out, const BCServiceStartedNotification& obj)
-{
-  obj.printTo(out);
-  return out;
-}
+std::ostream& operator<<(std::ostream& out, const BCServiceStartedNotification& obj);
 
 typedef struct _FileUploadSuccessResult__isset {
   _FileUploadSuccessResult__isset() : fileUploadId(false), jsonResponse(false) {}

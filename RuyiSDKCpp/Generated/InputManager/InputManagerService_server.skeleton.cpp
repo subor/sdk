@@ -12,8 +12,6 @@ using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
 using namespace ::apache::thrift::server;
 
-using boost::shared_ptr;
-
 using namespace  ::Ruyi::SDK::InputManager;
 
 class InputManagerServiceHandler : virtual public InputManagerServiceIf {
@@ -31,11 +29,11 @@ class InputManagerServiceHandler : virtual public InputManagerServiceIf {
 
 int main(int argc, char **argv) {
   int port = 9090;
-  shared_ptr<InputManagerServiceHandler> handler(new InputManagerServiceHandler());
-  shared_ptr<TProcessor> processor(new InputManagerServiceProcessor(handler));
-  shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
-  shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-  shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+  ::apache::thrift::stdcxx::shared_ptr<InputManagerServiceHandler> handler(new InputManagerServiceHandler());
+  ::apache::thrift::stdcxx::shared_ptr<TProcessor> processor(new InputManagerServiceProcessor(handler));
+  ::apache::thrift::stdcxx::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
+  ::apache::thrift::stdcxx::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
+  ::apache::thrift::stdcxx::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
 
   TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
   server.serve();
