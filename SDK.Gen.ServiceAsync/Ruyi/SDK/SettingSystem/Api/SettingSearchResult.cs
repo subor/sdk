@@ -28,7 +28,7 @@ namespace Ruyi.SDK.SettingSystem.Api
   public partial class SettingSearchResult : TBase
   {
     private string _Version;
-    private List<Ruyi.SDK.CommonType.SettingItem> _SettingItems;
+    private List<SettingItem> _SettingItems;
 
     public string Version
     {
@@ -43,7 +43,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public List<Ruyi.SDK.CommonType.SettingItem> SettingItems
+    public List<SettingItem> SettingItems
     {
       get
       {
@@ -99,12 +99,12 @@ namespace Ruyi.SDK.SettingSystem.Api
               if (field.Type == TType.List)
               {
                 {
-                  SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
+                  SettingItems = new List<SettingItem>();
                   TList _list4 = await iprot.ReadListBeginAsync(cancellationToken);
                   for(int _i5 = 0; _i5 < _list4.Count; ++_i5)
                   {
-                    Ruyi.SDK.CommonType.SettingItem _elem6;
-                    _elem6 = new Ruyi.SDK.CommonType.SettingItem();
+                    SettingItem _elem6;
+                    _elem6 = new SettingItem();
                     await _elem6.ReadAsync(iprot, cancellationToken);
                     SettingItems.Add(_elem6);
                   }
@@ -157,7 +157,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, SettingItems.Count), cancellationToken);
-            foreach (Ruyi.SDK.CommonType.SettingItem _iter7 in SettingItems)
+            foreach (SettingItem _iter7 in SettingItems)
             {
               await _iter7.WriteAsync(oprot, cancellationToken);
             }

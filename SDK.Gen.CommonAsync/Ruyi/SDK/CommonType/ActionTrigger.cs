@@ -25,62 +25,52 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
-  public partial class InputIdentifier : TBase
+  public partial class ActionTrigger : TBase
   {
-    private string _Device;
-    private string _Value;
-    private string _ActivateEvent;
-    private InputModifier _Modifier;
+    private InputCategory _InputCagetory;
+    private List<int> _TriggerButtons;
+    private List<int> _TriggerValue;
 
-    public string Device
+    /// <summary>
+    /// 
+    /// <seealso cref="InputCategory"/>
+    /// </summary>
+    public InputCategory InputCagetory
     {
       get
       {
-        return _Device;
+        return _InputCagetory;
       }
       set
       {
-        __isset.Device = true;
-        this._Device = value;
+        __isset.InputCagetory = true;
+        this._InputCagetory = value;
       }
     }
 
-    public string Value
+    public List<int> TriggerButtons
     {
       get
       {
-        return _Value;
+        return _TriggerButtons;
       }
       set
       {
-        __isset.@Value = true;
-        this._Value = value;
+        __isset.TriggerButtons = true;
+        this._TriggerButtons = value;
       }
     }
 
-    public string ActivateEvent
+    public List<int> TriggerValue
     {
       get
       {
-        return _ActivateEvent;
+        return _TriggerValue;
       }
       set
       {
-        __isset.ActivateEvent = true;
-        this._ActivateEvent = value;
-      }
-    }
-
-    public InputModifier Modifier
-    {
-      get
-      {
-        return _Modifier;
-      }
-      set
-      {
-        __isset.Modifier = true;
-        this._Modifier = value;
+        __isset.TriggerValue = true;
+        this._TriggerValue = value;
       }
     }
 
@@ -88,13 +78,12 @@ namespace Ruyi.SDK.CommonType
     public Isset __isset;
     public struct Isset
     {
-      public bool Device;
-      public bool @Value;
-      public bool ActivateEvent;
-      public bool Modifier;
+      public bool InputCagetory;
+      public bool TriggerButtons;
+      public bool TriggerValue;
     }
 
-    public InputIdentifier()
+    public ActionTrigger()
     {
     }
 
@@ -116,9 +105,9 @@ namespace Ruyi.SDK.CommonType
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
+              if (field.Type == TType.I32)
               {
-                Device = await iprot.ReadStringAsync(cancellationToken);
+                InputCagetory = (InputCategory)await iprot.ReadI32Async(cancellationToken);
               }
               else
               {
@@ -126,9 +115,19 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 2:
-              if (field.Type == TType.String)
+              if (field.Type == TType.List)
               {
-                Value = await iprot.ReadStringAsync(cancellationToken);
+                {
+                  TriggerButtons = new List<int>();
+                  TList _list0 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i1 = 0; _i1 < _list0.Count; ++_i1)
+                  {
+                    int _elem2;
+                    _elem2 = await iprot.ReadI32Async(cancellationToken);
+                    TriggerButtons.Add(_elem2);
+                  }
+                  await iprot.ReadListEndAsync(cancellationToken);
+                }
               }
               else
               {
@@ -136,20 +135,19 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 3:
-              if (field.Type == TType.String)
+              if (field.Type == TType.List)
               {
-                ActivateEvent = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 4:
-              if (field.Type == TType.Struct)
-              {
-                Modifier = new InputModifier();
-                await Modifier.ReadAsync(iprot, cancellationToken);
+                {
+                  TriggerValue = new List<int>();
+                  TList _list3 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i4 = 0; _i4 < _list3.Count; ++_i4)
+                  {
+                    int _elem5;
+                    _elem5 = await iprot.ReadI32Async(cancellationToken);
+                    TriggerValue.Add(_elem5);
+                  }
+                  await iprot.ReadListEndAsync(cancellationToken);
+                }
               }
               else
               {
@@ -177,43 +175,48 @@ namespace Ruyi.SDK.CommonType
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("InputIdentifier");
+        var struc = new TStruct("ActionTrigger");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Device != null && __isset.Device)
+        if (__isset.InputCagetory)
         {
-          field.Name = "Device";
-          field.Type = TType.String;
+          field.Name = "InputCagetory";
+          field.Type = TType.I32;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Device, cancellationToken);
+          await oprot.WriteI32Async((int)InputCagetory, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Value != null && __isset.@Value)
+        if (TriggerButtons != null && __isset.TriggerButtons)
         {
-          field.Name = "Value";
-          field.Type = TType.String;
+          field.Name = "TriggerButtons";
+          field.Type = TType.List;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Value, cancellationToken);
+          {
+            await oprot.WriteListBeginAsync(new TList(TType.I32, TriggerButtons.Count), cancellationToken);
+            foreach (int _iter6 in TriggerButtons)
+            {
+              await oprot.WriteI32Async(_iter6, cancellationToken);
+            }
+            await oprot.WriteListEndAsync(cancellationToken);
+          }
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (ActivateEvent != null && __isset.ActivateEvent)
+        if (TriggerValue != null && __isset.TriggerValue)
         {
-          field.Name = "ActivateEvent";
-          field.Type = TType.String;
+          field.Name = "TriggerValue";
+          field.Type = TType.List;
           field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(ActivateEvent, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (Modifier != null && __isset.Modifier)
-        {
-          field.Name = "Modifier";
-          field.Type = TType.Struct;
-          field.ID = 4;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Modifier.WriteAsync(oprot, cancellationToken);
+          {
+            await oprot.WriteListBeginAsync(new TList(TType.I32, TriggerValue.Count), cancellationToken);
+            foreach (int _iter7 in TriggerValue)
+            {
+              await oprot.WriteI32Async(_iter7, cancellationToken);
+            }
+            await oprot.WriteListEndAsync(cancellationToken);
+          }
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -227,35 +230,28 @@ namespace Ruyi.SDK.CommonType
 
     public override string ToString()
     {
-      var sb = new StringBuilder("InputIdentifier(");
+      var sb = new StringBuilder("ActionTrigger(");
       bool __first = true;
-      if (Device != null && __isset.Device)
+      if (__isset.InputCagetory)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Device: ");
-        sb.Append(Device);
+        sb.Append("InputCagetory: ");
+        sb.Append(InputCagetory);
       }
-      if (Value != null && __isset.@Value)
+      if (TriggerButtons != null && __isset.TriggerButtons)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Value: ");
-        sb.Append(Value);
+        sb.Append("TriggerButtons: ");
+        sb.Append(TriggerButtons);
       }
-      if (ActivateEvent != null && __isset.ActivateEvent)
+      if (TriggerValue != null && __isset.TriggerValue)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("ActivateEvent: ");
-        sb.Append(ActivateEvent);
-      }
-      if (Modifier != null && __isset.Modifier)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("Modifier: ");
-        sb.Append(Modifier== null ? "<null>" : Modifier.ToString());
+        sb.Append("TriggerValue: ");
+        sb.Append(TriggerValue);
       }
       sb.Append(")");
       return sb.ToString();

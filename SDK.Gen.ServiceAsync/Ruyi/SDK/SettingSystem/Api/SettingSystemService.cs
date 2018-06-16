@@ -32,14 +32,14 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// Get a setting data of the module.
       /// </summary>
       /// <param name="id">The setting's unique id in current module.</param>
-      Task<Ruyi.SDK.CommonType.SettingItem> GetSettingItemAsync(string id, CancellationToken cancellationToken);
+      Task<SettingItem> GetSettingItemAsync(string id, CancellationToken cancellationToken);
 
       /// <summary>
       /// Get a list of setting data of the module.
       /// </summary>
       /// <param name="category">Category to filter the settings. Null indicates getting all settings of the module</param>
       /// <param name="includeChildren">Whecher to get the settings of children cagegories.</param>
-      Task<List<Ruyi.SDK.CommonType.SettingItem>> GetSettingItemsAsync(string category, bool includeChildren, CancellationToken cancellationToken);
+      Task<List<SettingItem>> GetSettingItemsAsync(string category, bool includeChildren, CancellationToken cancellationToken);
 
       /// <summary>
       /// Search a set of settings using a json format string.
@@ -83,9 +83,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="moduleName">Module of the setting</param>
       Task<bool> UpdateModuleVersionAsync(string moduleName, CancellationToken cancellationToken);
 
-      Task<int> SetUserAppDataAsync(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems, CancellationToken cancellationToken);
+      Task<int> SetUserAppDataAsync(string userId, string category, Dictionary<string, SettingValue> settingItems, CancellationToken cancellationToken);
 
-      Task<Ruyi.SDK.CommonType.AppData> GetUserAppDataAsync(string userId, string category, List<string> settingKeys, CancellationToken cancellationToken);
+      Task<AppData> GetUserAppDataAsync(string userId, string category, List<string> settingKeys, CancellationToken cancellationToken);
 
       Task<int> RemoveUserAppDataAsync(string userId, string category, List<string> settingKeys, CancellationToken cancellationToken);
 
@@ -107,7 +107,7 @@ namespace Ruyi.SDK.SettingSystem.Api
 
       public Client(TProtocol inputProtocol, TProtocol outputProtocol) : base(inputProtocol, outputProtocol)      {
       }
-      public async Task<Ruyi.SDK.CommonType.SettingItem> GetSettingItemAsync(string id, CancellationToken cancellationToken)
+      public async Task<SettingItem> GetSettingItemAsync(string id, CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetSettingItem", TMessageType.Call, SeqId), cancellationToken);
         
@@ -140,7 +140,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetSettingItem failed: unknown result");
       }
 
-      public async Task<List<Ruyi.SDK.CommonType.SettingItem>> GetSettingItemsAsync(string category, bool includeChildren, CancellationToken cancellationToken)
+      public async Task<List<SettingItem>> GetSettingItemsAsync(string category, bool includeChildren, CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetSettingItems", TMessageType.Call, SeqId), cancellationToken);
         
@@ -442,7 +442,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "UpdateModuleVersion failed: unknown result");
       }
 
-      public async Task<int> SetUserAppDataAsync(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems, CancellationToken cancellationToken)
+      public async Task<int> SetUserAppDataAsync(string userId, string category, Dictionary<string, SettingValue> settingItems, CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("SetUserAppData", TMessageType.Call, SeqId), cancellationToken);
         
@@ -477,7 +477,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SetUserAppData failed: unknown result");
       }
 
-      public async Task<Ruyi.SDK.CommonType.AppData> GetUserAppDataAsync(string userId, string category, List<string> settingKeys, CancellationToken cancellationToken)
+      public async Task<AppData> GetUserAppDataAsync(string userId, string category, List<string> settingKeys, CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetUserAppData", TMessageType.Call, SeqId), cancellationToken);
         
@@ -660,7 +660,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.GetSettingItemAsync(args.Id, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -695,7 +695,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.GetSettingItemsAsync(args.Category, args.IncludeChildren, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -730,7 +730,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.SearchSettingItemsAsync(args.FilterJson, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -765,7 +765,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.GetCategoryNodeAsync(cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -800,7 +800,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.GetChildNodeAsync(args.Parent, args.NodeType, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -835,7 +835,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.SetSettingItemAsync(args.Key, args.Val, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -870,7 +870,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.SetSettingItemsAsync(args.KeyValues, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -905,7 +905,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.RestoreDefaultAsync(args.ModuleName, args.Category, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -940,7 +940,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.RestoreUserDefaultAsync(args.UserId, args.ModuleName, args.Category, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -975,7 +975,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.UpdateModuleVersionAsync(args.ModuleName, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -1010,7 +1010,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.SetUserAppDataAsync(args.UserId, args.Category, args.SettingItems, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -1045,7 +1045,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.GetUserAppDataAsync(args.UserId, args.Category, args.SettingKeys, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -1080,7 +1080,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.RemoveUserAppDataAsync(args.UserId, args.Category, args.SettingKeys, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -1115,7 +1115,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             result.Success = await _iAsync.SettingItemNotifyAsync(args.Key, args.Contents, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -1260,10 +1260,10 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public partial class GetSettingItemResult : TBase
     {
-      private Ruyi.SDK.CommonType.SettingItem _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private SettingItem _success;
+      private ErrorException _error1;
 
-      public Ruyi.SDK.CommonType.SettingItem Success
+      public SettingItem Success
       {
         get
         {
@@ -1276,7 +1276,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -1321,7 +1321,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 0:
                 if (field.Type == TType.Struct)
                 {
-                  Success = new Ruyi.SDK.CommonType.SettingItem();
+                  Success = new SettingItem();
                   await Success.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -1332,7 +1332,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -1585,10 +1585,10 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public partial class GetSettingItemsResult : TBase
     {
-      private List<Ruyi.SDK.CommonType.SettingItem> _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private List<SettingItem> _success;
+      private ErrorException _error1;
 
-      public List<Ruyi.SDK.CommonType.SettingItem> Success
+      public List<SettingItem> Success
       {
         get
         {
@@ -1601,7 +1601,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -1647,12 +1647,12 @@ namespace Ruyi.SDK.SettingSystem.Api
                 if (field.Type == TType.List)
                 {
                   {
-                    Success = new List<Ruyi.SDK.CommonType.SettingItem>();
+                    Success = new List<SettingItem>();
                     TList _list0 = await iprot.ReadListBeginAsync(cancellationToken);
                     for(int _i1 = 0; _i1 < _list0.Count; ++_i1)
                     {
-                      Ruyi.SDK.CommonType.SettingItem _elem2;
-                      _elem2 = new Ruyi.SDK.CommonType.SettingItem();
+                      SettingItem _elem2;
+                      _elem2 = new SettingItem();
                       await _elem2.ReadAsync(iprot, cancellationToken);
                       Success.Add(_elem2);
                     }
@@ -1667,7 +1667,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -1710,7 +1710,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               await oprot.WriteFieldBeginAsync(field, cancellationToken);
               {
                 await oprot.WriteListBeginAsync(new TList(TType.Struct, Success.Count), cancellationToken);
-                foreach (Ruyi.SDK.CommonType.SettingItem _iter3 in Success)
+                foreach (SettingItem _iter3 in Success)
                 {
                   await _iter3.WriteAsync(oprot, cancellationToken);
                 }
@@ -1884,7 +1884,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     public partial class SearchSettingItemsResult : TBase
     {
       private Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult> _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private ErrorException _error1;
 
       public Dictionary<string, Ruyi.SDK.SettingSystem.Api.SettingSearchResult> Success
       {
@@ -1899,7 +1899,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -1967,7 +1967,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -2133,7 +2133,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     public partial class GetCategoryNodeResult : TBase
     {
       private Ruyi.SDK.SettingSystem.Api.SettingTree _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private ErrorException _error1;
 
       public Ruyi.SDK.SettingSystem.Api.SettingTree Success
       {
@@ -2148,7 +2148,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -2204,7 +2204,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -2456,7 +2456,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     public partial class GetChildNodeResult : TBase
     {
       private Ruyi.SDK.SettingSystem.Api.NodeList _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private ErrorException _error1;
 
       public Ruyi.SDK.SettingSystem.Api.NodeList Success
       {
@@ -2471,7 +2471,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -2527,7 +2527,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -2781,7 +2781,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     public partial class SetSettingItemResult : TBase
     {
       private bool _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private ErrorException _error1;
 
       public bool Success
       {
@@ -2796,7 +2796,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -2851,7 +2851,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -3078,7 +3078,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     public partial class SetSettingItemsResult : TBase
     {
       private int _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private ErrorException _error1;
 
       public int Success
       {
@@ -3093,7 +3093,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -3148,7 +3148,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -3399,7 +3399,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     public partial class RestoreDefaultResult : TBase
     {
       private bool _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private ErrorException _error1;
 
       public bool Success
       {
@@ -3414,7 +3414,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -3469,7 +3469,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -3755,7 +3755,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     public partial class RestoreUserDefaultResult : TBase
     {
       private bool _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private ErrorException _error1;
 
       public bool Success
       {
@@ -3770,7 +3770,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -3825,7 +3825,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -4032,7 +4032,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     public partial class UpdateModuleVersionResult : TBase
     {
       private bool _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private ErrorException _error1;
 
       public bool Success
       {
@@ -4047,7 +4047,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -4102,7 +4102,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -4193,7 +4193,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     {
       private string _userId;
       private string _category;
-      private Dictionary<string, Ruyi.SDK.CommonType.SettingValue> _settingItems;
+      private Dictionary<string, SettingValue> _settingItems;
 
       public string UserId
       {
@@ -4221,7 +4221,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Dictionary<string, Ruyi.SDK.CommonType.SettingValue> SettingItems
+      public Dictionary<string, SettingValue> SettingItems
       {
         get
         {
@@ -4288,14 +4288,14 @@ namespace Ruyi.SDK.SettingSystem.Api
                 if (field.Type == TType.Map)
                 {
                   {
-                    SettingItems = new Dictionary<string, Ruyi.SDK.CommonType.SettingValue>();
+                    SettingItems = new Dictionary<string, SettingValue>();
                     TMap _map14 = await iprot.ReadMapBeginAsync(cancellationToken);
                     for(int _i15 = 0; _i15 < _map14.Count; ++_i15)
                     {
                       string _key16;
-                      Ruyi.SDK.CommonType.SettingValue _val17;
+                      SettingValue _val17;
                       _key16 = await iprot.ReadStringAsync(cancellationToken);
-                      _val17 = new Ruyi.SDK.CommonType.SettingValue();
+                      _val17 = new SettingValue();
                       await _val17.ReadAsync(iprot, cancellationToken);
                       SettingItems[_key16] = _val17;
                     }
@@ -4409,7 +4409,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     public partial class SetUserAppDataResult : TBase
     {
       private int _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private ErrorException _error1;
 
       public int Success
       {
@@ -4424,7 +4424,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -4479,7 +4479,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -4781,10 +4781,10 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public partial class GetUserAppDataResult : TBase
     {
-      private Ruyi.SDK.CommonType.AppData _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private AppData _success;
+      private ErrorException _error1;
 
-      public Ruyi.SDK.CommonType.AppData Success
+      public AppData Success
       {
         get
         {
@@ -4797,7 +4797,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -4842,7 +4842,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 0:
                 if (field.Type == TType.Struct)
                 {
-                  Success = new Ruyi.SDK.CommonType.AppData();
+                  Success = new AppData();
                   await Success.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -4853,7 +4853,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -5159,7 +5159,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     public partial class RemoveUserAppDataResult : TBase
     {
       private int _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private ErrorException _error1;
 
       public int Success
       {
@@ -5174,7 +5174,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -5229,7 +5229,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else
@@ -5480,7 +5480,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     public partial class SettingItemNotifyResult : TBase
     {
       private bool _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private ErrorException _error1;
 
       public bool Success
       {
@@ -5495,7 +5495,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -5550,7 +5550,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else

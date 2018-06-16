@@ -27,10 +27,10 @@ namespace Ruyi.SDK.SettingSystem.Api
 
   public partial class NodeList : TBase
   {
-    private List<Ruyi.SDK.CommonType.SettingCategory> _SettingCategories;
-    private List<Ruyi.SDK.CommonType.SettingItem> _SettingItems;
+    private List<SettingCategory> _SettingCategories;
+    private List<SettingItem> _SettingItems;
 
-    public List<Ruyi.SDK.CommonType.SettingCategory> SettingCategories
+    public List<SettingCategory> SettingCategories
     {
       get
       {
@@ -43,7 +43,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public List<Ruyi.SDK.CommonType.SettingItem> SettingItems
+    public List<SettingItem> SettingItems
     {
       get
       {
@@ -89,12 +89,12 @@ namespace Ruyi.SDK.SettingSystem.Api
               if (field.Type == TType.List)
               {
                 {
-                  SettingCategories = new List<Ruyi.SDK.CommonType.SettingCategory>();
+                  SettingCategories = new List<SettingCategory>();
                   TList _list18 = await iprot.ReadListBeginAsync(cancellationToken);
                   for(int _i19 = 0; _i19 < _list18.Count; ++_i19)
                   {
-                    Ruyi.SDK.CommonType.SettingCategory _elem20;
-                    _elem20 = new Ruyi.SDK.CommonType.SettingCategory();
+                    SettingCategory _elem20;
+                    _elem20 = new SettingCategory();
                     await _elem20.ReadAsync(iprot, cancellationToken);
                     SettingCategories.Add(_elem20);
                   }
@@ -110,12 +110,12 @@ namespace Ruyi.SDK.SettingSystem.Api
               if (field.Type == TType.List)
               {
                 {
-                  SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
+                  SettingItems = new List<SettingItem>();
                   TList _list21 = await iprot.ReadListBeginAsync(cancellationToken);
                   for(int _i22 = 0; _i22 < _list21.Count; ++_i22)
                   {
-                    Ruyi.SDK.CommonType.SettingItem _elem23;
-                    _elem23 = new Ruyi.SDK.CommonType.SettingItem();
+                    SettingItem _elem23;
+                    _elem23 = new SettingItem();
                     await _elem23.ReadAsync(iprot, cancellationToken);
                     SettingItems.Add(_elem23);
                   }
@@ -159,7 +159,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, SettingCategories.Count), cancellationToken);
-            foreach (Ruyi.SDK.CommonType.SettingCategory _iter24 in SettingCategories)
+            foreach (SettingCategory _iter24 in SettingCategories)
             {
               await _iter24.WriteAsync(oprot, cancellationToken);
             }
@@ -175,7 +175,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, SettingItems.Count), cancellationToken);
-            foreach (Ruyi.SDK.CommonType.SettingItem _iter25 in SettingItems)
+            foreach (SettingItem _iter25 in SettingItems)
             {
               await _iter25.WriteAsync(oprot, cancellationToken);
             }

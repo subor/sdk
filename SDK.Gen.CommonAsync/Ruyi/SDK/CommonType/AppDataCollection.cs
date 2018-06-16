@@ -106,13 +106,13 @@ namespace Ruyi.SDK.CommonType
               {
                 {
                   Records = new List<AppDataRecord>();
-                  TList _list29 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i30 = 0; _i30 < _list29.Count; ++_i30)
+                  TList _list33 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i34 = 0; _i34 < _list33.Count; ++_i34)
                   {
-                    AppDataRecord _elem31;
-                    _elem31 = new AppDataRecord();
-                    await _elem31.ReadAsync(iprot, cancellationToken);
-                    Records.Add(_elem31);
+                    AppDataRecord _elem35;
+                    _elem35 = new AppDataRecord();
+                    await _elem35.ReadAsync(iprot, cancellationToken);
+                    Records.Add(_elem35);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -163,9 +163,9 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, Records.Count), cancellationToken);
-            foreach (AppDataRecord _iter32 in Records)
+            foreach (AppDataRecord _iter36 in Records)
             {
-              await _iter32.WriteAsync(oprot, cancellationToken);
+              await _iter36.WriteAsync(oprot, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }

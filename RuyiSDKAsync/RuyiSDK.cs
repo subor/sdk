@@ -9,6 +9,7 @@ using Ruyi.SDK.SDKValidator;
 using Ruyi.SDK.Speech;
 using Ruyi.SDK.StorageLayer;
 using Ruyi.SDK.UserServiceExternal;
+using Ruyi.SDK.InputManager;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -114,7 +115,10 @@ namespace Ruyi
         /// </summary>
         public UserServExternal.Client UserService { get; private set; }
 
-        //public InputMgrExternal.Client InputMgr { get; private set; }
+        /// <summary>
+        /// Input related services
+        /// </summary>
+        public InputManagerService.Client InputMgr { get; private set; }
 
         /// <summary>
         /// the speech service
@@ -128,14 +132,14 @@ namespace Ruyi
 
         private RuyiSDKContext context = null;
 
-        private TClientTransport lowLatencyTransport = null;
+        private TTransport lowLatencyTransport = null;
         /// <summary>
         /// Underlying transport and protocol for low-latency messages
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public TBinaryProtocolTS LowLatencyProtocol { get; private set; }
 
-        private TClientTransport highLatencyTransport = null;
+        private TTransport highLatencyTransport = null;
         /// <summary>
         /// Underlying transport and protocol for high-latency messages
         /// </summary>
@@ -228,7 +232,7 @@ namespace Ruyi
             // init setting system
             if (IsFeatureEnabled(SDKFeatures.Settings))
             {
-                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.L0SETTINGSYSTEM_EXTERNAL.ServiceID());
+                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.SETTINGSYSTEM_EXTERNAL.ServiceID());
                 SettingSys = new SDK.SettingSystem.Api.SettingSystemService.Client(proto);
             }
 
@@ -246,12 +250,12 @@ namespace Ruyi
                 UserService = new UserServExternal.Client(proto);
             }
 
-            //// input manger
-            //if ( IsFeatureEnabled(Features.Input) )
-            //{
-            //    var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.INPUTMANAGER_EXTERNAL.ServiceID());
-            //    InputMgr = new InputMgrExternal.Client(proto);
-            //}
+            // input manger
+            if (IsFeatureEnabled(SDKFeatures.Input))
+            {
+                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.INPUTMANAGER_EXTERNAL.ServiceID());
+                InputMgr = new InputManagerService.Client(proto);
+            }
 
             if (IsFeatureEnabled(SDKFeatures.Speech))
             {
@@ -348,8 +352,8 @@ namespace Ruyi
             UserService?.Dispose();
             UserService = null;
 
-            //InputMgr?.Dispose();
-            //InputMgr = null;
+            InputMgr?.Dispose();
+            InputMgr = null;
 
             lowLatencyTransport?.Close();
             LowLatencyProtocol?.Dispose();
@@ -373,8 +377,9 @@ namespace Ruyi
                     return;
                 }
 
-                // not Layer0
-                if(!(entry.FullName.StartsWith("Layer0,")))
+                // not Layer0 & not Layer1
+                if(!entry.FullName.StartsWith("Layer0,", StringComparison.OrdinalIgnoreCase) 
+                    && !entry.FullName.StartsWith("Layer1,", StringComparison.OrdinalIgnoreCase))
                 {
                     NetMQConfig.Cleanup(false);
                     return;

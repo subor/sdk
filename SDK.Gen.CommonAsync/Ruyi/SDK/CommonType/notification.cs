@@ -125,12 +125,12 @@ namespace Ruyi.SDK.CommonType
               {
                 {
                   Option = new List<string>();
-                  TList _list4 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i5 = 0; _i5 < _list4.Count; ++_i5)
+                  TList _list8 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i9 = 0; _i9 < _list8.Count; ++_i9)
                   {
-                    string _elem6;
-                    _elem6 = await iprot.ReadStringAsync(cancellationToken);
-                    Option.Add(_elem6);
+                    string _elem10;
+                    _elem10 = await iprot.ReadStringAsync(cancellationToken);
+                    Option.Add(_elem10);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -190,9 +190,9 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.String, Option.Count), cancellationToken);
-            foreach (string _iter7 in Option)
+            foreach (string _iter11 in Option)
             {
-              await oprot.WriteStringAsync(_iter7, cancellationToken);
+              await oprot.WriteStringAsync(_iter11, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }

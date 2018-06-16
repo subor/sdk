@@ -141,7 +141,7 @@ namespace Ruyi.SDK.UserServiceExternal
           {
             result.Success = await _iAsync.GetPlayingUserInfoAsync(args.AppId, args.UserId, cancellationToken);
           }
-          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          catch (ErrorException error1)
           {
             result.Error1 = error1;
           }
@@ -325,7 +325,7 @@ namespace Ruyi.SDK.UserServiceExternal
     public partial class GetPlayingUserInfoResult : TBase
     {
       private Ruyi.SDK.UserServiceExternal.UserInfo_Public _success;
-      private Ruyi.SDK.CommonType.ErrorException _error1;
+      private ErrorException _error1;
 
       public Ruyi.SDK.UserServiceExternal.UserInfo_Public Success
       {
@@ -340,7 +340,7 @@ namespace Ruyi.SDK.UserServiceExternal
         }
       }
 
-      public Ruyi.SDK.CommonType.ErrorException Error1
+      public ErrorException Error1
       {
         get
         {
@@ -396,7 +396,7 @@ namespace Ruyi.SDK.UserServiceExternal
               case 1:
                 if (field.Type == TType.Struct)
                 {
-                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1 = new ErrorException();
                   await Error1.ReadAsync(iprot, cancellationToken);
                 }
                 else

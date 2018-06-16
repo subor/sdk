@@ -106,13 +106,13 @@ namespace Ruyi.SDK.CommonType
               {
                 {
                   Data = new List<AppDataCollection>();
-                  TList _list33 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i34 = 0; _i34 < _list33.Count; ++_i34)
+                  TList _list37 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i38 = 0; _i38 < _list37.Count; ++_i38)
                   {
-                    AppDataCollection _elem35;
-                    _elem35 = new AppDataCollection();
-                    await _elem35.ReadAsync(iprot, cancellationToken);
-                    Data.Add(_elem35);
+                    AppDataCollection _elem39;
+                    _elem39 = new AppDataCollection();
+                    await _elem39.ReadAsync(iprot, cancellationToken);
+                    Data.Add(_elem39);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -163,9 +163,9 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, Data.Count), cancellationToken);
-            foreach (AppDataCollection _iter36 in Data)
+            foreach (AppDataCollection _iter40 in Data)
             {
-              await _iter36.WriteAsync(oprot, cancellationToken);
+              await _iter40.WriteAsync(oprot, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }

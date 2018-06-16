@@ -197,60 +197,6 @@ namespace Ruyi.SDK.BrainCloudApi
       Task<string> Authentication_ResetEmailPasswordAsync(string externalId, int clientIndex, CancellationToken cancellationToken);
 
       /// <summary>
-      /// Returns the sessionId or empty string if no session present.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      Task<string> Client_GetSessionIdAsync(int clientIndex, CancellationToken cancellationToken);
-
-      /// <summary>
-      /// Returns true if the user is currently authenticated.
-      /// If a session time out or session invalidation is returned from executing a
-      /// sever API call, this flag will reset back to false.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      Task<bool> Client_IsAuthenticatedAsync(int clientIndex, CancellationToken cancellationToken);
-
-      /// <summary>
-      /// Returns true if brainCloud has been initialized.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      Task<bool> Client_IsInitializedAsync(int clientIndex, CancellationToken cancellationToken);
-
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId"></param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      Task Client_Initialize_SSSAsync(string secretKey, string appId, string appVersion, int clientIndex, CancellationToken cancellationToken);
-
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="serverURL">The URL to the brainCloud server</param>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId">The app id</param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      Task Client_Initialize_SSSSAsync(string serverURL, string secretKey, string appId, string appVersion, int clientIndex, CancellationToken cancellationToken);
-
-      /// <summary>
-      /// Initialize the identity aspects of brainCloud.
-      /// </summary>
-      /// <param name="profileId">The profile id</param>
-      /// <param name="anonymousId">The anonymous id</param>
-      /// <param name="clientIndex"></param>
-      Task Client_InitializeIdentityAsync(string profileId, string anonymousId, int clientIndex, CancellationToken cancellationToken);
-
-      /// <summary>
-      /// Update method needs to be called regularly in order
-      /// to process incoming and outgoing messages.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      Task Client_UpdateAsync(int clientIndex, CancellationToken cancellationToken);
-
-      /// <summary>
       /// Enable logging of brainCloud transactions (comms etc)
       /// </summary>
       /// <param name="enable">True if logging is to be enabled</param>
@@ -424,6 +370,60 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="languageCode">ISO 639-1 two-letter language code</param>
       /// <param name="clientIndex"></param>
       Task Client_OverrideLanguageCodeAsync(string languageCode, int clientIndex, CancellationToken cancellationToken);
+
+      /// <summary>
+      /// Returns the sessionId or empty string if no session present.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      Task<string> Client_GetSessionIdAsync(int clientIndex, CancellationToken cancellationToken);
+
+      /// <summary>
+      /// Returns true if the user is currently authenticated.
+      /// If a session time out or session invalidation is returned from executing a
+      /// sever API call, this flag will reset back to false.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      Task<bool> Client_IsAuthenticatedAsync(int clientIndex, CancellationToken cancellationToken);
+
+      /// <summary>
+      /// Returns true if brainCloud has been initialized.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      Task<bool> Client_IsInitializedAsync(int clientIndex, CancellationToken cancellationToken);
+
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId"></param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      Task Client_Initialize_SSSAsync(string secretKey, string appId, string appVersion, int clientIndex, CancellationToken cancellationToken);
+
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="serverURL">The URL to the brainCloud server</param>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId">The app id</param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      Task Client_Initialize_SSSSAsync(string serverURL, string secretKey, string appId, string appVersion, int clientIndex, CancellationToken cancellationToken);
+
+      /// <summary>
+      /// Initialize the identity aspects of brainCloud.
+      /// </summary>
+      /// <param name="profileId">The profile id</param>
+      /// <param name="anonymousId">The anonymous id</param>
+      /// <param name="clientIndex"></param>
+      Task Client_InitializeIdentityAsync(string profileId, string anonymousId, int clientIndex, CancellationToken cancellationToken);
+
+      /// <summary>
+      /// Update method needs to be called regularly in order
+      /// to process incoming and outgoing messages.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      Task Client_UpdateAsync(int clientIndex, CancellationToken cancellationToken);
 
       /// <summary>
       /// Creates custom data stream page event
@@ -3238,202 +3238,6 @@ namespace Ruyi.SDK.BrainCloudApi
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Authentication_ResetEmailPassword failed: unknown result");
       }
 
-      public async Task<string> Client_GetSessionIdAsync(int clientIndex, CancellationToken cancellationToken)
-      {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_GetSessionId", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new Client_GetSessionIdArgs();
-        args.ClientIndex = clientIndex;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
-          throw x;
-        }
-
-        var result = new Client_GetSessionIdResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        if (result.__isset.success)
-        {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_GetSessionId failed: unknown result");
-      }
-
-      public async Task<bool> Client_IsAuthenticatedAsync(int clientIndex, CancellationToken cancellationToken)
-      {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_IsAuthenticated", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new Client_IsAuthenticatedArgs();
-        args.ClientIndex = clientIndex;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
-          throw x;
-        }
-
-        var result = new Client_IsAuthenticatedResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        if (result.__isset.success)
-        {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_IsAuthenticated failed: unknown result");
-      }
-
-      public async Task<bool> Client_IsInitializedAsync(int clientIndex, CancellationToken cancellationToken)
-      {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_IsInitialized", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new Client_IsInitializedArgs();
-        args.ClientIndex = clientIndex;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
-          throw x;
-        }
-
-        var result = new Client_IsInitializedResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        if (result.__isset.success)
-        {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_IsInitialized failed: unknown result");
-      }
-
-      public async Task Client_Initialize_SSSAsync(string secretKey, string appId, string appVersion, int clientIndex, CancellationToken cancellationToken)
-      {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_Initialize_SSS", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new Client_Initialize_SSSArgs();
-        args.SecretKey = secretKey;
-        args.AppId = appId;
-        args.AppVersion = appVersion;
-        args.ClientIndex = clientIndex;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
-          throw x;
-        }
-
-        var result = new Client_Initialize_SSSResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        return;
-      }
-
-      public async Task Client_Initialize_SSSSAsync(string serverURL, string secretKey, string appId, string appVersion, int clientIndex, CancellationToken cancellationToken)
-      {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_Initialize_SSSS", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new Client_Initialize_SSSSArgs();
-        args.ServerURL = serverURL;
-        args.SecretKey = secretKey;
-        args.AppId = appId;
-        args.AppVersion = appVersion;
-        args.ClientIndex = clientIndex;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
-          throw x;
-        }
-
-        var result = new Client_Initialize_SSSSResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        return;
-      }
-
-      public async Task Client_InitializeIdentityAsync(string profileId, string anonymousId, int clientIndex, CancellationToken cancellationToken)
-      {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_InitializeIdentity", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new Client_InitializeIdentityArgs();
-        args.ProfileId = profileId;
-        args.AnonymousId = anonymousId;
-        args.ClientIndex = clientIndex;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
-          throw x;
-        }
-
-        var result = new Client_InitializeIdentityResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        return;
-      }
-
-      public async Task Client_UpdateAsync(int clientIndex, CancellationToken cancellationToken)
-      {
-        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_Update", TMessageType.Call, SeqId), cancellationToken);
-        
-        var args = new Client_UpdateArgs();
-        args.ClientIndex = clientIndex;
-        
-        await args.WriteAsync(OutputProtocol, cancellationToken);
-        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
-        await OutputProtocol.Transport.FlushAsync(cancellationToken);
-        
-        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
-        if (msg.Type == TMessageType.Exception)
-        {
-          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
-          await InputProtocol.ReadMessageEndAsync(cancellationToken);
-          throw x;
-        }
-
-        var result = new Client_UpdateResult();
-        await result.ReadAsync(InputProtocol, cancellationToken);
-        await InputProtocol.ReadMessageEndAsync(cancellationToken);
-        return;
-      }
-
       public async Task Client_EnableLoggingAsync(bool enable, int clientIndex, CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_EnableLogging", TMessageType.Call, SeqId), cancellationToken);
@@ -3879,6 +3683,202 @@ namespace Ruyi.SDK.BrainCloudApi
         }
 
         var result = new Client_OverrideLanguageCodeResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        return;
+      }
+
+      public async Task<string> Client_GetSessionIdAsync(int clientIndex, CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_GetSessionId", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new Client_GetSessionIdArgs();
+        args.ClientIndex = clientIndex;
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new Client_GetSessionIdResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_GetSessionId failed: unknown result");
+      }
+
+      public async Task<bool> Client_IsAuthenticatedAsync(int clientIndex, CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_IsAuthenticated", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new Client_IsAuthenticatedArgs();
+        args.ClientIndex = clientIndex;
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new Client_IsAuthenticatedResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_IsAuthenticated failed: unknown result");
+      }
+
+      public async Task<bool> Client_IsInitializedAsync(int clientIndex, CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_IsInitialized", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new Client_IsInitializedArgs();
+        args.ClientIndex = clientIndex;
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new Client_IsInitializedResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_IsInitialized failed: unknown result");
+      }
+
+      public async Task Client_Initialize_SSSAsync(string secretKey, string appId, string appVersion, int clientIndex, CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_Initialize_SSS", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new Client_Initialize_SSSArgs();
+        args.SecretKey = secretKey;
+        args.AppId = appId;
+        args.AppVersion = appVersion;
+        args.ClientIndex = clientIndex;
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new Client_Initialize_SSSResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        return;
+      }
+
+      public async Task Client_Initialize_SSSSAsync(string serverURL, string secretKey, string appId, string appVersion, int clientIndex, CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_Initialize_SSSS", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new Client_Initialize_SSSSArgs();
+        args.ServerURL = serverURL;
+        args.SecretKey = secretKey;
+        args.AppId = appId;
+        args.AppVersion = appVersion;
+        args.ClientIndex = clientIndex;
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new Client_Initialize_SSSSResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        return;
+      }
+
+      public async Task Client_InitializeIdentityAsync(string profileId, string anonymousId, int clientIndex, CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_InitializeIdentity", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new Client_InitializeIdentityArgs();
+        args.ProfileId = profileId;
+        args.AnonymousId = anonymousId;
+        args.ClientIndex = clientIndex;
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new Client_InitializeIdentityResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        return;
+      }
+
+      public async Task Client_UpdateAsync(int clientIndex, CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("Client_Update", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new Client_UpdateArgs();
+        args.ClientIndex = clientIndex;
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new Client_UpdateResult();
         await result.ReadAsync(InputProtocol, cancellationToken);
         await InputProtocol.ReadMessageEndAsync(cancellationToken);
         return;
@@ -12769,13 +12769,6 @@ namespace Ruyi.SDK.BrainCloudApi
         processMap_["Authentication_AuthenticateUniversal"] = Authentication_AuthenticateUniversal_ProcessAsync;
         processMap_["Authentication_AuthenticateExternal"] = Authentication_AuthenticateExternal_ProcessAsync;
         processMap_["Authentication_ResetEmailPassword"] = Authentication_ResetEmailPassword_ProcessAsync;
-        processMap_["Client_GetSessionId"] = Client_GetSessionId_ProcessAsync;
-        processMap_["Client_IsAuthenticated"] = Client_IsAuthenticated_ProcessAsync;
-        processMap_["Client_IsInitialized"] = Client_IsInitialized_ProcessAsync;
-        processMap_["Client_Initialize_SSS"] = Client_Initialize_SSS_ProcessAsync;
-        processMap_["Client_Initialize_SSSS"] = Client_Initialize_SSSS_ProcessAsync;
-        processMap_["Client_InitializeIdentity"] = Client_InitializeIdentity_ProcessAsync;
-        processMap_["Client_Update"] = Client_Update_ProcessAsync;
         processMap_["Client_EnableLogging"] = Client_EnableLogging_ProcessAsync;
         processMap_["Client_ResetCommunication"] = Client_ResetCommunication_ProcessAsync;
         processMap_["Client_SetPacketTimeouts"] = Client_SetPacketTimeouts_ProcessAsync;
@@ -12793,6 +12786,13 @@ namespace Ruyi.SDK.BrainCloudApi
         processMap_["Client_InsertEndOfMessageBundleMarker"] = Client_InsertEndOfMessageBundleMarker_ProcessAsync;
         processMap_["Client_OverrideCountryCode"] = Client_OverrideCountryCode_ProcessAsync;
         processMap_["Client_OverrideLanguageCode"] = Client_OverrideLanguageCode_ProcessAsync;
+        processMap_["Client_GetSessionId"] = Client_GetSessionId_ProcessAsync;
+        processMap_["Client_IsAuthenticated"] = Client_IsAuthenticated_ProcessAsync;
+        processMap_["Client_IsInitialized"] = Client_IsInitialized_ProcessAsync;
+        processMap_["Client_Initialize_SSS"] = Client_Initialize_SSS_ProcessAsync;
+        processMap_["Client_Initialize_SSSS"] = Client_Initialize_SSSS_ProcessAsync;
+        processMap_["Client_InitializeIdentity"] = Client_InitializeIdentity_ProcessAsync;
+        processMap_["Client_Update"] = Client_Update_ProcessAsync;
         processMap_["DataStream_CustomPageEvent"] = DataStream_CustomPageEvent_ProcessAsync;
         processMap_["DataStream_CustomScreenEvent"] = DataStream_CustomScreenEvent_ProcessAsync;
         processMap_["DataStream_CustomTrackEvent"] = DataStream_CustomTrackEvent_ProcessAsync;
@@ -13652,202 +13652,6 @@ namespace Ruyi.SDK.BrainCloudApi
         await oprot.Transport.FlushAsync(cancellationToken);
       }
 
-      public async Task Client_GetSessionId_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
-      {
-        var args = new Client_GetSessionIdArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new Client_GetSessionIdResult();
-        try
-        {
-          result.Success = await _iAsync.Client_GetSessionIdAsync(args.ClientIndex, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_GetSessionId", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_GetSessionId", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
-        }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
-      }
-
-      public async Task Client_IsAuthenticated_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
-      {
-        var args = new Client_IsAuthenticatedArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new Client_IsAuthenticatedResult();
-        try
-        {
-          result.Success = await _iAsync.Client_IsAuthenticatedAsync(args.ClientIndex, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_IsAuthenticated", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_IsAuthenticated", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
-        }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
-      }
-
-      public async Task Client_IsInitialized_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
-      {
-        var args = new Client_IsInitializedArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new Client_IsInitializedResult();
-        try
-        {
-          result.Success = await _iAsync.Client_IsInitializedAsync(args.ClientIndex, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_IsInitialized", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_IsInitialized", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
-        }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
-      }
-
-      public async Task Client_Initialize_SSS_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
-      {
-        var args = new Client_Initialize_SSSArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new Client_Initialize_SSSResult();
-        try
-        {
-          await _iAsync.Client_Initialize_SSSAsync(args.SecretKey, args.AppId, args.AppVersion, args.ClientIndex, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_Initialize_SSS", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_Initialize_SSS", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
-        }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
-      }
-
-      public async Task Client_Initialize_SSSS_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
-      {
-        var args = new Client_Initialize_SSSSArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new Client_Initialize_SSSSResult();
-        try
-        {
-          await _iAsync.Client_Initialize_SSSSAsync(args.ServerURL, args.SecretKey, args.AppId, args.AppVersion, args.ClientIndex, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_Initialize_SSSS", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_Initialize_SSSS", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
-        }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
-      }
-
-      public async Task Client_InitializeIdentity_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
-      {
-        var args = new Client_InitializeIdentityArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new Client_InitializeIdentityResult();
-        try
-        {
-          await _iAsync.Client_InitializeIdentityAsync(args.ProfileId, args.AnonymousId, args.ClientIndex, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_InitializeIdentity", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_InitializeIdentity", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
-        }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
-      }
-
-      public async Task Client_Update_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
-      {
-        var args = new Client_UpdateArgs();
-        await args.ReadAsync(iprot, cancellationToken);
-        await iprot.ReadMessageEndAsync(cancellationToken);
-        var result = new Client_UpdateResult();
-        try
-        {
-          await _iAsync.Client_UpdateAsync(args.ClientIndex, cancellationToken);
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_Update", TMessageType.Reply, seqid), cancellationToken); 
-          await result.WriteAsync(oprot, cancellationToken);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
-          await oprot.WriteMessageBeginAsync(new TMessage("Client_Update", TMessageType.Exception, seqid), cancellationToken);
-          await x.WriteAsync(oprot, cancellationToken);
-        }
-        await oprot.WriteMessageEndAsync(cancellationToken);
-        await oprot.Transport.FlushAsync(cancellationToken);
-      }
-
       public async Task Client_EnableLogging_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
         var args = new Client_EnableLoggingArgs();
@@ -14318,6 +14122,202 @@ namespace Ruyi.SDK.BrainCloudApi
           Console.Error.WriteLine(ex.ToString());
           var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
           await oprot.WriteMessageBeginAsync(new TMessage("Client_OverrideLanguageCode", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task Client_GetSessionId_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new Client_GetSessionIdArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new Client_GetSessionIdResult();
+        try
+        {
+          result.Success = await _iAsync.Client_GetSessionIdAsync(args.ClientIndex, cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_GetSessionId", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_GetSessionId", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task Client_IsAuthenticated_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new Client_IsAuthenticatedArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new Client_IsAuthenticatedResult();
+        try
+        {
+          result.Success = await _iAsync.Client_IsAuthenticatedAsync(args.ClientIndex, cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_IsAuthenticated", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_IsAuthenticated", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task Client_IsInitialized_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new Client_IsInitializedArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new Client_IsInitializedResult();
+        try
+        {
+          result.Success = await _iAsync.Client_IsInitializedAsync(args.ClientIndex, cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_IsInitialized", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_IsInitialized", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task Client_Initialize_SSS_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new Client_Initialize_SSSArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new Client_Initialize_SSSResult();
+        try
+        {
+          await _iAsync.Client_Initialize_SSSAsync(args.SecretKey, args.AppId, args.AppVersion, args.ClientIndex, cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_Initialize_SSS", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_Initialize_SSS", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task Client_Initialize_SSSS_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new Client_Initialize_SSSSArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new Client_Initialize_SSSSResult();
+        try
+        {
+          await _iAsync.Client_Initialize_SSSSAsync(args.ServerURL, args.SecretKey, args.AppId, args.AppVersion, args.ClientIndex, cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_Initialize_SSSS", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_Initialize_SSSS", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task Client_InitializeIdentity_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new Client_InitializeIdentityArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new Client_InitializeIdentityResult();
+        try
+        {
+          await _iAsync.Client_InitializeIdentityAsync(args.ProfileId, args.AnonymousId, args.ClientIndex, cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_InitializeIdentity", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_InitializeIdentity", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task Client_Update_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new Client_UpdateArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new Client_UpdateResult();
+        try
+        {
+          await _iAsync.Client_UpdateAsync(args.ClientIndex, cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_Update", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("Client_Update", TMessageType.Exception, seqid), cancellationToken);
           await x.WriteAsync(oprot, cancellationToken);
         }
         await oprot.WriteMessageEndAsync(cancellationToken);
@@ -28533,1805 +28533,6 @@ namespace Ruyi.SDK.BrainCloudApi
     }
 
 
-    public partial class Client_GetSessionIdArgs : TBase
-    {
-      private int _clientIndex;
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      public struct Isset
-      {
-        public bool clientIndex;
-      }
-
-      public Client_GetSessionIdArgs()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.I32)
-                {
-                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_GetSessionId_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (__isset.clientIndex)
-          {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteI32Async(ClientIndex, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_GetSessionId_args(");
-        bool __first = true;
-        if (__isset.clientIndex)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("ClientIndex: ");
-          sb.Append(ClientIndex);
-        }
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
-    public partial class Client_GetSessionIdResult : TBase
-    {
-      private string _success;
-
-      public string Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      public struct Isset
-      {
-        public bool success;
-      }
-
-      public Client_GetSessionIdResult()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.String)
-                {
-                  Success = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_GetSessionId_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-
-          if(this.__isset.success)
-          {
-            if (Success != null)
-            {
-              field.Name = "Success";
-              field.Type = TType.String;
-              field.ID = 0;
-              await oprot.WriteFieldBeginAsync(field, cancellationToken);
-              await oprot.WriteStringAsync(Success, cancellationToken);
-              await oprot.WriteFieldEndAsync(cancellationToken);
-            }
-          }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_GetSessionId_result(");
-        bool __first = true;
-        if (Success != null && __isset.success)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("Success: ");
-          sb.Append(Success);
-        }
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
-    public partial class Client_IsAuthenticatedArgs : TBase
-    {
-      private int _clientIndex;
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      public struct Isset
-      {
-        public bool clientIndex;
-      }
-
-      public Client_IsAuthenticatedArgs()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.I32)
-                {
-                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_IsAuthenticated_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (__isset.clientIndex)
-          {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteI32Async(ClientIndex, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_IsAuthenticated_args(");
-        bool __first = true;
-        if (__isset.clientIndex)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("ClientIndex: ");
-          sb.Append(ClientIndex);
-        }
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
-    public partial class Client_IsAuthenticatedResult : TBase
-    {
-      private bool _success;
-
-      public bool Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      public struct Isset
-      {
-        public bool success;
-      }
-
-      public Client_IsAuthenticatedResult()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.Bool)
-                {
-                  Success = await iprot.ReadBoolAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_IsAuthenticated_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-
-          if(this.__isset.success)
-          {
-            field.Name = "Success";
-            field.Type = TType.Bool;
-            field.ID = 0;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteBoolAsync(Success, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_IsAuthenticated_result(");
-        bool __first = true;
-        if (__isset.success)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("Success: ");
-          sb.Append(Success);
-        }
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
-    public partial class Client_IsInitializedArgs : TBase
-    {
-      private int _clientIndex;
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      public struct Isset
-      {
-        public bool clientIndex;
-      }
-
-      public Client_IsInitializedArgs()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.I32)
-                {
-                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_IsInitialized_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (__isset.clientIndex)
-          {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteI32Async(ClientIndex, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_IsInitialized_args(");
-        bool __first = true;
-        if (__isset.clientIndex)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("ClientIndex: ");
-          sb.Append(ClientIndex);
-        }
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
-    public partial class Client_IsInitializedResult : TBase
-    {
-      private bool _success;
-
-      public bool Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      public struct Isset
-      {
-        public bool success;
-      }
-
-      public Client_IsInitializedResult()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.Bool)
-                {
-                  Success = await iprot.ReadBoolAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_IsInitialized_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-
-          if(this.__isset.success)
-          {
-            field.Name = "Success";
-            field.Type = TType.Bool;
-            field.ID = 0;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteBoolAsync(Success, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_IsInitialized_result(");
-        bool __first = true;
-        if (__isset.success)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("Success: ");
-          sb.Append(Success);
-        }
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
-    public partial class Client_Initialize_SSSArgs : TBase
-    {
-      private string _secretKey;
-      private string _appId;
-      private string _appVersion;
-      private int _clientIndex;
-
-      /// <summary>
-      /// The secret key for your app
-      /// </summary>
-      public string SecretKey
-      {
-        get
-        {
-          return _secretKey;
-        }
-        set
-        {
-          __isset.secretKey = true;
-          this._secretKey = value;
-        }
-      }
-
-      public string AppId
-      {
-        get
-        {
-          return _appId;
-        }
-        set
-        {
-          __isset.appId = true;
-          this._appId = value;
-        }
-      }
-
-      /// <summary>
-      /// The app version
-      /// </summary>
-      public string AppVersion
-      {
-        get
-        {
-          return _appVersion;
-        }
-        set
-        {
-          __isset.appVersion = true;
-          this._appVersion = value;
-        }
-      }
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      public struct Isset
-      {
-        public bool secretKey;
-        public bool appId;
-        public bool appVersion;
-        public bool clientIndex;
-      }
-
-      public Client_Initialize_SSSArgs()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.String)
-                {
-                  SecretKey = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String)
-                {
-                  AppId = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              case 3:
-                if (field.Type == TType.String)
-                {
-                  AppVersion = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              case 4:
-                if (field.Type == TType.I32)
-                {
-                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_Initialize_SSS_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (SecretKey != null && __isset.secretKey)
-          {
-            field.Name = "secretKey";
-            field.Type = TType.String;
-            field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(SecretKey, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          if (AppId != null && __isset.appId)
-          {
-            field.Name = "appId";
-            field.Type = TType.String;
-            field.ID = 2;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(AppId, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          if (AppVersion != null && __isset.appVersion)
-          {
-            field.Name = "appVersion";
-            field.Type = TType.String;
-            field.ID = 3;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(AppVersion, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          if (__isset.clientIndex)
-          {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 4;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteI32Async(ClientIndex, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_Initialize_SSS_args(");
-        bool __first = true;
-        if (SecretKey != null && __isset.secretKey)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("SecretKey: ");
-          sb.Append(SecretKey);
-        }
-        if (AppId != null && __isset.appId)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("AppId: ");
-          sb.Append(AppId);
-        }
-        if (AppVersion != null && __isset.appVersion)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("AppVersion: ");
-          sb.Append(AppVersion);
-        }
-        if (__isset.clientIndex)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("ClientIndex: ");
-          sb.Append(ClientIndex);
-        }
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
-    public partial class Client_Initialize_SSSResult : TBase
-    {
-
-      public Client_Initialize_SSSResult()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_Initialize_SSS_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_Initialize_SSS_result(");
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
-    public partial class Client_Initialize_SSSSArgs : TBase
-    {
-      private string _serverURL;
-      private string _secretKey;
-      private string _appId;
-      private string _appVersion;
-      private int _clientIndex;
-
-      /// <summary>
-      /// The URL to the brainCloud server
-      /// </summary>
-      public string ServerURL
-      {
-        get
-        {
-          return _serverURL;
-        }
-        set
-        {
-          __isset.serverURL = true;
-          this._serverURL = value;
-        }
-      }
-
-      /// <summary>
-      /// The secret key for your app
-      /// </summary>
-      public string SecretKey
-      {
-        get
-        {
-          return _secretKey;
-        }
-        set
-        {
-          __isset.secretKey = true;
-          this._secretKey = value;
-        }
-      }
-
-      /// <summary>
-      /// The app id
-      /// </summary>
-      public string AppId
-      {
-        get
-        {
-          return _appId;
-        }
-        set
-        {
-          __isset.appId = true;
-          this._appId = value;
-        }
-      }
-
-      /// <summary>
-      /// The app version
-      /// </summary>
-      public string AppVersion
-      {
-        get
-        {
-          return _appVersion;
-        }
-        set
-        {
-          __isset.appVersion = true;
-          this._appVersion = value;
-        }
-      }
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      public struct Isset
-      {
-        public bool serverURL;
-        public bool secretKey;
-        public bool appId;
-        public bool appVersion;
-        public bool clientIndex;
-      }
-
-      public Client_Initialize_SSSSArgs()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.String)
-                {
-                  ServerURL = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String)
-                {
-                  SecretKey = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              case 3:
-                if (field.Type == TType.String)
-                {
-                  AppId = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              case 4:
-                if (field.Type == TType.String)
-                {
-                  AppVersion = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              case 5:
-                if (field.Type == TType.I32)
-                {
-                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_Initialize_SSSS_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (ServerURL != null && __isset.serverURL)
-          {
-            field.Name = "serverURL";
-            field.Type = TType.String;
-            field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(ServerURL, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          if (SecretKey != null && __isset.secretKey)
-          {
-            field.Name = "secretKey";
-            field.Type = TType.String;
-            field.ID = 2;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(SecretKey, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          if (AppId != null && __isset.appId)
-          {
-            field.Name = "appId";
-            field.Type = TType.String;
-            field.ID = 3;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(AppId, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          if (AppVersion != null && __isset.appVersion)
-          {
-            field.Name = "appVersion";
-            field.Type = TType.String;
-            field.ID = 4;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(AppVersion, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          if (__isset.clientIndex)
-          {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 5;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteI32Async(ClientIndex, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_Initialize_SSSS_args(");
-        bool __first = true;
-        if (ServerURL != null && __isset.serverURL)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("ServerURL: ");
-          sb.Append(ServerURL);
-        }
-        if (SecretKey != null && __isset.secretKey)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("SecretKey: ");
-          sb.Append(SecretKey);
-        }
-        if (AppId != null && __isset.appId)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("AppId: ");
-          sb.Append(AppId);
-        }
-        if (AppVersion != null && __isset.appVersion)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("AppVersion: ");
-          sb.Append(AppVersion);
-        }
-        if (__isset.clientIndex)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("ClientIndex: ");
-          sb.Append(ClientIndex);
-        }
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
-    public partial class Client_Initialize_SSSSResult : TBase
-    {
-
-      public Client_Initialize_SSSSResult()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_Initialize_SSSS_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_Initialize_SSSS_result(");
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
-    public partial class Client_InitializeIdentityArgs : TBase
-    {
-      private string _profileId;
-      private string _anonymousId;
-      private int _clientIndex;
-
-      /// <summary>
-      /// The profile id
-      /// </summary>
-      public string ProfileId
-      {
-        get
-        {
-          return _profileId;
-        }
-        set
-        {
-          __isset.profileId = true;
-          this._profileId = value;
-        }
-      }
-
-      /// <summary>
-      /// The anonymous id
-      /// </summary>
-      public string AnonymousId
-      {
-        get
-        {
-          return _anonymousId;
-        }
-        set
-        {
-          __isset.anonymousId = true;
-          this._anonymousId = value;
-        }
-      }
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      public struct Isset
-      {
-        public bool profileId;
-        public bool anonymousId;
-        public bool clientIndex;
-      }
-
-      public Client_InitializeIdentityArgs()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.String)
-                {
-                  ProfileId = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String)
-                {
-                  AnonymousId = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              case 3:
-                if (field.Type == TType.I32)
-                {
-                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_InitializeIdentity_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (ProfileId != null && __isset.profileId)
-          {
-            field.Name = "profileId";
-            field.Type = TType.String;
-            field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(ProfileId, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          if (AnonymousId != null && __isset.anonymousId)
-          {
-            field.Name = "anonymousId";
-            field.Type = TType.String;
-            field.ID = 2;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(AnonymousId, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          if (__isset.clientIndex)
-          {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 3;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteI32Async(ClientIndex, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_InitializeIdentity_args(");
-        bool __first = true;
-        if (ProfileId != null && __isset.profileId)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("ProfileId: ");
-          sb.Append(ProfileId);
-        }
-        if (AnonymousId != null && __isset.anonymousId)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("AnonymousId: ");
-          sb.Append(AnonymousId);
-        }
-        if (__isset.clientIndex)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("ClientIndex: ");
-          sb.Append(ClientIndex);
-        }
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
-    public partial class Client_InitializeIdentityResult : TBase
-    {
-
-      public Client_InitializeIdentityResult()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_InitializeIdentity_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_InitializeIdentity_result(");
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
-    public partial class Client_UpdateArgs : TBase
-    {
-      private int _clientIndex;
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      public struct Isset
-      {
-        public bool clientIndex;
-      }
-
-      public Client_UpdateArgs()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.I32)
-                {
-                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_Update_args");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          var field = new TField();
-          if (__isset.clientIndex)
-          {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteI32Async(ClientIndex, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_Update_args(");
-        bool __first = true;
-        if (__isset.clientIndex)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("ClientIndex: ");
-          sb.Append(ClientIndex);
-        }
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
-    public partial class Client_UpdateResult : TBase
-    {
-
-      public Client_UpdateResult()
-      {
-      }
-
-      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          await iprot.ReadStructBeginAsync(cancellationToken);
-          while (true)
-          {
-            field = await iprot.ReadFieldBeginAsync(cancellationToken);
-            if (field.Type == TType.Stop)
-            {
-              break;
-            }
-
-            switch (field.ID)
-            {
-              default: 
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                break;
-            }
-
-            await iprot.ReadFieldEndAsync(cancellationToken);
-          }
-
-          await iprot.ReadStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-      {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          var struc = new TStruct("Client_Update_result");
-          await oprot.WriteStructBeginAsync(struc, cancellationToken);
-          await oprot.WriteFieldStopAsync(cancellationToken);
-          await oprot.WriteStructEndAsync(cancellationToken);
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString()
-      {
-        var sb = new StringBuilder("Client_Update_result(");
-        sb.Append(")");
-        return sb.ToString();
-      }
-    }
-
-
     public partial class Client_EnableLoggingArgs : TBase
     {
       private bool _enable;
@@ -33997,6 +32198,1805 @@ namespace Ruyi.SDK.BrainCloudApi
       public override string ToString()
       {
         var sb = new StringBuilder("Client_OverrideLanguageCode_result(");
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_GetSessionIdArgs : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool clientIndex;
+      }
+
+      public Client_GetSessionIdArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32)
+                {
+                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_GetSessionId_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (__isset.clientIndex)
+          {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async(ClientIndex, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_GetSessionId_args(");
+        bool __first = true;
+        if (__isset.clientIndex)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("ClientIndex: ");
+          sb.Append(ClientIndex);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_GetSessionIdResult : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool success;
+      }
+
+      public Client_GetSessionIdResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String)
+                {
+                  Success = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_GetSessionId_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+
+          if(this.__isset.success)
+          {
+            if (Success != null)
+            {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await oprot.WriteStringAsync(Success, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
+            }
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_GetSessionId_result(");
+        bool __first = true;
+        if (Success != null && __isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Success: ");
+          sb.Append(Success);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_IsAuthenticatedArgs : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool clientIndex;
+      }
+
+      public Client_IsAuthenticatedArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32)
+                {
+                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_IsAuthenticated_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (__isset.clientIndex)
+          {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async(ClientIndex, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_IsAuthenticated_args(");
+        bool __first = true;
+        if (__isset.clientIndex)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("ClientIndex: ");
+          sb.Append(ClientIndex);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_IsAuthenticatedResult : TBase
+    {
+      private bool _success;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool success;
+      }
+
+      public Client_IsAuthenticatedResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool)
+                {
+                  Success = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_IsAuthenticated_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+
+          if(this.__isset.success)
+          {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_IsAuthenticated_result(");
+        bool __first = true;
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Success: ");
+          sb.Append(Success);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_IsInitializedArgs : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool clientIndex;
+      }
+
+      public Client_IsInitializedArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32)
+                {
+                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_IsInitialized_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (__isset.clientIndex)
+          {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async(ClientIndex, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_IsInitialized_args(");
+        bool __first = true;
+        if (__isset.clientIndex)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("ClientIndex: ");
+          sb.Append(ClientIndex);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_IsInitializedResult : TBase
+    {
+      private bool _success;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool success;
+      }
+
+      public Client_IsInitializedResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool)
+                {
+                  Success = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_IsInitialized_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+
+          if(this.__isset.success)
+          {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_IsInitialized_result(");
+        bool __first = true;
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Success: ");
+          sb.Append(Success);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_Initialize_SSSArgs : TBase
+    {
+      private string _secretKey;
+      private string _appId;
+      private string _appVersion;
+      private int _clientIndex;
+
+      /// <summary>
+      /// The secret key for your app
+      /// </summary>
+      public string SecretKey
+      {
+        get
+        {
+          return _secretKey;
+        }
+        set
+        {
+          __isset.secretKey = true;
+          this._secretKey = value;
+        }
+      }
+
+      public string AppId
+      {
+        get
+        {
+          return _appId;
+        }
+        set
+        {
+          __isset.appId = true;
+          this._appId = value;
+        }
+      }
+
+      /// <summary>
+      /// The app version
+      /// </summary>
+      public string AppVersion
+      {
+        get
+        {
+          return _appVersion;
+        }
+        set
+        {
+          __isset.appVersion = true;
+          this._appVersion = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool secretKey;
+        public bool appId;
+        public bool appVersion;
+        public bool clientIndex;
+      }
+
+      public Client_Initialize_SSSArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String)
+                {
+                  SecretKey = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String)
+                {
+                  AppId = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.String)
+                {
+                  AppVersion = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.I32)
+                {
+                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_Initialize_SSS_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (SecretKey != null && __isset.secretKey)
+          {
+            field.Name = "secretKey";
+            field.Type = TType.String;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(SecretKey, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (AppId != null && __isset.appId)
+          {
+            field.Name = "appId";
+            field.Type = TType.String;
+            field.ID = 2;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(AppId, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (AppVersion != null && __isset.appVersion)
+          {
+            field.Name = "appVersion";
+            field.Type = TType.String;
+            field.ID = 3;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(AppVersion, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (__isset.clientIndex)
+          {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 4;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async(ClientIndex, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_Initialize_SSS_args(");
+        bool __first = true;
+        if (SecretKey != null && __isset.secretKey)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("SecretKey: ");
+          sb.Append(SecretKey);
+        }
+        if (AppId != null && __isset.appId)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("AppId: ");
+          sb.Append(AppId);
+        }
+        if (AppVersion != null && __isset.appVersion)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("AppVersion: ");
+          sb.Append(AppVersion);
+        }
+        if (__isset.clientIndex)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("ClientIndex: ");
+          sb.Append(ClientIndex);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_Initialize_SSSResult : TBase
+    {
+
+      public Client_Initialize_SSSResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_Initialize_SSS_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_Initialize_SSS_result(");
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_Initialize_SSSSArgs : TBase
+    {
+      private string _serverURL;
+      private string _secretKey;
+      private string _appId;
+      private string _appVersion;
+      private int _clientIndex;
+
+      /// <summary>
+      /// The URL to the brainCloud server
+      /// </summary>
+      public string ServerURL
+      {
+        get
+        {
+          return _serverURL;
+        }
+        set
+        {
+          __isset.serverURL = true;
+          this._serverURL = value;
+        }
+      }
+
+      /// <summary>
+      /// The secret key for your app
+      /// </summary>
+      public string SecretKey
+      {
+        get
+        {
+          return _secretKey;
+        }
+        set
+        {
+          __isset.secretKey = true;
+          this._secretKey = value;
+        }
+      }
+
+      /// <summary>
+      /// The app id
+      /// </summary>
+      public string AppId
+      {
+        get
+        {
+          return _appId;
+        }
+        set
+        {
+          __isset.appId = true;
+          this._appId = value;
+        }
+      }
+
+      /// <summary>
+      /// The app version
+      /// </summary>
+      public string AppVersion
+      {
+        get
+        {
+          return _appVersion;
+        }
+        set
+        {
+          __isset.appVersion = true;
+          this._appVersion = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool serverURL;
+        public bool secretKey;
+        public bool appId;
+        public bool appVersion;
+        public bool clientIndex;
+      }
+
+      public Client_Initialize_SSSSArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String)
+                {
+                  ServerURL = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String)
+                {
+                  SecretKey = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.String)
+                {
+                  AppId = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.String)
+                {
+                  AppVersion = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 5:
+                if (field.Type == TType.I32)
+                {
+                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_Initialize_SSSS_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (ServerURL != null && __isset.serverURL)
+          {
+            field.Name = "serverURL";
+            field.Type = TType.String;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(ServerURL, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (SecretKey != null && __isset.secretKey)
+          {
+            field.Name = "secretKey";
+            field.Type = TType.String;
+            field.ID = 2;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(SecretKey, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (AppId != null && __isset.appId)
+          {
+            field.Name = "appId";
+            field.Type = TType.String;
+            field.ID = 3;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(AppId, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (AppVersion != null && __isset.appVersion)
+          {
+            field.Name = "appVersion";
+            field.Type = TType.String;
+            field.ID = 4;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(AppVersion, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (__isset.clientIndex)
+          {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 5;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async(ClientIndex, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_Initialize_SSSS_args(");
+        bool __first = true;
+        if (ServerURL != null && __isset.serverURL)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("ServerURL: ");
+          sb.Append(ServerURL);
+        }
+        if (SecretKey != null && __isset.secretKey)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("SecretKey: ");
+          sb.Append(SecretKey);
+        }
+        if (AppId != null && __isset.appId)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("AppId: ");
+          sb.Append(AppId);
+        }
+        if (AppVersion != null && __isset.appVersion)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("AppVersion: ");
+          sb.Append(AppVersion);
+        }
+        if (__isset.clientIndex)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("ClientIndex: ");
+          sb.Append(ClientIndex);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_Initialize_SSSSResult : TBase
+    {
+
+      public Client_Initialize_SSSSResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_Initialize_SSSS_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_Initialize_SSSS_result(");
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_InitializeIdentityArgs : TBase
+    {
+      private string _profileId;
+      private string _anonymousId;
+      private int _clientIndex;
+
+      /// <summary>
+      /// The profile id
+      /// </summary>
+      public string ProfileId
+      {
+        get
+        {
+          return _profileId;
+        }
+        set
+        {
+          __isset.profileId = true;
+          this._profileId = value;
+        }
+      }
+
+      /// <summary>
+      /// The anonymous id
+      /// </summary>
+      public string AnonymousId
+      {
+        get
+        {
+          return _anonymousId;
+        }
+        set
+        {
+          __isset.anonymousId = true;
+          this._anonymousId = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool profileId;
+        public bool anonymousId;
+        public bool clientIndex;
+      }
+
+      public Client_InitializeIdentityArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String)
+                {
+                  ProfileId = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String)
+                {
+                  AnonymousId = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.I32)
+                {
+                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_InitializeIdentity_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (ProfileId != null && __isset.profileId)
+          {
+            field.Name = "profileId";
+            field.Type = TType.String;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(ProfileId, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (AnonymousId != null && __isset.anonymousId)
+          {
+            field.Name = "anonymousId";
+            field.Type = TType.String;
+            field.ID = 2;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(AnonymousId, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (__isset.clientIndex)
+          {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 3;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async(ClientIndex, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_InitializeIdentity_args(");
+        bool __first = true;
+        if (ProfileId != null && __isset.profileId)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("ProfileId: ");
+          sb.Append(ProfileId);
+        }
+        if (AnonymousId != null && __isset.anonymousId)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("AnonymousId: ");
+          sb.Append(AnonymousId);
+        }
+        if (__isset.clientIndex)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("ClientIndex: ");
+          sb.Append(ClientIndex);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_InitializeIdentityResult : TBase
+    {
+
+      public Client_InitializeIdentityResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_InitializeIdentity_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_InitializeIdentity_result(");
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_UpdateArgs : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool clientIndex;
+      }
+
+      public Client_UpdateArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32)
+                {
+                  ClientIndex = await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_Update_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (__isset.clientIndex)
+          {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async(ClientIndex, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_Update_args(");
+        bool __first = true;
+        if (__isset.clientIndex)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("ClientIndex: ");
+          sb.Append(ClientIndex);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class Client_UpdateResult : TBase
+    {
+
+      public Client_UpdateResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("Client_Update_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("Client_Update_result(");
         sb.Append(")");
         return sb.ToString();
       }

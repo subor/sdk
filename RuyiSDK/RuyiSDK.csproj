@@ -31,6 +31,7 @@
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj">
     </ProjectReference>
     <ProjectReference Include="..\SDK.Base\SDK.Base.csproj" />
+    <ProjectReference Include="..\ServiceGenerated\ServiceGenerated.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

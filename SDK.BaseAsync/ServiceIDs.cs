@@ -2,6 +2,7 @@
 #pragma once
 #else
 using System;
+using System.Collections.Generic;
 
 namespace Ruyi.Layer0
 {
@@ -10,8 +11,6 @@ namespace Ruyi.Layer0
 
     enum ServiceIDs
     {
-        LAYER0,
-
         #region Low power services
         LOW_POWER_START = 101,
 
@@ -38,8 +37,8 @@ namespace Ruyi.Layer0
         #region High power services
         HIGH_POWER_START = 1001,
 
-        L0SETTINGSYSTEM_EXTERNAL,
-        L0SETTINGSYSTEM_INTERNAL,
+        SETTINGSYSTEM_EXTERNAL,
+        SETTINGSYSTEM_INTERNAL,
         USER_SERVICE_INTERNAL,
         USER_SERVICE_EXTERNAL,
         BCSERVICE,
@@ -67,15 +66,18 @@ namespace Ruyi.Layer0
 #if !__cplusplus            // C#, some helper functions
     public static class ServiceHelper
     {
+        static Dictionary<ServiceIDs, string> shortNames = new Dictionary<ServiceIDs, string>();
+        static object locker = new object();
+
         // Notice: we treat worker and service as the same mostly in layer0 because currently one service only got one worker.
         public static string WorkerID(this ServiceIDs swi)
         {
-            return "WRK_" + swi.ToString();
+            return "WRK_" + swi.ShortString();
         }
 
         public static string ForwarderID(this ServiceIDs swi)
         {
-            return "FWD_" + swi.ToString();
+            return "FWD_" + swi.ShortString();
         }
 
         #region string <-> serviceID convertion
@@ -99,7 +101,25 @@ namespace Ruyi.Layer0
 
         public static string PubChannelID(this ServiceIDs swi)
         {
-            return "service/" + swi.ToString().ToLower();
+            return "service/" + swi.ShortString().ToLower();
+        }
+
+        public static string ShortString(this ServiceIDs swi)
+        {
+            lock (locker)
+            {
+                if (!shortNames.ContainsKey(swi))
+                {
+                    shortNames.Add(swi, swi.ToString()
+                        .Replace("INTERNAL", "Int")
+                        .Replace("EXTERNAL", "Ext")
+                        .Replace("MANAGER", "Mgr")
+                        .Replace("SERVICE", "Serv")
+                        .Replace("SYSTEM", "Sys"));
+                }
+                return shortNames[swi];
+            }
+
         }
 
         public static bool ExistForwarder(this ServiceIDs swi)
@@ -108,11 +128,28 @@ namespace Ruyi.Layer0
             {
                 case ServiceIDs.HTTP_LISTENER:
                 case ServiceIDs.SYS_REPORTER:
+                case ServiceIDs.L2FORWARDER:
+                case ServiceIDs.LAYER1:
+                case ServiceIDs.UPDATESERVICE:
                     return false;
 
                 default:
                     return true;
             }
+        }
+
+        public static bool IsLayer1Service(this ServiceIDs sid)
+        {
+            switch (sid)
+            {
+                case ServiceIDs.INPUTMANAGER_INTERNAL:
+                case ServiceIDs.INPUTMANAGER_EXTERNAL:
+                case ServiceIDs.LAUNCHER:
+                case ServiceIDs.UPDATESERVICE:
+                case ServiceIDs.POWERMANAGER:
+                    return true;
+            }
+            return false;
         }
 
         public static bool IsSplitter(this ServiceIDs sid)

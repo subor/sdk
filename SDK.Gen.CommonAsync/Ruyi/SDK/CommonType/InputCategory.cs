@@ -7,10 +7,12 @@
 
 namespace Ruyi.SDK.CommonType
 {
-  public enum InputCagetory
+  public enum InputCategory
   {
-    RuyiGamePad = 0,
-    KeyboardMouse = 1,
-    XBox360 = 2,
+    GamePad = 0,
+    Keyboard = 1,
+    Mouse = 2,
+    JoyStick = 3,
+    MaxCount = 4,
   }
 }

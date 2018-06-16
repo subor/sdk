@@ -30,7 +30,7 @@ namespace Ruyi.Layer0
         List<string> topics = new List<string>();
 
         Task receivingThread = null;
-        CancellationTokenSource cts = new CancellationTokenSource();
+        CancellationTokenSource cts;
 
         Dictionary<string, Delegate> MsgHandlers = new Dictionary<string, Delegate>();
 
@@ -59,6 +59,7 @@ namespace Ruyi.Layer0
             socket.Subscribe(topic);
             if (topics.Count > 0 && receivingThread == null)
             {
+                cts = new CancellationTokenSource();
                 receivingThread = Task.Factory.StartNew(async () =>
                 {
                     while (await Receive()) ;
@@ -183,17 +184,17 @@ namespace Ruyi.Layer0
                 if (e is TargetInvocationException)
                 {
                     var ee = e as TargetInvocationException;
-                    Log($"Subscribe invoke exception: {(ee).InnerException.Message} \n {ee.InnerException.StackTrace}", Logging.LogLevel.Warn);
+                    Log($"SubscribeClient, invoke exception: {(ee).InnerException.Message} \n {ee.InnerException.StackTrace}", Logging.LogLevel.Warn);
                     return true;
                 }
                 if (e is TerminatingException)
                 {
-                    Log($"Subscribe client terminated: {e.Message}", Logging.LogLevel.Info);
+                    Log($"SubscribeClient, terminated: {e.Message}", Logging.LogLevel.Info);
                     return false;
                 }
                 else
                 {
-                    Log(disposing ? $"disposing exception: {e.Message}" : $"subscribe client receive exception: {e.Message} \n {e.StackTrace}",
+                    Log(disposing ? $"SubscribeClient, disposing exception: {e.Message}" : $"subscribe client receive exception: {e.Message} \n {e.StackTrace}",
                         disposing ? Logging.LogLevel.Info : Logging.LogLevel.Error
                         );
                     return false;
@@ -201,7 +202,7 @@ namespace Ruyi.Layer0
             }
         }
 
-        #region IDisposable
+#region IDisposable
         public void Dispose()
         {
             disposing = true;
@@ -229,19 +230,19 @@ namespace Ruyi.Layer0
             }
 
             // closing socket will throw an exception in Receive() which will be caught to end the thread.
-            if (receivingThread != null)
+            try
             {
-                if (receivingThread.Status == TaskStatus.Running)
+                if (receivingThread != null)
                 {
-                    try
-                    {
-                        cts.Cancel();
-                    }
-                    catch { }
+                    cts.Cancel();
+                    receivingThread.Wait();
+                    receivingThread = null;
                 }
-                receivingThread = null;
+            }
+            catch {
+                Log($"receiving thread aborted", Logging.LogLevel.Info);
             }
         }
-        #endregion
     }
+#endregion
 }

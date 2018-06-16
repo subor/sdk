@@ -255,14 +255,14 @@ namespace Ruyi.SDK.CommonType
               {
                 {
                   Items = new Dictionary<string, int>();
-                  TMap _map16 = await iprot.ReadMapBeginAsync(cancellationToken);
-                  for(int _i17 = 0; _i17 < _map16.Count; ++_i17)
+                  TMap _map20 = await iprot.ReadMapBeginAsync(cancellationToken);
+                  for(int _i21 = 0; _i21 < _map20.Count; ++_i21)
                   {
-                    string _key18;
-                    int _val19;
-                    _key18 = await iprot.ReadStringAsync(cancellationToken);
-                    _val19 = await iprot.ReadI32Async(cancellationToken);
-                    Items[_key18] = _val19;
+                    string _key22;
+                    int _val23;
+                    _key22 = await iprot.ReadStringAsync(cancellationToken);
+                    _val23 = await iprot.ReadI32Async(cancellationToken);
+                    Items[_key22] = _val23;
                   }
                   await iprot.ReadMapEndAsync(cancellationToken);
                 }
@@ -378,10 +378,10 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.I32, Items.Count), cancellationToken);
-            foreach (string _iter20 in Items.Keys)
+            foreach (string _iter24 in Items.Keys)
             {
-              await oprot.WriteStringAsync(_iter20, cancellationToken);
-              await oprot.WriteI32Async(Items[_iter20], cancellationToken);
+              await oprot.WriteStringAsync(_iter24, cancellationToken);
+              await oprot.WriteI32Async(Items[_iter24], cancellationToken);
             }
             await oprot.WriteMapEndAsync(cancellationToken);
           }
