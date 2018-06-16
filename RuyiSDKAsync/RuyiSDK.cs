@@ -19,6 +19,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Thrift.Protocols;
 using Thrift.Transports;
+using Thrift.Transports.Client;
 
 namespace Ruyi
 {
@@ -132,14 +133,14 @@ namespace Ruyi
 
         private RuyiSDKContext context = null;
 
-        private TTransport lowLatencyTransport = null;
+        private TClientTransport lowLatencyTransport = null;
         /// <summary>
         /// Underlying transport and protocol for low-latency messages
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public TBinaryProtocolTS LowLatencyProtocol { get; private set; }
 
-        private TTransport highLatencyTransport = null;
+        private TClientTransport highLatencyTransport = null;
         /// <summary>
         /// Underlying transport and protocol for high-latency messages
         /// </summary>
