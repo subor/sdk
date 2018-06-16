@@ -150,6 +150,68 @@ std::ostream& operator<<(std::ostream& out, const RotationType::type& val) {
 }
 
 
+BCServiceStartedNotification::~BCServiceStartedNotification() throw() {
+}
+
+
+uint32_t BCServiceStartedNotification::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    xfer += iprot->skip(ftype);
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t BCServiceStartedNotification::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("BCServiceStartedNotification");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(BCServiceStartedNotification &a, BCServiceStartedNotification &b) {
+  using ::std::swap;
+  (void) a;
+  (void) b;
+}
+
+BCServiceStartedNotification::BCServiceStartedNotification(const BCServiceStartedNotification& other0) {
+  (void) other0;
+}
+BCServiceStartedNotification& BCServiceStartedNotification::operator=(const BCServiceStartedNotification& other1) {
+  (void) other1;
+  return *this;
+}
+void BCServiceStartedNotification::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "BCServiceStartedNotification(";
+  out << ")";
+}
+
+
 FileUploadSuccessResult::~FileUploadSuccessResult() throw() {
 }
 
@@ -242,15 +304,15 @@ void swap(FileUploadSuccessResult &a, FileUploadSuccessResult &b) {
   swap(a.__isset, b.__isset);
 }
 
-FileUploadSuccessResult::FileUploadSuccessResult(const FileUploadSuccessResult& other0) {
-  fileUploadId = other0.fileUploadId;
-  jsonResponse = other0.jsonResponse;
-  __isset = other0.__isset;
+FileUploadSuccessResult::FileUploadSuccessResult(const FileUploadSuccessResult& other2) {
+  fileUploadId = other2.fileUploadId;
+  jsonResponse = other2.jsonResponse;
+  __isset = other2.__isset;
 }
-FileUploadSuccessResult& FileUploadSuccessResult::operator=(const FileUploadSuccessResult& other1) {
-  fileUploadId = other1.fileUploadId;
-  jsonResponse = other1.jsonResponse;
-  __isset = other1.__isset;
+FileUploadSuccessResult& FileUploadSuccessResult::operator=(const FileUploadSuccessResult& other3) {
+  fileUploadId = other3.fileUploadId;
+  jsonResponse = other3.jsonResponse;
+  __isset = other3.__isset;
   return *this;
 }
 void FileUploadSuccessResult::printTo(std::ostream& out) const {
@@ -388,19 +450,19 @@ void swap(FileUploadFailedResult &a, FileUploadFailedResult &b) {
   swap(a.__isset, b.__isset);
 }
 
-FileUploadFailedResult::FileUploadFailedResult(const FileUploadFailedResult& other2) {
-  fileUploadId = other2.fileUploadId;
-  statusCode = other2.statusCode;
-  reasonCode = other2.reasonCode;
-  jsonResponse = other2.jsonResponse;
-  __isset = other2.__isset;
+FileUploadFailedResult::FileUploadFailedResult(const FileUploadFailedResult& other4) {
+  fileUploadId = other4.fileUploadId;
+  statusCode = other4.statusCode;
+  reasonCode = other4.reasonCode;
+  jsonResponse = other4.jsonResponse;
+  __isset = other4.__isset;
 }
-FileUploadFailedResult& FileUploadFailedResult::operator=(const FileUploadFailedResult& other3) {
-  fileUploadId = other3.fileUploadId;
-  statusCode = other3.statusCode;
-  reasonCode = other3.reasonCode;
-  jsonResponse = other3.jsonResponse;
-  __isset = other3.__isset;
+FileUploadFailedResult& FileUploadFailedResult::operator=(const FileUploadFailedResult& other5) {
+  fileUploadId = other5.fileUploadId;
+  statusCode = other5.statusCode;
+  reasonCode = other5.reasonCode;
+  jsonResponse = other5.jsonResponse;
+  __isset = other5.__isset;
   return *this;
 }
 void FileUploadFailedResult::printTo(std::ostream& out) const {

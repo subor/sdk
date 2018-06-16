@@ -15,7 +15,7 @@ ConstantsSDKDataTypesConstants::ConstantsSDKDataTypesConstants() {
 
   high_latency_socket_port = 11390;
 
-  layer0_broker_address = "inproc://{addr}:5555";
+  layer0_broker_address = "tcp://{addr}:5555";
 
   layer0_publisher_in_uri = "tcp://{addr}:5567";
 
@@ -38,8 +38,6 @@ ConstantsSDKDataTypesConstants::ConstantsSDKDataTypesConstants() {
   debugger_publisher_out_uri = "tcp://{addr}:8868";
 
   broker_playback_message = "mmi.developer.playback";
-
-  broker_power_message = "mmi.power.operation";
 
 }
 

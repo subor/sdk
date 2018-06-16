@@ -24,9 +24,10 @@ namespace Ruyi.SDK.InputManager
   public partial class InputActionTriggered : TBase
   {
     private string _deviceId;
+    private string _userId;
     private string _name;
     private long _timestamp;
-    private List<RuyiInputEvent> _events;
+    private Ruyi.SDK.CommonType.ActionTrigger _trigger;
 
     public string DeviceId
     {
@@ -38,6 +39,19 @@ namespace Ruyi.SDK.InputManager
       {
         __isset.deviceId = true;
         this._deviceId = value;
+      }
+    }
+
+    public string UserId
+    {
+      get
+      {
+        return _userId;
+      }
+      set
+      {
+        __isset.userId = true;
+        this._userId = value;
       }
     }
 
@@ -67,16 +81,16 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
-    public List<RuyiInputEvent> Events
+    public Ruyi.SDK.CommonType.ActionTrigger Trigger
     {
       get
       {
-        return _events;
+        return _trigger;
       }
       set
       {
-        __isset.events = true;
-        this._events = value;
+        __isset.trigger = true;
+        this._trigger = value;
       }
     }
 
@@ -87,9 +101,10 @@ namespace Ruyi.SDK.InputManager
     #endif
     public struct Isset {
       public bool deviceId;
+      public bool userId;
       public bool name;
       public bool timestamp;
-      public bool events;
+      public bool trigger;
     }
 
     public InputActionTriggered() {
@@ -119,32 +134,29 @@ namespace Ruyi.SDK.InputManager
               break;
             case 2:
               if (field.Type == TType.String) {
-                Name = iprot.ReadString();
+                UserId = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 3:
+              if (field.Type == TType.String) {
+                Name = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 4:
               if (field.Type == TType.I64) {
                 Timestamp = iprot.ReadI64();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 4:
-              if (field.Type == TType.List) {
-                {
-                  Events = new List<RuyiInputEvent>();
-                  TList _list8 = iprot.ReadListBegin();
-                  for( int _i9 = 0; _i9 < _list8.Count; ++_i9)
-                  {
-                    RuyiInputEvent _elem10;
-                    _elem10 = new RuyiInputEvent();
-                    _elem10.Read(iprot);
-                    Events.Add(_elem10);
-                  }
-                  iprot.ReadListEnd();
-                }
+            case 5:
+              if (field.Type == TType.Struct) {
+                Trigger = new Ruyi.SDK.CommonType.ActionTrigger();
+                Trigger.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -178,10 +190,18 @@ namespace Ruyi.SDK.InputManager
           oprot.WriteString(DeviceId);
           oprot.WriteFieldEnd();
         }
+        if (UserId != null && __isset.userId) {
+          field.Name = "userId";
+          field.Type = TType.String;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(UserId);
+          oprot.WriteFieldEnd();
+        }
         if (Name != null && __isset.name) {
           field.Name = "name";
           field.Type = TType.String;
-          field.ID = 2;
+          field.ID = 3;
           oprot.WriteFieldBegin(field);
           oprot.WriteString(Name);
           oprot.WriteFieldEnd();
@@ -189,24 +209,17 @@ namespace Ruyi.SDK.InputManager
         if (__isset.timestamp) {
           field.Name = "timestamp";
           field.Type = TType.I64;
-          field.ID = 3;
+          field.ID = 4;
           oprot.WriteFieldBegin(field);
           oprot.WriteI64(Timestamp);
           oprot.WriteFieldEnd();
         }
-        if (Events != null && __isset.events) {
-          field.Name = "events";
-          field.Type = TType.List;
-          field.ID = 4;
+        if (Trigger != null && __isset.trigger) {
+          field.Name = "trigger";
+          field.Type = TType.Struct;
+          field.ID = 5;
           oprot.WriteFieldBegin(field);
-          {
-            oprot.WriteListBegin(new TList(TType.Struct, Events.Count));
-            foreach (RuyiInputEvent _iter11 in Events)
-            {
-              _iter11.Write(oprot);
-            }
-            oprot.WriteListEnd();
-          }
+          Trigger.Write(oprot);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -227,6 +240,12 @@ namespace Ruyi.SDK.InputManager
         __sb.Append("DeviceId: ");
         __sb.Append(DeviceId);
       }
+      if (UserId != null && __isset.userId) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("UserId: ");
+        __sb.Append(UserId);
+      }
       if (Name != null && __isset.name) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
@@ -239,11 +258,11 @@ namespace Ruyi.SDK.InputManager
         __sb.Append("Timestamp: ");
         __sb.Append(Timestamp);
       }
-      if (Events != null && __isset.events) {
+      if (Trigger != null && __isset.trigger) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Events: ");
-        __sb.Append(Events);
+        __sb.Append("Trigger: ");
+        __sb.Append(Trigger== null ? "<null>" : Trigger.ToString());
       }
       __sb.Append(")");
       return __sb.ToString();

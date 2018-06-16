@@ -122,7 +122,7 @@ bool RuyiSDK::Init()
 	Storage = new SDK::StorageLayer::StorageLayerServiceClient(stoProtocol);
 
 	// init setting system
-	auto proto = std::make_shared<TMultiplexedProtocol>(sharedLowProto, "SER_L0SETTINGSYSTEM_EXTERNAL");
+	auto proto = std::make_shared<TMultiplexedProtocol>(sharedLowProto, "SER_SETTINGSYSTEM_EXTERNAL");
 	SettingSys = new SDK::SettingSystem::Api::SettingSystemServiceClient(proto);
 
 	// init localization service

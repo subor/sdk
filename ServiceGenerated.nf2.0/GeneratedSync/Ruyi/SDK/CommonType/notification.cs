@@ -113,12 +113,12 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.List) {
                 {
                   Option = new List<string>();
-                  TList _list4 = iprot.ReadListBegin();
-                  for( int _i5 = 0; _i5 < _list4.Count; ++_i5)
+                  TList _list8 = iprot.ReadListBegin();
+                  for( int _i9 = 0; _i9 < _list8.Count; ++_i9)
                   {
-                    string _elem6;
-                    _elem6 = iprot.ReadString();
-                    Option.Add(_elem6);
+                    string _elem10;
+                    _elem10 = iprot.ReadString();
+                    Option.Add(_elem10);
                   }
                   iprot.ReadListEnd();
                 }
@@ -170,9 +170,9 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.String, Option.Count));
-            foreach (string _iter7 in Option)
+            foreach (string _iter11 in Option)
             {
-              oprot.WriteString(_iter7);
+              oprot.WriteString(_iter11);
             }
             oprot.WriteListEnd();
           }

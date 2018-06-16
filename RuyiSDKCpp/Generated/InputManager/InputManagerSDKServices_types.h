@@ -17,10 +17,11 @@
 
 #include <thrift/stdcxx.h>
 #include "InputManagerSDKDataTypes_types.h"
+#include "CommonTypeSDKDataTypes_types.h"
 
 
+namespace Ruyi { namespace SDK { namespace InputManager {
 
-
-
+}}} // namespace
 
 #endif

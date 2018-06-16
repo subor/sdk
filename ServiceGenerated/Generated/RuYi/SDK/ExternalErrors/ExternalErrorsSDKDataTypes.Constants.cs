@@ -22,8 +22,8 @@ namespace Ruyi.SDK.ExternalErrors
     static ExternalErrorsSDKDataTypesConstants()
     {
       ExternalErrorInfos tmp0 = new ExternalErrorInfos();
-      tmp0.Description = "";
       tmp0.ErrorCode = ExternalErrorCode.Err_0;
+      tmp0.Description = "";
       EXTERNALERRORLIST.Add(tmp0);
       ExternalErrorInfos tmp1 = new ExternalErrorInfos();
       tmp1.Description = "setting {0} is not found!";
@@ -62,8 +62,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp9.ErrorCode = ExternalErrorCode.Err_9;
       EXTERNALERRORLIST.Add(tmp9);
       ExternalErrorInfos tmp10 = new ExternalErrorInfos();
-      tmp10.Description = "";
       tmp10.ErrorCode = ExternalErrorCode.Err_10;
+      tmp10.Description = "";
       EXTERNALERRORLIST.Add(tmp10);
       ExternalErrorInfos tmp11 = new ExternalErrorInfos();
       tmp11.ErrorCode = ExternalErrorCode.Err_11;
@@ -78,8 +78,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp13.ErrorCode = ExternalErrorCode.Err_13;
       EXTERNALERRORLIST.Add(tmp13);
       ExternalErrorInfos tmp14 = new ExternalErrorInfos();
-      tmp14.Description = "";
       tmp14.ErrorCode = ExternalErrorCode.Err_14;
+      tmp14.Description = "";
       EXTERNALERRORLIST.Add(tmp14);
       ExternalErrorInfos tmp15 = new ExternalErrorInfos();
       tmp15.ErrorCode = ExternalErrorCode.Err_15;

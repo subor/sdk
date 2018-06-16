@@ -98,13 +98,13 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.List) {
                 {
                   Data = new List<AppDataCollection>();
-                  TList _list33 = iprot.ReadListBegin();
-                  for( int _i34 = 0; _i34 < _list33.Count; ++_i34)
+                  TList _list37 = iprot.ReadListBegin();
+                  for( int _i38 = 0; _i38 < _list37.Count; ++_i38)
                   {
-                    AppDataCollection _elem35;
-                    _elem35 = new AppDataCollection();
-                    _elem35.Read(iprot);
-                    Data.Add(_elem35);
+                    AppDataCollection _elem39;
+                    _elem39 = new AppDataCollection();
+                    _elem39.Read(iprot);
+                    Data.Add(_elem39);
                   }
                   iprot.ReadListEnd();
                 }
@@ -148,9 +148,9 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, Data.Count));
-            foreach (AppDataCollection _iter36 in Data)
+            foreach (AppDataCollection _iter40 in Data)
             {
-              _iter36.Write(oprot);
+              _iter40.Write(oprot);
             }
             oprot.WriteListEnd();
           }

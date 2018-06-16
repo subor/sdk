@@ -15,7 +15,6 @@
 #include "Generated/InputManager/InputManagerSDKDataTypes_types.h"
 #include "Generated/StorageLayer/StorageLayerSDKDataTypes_types.h"
 #include "Generated/SettingSystem/SettingSystemSDKDataTypes_types.h"
-#include "Generated/GlobalInputDefine/GlobalInputDefineSDKDataTypes_types.h"
 #include "Generated/BrainCloudService/BrainCloudServiceSDKDataTypes_types.h"
 #include "Generated/LocalizationService/LocalizationServiceSDKDataTypes_types.h"
 #include "Generated/UserServiceExternal/UserServiceExternalSDKDataTypes_types.h"
