@@ -561,7 +561,7 @@ inline std::ostream& operator<<(std::ostream& out, const SettingValue& obj)
 }
 
 typedef struct _SettingItem__isset {
-  _SettingItem__isset() : id(false), display(false), dataType(false), dataValue(false), dataList(false), platform(false), summary(false), description(false), UIType(false), devModeOnly(false), internalOnly(false), readOnly(false), isValid(false), isActive(false), validation(false), activeDependencies(false), ActionName(false), ActionObject(false), ActionMethodName(false) {}
+  _SettingItem__isset() : id(false), display(false), dataType(false), dataValue(false), dataList(false), platform(false), summary(false), description(false), UIType(false), devModeOnly(false), internalOnly(false), readOnly(false), isValid(false), isActive(false), validation(false), activeDependencies(false), ActionName(false), ActionObject(false), ActionOnSetValue(false), ActionOnGetValue(false) {}
   bool id :1;
   bool display :1;
   bool dataType :1;
@@ -580,7 +580,8 @@ typedef struct _SettingItem__isset {
   bool activeDependencies :1;
   bool ActionName :1;
   bool ActionObject :1;
-  bool ActionMethodName :1;
+  bool ActionOnSetValue :1;
+  bool ActionOnGetValue :1;
 } _SettingItem__isset;
 
 class SettingItem : public virtual ::apache::thrift::TBase {
@@ -588,7 +589,7 @@ class SettingItem : public virtual ::apache::thrift::TBase {
 
   SettingItem(const SettingItem&);
   SettingItem& operator=(const SettingItem&);
-  SettingItem() : id(), display(), dataType(), dataValue(), platform((ePlatform::type)0), summary(), description(), UIType((eUIType::type)0), devModeOnly(0), internalOnly(0), readOnly(0), isValid(0), isActive(0), validation(), ActionName(), ActionObject(), ActionMethodName() {
+  SettingItem() : id(), display(), dataType(), dataValue(), platform((ePlatform::type)0), summary(), description(), UIType((eUIType::type)0), devModeOnly(0), internalOnly(0), readOnly(0), isValid(0), isActive(0), validation(), ActionName(), ActionObject(), ActionOnSetValue(), ActionOnGetValue() {
   }
 
   virtual ~SettingItem() throw();
@@ -610,7 +611,8 @@ class SettingItem : public virtual ::apache::thrift::TBase {
   std::vector<activeDependency>  activeDependencies;
   std::string ActionName;
   std::string ActionObject;
-  std::string ActionMethodName;
+  std::string ActionOnSetValue;
+  std::string ActionOnGetValue;
 
   _SettingItem__isset __isset;
 
@@ -650,7 +652,9 @@ class SettingItem : public virtual ::apache::thrift::TBase {
 
   void __set_ActionObject(const std::string& val);
 
-  void __set_ActionMethodName(const std::string& val);
+  void __set_ActionOnSetValue(const std::string& val);
+
+  void __set_ActionOnGetValue(const std::string& val);
 
   bool operator == (const SettingItem & rhs) const
   {
@@ -706,11 +710,21 @@ class SettingItem : public virtual ::apache::thrift::TBase {
       return false;
     else if (__isset.activeDependencies && !(activeDependencies == rhs.activeDependencies))
       return false;
-    if (!(ActionName == rhs.ActionName))
+    if (__isset.ActionName != rhs.__isset.ActionName)
       return false;
-    if (!(ActionObject == rhs.ActionObject))
+    else if (__isset.ActionName && !(ActionName == rhs.ActionName))
       return false;
-    if (!(ActionMethodName == rhs.ActionMethodName))
+    if (__isset.ActionObject != rhs.__isset.ActionObject)
+      return false;
+    else if (__isset.ActionObject && !(ActionObject == rhs.ActionObject))
+      return false;
+    if (__isset.ActionOnSetValue != rhs.__isset.ActionOnSetValue)
+      return false;
+    else if (__isset.ActionOnSetValue && !(ActionOnSetValue == rhs.ActionOnSetValue))
+      return false;
+    if (__isset.ActionOnGetValue != rhs.__isset.ActionOnGetValue)
+      return false;
+    else if (__isset.ActionOnGetValue && !(ActionOnGetValue == rhs.ActionOnGetValue))
       return false;
     return true;
   }
