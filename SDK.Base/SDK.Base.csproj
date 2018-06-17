@@ -12,6 +12,11 @@
     <DocumentationFile>..\..\output\Release\RuyiSDK\SDK.Base.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\SDK.BaseAsync\PublisherLogger.cs" Link="PublisherLogger.cs" />
+    <Compile Include="..\SDK.BaseAsync\SDKUtility.cs" Link="SDKUtility.cs" />
+    <Compile Include="..\SDK.BaseAsync\ServiceIDs.cs" Link="ServiceIDs.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\externals\thrift.csharp\Thrift.ns2.0.csproj" />
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj" />
   </ItemGroup>
