@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\externals\thrift.netcore\Thrift.csproj" />
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj" />
+    <ProjectReference Include="..\SDK.Gen.ServiceAsync\SDK.Gen.ServiceAsync.csproj" />
   </ItemGroup>
 
 </Project>

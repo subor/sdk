@@ -38,7 +38,7 @@ namespace Ruyi.Layer0
                 {
                     try
                     {
-                        await base.WriteMessageBeginAsync(message);
+                        await base.WriteMessageBeginAsync(message, CancellationToken.None);
 
                         // reset retry times when send succeed.
                         connectRetryTimes = ConnectRetryTimesMax;

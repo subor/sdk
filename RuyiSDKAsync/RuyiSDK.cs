@@ -184,12 +184,13 @@ namespace Ruyi
         {
             if (context.Transport == null)
             {
+                var host = OS.Util.GetIPAddress(context.RemoteAddress);
                 // init and open high/low latency transport, create protocols
                 var lowLatencyPort = context.LowLatencyPort == 0 ? ConstantsSDKDataTypesConstants.low_latency_socket_port : context.LowLatencyPort;
-                lowLatencyTransport = new TSocketTransportTS(System.Net.IPAddress.Parse(context.RemoteAddress), lowLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.LowLatencyTimeout : context.Timeout);
+                lowLatencyTransport = new TSocketTransportTS(host, lowLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.LowLatencyTimeout : context.Timeout);
 
                 var highLatencyPort = context.HighLatencyPort == 0 ? ConstantsSDKDataTypesConstants.high_latency_socket_port : context.HighLatencyPort;
-                highLatencyTransport = new TSocketTransportTS(System.Net.IPAddress.Parse(context.RemoteAddress), highLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.HighLatencyTimeout : context.Timeout);
+                highLatencyTransport = new TSocketTransportTS(host, highLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.HighLatencyTimeout : context.Timeout);
             }
             else
             {

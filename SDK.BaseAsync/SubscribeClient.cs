@@ -124,16 +124,16 @@ namespace Ruyi.Layer0
                 if (cachedTypes.TryGetValue(msgType, out var ret))
                     return ret;
 
-                var assem = Assembly.Load("ServiceGenerated");
+                var assem = Assembly.Load("SDK.Gen.ServiceAsync");
                 var tp = assem.GetType(msgType);
                 if (tp == null)
                 {
-                    assem = Assembly.Load("ServiceCommon");
+                    assem = Assembly.Load("SDK.Gen.CommonAsync");
                     tp = assem?.GetType(msgType);
                 }
                 if (tp == null)
                 {
-                    assem = Assembly.Load("InternalServiceGenerated");
+                    assem = Assembly.Load("SDK.Gen.InternalServiceAsync");
                     tp = assem?.GetType(msgType);
                 }
                 if (tp != null)
