@@ -81,9 +81,9 @@ namespace Ruyi.Layer0
         }
 
         // read message end, release the transport
-        public override async Task ReadMessageEndAsync()
+        public override async Task ReadMessageEndAsync(CancellationToken token)
         {
-            await base.ReadMessageEndAsync();
+            await base.ReadMessageEndAsync(token);
             semaphore.Release();
         }
 

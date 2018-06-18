@@ -21,9 +21,9 @@ namespace Ruyi.Layer0
             writeLocker = locker;
         }
 
-        public override async Task FlushAsync()
+        public override async Task FlushAsync(CancellationToken token)
         {
-            await base.FlushAsync();
+            await base.FlushAsync(token);
 
             if (writeLocker != null)
                 Monitor.Exit(writeLocker);
