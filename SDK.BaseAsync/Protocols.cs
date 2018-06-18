@@ -12,9 +12,6 @@ namespace Ruyi.Layer0
     public class TBinaryProtocolTS : TBinaryProtocol
     {
         private const int ConnectRetryTimesMax = 5;
-
-        private object locker = new object();
-
         private int connectRetryTimes = ConnectRetryTimesMax;
         private bool needReconnect = false;
 
@@ -30,7 +27,7 @@ namespace Ruyi.Layer0
         // begin to write the message, see if we need to create a new transport
         public override async Task WriteMessageBeginAsync(TMessage message, CancellationToken token)
         {
-            Monitor.Enter(locker);
+            await semaphore.WaitAsync();
 
             while (true)
             {
@@ -87,9 +84,9 @@ namespace Ruyi.Layer0
         public override async Task ReadMessageEndAsync()
         {
             await base.ReadMessageEndAsync();
-
-            Monitor.Exit(locker);
+            semaphore.Release();
         }
 
+        SemaphoreSlim semaphore = new SemaphoreSlim(1);
     }
 }
