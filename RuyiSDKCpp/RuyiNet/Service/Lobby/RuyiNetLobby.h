@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../RuyiNetClient.h"
-#include "../Response/RuyiNetLobbyResponse.h"
+#include "../../RuyiNetClient.h"
+#include "../../Response/RuyiNetLobbyResponse.h"
 
 namespace Ruyi
 {

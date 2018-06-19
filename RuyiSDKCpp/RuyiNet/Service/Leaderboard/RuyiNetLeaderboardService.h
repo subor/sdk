@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../Response/RuyiNetLeaderboardResponse.h"
-#include "../Response/RuyiNetSocialLeaderboardResponse.h"
-#include "../Response/RuyiNetResponse.h"
+#include "../../Response/RuyiNetLeaderboardResponse.h"
+#include "../../Response/RuyiNetSocialLeaderboardResponse.h"
+#include "../../Response/RuyiNetResponse.h"
 #include "RuyiNetLeaderboardType.h"
 #include "RuyiNetRotationType.h"
-#include "RuyiNetService.h"
+#include "../RuyiNetService.h"
 
 namespace Ruyi
 {

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../RuyiNetClient.h"
-#include "../Response/RuyiNetGetCDNResponse.h"
-#include "../Response/RuyiNetGetFriendsVideosResponse.h"
-#include "../Response/RuyiNetListUserFilesResponse.h"
-#include "../Response/RuyiNetUploadFileResponse.h"
-#include "../Response/RuyiNetResponse.h"
-#include "RuyiNetService.h"
+#include "../../RuyiNetClient.h"
+#include "../../Response/RuyiNetGetCDNResponse.h"
+#include "../../Response/RuyiNetGetFriendsVideosResponse.h"
+#include "../../Response/RuyiNetListUserFilesResponse.h"
+#include "../../Response/RuyiNetUploadFileResponse.h"
+#include "../../Response/RuyiNetResponse.h"
+#include "../RuyiNetService.h"
 
 namespace Ruyi
 {

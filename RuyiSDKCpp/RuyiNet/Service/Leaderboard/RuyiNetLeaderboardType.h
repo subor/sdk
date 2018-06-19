@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Enum.h"
+#include "../../Enum.h"
 
 namespace Ruyi
 {

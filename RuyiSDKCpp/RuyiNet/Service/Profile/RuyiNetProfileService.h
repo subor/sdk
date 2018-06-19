@@ -1,9 +1,9 @@
 #pragma once
 
 //#include "../../RuyiString.h"
-#include "../RuyiNetClient.h"
-#include "../Response/RuyiNetGetCDNResponse.h"
-#include "RuyiNetService.h"
+#include "../../RuyiNetClient.h"
+#include "../../Response/RuyiNetGetCDNResponse.h"
+#include "../RuyiNetService.h"
 
 namespace Ruyi
 {

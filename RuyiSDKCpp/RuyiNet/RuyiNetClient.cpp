@@ -1,15 +1,14 @@
 
 #include "RuyiNetClient.h"
-#include "Service/RuyiNetCloudService.h"
-#include "Service/RuyiNetFriendService.h"
-#include "Service/RuyiNetLeaderboardService.h"
-#include "Service/RuyiNetPartyService.h"
-#include "Service/RuyiNetProfileService.h"
-#include "Service/RuyiNetUserFileService.h"
-#include "Service/RuyiNetVideoService.h"
-#include "Service/RuyiNetMatchmakingService.h"
-#include "Service/RuyiNetLobbyService.h"
-#include "Service/RuyiNetTelemetryService.h"
+#include "Service/Cloud/RuyiNetCloudService.h"
+#include "Service/Friend/RuyiNetFriendService.h"
+#include "Service/Leaderboard/RuyiNetLeaderboardService.h"
+#include "Service/Party/RuyiNetPartyService.h"
+#include "Service/Profile/RuyiNetProfileService.h"
+#include "Service/UserFile/RuyiNetUserFileService.h"
+#include "Service/Video/RuyiNetVideoService.h"
+#include "Service/Lobby/RuyiNetLobbyService.h"
+#include "Service/Telemetry/RuyiNetTelemetryService.h"
 
 #include "Response/RuyiNetGetProfileResponse.h"
 #include "Response/RuyiNetProfile.h"
@@ -21,7 +20,7 @@ namespace Ruyi
 	RuyiNetClient::RuyiNetClient(const boost::shared_ptr<TProtocol1> & protocol)
 		: BCService(nullptr), mCloudService(nullptr), mFriendService(nullptr), mLeaderboardService(nullptr),
 		mPartyService(nullptr), mProfileService(nullptr), 
-		mVideoService(nullptr), mMatchmakingService(nullptr), mLobbyService(nullptr), mTelemetryService(nullptr), mInitialised(false)
+		mVideoService(nullptr), mLobbyService(nullptr), mTelemetryService(nullptr), mInitialised(false)
 	{
 		BCService = new SDK::BrainCloudApi::BrainCloudServiceClient(protocol);
 
@@ -32,7 +31,6 @@ namespace Ruyi
 		mProfileService = new RuyiNetProfileService(this);
 		mUserFileService = new RuyiNetUserFileService(this);
 		mVideoService = new RuyiNetVideoService(this);
-		mMatchmakingService = new RuyiNetMatchmakingService(this);
 		mLobbyService = new RuyiNetLobbyService(this);
 		mTelemetryService = new RuyiNetTelemetryService(this);
 
@@ -51,10 +49,7 @@ namespace Ruyi
 
 		delete mLobbyService;
 		mLobbyService = nullptr;
-
-		delete mMatchmakingService;
-		mMatchmakingService = nullptr;
-
+		
 		delete mVideoService;
 		mVideoService = nullptr;
 

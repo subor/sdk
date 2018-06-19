@@ -3,8 +3,8 @@
 #include <filesystem>
 #include <strsafe.h>
 
-#include "../RuyiNetException.h"
-#include "../Response/RuyiNetListUserFilesResponse.h"
+#include "../../RuyiNetException.h"
+#include "../../Response/RuyiNetListUserFilesResponse.h"
 
 namespace Ruyi
 {

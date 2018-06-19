@@ -3,13 +3,13 @@
 #include "RuyiNet/Response/RuyiNetResponse.h"
 #include "RuyiNet/Response/RuyiNetProfile.h"
 
-#include "RuyiNet/Service/RuyiNetFriendService.h"
-#include "RuyiNet/Service/RuyiNetLeaderboardService.h"
-#include "RuyiNet/Service/RuyiNetCloudService.h"
-#include "RuyiNet/Service/RuyiNetLobbyService.h"
-#include "RuyiNet/Service/RuyiNetPartyService.h"
-#include "RuyiNet/Service/RuyiNetTelemetryService.h"
-#include "RuyiNet/Service/RuyiNetUserFileService.h"
+#include "RuyiNet/Service/Friend/RuyiNetFriendService.h"
+#include "RuyiNet/Service/Leaderboard/RuyiNetLeaderboardService.h"
+#include "RuyiNet/Service/Cloud/RuyiNetCloudService.h"
+#include "RuyiNet/Service/Lobby/RuyiNetLobbyService.h"
+#include "RuyiNet/Service/Party/RuyiNetPartyService.h"
+#include "RuyiNet/Service/Telemetry/RuyiNetTelemetryService.h"
+#include "RuyiNet/Service/UserFile/RuyiNetUserFileService.h"
 
 #include "boost/container/detail/json.hpp"
 

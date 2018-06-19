@@ -96,10 +96,6 @@ namespace Ruyi
 		/// </summary>
 		RuyiNetVideoService* const GetVideoService() { return mVideoService; }
 		/// <summary>
-		/// Allows users to locate players to play against each other.
-		/// </summary>
-		RuyiNetMatchmakingService* const GetMatchmakingService() { return mMatchmakingService; }
-		/// <summary>
 		/// Manages lobbies for network games.
 		/// </summary>
 		RuyiNetLobbyService* const GetLobbyService() { return mLobbyService; }
@@ -152,7 +148,6 @@ namespace Ruyi
 		RuyiNetProfileService* mProfileService;
 		RuyiNetUserFileService* mUserFileService;
 		RuyiNetVideoService* mVideoService;
-		RuyiNetMatchmakingService* mMatchmakingService;
 		RuyiNetLobbyService* mLobbyService;
 		RuyiNetTelemetryService* mTelemetryService;
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "RuyiNetService.h"
+#include "../RuyiNetService.h"
 #include "RuyiNetLobby.h"
-#include "../Response/RuyiNetLobbyResponse.h"
+#include "../../Response/RuyiNetLobbyResponse.h"
 
 #include <functional>
 
