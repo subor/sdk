@@ -41,6 +41,7 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\FileUploadFailedResult.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\FileUploadSuccessResult.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\FriendPlatform.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\LobbyType.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\Role.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\RotationType.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\SocialLeaderboardType.cs" />
