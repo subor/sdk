@@ -41,7 +41,8 @@ namespace Ruyi.SDK.CommonType
     private List<activeDependency> _activeDependencies;
     private string _ActionName;
     private string _ActionObject;
-    private string _ActionMethodName;
+    private string _ActionOnSetValue;
+    private string _ActionOnGetValue;
 
     public string Id
     {
@@ -285,16 +286,29 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public string ActionMethodName
+    public string ActionOnSetValue
     {
       get
       {
-        return _ActionMethodName;
+        return _ActionOnSetValue;
       }
       set
       {
-        __isset.ActionMethodName = true;
-        this._ActionMethodName = value;
+        __isset.ActionOnSetValue = true;
+        this._ActionOnSetValue = value;
+      }
+    }
+
+    public string ActionOnGetValue
+    {
+      get
+      {
+        return _ActionOnGetValue;
+      }
+      set
+      {
+        __isset.ActionOnGetValue = true;
+        this._ActionOnGetValue = value;
       }
     }
 
@@ -322,7 +336,8 @@ namespace Ruyi.SDK.CommonType
       public bool activeDependencies;
       public bool ActionName;
       public bool ActionObject;
-      public bool ActionMethodName;
+      public bool ActionOnSetValue;
+      public bool ActionOnGetValue;
     }
 
     public SettingItem() {
@@ -453,13 +468,13 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.List) {
                 {
                   ActiveDependencies = new List<activeDependency>();
-                  TList _list12 = iprot.ReadListBegin();
-                  for( int _i13 = 0; _i13 < _list12.Count; ++_i13)
+                  TList _list16 = iprot.ReadListBegin();
+                  for( int _i17 = 0; _i17 < _list16.Count; ++_i17)
                   {
-                    activeDependency _elem14;
-                    _elem14 = new activeDependency();
-                    _elem14.Read(iprot);
-                    ActiveDependencies.Add(_elem14);
+                    activeDependency _elem18;
+                    _elem18 = new activeDependency();
+                    _elem18.Read(iprot);
+                    ActiveDependencies.Add(_elem18);
                   }
                   iprot.ReadListEnd();
                 }
@@ -483,7 +498,14 @@ namespace Ruyi.SDK.CommonType
               break;
             case 19:
               if (field.Type == TType.String) {
-                ActionMethodName = iprot.ReadString();
+                ActionOnSetValue = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 20:
+              if (field.Type == TType.String) {
+                ActionOnGetValue = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -636,9 +658,9 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, ActiveDependencies.Count));
-            foreach (activeDependency _iter15 in ActiveDependencies)
+            foreach (activeDependency _iter19 in ActiveDependencies)
             {
-              _iter15.Write(oprot);
+              _iter19.Write(oprot);
             }
             oprot.WriteListEnd();
           }
@@ -660,12 +682,20 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteString(ActionObject);
           oprot.WriteFieldEnd();
         }
-        if (ActionMethodName != null && __isset.ActionMethodName) {
-          field.Name = "ActionMethodName";
+        if (ActionOnSetValue != null && __isset.ActionOnSetValue) {
+          field.Name = "ActionOnSetValue";
           field.Type = TType.String;
           field.ID = 19;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(ActionMethodName);
+          oprot.WriteString(ActionOnSetValue);
+          oprot.WriteFieldEnd();
+        }
+        if (ActionOnGetValue != null && __isset.ActionOnGetValue) {
+          field.Name = "ActionOnGetValue";
+          field.Type = TType.String;
+          field.ID = 20;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(ActionOnGetValue);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -788,11 +818,17 @@ namespace Ruyi.SDK.CommonType
         __sb.Append("ActionObject: ");
         __sb.Append(ActionObject);
       }
-      if (ActionMethodName != null && __isset.ActionMethodName) {
+      if (ActionOnSetValue != null && __isset.ActionOnSetValue) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("ActionMethodName: ");
-        __sb.Append(ActionMethodName);
+        __sb.Append("ActionOnSetValue: ");
+        __sb.Append(ActionOnSetValue);
+      }
+      if (ActionOnGetValue != null && __isset.ActionOnGetValue) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("ActionOnGetValue: ");
+        __sb.Append(ActionOnGetValue);
       }
       __sb.Append(")");
       return __sb.ToString();

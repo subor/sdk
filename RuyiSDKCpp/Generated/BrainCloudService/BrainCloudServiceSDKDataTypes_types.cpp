@@ -162,6 +162,68 @@ void BCServiceStartedNotification::printTo(std::ostream& out) const {
 }
 
 
+BCServiceStartedNotification::~BCServiceStartedNotification() throw() {
+}
+
+
+uint32_t BCServiceStartedNotification::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    xfer += iprot->skip(ftype);
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t BCServiceStartedNotification::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("BCServiceStartedNotification");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(BCServiceStartedNotification &a, BCServiceStartedNotification &b) {
+  using ::std::swap;
+  (void) a;
+  (void) b;
+}
+
+BCServiceStartedNotification::BCServiceStartedNotification(const BCServiceStartedNotification& other0) {
+  (void) other0;
+}
+BCServiceStartedNotification& BCServiceStartedNotification::operator=(const BCServiceStartedNotification& other1) {
+  (void) other1;
+  return *this;
+}
+void BCServiceStartedNotification::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "BCServiceStartedNotification(";
+  out << ")";
+}
+
+
 FileUploadSuccessResult::~FileUploadSuccessResult() throw() {
 }
 

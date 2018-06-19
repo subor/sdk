@@ -5,6 +5,12 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>..\..\output\Debug\RuyiSDK\SDK.Base.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>..\..\output\Release\RuyiSDK\SDK.Base.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\externals\thrift0.10.0\Thrift.ns2.0.csproj" />
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj" />

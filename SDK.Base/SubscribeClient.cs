@@ -10,14 +10,31 @@ using Thrift.Transport;
 
 namespace Ruyi.Layer0
 {
+    /// <summary>
+    /// Client to subscribe to publishers.
+    /// </summary>
+    /// <example>
+    /// Getting gamepad/controler input:
+    /// <code source="layer0/sdktest/doctests.cs" region="Subscribe_Input"></code>
+    /// </example>
     public class SubscribeClient : IDisposable
     {
+        /// <summary>
+        /// The thread name token
+        /// </summary>
+        /// <exclude/>
         public const char ThreadNameToken = '|';
 
         static Dictionary<string, Type> cachedTypes = new Dictionary<string, Type>();
         static object typeLocker = new object();
 
-        public delegate void MessageHandler<T>(string topic, T msg) where T : TBase;
+        /// <summary>
+        /// Handles pub/sub messages.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="topic">The topic.</param>
+        /// <param name="message">The message.</param>
+        public delegate void MessageHandler<T>(string topic, T message) where T : TBase;
 
         SubscriberSocket socket = new SubscriberSocket();
         bool disposing = false;
@@ -31,6 +48,14 @@ namespace Ruyi.Layer0
 
         Dictionary<string, Delegate> MsgHandlers = new Dictionary<string, Delegate>();
 
+        /// <summary>
+        /// Creates <see cref="SubscribeClient"/> instance.
+        /// </summary>
+        /// <param name="serverUri">The server URI.</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Both the public SDK and internal SDK already provide an instance.
+        /// </remarks>
         public static SubscribeClient CreateInstance(string serverUri)
         {
             SubscribeClient ret = new SubscribeClient
@@ -47,6 +72,13 @@ namespace Ruyi.Layer0
         {
         }
 
+        /// <summary>
+        /// Subscribes to the specified topic.
+        /// </summary>
+        /// <param name="topic">The topic.</param>
+        /// <remarks>
+        /// Each service publishes to topic returned by <see cref="Ruyi.Layer0.ServiceHelper.PubChannelID(ServiceIDs)"/>.
+        /// </remarks>
         public void Subscribe(string topic)
         {
             if (string.IsNullOrEmpty(topic) || topics.Contains(topic))
@@ -66,6 +98,10 @@ namespace Ruyi.Layer0
             }
         }
 
+        /// <summary>
+        /// Unsubscribes from the specified topic.
+        /// </summary>
+        /// <param name="topic">The topic.</param>
         public void Unsubscribe(string topic)
         {
             if (!topics.Contains(topic))
@@ -75,42 +111,66 @@ namespace Ruyi.Layer0
             socket.Unsubscribe(topic);
         }
 
-        public void AddGenericMessageHandler(string typeName, MessageHandler<TBase> mh)
+        /// <summary>
+        /// Adds the generic message handler.
+        /// </summary>
+        /// <param name="typeName">Name of the type.</param>
+        /// <param name="messageHandler">The message handler.</param>
+        /// <seealso cref="RemoveGenericMessageHandler(string, MessageHandler{TBase})"/>
+        public void AddGenericMessageHandler(string typeName, MessageHandler<TBase> messageHandler)
         {
-            if (mh == null)
+            if (messageHandler == null)
                 return;
 
             string tp = typeName;
             if (!MsgHandlers.ContainsKey(tp))
-                MsgHandlers.Add(tp, mh);
+                MsgHandlers.Add(tp, messageHandler);
             else
-                MsgHandlers[tp] = Delegate.Combine(MsgHandlers[tp], mh);
+                MsgHandlers[tp] = Delegate.Combine(MsgHandlers[tp], messageHandler);
         }
 
-        public void RemoveGenericMessageHandler(string typeName, MessageHandler<TBase> mh)
+        /// <summary>
+        /// Removes the generic message handler.
+        /// </summary>
+        /// <param name="typeName">Name of the type.</param>
+        /// <param name="messageHandler">The message handler.</param>
+        /// <seealso cref="AddGenericMessageHandler(string, MessageHandler{TBase})"/>
+        public void RemoveGenericMessageHandler(string typeName, MessageHandler<TBase> messageHandler)
         {
             string tp = typeName;
             if (MsgHandlers.ContainsKey(tp))
-                MsgHandlers[tp] = Delegate.Remove(MsgHandlers[tp], mh);
+                MsgHandlers[tp] = Delegate.Remove(MsgHandlers[tp], messageHandler);
         }
 
-        public void AddMessageHandler<T>(MessageHandler<T> mh) where T : TBase
+        /// <summary>
+        /// Adds a message handler.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="messageHandler">The message handler.</param>
+        /// <seealso cref="RemoveMessageHandler{T}(MessageHandler{T})"/>
+        public void AddMessageHandler<T>(MessageHandler<T> messageHandler) where T : TBase
         {
-            if (mh == null)
+            if (messageHandler == null)
                 return;
 
             string tp = typeof(T).ToString();
             if (!MsgHandlers.ContainsKey(tp))
-                MsgHandlers.Add(tp, mh);
+                MsgHandlers.Add(tp, messageHandler);
             else
-                MsgHandlers[tp] = Delegate.Combine(MsgHandlers[tp], mh);
+                MsgHandlers[tp] = Delegate.Combine(MsgHandlers[tp], messageHandler);
         }
 
-        public void RemoveMessageHandler<T>(MessageHandler<T> mh) where T : TBase
+        /// <summary>
+        /// Removes a message handler.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="messageHandler">The message handler.</param>
+        /// <seealso cref="AddMessageHandler{T}(MessageHandler{T})"/>
+        public void RemoveMessageHandler<T>(MessageHandler<T> messageHandler) where T : TBase
         {
             string tp = typeof(T).ToString();
             if (MsgHandlers.ContainsKey(tp))
-                MsgHandlers[tp] = Delegate.Remove(MsgHandlers[tp], mh);
+                MsgHandlers[tp] = Delegate.Remove(MsgHandlers[tp], messageHandler);
         }
 
         Type GetType(string msgType)
@@ -198,7 +258,7 @@ namespace Ruyi.Layer0
             }
         }
 
-        #region IDisposable
+#region IDisposable
         public void Dispose()
         {
             disposing = true;
@@ -239,5 +299,5 @@ namespace Ruyi.Layer0
             }
         }
     }
-    #endregion
+#endregion
 }

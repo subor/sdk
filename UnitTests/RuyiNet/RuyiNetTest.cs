@@ -12,7 +12,7 @@ namespace Ruyi.SDK.Online.Tests
         const string TEST_APP_SECRET = "9918d6c0-88e0-449c-bf27-b5dfbc6a59cd";
         const string TEST_LEADERBOARD_ID = "testCreate";
 
-        public static string[] PLAYER_IDS =
+        static string[] PLAYER_IDS =
         {
             "bfdcafbf-b15d-4c01-93b0-b363b310ef80"
         };
