@@ -4,7 +4,7 @@ using Ruyi.Logging;
 using Ruyi.SDK.Constants;
 using Ruyi.SDK.LocalizationService;
 using Ruyi.SDK.MediaService;
-//using Ruyi.SDK.Online;
+using Ruyi.SDK.Online;
 using Ruyi.SDK.SDKValidator;
 using Ruyi.SDK.Speech;
 using Ruyi.SDK.StorageLayer;
@@ -104,7 +104,7 @@ namespace Ruyi
         /// <summary>
         /// to access the ruyi platform back end service interface
         /// </summary>
-        //public RuyiNetClient RuyiNetService { get; private set; }
+        public RuyiNetClient RuyiNetService { get; private set; }
 
         /// <summary>
         /// to access the setting system
@@ -224,12 +224,12 @@ namespace Ruyi
             }
 
             // init braincloud service
-            //if (IsFeatureEnabled(SDKFeatures.Online))
-            //{
-            //    var bcProtocol = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.BCSERVICE.ServiceID());
-            //    RuyiNetService = new RuyiNetClient(bcProtocol, Storage);
-            //    //BCService = new BrainCloudService.Client(bcProtocal);
-            //}
+            if (IsFeatureEnabled(SDKFeatures.Online))
+            {
+                var bcProtocol = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.BCSERVICE.ServiceID());
+                RuyiNetService = new RuyiNetClient(bcProtocol, Storage);
+                //BCService = new BrainCloudService.Client(bcProtocal);
+            }
 
             // init setting system
             if (IsFeatureEnabled(SDKFeatures.Settings))
@@ -326,10 +326,10 @@ namespace Ruyi
         /// <summary>
         /// Basic update loop.
         /// </summary>
-        //public void Update()
-        //{
-        //    RuyiNetService.Update();
-        //}
+        public void Update()
+        {
+            RuyiNetService.Update();
+        }
 
         /// <summary>
         /// Dispose the SDK instance, don't miss this after SDK usage.
@@ -342,8 +342,8 @@ namespace Ruyi
             Storage?.Dispose();
             Storage = null;
 
-            //RuyiNetService?.Dispose();
-            //RuyiNetService = null;
+            RuyiNetService?.Dispose();
+            RuyiNetService = null;
 
             SettingSys?.Dispose();
             SettingSys = null;
