@@ -29,8 +29,7 @@ Check the top of the `DA220REL.txt` file:
 
 __Important__:
 
-- The BIOS version __must__ match the [Ruyi OS](os.md) version because the BIOS must be paired with a compatible AMD driver.
-- If updating from BIOS 0.09 (or earlier) to BIOS 0.19 (or later), you must first update to BIOS 0.13 and OS 0.6 then update to the more recent BIOS/OS.
+![](/docs/img/warning.png) Because the BIOS must be paired with a compatible AMD driver, the BIOS version __must__ be paried with the correct version of [Ruyi OS](os.md).  This is summarized as follows:  
 
 | BIOS Version/Date | Ruyi OS Version | AMD Driver Stack Version/Date
 |-|-|-
@@ -42,6 +41,13 @@ __Important__:
 | [0.09](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220009.zip) 2018/1/8 | 0.3 | 0.0.7.2 2017/12/15
 | 0.08 2018/1/2 | 0.3 | 0.0.7.2 2017/12/15
 
+Because the BIOS flashing process was changed, please observe the following rules:  
+
+| Installed BIOS | BIOS to Flash | Rule
+|-|-|-
+| 0.09 (or earlier) | 0.19 (or later) | First update to BIOS 0.13 and OS 0.6.  Then update to more recent BIOS/OS.
+
+
 Also see:
 
 - How to check the [Ruyi OS verison](os.md#Version)
@@ -51,7 +57,7 @@ Also see:
 
 The BIOS can be flashed from Windows (the preferred method) or via EFI shell with thumb drive.
 
-![](/docs/img/warning.png) [BIOS](bios.md) updates should only be done from [Ruyi OS](os.md).  Make sure you are __not__ in [PC mode](pc_mode.md) before updating the BIOS.
+![](/docs/img/warning.png) [BIOS](bios.md) updates should only be done from [Ruyi OS](os.md).  Starting with OS 0.6, make sure you are __not__ in [PC mode](pc_mode.md) before updating the BIOS.
 
 __Flash under Windows__
 

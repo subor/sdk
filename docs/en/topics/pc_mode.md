@@ -10,7 +10,9 @@ PC mode is similar to Ruyi OS- same version of Windows- but many of the security
 
 It is possible to switch back and forth between Ruyi OS and PC mode.
 
-__As Administrator__ run `SwitchOS.cmd` (found on Windows Desktop) and restart.
+__As Administrator__ run `SwitchOS.cmd` (found on Windows Desktop or [download](https://bitbucket.org/playruyi/support/src/master/files/scripts/)) and restart.
+
+Starting 0.8.1, in main client or [Ruyi Assist](ruyi_assist.md) (only in [PC mode](pc_mode.md)).
 
 ## Changing Default Language
 

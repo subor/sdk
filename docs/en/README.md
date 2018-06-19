@@ -40,11 +40,13 @@ Get __[Support](topics/support.md)__
         * [UE4](topics/ue4.md)
         * [Unity](topics/unity.md)
         * [Build SDK source](topics/build_sdk_source.md) (advanced)
+    * [Console](topics/console_dev.md)
     * Specialized Areas
         * [App Manifest](topics/app_metadata.md)
         * [Input](topics/input.md)
         * [Overlay](topics/overlay.md)
             * [DVR](topics/dvr.md)
+            * [Gamesdb.xml Format](topics/gamesdb_format.md) (advanced)
         * [Low-Power Mode](topics/lpm.md)
     * Advanced
         * [Optimization](topics/optimization.md)

@@ -1,4 +1,6 @@
-# Platform Architecture
+# Layer0
+
+## Platform Architecture
 
 The Ruyi platform has the following architecture:
 
@@ -11,3 +13,26 @@ Client applications interact with the platform (and indirectly with eachother) v
 Asynchronous push messages are received by subscribing to topics published via [ZeroMQ](http://zeromq.org/).
 
 Online services are provided by a customized instance of [brainCloud](http://getbraincloud.com/) running within China.
+
+## Launching
+
+Layer0 is designed to run as a Windows service.
+
+1. Run `cmd.exe` as __Administrator__
+1. `layer0.exe --install --start` to install and start layer0
+
+Once installed, layer0 can be started/stopped via `services.msc`:  
+![](/docs/img/services.png)
+
+1. Launch __Start / Windows Administrative Tools / Services__ (or run `services.msc`)
+1. Right-click service named __Ruyi Layer0__ and select __Start__/__Stop__
+
+Or, to stop it from the command-line:
+
+1. Run `cmd.exe` as __Administrator__
+1. `layer0.exe --stop`
+
+Alternatively, it can be run as a console application:
+
+1. If it is already running as a service, stop it
+1. Double-click `layer0.exe`
