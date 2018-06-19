@@ -75,7 +75,7 @@ The following rules are supported:
 
 | Rule | Description | Example
 |-|-|-
-| `if` | Check if `<cond>` specified in `<condition>` is true | `<if name="CONDITION_NAME" />`
+| `if` | Check if `<cond>` specified in [`<conditions>`](#Conditions-element) is true | `<if name="CONDITION_NAME" />`
 
 ## Runtime Element
 
