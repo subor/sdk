@@ -72,6 +72,7 @@ If __TYPE__ is `file-present` or `file-absent`, the `file` attribute may use the
 `<detection>` contains one or more `<variant>` elements.  Each `<variant>` contains one or more rules.  If all the rules in a `<variant>` match, then an instance of an application is detected.
 
 The following rules are supported:
+
 | Rule | Description | Example
 |-|-|-
 | `if` | Check if `<cond>` specified in `<condition>` is true | `<if name="CONDITION_NAME" />`
