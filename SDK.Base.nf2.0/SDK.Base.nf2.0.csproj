@@ -41,19 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SDK.BaseAsync\GeneratedTypeCache.cs">
+      <Link>GeneratedTypeCache.cs</Link>
+    </Compile>
     <Compile Include="..\SDK.Base\Protocols.cs">
       <Link>Protocols.cs</Link>
     </Compile>
-    <Compile Include="..\SDK.Base\PublisherLogger.cs">
+    <Compile Include="..\SDK.BaseAsync\PublisherLogger.cs">
       <Link>PublisherLogger.cs</Link>
     </Compile>
     <Compile Include="..\SDK.Base\PubsubUtil.cs">
       <Link>PubsubUtil.cs</Link>
     </Compile>
-    <Compile Include="..\SDK.Base\SDKUtility.cs">
+    <Compile Include="..\SDK.BaseAsync\SDKUtility.cs">
       <Link>SDKUtility.cs</Link>
     </Compile>
-    <Compile Include="..\SDK.Base\ServiceIDs.cs">
+    <Compile Include="..\SDK.BaseAsync\ServiceIDs.cs">
       <Link>ServiceIDs.cs</Link>
     </Compile>
     <Compile Include="..\SDK.Base\SubscribeClient.cs">
