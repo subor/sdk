@@ -1,5 +1,5 @@
 # DVR
 
-The [overlay](overlay.md) includes functionality to record video in-app.
+[游戏呼出界面](overlay.md)包括在应用内录制视频功能。
 
-Thanks to support for AMD's UVD/VCE (VCN) in [ffmpeg](http://ffmpeg.org/), encoding with h.264/AVC, h.265/HEVC, VP8 or VP9 can be done up to 4K@60fps for almost no cost.
+感谢AMD的UVD/VCE(VCN)对[ffmpeg](http://ffmpeg.org/)的支持，使用h.264/AVC, h.265/HEVC, VP8或者VP9视频编码能轻松达到4k60帧。

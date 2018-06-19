@@ -1,15 +1,15 @@
-# Input
+# 输入
 
-## Supported Devices
+## 支持的设备
 
-__Gamepads__
+__手柄__
 
-- __Ruyi controller__
-    - Includes controller shipped with devkits; which has a different exterior design, but similar circuitry and firmware
-- Xbox One controller
-- Xbox 360 controller
-- DualShock 4 (Playstation 4) controller
+- __Ruyi手柄__
+    - 随开发机附带的手柄。外形上(和普通手柄)设计略有不同，内部电路固件相似。
+- Xbox One手柄
+- Xbox 360手柄
+- DualShock 4 (Playstation 4)手柄
 
-__Other__
+__其他__
 
-* Keyboard/mouse
+* 键盘/鼠标

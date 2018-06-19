@@ -1,16 +1,16 @@
-# UE4 Integration
+# Ruyi C++ SDK集成到虚幻4引擎
 
-Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unrealengine.com/en-US/) for the [UE4 demo](https://bitbucket.org/playruyi/unreal_demo) and [platformer game](https://bitbucket.org/playruyi/platformer_game).
+本来是关于如何将Ruyi C++ SDK集成到使用[虚幻4](https://www.unrealengine.com/en-US/)引擎的[示例项目](https://bitbucket.org/playruyi/unreal_demo)和[platformer](https://bitbucket.org/playruyi/platformer_game)游戏中.
 
-## Prerequisites
+## 前提条件
 
-- See [prerequisites for C++ SDK](cplusplus.md#Prerequsites)
-- Unreal Engine 18 (4.18), Compiled version
+- 参考[集成C++ SDK]里的前提条件(cplusplus.md#Prerequsites)
+- Unreal Engine 18 (4.18)，编译版
 
-## Download SDK from developer website Instructions
+## 从开发者网站下载SDK的接入说明
 
-1. You can directly download our sdk from our developer website(http://dev.playruyi.com). Our SDK files will be in two folders: __include__ and __lib__.  Put them in one of your game module source folder.  For example, `source/ModuleName/include` and `source/ModuleName/lib`.  They may be put in a sub-folder, just make sure they're in the same folder.
-1. Open __ModuleName.Build.cs__ and add `ModuleName/xxx/include` to the `PublicIncludePaths` property.  For example:
+1. 可以直接从开发者网站(http://dev.playruyi.com)下载Ruyi C++ SDK. 包括两个文件夹: __include__ 和 __lib__。 将它们放在你其中一个游戏模块的根目录文件夹下。比如，`source/ModuleName/include`和`source/ModuleName/lib`。也可以放在子文件夹下，保证这两个文件夹同级即可。
+1. 打开文件 __ModuleName.Build.cs__，为变量`PublicIncludePaths`添加`ModuleName/xxx/include`。代码如下所示:
 
         PublicIncludePaths.AddRange(
             new string[] {
@@ -18,7 +18,7 @@ Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unreal
             }
         );
 
-1. Add `using System.IO;` to the top of the file.  Bind lib path with:
+1. 添加`using System.IO;`到文件头部。如下所示添加模块和库路径代码:
 
         private string ModulePath
         {
@@ -30,7 +30,7 @@ Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unreal
             get { return Path.GetFullPath(Path.Combine(ModulePath, "xxx/lib/")); }
         }
 
-1. Add the following to the same function:
+1. 添加以下代码到主体函数中:
 
         PublicDelayLoadDLLs.Add(Path.Combine(LibPath, "zmq", "libzmq.dll"));
 
@@ -46,27 +46,27 @@ Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unreal
         PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_thread-vc141-mt-1_64.lib"));
         PublicAdditionalLibraries.Add(Path.Combine(LibPath, "boost", "libboost_thread-vc141-mt-gd-1_64.lib"));
 
-1. Copy `lib/zmq/libzmq.dll` to the build output folder.  For example, `Binaries/Win64`.
-1. Open your project with Unreal Engine 4 Editor.  Click __File -> Refresh Visual Studio Project__ (or right-click __xxxxx.uproject__ file and click __Generate visual studio project file__).  Wait for it to finish, then reload your Visual Studio project and you will find __include__ and __lib__ folders in _Solution Explorer_ (click __View -> Solution Explorer__).
-1. When using SDK functions, include `RuyiSDK.h` and use apprpropriate namespaces (like `Ruyi::RuyiSDK`).  Refer to the [UE4 sample](https://bitbucket.org/playruyi/unreal_demo) and [SDK documentation](http://dev.playruyi.com/api) for API details.
-1. Build your project.
+1. 复制`lib/zmq/libzmq.dll`到编译目标文件夹。比如`Binaries/Win64`。
+1. 打开虚幻4编辑器。点击 __File -> Refresh Visual Studio Project__ (或者右击 __xxxxx.uproject__ 文件，点击 __Generate visual studio project file__)。等待完成，然后重新加载VS项目，项目工程里会显示 __include__ 和 __lib__ 文件夹。
+1. 使用SDK时注意包含头文件`RuyiSDK.h`和对应命名空间(比如`Ruyi::RuyiSDK`)。可以参考[UE4示例](https://bitbucket.org/playruyi/unreal_demo)和[SDK文档](http://dev.playruyi.com/api)的具体API说明.
+1. 编译项目。
 
-## Download sdk_source repo Instructions
+## 从sdk_source GIT下载SDK的接入说明
 
-You can also download the SDK from our [sdk_source](https://bitbucket.org/playruyi/sdk_source) repository.
+也可以从[sdk_source](https://bitbucket.org/playruyi/sdk_source)GIT仓库上下载SDK。
 
-1. Download the sdk_source repo.
+1. 下载sdk_source仓库。
 
-1. Download the third-party libraries using the provided link.  Unpack it, copy the __externals__ folder to the same level of your __sdk_source__ folder.
+1. 从提供的链接里下载第三方库。解压缩，复制 __externals__ 文件夹到和 __sdk_source__ 同级的文件夹目录.
   
-1. Build the "RuyiSDKCpp" solution.
+1. 编译"RuyiSDKCpp"项目。
 
-1. Go to "RuyiSDKCpp\bin\Release", copy the __include__ and __lib__ folder to your main module.
+1. 到"RuyiSDKCpp\bin\Release"路径下，复制 __include__ 和 __lib__ 文件夹到目标项目的主模块下。
 
-1. The rest is just the same as the insturction of downloading sdk from website.
+1. 余下内容和从开发者网站下载SDK的接入过程一样。
 
-## Common Issues
+## 可能会遇到的问题
 
-- Since the sdk uses [boost](http://www.boost.org/), you may encounter `error LNK2038: mismatch detected for 'boost__type_index__abi': value 'RTTI is used'`.  You can solve this by adding `bUseRTTI = true;` to __xxxx.build.cs__.
+- 由于Ruyi SDK使用[boost](http://www.boost.org/)库, 可能会遇到`error LNK2038: mismatch detected for 'boost__type_index__abi': value 'RTTI is used'`这样的错误。可以在模块编译配置文件 __xxxx.build.cs__ 里添加`bUseRTTI = true;`解决。
 
-- Similarly: `Error C4577: 'noexcept' used with no exception handling mode specified`.  You can solve this by adding `bEnableExceptions = true;` to __xxx.build.cs__.
+- 如果遇到: `Error C4577: 'noexcept' used with no exception handling mode specified`。可以在模块编译配置文件 __xxx.build.cs__ 里添加`bEnableExceptions = true;`解决。
