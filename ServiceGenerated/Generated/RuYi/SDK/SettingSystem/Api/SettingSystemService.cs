@@ -74,6 +74,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="key">The item's ID</param>
       /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
       bool SettingItemNotify(string key, string contents);
+      Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings GetNetworkSettings();
     }
 
     public interface IAsync {
@@ -131,6 +132,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="key">The item's ID</param>
       /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
       Task<bool> SettingItemNotifyAsync(string key, string contents);
+      Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings> GetNetworkSettingsAsync();
     }
 
     public interface Iface : ISync, IAsync {
@@ -202,6 +204,8 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
       IAsyncResult Begin_SettingItemNotify(AsyncCallback callback, object state, string key, string contents);
       bool End_SettingItemNotify(IAsyncResult asyncResult);
+      IAsyncResult Begin_GetNetworkSettings(AsyncCallback callback, object state);
+      Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings End_GetNetworkSettings(IAsyncResult asyncResult);
     }
 
     public class Client : IDisposable, Iface {
@@ -1124,6 +1128,63 @@ namespace Ruyi.SDK.SettingSystem.Api
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SettingItemNotify failed: unknown result");
       }
 
+      
+      public IAsyncResult Begin_GetNetworkSettings(AsyncCallback callback, object state)
+      {
+        return send_GetNetworkSettings(callback, state);
+      }
+
+      public Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings End_GetNetworkSettings(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_GetNetworkSettings();
+      }
+
+      public async Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings> GetNetworkSettingsAsync()
+      {
+        Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings retval;
+        retval = await Task.Run(() =>
+        {
+          return GetNetworkSettings();
+        });
+        return retval;
+      }
+
+      public Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings GetNetworkSettings()
+      {
+        var asyncResult = Begin_GetNetworkSettings(null, null);
+        return End_GetNetworkSettings(asyncResult);
+
+      }
+      public IAsyncResult send_GetNetworkSettings(AsyncCallback callback, object state)
+      {
+        oprot_.WriteMessageBegin(new TMessage("GetNetworkSettings", TMessageType.Call, seqid_));
+        GetNetworkSettings_args args = new GetNetworkSettings_args();
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings recv_GetNetworkSettings()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        GetNetworkSettings_result result = new GetNetworkSettings_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        if (result.__isset.error1) {
+          throw result.Error1;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetNetworkSettings failed: unknown result");
+      }
+
     }
     public class AsyncProcessor : TAsyncProcessor {
       public AsyncProcessor(IAsync iface)
@@ -1143,6 +1204,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         processMap_["GetUserAppData"] = GetUserAppData_ProcessAsync;
         processMap_["RemoveUserAppData"] = RemoveUserAppData_ProcessAsync;
         processMap_["SettingItemNotify"] = SettingItemNotify_ProcessAsync;
+        processMap_["GetNetworkSettings"] = GetNetworkSettings_ProcessAsync;
       }
 
       protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -1665,6 +1727,41 @@ namespace Ruyi.SDK.SettingSystem.Api
         oprot.Transport.Flush();
       }
 
+      public async Task GetNetworkSettings_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetNetworkSettings_args args = new GetNetworkSettings_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetNetworkSettings_result result = new GetNetworkSettings_result();
+        try
+        {
+          try
+          {
+            result.Success = await iface_.GetNetworkSettingsAsync();
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          oprot.WriteMessageBegin(new TMessage("GetNetworkSettings", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetNetworkSettings", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
     }
 
     public class Processor : TProcessor {
@@ -1685,6 +1782,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         processMap_["GetUserAppData"] = GetUserAppData_Process;
         processMap_["RemoveUserAppData"] = RemoveUserAppData_Process;
         processMap_["SettingItemNotify"] = SettingItemNotify_Process;
+        processMap_["GetNetworkSettings"] = GetNetworkSettings_Process;
       }
 
       protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -2201,6 +2299,41 @@ namespace Ruyi.SDK.SettingSystem.Api
           Console.Error.WriteLine(ex.ToString());
           TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
           oprot.WriteMessageBegin(new TMessage("SettingItemNotify", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void GetNetworkSettings_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetNetworkSettings_args args = new GetNetworkSettings_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetNetworkSettings_result result = new GetNetworkSettings_result();
+        try
+        {
+          try
+          {
+            result.Success = iface_.GetNetworkSettings();
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          oprot.WriteMessageBegin(new TMessage("GetNetworkSettings", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetNetworkSettings", TMessageType.Exception, seqid));
           x.Write(oprot);
         }
         oprot.WriteMessageEnd();
@@ -6358,6 +6491,218 @@ namespace Ruyi.SDK.SettingSystem.Api
           __first = false;
           __sb.Append("Success: ");
           __sb.Append(Success);
+        }
+        if (Error1 != null && __isset.error1) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Error1: ");
+          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetNetworkSettings_args : TBase
+    {
+
+      public GetNetworkSettings_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("GetNetworkSettings_args");
+          oprot.WriteStructBegin(struc);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetNetworkSettings_args(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetNetworkSettings_result : TBase
+    {
+      private Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings _success;
+      private Ruyi.SDK.CommonType.ErrorException _error1;
+
+      public Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+      public Ruyi.SDK.CommonType.ErrorException Error1
+      {
+        get
+        {
+          return _error1;
+        }
+        set
+        {
+          __isset.error1 = true;
+          this._error1 = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+        public bool error1;
+      }
+
+      public GetNetworkSettings_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Struct) {
+                  Success = new Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings();
+                  Success.Read(iprot);
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 1:
+                if (field.Type == TType.Struct) {
+                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1.Read(iprot);
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("GetNetworkSettings_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.Struct;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              Success.Write(oprot);
+              oprot.WriteFieldEnd();
+            }
+          } else if (this.__isset.error1) {
+            if (Error1 != null) {
+              field.Name = "Error1";
+              field.Type = TType.Struct;
+              field.ID = 1;
+              oprot.WriteFieldBegin(field);
+              Error1.Write(oprot);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetNetworkSettings_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success== null ? "<null>" : Success.ToString());
         }
         if (Error1 != null && __isset.error1) {
           if(!__first) { __sb.Append(", "); }

@@ -31,7 +31,11 @@ struct NodeType {
 
 extern const std::map<int, const char*> _NodeType_VALUES_TO_NAMES;
 
+typedef int32_t _int;
+
 typedef std::string JSON;
+
+class RuyiNetworkSettings;
 
 class CategoryNode;
 
@@ -42,6 +46,130 @@ class SettingTree;
 class NodeList;
 
 class SettingItemNotification;
+
+typedef struct _RuyiNetworkSettings__isset {
+  _RuyiNetworkSettings__isset() : connection(false), connectionType(false), quality(false), SSID(false), BSSID(false), Authentication(false), DHCPEnabled(false), IpAddress(false), SubMask(false), Gateway(false), MainDNS(false), SubDNS(false), MacAddress(false), Proxy(false) {}
+  bool connection :1;
+  bool connectionType :1;
+  bool quality :1;
+  bool SSID :1;
+  bool BSSID :1;
+  bool Authentication :1;
+  bool DHCPEnabled :1;
+  bool IpAddress :1;
+  bool SubMask :1;
+  bool Gateway :1;
+  bool MainDNS :1;
+  bool SubDNS :1;
+  bool MacAddress :1;
+  bool Proxy :1;
+} _RuyiNetworkSettings__isset;
+
+class RuyiNetworkSettings : public virtual ::apache::thrift::TBase {
+ public:
+
+  RuyiNetworkSettings(const RuyiNetworkSettings&);
+  RuyiNetworkSettings& operator=(const RuyiNetworkSettings&);
+  RuyiNetworkSettings() : connection(0), connectionType(0), quality(0), SSID(), BSSID(), Authentication(), DHCPEnabled(0), IpAddress(), SubMask(), Gateway(), MainDNS(), SubDNS(), MacAddress(), Proxy() {
+  }
+
+  virtual ~RuyiNetworkSettings() throw();
+  bool connection;
+  bool connectionType;
+  _int quality;
+  std::string SSID;
+  std::string BSSID;
+  std::string Authentication;
+  bool DHCPEnabled;
+  std::string IpAddress;
+  std::string SubMask;
+  std::string Gateway;
+  std::string MainDNS;
+  std::string SubDNS;
+  std::string MacAddress;
+  std::string Proxy;
+
+  _RuyiNetworkSettings__isset __isset;
+
+  void __set_connection(const bool val);
+
+  void __set_connectionType(const bool val);
+
+  void __set_quality(const _int val);
+
+  void __set_SSID(const std::string& val);
+
+  void __set_BSSID(const std::string& val);
+
+  void __set_Authentication(const std::string& val);
+
+  void __set_DHCPEnabled(const bool val);
+
+  void __set_IpAddress(const std::string& val);
+
+  void __set_SubMask(const std::string& val);
+
+  void __set_Gateway(const std::string& val);
+
+  void __set_MainDNS(const std::string& val);
+
+  void __set_SubDNS(const std::string& val);
+
+  void __set_MacAddress(const std::string& val);
+
+  void __set_Proxy(const std::string& val);
+
+  bool operator == (const RuyiNetworkSettings & rhs) const
+  {
+    if (!(connection == rhs.connection))
+      return false;
+    if (!(connectionType == rhs.connectionType))
+      return false;
+    if (!(quality == rhs.quality))
+      return false;
+    if (!(SSID == rhs.SSID))
+      return false;
+    if (!(BSSID == rhs.BSSID))
+      return false;
+    if (!(Authentication == rhs.Authentication))
+      return false;
+    if (!(DHCPEnabled == rhs.DHCPEnabled))
+      return false;
+    if (!(IpAddress == rhs.IpAddress))
+      return false;
+    if (!(SubMask == rhs.SubMask))
+      return false;
+    if (!(Gateway == rhs.Gateway))
+      return false;
+    if (!(MainDNS == rhs.MainDNS))
+      return false;
+    if (!(SubDNS == rhs.SubDNS))
+      return false;
+    if (!(MacAddress == rhs.MacAddress))
+      return false;
+    if (!(Proxy == rhs.Proxy))
+      return false;
+    return true;
+  }
+  bool operator != (const RuyiNetworkSettings &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const RuyiNetworkSettings & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(RuyiNetworkSettings &a, RuyiNetworkSettings &b);
+
+inline std::ostream& operator<<(std::ostream& out, const RuyiNetworkSettings& obj)
+{
+  obj.printTo(out);
+  return out;
+}
 
 typedef struct _CategoryNode__isset {
   _CategoryNode__isset() : id(false), categoryId(false), sortingPriority(false), children(false) {}
