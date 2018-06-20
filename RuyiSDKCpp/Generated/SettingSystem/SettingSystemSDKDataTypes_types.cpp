@@ -95,10 +95,16 @@ void RuyiNetworkSettings::__set_MacAddress(const std::string& val) {
 void RuyiNetworkSettings::__set_Proxy(const std::string& val) {
   this->Proxy = val;
 }
+std::ostream& operator<<(std::ostream& out, const RuyiNetworkSettings& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
 
 uint32_t RuyiNetworkSettings::read(::apache::thrift::protocol::TProtocol* iprot) {
 
-  apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
   std::string fname;
   ::apache::thrift::protocol::TType ftype;
@@ -243,7 +249,7 @@ uint32_t RuyiNetworkSettings::read(::apache::thrift::protocol::TProtocol* iprot)
 
 uint32_t RuyiNetworkSettings::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
-  apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("RuyiNetworkSettings");
 
   xfer += oprot->writeFieldBegin("connection", ::apache::thrift::protocol::T_BOOL, 1);
