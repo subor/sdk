@@ -15,7 +15,7 @@ enum NodeType {
 
 struct RuyiNetworkSettings {
     1: bool connection,
-    2: bool connectionType,
+    2: bool isWifi,
     3: _int quality,
     4: string SSID,
     5: string BSSID,

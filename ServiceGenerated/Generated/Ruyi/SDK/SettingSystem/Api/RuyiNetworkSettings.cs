@@ -25,7 +25,7 @@ namespace Ruyi.SDK.SettingSystem.Api
   public partial class RuyiNetworkSettings : TBase
   {
     private bool _connection;
-    private bool _connectionType;
+    private bool _isWifi;
     private int _quality;
     private string _SSID;
     private string _BSSID;
@@ -52,16 +52,16 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public bool ConnectionType
+    public bool IsWifi
     {
       get
       {
-        return _connectionType;
+        return _isWifi;
       }
       set
       {
-        __isset.connectionType = true;
-        this._connectionType = value;
+        __isset.isWifi = true;
+        this._isWifi = value;
       }
     }
 
@@ -228,7 +228,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     #endif
     public struct Isset {
       public bool connection;
-      public bool connectionType;
+      public bool isWifi;
       public bool quality;
       public bool SSID;
       public bool BSSID;
@@ -270,7 +270,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               break;
             case 2:
               if (field.Type == TType.Bool) {
-                ConnectionType = iprot.ReadBool();
+                IsWifi = iprot.ReadBool();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -388,12 +388,12 @@ namespace Ruyi.SDK.SettingSystem.Api
           oprot.WriteBool(Connection);
           oprot.WriteFieldEnd();
         }
-        if (__isset.connectionType) {
-          field.Name = "connectionType";
+        if (__isset.isWifi) {
+          field.Name = "isWifi";
           field.Type = TType.Bool;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          oprot.WriteBool(ConnectionType);
+          oprot.WriteBool(IsWifi);
           oprot.WriteFieldEnd();
         }
         if (__isset.quality) {
@@ -510,11 +510,11 @@ namespace Ruyi.SDK.SettingSystem.Api
         __sb.Append("Connection: ");
         __sb.Append(Connection);
       }
-      if (__isset.connectionType) {
+      if (__isset.isWifi) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("ConnectionType: ");
-        __sb.Append(ConnectionType);
+        __sb.Append("IsWifi: ");
+        __sb.Append(IsWifi);
       }
       if (__isset.quality) {
         if(!__first) { __sb.Append(", "); }

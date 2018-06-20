@@ -48,9 +48,9 @@ class NodeList;
 class SettingItemNotification;
 
 typedef struct _RuyiNetworkSettings__isset {
-  _RuyiNetworkSettings__isset() : connection(false), connectionType(false), quality(false), SSID(false), BSSID(false), Authentication(false), DHCPEnabled(false), IpAddress(false), SubMask(false), Gateway(false), MainDNS(false), SubDNS(false), MacAddress(false), Proxy(false) {}
+  _RuyiNetworkSettings__isset() : connection(false), isWifi(false), quality(false), SSID(false), BSSID(false), Authentication(false), DHCPEnabled(false), IpAddress(false), SubMask(false), Gateway(false), MainDNS(false), SubDNS(false), MacAddress(false), Proxy(false) {}
   bool connection :1;
-  bool connectionType :1;
+  bool isWifi :1;
   bool quality :1;
   bool SSID :1;
   bool BSSID :1;
@@ -70,12 +70,12 @@ class RuyiNetworkSettings : public virtual ::apache::thrift::TBase {
 
   RuyiNetworkSettings(const RuyiNetworkSettings&);
   RuyiNetworkSettings& operator=(const RuyiNetworkSettings&);
-  RuyiNetworkSettings() : connection(0), connectionType(0), quality(0), SSID(), BSSID(), Authentication(), DHCPEnabled(0), IpAddress(), SubMask(), Gateway(), MainDNS(), SubDNS(), MacAddress(), Proxy() {
+  RuyiNetworkSettings() : connection(0), isWifi(0), quality(0), SSID(), BSSID(), Authentication(), DHCPEnabled(0), IpAddress(), SubMask(), Gateway(), MainDNS(), SubDNS(), MacAddress(), Proxy() {
   }
 
   virtual ~RuyiNetworkSettings() throw();
   bool connection;
-  bool connectionType;
+  bool isWifi;
   _int quality;
   std::string SSID;
   std::string BSSID;
@@ -93,7 +93,7 @@ class RuyiNetworkSettings : public virtual ::apache::thrift::TBase {
 
   void __set_connection(const bool val);
 
-  void __set_connectionType(const bool val);
+  void __set_isWifi(const bool val);
 
   void __set_quality(const _int val);
 
@@ -123,7 +123,7 @@ class RuyiNetworkSettings : public virtual ::apache::thrift::TBase {
   {
     if (!(connection == rhs.connection))
       return false;
-    if (!(connectionType == rhs.connectionType))
+    if (!(isWifi == rhs.isWifi))
       return false;
     if (!(quality == rhs.quality))
       return false;

@@ -34,8 +34,8 @@ void RuyiNetworkSettings::__set_connection(const bool val) {
   this->connection = val;
 }
 
-void RuyiNetworkSettings::__set_connectionType(const bool val) {
-  this->connectionType = val;
+void RuyiNetworkSettings::__set_isWifi(const bool val) {
+  this->isWifi = val;
 }
 
 void RuyiNetworkSettings::__set_quality(const _int val) {
@@ -117,8 +117,8 @@ uint32_t RuyiNetworkSettings::read(::apache::thrift::protocol::TProtocol* iprot)
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool(this->connectionType);
-          this->__isset.connectionType = true;
+          xfer += iprot->readBool(this->isWifi);
+          this->__isset.isWifi = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -240,8 +240,8 @@ uint32_t RuyiNetworkSettings::write(::apache::thrift::protocol::TProtocol* oprot
   xfer += oprot->writeBool(this->connection);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("connectionType", ::apache::thrift::protocol::T_BOOL, 2);
-  xfer += oprot->writeBool(this->connectionType);
+  xfer += oprot->writeFieldBegin("isWifi", ::apache::thrift::protocol::T_BOOL, 2);
+  xfer += oprot->writeBool(this->isWifi);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("quality", ::apache::thrift::protocol::T_I32, 3);
@@ -300,7 +300,7 @@ uint32_t RuyiNetworkSettings::write(::apache::thrift::protocol::TProtocol* oprot
 void swap(RuyiNetworkSettings &a, RuyiNetworkSettings &b) {
   using ::std::swap;
   swap(a.connection, b.connection);
-  swap(a.connectionType, b.connectionType);
+  swap(a.isWifi, b.isWifi);
   swap(a.quality, b.quality);
   swap(a.SSID, b.SSID);
   swap(a.BSSID, b.BSSID);
@@ -318,7 +318,7 @@ void swap(RuyiNetworkSettings &a, RuyiNetworkSettings &b) {
 
 RuyiNetworkSettings::RuyiNetworkSettings(const RuyiNetworkSettings& other0) {
   connection = other0.connection;
-  connectionType = other0.connectionType;
+  isWifi = other0.isWifi;
   quality = other0.quality;
   SSID = other0.SSID;
   BSSID = other0.BSSID;
@@ -335,7 +335,7 @@ RuyiNetworkSettings::RuyiNetworkSettings(const RuyiNetworkSettings& other0) {
 }
 RuyiNetworkSettings& RuyiNetworkSettings::operator=(const RuyiNetworkSettings& other1) {
   connection = other1.connection;
-  connectionType = other1.connectionType;
+  isWifi = other1.isWifi;
   quality = other1.quality;
   SSID = other1.SSID;
   BSSID = other1.BSSID;
@@ -355,7 +355,7 @@ void RuyiNetworkSettings::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
   out << "RuyiNetworkSettings(";
   out << "connection=" << to_string(connection);
-  out << ", " << "connectionType=" << to_string(connectionType);
+  out << ", " << "isWifi=" << to_string(isWifi);
   out << ", " << "quality=" << to_string(quality);
   out << ", " << "SSID=" << to_string(SSID);
   out << ", " << "BSSID=" << to_string(BSSID);
