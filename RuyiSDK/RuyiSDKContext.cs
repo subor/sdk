@@ -4,7 +4,7 @@ using Thrift.Transport;
 namespace Ruyi
 {
     /// <summary>
-    /// context used to create RuyiSDK instance
+    /// Context to create <see cref="RuyiSDK"/> instance
     /// </summary>
     public class RuyiSDKContext
     {
@@ -36,34 +36,38 @@ namespace Ruyi
         }
 
         /// <summary>
-        /// set the running end point
+        /// The running end point
         /// </summary>
         public Endpoint endpoint = Endpoint.Notset;
 
         /// <summary>
-        /// remote address of layer0
+        /// Address of layer0 to connect to.  Default to localhost.
         /// </summary>
         public string RemoteAddress { get; set; } = "localhost";
 
         /// <summary>
-        /// Specify which SDK features should be enabled.  Default is all features enabled.
+        /// Which SDK features to enable.  Default is all features enabled.
         /// </summary>
         public RuyiSDK.SDKFeatures EnabledFeatures { get; set; } = RuyiSDK.SDKFeatures.All;
 
         /// <summary>
         /// Port to connect to for low-latency messages.  Leave as zero to use default.
         /// </summary>
+        /// <exclude/>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public int LowLatencyPort = 0;
+
         /// <summary>
         /// Port to connect to for high-latency messages.  Leave as zero to use default.
         /// </summary>
+        /// <exclude/>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public int HighLatencyPort = 0;
 
         /// <summary>
         /// Thrift transport to use.  If null will initialize default.
         /// </summary>
+        /// <exclude/>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public TTransport Transport;
 
