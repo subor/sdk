@@ -6,6 +6,7 @@ namespace java Ruyi.SDK.SettingSystem.Api
 namespace netcore Ruyi.SDK.SettingSystem.Api
 namespace rs Ruyi.SDK.SettingSystem.Api
 
+typedef i32 _int
 typedef string JSON
 
 enum NodeType {
@@ -14,6 +15,23 @@ enum NodeType {
     All = 3,
 }
 
+
+struct RuyiNetworkSettings {
+    1: bool connection,
+    2: bool isWifi,
+    3: _int quality,
+    4: string SSID,
+    5: string BSSID,
+    6: string Authentication,
+    7: bool DHCPEnabled,
+    8: string IpAddress,
+    9: string SubMask,
+    10: string Gateway,
+    11: string MainDNS,
+    12: string SubDNS,
+    13: string MacAddress,
+    14: string Proxy,
+}
 
 struct CategoryNode {
     1: string id,

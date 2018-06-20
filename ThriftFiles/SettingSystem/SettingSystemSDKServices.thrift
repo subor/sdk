@@ -82,5 +82,7 @@ According to the format of json string your write, searching can be separated to
 		/** Optional. The arguments of the notification. In json string format */
 		2: SettingSystemSDKDataTypes.JSON contents
 	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	SettingSystemSDKDataTypes.RuyiNetworkSettings GetNetworkSettings() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 }
 

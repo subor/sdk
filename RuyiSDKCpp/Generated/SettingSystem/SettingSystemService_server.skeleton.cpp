@@ -142,6 +142,11 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("SettingItemNotify\n");
   }
 
+  void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) {
+    // Your implementation goes here
+    printf("GetNetworkSettings\n");
+  }
+
 };
 
 int main(int argc, char **argv) {
