@@ -184,13 +184,21 @@ namespace Ruyi
         {
             if (context.Transport == null)
             {
-                var host = OS.Util.GetIPAddress(context.RemoteAddress);
-                // init and open high/low latency transport, create protocols
-                var lowLatencyPort = context.LowLatencyPort == 0 ? ConstantsSDKDataTypesConstants.low_latency_socket_port : context.LowLatencyPort;
-                lowLatencyTransport = new TSocketTransportTS(host, lowLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.LowLatencyTimeout : context.Timeout);
+                if (context.endpoint == RuyiSDKContext.Endpoint.Web)
+                {
+                    lowLatencyTransport = new THttpClientTransport(new Uri(context.RemoteAddress), null);
+                    highLatencyTransport = lowLatencyTransport;
+                }
+                else
+                {
+                    var host = OS.Util.GetIPAddress(context.RemoteAddress);
+                    // init and open high/low latency transport, create protocols
+                    var lowLatencyPort = context.LowLatencyPort == 0 ? ConstantsSDKDataTypesConstants.low_latency_socket_port : context.LowLatencyPort;
+                    lowLatencyTransport = new TSocketTransportTS(host, lowLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.LowLatencyTimeout : context.Timeout);
 
-                var highLatencyPort = context.HighLatencyPort == 0 ? ConstantsSDKDataTypesConstants.high_latency_socket_port : context.HighLatencyPort;
-                highLatencyTransport = new TSocketTransportTS(host, highLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.HighLatencyTimeout : context.Timeout);
+                    var highLatencyPort = context.HighLatencyPort == 0 ? ConstantsSDKDataTypesConstants.high_latency_socket_port : context.HighLatencyPort;
+                    highLatencyTransport = new TSocketTransportTS(host, highLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.HighLatencyTimeout : context.Timeout);
+                }
             }
             else
             {
@@ -198,19 +206,28 @@ namespace Ruyi
                 highLatencyTransport = context.Transport;
             }
 
-            LowLatencyProtocol = new TBinaryProtocolTS(lowLatencyTransport);
-            HighLatencyProtocol = new TBinaryProtocolTS(highLatencyTransport);
+            if (Object.ReferenceEquals(lowLatencyTransport, highLatencyTransport))
+            {
+                LowLatencyProtocol = new TBinaryProtocolTS(lowLatencyTransport);
+                HighLatencyProtocol = LowLatencyProtocol;
+                lowLatencyTransport.OpenAsync().Wait();
+            }
+            else
+            {
+                LowLatencyProtocol = new TBinaryProtocolTS(lowLatencyTransport);
+                HighLatencyProtocol = new TBinaryProtocolTS(highLatencyTransport);
 
-            Task.WaitAll(
-                lowLatencyTransport.OpenAsync(),
-                highLatencyTransport.OpenAsync()
-                );
+                Task.WaitAll(
+                    lowLatencyTransport.OpenAsync(),
+                    highLatencyTransport.OpenAsync()
+                    );
+            }
 
             if (!ValidateVersion())
                 return false;
 
             // init subscriber
-            if (IsFeatureEnabled(SDKFeatures.Subscriber))
+            if (context.endpoint != RuyiSDKContext.Endpoint.Web && IsFeatureEnabled(SDKFeatures.Subscriber))
             {
                 var pubout = ConstantsSDKDataTypesConstants.layer0_publisher_out_uri.SetAddress(context.RemoteAddress);
                 Subscriber = SubscribeClient.CreateInstance(pubout);
