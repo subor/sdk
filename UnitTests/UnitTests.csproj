@@ -32,11 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Elo\DuellingEloTest.cs" />
@@ -70,6 +66,15 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\RuyiSDK\RuyiSDK.csproj">
+      <Project>{6636a711-7919-419c-90c1-c633aa63a8b8}</Project>
+      <Name>RuyiSDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceGenerated\ServiceGenerated.csproj">
+      <Project>{542ac8d4-8058-4e1d-9ed2-bc0b4ca04956}</Project>
+      <Name>ServiceGenerated</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
