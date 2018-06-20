@@ -138,14 +138,14 @@ namespace Ruyi
         /// Underlying transport and protocol for low-latency messages
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public TBinaryProtocolTS LowLatencyProtocol { get; private set; }
+        public TProtocol LowLatencyProtocol { get; private set; }
 
         private TClientTransport highLatencyTransport = null;
         /// <summary>
         /// Underlying transport and protocol for high-latency messages
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        public TBinaryProtocolTS HighLatencyProtocol { get; private set; }
+        public TProtocol HighLatencyProtocol { get; private set; }
 
         private ValidatorService.Client validator = null;
 
@@ -182,12 +182,16 @@ namespace Ruyi
 
         bool Init()
         {
+            // Default to using binary protocol
+            Func<TClientTransport, TProtocol> createProtocolFunc = (transport) => new TBinaryProtocolTS(transport);
+
             if (context.Transport == null)
             {
                 if (context.endpoint == RuyiSDKContext.Endpoint.Web)
                 {
                     lowLatencyTransport = new THttpClientTransport(new Uri(context.RemoteAddress), null);
                     highLatencyTransport = lowLatencyTransport;
+                    createProtocolFunc = (transport) => new TJsonProtocol(transport);
                 }
                 else
                 {
@@ -206,16 +210,17 @@ namespace Ruyi
                 highLatencyTransport = context.Transport;
             }
 
+            // If we have 1 transport we need 1 protocol, if 2 transports 2 protocol
             if (Object.ReferenceEquals(lowLatencyTransport, highLatencyTransport))
             {
-                LowLatencyProtocol = new TBinaryProtocolTS(lowLatencyTransport);
+                LowLatencyProtocol = createProtocolFunc(lowLatencyTransport);
                 HighLatencyProtocol = LowLatencyProtocol;
                 lowLatencyTransport.OpenAsync().Wait();
             }
             else
             {
-                LowLatencyProtocol = new TBinaryProtocolTS(lowLatencyTransport);
-                HighLatencyProtocol = new TBinaryProtocolTS(highLatencyTransport);
+                LowLatencyProtocol = createProtocolFunc(lowLatencyTransport);
+                HighLatencyProtocol = createProtocolFunc(highLatencyTransport);
 
                 Task.WaitAll(
                     lowLatencyTransport.OpenAsync(),
