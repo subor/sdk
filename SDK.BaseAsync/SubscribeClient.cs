@@ -57,9 +57,9 @@ namespace Ruyi.Layer0
             if (topics.Count > 0 && receivingThread == null)
             {
                 cts = new CancellationTokenSource();
-                receivingThread = Task.Factory.StartNew(async () =>
+                receivingThread = Task.Run(async () =>
                 {
-                    while (await Receive()) ;
+                    while (!cts.IsCancellationRequested && await Receive()) ;
                 }, cts.Token);
                 //var tokens = Thread.CurrentThread.Name?.Split(ThreadNameToken);
                 //receivingThread.Name = ((tokens == null || tokens.Length == 0) ? topic : tokens[0]) + ThreadNameToken + "Subscriber";
@@ -119,35 +119,49 @@ namespace Ruyi.Layer0
             Logging.Logger.Log(message, level: level, category: Logging.MessageCategory.Subscriber);
         }
 
+        static readonly TimeSpan ReceiveTimeout = TimeSpan.FromMilliseconds(500);
+
         async Task<bool> Receive()
         {
             try
             {
-                var msg = socket?.ReceiveMultipartMessage();
-                if (msg == null || PubsubUtil.IsStoppingMessage(msg))
+                NetMQMessage msg = null;
+                // NOTE:
+                // After switching to async IO, when we close the socket in Dispose() the ReceiveMultipartMessage() wasn't returning.
+                // So, we TryReceive() with a timeout.  If it times out the receive loop will check if we retry or exit.
+                // If we get an async-friendly version of NetMQ (or switch transports) we can probably go back to regular Receive().
+                if (socket.TryReceiveMultipartMessage(ReceiveTimeout, ref msg))
                 {
-                    PublisherLogger.Info("subscribe client stopped by stpping message!");
-                    return false;
-                }
-
-                var topic = msg[0].ConvertToString();
-                var msgType = msg[1].ConvertToString();
-                if (MsgHandlers.TryGetValue(msgType, out Delegate mh))
-                {
-                    var respBytes = msg[2].Buffer;
-                    var stream = new MemoryStream(respBytes, 0, respBytes.Length);
-                    using (var trans = new TStreamClientTransport(stream, stream))
-                    using (var proto = new TBinaryProtocol(trans))
+                    if (msg == null || PubsubUtil.IsStoppingMessage(msg))
                     {
-                        Type t = GeneratedTypeCache.GetType(msgType);
-                        if (t == null)
-                            throw new TargetInvocationException(new Exception($"can't get type for: {msgType}"));
-                        TBase ret = Activator.CreateInstance(t) as TBase;
-                        await ret.ReadAsync(proto, cts.Token);
-                        mh.DynamicInvoke(topic, ret);
+                        PublisherLogger.Info("subscribe client stopped by stpping message!");
+                        return false;
                     }
+
+                    var topic = msg[0].ConvertToString();
+                    var msgType = msg[1].ConvertToString();
+                    if (MsgHandlers.TryGetValue(msgType, out Delegate mh))
+                    {
+                        var respBytes = msg[2].Buffer;
+                        var stream = new MemoryStream(respBytes, 0, respBytes.Length);
+                        using (var trans = new TStreamClientTransport(stream, stream))
+                        using (var proto = new TBinaryProtocol(trans))
+                        {
+                            Type t = GeneratedTypeCache.GetType(msgType);
+                            if (t == null)
+                                throw new TargetInvocationException(new Exception($"can't get type for: {msgType}"));
+                            TBase ret = Activator.CreateInstance(t) as TBase;
+                            await ret.ReadAsync(proto, cts.Token);
+                            mh.DynamicInvoke(topic, ret);
+                        }
+                    }
+                    return true;
                 }
-                return true;
+                else
+                {
+                    // Receive timed out.  Return true so receive loop can check if we should exit or try again.
+                    return true;
+                }
             }
             catch (Exception e)
             {
