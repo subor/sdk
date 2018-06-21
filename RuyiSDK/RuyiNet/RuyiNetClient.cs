@@ -9,8 +9,26 @@ using Thrift.Protocol;
 namespace Ruyi.SDK.Online
 {
     /// <summary>
-    /// The main client for accessing Ruyi Net Services
+    /// <see cref="Ruyi.SDK.Online"/> namespace provides access to online services.  Most functionality is available via a <see cref="Ruyi.SDK.Online.RuyiNetClient"/> instance.
     /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    { }
+
+    /// <summary>
+    /// The main client for accessing Ruyi's online services (aka "RuyiNet")
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Instance available from <see cref="Ruyi.RuyiSDK.RuyiNetService"/> property of <see cref="Ruyi.RuyiSDK"/>.
+    /// </para>
+    /// <para>
+    /// Must call <see cref="RuyiNetClient.Update"/> periodically to process events and callbacks.  
+    /// </para>
+    /// </remarks>
+    /// <example>
+    /// <code source="layer0/sdktest/doctests.cs" region="RuyiNetClient"></code>
+    /// </example>
     public class RuyiNetClient : IDisposable
     {
         private const int MAX_PLAYERS = 4;
@@ -91,6 +109,9 @@ namespace Ruyi.SDK.Online
         /// <summary>
         /// Update the tasks.
         /// </summary>
+        /// <remarks>
+        /// Note that a <see cref="Ruyi.RuyiSDK"/> instance's <see cref="Ruyi.RuyiSDK.Update"/> method will update its <see cref="Ruyi.RuyiSDK.RuyiNetService"/> property.
+        /// </remarks>
         public void Update()
         {
             mTaskQueue.Update();
@@ -249,6 +270,8 @@ namespace Ruyi.SDK.Online
         {
             BCService = new BrainCloudService.Client(protocol);
 
+            AppId = string.Empty;
+            AppSecret = string.Empty;
             mTaskQueue = new RuyiNetTaskQueue();
 
             CloudService = new RuyiNetCloudService(this, storageLayerService);
@@ -264,6 +287,8 @@ namespace Ruyi.SDK.Online
             VideoService = new RuyiNetVideoService(this);
 
             CurrentPlayers = new RuyiNetProfile[MAX_PLAYERS];
+
+            RemoteIpAddress = string.Empty;
 
             Initialised = false;
         }
@@ -306,7 +331,6 @@ namespace Ruyi.SDK.Online
             [Serializable]
             public class Data
             {
-
                 public string parentProfileId;
                 public string playerName;
                 public bool newUser;
