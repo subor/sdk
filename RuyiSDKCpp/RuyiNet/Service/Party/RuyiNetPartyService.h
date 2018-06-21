@@ -5,8 +5,9 @@
 #include "../../Response/RuyiNetResponse.h"
 #include "../RuyiNetService.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	class RuyiNetPartyService : public RuyiNetService
 	{
 	public:
@@ -66,4 +67,5 @@ namespace Ruyi
 		/// <param name="response">The parse data structure of response json</param>
 		void LeaveParty(int index, const std::string& groupId, RuyiNetResponse& response);	
 	};
-}
+//}
+	}}} //namespace

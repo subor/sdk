@@ -466,6 +466,7 @@
     <ClCompile Include="RuyiNet\RuyiNetClient.cpp" />
     <ClCompile Include="RuyiNet\Service\Cloud\RuyiNetCloudService.cpp" />
     <ClCompile Include="RuyiNet\Service\Friend\RuyiNetFriendService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Gamification\RuyiNetGamificationService.cpp" />
     <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardService.cpp" />
     <ClCompile Include="RuyiNet\Service\Lobby\RuyiNetLobby.cpp" />
     <ClCompile Include="RuyiNet\Service\Lobby\RuyiNetLobbyService.cpp" />
@@ -524,6 +525,7 @@
     <ClInclude Include="PubSub\SubscribeClient.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RuyiNet\Enum.h" />
+    <ClInclude Include="RuyiNet\Response\RuyiNetAchievementResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetFindPlayersResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetFriendResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetCDNResponse.h" />
@@ -542,8 +544,11 @@
     <ClInclude Include="RuyiNet\Response\RuyiNetUploadFileResponse.h" />
     <ClInclude Include="RuyiNet\RuyiNetClient.h" />
     <ClInclude Include="RuyiNet\RuyiNetException.h" />
+    <ClInclude Include="RuyiNet\RuyiNetHttpStatus.h" />
     <ClInclude Include="RuyiNet\Service\Cloud\RuyiNetCloudService.h" />
     <ClInclude Include="RuyiNet\Service\Friend\RuyiNetFriendService.h" />
+    <ClInclude Include="RuyiNet\Service\Gamification\RuyiNetAchievement.h" />
+    <ClInclude Include="RuyiNet\Service\Gamification\RuyiNetGamificationService.h" />
     <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardService.h" />
     <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardType.h" />
     <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetRotationType.h" />

@@ -1,7 +1,8 @@
 #include "RuyiNetLobby.h"
 
-namespace Ruyi 
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi {
 	RuyiNetLobby::RuyiNetLobby() 
 	{
 		PendingMembers.clear();
@@ -71,4 +72,5 @@ namespace Ruyi
 		});
 	}
 
-}
+//}
+	}}} //namespace

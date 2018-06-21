@@ -1,7 +1,8 @@
 #include "RuyiNetFriendService.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	RuyiNetFriendService::RuyiNetFriendService(RuyiNetClient * client)
 		: RuyiNetService(client)
 	{}
@@ -52,4 +53,5 @@ namespace Ruyi
 		nlohmann::json retJson = nlohmann::json::parse(strResponse);
 		response.parseJson(retJson);
 	}
-}
+//}
+}}} //namespace

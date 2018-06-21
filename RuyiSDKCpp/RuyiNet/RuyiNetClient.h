@@ -3,14 +3,16 @@
 #include "../Generated/BrainCloudService/BrainCloudService.h"
 #include "../RuyiString.h"
 #include "RuyiNetException.h"
+#include "RuyiNetHttpStatus.h"
 
 #include "thrift/protocol/TMultiplexedProtocol.h"
 #include "boost/container/detail/json.hpp"
 
 using TProtocol1 = apache::thrift::protocol::TMultiplexedProtocol;
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	#define STATUS_OK 200
 	
 	class RuyiNetCloudService;
@@ -23,6 +25,7 @@ namespace Ruyi
 	class RuyiNetMatchmakingService;
 	class RuyiNetLobbyService;
 	class RuyiNetTelemetryService;
+	class RuyiNetGamificationService;
 
 	class RuyiNetClient
 	{
@@ -157,4 +160,5 @@ namespace Ruyi
 		std::string mAppSecret;
 		bool mInitialised;
 	};
-}
+//}
+}}} //namespace

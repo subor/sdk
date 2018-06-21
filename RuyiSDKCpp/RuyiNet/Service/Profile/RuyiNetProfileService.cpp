@@ -2,8 +2,9 @@
 
 #include "../../Response/RuyiNetUploadFileResponse.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	RuyiNetProfileService::RuyiNetProfileService(RuyiNetClient * client)
 		: RuyiNetService(client)
 	{
@@ -36,4 +37,5 @@ namespace Ruyi
 			}
 		}
 	}
-}
+//}
+}}} //namespace

@@ -1,7 +1,8 @@
 #include "RuyiNetLobbyService.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	RuyiNetLobbyService::RuyiNetLobbyService(RuyiNetClient * client) : RuyiNetService(client)
 	{
 		mCurrentLobby = nullptr;
@@ -226,4 +227,5 @@ namespace Ruyi
 			mCurrentLobby = nullptr;
 		}
 	}
-}
+//}
+	}}} //namespace

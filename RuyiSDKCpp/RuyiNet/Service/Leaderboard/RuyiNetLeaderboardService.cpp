@@ -1,7 +1,8 @@
 #include "RuyiNetLeaderboardService.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	RuyiNetLeaderboardService::RuyiNetLeaderboardService(RuyiNetClient * client)
 		: RuyiNetService(client)
 	{}
@@ -95,4 +96,5 @@ namespace Ruyi
 
 		return result;
 	}
-}
+//}
+}}} //namespace

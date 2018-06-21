@@ -2,8 +2,9 @@
 
 #include "../RuyiNetClient.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	/// <summary>
 	/// A response from retrieving social leaderboard data.
 	/// </summary>
@@ -170,4 +171,5 @@ namespace Ruyi
 			}
 		}
 	};
-}
+//}
+}}} //namespace

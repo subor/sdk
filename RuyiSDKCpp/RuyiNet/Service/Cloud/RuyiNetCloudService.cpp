@@ -6,8 +6,10 @@
 #include "../../RuyiNetException.h"
 #include "../../Response/RuyiNetListUserFilesResponse.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
+
 	namespace fs = std::experimental::filesystem;
 
 	RuyiNetCloudService::RuyiNetCloudService(RuyiNetClient * const client)
@@ -189,4 +191,5 @@ namespace Ruyi
 			throw RuyiNetException(buffer);
 		}
 	}
-}
+//}
+}}} //namespace

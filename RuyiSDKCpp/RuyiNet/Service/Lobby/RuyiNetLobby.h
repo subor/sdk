@@ -3,8 +3,9 @@
 #include "../../RuyiNetClient.h"
 #include "../../Response/RuyiNetLobbyResponse.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	class RuyiNetLobby 
 	{
 		/// <summary>
@@ -133,4 +134,5 @@ namespace Ruyi
 
 		void ParseMembers(std::map<std::string, RuyiNetResponseGroup::Member>& members, std::list<RuyiNetLobbyMember>& pendingMembers);
 	};
-}
+//}
+	}}} //namespace

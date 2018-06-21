@@ -6,8 +6,9 @@
 #include "../../Response/RuyiNetResponse.h"
 #include "../RuyiNetService.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	/// <summary>
 	/// Allows users to upload files to their individual accounts
 	/// </summary>
@@ -110,4 +111,5 @@ namespace Ruyi
 		/// <param name="response">The parsed data struct of return json.</param>
 		void DownloadFile(int index, const std::string cloudPath, const std::string& cloudFilename, RuyiNetResponse& response);
 	};
-}
+//}
+	}}} //namespace

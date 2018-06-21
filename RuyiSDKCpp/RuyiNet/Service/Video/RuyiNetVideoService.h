@@ -8,8 +8,9 @@
 #include "../../Response/RuyiNetResponse.h"
 #include "../RuyiNetService.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	class RuyiNetVideoService : public RuyiNetService
 	{
 	public:
@@ -66,4 +67,5 @@ namespace Ruyi
 	private:
 		const RuyiString VIDEO_LOCATION = RUYI_STR("video");
 	};
-}
+//}
+	}}} //namespace

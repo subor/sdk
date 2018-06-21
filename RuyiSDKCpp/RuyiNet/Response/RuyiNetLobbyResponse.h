@@ -5,8 +5,9 @@
 
 #include "RuyiNetResponse.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	enum RuyiNetLobbyType
 	{
 		RANKED,
@@ -228,4 +229,5 @@ namespace Ruyi
 			}
 		}
 	};
-}
+//}
+}}} //namespace

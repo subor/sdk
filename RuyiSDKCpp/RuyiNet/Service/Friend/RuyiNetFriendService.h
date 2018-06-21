@@ -5,8 +5,9 @@
 #include "../../Response/RuyiNetGetProfilesResponse.h"
 #include "../../Response/RuyiNetFriendResponse.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	class RuyiNetFriendService : public RuyiNetService
 	{
 	public:
@@ -50,4 +51,5 @@ namespace Ruyi
 		/// <param name="profileIds">A list of profile IDs of the users to get the profiles for.</param>
 		void GetProfiles(int index, const std::list<std::string>& profileId, RuyiNetGetProfilesResponse& response);
 	};
-}
+//}
+}}} //namespace

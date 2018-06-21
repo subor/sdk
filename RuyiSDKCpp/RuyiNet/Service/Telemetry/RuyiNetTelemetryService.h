@@ -5,8 +5,9 @@
 #include "../../Response/RuyiNetTelemetrySessionResponse.h"
 #include "../../Response/RuyiNetResponse.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	/// <summary>
 	/// Represents a telemetry session.
 	/// </summary>
@@ -351,4 +352,5 @@ namespace Ruyi
 		//seconds
 		int GetCurrentTimestamp();
 	};
-}
+//}
+	}}} //namespace

@@ -2,8 +2,9 @@
 
 #include "../RuyiNetClient.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	struct RuyiNetResponse
 	{
 		/// <summary>
@@ -304,4 +305,5 @@ namespace Ruyi
 			}
 		}
 	};
-}
+//}
+}}} //namespace

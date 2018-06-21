@@ -2,8 +2,9 @@
 
 #include <sys/utime.h>
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	void RuyiNetTelemetryService::StartTelemetrySession(int clientIndex, RuyiNetTelemetrySessionResponse& response, RuyiNetTelemetrySession& session)
 	{
 		StartTelemetrySession(clientIndex, GetCurrentTimestamp(), response, session);
@@ -204,4 +205,5 @@ namespace Ruyi
 
 		return ret;
 	}
-}
+//}
+	}}} //namespace

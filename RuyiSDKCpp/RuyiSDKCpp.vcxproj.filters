@@ -256,6 +256,9 @@
     <ClCompile Include="RuyiNet\Service\Video\RuyiNetVideoService.cpp">
       <Filter>Sources\RuyiNet\Service\Video</Filter>
     </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Gamification\RuyiNetGamificationService.cpp">
+      <Filter>Sources\RuyiNet\Service\Gamification</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_constants.h">
@@ -492,6 +495,18 @@
     </ClInclude>
     <ClInclude Include="RuyiNet\Service\Video\RuyiNetVideoService.h">
       <Filter>Sources\RuyiNet\Service\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Gamification\RuyiNetAchievement.h">
+      <Filter>Sources\RuyiNet\Service\Gamification</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetAchievementResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\RuyiNetHttpStatus.h">
+      <Filter>Sources\RuyiNet</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Gamification\RuyiNetGamificationService.h">
+      <Filter>Sources\RuyiNet\Service\Gamification</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

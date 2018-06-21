@@ -2,8 +2,9 @@
 
 #include "RuyiNetProfile.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	/// <summary>
 	/// The response after a single profile is requested.
 	/// </summary>
@@ -60,4 +61,5 @@ namespace Ruyi
 			}
 		}
 	};
-}
+//}
+}}} //namespace

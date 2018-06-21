@@ -4,8 +4,9 @@
 
 #include "../RuyiNetClient.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	/// <summary>
 	/// The response after uploading a file.
 	/// </summary>
@@ -165,4 +166,5 @@ namespace Ruyi
 			}
 		}
 	};
-}
+//}
+}}} //namespace

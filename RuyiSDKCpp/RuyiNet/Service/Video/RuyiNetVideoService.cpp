@@ -1,7 +1,8 @@
 #include "RuyiNetVideoService.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	RuyiNetVideoService::RuyiNetVideoService(RuyiNetClient * const client)
 		: RuyiNetService(client)
 	{
@@ -92,4 +93,5 @@ namespace Ruyi
 
 		response.parseJson(responseJson);
 	}
-}
+//}
+	}}} //namespace

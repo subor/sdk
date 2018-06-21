@@ -9,12 +9,15 @@
 #include "Service/Video/RuyiNetVideoService.h"
 #include "Service/Lobby/RuyiNetLobbyService.h"
 #include "Service/Telemetry/RuyiNetTelemetryService.h"
+#include "Service/Gamification/RuyiNetGamificationService.h"
 
 #include "Response/RuyiNetGetProfileResponse.h"
 #include "Response/RuyiNetProfile.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi
+//{
 	
 
 	RuyiNetClient::RuyiNetClient(const boost::shared_ptr<TProtocol1> & protocol)
@@ -171,4 +174,5 @@ namespace Ruyi
 		return 0;
 	}
 
-}
+//}
+}}} //namespace

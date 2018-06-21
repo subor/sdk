@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../RuyiNetClient.h"
+namespace Ruyi { namespace SDK { namespace Online {
 
-namespace Ruyi
-{
+//namespace Ruyi{
 	class RuyiNetService
 	{
 	protected:
@@ -13,4 +13,5 @@ namespace Ruyi
 
 		RuyiNetClient * mClient;
 	};
-}
+//}
+}}} //namespace

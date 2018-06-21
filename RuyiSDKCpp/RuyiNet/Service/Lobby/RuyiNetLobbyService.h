@@ -6,8 +6,9 @@
 
 #include <functional>
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
+//namespace Ruyi{
 	class RuyiNetLobbyService : public RuyiNetService
 	{
 	public:
@@ -109,4 +110,5 @@ namespace Ruyi
 		void InitLobby(RuyiNetResponseGroup& response);
 		void DeleteLobby();
 	};
-}
+//}
+	}}} //namespace
