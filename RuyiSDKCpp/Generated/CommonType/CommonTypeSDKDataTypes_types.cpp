@@ -1205,14 +1205,22 @@ __isset.activeDependencies = true;
 
 void SettingItem::__set_ActionName(const std::string& val) {
   this->ActionName = val;
+__isset.ActionName = true;
 }
 
 void SettingItem::__set_ActionObject(const std::string& val) {
   this->ActionObject = val;
+__isset.ActionObject = true;
 }
 
-void SettingItem::__set_ActionMethodName(const std::string& val) {
-  this->ActionMethodName = val;
+void SettingItem::__set_ActionOnSetValue(const std::string& val) {
+  this->ActionOnSetValue = val;
+__isset.ActionOnSetValue = true;
+}
+
+void SettingItem::__set_ActionOnGetValue(const std::string& val) {
+  this->ActionOnGetValue = val;
+__isset.ActionOnGetValue = true;
 }
 
 uint32_t SettingItem::read(::apache::thrift::protocol::TProtocol* iprot) {
@@ -1398,8 +1406,16 @@ uint32_t SettingItem::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 19:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->ActionMethodName);
-          this->__isset.ActionMethodName = true;
+          xfer += iprot->readString(this->ActionOnSetValue);
+          this->__isset.ActionOnSetValue = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 20:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->ActionOnGetValue);
+          this->__isset.ActionOnGetValue = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1503,18 +1519,26 @@ uint32_t SettingItem::write(::apache::thrift::protocol::TProtocol* oprot) const 
     }
     xfer += oprot->writeFieldEnd();
   }
-  xfer += oprot->writeFieldBegin("ActionName", ::apache::thrift::protocol::T_STRING, 17);
-  xfer += oprot->writeString(this->ActionName);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("ActionObject", ::apache::thrift::protocol::T_STRING, 18);
-  xfer += oprot->writeString(this->ActionObject);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("ActionMethodName", ::apache::thrift::protocol::T_STRING, 19);
-  xfer += oprot->writeString(this->ActionMethodName);
-  xfer += oprot->writeFieldEnd();
-
+  if (this->__isset.ActionName) {
+    xfer += oprot->writeFieldBegin("ActionName", ::apache::thrift::protocol::T_STRING, 17);
+    xfer += oprot->writeString(this->ActionName);
+    xfer += oprot->writeFieldEnd();
+  }
+  if (this->__isset.ActionObject) {
+    xfer += oprot->writeFieldBegin("ActionObject", ::apache::thrift::protocol::T_STRING, 18);
+    xfer += oprot->writeString(this->ActionObject);
+    xfer += oprot->writeFieldEnd();
+  }
+  if (this->__isset.ActionOnSetValue) {
+    xfer += oprot->writeFieldBegin("ActionOnSetValue", ::apache::thrift::protocol::T_STRING, 19);
+    xfer += oprot->writeString(this->ActionOnSetValue);
+    xfer += oprot->writeFieldEnd();
+  }
+  if (this->__isset.ActionOnGetValue) {
+    xfer += oprot->writeFieldBegin("ActionOnGetValue", ::apache::thrift::protocol::T_STRING, 20);
+    xfer += oprot->writeString(this->ActionOnGetValue);
+    xfer += oprot->writeFieldEnd();
+  }
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -1540,7 +1564,8 @@ void swap(SettingItem &a, SettingItem &b) {
   swap(a.activeDependencies, b.activeDependencies);
   swap(a.ActionName, b.ActionName);
   swap(a.ActionObject, b.ActionObject);
-  swap(a.ActionMethodName, b.ActionMethodName);
+  swap(a.ActionOnSetValue, b.ActionOnSetValue);
+  swap(a.ActionOnGetValue, b.ActionOnGetValue);
   swap(a.__isset, b.__isset);
 }
 
@@ -1563,7 +1588,8 @@ SettingItem::SettingItem(const SettingItem& other49) {
   activeDependencies = other49.activeDependencies;
   ActionName = other49.ActionName;
   ActionObject = other49.ActionObject;
-  ActionMethodName = other49.ActionMethodName;
+  ActionOnSetValue = other49.ActionOnSetValue;
+  ActionOnGetValue = other49.ActionOnGetValue;
   __isset = other49.__isset;
 }
 SettingItem& SettingItem::operator=(const SettingItem& other50) {
@@ -1585,7 +1611,8 @@ SettingItem& SettingItem::operator=(const SettingItem& other50) {
   activeDependencies = other50.activeDependencies;
   ActionName = other50.ActionName;
   ActionObject = other50.ActionObject;
-  ActionMethodName = other50.ActionMethodName;
+  ActionOnSetValue = other50.ActionOnSetValue;
+  ActionOnGetValue = other50.ActionOnGetValue;
   __isset = other50.__isset;
   return *this;
 }
@@ -1608,9 +1635,10 @@ void SettingItem::printTo(std::ostream& out) const {
   out << ", " << "isActive=" << to_string(isActive);
   out << ", " << "validation="; (__isset.validation ? (out << to_string(validation)) : (out << "<null>"));
   out << ", " << "activeDependencies="; (__isset.activeDependencies ? (out << to_string(activeDependencies)) : (out << "<null>"));
-  out << ", " << "ActionName=" << to_string(ActionName);
-  out << ", " << "ActionObject=" << to_string(ActionObject);
-  out << ", " << "ActionMethodName=" << to_string(ActionMethodName);
+  out << ", " << "ActionName="; (__isset.ActionName ? (out << to_string(ActionName)) : (out << "<null>"));
+  out << ", " << "ActionObject="; (__isset.ActionObject ? (out << to_string(ActionObject)) : (out << "<null>"));
+  out << ", " << "ActionOnSetValue="; (__isset.ActionOnSetValue ? (out << to_string(ActionOnSetValue)) : (out << "<null>"));
+  out << ", " << "ActionOnGetValue="; (__isset.ActionOnGetValue ? (out << to_string(ActionOnGetValue)) : (out << "<null>"));
   out << ")";
 }
 

@@ -22,8 +22,8 @@ namespace Ruyi.SDK.ExternalErrors
     static ExternalErrorsSDKDataTypesConstants()
     {
       ExternalErrorInfos tmp0 = new ExternalErrorInfos();
-      tmp0.ErrorCode = ExternalErrorCode.Err_0;
       tmp0.Description = "";
+      tmp0.ErrorCode = ExternalErrorCode.Err_0;
       EXTERNALERRORLIST.Add(tmp0);
       ExternalErrorInfos tmp1 = new ExternalErrorInfos();
       tmp1.Description = "setting {0} is not found!";
@@ -42,12 +42,12 @@ namespace Ruyi.SDK.ExternalErrors
       tmp4.ErrorCode = ExternalErrorCode.Err_4;
       EXTERNALERRORLIST.Add(tmp4);
       ExternalErrorInfos tmp5 = new ExternalErrorInfos();
-      tmp5.Description = "[type error] trying to assign a {0} to setting category {1} 's property {2}, whose data type is {3}";
       tmp5.ErrorCode = ExternalErrorCode.Err_5;
+      tmp5.Description = "[type error] trying to assign a {0} to setting category {1} 's property {2}, whose data type is {3}";
       EXTERNALERRORLIST.Add(tmp5);
       ExternalErrorInfos tmp6 = new ExternalErrorInfos();
-      tmp6.Description = "currently no player logged in. please login a player first.";
       tmp6.ErrorCode = ExternalErrorCode.Err_6;
+      tmp6.Description = "currently no player logged in. please login a player first.";
       EXTERNALERRORLIST.Add(tmp6);
       ExternalErrorInfos tmp7 = new ExternalErrorInfos();
       tmp7.ErrorCode = ExternalErrorCode.Err_7;
@@ -90,8 +90,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp16.Description = "";
       EXTERNALERRORLIST.Add(tmp16);
       ExternalErrorInfos tmp17 = new ExternalErrorInfos();
-      tmp17.Description = "";
       tmp17.ErrorCode = ExternalErrorCode.Err_17;
+      tmp17.Description = "";
       EXTERNALERRORLIST.Add(tmp17);
       ExternalErrorInfos tmp18 = new ExternalErrorInfos();
       tmp18.ErrorCode = ExternalErrorCode.Err_18;
