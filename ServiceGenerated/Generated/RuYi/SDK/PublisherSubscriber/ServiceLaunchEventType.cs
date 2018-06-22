@@ -25,12 +25,16 @@ namespace Ruyi.SDK.PublisherSubscriber
     /// </summary>
     BackToLowerPowerOver = 2,
     /// <summary>
+    /// High power recovered, happens when layer1 restart.
+    /// </summary>
+    HighPowerRecoverOver = 3,
+    /// <summary>
     /// A Service connected to the broker, it's ready to process messages.
     /// </summary>
-    SingleServiceStarted = 3,
+    SingleServiceStarted = 4,
     /// <summary>
     /// A Service been removed from the broker.
     /// </summary>
-    SingleServiceStopped = 4,
+    SingleServiceStopped = 5,
   }
 }
