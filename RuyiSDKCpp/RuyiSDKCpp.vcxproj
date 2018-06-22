@@ -471,6 +471,7 @@
     <ClCompile Include="RuyiNet\Service\Lobby\RuyiNetLobby.cpp" />
     <ClCompile Include="RuyiNet\Service\Lobby\RuyiNetLobbyService.cpp" />
     <ClCompile Include="RuyiNet\Service\Party\RuyiNetPartyService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Patch\RuyiNetPatchService.cpp" />
     <ClCompile Include="RuyiNet\Service\Profile\RuyiNetProfileService.cpp" />
     <ClCompile Include="RuyiNet\Service\RuyiNetService.cpp" />
     <ClCompile Include="RuyiNet\Service\Telemetry\RuyiNetTelemetryService.cpp" />
@@ -530,6 +531,7 @@
     <ClInclude Include="RuyiNet\Response\RuyiNetFriendResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetCDNResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetFriendsVideosResponse.h" />
+    <ClInclude Include="RuyiNet\Response\RuyiNetGetGameManifestResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetPartyInfoResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetProfileResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetProfilesResponse.h" />
@@ -555,6 +557,8 @@
     <ClInclude Include="RuyiNet\Service\Lobby\RuyiNetLobby.h" />
     <ClInclude Include="RuyiNet\Service\Lobby\RuyiNetLobbyService.h" />
     <ClInclude Include="RuyiNet\Service\Party\RuyiNetPartyService.h" />
+    <ClInclude Include="RuyiNet\Service\Patch\RuyiNetGameManifest.h" />
+    <ClInclude Include="RuyiNet\Service\Patch\RuyiNetPatchService.h" />
     <ClInclude Include="RuyiNet\Service\Profile\RuyiNetProfileService.h" />
     <ClInclude Include="RuyiNet\Service\RuyiNetService.h" />
     <ClInclude Include="RuyiNet\Service\Telemetry\RuyiNetTelemetryService.h" />

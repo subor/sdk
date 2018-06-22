@@ -122,7 +122,7 @@ public class RuyiNet : MonoBehaviour
     public SubscribeClient Subscribe { get { return mSDK.Subscriber; } }
 
     private RuyiSDKContext mSDKContext;
-    private RuyiSDK mSDK;
+    public RuyiSDK mSDK;
 
     private Action mOnInitialised;
 }

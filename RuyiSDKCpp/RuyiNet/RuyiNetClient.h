@@ -26,6 +26,7 @@ namespace Ruyi { namespace SDK { namespace Online {
 	class RuyiNetLobbyService;
 	class RuyiNetTelemetryService;
 	class RuyiNetGamificationService;
+	class RuyiNetPatchService;
 
 	class RuyiNetClient
 	{
@@ -107,6 +108,13 @@ namespace Ruyi { namespace SDK { namespace Online {
 		/// </summary>
 		RuyiNetTelemetryService* const GetTelemetryService() { return mTelemetryService; }
 
+		RuyiNetGamificationService* const GetGamificationService() { return mGamificationService; }
+
+		/// <summary>
+		/// Get manifest info for a game.
+		/// </summary>
+		RuyiNetPatchService* const GetPatchService() { return mPatchService; }
+
 		static const int MAX_PLAYERS = 4;
 
 		struct SwitchToChildProfileResponse
@@ -153,6 +161,8 @@ namespace Ruyi { namespace SDK { namespace Online {
 		RuyiNetVideoService* mVideoService;
 		RuyiNetLobbyService* mLobbyService;
 		RuyiNetTelemetryService* mTelemetryService;
+		RuyiNetGamificationService* mGamificationService;
+		RuyiNetPatchService* mPatchService;
 
 		struct RuyiNetProfile* mCurrentPlayers[MAX_PLAYERS];
 

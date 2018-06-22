@@ -10,6 +10,7 @@
 #include "Service/Lobby/RuyiNetLobbyService.h"
 #include "Service/Telemetry/RuyiNetTelemetryService.h"
 #include "Service/Gamification/RuyiNetGamificationService.h"
+#include "Service/Patch/RuyiNetPatchService.h"
 
 #include "Response/RuyiNetGetProfileResponse.h"
 #include "Response/RuyiNetProfile.h"
@@ -22,8 +23,8 @@ namespace Ruyi { namespace SDK { namespace Online {
 
 	RuyiNetClient::RuyiNetClient(const boost::shared_ptr<TProtocol1> & protocol)
 		: BCService(nullptr), mCloudService(nullptr), mFriendService(nullptr), mLeaderboardService(nullptr),
-		mPartyService(nullptr), mProfileService(nullptr), 
-		mVideoService(nullptr), mLobbyService(nullptr), mTelemetryService(nullptr), mInitialised(false)
+		mPartyService(nullptr), mProfileService(nullptr), mVideoService(nullptr), mLobbyService(nullptr), 
+		mTelemetryService(nullptr), mGamificationService(nullptr), mPatchService(nullptr), mInitialised(false)
 	{
 		BCService = new SDK::BrainCloudApi::BrainCloudServiceClient(protocol);
 
@@ -36,6 +37,8 @@ namespace Ruyi { namespace SDK { namespace Online {
 		mVideoService = new RuyiNetVideoService(this);
 		mLobbyService = new RuyiNetLobbyService(this);
 		mTelemetryService = new RuyiNetTelemetryService(this);
+		mGamificationService = new RuyiNetGamificationService(this);
+		mPatchService = new RuyiNetPatchService(this);
 
 		for (int i = 0; i < MAX_PLAYERS; ++i)
 		{ 
@@ -73,6 +76,12 @@ namespace Ruyi { namespace SDK { namespace Online {
 
 		delete mCloudService;
 		mCloudService = nullptr;
+
+		delete mGamificationService;
+		mGamificationService = nullptr;
+
+		delete mPatchService;
+		mPatchService = nullptr;
 
 		if (BCService != nullptr)
 		{

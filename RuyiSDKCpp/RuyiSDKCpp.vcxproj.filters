@@ -259,6 +259,9 @@
     <ClCompile Include="RuyiNet\Service\Gamification\RuyiNetGamificationService.cpp">
       <Filter>Sources\RuyiNet\Service\Gamification</Filter>
     </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Patch\RuyiNetPatchService.cpp">
+      <Filter>Sources\RuyiNet\Service\Patch</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_constants.h">
@@ -507,6 +510,15 @@
     </ClInclude>
     <ClInclude Include="RuyiNet\Service\Gamification\RuyiNetGamificationService.h">
       <Filter>Sources\RuyiNet\Service\Gamification</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetGetGameManifestResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Patch\RuyiNetGameManifest.h">
+      <Filter>Sources\RuyiNet\Service\Patch</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Patch\RuyiNetPatchService.h">
+      <Filter>Sources\RuyiNet\Service\Patch</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

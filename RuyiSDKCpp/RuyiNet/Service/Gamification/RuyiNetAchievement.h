@@ -32,7 +32,18 @@ namespace Ruyi { namespace SDK { namespace Online {
 	{
 	public:
 		
-		RuyiNetAchievement() {}
+		RuyiNetAchievement() 
+		{
+			InvisibleUntilEarned = false;
+			XpAwarded = 0;
+			CoinAwarded = 0;
+			GameId = "";
+			AchievementId = "";
+			Title = "";
+			Description = "";
+			ImageUrl = "";
+			ExtraData = "";
+		}
 		
 		/// <summary>
 		/// Construct from an achievement response.
