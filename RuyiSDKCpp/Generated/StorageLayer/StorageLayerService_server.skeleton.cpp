@@ -12,8 +12,6 @@ using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
 using namespace ::apache::thrift::server;
 
-using boost::shared_ptr;
-
 using namespace  ::Ruyi::SDK::StorageLayer;
 
 class StorageLayerServiceHandler : virtual public StorageLayerServiceIf {
@@ -22,7 +20,7 @@ class StorageLayerServiceHandler : virtual public StorageLayerServiceIf {
     // Your initialization goes here
   }
 
-  void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& msg) {
+  void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& message) {
     // Your implementation goes here
     printf("GetLocalPath\n");
   }
@@ -31,11 +29,11 @@ class StorageLayerServiceHandler : virtual public StorageLayerServiceIf {
 
 int main(int argc, char **argv) {
   int port = 9090;
-  shared_ptr<StorageLayerServiceHandler> handler(new StorageLayerServiceHandler());
-  shared_ptr<TProcessor> processor(new StorageLayerServiceProcessor(handler));
-  shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
-  shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-  shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+  ::apache::thrift::stdcxx::shared_ptr<StorageLayerServiceHandler> handler(new StorageLayerServiceHandler());
+  ::apache::thrift::stdcxx::shared_ptr<TProcessor> processor(new StorageLayerServiceProcessor(handler));
+  ::apache::thrift::stdcxx::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
+  ::apache::thrift::stdcxx::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
+  ::apache::thrift::stdcxx::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
 
   TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
   server.serve();

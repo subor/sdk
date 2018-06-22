@@ -12,8 +12,6 @@ using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
 using namespace ::apache::thrift::server;
 
-using boost::shared_ptr;
-
 using namespace  ::Ruyi::SDK::SDKValidator;
 
 class ValidatorServiceHandler : virtual public ValidatorServiceIf {
@@ -31,11 +29,11 @@ class ValidatorServiceHandler : virtual public ValidatorServiceIf {
 
 int main(int argc, char **argv) {
   int port = 9090;
-  shared_ptr<ValidatorServiceHandler> handler(new ValidatorServiceHandler());
-  shared_ptr<TProcessor> processor(new ValidatorServiceProcessor(handler));
-  shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
-  shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-  shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+  ::apache::thrift::stdcxx::shared_ptr<ValidatorServiceHandler> handler(new ValidatorServiceHandler());
+  ::apache::thrift::stdcxx::shared_ptr<TProcessor> processor(new ValidatorServiceProcessor(handler));
+  ::apache::thrift::stdcxx::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
+  ::apache::thrift::stdcxx::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
+  ::apache::thrift::stdcxx::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
 
   TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
   server.serve();

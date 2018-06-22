@@ -1,8 +1,11 @@
 include "SettingSystemSDKDataTypes.thrift"
 include "../../../commons/Config/SDKDesc/ServiceCommon/thrift/CommonType/CommonTypeSDKDataTypes.thrift"
 
-namespace csharp Ruyi.SDK.SettingSystem.Api
 namespace cpp Ruyi.SDK.SettingSystem.Api
+namespace csharp Ruyi.SDK.SettingSystem.Api
+namespace java Ruyi.SDK.SettingSystem.Api
+namespace netcore Ruyi.SDK.SettingSystem.Api
+namespace rs Ruyi.SDK.SettingSystem.Api
 
 
 service SettingSystemService {
