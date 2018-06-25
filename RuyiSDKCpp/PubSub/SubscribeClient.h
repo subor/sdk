@@ -111,7 +111,7 @@ namespace Ruyi
 			zmq::socket_t* subscriber;
 			zmq::context_t* context;
 
-			boost::shared_ptr<boost::thread> receivingThread;
+			std::shared_ptr<boost::thread> receivingThread;
 
 			vector<string> topics;
 

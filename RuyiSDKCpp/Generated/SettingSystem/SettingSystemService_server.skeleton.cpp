@@ -12,8 +12,6 @@ using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
 using namespace ::apache::thrift::server;
 
-using boost::shared_ptr;
-
 using namespace  ::Ruyi::SDK::SettingSystem::Api;
 
 class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
@@ -144,15 +142,20 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("SettingItemNotify\n");
   }
 
+  void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) {
+    // Your implementation goes here
+    printf("GetNetworkSettings\n");
+  }
+
 };
 
 int main(int argc, char **argv) {
   int port = 9090;
-  shared_ptr<SettingSystemServiceHandler> handler(new SettingSystemServiceHandler());
-  shared_ptr<TProcessor> processor(new SettingSystemServiceProcessor(handler));
-  shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
-  shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-  shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+  ::apache::thrift::stdcxx::shared_ptr<SettingSystemServiceHandler> handler(new SettingSystemServiceHandler());
+  ::apache::thrift::stdcxx::shared_ptr<TProcessor> processor(new SettingSystemServiceProcessor(handler));
+  ::apache::thrift::stdcxx::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
+  ::apache::thrift::stdcxx::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
+  ::apache::thrift::stdcxx::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
 
   TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
   server.serve();
