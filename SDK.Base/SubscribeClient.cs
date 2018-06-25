@@ -25,9 +25,6 @@ namespace Ruyi.Layer0
         /// <exclude/>
         public const char ThreadNameToken = '|';
 
-        static Dictionary<string, Type> cachedTypes = new Dictionary<string, Type>();
-        static object typeLocker = new object();
-
         /// <summary>
         /// Handles pub/sub messages.
         /// </summary>
@@ -173,33 +170,6 @@ namespace Ruyi.Layer0
                 MsgHandlers[tp] = Delegate.Remove(MsgHandlers[tp], messageHandler);
         }
 
-        Type GetType(string msgType)
-        {
-            lock (typeLocker)
-            {
-                if (cachedTypes.TryGetValue(msgType, out var ret))
-                    return ret;
-
-                var assem = Assembly.Load("ServiceGenerated");
-                var tp = assem.GetType(msgType);
-                if (tp == null)
-                {
-                    assem = Assembly.Load("ServiceCommon");
-                    tp = assem?.GetType(msgType);
-                }
-                if (tp == null)
-                {
-                    assem = Assembly.Load("InternalServiceGenerated");
-                    tp = assem?.GetType(msgType);
-                }
-                if (tp != null)
-                {
-                    cachedTypes.Add(msgType, tp);
-                }
-                return tp;
-            }
-        }
-
         void Log(string message, Logging.LogLevel level)
         {
             Logging.Logger.Log(message, level: level, category: Logging.MessageCategory.Subscriber);
@@ -225,7 +195,7 @@ namespace Ruyi.Layer0
                     using (TStreamTransport trans = new TStreamTransport(stream, stream))
                     using (TBinaryProtocol proto = new TBinaryProtocol(trans))
                     {
-                        Type t = GetType(msgType);
+                        Type t = GeneratedTypeCache.GetType(msgType);
                         if (t == null)
                             throw new TargetInvocationException(new Exception($"can't get type for: {msgType}"));
                         TBase ret = Activator.CreateInstance(t) as TBase;
