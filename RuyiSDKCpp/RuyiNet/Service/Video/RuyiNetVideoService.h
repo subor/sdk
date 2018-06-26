@@ -10,7 +10,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	class RuyiNetVideoService : public RuyiNetService
 	{
 	public:
@@ -67,5 +66,5 @@ namespace Ruyi { namespace SDK { namespace Online {
 	private:
 		const RuyiString VIDEO_LOCATION = RUYI_STR("video");
 	};
-//}
-	}}} //namespace
+
+}}} 

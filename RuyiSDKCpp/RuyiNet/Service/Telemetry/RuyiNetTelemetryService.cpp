@@ -4,7 +4,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	void RuyiNetTelemetryService::StartTelemetrySession(int clientIndex, RuyiNetTelemetrySessionResponse& response, RuyiNetTelemetrySession& session)
 	{
 		StartTelemetrySession(clientIndex, GetCurrentTimestamp(), response, session);
@@ -205,5 +204,5 @@ namespace Ruyi { namespace SDK { namespace Online {
 
 		return ret;
 	}
-//}
-	}}} //namespace
+
+}}} 

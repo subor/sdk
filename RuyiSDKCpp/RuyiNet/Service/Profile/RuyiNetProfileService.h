@@ -7,7 +7,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	class RuyiNetProfileService : public RuyiNetService
 	{
 	public:
@@ -25,5 +24,5 @@ namespace Ruyi { namespace SDK { namespace Online {
 		const RuyiString PROFILE_LOCATION = RUYI_STR("profile");
 		const RuyiString PROFILE_IMAGE_FILENAME = RUYI_STR("image.jpg");
 	};
-//}
-}}} //namespace
+
+}}} 

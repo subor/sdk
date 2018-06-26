@@ -4,7 +4,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	class RuyiNetException : public std::runtime_error
 	{
 	public:
@@ -13,5 +12,4 @@ namespace Ruyi { namespace SDK { namespace Online {
 		{
 		}
 	};
-	//}
 }}}

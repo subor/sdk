@@ -2,7 +2,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	RuyiNetVideoService::RuyiNetVideoService(RuyiNetClient * const client)
 		: RuyiNetService(client)
 	{
@@ -93,5 +92,5 @@ namespace Ruyi { namespace SDK { namespace Online {
 
 		response.parseJson(responseJson);
 	}
-//}
-	}}} //namespace
+
+}}} 

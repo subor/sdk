@@ -2,7 +2,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	RuyiNetPartyService::RuyiNetPartyService(RuyiNetClient * client)
 		:RuyiNetService(client)
 	{
@@ -68,5 +67,5 @@ namespace Ruyi { namespace SDK { namespace Online {
 		nlohmann::json retJson = nlohmann::json::parse(strResponse);
 		response.parseJson(retJson);
 	}
-//}
-	}}} //namespace
+
+}}} 

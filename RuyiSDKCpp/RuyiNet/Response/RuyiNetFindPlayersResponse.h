@@ -4,9 +4,8 @@
 #include <string>
 
 #include "RuyiNetSummaryFriendData.h"
-namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
+namespace Ruyi { namespace SDK { namespace Online {
 	/// <summary>
 	/// The response after a matching-making is requested.
 	/// </summary> 
@@ -107,7 +106,6 @@ namespace Ruyi { namespace SDK { namespace Online {
 			}
 		}
 	};
-//}
-	}}} //namespace
+}}} 
 
 	

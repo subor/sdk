@@ -6,8 +6,6 @@
 #include "../../Response/RuyiNetResponse.h"
 
 namespace Ruyi { namespace SDK { namespace Online {
-//namespace Ruyi{
-
 	/// <summary>
 	/// Handles backing up data to the cloud.
 	/// </summary>
@@ -45,5 +43,4 @@ namespace Ruyi { namespace SDK { namespace Online {
 			RUYI_STR("output_log.txt")
 		};
 	};
-//}
-}}} //namespace
+}}}

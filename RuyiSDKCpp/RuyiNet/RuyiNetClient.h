@@ -12,7 +12,6 @@ using TProtocol1 = apache::thrift::protocol::TMultiplexedProtocol;
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	#define STATUS_OK 200
 	
 	class RuyiNetCloudService;
@@ -170,5 +169,5 @@ namespace Ruyi { namespace SDK { namespace Online {
 		std::string mAppSecret;
 		bool mInitialised;
 	};
-//}
-}}} //namespace
+
+}}}

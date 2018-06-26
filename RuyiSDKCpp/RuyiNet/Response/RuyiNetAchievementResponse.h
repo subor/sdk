@@ -136,4 +136,4 @@ namespace Ruyi { namespace SDK { namespace Online {
 		}
 	};
 
-}}} //namespace
+}}}

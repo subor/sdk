@@ -7,7 +7,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	class RuyiNetPartyService : public RuyiNetService
 	{
 	public:
@@ -67,5 +66,5 @@ namespace Ruyi { namespace SDK { namespace Online {
 		/// <param name="response">The parse data structure of response json</param>
 		void LeaveParty(int index, const std::string& groupId, RuyiNetResponse& response);	
 	};
-//}
-	}}} //namespace
+
+}}} 

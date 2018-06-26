@@ -3,8 +3,6 @@
 #include "../RuyiNetClient.h"
 
 namespace Ruyi { namespace SDK { namespace Online {
-
-//namespace Ruyi{
 	/// <summary>
 	/// The summary data of the player.
 	/// </summary>
@@ -41,6 +39,4 @@ namespace Ruyi { namespace SDK { namespace Online {
 			}
 		}
 	};
-
-//}
-}}} //namespace
+}}} 

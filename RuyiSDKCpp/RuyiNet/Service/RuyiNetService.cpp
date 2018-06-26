@@ -2,7 +2,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	RuyiNetService::RuyiNetService(RuyiNetClient * client)
 		: mClient(client)
 	{
@@ -15,5 +14,5 @@ namespace Ruyi { namespace SDK { namespace Online {
 		mClient->GetBCService()->Script_RunParentScript(response, scriptName, jsonScriptData, "RUYI", index);	
 		return response;
 	}
-//}
-}}} //namespace
+
+}}} 

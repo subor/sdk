@@ -2,7 +2,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	RuyiNetLeaderboardService::RuyiNetLeaderboardService(RuyiNetClient * client)
 		: RuyiNetService(client)
 	{}
@@ -96,5 +95,4 @@ namespace Ruyi { namespace SDK { namespace Online {
 
 		return result;
 	}
-//}
-}}} //namespace
+}}} 

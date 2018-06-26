@@ -4,7 +4,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	ENUM(RuyiNetRotationType, char,
 		NEVER,
 		DAILY,
@@ -12,5 +11,4 @@ namespace Ruyi { namespace SDK { namespace Online {
 		WEEKLY,
 		MONTHLY,
 		YEARLY);
-//}
-}}} //namespace
+}}} 

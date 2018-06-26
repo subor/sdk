@@ -8,8 +8,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
-
 	namespace fs = std::experimental::filesystem;
 
 	RuyiNetCloudService::RuyiNetCloudService(RuyiNetClient * const client)
@@ -191,5 +189,4 @@ namespace Ruyi { namespace SDK { namespace Online {
 			throw RuyiNetException(buffer);
 		}
 	}
-//}
-}}} //namespace
+}}} 

@@ -5,7 +5,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	class RuyiNetLobby 
 	{
 		/// <summary>
@@ -134,5 +133,5 @@ namespace Ruyi { namespace SDK { namespace Online {
 
 		void ParseMembers(std::map<std::string, RuyiNetResponseGroup::Member>& members, std::list<RuyiNetLobbyMember>& pendingMembers);
 	};
-//}
-	}}} //namespace
+
+}}}

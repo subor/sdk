@@ -9,7 +9,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	class RuyiNetLeaderboardService : public RuyiNetService
 	{
 	public:
@@ -72,5 +71,4 @@ namespace Ruyi { namespace SDK { namespace Online {
 	private:
 		std::string GetLeaderboardId(const std::string& id);
 	};
-//}
-}}} //namespace
+}}} 

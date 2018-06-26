@@ -3,7 +3,6 @@
 #include "../RuyiNetClient.h"
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	class RuyiNetService
 	{
 	protected:
@@ -13,5 +12,5 @@ namespace Ruyi { namespace SDK { namespace Online {
 
 		RuyiNetClient * mClient;
 	};
-//}
-}}} //namespace
+
+}}} 

@@ -7,7 +7,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi{
 	/// <summary>
 	/// Represents a telemetry session.
 	/// </summary>
@@ -352,5 +351,5 @@ namespace Ruyi { namespace SDK { namespace Online {
 		//seconds
 		int GetCurrentTimestamp();
 	};
-//}
-	}}} //namespace
+
+}}} 

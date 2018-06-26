@@ -3,8 +3,6 @@
 #include "../RuyiNetClient.h"
 
 namespace Ruyi { namespace SDK { namespace Online {
-
-//namespace Ruyi{
 	/// <summary>
 	/// Contains the leaderboard returned from a leaderboard request.
 	/// </summary>
@@ -212,5 +210,4 @@ namespace Ruyi { namespace SDK { namespace Online {
 			}
 		}
 	};
-//}
-}}} //namespace
+}}}

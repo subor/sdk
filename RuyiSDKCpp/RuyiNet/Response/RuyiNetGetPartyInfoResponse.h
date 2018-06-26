@@ -3,8 +3,6 @@
 #include "../RuyiNetClient.h"
 
 namespace Ruyi { namespace SDK { namespace Online {
-
-//namespace Ruyi{
 	/// <summary>
 	/// The response when getting party information.
 	/// </summary>
@@ -192,5 +190,5 @@ namespace Ruyi { namespace SDK { namespace Online {
 			}
 		}
 	};
-//}
-}}} //namespace
+
+}}} 

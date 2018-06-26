@@ -17,10 +17,6 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
-//namespace Ruyi
-//{
-	
-
 	RuyiNetClient::RuyiNetClient(const boost::shared_ptr<TProtocol1> & protocol)
 		: BCService(nullptr), mCloudService(nullptr), mFriendService(nullptr), mLeaderboardService(nullptr),
 		mPartyService(nullptr), mProfileService(nullptr), mVideoService(nullptr), mLobbyService(nullptr), 
@@ -183,5 +179,4 @@ namespace Ruyi { namespace SDK { namespace Online {
 		return 0;
 	}
 
-//}
-}}} //namespace
+}}} 
