@@ -34,8 +34,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp2.Description = "[type error] trying to assign a {0} to setting item {1}, whose data type is {2}";
       EXTERNALERRORLIST.Add(tmp2);
       ExternalErrorInfos tmp3 = new ExternalErrorInfos();
-      tmp3.ErrorCode = ExternalErrorCode.Err_3;
       tmp3.Description = "json string convert failed: {0}";
+      tmp3.ErrorCode = ExternalErrorCode.Err_3;
       EXTERNALERRORLIST.Add(tmp3);
       ExternalErrorInfos tmp4 = new ExternalErrorInfos();
       tmp4.ErrorCode = ExternalErrorCode.Err_4;
@@ -82,20 +82,20 @@ namespace Ruyi.SDK.ExternalErrors
       tmp14.Description = "";
       EXTERNALERRORLIST.Add(tmp14);
       ExternalErrorInfos tmp15 = new ExternalErrorInfos();
-      tmp15.Description = "";
       tmp15.ErrorCode = ExternalErrorCode.Err_15;
+      tmp15.Description = "";
       EXTERNALERRORLIST.Add(tmp15);
       ExternalErrorInfos tmp16 = new ExternalErrorInfos();
-      tmp16.ErrorCode = ExternalErrorCode.Err_16;
       tmp16.Description = "";
+      tmp16.ErrorCode = ExternalErrorCode.Err_16;
       EXTERNALERRORLIST.Add(tmp16);
       ExternalErrorInfos tmp17 = new ExternalErrorInfos();
       tmp17.ErrorCode = ExternalErrorCode.Err_17;
       tmp17.Description = "";
       EXTERNALERRORLIST.Add(tmp17);
       ExternalErrorInfos tmp18 = new ExternalErrorInfos();
-      tmp18.Description = "trigger action failed when changing setting {0}!";
       tmp18.ErrorCode = ExternalErrorCode.Err_18;
+      tmp18.Description = "trigger action failed when changing setting {0}!";
       EXTERNALERRORLIST.Add(tmp18);
     }
   }
