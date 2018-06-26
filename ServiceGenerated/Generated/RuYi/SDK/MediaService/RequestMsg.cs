@@ -18,299 +18,296 @@ using Thrift.Transport;
 
 namespace Ruyi.SDK.MediaService
 {
-  public abstract partial class RequestMsg : TAbstractBase {
-    public abstract void Write(TProtocol protocol);
-    public readonly bool Isset;
-    public abstract object Data { get; }
-    protected RequestMsg(bool isset) {
-      Isset = isset;
-    }
 
-    public class ___undefined : RequestMsg {
-      public override object Data { get { return null; } }
-      public ___undefined() : base(false) {}
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class RequestMsg : TBase
+  {
+    private PlayMsg _Play;
+    private PauseMsg _Pause;
+    private StopMsg _Stop;
+    private AddPathMsg _AddPath;
+    private RemovePathMsg _RemovePath;
+    private QueryMsg _Query;
 
-      public override void Write(TProtocol protocol) {
-        throw new TProtocolException( TProtocolException.INVALID_DATA, "Cannot persist an union type which is not set.");
-      }
-
-    }
-
-    public class Play : RequestMsg {
-      private PlayMsg _data;
-      public override object Data { get { return _data; } }
-      public Play(PlayMsg data) : base(true) {
-        this._data = data;
-      }
-      public override void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("RequestMsg");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          field.Name = "Play";
-          field.Type = TType.Struct;
-          field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          _data.Write(oprot);
-          oprot.WriteFieldEnd();
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-      }
-      finally
+    public PlayMsg Play
+    {
+      get
       {
-        oprot.DecrementRecursionDepth();
+        return _Play;
       }
-      }
-    }
-
-    public class Pause : RequestMsg {
-      private PauseMsg _data;
-      public override object Data { get { return _data; } }
-      public Pause(PauseMsg data) : base(true) {
-        this._data = data;
-      }
-      public override void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("RequestMsg");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          field.Name = "Pause";
-          field.Type = TType.Struct;
-          field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          _data.Write(oprot);
-          oprot.WriteFieldEnd();
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-      }
-      finally
+      set
       {
-        oprot.DecrementRecursionDepth();
-      }
+        __isset.Play = true;
+        this._Play = value;
       }
     }
 
-    public class Stop : RequestMsg {
-      private StopMsg _data;
-      public override object Data { get { return _data; } }
-      public Stop(StopMsg data) : base(true) {
-        this._data = data;
-      }
-      public override void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("RequestMsg");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          field.Name = "Stop";
-          field.Type = TType.Struct;
-          field.ID = 3;
-          oprot.WriteFieldBegin(field);
-          _data.Write(oprot);
-          oprot.WriteFieldEnd();
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-      }
-      finally
+    public PauseMsg Pause
+    {
+      get
       {
-        oprot.DecrementRecursionDepth();
+        return _Pause;
       }
-      }
-    }
-
-    public class AddPath : RequestMsg {
-      private AddPathMsg _data;
-      public override object Data { get { return _data; } }
-      public AddPath(AddPathMsg data) : base(true) {
-        this._data = data;
-      }
-      public override void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("RequestMsg");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          field.Name = "AddPath";
-          field.Type = TType.Struct;
-          field.ID = 4;
-          oprot.WriteFieldBegin(field);
-          _data.Write(oprot);
-          oprot.WriteFieldEnd();
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-      }
-      finally
+      set
       {
-        oprot.DecrementRecursionDepth();
-      }
+        __isset.Pause = true;
+        this._Pause = value;
       }
     }
 
-    public class RemovePath : RequestMsg {
-      private RemovePathMsg _data;
-      public override object Data { get { return _data; } }
-      public RemovePath(RemovePathMsg data) : base(true) {
-        this._data = data;
-      }
-      public override void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("RequestMsg");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          field.Name = "RemovePath";
-          field.Type = TType.Struct;
-          field.ID = 5;
-          oprot.WriteFieldBegin(field);
-          _data.Write(oprot);
-          oprot.WriteFieldEnd();
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-      }
-      finally
+    public StopMsg Stop
+    {
+      get
       {
-        oprot.DecrementRecursionDepth();
+        return _Stop;
       }
-      }
-    }
-
-    public class Query : RequestMsg {
-      private QueryMsg _data;
-      public override object Data { get { return _data; } }
-      public Query(QueryMsg data) : base(true) {
-        this._data = data;
-      }
-      public override void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("RequestMsg");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          field.Name = "Query";
-          field.Type = TType.Struct;
-          field.ID = 6;
-          oprot.WriteFieldBegin(field);
-          _data.Write(oprot);
-          oprot.WriteFieldEnd();
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-      }
-      finally
+      set
       {
-        oprot.DecrementRecursionDepth();
-      }
+        __isset.Stop = true;
+        this._Stop = value;
       }
     }
 
-    public static RequestMsg Read(TProtocol iprot)
+    public AddPathMsg AddPath
+    {
+      get
+      {
+        return _AddPath;
+      }
+      set
+      {
+        __isset.AddPath = true;
+        this._AddPath = value;
+      }
+    }
+
+    public RemovePathMsg RemovePath
+    {
+      get
+      {
+        return _RemovePath;
+      }
+      set
+      {
+        __isset.RemovePath = true;
+        this._RemovePath = value;
+      }
+    }
+
+    public QueryMsg Query
+    {
+      get
+      {
+        return _Query;
+      }
+      set
+      {
+        __isset.Query = true;
+        this._Query = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool Play;
+      public bool Pause;
+      public bool Stop;
+      public bool AddPath;
+      public bool RemovePath;
+      public bool Query;
+    }
+
+    public RequestMsg() {
+    }
+
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
-        RequestMsg retval;
+        TField field;
         iprot.ReadStructBegin();
-        TField field = iprot.ReadFieldBegin();
-        if (field.Type == TType.Stop)
+        while (true)
         {
-          iprot.ReadFieldEnd();
-          retval = new ___undefined();
-        }
-        else
-        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
           switch (field.ID)
           {
             case 1:
               if (field.Type == TType.Struct) {
-                PlayMsg temp;
-                temp = new PlayMsg();
-                temp.Read(iprot);
-                retval = new Play(temp);
+                Play = new PlayMsg();
+                Play.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
-                retval = new ___undefined();
               }
               break;
             case 2:
               if (field.Type == TType.Struct) {
-                PauseMsg temp;
-                temp = new PauseMsg();
-                temp.Read(iprot);
-                retval = new Pause(temp);
+                Pause = new PauseMsg();
+                Pause.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
-                retval = new ___undefined();
               }
               break;
             case 3:
               if (field.Type == TType.Struct) {
-                StopMsg temp;
-                temp = new StopMsg();
-                temp.Read(iprot);
-                retval = new Stop(temp);
+                Stop = new StopMsg();
+                Stop.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
-                retval = new ___undefined();
               }
               break;
             case 4:
               if (field.Type == TType.Struct) {
-                AddPathMsg temp;
-                temp = new AddPathMsg();
-                temp.Read(iprot);
-                retval = new AddPath(temp);
+                AddPath = new AddPathMsg();
+                AddPath.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
-                retval = new ___undefined();
               }
               break;
             case 5:
               if (field.Type == TType.Struct) {
-                RemovePathMsg temp;
-                temp = new RemovePathMsg();
-                temp.Read(iprot);
-                retval = new RemovePath(temp);
+                RemovePath = new RemovePathMsg();
+                RemovePath.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
-                retval = new ___undefined();
               }
               break;
             case 6:
               if (field.Type == TType.Struct) {
-                QueryMsg temp;
-                temp = new QueryMsg();
-                temp.Read(iprot);
-                retval = new Query(temp);
+                Query = new QueryMsg();
+                Query.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
-                retval = new ___undefined();
               }
               break;
             default: 
               TProtocolUtil.Skip(iprot, field.Type);
-              retval = new ___undefined();
               break;
           }
           iprot.ReadFieldEnd();
-          if (iprot.ReadFieldBegin().Type != TType.Stop)
-          {
-            throw new TProtocolException(TProtocolException.INVALID_DATA);
-          }
         }
         iprot.ReadStructEnd();
-        return retval;
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
     }
-    finally
-    {
-      iprot.DecrementRecursionDepth();
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("RequestMsg");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Play != null && __isset.Play) {
+          field.Name = "Play";
+          field.Type = TType.Struct;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          Play.Write(oprot);
+          oprot.WriteFieldEnd();
+        }
+        if (Pause != null && __isset.Pause) {
+          field.Name = "Pause";
+          field.Type = TType.Struct;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          Pause.Write(oprot);
+          oprot.WriteFieldEnd();
+        }
+        if (Stop != null && __isset.Stop) {
+          field.Name = "Stop";
+          field.Type = TType.Struct;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          Stop.Write(oprot);
+          oprot.WriteFieldEnd();
+        }
+        if (AddPath != null && __isset.AddPath) {
+          field.Name = "AddPath";
+          field.Type = TType.Struct;
+          field.ID = 4;
+          oprot.WriteFieldBegin(field);
+          AddPath.Write(oprot);
+          oprot.WriteFieldEnd();
+        }
+        if (RemovePath != null && __isset.RemovePath) {
+          field.Name = "RemovePath";
+          field.Type = TType.Struct;
+          field.ID = 5;
+          oprot.WriteFieldBegin(field);
+          RemovePath.Write(oprot);
+          oprot.WriteFieldEnd();
+        }
+        if (Query != null && __isset.Query) {
+          field.Name = "Query";
+          field.Type = TType.Struct;
+          field.ID = 6;
+          oprot.WriteFieldBegin(field);
+          Query.Write(oprot);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
     }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("RequestMsg(");
+      bool __first = true;
+      if (Play != null && __isset.Play) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Play: ");
+        __sb.Append(Play== null ? "<null>" : Play.ToString());
+      }
+      if (Pause != null && __isset.Pause) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Pause: ");
+        __sb.Append(Pause== null ? "<null>" : Pause.ToString());
+      }
+      if (Stop != null && __isset.Stop) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Stop: ");
+        __sb.Append(Stop== null ? "<null>" : Stop.ToString());
+      }
+      if (AddPath != null && __isset.AddPath) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("AddPath: ");
+        __sb.Append(AddPath== null ? "<null>" : AddPath.ToString());
+      }
+      if (RemovePath != null && __isset.RemovePath) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("RemovePath: ");
+        __sb.Append(RemovePath== null ? "<null>" : RemovePath.ToString());
+      }
+      if (Query != null && __isset.Query) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Query: ");
+        __sb.Append(Query== null ? "<null>" : Query.ToString());
+      }
+      __sb.Append(")");
+      return __sb.ToString();
     }
 
   }

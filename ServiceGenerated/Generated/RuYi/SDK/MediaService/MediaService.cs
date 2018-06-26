@@ -344,7 +344,8 @@ namespace Ruyi.SDK.MediaService
             {
               case 1:
                 if (field.Type == TType.Struct) {
-                  Request = Ruyi.SDK.MediaService.RequestMsg.Read(iprot);
+                  Request = new Ruyi.SDK.MediaService.RequestMsg();
+                  Request.Read(iprot);
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }

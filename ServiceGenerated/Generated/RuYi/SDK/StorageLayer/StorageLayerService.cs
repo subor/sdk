@@ -20,15 +20,15 @@ namespace Ruyi.SDK.StorageLayer
 {
   public partial class StorageLayerService {
     public interface ISync {
-      Ruyi.SDK.StorageLayer.GetLocalPathResult GetLocalPath(string msg);
+      Ruyi.SDK.StorageLayer.GetLocalPathResult GetLocalPath(string message);
     }
 
     public interface IAsync {
-      Task<Ruyi.SDK.StorageLayer.GetLocalPathResult> GetLocalPathAsync(string msg);
+      Task<Ruyi.SDK.StorageLayer.GetLocalPathResult> GetLocalPathAsync(string message);
     }
 
     public interface Iface : ISync, IAsync {
-      IAsyncResult Begin_GetLocalPath(AsyncCallback callback, object state, string msg);
+      IAsyncResult Begin_GetLocalPath(AsyncCallback callback, object state, string message);
       Ruyi.SDK.StorageLayer.GetLocalPathResult End_GetLocalPath(IAsyncResult asyncResult);
     }
 
@@ -89,9 +89,9 @@ namespace Ruyi.SDK.StorageLayer
 
 
       
-      public IAsyncResult Begin_GetLocalPath(AsyncCallback callback, object state, string msg)
+      public IAsyncResult Begin_GetLocalPath(AsyncCallback callback, object state, string message)
       {
-        return send_GetLocalPath(callback, state, msg);
+        return send_GetLocalPath(callback, state, message);
       }
 
       public Ruyi.SDK.StorageLayer.GetLocalPathResult End_GetLocalPath(IAsyncResult asyncResult)
@@ -100,27 +100,27 @@ namespace Ruyi.SDK.StorageLayer
         return recv_GetLocalPath();
       }
 
-      public async Task<Ruyi.SDK.StorageLayer.GetLocalPathResult> GetLocalPathAsync(string msg)
+      public async Task<Ruyi.SDK.StorageLayer.GetLocalPathResult> GetLocalPathAsync(string message)
       {
         Ruyi.SDK.StorageLayer.GetLocalPathResult retval;
         retval = await Task.Run(() =>
         {
-          return GetLocalPath(msg);
+          return GetLocalPath(message);
         });
         return retval;
       }
 
-      public Ruyi.SDK.StorageLayer.GetLocalPathResult GetLocalPath(string msg)
+      public Ruyi.SDK.StorageLayer.GetLocalPathResult GetLocalPath(string message)
       {
-        var asyncResult = Begin_GetLocalPath(null, null, msg);
+        var asyncResult = Begin_GetLocalPath(null, null, message);
         return End_GetLocalPath(asyncResult);
 
       }
-      public IAsyncResult send_GetLocalPath(AsyncCallback callback, object state, string msg)
+      public IAsyncResult send_GetLocalPath(AsyncCallback callback, object state, string message)
       {
         oprot_.WriteMessageBegin(new TMessage("GetLocalPath", TMessageType.Call, seqid_));
         GetLocalPath_args args = new GetLocalPath_args();
-        args.Msg = msg;
+        args.Message = message;
         args.Write(oprot_);
         oprot_.WriteMessageEnd();
         return oprot_.Transport.BeginFlush(callback, state);
@@ -189,7 +189,7 @@ namespace Ruyi.SDK.StorageLayer
         GetLocalPath_result result = new GetLocalPath_result();
         try
         {
-          result.Success = await iface_.GetLocalPathAsync(args.Msg);
+          result.Success = await iface_.GetLocalPathAsync(args.Message);
           oprot.WriteMessageBegin(new TMessage("GetLocalPath", TMessageType.Reply, seqid)); 
           result.Write(oprot);
         }
@@ -256,7 +256,7 @@ namespace Ruyi.SDK.StorageLayer
         GetLocalPath_result result = new GetLocalPath_result();
         try
         {
-          result.Success = iface_.GetLocalPath(args.Msg);
+          result.Success = iface_.GetLocalPath(args.Message);
           oprot.WriteMessageBegin(new TMessage("GetLocalPath", TMessageType.Reply, seqid)); 
           result.Write(oprot);
         }
@@ -284,18 +284,18 @@ namespace Ruyi.SDK.StorageLayer
     #endif
     public partial class GetLocalPath_args : TBase
     {
-      private string _msg;
+      private string _message;
 
-      public string Msg
+      public string Message
       {
         get
         {
-          return _msg;
+          return _message;
         }
         set
         {
-          __isset.msg = true;
-          this._msg = value;
+          __isset.message = true;
+          this._message = value;
         }
       }
 
@@ -305,7 +305,7 @@ namespace Ruyi.SDK.StorageLayer
       [Serializable]
       #endif
       public struct Isset {
-        public bool msg;
+        public bool message;
       }
 
       public GetLocalPath_args() {
@@ -328,7 +328,7 @@ namespace Ruyi.SDK.StorageLayer
             {
               case 1:
                 if (field.Type == TType.String) {
-                  Msg = iprot.ReadString();
+                  Message = iprot.ReadString();
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }
@@ -354,12 +354,12 @@ namespace Ruyi.SDK.StorageLayer
           TStruct struc = new TStruct("GetLocalPath_args");
           oprot.WriteStructBegin(struc);
           TField field = new TField();
-          if (Msg != null && __isset.msg) {
-            field.Name = "msg";
+          if (Message != null && __isset.message) {
+            field.Name = "message";
             field.Type = TType.String;
             field.ID = 1;
             oprot.WriteFieldBegin(field);
-            oprot.WriteString(Msg);
+            oprot.WriteString(Message);
             oprot.WriteFieldEnd();
           }
           oprot.WriteFieldStop();
@@ -374,11 +374,11 @@ namespace Ruyi.SDK.StorageLayer
       public override string ToString() {
         StringBuilder __sb = new StringBuilder("GetLocalPath_args(");
         bool __first = true;
-        if (Msg != null && __isset.msg) {
+        if (Message != null && __isset.message) {
           if(!__first) { __sb.Append(", "); }
           __first = false;
-          __sb.Append("Msg: ");
-          __sb.Append(Msg);
+          __sb.Append("Message: ");
+          __sb.Append(Message);
         }
         __sb.Append(")");
         return __sb.ToString();

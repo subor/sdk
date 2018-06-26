@@ -18,137 +18,146 @@ using Thrift.Transport;
 
 namespace Ruyi.SDK.Speech
 {
-  public abstract partial class VoiceCommand : TAbstractBase {
-    public abstract void Write(TProtocol protocol);
-    public readonly bool Isset;
-    public abstract object Data { get; }
-    protected VoiceCommand(bool isset) {
-      Isset = isset;
-    }
 
-    public class ___undefined : VoiceCommand {
-      public override object Data { get { return null; } }
-      public ___undefined() : base(false) {}
+  #if !SILVERLIGHT
+  [Serializable]
+  #endif
+  public partial class VoiceCommand : TBase
+  {
+    private string _Filename;
+    private byte[] _RawData;
 
-      public override void Write(TProtocol protocol) {
-        throw new TProtocolException( TProtocolException.INVALID_DATA, "Cannot persist an union type which is not set.");
-      }
-
-    }
-
-    public class Filename : VoiceCommand {
-      private string _data;
-      public override object Data { get { return _data; } }
-      public Filename(string data) : base(true) {
-        this._data = data;
-      }
-      public override void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("VoiceCommand");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          field.Name = "Filename";
-          field.Type = TType.String;
-          field.ID = 1;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(_data);
-          oprot.WriteFieldEnd();
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-      }
-      finally
+    public string Filename
+    {
+      get
       {
-        oprot.DecrementRecursionDepth();
+        return _Filename;
       }
-      }
-    }
-
-    public class RawData : VoiceCommand {
-      private byte[] _data;
-      public override object Data { get { return _data; } }
-      public RawData(byte[] data) : base(true) {
-        this._data = data;
-      }
-      public override void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("VoiceCommand");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          field.Name = "RawData";
-          field.Type = TType.String;
-          field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteBinary(_data);
-          oprot.WriteFieldEnd();
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-      }
-      finally
+      set
       {
-        oprot.DecrementRecursionDepth();
-      }
+        __isset.Filename = true;
+        this._Filename = value;
       }
     }
 
-    public static VoiceCommand Read(TProtocol iprot)
+    public byte[] RawData
+    {
+      get
+      {
+        return _RawData;
+      }
+      set
+      {
+        __isset.RawData = true;
+        this._RawData = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool Filename;
+      public bool RawData;
+    }
+
+    public VoiceCommand() {
+    }
+
+    public void Read (TProtocol iprot)
     {
       iprot.IncrementRecursionDepth();
       try
       {
-        VoiceCommand retval;
+        TField field;
         iprot.ReadStructBegin();
-        TField field = iprot.ReadFieldBegin();
-        if (field.Type == TType.Stop)
+        while (true)
         {
-          iprot.ReadFieldEnd();
-          retval = new ___undefined();
-        }
-        else
-        {
+          field = iprot.ReadFieldBegin();
+          if (field.Type == TType.Stop) { 
+            break;
+          }
           switch (field.ID)
           {
             case 1:
               if (field.Type == TType.String) {
-                string temp;
-                temp = iprot.ReadString();
-                retval = new Filename(temp);
+                Filename = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
-                retval = new ___undefined();
               }
               break;
             case 2:
               if (field.Type == TType.String) {
-                byte[] temp;
-                temp = iprot.ReadBinary();
-                retval = new RawData(temp);
+                RawData = iprot.ReadBinary();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
-                retval = new ___undefined();
               }
               break;
             default: 
               TProtocolUtil.Skip(iprot, field.Type);
-              retval = new ___undefined();
               break;
           }
           iprot.ReadFieldEnd();
-          if (iprot.ReadFieldBegin().Type != TType.Stop)
-          {
-            throw new TProtocolException(TProtocolException.INVALID_DATA);
-          }
         }
         iprot.ReadStructEnd();
-        return retval;
+      }
+      finally
+      {
+        iprot.DecrementRecursionDepth();
+      }
     }
-    finally
-    {
-      iprot.DecrementRecursionDepth();
+
+    public void Write(TProtocol oprot) {
+      oprot.IncrementRecursionDepth();
+      try
+      {
+        TStruct struc = new TStruct("VoiceCommand");
+        oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (Filename != null && __isset.Filename) {
+          field.Name = "Filename";
+          field.Type = TType.String;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Filename);
+          oprot.WriteFieldEnd();
+        }
+        if (RawData != null && __isset.RawData) {
+          field.Name = "RawData";
+          field.Type = TType.String;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBinary(RawData);
+          oprot.WriteFieldEnd();
+        }
+        oprot.WriteFieldStop();
+        oprot.WriteStructEnd();
+      }
+      finally
+      {
+        oprot.DecrementRecursionDepth();
+      }
     }
+
+    public override string ToString() {
+      StringBuilder __sb = new StringBuilder("VoiceCommand(");
+      bool __first = true;
+      if (Filename != null && __isset.Filename) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Filename: ");
+        __sb.Append(Filename);
+      }
+      if (RawData != null && __isset.RawData) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("RawData: ");
+        __sb.Append(RawData);
+      }
+      __sb.Append(")");
+      return __sb.ToString();
     }
 
   }

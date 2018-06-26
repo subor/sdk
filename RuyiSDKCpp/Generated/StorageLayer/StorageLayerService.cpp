@@ -36,8 +36,8 @@ uint32_t StorageLayerService_GetLocalPath_args::read(::apache::thrift::protocol:
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->msg);
-          this->__isset.msg = true;
+          xfer += iprot->readString(this->message);
+          this->__isset.message = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -59,8 +59,8 @@ uint32_t StorageLayerService_GetLocalPath_args::write(::apache::thrift::protocol
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("StorageLayerService_GetLocalPath_args");
 
-  xfer += oprot->writeFieldBegin("msg", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->msg);
+  xfer += oprot->writeFieldBegin("message", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->message);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -78,8 +78,8 @@ uint32_t StorageLayerService_GetLocalPath_pargs::write(::apache::thrift::protoco
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("StorageLayerService_GetLocalPath_pargs");
 
-  xfer += oprot->writeFieldBegin("msg", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->msg)));
+  xfer += oprot->writeFieldBegin("message", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString((*(this->message)));
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -195,19 +195,19 @@ uint32_t StorageLayerService_GetLocalPath_presult::read(::apache::thrift::protoc
   return xfer;
 }
 
-void StorageLayerServiceClient::GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& msg)
+void StorageLayerServiceClient::GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& message)
 {
-  send_GetLocalPath(msg);
+  send_GetLocalPath(message);
   recv_GetLocalPath(_return);
 }
 
-void StorageLayerServiceClient::send_GetLocalPath(const std::string& msg)
+void StorageLayerServiceClient::send_GetLocalPath(const std::string& message)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("GetLocalPath", ::apache::thrift::protocol::T_CALL, cseqid);
 
   StorageLayerService_GetLocalPath_pargs args;
-  args.msg = &msg;
+  args.message = &message;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -295,7 +295,7 @@ void StorageLayerServiceProcessor::process_GetLocalPath(int32_t seqid, ::apache:
 
   StorageLayerService_GetLocalPath_result result;
   try {
-    iface_->GetLocalPath(result.success, args.msg);
+    iface_->GetLocalPath(result.success, args.message);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -333,20 +333,20 @@ void StorageLayerServiceProcessor::process_GetLocalPath(int32_t seqid, ::apache:
   return processor;
 }
 
-void StorageLayerServiceConcurrentClient::GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& msg)
+void StorageLayerServiceConcurrentClient::GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& message)
 {
-  int32_t seqid = send_GetLocalPath(msg);
+  int32_t seqid = send_GetLocalPath(message);
   recv_GetLocalPath(_return, seqid);
 }
 
-int32_t StorageLayerServiceConcurrentClient::send_GetLocalPath(const std::string& msg)
+int32_t StorageLayerServiceConcurrentClient::send_GetLocalPath(const std::string& message)
 {
   int32_t cseqid = this->sync_.generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
   oprot_->writeMessageBegin("GetLocalPath", ::apache::thrift::protocol::T_CALL, cseqid);
 
   StorageLayerService_GetLocalPath_pargs args;
-  args.msg = &msg;
+  args.message = &message;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();

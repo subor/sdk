@@ -328,7 +328,8 @@ namespace Ruyi.SDK.Speech
             {
               case 1:
                 if (field.Type == TType.Struct) {
-                  Command = Ruyi.SDK.Speech.VoiceCommand.Read(iprot);
+                  Command = new Ruyi.SDK.Speech.VoiceCommand();
+                  Command.Read(iprot);
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }

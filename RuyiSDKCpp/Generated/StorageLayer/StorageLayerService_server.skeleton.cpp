@@ -20,7 +20,7 @@ class StorageLayerServiceHandler : virtual public StorageLayerServiceIf {
     // Your initialization goes here
   }
 
-  void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& msg) {
+  void GetLocalPath( ::Ruyi::SDK::StorageLayer::GetLocalPathResult& _return, const std::string& message) {
     // Your implementation goes here
     printf("GetLocalPath\n");
   }

@@ -19,12 +19,12 @@ namespace Ruyi.SDK.Http
 {
   public partial class HttpService {
     public interface ISync {
-      Ruyi.SDK.Http.SubscribeReply Subscribe(Ruyi.SDK.Http.SubscribeRequest msg);
+      Ruyi.SDK.Http.SubscribeReply Subscribe(Ruyi.SDK.Http.SubscribeRequest message);
     }
 
     public interface Iface : ISync {
       #if SILVERLIGHT
-      IAsyncResult Begin_Subscribe(AsyncCallback callback, object state, Ruyi.SDK.Http.SubscribeRequest msg);
+      IAsyncResult Begin_Subscribe(AsyncCallback callback, object state, Ruyi.SDK.Http.SubscribeRequest message);
       Ruyi.SDK.Http.SubscribeReply End_Subscribe(IAsyncResult asyncResult);
       #endif
     }
@@ -87,9 +87,9 @@ namespace Ruyi.SDK.Http
 
       
       #if SILVERLIGHT
-      public IAsyncResult Begin_Subscribe(AsyncCallback callback, object state, Ruyi.SDK.Http.SubscribeRequest msg)
+      public IAsyncResult Begin_Subscribe(AsyncCallback callback, object state, Ruyi.SDK.Http.SubscribeRequest message)
       {
-        return send_Subscribe(callback, state, msg);
+        return send_Subscribe(callback, state, message);
       }
 
       public Ruyi.SDK.Http.SubscribeReply End_Subscribe(IAsyncResult asyncResult)
@@ -100,27 +100,27 @@ namespace Ruyi.SDK.Http
 
       #endif
 
-      public Ruyi.SDK.Http.SubscribeReply Subscribe(Ruyi.SDK.Http.SubscribeRequest msg)
+      public Ruyi.SDK.Http.SubscribeReply Subscribe(Ruyi.SDK.Http.SubscribeRequest message)
       {
         #if !SILVERLIGHT
-        send_Subscribe(msg);
+        send_Subscribe(message);
         return recv_Subscribe();
 
         #else
-        var asyncResult = Begin_Subscribe(null, null, msg);
+        var asyncResult = Begin_Subscribe(null, null, message);
         return End_Subscribe(asyncResult);
 
         #endif
       }
       #if SILVERLIGHT
-      public IAsyncResult send_Subscribe(AsyncCallback callback, object state, Ruyi.SDK.Http.SubscribeRequest msg)
+      public IAsyncResult send_Subscribe(AsyncCallback callback, object state, Ruyi.SDK.Http.SubscribeRequest message)
       #else
-      public void send_Subscribe(Ruyi.SDK.Http.SubscribeRequest msg)
+      public void send_Subscribe(Ruyi.SDK.Http.SubscribeRequest message)
       #endif
       {
         oprot_.WriteMessageBegin(new TMessage("Subscribe", TMessageType.Call, seqid_));
         Subscribe_args args = new Subscribe_args();
-        args.Msg = msg;
+        args.Message = message;
         args.Write(oprot_);
         oprot_.WriteMessageEnd();
         #if SILVERLIGHT
@@ -193,7 +193,7 @@ namespace Ruyi.SDK.Http
         Subscribe_result result = new Subscribe_result();
         try
         {
-          result.Success = iface_.Subscribe(args.Msg);
+          result.Success = iface_.Subscribe(args.Message);
           oprot.WriteMessageBegin(new TMessage("Subscribe", TMessageType.Reply, seqid)); 
           result.Write(oprot);
         }
@@ -221,18 +221,18 @@ namespace Ruyi.SDK.Http
     #endif
     public partial class Subscribe_args : TBase
     {
-      private Ruyi.SDK.Http.SubscribeRequest _msg;
+      private Ruyi.SDK.Http.SubscribeRequest _message;
 
-      public Ruyi.SDK.Http.SubscribeRequest Msg
+      public Ruyi.SDK.Http.SubscribeRequest Message
       {
         get
         {
-          return _msg;
+          return _message;
         }
         set
         {
-          __isset.msg = true;
-          this._msg = value;
+          __isset.message = true;
+          this._message = value;
         }
       }
 
@@ -242,7 +242,7 @@ namespace Ruyi.SDK.Http
       [Serializable]
       #endif
       public struct Isset {
-        public bool msg;
+        public bool message;
       }
 
       public Subscribe_args() {
@@ -265,8 +265,8 @@ namespace Ruyi.SDK.Http
             {
               case 1:
                 if (field.Type == TType.Struct) {
-                  Msg = new Ruyi.SDK.Http.SubscribeRequest();
-                  Msg.Read(iprot);
+                  Message = new Ruyi.SDK.Http.SubscribeRequest();
+                  Message.Read(iprot);
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }
@@ -292,12 +292,12 @@ namespace Ruyi.SDK.Http
           TStruct struc = new TStruct("Subscribe_args");
           oprot.WriteStructBegin(struc);
           TField field = new TField();
-          if (Msg != null && __isset.msg) {
-            field.Name = "msg";
+          if (Message != null && __isset.message) {
+            field.Name = "message";
             field.Type = TType.Struct;
             field.ID = 1;
             oprot.WriteFieldBegin(field);
-            Msg.Write(oprot);
+            Message.Write(oprot);
             oprot.WriteFieldEnd();
           }
           oprot.WriteFieldStop();
@@ -312,11 +312,11 @@ namespace Ruyi.SDK.Http
       public override string ToString() {
         StringBuilder __sb = new StringBuilder("Subscribe_args(");
         bool __first = true;
-        if (Msg != null && __isset.msg) {
+        if (Message != null && __isset.message) {
           if(!__first) { __sb.Append(", "); }
           __first = false;
-          __sb.Append("Msg: ");
-          __sb.Append(Msg== null ? "<null>" : Msg.ToString());
+          __sb.Append("Message: ");
+          __sb.Append(Message== null ? "<null>" : Message.ToString());
         }
         __sb.Append(")");
         return __sb.ToString();
