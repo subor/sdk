@@ -17,6 +17,7 @@ void MessageCreator::Initialize()
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.InputActionTriggered", Ruyi::SDK::InputManager::InputActionTriggered);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.AxisActionTriggered", Ruyi::SDK::InputManager::AxisActionTriggered);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.StorageLayer.GetLocalPathResult", Ruyi::SDK::StorageLayer::GetLocalPathResult);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettingNameValue", Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettingNameValue);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings", Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.CategoryNode", Ruyi::SDK::SettingSystem::Api::CategoryNode);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.SettingSearchResult", Ruyi::SDK::SettingSystem::Api::SettingSearchResult);

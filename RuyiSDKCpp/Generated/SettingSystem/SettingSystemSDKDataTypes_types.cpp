@@ -36,63 +36,175 @@ std::ostream& operator<<(std::ostream& out, const NodeType::type& val) {
 }
 
 
+RuyiNetworkSettingNameValue::~RuyiNetworkSettingNameValue() throw() {
+}
+
+
+void RuyiNetworkSettingNameValue::__set_name(const std::string& val) {
+  this->name = val;
+}
+
+void RuyiNetworkSettingNameValue::__set_value(const std::string& val) {
+  this->value = val;
+}
+std::ostream& operator<<(std::ostream& out, const RuyiNetworkSettingNameValue& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+uint32_t RuyiNetworkSettingNameValue::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->name);
+          this->__isset.name = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->value);
+          this->__isset.value = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t RuyiNetworkSettingNameValue::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("RuyiNetworkSettingNameValue");
+
+  xfer += oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->name);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("value", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->value);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(RuyiNetworkSettingNameValue &a, RuyiNetworkSettingNameValue &b) {
+  using ::std::swap;
+  swap(a.name, b.name);
+  swap(a.value, b.value);
+  swap(a.__isset, b.__isset);
+}
+
+RuyiNetworkSettingNameValue::RuyiNetworkSettingNameValue(const RuyiNetworkSettingNameValue& other0) {
+  name = other0.name;
+  value = other0.value;
+  __isset = other0.__isset;
+}
+RuyiNetworkSettingNameValue& RuyiNetworkSettingNameValue::operator=(const RuyiNetworkSettingNameValue& other1) {
+  name = other1.name;
+  value = other1.value;
+  __isset = other1.__isset;
+  return *this;
+}
+void RuyiNetworkSettingNameValue::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "RuyiNetworkSettingNameValue(";
+  out << "name=" << to_string(name);
+  out << ", " << "value=" << to_string(value);
+  out << ")";
+}
+
+
 RuyiNetworkSettings::~RuyiNetworkSettings() throw() {
 }
 
 
-void RuyiNetworkSettings::__set_connection(const bool val) {
+void RuyiNetworkSettings::__set_connection(const RuyiNetworkSettingNameValue& val) {
   this->connection = val;
 }
 
-void RuyiNetworkSettings::__set_isWifi(const bool val) {
-  this->isWifi = val;
+void RuyiNetworkSettings::__set_networkType(const RuyiNetworkSettingNameValue& val) {
+  this->networkType = val;
 }
 
-void RuyiNetworkSettings::__set_quality(const _int val) {
+void RuyiNetworkSettings::__set_quality(const RuyiNetworkSettingNameValue& val) {
   this->quality = val;
 }
 
-void RuyiNetworkSettings::__set_SSID(const std::string& val) {
+void RuyiNetworkSettings::__set_SSID(const RuyiNetworkSettingNameValue& val) {
   this->SSID = val;
 }
 
-void RuyiNetworkSettings::__set_BSSID(const std::string& val) {
+void RuyiNetworkSettings::__set_BSSID(const RuyiNetworkSettingNameValue& val) {
   this->BSSID = val;
 }
 
-void RuyiNetworkSettings::__set_Authentication(const std::string& val) {
+void RuyiNetworkSettings::__set_Authentication(const RuyiNetworkSettingNameValue& val) {
   this->Authentication = val;
 }
 
-void RuyiNetworkSettings::__set_DHCPEnabled(const bool val) {
+void RuyiNetworkSettings::__set_DHCPEnabled(const RuyiNetworkSettingNameValue& val) {
   this->DHCPEnabled = val;
 }
 
-void RuyiNetworkSettings::__set_IpAddress(const std::string& val) {
+void RuyiNetworkSettings::__set_IpAddress(const RuyiNetworkSettingNameValue& val) {
   this->IpAddress = val;
 }
 
-void RuyiNetworkSettings::__set_SubMask(const std::string& val) {
+void RuyiNetworkSettings::__set_SubMask(const RuyiNetworkSettingNameValue& val) {
   this->SubMask = val;
 }
 
-void RuyiNetworkSettings::__set_Gateway(const std::string& val) {
+void RuyiNetworkSettings::__set_Gateway(const RuyiNetworkSettingNameValue& val) {
   this->Gateway = val;
 }
 
-void RuyiNetworkSettings::__set_MainDNS(const std::string& val) {
+void RuyiNetworkSettings::__set_MainDNS(const RuyiNetworkSettingNameValue& val) {
   this->MainDNS = val;
 }
 
-void RuyiNetworkSettings::__set_SubDNS(const std::string& val) {
+void RuyiNetworkSettings::__set_SubDNS(const RuyiNetworkSettingNameValue& val) {
   this->SubDNS = val;
 }
 
-void RuyiNetworkSettings::__set_MacAddress(const std::string& val) {
+void RuyiNetworkSettings::__set_MacAddress(const RuyiNetworkSettingNameValue& val) {
   this->MacAddress = val;
 }
 
-void RuyiNetworkSettings::__set_Proxy(const std::string& val) {
+void RuyiNetworkSettings::__set_Proxy(const RuyiNetworkSettingNameValue& val) {
   this->Proxy = val;
 }
 std::ostream& operator<<(std::ostream& out, const RuyiNetworkSettings& obj)
@@ -124,112 +236,112 @@ uint32_t RuyiNetworkSettings::read(::apache::thrift::protocol::TProtocol* iprot)
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool(this->connection);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->connection.read(iprot);
           this->__isset.connection = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 2:
-        if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool(this->isWifi);
-          this->__isset.isWifi = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->networkType.read(iprot);
+          this->__isset.networkType = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 3:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->quality);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->quality.read(iprot);
           this->__isset.quality = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 4:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->SSID);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->SSID.read(iprot);
           this->__isset.SSID = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 5:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->BSSID);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->BSSID.read(iprot);
           this->__isset.BSSID = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 6:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->Authentication);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->Authentication.read(iprot);
           this->__isset.Authentication = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 7:
-        if (ftype == ::apache::thrift::protocol::T_BOOL) {
-          xfer += iprot->readBool(this->DHCPEnabled);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->DHCPEnabled.read(iprot);
           this->__isset.DHCPEnabled = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 8:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->IpAddress);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->IpAddress.read(iprot);
           this->__isset.IpAddress = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 9:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->SubMask);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->SubMask.read(iprot);
           this->__isset.SubMask = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 10:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->Gateway);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->Gateway.read(iprot);
           this->__isset.Gateway = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 11:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->MainDNS);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->MainDNS.read(iprot);
           this->__isset.MainDNS = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 12:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->SubDNS);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->SubDNS.read(iprot);
           this->__isset.SubDNS = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 13:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->MacAddress);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->MacAddress.read(iprot);
           this->__isset.MacAddress = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 14:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->Proxy);
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->Proxy.read(iprot);
           this->__isset.Proxy = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -252,60 +364,60 @@ uint32_t RuyiNetworkSettings::write(::apache::thrift::protocol::TProtocol* oprot
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("RuyiNetworkSettings");
 
-  xfer += oprot->writeFieldBegin("connection", ::apache::thrift::protocol::T_BOOL, 1);
-  xfer += oprot->writeBool(this->connection);
+  xfer += oprot->writeFieldBegin("connection", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->connection.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("isWifi", ::apache::thrift::protocol::T_BOOL, 2);
-  xfer += oprot->writeBool(this->isWifi);
+  xfer += oprot->writeFieldBegin("networkType", ::apache::thrift::protocol::T_STRUCT, 2);
+  xfer += this->networkType.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("quality", ::apache::thrift::protocol::T_I32, 3);
-  xfer += oprot->writeI32(this->quality);
+  xfer += oprot->writeFieldBegin("quality", ::apache::thrift::protocol::T_STRUCT, 3);
+  xfer += this->quality.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("SSID", ::apache::thrift::protocol::T_STRING, 4);
-  xfer += oprot->writeString(this->SSID);
+  xfer += oprot->writeFieldBegin("SSID", ::apache::thrift::protocol::T_STRUCT, 4);
+  xfer += this->SSID.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("BSSID", ::apache::thrift::protocol::T_STRING, 5);
-  xfer += oprot->writeString(this->BSSID);
+  xfer += oprot->writeFieldBegin("BSSID", ::apache::thrift::protocol::T_STRUCT, 5);
+  xfer += this->BSSID.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Authentication", ::apache::thrift::protocol::T_STRING, 6);
-  xfer += oprot->writeString(this->Authentication);
+  xfer += oprot->writeFieldBegin("Authentication", ::apache::thrift::protocol::T_STRUCT, 6);
+  xfer += this->Authentication.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("DHCPEnabled", ::apache::thrift::protocol::T_BOOL, 7);
-  xfer += oprot->writeBool(this->DHCPEnabled);
+  xfer += oprot->writeFieldBegin("DHCPEnabled", ::apache::thrift::protocol::T_STRUCT, 7);
+  xfer += this->DHCPEnabled.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("IpAddress", ::apache::thrift::protocol::T_STRING, 8);
-  xfer += oprot->writeString(this->IpAddress);
+  xfer += oprot->writeFieldBegin("IpAddress", ::apache::thrift::protocol::T_STRUCT, 8);
+  xfer += this->IpAddress.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("SubMask", ::apache::thrift::protocol::T_STRING, 9);
-  xfer += oprot->writeString(this->SubMask);
+  xfer += oprot->writeFieldBegin("SubMask", ::apache::thrift::protocol::T_STRUCT, 9);
+  xfer += this->SubMask.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Gateway", ::apache::thrift::protocol::T_STRING, 10);
-  xfer += oprot->writeString(this->Gateway);
+  xfer += oprot->writeFieldBegin("Gateway", ::apache::thrift::protocol::T_STRUCT, 10);
+  xfer += this->Gateway.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("MainDNS", ::apache::thrift::protocol::T_STRING, 11);
-  xfer += oprot->writeString(this->MainDNS);
+  xfer += oprot->writeFieldBegin("MainDNS", ::apache::thrift::protocol::T_STRUCT, 11);
+  xfer += this->MainDNS.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("SubDNS", ::apache::thrift::protocol::T_STRING, 12);
-  xfer += oprot->writeString(this->SubDNS);
+  xfer += oprot->writeFieldBegin("SubDNS", ::apache::thrift::protocol::T_STRUCT, 12);
+  xfer += this->SubDNS.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("MacAddress", ::apache::thrift::protocol::T_STRING, 13);
-  xfer += oprot->writeString(this->MacAddress);
+  xfer += oprot->writeFieldBegin("MacAddress", ::apache::thrift::protocol::T_STRUCT, 13);
+  xfer += this->MacAddress.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("Proxy", ::apache::thrift::protocol::T_STRING, 14);
-  xfer += oprot->writeString(this->Proxy);
+  xfer += oprot->writeFieldBegin("Proxy", ::apache::thrift::protocol::T_STRUCT, 14);
+  xfer += this->Proxy.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -316,7 +428,7 @@ uint32_t RuyiNetworkSettings::write(::apache::thrift::protocol::TProtocol* oprot
 void swap(RuyiNetworkSettings &a, RuyiNetworkSettings &b) {
   using ::std::swap;
   swap(a.connection, b.connection);
-  swap(a.isWifi, b.isWifi);
+  swap(a.networkType, b.networkType);
   swap(a.quality, b.quality);
   swap(a.SSID, b.SSID);
   swap(a.BSSID, b.BSSID);
@@ -332,46 +444,46 @@ void swap(RuyiNetworkSettings &a, RuyiNetworkSettings &b) {
   swap(a.__isset, b.__isset);
 }
 
-RuyiNetworkSettings::RuyiNetworkSettings(const RuyiNetworkSettings& other0) {
-  connection = other0.connection;
-  isWifi = other0.isWifi;
-  quality = other0.quality;
-  SSID = other0.SSID;
-  BSSID = other0.BSSID;
-  Authentication = other0.Authentication;
-  DHCPEnabled = other0.DHCPEnabled;
-  IpAddress = other0.IpAddress;
-  SubMask = other0.SubMask;
-  Gateway = other0.Gateway;
-  MainDNS = other0.MainDNS;
-  SubDNS = other0.SubDNS;
-  MacAddress = other0.MacAddress;
-  Proxy = other0.Proxy;
-  __isset = other0.__isset;
+RuyiNetworkSettings::RuyiNetworkSettings(const RuyiNetworkSettings& other2) {
+  connection = other2.connection;
+  networkType = other2.networkType;
+  quality = other2.quality;
+  SSID = other2.SSID;
+  BSSID = other2.BSSID;
+  Authentication = other2.Authentication;
+  DHCPEnabled = other2.DHCPEnabled;
+  IpAddress = other2.IpAddress;
+  SubMask = other2.SubMask;
+  Gateway = other2.Gateway;
+  MainDNS = other2.MainDNS;
+  SubDNS = other2.SubDNS;
+  MacAddress = other2.MacAddress;
+  Proxy = other2.Proxy;
+  __isset = other2.__isset;
 }
-RuyiNetworkSettings& RuyiNetworkSettings::operator=(const RuyiNetworkSettings& other1) {
-  connection = other1.connection;
-  isWifi = other1.isWifi;
-  quality = other1.quality;
-  SSID = other1.SSID;
-  BSSID = other1.BSSID;
-  Authentication = other1.Authentication;
-  DHCPEnabled = other1.DHCPEnabled;
-  IpAddress = other1.IpAddress;
-  SubMask = other1.SubMask;
-  Gateway = other1.Gateway;
-  MainDNS = other1.MainDNS;
-  SubDNS = other1.SubDNS;
-  MacAddress = other1.MacAddress;
-  Proxy = other1.Proxy;
-  __isset = other1.__isset;
+RuyiNetworkSettings& RuyiNetworkSettings::operator=(const RuyiNetworkSettings& other3) {
+  connection = other3.connection;
+  networkType = other3.networkType;
+  quality = other3.quality;
+  SSID = other3.SSID;
+  BSSID = other3.BSSID;
+  Authentication = other3.Authentication;
+  DHCPEnabled = other3.DHCPEnabled;
+  IpAddress = other3.IpAddress;
+  SubMask = other3.SubMask;
+  Gateway = other3.Gateway;
+  MainDNS = other3.MainDNS;
+  SubDNS = other3.SubDNS;
+  MacAddress = other3.MacAddress;
+  Proxy = other3.Proxy;
+  __isset = other3.__isset;
   return *this;
 }
 void RuyiNetworkSettings::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
   out << "RuyiNetworkSettings(";
   out << "connection=" << to_string(connection);
-  out << ", " << "isWifi=" << to_string(isWifi);
+  out << ", " << "networkType=" << to_string(networkType);
   out << ", " << "quality=" << to_string(quality);
   out << ", " << "SSID=" << to_string(SSID);
   out << ", " << "BSSID=" << to_string(BSSID);
@@ -463,14 +575,14 @@ uint32_t CategoryNode::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->children.clear();
-            uint32_t _size2;
-            ::apache::thrift::protocol::TType _etype5;
-            xfer += iprot->readListBegin(_etype5, _size2);
-            this->children.resize(_size2);
-            uint32_t _i6;
-            for (_i6 = 0; _i6 < _size2; ++_i6)
+            uint32_t _size4;
+            ::apache::thrift::protocol::TType _etype7;
+            xfer += iprot->readListBegin(_etype7, _size4);
+            this->children.resize(_size4);
+            uint32_t _i8;
+            for (_i8 = 0; _i8 < _size4; ++_i8)
             {
-              xfer += this->children[_i6].read(iprot);
+              xfer += this->children[_i8].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -511,10 +623,10 @@ uint32_t CategoryNode::write(::apache::thrift::protocol::TProtocol* oprot) const
   xfer += oprot->writeFieldBegin("children", ::apache::thrift::protocol::T_LIST, 4);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->children.size()));
-    std::vector<CategoryNode> ::const_iterator _iter7;
-    for (_iter7 = this->children.begin(); _iter7 != this->children.end(); ++_iter7)
+    std::vector<CategoryNode> ::const_iterator _iter9;
+    for (_iter9 = this->children.begin(); _iter9 != this->children.end(); ++_iter9)
     {
-      xfer += (*_iter7).write(oprot);
+      xfer += (*_iter9).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -534,19 +646,19 @@ void swap(CategoryNode &a, CategoryNode &b) {
   swap(a.__isset, b.__isset);
 }
 
-CategoryNode::CategoryNode(const CategoryNode& other8) {
-  id = other8.id;
-  categoryId = other8.categoryId;
-  sortingPriority = other8.sortingPriority;
-  children = other8.children;
-  __isset = other8.__isset;
+CategoryNode::CategoryNode(const CategoryNode& other10) {
+  id = other10.id;
+  categoryId = other10.categoryId;
+  sortingPriority = other10.sortingPriority;
+  children = other10.children;
+  __isset = other10.__isset;
 }
-CategoryNode& CategoryNode::operator=(const CategoryNode& other9) {
-  id = other9.id;
-  categoryId = other9.categoryId;
-  sortingPriority = other9.sortingPriority;
-  children = other9.children;
-  __isset = other9.__isset;
+CategoryNode& CategoryNode::operator=(const CategoryNode& other11) {
+  id = other11.id;
+  categoryId = other11.categoryId;
+  sortingPriority = other11.sortingPriority;
+  children = other11.children;
+  __isset = other11.__isset;
   return *this;
 }
 void CategoryNode::printTo(std::ostream& out) const {
@@ -611,14 +723,14 @@ uint32_t SettingSearchResult::read(::apache::thrift::protocol::TProtocol* iprot)
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->SettingItems.clear();
-            uint32_t _size10;
-            ::apache::thrift::protocol::TType _etype13;
-            xfer += iprot->readListBegin(_etype13, _size10);
-            this->SettingItems.resize(_size10);
-            uint32_t _i14;
-            for (_i14 = 0; _i14 < _size10; ++_i14)
+            uint32_t _size12;
+            ::apache::thrift::protocol::TType _etype15;
+            xfer += iprot->readListBegin(_etype15, _size12);
+            this->SettingItems.resize(_size12);
+            uint32_t _i16;
+            for (_i16 = 0; _i16 < _size12; ++_i16)
             {
-              xfer += this->SettingItems[_i14].read(iprot);
+              xfer += this->SettingItems[_i16].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -651,10 +763,10 @@ uint32_t SettingSearchResult::write(::apache::thrift::protocol::TProtocol* oprot
   xfer += oprot->writeFieldBegin("SettingItems", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingItems.size()));
-    std::vector< ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter15;
-    for (_iter15 = this->SettingItems.begin(); _iter15 != this->SettingItems.end(); ++_iter15)
+    std::vector< ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter17;
+    for (_iter17 = this->SettingItems.begin(); _iter17 != this->SettingItems.end(); ++_iter17)
     {
-      xfer += (*_iter15).write(oprot);
+      xfer += (*_iter17).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -672,15 +784,15 @@ void swap(SettingSearchResult &a, SettingSearchResult &b) {
   swap(a.__isset, b.__isset);
 }
 
-SettingSearchResult::SettingSearchResult(const SettingSearchResult& other16) {
-  Version = other16.Version;
-  SettingItems = other16.SettingItems;
-  __isset = other16.__isset;
+SettingSearchResult::SettingSearchResult(const SettingSearchResult& other18) {
+  Version = other18.Version;
+  SettingItems = other18.SettingItems;
+  __isset = other18.__isset;
 }
-SettingSearchResult& SettingSearchResult::operator=(const SettingSearchResult& other17) {
-  Version = other17.Version;
-  SettingItems = other17.SettingItems;
-  __isset = other17.__isset;
+SettingSearchResult& SettingSearchResult::operator=(const SettingSearchResult& other19) {
+  Version = other19.Version;
+  SettingItems = other19.SettingItems;
+  __isset = other19.__isset;
   return *this;
 }
 void SettingSearchResult::printTo(std::ostream& out) const {
@@ -747,17 +859,17 @@ uint32_t SettingTree::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->SettingCategories.clear();
-            uint32_t _size18;
-            ::apache::thrift::protocol::TType _ktype19;
-            ::apache::thrift::protocol::TType _vtype20;
-            xfer += iprot->readMapBegin(_ktype19, _vtype20, _size18);
-            uint32_t _i22;
-            for (_i22 = 0; _i22 < _size18; ++_i22)
+            uint32_t _size20;
+            ::apache::thrift::protocol::TType _ktype21;
+            ::apache::thrift::protocol::TType _vtype22;
+            xfer += iprot->readMapBegin(_ktype21, _vtype22, _size20);
+            uint32_t _i24;
+            for (_i24 = 0; _i24 < _size20; ++_i24)
             {
-              std::string _key23;
-              xfer += iprot->readString(_key23);
-               ::Ruyi::SDK::CommonType::SettingCategory& _val24 = this->SettingCategories[_key23];
-              xfer += _val24.read(iprot);
+              std::string _key25;
+              xfer += iprot->readString(_key25);
+               ::Ruyi::SDK::CommonType::SettingCategory& _val26 = this->SettingCategories[_key25];
+              xfer += _val26.read(iprot);
             }
             xfer += iprot->readMapEnd();
           }
@@ -770,17 +882,17 @@ uint32_t SettingTree::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->SettingItems.clear();
-            uint32_t _size25;
-            ::apache::thrift::protocol::TType _ktype26;
-            ::apache::thrift::protocol::TType _vtype27;
-            xfer += iprot->readMapBegin(_ktype26, _vtype27, _size25);
-            uint32_t _i29;
-            for (_i29 = 0; _i29 < _size25; ++_i29)
+            uint32_t _size27;
+            ::apache::thrift::protocol::TType _ktype28;
+            ::apache::thrift::protocol::TType _vtype29;
+            xfer += iprot->readMapBegin(_ktype28, _vtype29, _size27);
+            uint32_t _i31;
+            for (_i31 = 0; _i31 < _size27; ++_i31)
             {
-              std::string _key30;
-              xfer += iprot->readString(_key30);
-               ::Ruyi::SDK::CommonType::SettingItem& _val31 = this->SettingItems[_key30];
-              xfer += _val31.read(iprot);
+              std::string _key32;
+              xfer += iprot->readString(_key32);
+               ::Ruyi::SDK::CommonType::SettingItem& _val33 = this->SettingItems[_key32];
+              xfer += _val33.read(iprot);
             }
             xfer += iprot->readMapEnd();
           }
@@ -813,11 +925,11 @@ uint32_t SettingTree::write(::apache::thrift::protocol::TProtocol* oprot) const 
   xfer += oprot->writeFieldBegin("SettingCategories", ::apache::thrift::protocol::T_MAP, 2);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingCategories.size()));
-    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingCategory> ::const_iterator _iter32;
-    for (_iter32 = this->SettingCategories.begin(); _iter32 != this->SettingCategories.end(); ++_iter32)
+    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingCategory> ::const_iterator _iter34;
+    for (_iter34 = this->SettingCategories.begin(); _iter34 != this->SettingCategories.end(); ++_iter34)
     {
-      xfer += oprot->writeString(_iter32->first);
-      xfer += _iter32->second.write(oprot);
+      xfer += oprot->writeString(_iter34->first);
+      xfer += _iter34->second.write(oprot);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -826,11 +938,11 @@ uint32_t SettingTree::write(::apache::thrift::protocol::TProtocol* oprot) const 
   xfer += oprot->writeFieldBegin("SettingItems", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingItems.size()));
-    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter33;
-    for (_iter33 = this->SettingItems.begin(); _iter33 != this->SettingItems.end(); ++_iter33)
+    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter35;
+    for (_iter35 = this->SettingItems.begin(); _iter35 != this->SettingItems.end(); ++_iter35)
     {
-      xfer += oprot->writeString(_iter33->first);
-      xfer += _iter33->second.write(oprot);
+      xfer += oprot->writeString(_iter35->first);
+      xfer += _iter35->second.write(oprot);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -849,17 +961,17 @@ void swap(SettingTree &a, SettingTree &b) {
   swap(a.__isset, b.__isset);
 }
 
-SettingTree::SettingTree(const SettingTree& other34) {
-  CateNode = other34.CateNode;
-  SettingCategories = other34.SettingCategories;
-  SettingItems = other34.SettingItems;
-  __isset = other34.__isset;
+SettingTree::SettingTree(const SettingTree& other36) {
+  CateNode = other36.CateNode;
+  SettingCategories = other36.SettingCategories;
+  SettingItems = other36.SettingItems;
+  __isset = other36.__isset;
 }
-SettingTree& SettingTree::operator=(const SettingTree& other35) {
-  CateNode = other35.CateNode;
-  SettingCategories = other35.SettingCategories;
-  SettingItems = other35.SettingItems;
-  __isset = other35.__isset;
+SettingTree& SettingTree::operator=(const SettingTree& other37) {
+  CateNode = other37.CateNode;
+  SettingCategories = other37.SettingCategories;
+  SettingItems = other37.SettingItems;
+  __isset = other37.__isset;
   return *this;
 }
 void SettingTree::printTo(std::ostream& out) const {
@@ -915,14 +1027,14 @@ uint32_t NodeList::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->SettingCategories.clear();
-            uint32_t _size36;
-            ::apache::thrift::protocol::TType _etype39;
-            xfer += iprot->readListBegin(_etype39, _size36);
-            this->SettingCategories.resize(_size36);
-            uint32_t _i40;
-            for (_i40 = 0; _i40 < _size36; ++_i40)
+            uint32_t _size38;
+            ::apache::thrift::protocol::TType _etype41;
+            xfer += iprot->readListBegin(_etype41, _size38);
+            this->SettingCategories.resize(_size38);
+            uint32_t _i42;
+            for (_i42 = 0; _i42 < _size38; ++_i42)
             {
-              xfer += this->SettingCategories[_i40].read(iprot);
+              xfer += this->SettingCategories[_i42].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -935,14 +1047,14 @@ uint32_t NodeList::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->SettingItems.clear();
-            uint32_t _size41;
-            ::apache::thrift::protocol::TType _etype44;
-            xfer += iprot->readListBegin(_etype44, _size41);
-            this->SettingItems.resize(_size41);
-            uint32_t _i45;
-            for (_i45 = 0; _i45 < _size41; ++_i45)
+            uint32_t _size43;
+            ::apache::thrift::protocol::TType _etype46;
+            xfer += iprot->readListBegin(_etype46, _size43);
+            this->SettingItems.resize(_size43);
+            uint32_t _i47;
+            for (_i47 = 0; _i47 < _size43; ++_i47)
             {
-              xfer += this->SettingItems[_i45].read(iprot);
+              xfer += this->SettingItems[_i47].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -971,10 +1083,10 @@ uint32_t NodeList::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += oprot->writeFieldBegin("SettingCategories", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingCategories.size()));
-    std::vector< ::Ruyi::SDK::CommonType::SettingCategory> ::const_iterator _iter46;
-    for (_iter46 = this->SettingCategories.begin(); _iter46 != this->SettingCategories.end(); ++_iter46)
+    std::vector< ::Ruyi::SDK::CommonType::SettingCategory> ::const_iterator _iter48;
+    for (_iter48 = this->SettingCategories.begin(); _iter48 != this->SettingCategories.end(); ++_iter48)
     {
-      xfer += (*_iter46).write(oprot);
+      xfer += (*_iter48).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -983,10 +1095,10 @@ uint32_t NodeList::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += oprot->writeFieldBegin("SettingItems", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingItems.size()));
-    std::vector< ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter47;
-    for (_iter47 = this->SettingItems.begin(); _iter47 != this->SettingItems.end(); ++_iter47)
+    std::vector< ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter49;
+    for (_iter49 = this->SettingItems.begin(); _iter49 != this->SettingItems.end(); ++_iter49)
     {
-      xfer += (*_iter47).write(oprot);
+      xfer += (*_iter49).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -1004,15 +1116,15 @@ void swap(NodeList &a, NodeList &b) {
   swap(a.__isset, b.__isset);
 }
 
-NodeList::NodeList(const NodeList& other48) {
-  SettingCategories = other48.SettingCategories;
-  SettingItems = other48.SettingItems;
-  __isset = other48.__isset;
+NodeList::NodeList(const NodeList& other50) {
+  SettingCategories = other50.SettingCategories;
+  SettingItems = other50.SettingItems;
+  __isset = other50.__isset;
 }
-NodeList& NodeList::operator=(const NodeList& other49) {
-  SettingCategories = other49.SettingCategories;
-  SettingItems = other49.SettingItems;
-  __isset = other49.__isset;
+NodeList& NodeList::operator=(const NodeList& other51) {
+  SettingCategories = other51.SettingCategories;
+  SettingItems = other51.SettingItems;
+  __isset = other51.__isset;
   return *this;
 }
 void NodeList::printTo(std::ostream& out) const {
@@ -1116,15 +1228,15 @@ void swap(SettingItemNotification &a, SettingItemNotification &b) {
   swap(a.__isset, b.__isset);
 }
 
-SettingItemNotification::SettingItemNotification(const SettingItemNotification& other50) {
-  key = other50.key;
-  contents = other50.contents;
-  __isset = other50.__isset;
+SettingItemNotification::SettingItemNotification(const SettingItemNotification& other52) {
+  key = other52.key;
+  contents = other52.contents;
+  __isset = other52.__isset;
 }
-SettingItemNotification& SettingItemNotification::operator=(const SettingItemNotification& other51) {
-  key = other51.key;
-  contents = other51.contents;
-  __isset = other51.__isset;
+SettingItemNotification& SettingItemNotification::operator=(const SettingItemNotification& other53) {
+  key = other53.key;
+  contents = other53.contents;
+  __isset = other53.__isset;
   return *this;
 }
 void SettingItemNotification::printTo(std::ostream& out) const {
