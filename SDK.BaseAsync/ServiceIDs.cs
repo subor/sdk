@@ -17,6 +17,7 @@ namespace Ruyi.Layer0
         VALIDATOR,
         LAUNCHER,
         POWERMANAGER,
+        POWERMANAGER_INTERNAL,
         APPSYSTEM,
         STORAGELAYER,
         STORAGELAYER_INTERNAL,
