@@ -3,15 +3,29 @@
 Support is available in several forms:
 
 - [FAQ](../faq.md)
+- [Docs](../README.md) ([search docs](https://bitbucket.org/search?q=repo%3Adocs&account=%7Bf59fdd59-0a84-4d5b-a424-61eb2b74c84f%7D))
 - [Forums](http://dev.playruyi.com/forum/) for discussion
-- [Support repository](https://bitbucket.org/playruyi/support) for submitting tickets
+- [Support repository](https://bitbucket.org/playruyi/support) for submitting [tickets](https://bitbucket.org/playruyi/support/issues?status=new&status=open)
 - Via email to dev-support@playruyi.com
 
 Other resources:
 
 - [Release Notes](release_notes.md)
 
-## Searching for existing issues
+## Repository Search
+
+Bitbucket's search feature can be used to search any of the repositories.
+
+1. Click the magnifying class on the left side of the site  
+![](/docs/img/bitbucket_search.png)
+1. Input terms and where to search  
+![](/docs/img/bitbucket_search_input.png)
+1. Refine search terms and view results  
+![](/docs/img/bitbucket_search_results.png)
+1. Consult [Atlassian documentation for advanced search options](https://confluence.atlassian.com/bitbucket/search-873876782.html)
+
+
+## Searching for Existing Issues
 
 1. Open [support repository](https://bitbucket.org/playruyi/support) in web browser
 1. Select __Issues__ from left panel to view current issues
