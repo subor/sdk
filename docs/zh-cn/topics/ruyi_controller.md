@@ -1,6 +1,6 @@
 # Ruyi手柄适配说明
 
-  本文档旨在说明同过代码实现Ruyi手柄适合，由于目前RuyiSDK仍处于开发中，所以说明中使用的代码相关API可能会和实际SDK有出入，最新
+  本文档旨在说明通过代码实现Ruyi手柄接入。目前接入手柄需要下载最新Layer0（可在[开发者网站](https://dev.playruyi.com/)下载），并在游戏运行前打开。由于目前RuyiSDK仍处于开发中，所以说明中使用的代码相关API可能会和实际SDK有出入，最新
 代码可以在这里[C#](https://bitbucket.org/playruyi/space_shooter/src),[C++](https://bitbucket.org/playruyi/unreal_demo/src/master)
 查看
 
@@ -35,7 +35,7 @@ m_RuyiNet.Subscribe.AddMessageHandler<Ruyi.SDK.InputManager.RuyiGamePadInput>(Ru
             Debug.Log("X&B");
         }
 	
-	遥感判定左摇杆LeftThumbX水平LeftThumbY垂直
+	遥感判定：左摇杆 LeftThumbX水平 LeftThumbY垂直 右摇杆 RightThumbX水平 RightThumbY垂直 
 	
 	将LeftThumbX或LeftThumbY的值除以Mathf.Pow(2f, 15)（2的15次方），结果映射为（-1，1），即为遥感移动范围(-1,1)(左，右)（下，上），右摇杆一样
 
@@ -44,17 +44,17 @@ m_RuyiNet.Subscribe.AddMessageHandler<Ruyi.SDK.InputManager.RuyiGamePadInput>(Ru
 	
 	channel：由连接方式决定（有线无线），目前有线情况下第一个手柄就固定填4，之后会再对该API做调整。
 	
-	enableR,enable,enable指定手柄等是否亮
+	enableR,enable,enable指定手柄灯是否亮
 	
-	enableMotor1,enableMoter2指是否开启震动（左右两边）,shutdown一般false
+	enableMotor1,enableMoter2指是否开启震动（左右两边）,shutdown一般填false
 	
 	RValue,GValue,BValue指灯亮的参数
 	
-	motor1Value,motor1Time,motor2Value,motor2Time指手柄的震动长度和持续时间
+	motor1Value,motor1Time,motor2Value,motor2Time指手柄的震动强度和持续时间长度
 	
 	比较重要的参数就是震动强度和时间。可以像以下这样传
 	
-	byte viberatePower = 255 (范围0~255强度从小到大), viberateTime = 255（范围0~255时间从短到长） ，否则直接传sbyte（-128~127）不够直观
+	byte viberatePower = 255 (范围0~255对应强度从小到大), viberateTime = 255（范围0~255对应时间从短到长） ，否则直接传sbyte（-128~127）不够直观
 	
 	m_RuyiNet.mSDK.InputMgr.SetRuyiControllerStatus(4, false, false, false,
                 true, true, false,
