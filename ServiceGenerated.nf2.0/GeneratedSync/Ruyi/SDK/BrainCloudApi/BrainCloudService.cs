@@ -169,6 +169,53 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="clientIndex"></param>
       string Authentication_ResetEmailPassword(string externalId, int clientIndex);
       /// <summary>
+      /// Returns the sessionId or empty string if no session present.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      string Client_GetSessionId(int clientIndex);
+      /// <summary>
+      /// Returns true if the user is currently authenticated.
+      /// If a session time out or session invalidation is returned from executing a
+      /// sever API call, this flag will reset back to false.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      bool Client_IsAuthenticated(int clientIndex);
+      /// <summary>
+      /// Returns true if brainCloud has been initialized.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      bool Client_IsInitialized(int clientIndex);
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId"></param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      void Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex);
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="serverURL">The URL to the brainCloud server</param>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId">The app id</param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      void Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex);
+      /// <summary>
+      /// Initialize the identity aspects of brainCloud.
+      /// </summary>
+      /// <param name="profileId">The profile id</param>
+      /// <param name="anonymousId">The anonymous id</param>
+      /// <param name="clientIndex"></param>
+      void Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex);
+      /// <summary>
+      /// Update method needs to be called regularly in order
+      /// to process incoming and outgoing messages.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      void Client_Update(int clientIndex);
+      /// <summary>
       /// Enable logging of brainCloud transactions (comms etc)
       /// </summary>
       /// <param name="enable">True if logging is to be enabled</param>
@@ -326,53 +373,6 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="languageCode">ISO 639-1 two-letter language code</param>
       /// <param name="clientIndex"></param>
       void Client_OverrideLanguageCode(string languageCode, int clientIndex);
-      /// <summary>
-      /// Returns the sessionId or empty string if no session present.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      string Client_GetSessionId(int clientIndex);
-      /// <summary>
-      /// Returns true if the user is currently authenticated.
-      /// If a session time out or session invalidation is returned from executing a
-      /// sever API call, this flag will reset back to false.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      bool Client_IsAuthenticated(int clientIndex);
-      /// <summary>
-      /// Returns true if brainCloud has been initialized.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      bool Client_IsInitialized(int clientIndex);
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId"></param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      void Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex);
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="serverURL">The URL to the brainCloud server</param>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId">The app id</param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      void Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex);
-      /// <summary>
-      /// Initialize the identity aspects of brainCloud.
-      /// </summary>
-      /// <param name="profileId">The profile id</param>
-      /// <param name="anonymousId">The anonymous id</param>
-      /// <param name="clientIndex"></param>
-      void Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex);
-      /// <summary>
-      /// Update method needs to be called regularly in order
-      /// to process incoming and outgoing messages.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      void Client_Update(int clientIndex);
       /// <summary>
       /// Creates custom data stream page event
       /// </summary>
@@ -642,34 +642,6 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="clientIndex"></param>
       string File_GetCDNUrl(string cloudPath, string cloudFilename, int clientIndex);
       /// <summary>
-      /// Retrieves profile information for the partial matches of the specified text.
-      /// </summary>
-      /// <param name="searchText">Universal ID text on which to search.</param>
-      /// <param name="maxResults">Maximum number of results to return.</param>
-      /// <param name="clientIndex"></param>
-      string Friend_FindUserByUniversalId(string searchText, int maxResults, int clientIndex);
-      /// <summary>
-      /// Retrieves profile information of the specified user.
-      /// </summary>
-      /// <param name="externalId">External id of the user to find</param>
-      /// <param name="authenticationType">The authentication type used for the user's ID</param>
-      /// <param name="clientIndex"></param>
-      string Friend_GetProfileInfoForCredential(string externalId, string authenticationType, int clientIndex);
-      /// <summary>
-      /// Retrieves profile information for the specified external auth user.
-      /// </summary>
-      /// <param name="externalId">External id of the friend to find</param>
-      /// <param name="externalAuthType">The external authentication type used for this friend's external id</param>
-      /// <param name="clientIndex"></param>
-      string Friend_GetProfileInfoForExternalAuthId(string externalId, string externalAuthType, int clientIndex);
-      /// <summary>
-      /// Retrieves the external ID for the specified user profile ID on the specified social platform.
-      /// </summary>
-      /// <param name="profileId">Profile (user) ID.</param>
-      /// <param name="authenticationType">Associated authentication type.</param>
-      /// <param name="clientIndex"></param>
-      string Friend_GetExternalIdForProfileId(string profileId, string authenticationType, int clientIndex);
-      /// <summary>
       /// Returns a particular entity of a particular friend.
       /// </summary>
       /// <param name="entityId">Id of entity to retrieve.</param>
@@ -735,6 +707,12 @@ namespace Ruyi.SDK.BrainCloudApi
       /// <param name="profileIds">Collection of profile IDs.</param>
       /// <param name="clientIndex"></param>
       string Friend_GetUsersOnlineStatus(List<string> profileIds, int clientIndex);
+      string Friend_SendFriendInvitation(string toPlayerId, int clientIndex);
+      string Friend_ListFriendInvitationsReceived(int clientIndex);
+      string Friend_ListFriendInvitationsSent(int clientIndex);
+      string Friend_AcceptFriendInvitation(string fromPlayerId, int clientIndex);
+      string Friend_RejectFriendInvitation(string fromPlayerId, int clientIndex);
+      string Friend_RemoveFriend(string playerId, int clientIndex);
       /// <summary>
       /// Method retrieves all gamification data for the player.
       /// </summary>
@@ -2514,6 +2492,74 @@ namespace Ruyi.SDK.BrainCloudApi
       string End_Authentication_ResetEmailPassword(IAsyncResult asyncResult);
       #endif
       /// <summary>
+      /// Returns the sessionId or empty string if no session present.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_GetSessionId(AsyncCallback callback, object state, int clientIndex);
+      string End_Client_GetSessionId(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Returns true if the user is currently authenticated.
+      /// If a session time out or session invalidation is returned from executing a
+      /// sever API call, this flag will reset back to false.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_IsAuthenticated(AsyncCallback callback, object state, int clientIndex);
+      bool End_Client_IsAuthenticated(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Returns true if brainCloud has been initialized.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex);
+      bool End_Client_IsInitialized(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId"></param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex);
+      void End_Client_Initialize_SSS(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="serverURL">The URL to the brainCloud server</param>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId">The app id</param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex);
+      void End_Client_Initialize_SSSS(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Initialize the identity aspects of brainCloud.
+      /// </summary>
+      /// <param name="profileId">The profile id</param>
+      /// <param name="anonymousId">The anonymous id</param>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_InitializeIdentity(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex);
+      void End_Client_InitializeIdentity(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
+      /// Update method needs to be called regularly in order
+      /// to process incoming and outgoing messages.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      #if SILVERLIGHT
+      IAsyncResult Begin_Client_Update(AsyncCallback callback, object state, int clientIndex);
+      void End_Client_Update(IAsyncResult asyncResult);
+      #endif
+      /// <summary>
       /// Enable logging of brainCloud transactions (comms etc)
       /// </summary>
       /// <param name="enable">True if logging is to be enabled</param>
@@ -2721,74 +2767,6 @@ namespace Ruyi.SDK.BrainCloudApi
       #if SILVERLIGHT
       IAsyncResult Begin_Client_OverrideLanguageCode(AsyncCallback callback, object state, string languageCode, int clientIndex);
       void End_Client_OverrideLanguageCode(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Returns the sessionId or empty string if no session present.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_GetSessionId(AsyncCallback callback, object state, int clientIndex);
-      string End_Client_GetSessionId(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Returns true if the user is currently authenticated.
-      /// If a session time out or session invalidation is returned from executing a
-      /// sever API call, this flag will reset back to false.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_IsAuthenticated(AsyncCallback callback, object state, int clientIndex);
-      bool End_Client_IsAuthenticated(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Returns true if brainCloud has been initialized.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex);
-      bool End_Client_IsInitialized(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId"></param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex);
-      void End_Client_Initialize_SSS(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="serverURL">The URL to the brainCloud server</param>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId">The app id</param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex);
-      void End_Client_Initialize_SSSS(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Initialize the identity aspects of brainCloud.
-      /// </summary>
-      /// <param name="profileId">The profile id</param>
-      /// <param name="anonymousId">The anonymous id</param>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_InitializeIdentity(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex);
-      void End_Client_InitializeIdentity(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Update method needs to be called regularly in order
-      /// to process incoming and outgoing messages.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Client_Update(AsyncCallback callback, object state, int clientIndex);
-      void End_Client_Update(IAsyncResult asyncResult);
       #endif
       /// <summary>
       /// Creates custom data stream page event
@@ -3164,46 +3142,6 @@ namespace Ruyi.SDK.BrainCloudApi
       string End_File_GetCDNUrl(IAsyncResult asyncResult);
       #endif
       /// <summary>
-      /// Retrieves profile information for the partial matches of the specified text.
-      /// </summary>
-      /// <param name="searchText">Universal ID text on which to search.</param>
-      /// <param name="maxResults">Maximum number of results to return.</param>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Friend_FindUserByUniversalId(AsyncCallback callback, object state, string searchText, int maxResults, int clientIndex);
-      string End_Friend_FindUserByUniversalId(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Retrieves profile information of the specified user.
-      /// </summary>
-      /// <param name="externalId">External id of the user to find</param>
-      /// <param name="authenticationType">The authentication type used for the user's ID</param>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Friend_GetProfileInfoForCredential(AsyncCallback callback, object state, string externalId, string authenticationType, int clientIndex);
-      string End_Friend_GetProfileInfoForCredential(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Retrieves profile information for the specified external auth user.
-      /// </summary>
-      /// <param name="externalId">External id of the friend to find</param>
-      /// <param name="externalAuthType">The external authentication type used for this friend's external id</param>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Friend_GetProfileInfoForExternalAuthId(AsyncCallback callback, object state, string externalId, string externalAuthType, int clientIndex);
-      string End_Friend_GetProfileInfoForExternalAuthId(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
-      /// Retrieves the external ID for the specified user profile ID on the specified social platform.
-      /// </summary>
-      /// <param name="profileId">Profile (user) ID.</param>
-      /// <param name="authenticationType">Associated authentication type.</param>
-      /// <param name="clientIndex"></param>
-      #if SILVERLIGHT
-      IAsyncResult Begin_Friend_GetExternalIdForProfileId(AsyncCallback callback, object state, string profileId, string authenticationType, int clientIndex);
-      string End_Friend_GetExternalIdForProfileId(IAsyncResult asyncResult);
-      #endif
-      /// <summary>
       /// Returns a particular entity of a particular friend.
       /// </summary>
       /// <param name="entityId">Id of entity to retrieve.</param>
@@ -3298,6 +3236,30 @@ namespace Ruyi.SDK.BrainCloudApi
       #if SILVERLIGHT
       IAsyncResult Begin_Friend_GetUsersOnlineStatus(AsyncCallback callback, object state, List<string> profileIds, int clientIndex);
       string End_Friend_GetUsersOnlineStatus(IAsyncResult asyncResult);
+      #endif
+      #if SILVERLIGHT
+      IAsyncResult Begin_Friend_SendFriendInvitation(AsyncCallback callback, object state, string toPlayerId, int clientIndex);
+      string End_Friend_SendFriendInvitation(IAsyncResult asyncResult);
+      #endif
+      #if SILVERLIGHT
+      IAsyncResult Begin_Friend_ListFriendInvitationsReceived(AsyncCallback callback, object state, int clientIndex);
+      string End_Friend_ListFriendInvitationsReceived(IAsyncResult asyncResult);
+      #endif
+      #if SILVERLIGHT
+      IAsyncResult Begin_Friend_ListFriendInvitationsSent(AsyncCallback callback, object state, int clientIndex);
+      string End_Friend_ListFriendInvitationsSent(IAsyncResult asyncResult);
+      #endif
+      #if SILVERLIGHT
+      IAsyncResult Begin_Friend_AcceptFriendInvitation(AsyncCallback callback, object state, string fromPlayerId, int clientIndex);
+      string End_Friend_AcceptFriendInvitation(IAsyncResult asyncResult);
+      #endif
+      #if SILVERLIGHT
+      IAsyncResult Begin_Friend_RejectFriendInvitation(AsyncCallback callback, object state, string fromPlayerId, int clientIndex);
+      string End_Friend_RejectFriendInvitation(IAsyncResult asyncResult);
+      #endif
+      #if SILVERLIGHT
+      IAsyncResult Begin_Friend_RemoveFriend(AsyncCallback callback, object state, string playerId, int clientIndex);
+      string End_Friend_RemoveFriend(IAsyncResult asyncResult);
       #endif
       /// <summary>
       /// Method retrieves all gamification data for the player.
@@ -6981,6 +6943,477 @@ namespace Ruyi.SDK.BrainCloudApi
 
       
       #if SILVERLIGHT
+      public IAsyncResult Begin_Client_GetSessionId(AsyncCallback callback, object state, int clientIndex)
+      {
+        return send_Client_GetSessionId(callback, state, clientIndex);
+      }
+
+      public string End_Client_GetSessionId(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Client_GetSessionId();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Returns the sessionId or empty string if no session present.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      public string Client_GetSessionId(int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_GetSessionId(clientIndex);
+        return recv_Client_GetSessionId();
+
+        #else
+        var asyncResult = Begin_Client_GetSessionId(null, null, clientIndex);
+        return End_Client_GetSessionId(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_GetSessionId(AsyncCallback callback, object state, int clientIndex)
+      #else
+      public void send_Client_GetSessionId(int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_GetSessionId", TMessageType.Call, seqid_));
+        Client_GetSessionId_args args = new Client_GetSessionId_args();
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public string recv_Client_GetSessionId()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_GetSessionId_result result = new Client_GetSessionId_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_GetSessionId failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Client_IsAuthenticated(AsyncCallback callback, object state, int clientIndex)
+      {
+        return send_Client_IsAuthenticated(callback, state, clientIndex);
+      }
+
+      public bool End_Client_IsAuthenticated(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Client_IsAuthenticated();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Returns true if the user is currently authenticated.
+      /// If a session time out or session invalidation is returned from executing a
+      /// sever API call, this flag will reset back to false.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      public bool Client_IsAuthenticated(int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_IsAuthenticated(clientIndex);
+        return recv_Client_IsAuthenticated();
+
+        #else
+        var asyncResult = Begin_Client_IsAuthenticated(null, null, clientIndex);
+        return End_Client_IsAuthenticated(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_IsAuthenticated(AsyncCallback callback, object state, int clientIndex)
+      #else
+      public void send_Client_IsAuthenticated(int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_IsAuthenticated", TMessageType.Call, seqid_));
+        Client_IsAuthenticated_args args = new Client_IsAuthenticated_args();
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public bool recv_Client_IsAuthenticated()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_IsAuthenticated_result result = new Client_IsAuthenticated_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_IsAuthenticated failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex)
+      {
+        return send_Client_IsInitialized(callback, state, clientIndex);
+      }
+
+      public bool End_Client_IsInitialized(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Client_IsInitialized();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Returns true if brainCloud has been initialized.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      public bool Client_IsInitialized(int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_IsInitialized(clientIndex);
+        return recv_Client_IsInitialized();
+
+        #else
+        var asyncResult = Begin_Client_IsInitialized(null, null, clientIndex);
+        return End_Client_IsInitialized(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex)
+      #else
+      public void send_Client_IsInitialized(int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_IsInitialized", TMessageType.Call, seqid_));
+        Client_IsInitialized_args args = new Client_IsInitialized_args();
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public bool recv_Client_IsInitialized()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_IsInitialized_result result = new Client_IsInitialized_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_IsInitialized failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex)
+      {
+        return send_Client_Initialize_SSS(callback, state, secretKey, appId, appVersion, clientIndex);
+      }
+
+      public void End_Client_Initialize_SSS(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        recv_Client_Initialize_SSS();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId"></param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      public void Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_Initialize_SSS(secretKey, appId, appVersion, clientIndex);
+        recv_Client_Initialize_SSS();
+
+        #else
+        var asyncResult = Begin_Client_Initialize_SSS(null, null, secretKey, appId, appVersion, clientIndex);
+        End_Client_Initialize_SSS(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex)
+      #else
+      public void send_Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_Initialize_SSS", TMessageType.Call, seqid_));
+        Client_Initialize_SSS_args args = new Client_Initialize_SSS_args();
+        args.SecretKey = secretKey;
+        args.AppId = appId;
+        args.AppVersion = appVersion;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public void recv_Client_Initialize_SSS()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_Initialize_SSS_result result = new Client_Initialize_SSS_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        return;
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
+      {
+        return send_Client_Initialize_SSSS(callback, state, serverURL, secretKey, appId, appVersion, clientIndex);
+      }
+
+      public void End_Client_Initialize_SSSS(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        recv_Client_Initialize_SSSS();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Method initializes the BrainCloudClient.
+      /// </summary>
+      /// <param name="serverURL">The URL to the brainCloud server</param>
+      /// <param name="secretKey">The secret key for your app</param>
+      /// <param name="appId">The app id</param>
+      /// <param name="appVersion">The app version</param>
+      /// <param name="clientIndex"></param>
+      public void Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_Initialize_SSSS(serverURL, secretKey, appId, appVersion, clientIndex);
+        recv_Client_Initialize_SSSS();
+
+        #else
+        var asyncResult = Begin_Client_Initialize_SSSS(null, null, serverURL, secretKey, appId, appVersion, clientIndex);
+        End_Client_Initialize_SSSS(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
+      #else
+      public void send_Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_Initialize_SSSS", TMessageType.Call, seqid_));
+        Client_Initialize_SSSS_args args = new Client_Initialize_SSSS_args();
+        args.ServerURL = serverURL;
+        args.SecretKey = secretKey;
+        args.AppId = appId;
+        args.AppVersion = appVersion;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public void recv_Client_Initialize_SSSS()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_Initialize_SSSS_result result = new Client_Initialize_SSSS_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        return;
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Client_InitializeIdentity(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex)
+      {
+        return send_Client_InitializeIdentity(callback, state, profileId, anonymousId, clientIndex);
+      }
+
+      public void End_Client_InitializeIdentity(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        recv_Client_InitializeIdentity();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Initialize the identity aspects of brainCloud.
+      /// </summary>
+      /// <param name="profileId">The profile id</param>
+      /// <param name="anonymousId">The anonymous id</param>
+      /// <param name="clientIndex"></param>
+      public void Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_InitializeIdentity(profileId, anonymousId, clientIndex);
+        recv_Client_InitializeIdentity();
+
+        #else
+        var asyncResult = Begin_Client_InitializeIdentity(null, null, profileId, anonymousId, clientIndex);
+        End_Client_InitializeIdentity(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_InitializeIdentity(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex)
+      #else
+      public void send_Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_InitializeIdentity", TMessageType.Call, seqid_));
+        Client_InitializeIdentity_args args = new Client_InitializeIdentity_args();
+        args.ProfileId = profileId;
+        args.AnonymousId = anonymousId;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public void recv_Client_InitializeIdentity()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_InitializeIdentity_result result = new Client_InitializeIdentity_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        return;
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Client_Update(AsyncCallback callback, object state, int clientIndex)
+      {
+        return send_Client_Update(callback, state, clientIndex);
+      }
+
+      public void End_Client_Update(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        recv_Client_Update();
+      }
+
+      #endif
+
+      /// <summary>
+      /// Update method needs to be called regularly in order
+      /// to process incoming and outgoing messages.
+      /// </summary>
+      /// <param name="clientIndex"></param>
+      public void Client_Update(int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Client_Update(clientIndex);
+        recv_Client_Update();
+
+        #else
+        var asyncResult = Begin_Client_Update(null, null, clientIndex);
+        End_Client_Update(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Client_Update(AsyncCallback callback, object state, int clientIndex)
+      #else
+      public void send_Client_Update(int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Client_Update", TMessageType.Call, seqid_));
+        Client_Update_args args = new Client_Update_args();
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public void recv_Client_Update()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Client_Update_result result = new Client_Update_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        return;
+      }
+
+      
+      #if SILVERLIGHT
       public IAsyncResult Begin_Client_EnableLogging(AsyncCallback callback, object state, bool enable, int clientIndex)
       {
         return send_Client_EnableLogging(callback, state, enable, clientIndex);
@@ -8139,477 +8572,6 @@ namespace Ruyi.SDK.BrainCloudApi
           throw x;
         }
         Client_OverrideLanguageCode_result result = new Client_OverrideLanguageCode_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        return;
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Client_GetSessionId(AsyncCallback callback, object state, int clientIndex)
-      {
-        return send_Client_GetSessionId(callback, state, clientIndex);
-      }
-
-      public string End_Client_GetSessionId(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_Client_GetSessionId();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Returns the sessionId or empty string if no session present.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      public string Client_GetSessionId(int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_GetSessionId(clientIndex);
-        return recv_Client_GetSessionId();
-
-        #else
-        var asyncResult = Begin_Client_GetSessionId(null, null, clientIndex);
-        return End_Client_GetSessionId(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_GetSessionId(AsyncCallback callback, object state, int clientIndex)
-      #else
-      public void send_Client_GetSessionId(int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_GetSessionId", TMessageType.Call, seqid_));
-        Client_GetSessionId_args args = new Client_GetSessionId_args();
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public string recv_Client_GetSessionId()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_GetSessionId_result result = new Client_GetSessionId_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_GetSessionId failed: unknown result");
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Client_IsAuthenticated(AsyncCallback callback, object state, int clientIndex)
-      {
-        return send_Client_IsAuthenticated(callback, state, clientIndex);
-      }
-
-      public bool End_Client_IsAuthenticated(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_Client_IsAuthenticated();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Returns true if the user is currently authenticated.
-      /// If a session time out or session invalidation is returned from executing a
-      /// sever API call, this flag will reset back to false.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      public bool Client_IsAuthenticated(int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_IsAuthenticated(clientIndex);
-        return recv_Client_IsAuthenticated();
-
-        #else
-        var asyncResult = Begin_Client_IsAuthenticated(null, null, clientIndex);
-        return End_Client_IsAuthenticated(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_IsAuthenticated(AsyncCallback callback, object state, int clientIndex)
-      #else
-      public void send_Client_IsAuthenticated(int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_IsAuthenticated", TMessageType.Call, seqid_));
-        Client_IsAuthenticated_args args = new Client_IsAuthenticated_args();
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public bool recv_Client_IsAuthenticated()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_IsAuthenticated_result result = new Client_IsAuthenticated_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_IsAuthenticated failed: unknown result");
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex)
-      {
-        return send_Client_IsInitialized(callback, state, clientIndex);
-      }
-
-      public bool End_Client_IsInitialized(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_Client_IsInitialized();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Returns true if brainCloud has been initialized.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      public bool Client_IsInitialized(int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_IsInitialized(clientIndex);
-        return recv_Client_IsInitialized();
-
-        #else
-        var asyncResult = Begin_Client_IsInitialized(null, null, clientIndex);
-        return End_Client_IsInitialized(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_IsInitialized(AsyncCallback callback, object state, int clientIndex)
-      #else
-      public void send_Client_IsInitialized(int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_IsInitialized", TMessageType.Call, seqid_));
-        Client_IsInitialized_args args = new Client_IsInitialized_args();
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public bool recv_Client_IsInitialized()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_IsInitialized_result result = new Client_IsInitialized_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Client_IsInitialized failed: unknown result");
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex)
-      {
-        return send_Client_Initialize_SSS(callback, state, secretKey, appId, appVersion, clientIndex);
-      }
-
-      public void End_Client_Initialize_SSS(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        recv_Client_Initialize_SSS();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId"></param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      public void Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_Initialize_SSS(secretKey, appId, appVersion, clientIndex);
-        recv_Client_Initialize_SSS();
-
-        #else
-        var asyncResult = Begin_Client_Initialize_SSS(null, null, secretKey, appId, appVersion, clientIndex);
-        End_Client_Initialize_SSS(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_Initialize_SSS(AsyncCallback callback, object state, string secretKey, string appId, string appVersion, int clientIndex)
-      #else
-      public void send_Client_Initialize_SSS(string secretKey, string appId, string appVersion, int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_Initialize_SSS", TMessageType.Call, seqid_));
-        Client_Initialize_SSS_args args = new Client_Initialize_SSS_args();
-        args.SecretKey = secretKey;
-        args.AppId = appId;
-        args.AppVersion = appVersion;
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public void recv_Client_Initialize_SSS()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_Initialize_SSS_result result = new Client_Initialize_SSS_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        return;
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
-      {
-        return send_Client_Initialize_SSSS(callback, state, serverURL, secretKey, appId, appVersion, clientIndex);
-      }
-
-      public void End_Client_Initialize_SSSS(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        recv_Client_Initialize_SSSS();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Method initializes the BrainCloudClient.
-      /// </summary>
-      /// <param name="serverURL">The URL to the brainCloud server</param>
-      /// <param name="secretKey">The secret key for your app</param>
-      /// <param name="appId">The app id</param>
-      /// <param name="appVersion">The app version</param>
-      /// <param name="clientIndex"></param>
-      public void Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_Initialize_SSSS(serverURL, secretKey, appId, appVersion, clientIndex);
-        recv_Client_Initialize_SSSS();
-
-        #else
-        var asyncResult = Begin_Client_Initialize_SSSS(null, null, serverURL, secretKey, appId, appVersion, clientIndex);
-        End_Client_Initialize_SSSS(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_Initialize_SSSS(AsyncCallback callback, object state, string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
-      #else
-      public void send_Client_Initialize_SSSS(string serverURL, string secretKey, string appId, string appVersion, int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_Initialize_SSSS", TMessageType.Call, seqid_));
-        Client_Initialize_SSSS_args args = new Client_Initialize_SSSS_args();
-        args.ServerURL = serverURL;
-        args.SecretKey = secretKey;
-        args.AppId = appId;
-        args.AppVersion = appVersion;
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public void recv_Client_Initialize_SSSS()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_Initialize_SSSS_result result = new Client_Initialize_SSSS_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        return;
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Client_InitializeIdentity(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex)
-      {
-        return send_Client_InitializeIdentity(callback, state, profileId, anonymousId, clientIndex);
-      }
-
-      public void End_Client_InitializeIdentity(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        recv_Client_InitializeIdentity();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Initialize the identity aspects of brainCloud.
-      /// </summary>
-      /// <param name="profileId">The profile id</param>
-      /// <param name="anonymousId">The anonymous id</param>
-      /// <param name="clientIndex"></param>
-      public void Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_InitializeIdentity(profileId, anonymousId, clientIndex);
-        recv_Client_InitializeIdentity();
-
-        #else
-        var asyncResult = Begin_Client_InitializeIdentity(null, null, profileId, anonymousId, clientIndex);
-        End_Client_InitializeIdentity(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_InitializeIdentity(AsyncCallback callback, object state, string profileId, string anonymousId, int clientIndex)
-      #else
-      public void send_Client_InitializeIdentity(string profileId, string anonymousId, int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_InitializeIdentity", TMessageType.Call, seqid_));
-        Client_InitializeIdentity_args args = new Client_InitializeIdentity_args();
-        args.ProfileId = profileId;
-        args.AnonymousId = anonymousId;
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public void recv_Client_InitializeIdentity()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_InitializeIdentity_result result = new Client_InitializeIdentity_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        return;
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Client_Update(AsyncCallback callback, object state, int clientIndex)
-      {
-        return send_Client_Update(callback, state, clientIndex);
-      }
-
-      public void End_Client_Update(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        recv_Client_Update();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Update method needs to be called regularly in order
-      /// to process incoming and outgoing messages.
-      /// </summary>
-      /// <param name="clientIndex"></param>
-      public void Client_Update(int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Client_Update(clientIndex);
-        recv_Client_Update();
-
-        #else
-        var asyncResult = Begin_Client_Update(null, null, clientIndex);
-        End_Client_Update(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Client_Update(AsyncCallback callback, object state, int clientIndex)
-      #else
-      public void send_Client_Update(int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Client_Update", TMessageType.Call, seqid_));
-        Client_Update_args args = new Client_Update_args();
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public void recv_Client_Update()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Client_Update_result result = new Client_Update_result();
         result.Read(iprot_);
         iprot_.ReadMessageEnd();
         return;
@@ -11089,286 +11051,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       
       #if SILVERLIGHT
-      public IAsyncResult Begin_Friend_FindUserByUniversalId(AsyncCallback callback, object state, string searchText, int maxResults, int clientIndex)
-      {
-        return send_Friend_FindUserByUniversalId(callback, state, searchText, maxResults, clientIndex);
-      }
-
-      public string End_Friend_FindUserByUniversalId(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_Friend_FindUserByUniversalId();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Retrieves profile information for the partial matches of the specified text.
-      /// </summary>
-      /// <param name="searchText">Universal ID text on which to search.</param>
-      /// <param name="maxResults">Maximum number of results to return.</param>
-      /// <param name="clientIndex"></param>
-      public string Friend_FindUserByUniversalId(string searchText, int maxResults, int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Friend_FindUserByUniversalId(searchText, maxResults, clientIndex);
-        return recv_Friend_FindUserByUniversalId();
-
-        #else
-        var asyncResult = Begin_Friend_FindUserByUniversalId(null, null, searchText, maxResults, clientIndex);
-        return End_Friend_FindUserByUniversalId(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Friend_FindUserByUniversalId(AsyncCallback callback, object state, string searchText, int maxResults, int clientIndex)
-      #else
-      public void send_Friend_FindUserByUniversalId(string searchText, int maxResults, int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Friend_FindUserByUniversalId", TMessageType.Call, seqid_));
-        Friend_FindUserByUniversalId_args args = new Friend_FindUserByUniversalId_args();
-        args.SearchText = searchText;
-        args.MaxResults = maxResults;
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public string recv_Friend_FindUserByUniversalId()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Friend_FindUserByUniversalId_result result = new Friend_FindUserByUniversalId_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Friend_FindUserByUniversalId failed: unknown result");
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Friend_GetProfileInfoForCredential(AsyncCallback callback, object state, string externalId, string authenticationType, int clientIndex)
-      {
-        return send_Friend_GetProfileInfoForCredential(callback, state, externalId, authenticationType, clientIndex);
-      }
-
-      public string End_Friend_GetProfileInfoForCredential(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_Friend_GetProfileInfoForCredential();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Retrieves profile information of the specified user.
-      /// </summary>
-      /// <param name="externalId">External id of the user to find</param>
-      /// <param name="authenticationType">The authentication type used for the user's ID</param>
-      /// <param name="clientIndex"></param>
-      public string Friend_GetProfileInfoForCredential(string externalId, string authenticationType, int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Friend_GetProfileInfoForCredential(externalId, authenticationType, clientIndex);
-        return recv_Friend_GetProfileInfoForCredential();
-
-        #else
-        var asyncResult = Begin_Friend_GetProfileInfoForCredential(null, null, externalId, authenticationType, clientIndex);
-        return End_Friend_GetProfileInfoForCredential(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Friend_GetProfileInfoForCredential(AsyncCallback callback, object state, string externalId, string authenticationType, int clientIndex)
-      #else
-      public void send_Friend_GetProfileInfoForCredential(string externalId, string authenticationType, int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Friend_GetProfileInfoForCredential", TMessageType.Call, seqid_));
-        Friend_GetProfileInfoForCredential_args args = new Friend_GetProfileInfoForCredential_args();
-        args.ExternalId = externalId;
-        args.AuthenticationType = authenticationType;
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public string recv_Friend_GetProfileInfoForCredential()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Friend_GetProfileInfoForCredential_result result = new Friend_GetProfileInfoForCredential_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Friend_GetProfileInfoForCredential failed: unknown result");
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Friend_GetProfileInfoForExternalAuthId(AsyncCallback callback, object state, string externalId, string externalAuthType, int clientIndex)
-      {
-        return send_Friend_GetProfileInfoForExternalAuthId(callback, state, externalId, externalAuthType, clientIndex);
-      }
-
-      public string End_Friend_GetProfileInfoForExternalAuthId(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_Friend_GetProfileInfoForExternalAuthId();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Retrieves profile information for the specified external auth user.
-      /// </summary>
-      /// <param name="externalId">External id of the friend to find</param>
-      /// <param name="externalAuthType">The external authentication type used for this friend's external id</param>
-      /// <param name="clientIndex"></param>
-      public string Friend_GetProfileInfoForExternalAuthId(string externalId, string externalAuthType, int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Friend_GetProfileInfoForExternalAuthId(externalId, externalAuthType, clientIndex);
-        return recv_Friend_GetProfileInfoForExternalAuthId();
-
-        #else
-        var asyncResult = Begin_Friend_GetProfileInfoForExternalAuthId(null, null, externalId, externalAuthType, clientIndex);
-        return End_Friend_GetProfileInfoForExternalAuthId(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Friend_GetProfileInfoForExternalAuthId(AsyncCallback callback, object state, string externalId, string externalAuthType, int clientIndex)
-      #else
-      public void send_Friend_GetProfileInfoForExternalAuthId(string externalId, string externalAuthType, int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Friend_GetProfileInfoForExternalAuthId", TMessageType.Call, seqid_));
-        Friend_GetProfileInfoForExternalAuthId_args args = new Friend_GetProfileInfoForExternalAuthId_args();
-        args.ExternalId = externalId;
-        args.ExternalAuthType = externalAuthType;
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public string recv_Friend_GetProfileInfoForExternalAuthId()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Friend_GetProfileInfoForExternalAuthId_result result = new Friend_GetProfileInfoForExternalAuthId_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Friend_GetProfileInfoForExternalAuthId failed: unknown result");
-      }
-
-      
-      #if SILVERLIGHT
-      public IAsyncResult Begin_Friend_GetExternalIdForProfileId(AsyncCallback callback, object state, string profileId, string authenticationType, int clientIndex)
-      {
-        return send_Friend_GetExternalIdForProfileId(callback, state, profileId, authenticationType, clientIndex);
-      }
-
-      public string End_Friend_GetExternalIdForProfileId(IAsyncResult asyncResult)
-      {
-        oprot_.Transport.EndFlush(asyncResult);
-        return recv_Friend_GetExternalIdForProfileId();
-      }
-
-      #endif
-
-      /// <summary>
-      /// Retrieves the external ID for the specified user profile ID on the specified social platform.
-      /// </summary>
-      /// <param name="profileId">Profile (user) ID.</param>
-      /// <param name="authenticationType">Associated authentication type.</param>
-      /// <param name="clientIndex"></param>
-      public string Friend_GetExternalIdForProfileId(string profileId, string authenticationType, int clientIndex)
-      {
-        #if !SILVERLIGHT
-        send_Friend_GetExternalIdForProfileId(profileId, authenticationType, clientIndex);
-        return recv_Friend_GetExternalIdForProfileId();
-
-        #else
-        var asyncResult = Begin_Friend_GetExternalIdForProfileId(null, null, profileId, authenticationType, clientIndex);
-        return End_Friend_GetExternalIdForProfileId(asyncResult);
-
-        #endif
-      }
-      #if SILVERLIGHT
-      public IAsyncResult send_Friend_GetExternalIdForProfileId(AsyncCallback callback, object state, string profileId, string authenticationType, int clientIndex)
-      #else
-      public void send_Friend_GetExternalIdForProfileId(string profileId, string authenticationType, int clientIndex)
-      #endif
-      {
-        oprot_.WriteMessageBegin(new TMessage("Friend_GetExternalIdForProfileId", TMessageType.Call, seqid_));
-        Friend_GetExternalIdForProfileId_args args = new Friend_GetExternalIdForProfileId_args();
-        args.ProfileId = profileId;
-        args.AuthenticationType = authenticationType;
-        args.ClientIndex = clientIndex;
-        args.Write(oprot_);
-        oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
-        return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
-      }
-
-      public string recv_Friend_GetExternalIdForProfileId()
-      {
-        TMessage msg = iprot_.ReadMessageBegin();
-        if (msg.Type == TMessageType.Exception) {
-          TApplicationException x = TApplicationException.Read(iprot_);
-          iprot_.ReadMessageEnd();
-          throw x;
-        }
-        Friend_GetExternalIdForProfileId_result result = new Friend_GetExternalIdForProfileId_result();
-        result.Read(iprot_);
-        iprot_.ReadMessageEnd();
-        if (result.__isset.success) {
-          return result.Success;
-        }
-        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Friend_GetExternalIdForProfileId failed: unknown result");
-      }
-
-      
-      #if SILVERLIGHT
       public IAsyncResult Begin_Friend_ReadFriendEntity(AsyncCallback callback, object state, string entityId, string friendId, int clientIndex)
       {
         return send_Friend_ReadFriendEntity(callback, state, entityId, friendId, clientIndex);
@@ -12055,6 +11737,382 @@ namespace Ruyi.SDK.BrainCloudApi
           return result.Success;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Friend_GetUsersOnlineStatus failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Friend_SendFriendInvitation(AsyncCallback callback, object state, string toPlayerId, int clientIndex)
+      {
+        return send_Friend_SendFriendInvitation(callback, state, toPlayerId, clientIndex);
+      }
+
+      public string End_Friend_SendFriendInvitation(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Friend_SendFriendInvitation();
+      }
+
+      #endif
+
+      public string Friend_SendFriendInvitation(string toPlayerId, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Friend_SendFriendInvitation(toPlayerId, clientIndex);
+        return recv_Friend_SendFriendInvitation();
+
+        #else
+        var asyncResult = Begin_Friend_SendFriendInvitation(null, null, toPlayerId, clientIndex);
+        return End_Friend_SendFriendInvitation(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Friend_SendFriendInvitation(AsyncCallback callback, object state, string toPlayerId, int clientIndex)
+      #else
+      public void send_Friend_SendFriendInvitation(string toPlayerId, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Friend_SendFriendInvitation", TMessageType.Call, seqid_));
+        Friend_SendFriendInvitation_args args = new Friend_SendFriendInvitation_args();
+        args.ToPlayerId = toPlayerId;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public string recv_Friend_SendFriendInvitation()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Friend_SendFriendInvitation_result result = new Friend_SendFriendInvitation_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Friend_SendFriendInvitation failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Friend_ListFriendInvitationsReceived(AsyncCallback callback, object state, int clientIndex)
+      {
+        return send_Friend_ListFriendInvitationsReceived(callback, state, clientIndex);
+      }
+
+      public string End_Friend_ListFriendInvitationsReceived(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Friend_ListFriendInvitationsReceived();
+      }
+
+      #endif
+
+      public string Friend_ListFriendInvitationsReceived(int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Friend_ListFriendInvitationsReceived(clientIndex);
+        return recv_Friend_ListFriendInvitationsReceived();
+
+        #else
+        var asyncResult = Begin_Friend_ListFriendInvitationsReceived(null, null, clientIndex);
+        return End_Friend_ListFriendInvitationsReceived(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Friend_ListFriendInvitationsReceived(AsyncCallback callback, object state, int clientIndex)
+      #else
+      public void send_Friend_ListFriendInvitationsReceived(int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Friend_ListFriendInvitationsReceived", TMessageType.Call, seqid_));
+        Friend_ListFriendInvitationsReceived_args args = new Friend_ListFriendInvitationsReceived_args();
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public string recv_Friend_ListFriendInvitationsReceived()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Friend_ListFriendInvitationsReceived_result result = new Friend_ListFriendInvitationsReceived_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Friend_ListFriendInvitationsReceived failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Friend_ListFriendInvitationsSent(AsyncCallback callback, object state, int clientIndex)
+      {
+        return send_Friend_ListFriendInvitationsSent(callback, state, clientIndex);
+      }
+
+      public string End_Friend_ListFriendInvitationsSent(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Friend_ListFriendInvitationsSent();
+      }
+
+      #endif
+
+      public string Friend_ListFriendInvitationsSent(int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Friend_ListFriendInvitationsSent(clientIndex);
+        return recv_Friend_ListFriendInvitationsSent();
+
+        #else
+        var asyncResult = Begin_Friend_ListFriendInvitationsSent(null, null, clientIndex);
+        return End_Friend_ListFriendInvitationsSent(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Friend_ListFriendInvitationsSent(AsyncCallback callback, object state, int clientIndex)
+      #else
+      public void send_Friend_ListFriendInvitationsSent(int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Friend_ListFriendInvitationsSent", TMessageType.Call, seqid_));
+        Friend_ListFriendInvitationsSent_args args = new Friend_ListFriendInvitationsSent_args();
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public string recv_Friend_ListFriendInvitationsSent()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Friend_ListFriendInvitationsSent_result result = new Friend_ListFriendInvitationsSent_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Friend_ListFriendInvitationsSent failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Friend_AcceptFriendInvitation(AsyncCallback callback, object state, string fromPlayerId, int clientIndex)
+      {
+        return send_Friend_AcceptFriendInvitation(callback, state, fromPlayerId, clientIndex);
+      }
+
+      public string End_Friend_AcceptFriendInvitation(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Friend_AcceptFriendInvitation();
+      }
+
+      #endif
+
+      public string Friend_AcceptFriendInvitation(string fromPlayerId, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Friend_AcceptFriendInvitation(fromPlayerId, clientIndex);
+        return recv_Friend_AcceptFriendInvitation();
+
+        #else
+        var asyncResult = Begin_Friend_AcceptFriendInvitation(null, null, fromPlayerId, clientIndex);
+        return End_Friend_AcceptFriendInvitation(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Friend_AcceptFriendInvitation(AsyncCallback callback, object state, string fromPlayerId, int clientIndex)
+      #else
+      public void send_Friend_AcceptFriendInvitation(string fromPlayerId, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Friend_AcceptFriendInvitation", TMessageType.Call, seqid_));
+        Friend_AcceptFriendInvitation_args args = new Friend_AcceptFriendInvitation_args();
+        args.FromPlayerId = fromPlayerId;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public string recv_Friend_AcceptFriendInvitation()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Friend_AcceptFriendInvitation_result result = new Friend_AcceptFriendInvitation_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Friend_AcceptFriendInvitation failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Friend_RejectFriendInvitation(AsyncCallback callback, object state, string fromPlayerId, int clientIndex)
+      {
+        return send_Friend_RejectFriendInvitation(callback, state, fromPlayerId, clientIndex);
+      }
+
+      public string End_Friend_RejectFriendInvitation(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Friend_RejectFriendInvitation();
+      }
+
+      #endif
+
+      public string Friend_RejectFriendInvitation(string fromPlayerId, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Friend_RejectFriendInvitation(fromPlayerId, clientIndex);
+        return recv_Friend_RejectFriendInvitation();
+
+        #else
+        var asyncResult = Begin_Friend_RejectFriendInvitation(null, null, fromPlayerId, clientIndex);
+        return End_Friend_RejectFriendInvitation(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Friend_RejectFriendInvitation(AsyncCallback callback, object state, string fromPlayerId, int clientIndex)
+      #else
+      public void send_Friend_RejectFriendInvitation(string fromPlayerId, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Friend_RejectFriendInvitation", TMessageType.Call, seqid_));
+        Friend_RejectFriendInvitation_args args = new Friend_RejectFriendInvitation_args();
+        args.FromPlayerId = fromPlayerId;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public string recv_Friend_RejectFriendInvitation()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Friend_RejectFriendInvitation_result result = new Friend_RejectFriendInvitation_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Friend_RejectFriendInvitation failed: unknown result");
+      }
+
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_Friend_RemoveFriend(AsyncCallback callback, object state, string playerId, int clientIndex)
+      {
+        return send_Friend_RemoveFriend(callback, state, playerId, clientIndex);
+      }
+
+      public string End_Friend_RemoveFriend(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_Friend_RemoveFriend();
+      }
+
+      #endif
+
+      public string Friend_RemoveFriend(string playerId, int clientIndex)
+      {
+        #if !SILVERLIGHT
+        send_Friend_RemoveFriend(playerId, clientIndex);
+        return recv_Friend_RemoveFriend();
+
+        #else
+        var asyncResult = Begin_Friend_RemoveFriend(null, null, playerId, clientIndex);
+        return End_Friend_RemoveFriend(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_Friend_RemoveFriend(AsyncCallback callback, object state, string playerId, int clientIndex)
+      #else
+      public void send_Friend_RemoveFriend(string playerId, int clientIndex)
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("Friend_RemoveFriend", TMessageType.Call, seqid_));
+        Friend_RemoveFriend_args args = new Friend_RemoveFriend_args();
+        args.PlayerId = playerId;
+        args.ClientIndex = clientIndex;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public string recv_Friend_RemoveFriend()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        Friend_RemoveFriend_result result = new Friend_RemoveFriend_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "Friend_RemoveFriend failed: unknown result");
       }
 
       
@@ -28546,6 +28604,13 @@ namespace Ruyi.SDK.BrainCloudApi
         processMap_["Authentication_AuthenticateUniversal"] = Authentication_AuthenticateUniversal_Process;
         processMap_["Authentication_AuthenticateExternal"] = Authentication_AuthenticateExternal_Process;
         processMap_["Authentication_ResetEmailPassword"] = Authentication_ResetEmailPassword_Process;
+        processMap_["Client_GetSessionId"] = Client_GetSessionId_Process;
+        processMap_["Client_IsAuthenticated"] = Client_IsAuthenticated_Process;
+        processMap_["Client_IsInitialized"] = Client_IsInitialized_Process;
+        processMap_["Client_Initialize_SSS"] = Client_Initialize_SSS_Process;
+        processMap_["Client_Initialize_SSSS"] = Client_Initialize_SSSS_Process;
+        processMap_["Client_InitializeIdentity"] = Client_InitializeIdentity_Process;
+        processMap_["Client_Update"] = Client_Update_Process;
         processMap_["Client_EnableLogging"] = Client_EnableLogging_Process;
         processMap_["Client_ResetCommunication"] = Client_ResetCommunication_Process;
         processMap_["Client_SetPacketTimeouts"] = Client_SetPacketTimeouts_Process;
@@ -28563,13 +28628,6 @@ namespace Ruyi.SDK.BrainCloudApi
         processMap_["Client_InsertEndOfMessageBundleMarker"] = Client_InsertEndOfMessageBundleMarker_Process;
         processMap_["Client_OverrideCountryCode"] = Client_OverrideCountryCode_Process;
         processMap_["Client_OverrideLanguageCode"] = Client_OverrideLanguageCode_Process;
-        processMap_["Client_GetSessionId"] = Client_GetSessionId_Process;
-        processMap_["Client_IsAuthenticated"] = Client_IsAuthenticated_Process;
-        processMap_["Client_IsInitialized"] = Client_IsInitialized_Process;
-        processMap_["Client_Initialize_SSS"] = Client_Initialize_SSS_Process;
-        processMap_["Client_Initialize_SSSS"] = Client_Initialize_SSSS_Process;
-        processMap_["Client_InitializeIdentity"] = Client_InitializeIdentity_Process;
-        processMap_["Client_Update"] = Client_Update_Process;
         processMap_["DataStream_CustomPageEvent"] = DataStream_CustomPageEvent_Process;
         processMap_["DataStream_CustomScreenEvent"] = DataStream_CustomScreenEvent_Process;
         processMap_["DataStream_CustomTrackEvent"] = DataStream_CustomTrackEvent_Process;
@@ -28605,10 +28663,6 @@ namespace Ruyi.SDK.BrainCloudApi
         processMap_["File_DeleteUserFile"] = File_DeleteUserFile_Process;
         processMap_["File_DeleteUserFiles"] = File_DeleteUserFiles_Process;
         processMap_["File_GetCDNUrl"] = File_GetCDNUrl_Process;
-        processMap_["Friend_FindUserByUniversalId"] = Friend_FindUserByUniversalId_Process;
-        processMap_["Friend_GetProfileInfoForCredential"] = Friend_GetProfileInfoForCredential_Process;
-        processMap_["Friend_GetProfileInfoForExternalAuthId"] = Friend_GetProfileInfoForExternalAuthId_Process;
-        processMap_["Friend_GetExternalIdForProfileId"] = Friend_GetExternalIdForProfileId_Process;
         processMap_["Friend_ReadFriendEntity"] = Friend_ReadFriendEntity_Process;
         processMap_["Friend_ReadFriendsEntities"] = Friend_ReadFriendsEntities_Process;
         processMap_["Friend_ReadFriendUserState"] = Friend_ReadFriendUserState_Process;
@@ -28619,6 +28673,12 @@ namespace Ruyi.SDK.BrainCloudApi
         processMap_["Friend_AddFriends"] = Friend_AddFriends_Process;
         processMap_["Friend_RemoveFriends"] = Friend_RemoveFriends_Process;
         processMap_["Friend_GetUsersOnlineStatus"] = Friend_GetUsersOnlineStatus_Process;
+        processMap_["Friend_SendFriendInvitation"] = Friend_SendFriendInvitation_Process;
+        processMap_["Friend_ListFriendInvitationsReceived"] = Friend_ListFriendInvitationsReceived_Process;
+        processMap_["Friend_ListFriendInvitationsSent"] = Friend_ListFriendInvitationsSent_Process;
+        processMap_["Friend_AcceptFriendInvitation"] = Friend_AcceptFriendInvitation_Process;
+        processMap_["Friend_RejectFriendInvitation"] = Friend_RejectFriendInvitation_Process;
+        processMap_["Friend_RemoveFriend"] = Friend_RemoveFriend_Process;
         processMap_["Gamification_ReadAllGamification"] = Gamification_ReadAllGamification_Process;
         processMap_["Gamification_ReadMilestones"] = Gamification_ReadMilestones_Process;
         processMap_["Gamification_ReadAchievements"] = Gamification_ReadAchievements_Process;
@@ -29419,6 +29479,202 @@ namespace Ruyi.SDK.BrainCloudApi
         oprot.Transport.Flush();
       }
 
+      public void Client_GetSessionId_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_GetSessionId_args args = new Client_GetSessionId_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_GetSessionId_result result = new Client_GetSessionId_result();
+        try
+        {
+          result.Success = iface_.Client_GetSessionId(args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_GetSessionId", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_GetSessionId", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Client_IsAuthenticated_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_IsAuthenticated_args args = new Client_IsAuthenticated_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_IsAuthenticated_result result = new Client_IsAuthenticated_result();
+        try
+        {
+          result.Success = iface_.Client_IsAuthenticated(args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_IsAuthenticated", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_IsAuthenticated", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Client_IsInitialized_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_IsInitialized_args args = new Client_IsInitialized_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_IsInitialized_result result = new Client_IsInitialized_result();
+        try
+        {
+          result.Success = iface_.Client_IsInitialized(args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_IsInitialized", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_IsInitialized", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Client_Initialize_SSS_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_Initialize_SSS_args args = new Client_Initialize_SSS_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_Initialize_SSS_result result = new Client_Initialize_SSS_result();
+        try
+        {
+          iface_.Client_Initialize_SSS(args.SecretKey, args.AppId, args.AppVersion, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSS", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSS", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Client_Initialize_SSSS_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_Initialize_SSSS_args args = new Client_Initialize_SSSS_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_Initialize_SSSS_result result = new Client_Initialize_SSSS_result();
+        try
+        {
+          iface_.Client_Initialize_SSSS(args.ServerURL, args.SecretKey, args.AppId, args.AppVersion, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSSS", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSSS", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Client_InitializeIdentity_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_InitializeIdentity_args args = new Client_InitializeIdentity_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_InitializeIdentity_result result = new Client_InitializeIdentity_result();
+        try
+        {
+          iface_.Client_InitializeIdentity(args.ProfileId, args.AnonymousId, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_InitializeIdentity", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_InitializeIdentity", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Client_Update_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Client_Update_args args = new Client_Update_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Client_Update_result result = new Client_Update_result();
+        try
+        {
+          iface_.Client_Update(args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Client_Update", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Client_Update", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
       public void Client_EnableLogging_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
         Client_EnableLogging_args args = new Client_EnableLogging_args();
@@ -29889,202 +30145,6 @@ namespace Ruyi.SDK.BrainCloudApi
           Console.Error.WriteLine(ex.ToString());
           TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
           oprot.WriteMessageBegin(new TMessage("Client_OverrideLanguageCode", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_GetSessionId_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_GetSessionId_args args = new Client_GetSessionId_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_GetSessionId_result result = new Client_GetSessionId_result();
-        try
-        {
-          result.Success = iface_.Client_GetSessionId(args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_GetSessionId", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_GetSessionId", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_IsAuthenticated_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_IsAuthenticated_args args = new Client_IsAuthenticated_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_IsAuthenticated_result result = new Client_IsAuthenticated_result();
-        try
-        {
-          result.Success = iface_.Client_IsAuthenticated(args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_IsAuthenticated", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_IsAuthenticated", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_IsInitialized_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_IsInitialized_args args = new Client_IsInitialized_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_IsInitialized_result result = new Client_IsInitialized_result();
-        try
-        {
-          result.Success = iface_.Client_IsInitialized(args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_IsInitialized", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_IsInitialized", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_Initialize_SSS_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_Initialize_SSS_args args = new Client_Initialize_SSS_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_Initialize_SSS_result result = new Client_Initialize_SSS_result();
-        try
-        {
-          iface_.Client_Initialize_SSS(args.SecretKey, args.AppId, args.AppVersion, args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSS", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSS", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_Initialize_SSSS_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_Initialize_SSSS_args args = new Client_Initialize_SSSS_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_Initialize_SSSS_result result = new Client_Initialize_SSSS_result();
-        try
-        {
-          iface_.Client_Initialize_SSSS(args.ServerURL, args.SecretKey, args.AppId, args.AppVersion, args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSSS", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_Initialize_SSSS", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_InitializeIdentity_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_InitializeIdentity_args args = new Client_InitializeIdentity_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_InitializeIdentity_result result = new Client_InitializeIdentity_result();
-        try
-        {
-          iface_.Client_InitializeIdentity(args.ProfileId, args.AnonymousId, args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_InitializeIdentity", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_InitializeIdentity", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Client_Update_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Client_Update_args args = new Client_Update_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Client_Update_result result = new Client_Update_result();
-        try
-        {
-          iface_.Client_Update(args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Client_Update", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Client_Update", TMessageType.Exception, seqid));
           x.Write(oprot);
         }
         oprot.WriteMessageEnd();
@@ -31071,118 +31131,6 @@ namespace Ruyi.SDK.BrainCloudApi
         oprot.Transport.Flush();
       }
 
-      public void Friend_FindUserByUniversalId_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Friend_FindUserByUniversalId_args args = new Friend_FindUserByUniversalId_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Friend_FindUserByUniversalId_result result = new Friend_FindUserByUniversalId_result();
-        try
-        {
-          result.Success = iface_.Friend_FindUserByUniversalId(args.SearchText, args.MaxResults, args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Friend_FindUserByUniversalId", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Friend_FindUserByUniversalId", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Friend_GetProfileInfoForCredential_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Friend_GetProfileInfoForCredential_args args = new Friend_GetProfileInfoForCredential_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Friend_GetProfileInfoForCredential_result result = new Friend_GetProfileInfoForCredential_result();
-        try
-        {
-          result.Success = iface_.Friend_GetProfileInfoForCredential(args.ExternalId, args.AuthenticationType, args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Friend_GetProfileInfoForCredential", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Friend_GetProfileInfoForCredential", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Friend_GetProfileInfoForExternalAuthId_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Friend_GetProfileInfoForExternalAuthId_args args = new Friend_GetProfileInfoForExternalAuthId_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Friend_GetProfileInfoForExternalAuthId_result result = new Friend_GetProfileInfoForExternalAuthId_result();
-        try
-        {
-          result.Success = iface_.Friend_GetProfileInfoForExternalAuthId(args.ExternalId, args.ExternalAuthType, args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Friend_GetProfileInfoForExternalAuthId", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Friend_GetProfileInfoForExternalAuthId", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
-      public void Friend_GetExternalIdForProfileId_Process(int seqid, TProtocol iprot, TProtocol oprot)
-      {
-        Friend_GetExternalIdForProfileId_args args = new Friend_GetExternalIdForProfileId_args();
-        args.Read(iprot);
-        iprot.ReadMessageEnd();
-        Friend_GetExternalIdForProfileId_result result = new Friend_GetExternalIdForProfileId_result();
-        try
-        {
-          result.Success = iface_.Friend_GetExternalIdForProfileId(args.ProfileId, args.AuthenticationType, args.ClientIndex);
-          oprot.WriteMessageBegin(new TMessage("Friend_GetExternalIdForProfileId", TMessageType.Reply, seqid)); 
-          result.Write(oprot);
-        }
-        catch (TTransportException)
-        {
-          throw;
-        }
-        catch (Exception ex)
-        {
-          Console.Error.WriteLine("Error occurred in processor:");
-          Console.Error.WriteLine(ex.ToString());
-          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
-          oprot.WriteMessageBegin(new TMessage("Friend_GetExternalIdForProfileId", TMessageType.Exception, seqid));
-          x.Write(oprot);
-        }
-        oprot.WriteMessageEnd();
-        oprot.Transport.Flush();
-      }
-
       public void Friend_ReadFriendEntity_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
         Friend_ReadFriendEntity_args args = new Friend_ReadFriendEntity_args();
@@ -31457,6 +31405,174 @@ namespace Ruyi.SDK.BrainCloudApi
           Console.Error.WriteLine(ex.ToString());
           TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
           oprot.WriteMessageBegin(new TMessage("Friend_GetUsersOnlineStatus", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Friend_SendFriendInvitation_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Friend_SendFriendInvitation_args args = new Friend_SendFriendInvitation_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Friend_SendFriendInvitation_result result = new Friend_SendFriendInvitation_result();
+        try
+        {
+          result.Success = iface_.Friend_SendFriendInvitation(args.ToPlayerId, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Friend_SendFriendInvitation", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Friend_SendFriendInvitation", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Friend_ListFriendInvitationsReceived_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Friend_ListFriendInvitationsReceived_args args = new Friend_ListFriendInvitationsReceived_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Friend_ListFriendInvitationsReceived_result result = new Friend_ListFriendInvitationsReceived_result();
+        try
+        {
+          result.Success = iface_.Friend_ListFriendInvitationsReceived(args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Friend_ListFriendInvitationsReceived", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Friend_ListFriendInvitationsReceived", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Friend_ListFriendInvitationsSent_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Friend_ListFriendInvitationsSent_args args = new Friend_ListFriendInvitationsSent_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Friend_ListFriendInvitationsSent_result result = new Friend_ListFriendInvitationsSent_result();
+        try
+        {
+          result.Success = iface_.Friend_ListFriendInvitationsSent(args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Friend_ListFriendInvitationsSent", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Friend_ListFriendInvitationsSent", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Friend_AcceptFriendInvitation_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Friend_AcceptFriendInvitation_args args = new Friend_AcceptFriendInvitation_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Friend_AcceptFriendInvitation_result result = new Friend_AcceptFriendInvitation_result();
+        try
+        {
+          result.Success = iface_.Friend_AcceptFriendInvitation(args.FromPlayerId, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Friend_AcceptFriendInvitation", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Friend_AcceptFriendInvitation", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Friend_RejectFriendInvitation_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Friend_RejectFriendInvitation_args args = new Friend_RejectFriendInvitation_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Friend_RejectFriendInvitation_result result = new Friend_RejectFriendInvitation_result();
+        try
+        {
+          result.Success = iface_.Friend_RejectFriendInvitation(args.FromPlayerId, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Friend_RejectFriendInvitation", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Friend_RejectFriendInvitation", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void Friend_RemoveFriend_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        Friend_RemoveFriend_args args = new Friend_RemoveFriend_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        Friend_RemoveFriend_result result = new Friend_RemoveFriend_result();
+        try
+        {
+          result.Success = iface_.Friend_RemoveFriend(args.PlayerId, args.ClientIndex);
+          oprot.WriteMessageBegin(new TMessage("Friend_RemoveFriend", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("Friend_RemoveFriend", TMessageType.Exception, seqid));
           x.Write(oprot);
         }
         oprot.WriteMessageEnd();
@@ -43851,6 +43967,1691 @@ namespace Ruyi.SDK.BrainCloudApi
     #if !SILVERLIGHT
     [Serializable]
     #endif
+    public partial class Client_GetSessionId_args : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool clientIndex;
+      }
+
+      public Client_GetSessionId_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_GetSessionId_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_GetSessionId_args(");
+        bool __first = true;
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_GetSessionId_result : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Client_GetSessionId_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_GetSessionId_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_GetSessionId_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_IsAuthenticated_args : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool clientIndex;
+      }
+
+      public Client_IsAuthenticated_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_IsAuthenticated_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_IsAuthenticated_args(");
+        bool __first = true;
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_IsAuthenticated_result : TBase
+    {
+      private bool _success;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Client_IsAuthenticated_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool) {
+                  Success = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_IsAuthenticated_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(Success);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_IsAuthenticated_result(");
+        bool __first = true;
+        if (__isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_IsInitialized_args : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool clientIndex;
+      }
+
+      public Client_IsInitialized_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_IsInitialized_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_IsInitialized_args(");
+        bool __first = true;
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_IsInitialized_result : TBase
+    {
+      private bool _success;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Client_IsInitialized_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool) {
+                  Success = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_IsInitialized_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(Success);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_IsInitialized_result(");
+        bool __first = true;
+        if (__isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_Initialize_SSS_args : TBase
+    {
+      private string _secretKey;
+      private string _appId;
+      private string _appVersion;
+      private int _clientIndex;
+
+      /// <summary>
+      /// The secret key for your app
+      /// </summary>
+      public string SecretKey
+      {
+        get
+        {
+          return _secretKey;
+        }
+        set
+        {
+          __isset.secretKey = true;
+          this._secretKey = value;
+        }
+      }
+
+      public string AppId
+      {
+        get
+        {
+          return _appId;
+        }
+        set
+        {
+          __isset.appId = true;
+          this._appId = value;
+        }
+      }
+
+      /// <summary>
+      /// The app version
+      /// </summary>
+      public string AppVersion
+      {
+        get
+        {
+          return _appVersion;
+        }
+        set
+        {
+          __isset.appVersion = true;
+          this._appVersion = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool secretKey;
+        public bool appId;
+        public bool appVersion;
+        public bool clientIndex;
+      }
+
+      public Client_Initialize_SSS_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  SecretKey = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String) {
+                  AppId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.String) {
+                  AppVersion = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_Initialize_SSS_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (SecretKey != null && __isset.secretKey) {
+            field.Name = "secretKey";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(SecretKey);
+            oprot.WriteFieldEnd();
+          }
+          if (AppId != null && __isset.appId) {
+            field.Name = "appId";
+            field.Type = TType.String;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(AppId);
+            oprot.WriteFieldEnd();
+          }
+          if (AppVersion != null && __isset.appVersion) {
+            field.Name = "appVersion";
+            field.Type = TType.String;
+            field.ID = 3;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(AppVersion);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 4;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_Initialize_SSS_args(");
+        bool __first = true;
+        if (SecretKey != null && __isset.secretKey) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("SecretKey: ");
+          __sb.Append(SecretKey);
+        }
+        if (AppId != null && __isset.appId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("AppId: ");
+          __sb.Append(AppId);
+        }
+        if (AppVersion != null && __isset.appVersion) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("AppVersion: ");
+          __sb.Append(AppVersion);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_Initialize_SSS_result : TBase
+    {
+
+      public Client_Initialize_SSS_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_Initialize_SSS_result");
+          oprot.WriteStructBegin(struc);
+
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_Initialize_SSS_result(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_Initialize_SSSS_args : TBase
+    {
+      private string _serverURL;
+      private string _secretKey;
+      private string _appId;
+      private string _appVersion;
+      private int _clientIndex;
+
+      /// <summary>
+      /// The URL to the brainCloud server
+      /// </summary>
+      public string ServerURL
+      {
+        get
+        {
+          return _serverURL;
+        }
+        set
+        {
+          __isset.serverURL = true;
+          this._serverURL = value;
+        }
+      }
+
+      /// <summary>
+      /// The secret key for your app
+      /// </summary>
+      public string SecretKey
+      {
+        get
+        {
+          return _secretKey;
+        }
+        set
+        {
+          __isset.secretKey = true;
+          this._secretKey = value;
+        }
+      }
+
+      /// <summary>
+      /// The app id
+      /// </summary>
+      public string AppId
+      {
+        get
+        {
+          return _appId;
+        }
+        set
+        {
+          __isset.appId = true;
+          this._appId = value;
+        }
+      }
+
+      /// <summary>
+      /// The app version
+      /// </summary>
+      public string AppVersion
+      {
+        get
+        {
+          return _appVersion;
+        }
+        set
+        {
+          __isset.appVersion = true;
+          this._appVersion = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool serverURL;
+        public bool secretKey;
+        public bool appId;
+        public bool appVersion;
+        public bool clientIndex;
+      }
+
+      public Client_Initialize_SSSS_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  ServerURL = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String) {
+                  SecretKey = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.String) {
+                  AppId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.String) {
+                  AppVersion = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 5:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_Initialize_SSSS_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (ServerURL != null && __isset.serverURL) {
+            field.Name = "serverURL";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(ServerURL);
+            oprot.WriteFieldEnd();
+          }
+          if (SecretKey != null && __isset.secretKey) {
+            field.Name = "secretKey";
+            field.Type = TType.String;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(SecretKey);
+            oprot.WriteFieldEnd();
+          }
+          if (AppId != null && __isset.appId) {
+            field.Name = "appId";
+            field.Type = TType.String;
+            field.ID = 3;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(AppId);
+            oprot.WriteFieldEnd();
+          }
+          if (AppVersion != null && __isset.appVersion) {
+            field.Name = "appVersion";
+            field.Type = TType.String;
+            field.ID = 4;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(AppVersion);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 5;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_Initialize_SSSS_args(");
+        bool __first = true;
+        if (ServerURL != null && __isset.serverURL) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ServerURL: ");
+          __sb.Append(ServerURL);
+        }
+        if (SecretKey != null && __isset.secretKey) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("SecretKey: ");
+          __sb.Append(SecretKey);
+        }
+        if (AppId != null && __isset.appId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("AppId: ");
+          __sb.Append(AppId);
+        }
+        if (AppVersion != null && __isset.appVersion) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("AppVersion: ");
+          __sb.Append(AppVersion);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_Initialize_SSSS_result : TBase
+    {
+
+      public Client_Initialize_SSSS_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_Initialize_SSSS_result");
+          oprot.WriteStructBegin(struc);
+
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_Initialize_SSSS_result(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_InitializeIdentity_args : TBase
+    {
+      private string _profileId;
+      private string _anonymousId;
+      private int _clientIndex;
+
+      /// <summary>
+      /// The profile id
+      /// </summary>
+      public string ProfileId
+      {
+        get
+        {
+          return _profileId;
+        }
+        set
+        {
+          __isset.profileId = true;
+          this._profileId = value;
+        }
+      }
+
+      /// <summary>
+      /// The anonymous id
+      /// </summary>
+      public string AnonymousId
+      {
+        get
+        {
+          return _anonymousId;
+        }
+        set
+        {
+          __isset.anonymousId = true;
+          this._anonymousId = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool profileId;
+        public bool anonymousId;
+        public bool clientIndex;
+      }
+
+      public Client_InitializeIdentity_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  ProfileId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String) {
+                  AnonymousId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_InitializeIdentity_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (ProfileId != null && __isset.profileId) {
+            field.Name = "profileId";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(ProfileId);
+            oprot.WriteFieldEnd();
+          }
+          if (AnonymousId != null && __isset.anonymousId) {
+            field.Name = "anonymousId";
+            field.Type = TType.String;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(AnonymousId);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 3;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_InitializeIdentity_args(");
+        bool __first = true;
+        if (ProfileId != null && __isset.profileId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ProfileId: ");
+          __sb.Append(ProfileId);
+        }
+        if (AnonymousId != null && __isset.anonymousId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("AnonymousId: ");
+          __sb.Append(AnonymousId);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_InitializeIdentity_result : TBase
+    {
+
+      public Client_InitializeIdentity_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_InitializeIdentity_result");
+          oprot.WriteStructBegin(struc);
+
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_InitializeIdentity_result(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_Update_args : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool clientIndex;
+      }
+
+      public Client_Update_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_Update_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_Update_args(");
+        bool __first = true;
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Client_Update_result : TBase
+    {
+
+      public Client_Update_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Client_Update_result");
+          oprot.WriteStructBegin(struc);
+
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Client_Update_result(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
     public partial class Client_EnableLogging_args : TBase
     {
       private bool _enable;
@@ -47314,1691 +49115,6 @@ namespace Ruyi.SDK.BrainCloudApi
 
       public override string ToString() {
         StringBuilder __sb = new StringBuilder("Client_OverrideLanguageCode_result(");
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_GetSessionId_args : TBase
-    {
-      private int _clientIndex;
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool clientIndex;
-      }
-
-      public Client_GetSessionId_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_GetSessionId_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_GetSessionId_args(");
-        bool __first = true;
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_GetSessionId_result : TBase
-    {
-      private string _success;
-
-      public string Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool success;
-      }
-
-      public Client_GetSessionId_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.String) {
-                  Success = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_GetSessionId_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-
-          if (this.__isset.success) {
-            if (Success != null) {
-              field.Name = "Success";
-              field.Type = TType.String;
-              field.ID = 0;
-              oprot.WriteFieldBegin(field);
-              oprot.WriteString(Success);
-              oprot.WriteFieldEnd();
-            }
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_GetSessionId_result(");
-        bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_IsAuthenticated_args : TBase
-    {
-      private int _clientIndex;
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool clientIndex;
-      }
-
-      public Client_IsAuthenticated_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_IsAuthenticated_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_IsAuthenticated_args(");
-        bool __first = true;
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_IsAuthenticated_result : TBase
-    {
-      private bool _success;
-
-      public bool Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool success;
-      }
-
-      public Client_IsAuthenticated_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.Bool) {
-                  Success = iprot.ReadBool();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_IsAuthenticated_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-
-          if (this.__isset.success) {
-            field.Name = "Success";
-            field.Type = TType.Bool;
-            field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteBool(Success);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_IsAuthenticated_result(");
-        bool __first = true;
-        if (__isset.success) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_IsInitialized_args : TBase
-    {
-      private int _clientIndex;
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool clientIndex;
-      }
-
-      public Client_IsInitialized_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_IsInitialized_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_IsInitialized_args(");
-        bool __first = true;
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_IsInitialized_result : TBase
-    {
-      private bool _success;
-
-      public bool Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool success;
-      }
-
-      public Client_IsInitialized_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.Bool) {
-                  Success = iprot.ReadBool();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_IsInitialized_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-
-          if (this.__isset.success) {
-            field.Name = "Success";
-            field.Type = TType.Bool;
-            field.ID = 0;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteBool(Success);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_IsInitialized_result(");
-        bool __first = true;
-        if (__isset.success) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_Initialize_SSS_args : TBase
-    {
-      private string _secretKey;
-      private string _appId;
-      private string _appVersion;
-      private int _clientIndex;
-
-      /// <summary>
-      /// The secret key for your app
-      /// </summary>
-      public string SecretKey
-      {
-        get
-        {
-          return _secretKey;
-        }
-        set
-        {
-          __isset.secretKey = true;
-          this._secretKey = value;
-        }
-      }
-
-      public string AppId
-      {
-        get
-        {
-          return _appId;
-        }
-        set
-        {
-          __isset.appId = true;
-          this._appId = value;
-        }
-      }
-
-      /// <summary>
-      /// The app version
-      /// </summary>
-      public string AppVersion
-      {
-        get
-        {
-          return _appVersion;
-        }
-        set
-        {
-          __isset.appVersion = true;
-          this._appVersion = value;
-        }
-      }
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool secretKey;
-        public bool appId;
-        public bool appVersion;
-        public bool clientIndex;
-      }
-
-      public Client_Initialize_SSS_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.String) {
-                  SecretKey = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String) {
-                  AppId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 3:
-                if (field.Type == TType.String) {
-                  AppVersion = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 4:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_Initialize_SSS_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (SecretKey != null && __isset.secretKey) {
-            field.Name = "secretKey";
-            field.Type = TType.String;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(SecretKey);
-            oprot.WriteFieldEnd();
-          }
-          if (AppId != null && __isset.appId) {
-            field.Name = "appId";
-            field.Type = TType.String;
-            field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(AppId);
-            oprot.WriteFieldEnd();
-          }
-          if (AppVersion != null && __isset.appVersion) {
-            field.Name = "appVersion";
-            field.Type = TType.String;
-            field.ID = 3;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(AppVersion);
-            oprot.WriteFieldEnd();
-          }
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 4;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_Initialize_SSS_args(");
-        bool __first = true;
-        if (SecretKey != null && __isset.secretKey) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("SecretKey: ");
-          __sb.Append(SecretKey);
-        }
-        if (AppId != null && __isset.appId) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("AppId: ");
-          __sb.Append(AppId);
-        }
-        if (AppVersion != null && __isset.appVersion) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("AppVersion: ");
-          __sb.Append(AppVersion);
-        }
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_Initialize_SSS_result : TBase
-    {
-
-      public Client_Initialize_SSS_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_Initialize_SSS_result");
-          oprot.WriteStructBegin(struc);
-
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_Initialize_SSS_result(");
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_Initialize_SSSS_args : TBase
-    {
-      private string _serverURL;
-      private string _secretKey;
-      private string _appId;
-      private string _appVersion;
-      private int _clientIndex;
-
-      /// <summary>
-      /// The URL to the brainCloud server
-      /// </summary>
-      public string ServerURL
-      {
-        get
-        {
-          return _serverURL;
-        }
-        set
-        {
-          __isset.serverURL = true;
-          this._serverURL = value;
-        }
-      }
-
-      /// <summary>
-      /// The secret key for your app
-      /// </summary>
-      public string SecretKey
-      {
-        get
-        {
-          return _secretKey;
-        }
-        set
-        {
-          __isset.secretKey = true;
-          this._secretKey = value;
-        }
-      }
-
-      /// <summary>
-      /// The app id
-      /// </summary>
-      public string AppId
-      {
-        get
-        {
-          return _appId;
-        }
-        set
-        {
-          __isset.appId = true;
-          this._appId = value;
-        }
-      }
-
-      /// <summary>
-      /// The app version
-      /// </summary>
-      public string AppVersion
-      {
-        get
-        {
-          return _appVersion;
-        }
-        set
-        {
-          __isset.appVersion = true;
-          this._appVersion = value;
-        }
-      }
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool serverURL;
-        public bool secretKey;
-        public bool appId;
-        public bool appVersion;
-        public bool clientIndex;
-      }
-
-      public Client_Initialize_SSSS_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.String) {
-                  ServerURL = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String) {
-                  SecretKey = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 3:
-                if (field.Type == TType.String) {
-                  AppId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 4:
-                if (field.Type == TType.String) {
-                  AppVersion = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 5:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_Initialize_SSSS_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (ServerURL != null && __isset.serverURL) {
-            field.Name = "serverURL";
-            field.Type = TType.String;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(ServerURL);
-            oprot.WriteFieldEnd();
-          }
-          if (SecretKey != null && __isset.secretKey) {
-            field.Name = "secretKey";
-            field.Type = TType.String;
-            field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(SecretKey);
-            oprot.WriteFieldEnd();
-          }
-          if (AppId != null && __isset.appId) {
-            field.Name = "appId";
-            field.Type = TType.String;
-            field.ID = 3;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(AppId);
-            oprot.WriteFieldEnd();
-          }
-          if (AppVersion != null && __isset.appVersion) {
-            field.Name = "appVersion";
-            field.Type = TType.String;
-            field.ID = 4;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(AppVersion);
-            oprot.WriteFieldEnd();
-          }
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 5;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_Initialize_SSSS_args(");
-        bool __first = true;
-        if (ServerURL != null && __isset.serverURL) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ServerURL: ");
-          __sb.Append(ServerURL);
-        }
-        if (SecretKey != null && __isset.secretKey) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("SecretKey: ");
-          __sb.Append(SecretKey);
-        }
-        if (AppId != null && __isset.appId) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("AppId: ");
-          __sb.Append(AppId);
-        }
-        if (AppVersion != null && __isset.appVersion) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("AppVersion: ");
-          __sb.Append(AppVersion);
-        }
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_Initialize_SSSS_result : TBase
-    {
-
-      public Client_Initialize_SSSS_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_Initialize_SSSS_result");
-          oprot.WriteStructBegin(struc);
-
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_Initialize_SSSS_result(");
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_InitializeIdentity_args : TBase
-    {
-      private string _profileId;
-      private string _anonymousId;
-      private int _clientIndex;
-
-      /// <summary>
-      /// The profile id
-      /// </summary>
-      public string ProfileId
-      {
-        get
-        {
-          return _profileId;
-        }
-        set
-        {
-          __isset.profileId = true;
-          this._profileId = value;
-        }
-      }
-
-      /// <summary>
-      /// The anonymous id
-      /// </summary>
-      public string AnonymousId
-      {
-        get
-        {
-          return _anonymousId;
-        }
-        set
-        {
-          __isset.anonymousId = true;
-          this._anonymousId = value;
-        }
-      }
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool profileId;
-        public bool anonymousId;
-        public bool clientIndex;
-      }
-
-      public Client_InitializeIdentity_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.String) {
-                  ProfileId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String) {
-                  AnonymousId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 3:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_InitializeIdentity_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (ProfileId != null && __isset.profileId) {
-            field.Name = "profileId";
-            field.Type = TType.String;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(ProfileId);
-            oprot.WriteFieldEnd();
-          }
-          if (AnonymousId != null && __isset.anonymousId) {
-            field.Name = "anonymousId";
-            field.Type = TType.String;
-            field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(AnonymousId);
-            oprot.WriteFieldEnd();
-          }
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 3;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_InitializeIdentity_args(");
-        bool __first = true;
-        if (ProfileId != null && __isset.profileId) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ProfileId: ");
-          __sb.Append(ProfileId);
-        }
-        if (AnonymousId != null && __isset.anonymousId) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("AnonymousId: ");
-          __sb.Append(AnonymousId);
-        }
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_InitializeIdentity_result : TBase
-    {
-
-      public Client_InitializeIdentity_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_InitializeIdentity_result");
-          oprot.WriteStructBegin(struc);
-
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_InitializeIdentity_result(");
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_Update_args : TBase
-    {
-      private int _clientIndex;
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool clientIndex;
-      }
-
-      public Client_Update_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_Update_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_Update_args(");
-        bool __first = true;
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Client_Update_result : TBase
-    {
-
-      public Client_Update_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Client_Update_result");
-          oprot.WriteStructBegin(struc);
-
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Client_Update_result(");
         __sb.Append(")");
         return __sb.ToString();
       }
@@ -59440,1194 +59556,6 @@ namespace Ruyi.SDK.BrainCloudApi
     #if !SILVERLIGHT
     [Serializable]
     #endif
-    public partial class Friend_FindUserByUniversalId_args : TBase
-    {
-      private string _searchText;
-      private int _maxResults;
-      private int _clientIndex;
-
-      /// <summary>
-      /// Universal ID text on which to search.
-      /// </summary>
-      public string SearchText
-      {
-        get
-        {
-          return _searchText;
-        }
-        set
-        {
-          __isset.searchText = true;
-          this._searchText = value;
-        }
-      }
-
-      /// <summary>
-      /// Maximum number of results to return.
-      /// </summary>
-      public int MaxResults
-      {
-        get
-        {
-          return _maxResults;
-        }
-        set
-        {
-          __isset.maxResults = true;
-          this._maxResults = value;
-        }
-      }
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool searchText;
-        public bool maxResults;
-        public bool clientIndex;
-      }
-
-      public Friend_FindUserByUniversalId_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.String) {
-                  SearchText = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.I32) {
-                  MaxResults = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 3:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Friend_FindUserByUniversalId_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (SearchText != null && __isset.searchText) {
-            field.Name = "searchText";
-            field.Type = TType.String;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(SearchText);
-            oprot.WriteFieldEnd();
-          }
-          if (__isset.maxResults) {
-            field.Name = "maxResults";
-            field.Type = TType.I32;
-            field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(MaxResults);
-            oprot.WriteFieldEnd();
-          }
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 3;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Friend_FindUserByUniversalId_args(");
-        bool __first = true;
-        if (SearchText != null && __isset.searchText) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("SearchText: ");
-          __sb.Append(SearchText);
-        }
-        if (__isset.maxResults) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("MaxResults: ");
-          __sb.Append(MaxResults);
-        }
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Friend_FindUserByUniversalId_result : TBase
-    {
-      private string _success;
-
-      public string Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool success;
-      }
-
-      public Friend_FindUserByUniversalId_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.String) {
-                  Success = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Friend_FindUserByUniversalId_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-
-          if (this.__isset.success) {
-            if (Success != null) {
-              field.Name = "Success";
-              field.Type = TType.String;
-              field.ID = 0;
-              oprot.WriteFieldBegin(field);
-              oprot.WriteString(Success);
-              oprot.WriteFieldEnd();
-            }
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Friend_FindUserByUniversalId_result(");
-        bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Friend_GetProfileInfoForCredential_args : TBase
-    {
-      private string _externalId;
-      private string _authenticationType;
-      private int _clientIndex;
-
-      /// <summary>
-      /// External id of the user to find
-      /// </summary>
-      public string ExternalId
-      {
-        get
-        {
-          return _externalId;
-        }
-        set
-        {
-          __isset.externalId = true;
-          this._externalId = value;
-        }
-      }
-
-      /// <summary>
-      /// The authentication type used for the user's ID
-      /// </summary>
-      public string AuthenticationType
-      {
-        get
-        {
-          return _authenticationType;
-        }
-        set
-        {
-          __isset.authenticationType = true;
-          this._authenticationType = value;
-        }
-      }
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool externalId;
-        public bool authenticationType;
-        public bool clientIndex;
-      }
-
-      public Friend_GetProfileInfoForCredential_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.String) {
-                  ExternalId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String) {
-                  AuthenticationType = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 3:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Friend_GetProfileInfoForCredential_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (ExternalId != null && __isset.externalId) {
-            field.Name = "externalId";
-            field.Type = TType.String;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(ExternalId);
-            oprot.WriteFieldEnd();
-          }
-          if (AuthenticationType != null && __isset.authenticationType) {
-            field.Name = "authenticationType";
-            field.Type = TType.String;
-            field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(AuthenticationType);
-            oprot.WriteFieldEnd();
-          }
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 3;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Friend_GetProfileInfoForCredential_args(");
-        bool __first = true;
-        if (ExternalId != null && __isset.externalId) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ExternalId: ");
-          __sb.Append(ExternalId);
-        }
-        if (AuthenticationType != null && __isset.authenticationType) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("AuthenticationType: ");
-          __sb.Append(AuthenticationType);
-        }
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Friend_GetProfileInfoForCredential_result : TBase
-    {
-      private string _success;
-
-      public string Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool success;
-      }
-
-      public Friend_GetProfileInfoForCredential_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.String) {
-                  Success = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Friend_GetProfileInfoForCredential_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-
-          if (this.__isset.success) {
-            if (Success != null) {
-              field.Name = "Success";
-              field.Type = TType.String;
-              field.ID = 0;
-              oprot.WriteFieldBegin(field);
-              oprot.WriteString(Success);
-              oprot.WriteFieldEnd();
-            }
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Friend_GetProfileInfoForCredential_result(");
-        bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Friend_GetProfileInfoForExternalAuthId_args : TBase
-    {
-      private string _externalId;
-      private string _externalAuthType;
-      private int _clientIndex;
-
-      /// <summary>
-      /// External id of the friend to find
-      /// </summary>
-      public string ExternalId
-      {
-        get
-        {
-          return _externalId;
-        }
-        set
-        {
-          __isset.externalId = true;
-          this._externalId = value;
-        }
-      }
-
-      /// <summary>
-      /// The external authentication type used for this friend's external id
-      /// </summary>
-      public string ExternalAuthType
-      {
-        get
-        {
-          return _externalAuthType;
-        }
-        set
-        {
-          __isset.externalAuthType = true;
-          this._externalAuthType = value;
-        }
-      }
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool externalId;
-        public bool externalAuthType;
-        public bool clientIndex;
-      }
-
-      public Friend_GetProfileInfoForExternalAuthId_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.String) {
-                  ExternalId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String) {
-                  ExternalAuthType = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 3:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Friend_GetProfileInfoForExternalAuthId_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (ExternalId != null && __isset.externalId) {
-            field.Name = "externalId";
-            field.Type = TType.String;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(ExternalId);
-            oprot.WriteFieldEnd();
-          }
-          if (ExternalAuthType != null && __isset.externalAuthType) {
-            field.Name = "externalAuthType";
-            field.Type = TType.String;
-            field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(ExternalAuthType);
-            oprot.WriteFieldEnd();
-          }
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 3;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Friend_GetProfileInfoForExternalAuthId_args(");
-        bool __first = true;
-        if (ExternalId != null && __isset.externalId) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ExternalId: ");
-          __sb.Append(ExternalId);
-        }
-        if (ExternalAuthType != null && __isset.externalAuthType) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ExternalAuthType: ");
-          __sb.Append(ExternalAuthType);
-        }
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Friend_GetProfileInfoForExternalAuthId_result : TBase
-    {
-      private string _success;
-
-      public string Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool success;
-      }
-
-      public Friend_GetProfileInfoForExternalAuthId_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.String) {
-                  Success = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Friend_GetProfileInfoForExternalAuthId_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-
-          if (this.__isset.success) {
-            if (Success != null) {
-              field.Name = "Success";
-              field.Type = TType.String;
-              field.ID = 0;
-              oprot.WriteFieldBegin(field);
-              oprot.WriteString(Success);
-              oprot.WriteFieldEnd();
-            }
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Friend_GetProfileInfoForExternalAuthId_result(");
-        bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Friend_GetExternalIdForProfileId_args : TBase
-    {
-      private string _profileId;
-      private string _authenticationType;
-      private int _clientIndex;
-
-      /// <summary>
-      /// Profile (user) ID.
-      /// </summary>
-      public string ProfileId
-      {
-        get
-        {
-          return _profileId;
-        }
-        set
-        {
-          __isset.profileId = true;
-          this._profileId = value;
-        }
-      }
-
-      /// <summary>
-      /// Associated authentication type.
-      /// </summary>
-      public string AuthenticationType
-      {
-        get
-        {
-          return _authenticationType;
-        }
-        set
-        {
-          __isset.authenticationType = true;
-          this._authenticationType = value;
-        }
-      }
-
-      public int ClientIndex
-      {
-        get
-        {
-          return _clientIndex;
-        }
-        set
-        {
-          __isset.clientIndex = true;
-          this._clientIndex = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool profileId;
-        public bool authenticationType;
-        public bool clientIndex;
-      }
-
-      public Friend_GetExternalIdForProfileId_args() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 1:
-                if (field.Type == TType.String) {
-                  ProfileId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 2:
-                if (field.Type == TType.String) {
-                  AuthenticationType = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 3:
-                if (field.Type == TType.I32) {
-                  ClientIndex = iprot.ReadI32();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Friend_GetExternalIdForProfileId_args");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-          if (ProfileId != null && __isset.profileId) {
-            field.Name = "profileId";
-            field.Type = TType.String;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(ProfileId);
-            oprot.WriteFieldEnd();
-          }
-          if (AuthenticationType != null && __isset.authenticationType) {
-            field.Name = "authenticationType";
-            field.Type = TType.String;
-            field.ID = 2;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(AuthenticationType);
-            oprot.WriteFieldEnd();
-          }
-          if (__isset.clientIndex) {
-            field.Name = "clientIndex";
-            field.Type = TType.I32;
-            field.ID = 3;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteI32(ClientIndex);
-            oprot.WriteFieldEnd();
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Friend_GetExternalIdForProfileId_args(");
-        bool __first = true;
-        if (ProfileId != null && __isset.profileId) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ProfileId: ");
-          __sb.Append(ProfileId);
-        }
-        if (AuthenticationType != null && __isset.authenticationType) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("AuthenticationType: ");
-          __sb.Append(AuthenticationType);
-        }
-        if (__isset.clientIndex) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("ClientIndex: ");
-          __sb.Append(ClientIndex);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
-    public partial class Friend_GetExternalIdForProfileId_result : TBase
-    {
-      private string _success;
-
-      public string Success
-      {
-        get
-        {
-          return _success;
-        }
-        set
-        {
-          __isset.success = true;
-          this._success = value;
-        }
-      }
-
-
-      public Isset __isset;
-      #if !SILVERLIGHT
-      [Serializable]
-      #endif
-      public struct Isset {
-        public bool success;
-      }
-
-      public Friend_GetExternalIdForProfileId_result() {
-      }
-
-      public void Read (TProtocol iprot)
-      {
-        iprot.IncrementRecursionDepth();
-        try
-        {
-          TField field;
-          iprot.ReadStructBegin();
-          while (true)
-          {
-            field = iprot.ReadFieldBegin();
-            if (field.Type == TType.Stop) { 
-              break;
-            }
-            switch (field.ID)
-            {
-              case 0:
-                if (field.Type == TType.String) {
-                  Success = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              default: 
-                TProtocolUtil.Skip(iprot, field.Type);
-                break;
-            }
-            iprot.ReadFieldEnd();
-          }
-          iprot.ReadStructEnd();
-        }
-        finally
-        {
-          iprot.DecrementRecursionDepth();
-        }
-      }
-
-      public void Write(TProtocol oprot) {
-        oprot.IncrementRecursionDepth();
-        try
-        {
-          TStruct struc = new TStruct("Friend_GetExternalIdForProfileId_result");
-          oprot.WriteStructBegin(struc);
-          TField field = new TField();
-
-          if (this.__isset.success) {
-            if (Success != null) {
-              field.Name = "Success";
-              field.Type = TType.String;
-              field.ID = 0;
-              oprot.WriteFieldBegin(field);
-              oprot.WriteString(Success);
-              oprot.WriteFieldEnd();
-            }
-          }
-          oprot.WriteFieldStop();
-          oprot.WriteStructEnd();
-        }
-        finally
-        {
-          oprot.DecrementRecursionDepth();
-        }
-      }
-
-      public override string ToString() {
-        StringBuilder __sb = new StringBuilder("Friend_GetExternalIdForProfileId_result(");
-        bool __first = true;
-        if (Success != null && __isset.success) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("Success: ");
-          __sb.Append(Success);
-        }
-        __sb.Append(")");
-        return __sb.ToString();
-      }
-
-    }
-
-
-    #if !SILVERLIGHT
-    [Serializable]
-    #endif
     public partial class Friend_ReadFriendEntity_args : TBase
     {
       private string _entityId;
@@ -63400,6 +62328,1464 @@ namespace Ruyi.SDK.BrainCloudApi
 
       public override string ToString() {
         StringBuilder __sb = new StringBuilder("Friend_GetUsersOnlineStatus_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Friend_SendFriendInvitation_args : TBase
+    {
+      private string _toPlayerId;
+      private int _clientIndex;
+
+      public string ToPlayerId
+      {
+        get
+        {
+          return _toPlayerId;
+        }
+        set
+        {
+          __isset.toPlayerId = true;
+          this._toPlayerId = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool toPlayerId;
+        public bool clientIndex;
+      }
+
+      public Friend_SendFriendInvitation_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  ToPlayerId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Friend_SendFriendInvitation_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (ToPlayerId != null && __isset.toPlayerId) {
+            field.Name = "toPlayerId";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(ToPlayerId);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Friend_SendFriendInvitation_args(");
+        bool __first = true;
+        if (ToPlayerId != null && __isset.toPlayerId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ToPlayerId: ");
+          __sb.Append(ToPlayerId);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Friend_SendFriendInvitation_result : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Friend_SendFriendInvitation_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Friend_SendFriendInvitation_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Friend_SendFriendInvitation_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Friend_ListFriendInvitationsReceived_args : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool clientIndex;
+      }
+
+      public Friend_ListFriendInvitationsReceived_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Friend_ListFriendInvitationsReceived_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Friend_ListFriendInvitationsReceived_args(");
+        bool __first = true;
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Friend_ListFriendInvitationsReceived_result : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Friend_ListFriendInvitationsReceived_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Friend_ListFriendInvitationsReceived_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Friend_ListFriendInvitationsReceived_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Friend_ListFriendInvitationsSent_args : TBase
+    {
+      private int _clientIndex;
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool clientIndex;
+      }
+
+      public Friend_ListFriendInvitationsSent_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Friend_ListFriendInvitationsSent_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Friend_ListFriendInvitationsSent_args(");
+        bool __first = true;
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Friend_ListFriendInvitationsSent_result : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Friend_ListFriendInvitationsSent_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Friend_ListFriendInvitationsSent_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Friend_ListFriendInvitationsSent_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Friend_AcceptFriendInvitation_args : TBase
+    {
+      private string _fromPlayerId;
+      private int _clientIndex;
+
+      public string FromPlayerId
+      {
+        get
+        {
+          return _fromPlayerId;
+        }
+        set
+        {
+          __isset.fromPlayerId = true;
+          this._fromPlayerId = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool fromPlayerId;
+        public bool clientIndex;
+      }
+
+      public Friend_AcceptFriendInvitation_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  FromPlayerId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Friend_AcceptFriendInvitation_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (FromPlayerId != null && __isset.fromPlayerId) {
+            field.Name = "fromPlayerId";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(FromPlayerId);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Friend_AcceptFriendInvitation_args(");
+        bool __first = true;
+        if (FromPlayerId != null && __isset.fromPlayerId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("FromPlayerId: ");
+          __sb.Append(FromPlayerId);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Friend_AcceptFriendInvitation_result : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Friend_AcceptFriendInvitation_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Friend_AcceptFriendInvitation_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Friend_AcceptFriendInvitation_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Friend_RejectFriendInvitation_args : TBase
+    {
+      private string _fromPlayerId;
+      private int _clientIndex;
+
+      public string FromPlayerId
+      {
+        get
+        {
+          return _fromPlayerId;
+        }
+        set
+        {
+          __isset.fromPlayerId = true;
+          this._fromPlayerId = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool fromPlayerId;
+        public bool clientIndex;
+      }
+
+      public Friend_RejectFriendInvitation_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  FromPlayerId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Friend_RejectFriendInvitation_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (FromPlayerId != null && __isset.fromPlayerId) {
+            field.Name = "fromPlayerId";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(FromPlayerId);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Friend_RejectFriendInvitation_args(");
+        bool __first = true;
+        if (FromPlayerId != null && __isset.fromPlayerId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("FromPlayerId: ");
+          __sb.Append(FromPlayerId);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Friend_RejectFriendInvitation_result : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Friend_RejectFriendInvitation_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Friend_RejectFriendInvitation_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Friend_RejectFriendInvitation_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Friend_RemoveFriend_args : TBase
+    {
+      private string _playerId;
+      private int _clientIndex;
+
+      public string PlayerId
+      {
+        get
+        {
+          return _playerId;
+        }
+        set
+        {
+          __isset.playerId = true;
+          this._playerId = value;
+        }
+      }
+
+      public int ClientIndex
+      {
+        get
+        {
+          return _clientIndex;
+        }
+        set
+        {
+          __isset.clientIndex = true;
+          this._clientIndex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool playerId;
+        public bool clientIndex;
+      }
+
+      public Friend_RemoveFriend_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  PlayerId = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.I32) {
+                  ClientIndex = iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Friend_RemoveFriend_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (PlayerId != null && __isset.playerId) {
+            field.Name = "playerId";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(PlayerId);
+            oprot.WriteFieldEnd();
+          }
+          if (__isset.clientIndex) {
+            field.Name = "clientIndex";
+            field.Type = TType.I32;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteI32(ClientIndex);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Friend_RemoveFriend_args(");
+        bool __first = true;
+        if (PlayerId != null && __isset.playerId) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("PlayerId: ");
+          __sb.Append(PlayerId);
+        }
+        if (__isset.clientIndex) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ClientIndex: ");
+          __sb.Append(ClientIndex);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class Friend_RemoveFriend_result : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public Friend_RemoveFriend_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("Friend_RemoveFriend_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("Friend_RemoveFriend_result(");
         bool __first = true;
         if (Success != null && __isset.success) {
           if(!__first) { __sb.Append(", "); }

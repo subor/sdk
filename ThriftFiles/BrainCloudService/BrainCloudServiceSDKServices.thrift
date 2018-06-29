@@ -1,10 +1,7 @@
 include "BrainCloudServiceSDKDataTypes.thrift"
 
-namespace cpp Ruyi.SDK.BrainCloudApi
 namespace csharp Ruyi.SDK.BrainCloudApi
-namespace java Ruyi.SDK.BrainCloudApi
-namespace netcore Ruyi.SDK.BrainCloudApi
-namespace rs Ruyi.SDK.BrainCloudApi
+namespace cpp Ruyi.SDK.BrainCloudApi
 
 
 service BrainCloudService {
@@ -252,6 +249,58 @@ service BrainCloudService {
 		2: i32 clientIndex
 	),
 
+	/** Returns the sessionId or empty string if no session present. */
+	string Client_GetSessionId(1: i32 clientIndex),
+
+	/** Returns true if the user is currently authenticated.
+            If a session time out or session invalidation is returned from executing a
+            sever API call, this flag will reset back to false. */
+	bool Client_IsAuthenticated(1: i32 clientIndex),
+
+	/** Returns true if brainCloud has been initialized. */
+	bool Client_IsInitialized(1: i32 clientIndex),
+
+	/** Method initializes the BrainCloudClient. */
+	void Client_Initialize_SSS(
+		/** The secret key for your app */
+		1: string secretKey, 
+		2: string appId, 
+		
+		/** The app version */
+		3: string appVersion, 
+		4: i32 clientIndex
+	),
+
+	/** Method initializes the BrainCloudClient. */
+	void Client_Initialize_SSSS(
+		/** The URL to the brainCloud server */
+		1: string serverURL, 
+		
+		/** The secret key for your app */
+		2: string secretKey, 
+		
+		/** The app id */
+		3: string appId, 
+		
+		/** The app version */
+		4: string appVersion, 
+		5: i32 clientIndex
+	),
+
+	/** Initialize the identity aspects of brainCloud. */
+	void Client_InitializeIdentity(
+		/** The profile id */
+		1: string profileId, 
+		
+		/** The anonymous id */
+		2: string anonymousId, 
+		3: i32 clientIndex
+	),
+
+	/** Update method needs to be called regularly in order
+            to process incoming and outgoing messages. */
+	void Client_Update(1: i32 clientIndex),
+
 	/** Enable logging of brainCloud transactions (comms etc) */
 	void Client_EnableLogging(
 		/** True if logging is to be enabled */
@@ -395,58 +444,6 @@ service BrainCloudService {
 		1: string languageCode, 
 		2: i32 clientIndex
 	),
-
-	/** Returns the sessionId or empty string if no session present. */
-	string Client_GetSessionId(1: i32 clientIndex),
-
-	/** Returns true if the user is currently authenticated.
-            If a session time out or session invalidation is returned from executing a
-            sever API call, this flag will reset back to false. */
-	bool Client_IsAuthenticated(1: i32 clientIndex),
-
-	/** Returns true if brainCloud has been initialized. */
-	bool Client_IsInitialized(1: i32 clientIndex),
-
-	/** Method initializes the BrainCloudClient. */
-	void Client_Initialize_SSS(
-		/** The secret key for your app */
-		1: string secretKey, 
-		2: string appId, 
-		
-		/** The app version */
-		3: string appVersion, 
-		4: i32 clientIndex
-	),
-
-	/** Method initializes the BrainCloudClient. */
-	void Client_Initialize_SSSS(
-		/** The URL to the brainCloud server */
-		1: string serverURL, 
-		
-		/** The secret key for your app */
-		2: string secretKey, 
-		
-		/** The app id */
-		3: string appId, 
-		
-		/** The app version */
-		4: string appVersion, 
-		5: i32 clientIndex
-	),
-
-	/** Initialize the identity aspects of brainCloud. */
-	void Client_InitializeIdentity(
-		/** The profile id */
-		1: string profileId, 
-		
-		/** The anonymous id */
-		2: string anonymousId, 
-		3: i32 clientIndex
-	),
-
-	/** Update method needs to be called regularly in order
-            to process incoming and outgoing messages. */
-	void Client_Update(1: i32 clientIndex),
 
 	/** Creates custom data stream page event */
 	string DataStream_CustomPageEvent(
@@ -836,46 +833,6 @@ service BrainCloudService {
 		3: i32 clientIndex
 	),
 
-	/** Retrieves profile information for the partial matches of the specified text. */
-	string Friend_FindUserByUniversalId(
-		/** Universal ID text on which to search. */
-		1: string searchText, 
-		
-		/** Maximum number of results to return. */
-		2: i32 maxResults, 
-		3: i32 clientIndex
-	),
-
-	/** Retrieves profile information of the specified user. */
-	string Friend_GetProfileInfoForCredential(
-		/** External id of the user to find */
-		1: string externalId, 
-		
-		/** The authentication type used for the user's ID */
-		2: string authenticationType, 
-		3: i32 clientIndex
-	),
-
-	/** Retrieves profile information for the specified external auth user. */
-	string Friend_GetProfileInfoForExternalAuthId(
-		/** External id of the friend to find */
-		1: string externalId, 
-		
-		/** The external authentication type used for this friend's external id */
-		2: string externalAuthType, 
-		3: i32 clientIndex
-	),
-
-	/** Retrieves the external ID for the specified user profile ID on the specified social platform. */
-	string Friend_GetExternalIdForProfileId(
-		/** Profile (user) ID. */
-		1: string profileId, 
-		
-		/** Associated authentication type. */
-		2: string authenticationType, 
-		3: i32 clientIndex
-	),
-
 	/** Returns a particular entity of a particular friend. */
 	string Friend_ReadFriendEntity(
 		/** Id of entity to retrieve. */
@@ -959,6 +916,18 @@ service BrainCloudService {
 		1: list<string> profileIds, 
 		2: i32 clientIndex
 	),
+
+	string Friend_SendFriendInvitation(1: string toPlayerId, 2: i32 clientIndex),
+
+	string Friend_ListFriendInvitationsReceived(1: i32 clientIndex),
+
+	string Friend_ListFriendInvitationsSent(1: i32 clientIndex),
+
+	string Friend_AcceptFriendInvitation(1: string fromPlayerId, 2: i32 clientIndex),
+
+	string Friend_RejectFriendInvitation(1: string fromPlayerId, 2: i32 clientIndex),
+
+	string Friend_RemoveFriend(1: string playerId, 2: i32 clientIndex),
 
 	/** Method retrieves all gamification data for the player. */
 	string Gamification_ReadAllGamification(1: bool includeMetaData, 2: i32 clientIndex),
