@@ -46,6 +46,14 @@ m_RuyiNet.Subscribe.AddMessageHandler<Ruyi.SDK.InputManager.RuyiGamePadInput>(Ru
                 (sbyte)viberatePower, (sbyte)viberateTime);
 C++版本API同样
 
+## 手柄震动建议
+	    马达1 （大马达）	                              马达2（小马达）
+强度	   建议70开始，80，90，a0， b0，c0，d0，e0，f0，ff	 建议70开始，80，90，a0， b0，c0，d0，e0，f0，ff
+时间	   建议>04	                                    建议>04
+		
+	另外建议，震动时间特别短的时候尽量震动强度相对大一点，比如 强度ff，时间04，可以感觉到明显的短促震动一下，但是强度70时间04就几乎没有震感，但是强度70，时间20也是能够感觉到持续的轻微震动的	
+    
 ## 帮助支持
 
     如果在实际使用过程中有问题或者API有变更，可以随时和这边联系，技术支持邮箱 dev-support@playruyi.com。论坛https://dev.playruyi.com/forum
+
