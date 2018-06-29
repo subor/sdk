@@ -1,55 +1,51 @@
-# 文档
+# Ruyi手柄适配说明
 
-本文位于[__docs__ 仓库](https://bitbucket.org/playruyi/docs).  
-GIT仓库地址`git clone https://your_username_here@bitbucket.org/playruyi/docs.git`(或[Sourcetree](https://www.sourcetreeapp.com/))
+  本文档旨在说明同过代码实现Ruyi手柄适合，由于目前RuyiSDK仍处于开发中，所以说明中使用的代码相关API可能会和实际SDK有出入，最新
+代码可以在这里[C#](https://bitbucket.org/playruyi/space_shooter/src),[C++](https://bitbucket.org/playruyi/unreal_demo/src/master)
+查看
 
-创建一个[拉拽请求(pull request)](https://bitbucket.org/playruyi/docs/pull-requests/)来提交更新(我们会负责审核):  
-![](/docs/img/pull_requests.png)
+## 具体代码说明（以C#版为例）
 
-## 格式说明
+1. 注册手柄事件和监听消息
+m_RuyiNet.Subscribe.Subscribe("service/inputmgr_int");
+m_RuyiNet.Subscribe.AddMessageHandler<Ruyi.SDK.InputManager.RuyiGamePadInput>(RuyiGamePadInputListener);
 
-- __粗体(Bold)__
-	- __界面 -> 菜单 -> 子菜单等__ 的标题 
-	- 特指 __文件/路径/__ 或 __文件名.txt__.
-- _斜体(Italics)_
-	- _内容区域_ 需要引起注意
-	- __任何粗体内容__ _已经_ __无法再使用斜体__
-- `代码块(code)`
-	- 单个关键字(词)或组合，比如: `Enter`, `Ctrl+Alt+Del`
-	- 命令行语句或者其他打印文字
-	- 文件内容的部分引用(包括源代码)，终端输出等等。
+2. 在监听事件监听按键和遥感输入：
+       void RuyiGamePadInputListener(string topic, Ruyi.SDK.InputManager.RuyiGamePadInput msg)
+	其中Ruyi.SDK.InputManager.RuyiGamePadInput即为返回的手柄输入数据
+	主要变量	public int ButtonFlags { get; set; }
+        		public sbyte LeftTrigger { get; set; }
+        		public sbyte RightTrigger { get; set; }
+        		public short LeftThumbX { get; set; }
+        		public short LeftThumbY { get; set; }
+        		public short RightThumbX { get; set; }
+        		public short RightThumbY { get; set; }
+	ButtonFlags表示手柄按键输入，比如：
+	if ((int)Ruyi.SDK.CommonType.RuyiGamePadButtonFlags.GamePad_X == msg.ButtonFlags) {Debug.Log(“Button X”);}表示手柄“X”键输入事件，注意该判定是在按键“按下”时判定成功。“松开”时ButtonFlags的值为0.
+	也可以 判定按键组合，比如按下“X”键同时按键“A”键 (先按“X”然后再按“A“或反之结果一样)
+   	if (((int)Ruyi.SDK.CommonType.RuyiGamePadButtonFlags.GamePad_X | (int)Ruyi.SDK.CommonType.RuyiGamePadButtonFlags.GamePad_A) == msg.ButtonFlags)
+        {
+            Debug.Log("X&B");
+        }
+	遥感判定左摇杆LeftThumbX水平LeftThumbY垂直
+	将LeftThumbX或LeftThumbY的值除以Mathf.Pow(2f, 15)（2的15次方），结果映射为（-1，1），即为遥感移动范围(-1,1)(左，右)（下，上），右摇杆一样
 
-## 编辑提示
+3. 手柄震动API说明
+	bool SetRuyiControllerStatus(sbyte channel, bool enableR, bool enableG, bool enableB, bool enableMotor1, bool enableMotor2, bool shutdown, sbyte RValue, sbyte GValue, sbyte BValue, sbyte motor1Value, sbyte motor1Time, sbyte motor2Value, sbyte motor2Time);
+	channel：由连接方式决定（有线无线），目前有线情况下第一个手柄就固定填4，之后会再对该API做调整。
+	enableR,enable,enable指定手柄等是否亮
+	enableMotor1,enableMoter2指是否开启震动（左右两边）,shutdown一般false
+	RValue,GValue,BValue指灯亮的参数
+	motor1Value,motor1Time,motor2Value,motor2Time指手柄的震动长度和持续时间
+	比较重要的参数就是震动强度和时间。可以像以下这样传
+	byte viberatePower = 255 (范围0~255强度从小到大), viberateTime = 255（范围0~255时间从短到长） ，否则直接传sbyte（-128~127）不够直观
+	m_RuyiNet.mSDK.InputMgr.SetRuyiControllerStatus(4, false, false, false,
+                true, true, false,
+                (sbyte)0, (sbyte)0, (sbyte)0,
+                (sbyte)viberatePower, (sbyte)viberateTime,
+                (sbyte)viberatePower, (sbyte)viberateTime);
+C++版本API同样
 
-- 下标(markdown)参考:
-	- [Bitbucket下标(markdown)说明](https://bitbucket.org/tutorials/markdowndemo/overview)
-	- [Daring Fireball](https://daringfireball.net/projects/markdown/syntax)
+## 帮助支持
 
-- 将某段内容链接到Bitbucket上的某个文件最新版本:
-
-    注意下面链接中使用的是`master`分支名而不是SHA1哈希值
-
-      https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/support.md
-
-- 将某段内容链接到问题(issue):
-
-    注意替换下面链接中的`1`为需要的[问题(issue)编号](https://bitbucket.org/playruyi/support/issues?status=new&status=open)
-
-      https://bitbucket.org/playruyi/support/issues/1
-
-- 我们使用[Visual Studio Code](https://code.visualstudio.com/)。查看相应的[下标编辑提示](https://code.visualstudio.com/Docs/languages/markdown):  
-![](/docs/img/docs_vs_code_preview.png)
-
-- 配置VS Code，更改插入制表符(tab)为空白符(spaces):
-
-	1. 点击__View -> Command Palette...__ (或者按`Ctrl+Shift+P`)  
-	![](/docs/img/vscode_command.png)
-	1. 输入`indent using spaces`  
-	![](/docs/img/vscode_indent_using.png)
-
-    或者
-
-	1. 点击窗口右下角  
-	![](/docs/img/vscode_lower_right.png)
-	1. 选择`Indent Using Spaces`  
-	![](/docs/img/vscode_spaces.png)
+    如果在实际使用过程中有问题或者API有变更，可以随时和这边联系，技术支持邮箱 dev-support@playruyi.com。论坛https://dev.playruyi.com/forum
