@@ -37,6 +37,11 @@ struct RuyiNetworkSettings {
     14: RuyiNetworkSettingNameValue Proxy,
 }
 
+struct RuyiNetworkStatus {
+    1: bool isWifi,
+    2: string Name,
+}
+
 struct CategoryNode {
     1: string id,
     2: string categoryId,
