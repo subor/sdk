@@ -30,7 +30,7 @@ namespace Ruyi { namespace SDK { namespace Online {
 	class RuyiNetClient
 	{
 	public:
-		RuyiNetClient(const boost::shared_ptr<TProtocol1> & protocol);
+		RuyiNetClient(const std::shared_ptr<TProtocol1> & protocol);
 		~RuyiNetClient();
 
 		/// <summary>
