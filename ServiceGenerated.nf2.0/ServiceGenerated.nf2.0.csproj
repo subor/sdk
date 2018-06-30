@@ -86,7 +86,9 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\QueryResultMsg.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\RemovePathMsg.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\RequestMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkSettingNameValue.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkSettings.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkStatus.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Speech\File.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Http\HttpService.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Http\SubscribeReply.cs" />
