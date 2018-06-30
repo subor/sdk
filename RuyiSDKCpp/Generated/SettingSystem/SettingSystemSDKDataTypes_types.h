@@ -33,11 +33,13 @@ extern const std::map<int, const char*> _NodeType_VALUES_TO_NAMES;
 
 std::ostream& operator<<(std::ostream& out, const NodeType::type& val);
 
-typedef int32_t _int;
-
 typedef std::string JSON;
 
+class RuyiNetworkSettingNameValue;
+
 class RuyiNetworkSettings;
+
+class RuyiNetworkStatus;
 
 class CategoryNode;
 
@@ -49,10 +51,58 @@ class NodeList;
 
 class SettingItemNotification;
 
+typedef struct _RuyiNetworkSettingNameValue__isset {
+  _RuyiNetworkSettingNameValue__isset() : name(false), value(false) {}
+  bool name :1;
+  bool value :1;
+} _RuyiNetworkSettingNameValue__isset;
+
+class RuyiNetworkSettingNameValue : public virtual ::apache::thrift::TBase {
+ public:
+
+  RuyiNetworkSettingNameValue(const RuyiNetworkSettingNameValue&);
+  RuyiNetworkSettingNameValue& operator=(const RuyiNetworkSettingNameValue&);
+  RuyiNetworkSettingNameValue() : name(), value() {
+  }
+
+  virtual ~RuyiNetworkSettingNameValue() throw();
+  std::string name;
+  std::string value;
+
+  _RuyiNetworkSettingNameValue__isset __isset;
+
+  void __set_name(const std::string& val);
+
+  void __set_value(const std::string& val);
+
+  bool operator == (const RuyiNetworkSettingNameValue & rhs) const
+  {
+    if (!(name == rhs.name))
+      return false;
+    if (!(value == rhs.value))
+      return false;
+    return true;
+  }
+  bool operator != (const RuyiNetworkSettingNameValue &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const RuyiNetworkSettingNameValue & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(RuyiNetworkSettingNameValue &a, RuyiNetworkSettingNameValue &b);
+
+std::ostream& operator<<(std::ostream& out, const RuyiNetworkSettingNameValue& obj);
+
 typedef struct _RuyiNetworkSettings__isset {
-  _RuyiNetworkSettings__isset() : connection(false), isWifi(false), quality(false), SSID(false), BSSID(false), Authentication(false), DHCPEnabled(false), IpAddress(false), SubMask(false), Gateway(false), MainDNS(false), SubDNS(false), MacAddress(false), Proxy(false) {}
+  _RuyiNetworkSettings__isset() : connection(false), networkType(false), quality(false), SSID(false), BSSID(false), Authentication(false), DHCPEnabled(false), IpAddress(false), SubMask(false), Gateway(false), MainDNS(false), SubDNS(false), MacAddress(false), Proxy(false) {}
   bool connection :1;
-  bool isWifi :1;
+  bool networkType :1;
   bool quality :1;
   bool SSID :1;
   bool BSSID :1;
@@ -72,60 +122,60 @@ class RuyiNetworkSettings : public virtual ::apache::thrift::TBase {
 
   RuyiNetworkSettings(const RuyiNetworkSettings&);
   RuyiNetworkSettings& operator=(const RuyiNetworkSettings&);
-  RuyiNetworkSettings() : connection(0), isWifi(0), quality(0), SSID(), BSSID(), Authentication(), DHCPEnabled(0), IpAddress(), SubMask(), Gateway(), MainDNS(), SubDNS(), MacAddress(), Proxy() {
+  RuyiNetworkSettings() {
   }
 
   virtual ~RuyiNetworkSettings() throw();
-  bool connection;
-  bool isWifi;
-  _int quality;
-  std::string SSID;
-  std::string BSSID;
-  std::string Authentication;
-  bool DHCPEnabled;
-  std::string IpAddress;
-  std::string SubMask;
-  std::string Gateway;
-  std::string MainDNS;
-  std::string SubDNS;
-  std::string MacAddress;
-  std::string Proxy;
+  RuyiNetworkSettingNameValue connection;
+  RuyiNetworkSettingNameValue networkType;
+  RuyiNetworkSettingNameValue quality;
+  RuyiNetworkSettingNameValue SSID;
+  RuyiNetworkSettingNameValue BSSID;
+  RuyiNetworkSettingNameValue Authentication;
+  RuyiNetworkSettingNameValue DHCPEnabled;
+  RuyiNetworkSettingNameValue IpAddress;
+  RuyiNetworkSettingNameValue SubMask;
+  RuyiNetworkSettingNameValue Gateway;
+  RuyiNetworkSettingNameValue MainDNS;
+  RuyiNetworkSettingNameValue SubDNS;
+  RuyiNetworkSettingNameValue MacAddress;
+  RuyiNetworkSettingNameValue Proxy;
 
   _RuyiNetworkSettings__isset __isset;
 
-  void __set_connection(const bool val);
+  void __set_connection(const RuyiNetworkSettingNameValue& val);
 
-  void __set_isWifi(const bool val);
+  void __set_networkType(const RuyiNetworkSettingNameValue& val);
 
-  void __set_quality(const _int val);
+  void __set_quality(const RuyiNetworkSettingNameValue& val);
 
-  void __set_SSID(const std::string& val);
+  void __set_SSID(const RuyiNetworkSettingNameValue& val);
 
-  void __set_BSSID(const std::string& val);
+  void __set_BSSID(const RuyiNetworkSettingNameValue& val);
 
-  void __set_Authentication(const std::string& val);
+  void __set_Authentication(const RuyiNetworkSettingNameValue& val);
 
-  void __set_DHCPEnabled(const bool val);
+  void __set_DHCPEnabled(const RuyiNetworkSettingNameValue& val);
 
-  void __set_IpAddress(const std::string& val);
+  void __set_IpAddress(const RuyiNetworkSettingNameValue& val);
 
-  void __set_SubMask(const std::string& val);
+  void __set_SubMask(const RuyiNetworkSettingNameValue& val);
 
-  void __set_Gateway(const std::string& val);
+  void __set_Gateway(const RuyiNetworkSettingNameValue& val);
 
-  void __set_MainDNS(const std::string& val);
+  void __set_MainDNS(const RuyiNetworkSettingNameValue& val);
 
-  void __set_SubDNS(const std::string& val);
+  void __set_SubDNS(const RuyiNetworkSettingNameValue& val);
 
-  void __set_MacAddress(const std::string& val);
+  void __set_MacAddress(const RuyiNetworkSettingNameValue& val);
 
-  void __set_Proxy(const std::string& val);
+  void __set_Proxy(const RuyiNetworkSettingNameValue& val);
 
   bool operator == (const RuyiNetworkSettings & rhs) const
   {
     if (!(connection == rhs.connection))
       return false;
-    if (!(isWifi == rhs.isWifi))
+    if (!(networkType == rhs.networkType))
       return false;
     if (!(quality == rhs.quality))
       return false;
@@ -168,6 +218,54 @@ class RuyiNetworkSettings : public virtual ::apache::thrift::TBase {
 void swap(RuyiNetworkSettings &a, RuyiNetworkSettings &b);
 
 std::ostream& operator<<(std::ostream& out, const RuyiNetworkSettings& obj);
+
+typedef struct _RuyiNetworkStatus__isset {
+  _RuyiNetworkStatus__isset() : isWifi(false), Name(false) {}
+  bool isWifi :1;
+  bool Name :1;
+} _RuyiNetworkStatus__isset;
+
+class RuyiNetworkStatus : public virtual ::apache::thrift::TBase {
+ public:
+
+  RuyiNetworkStatus(const RuyiNetworkStatus&);
+  RuyiNetworkStatus& operator=(const RuyiNetworkStatus&);
+  RuyiNetworkStatus() : isWifi(0), Name() {
+  }
+
+  virtual ~RuyiNetworkStatus() throw();
+  bool isWifi;
+  std::string Name;
+
+  _RuyiNetworkStatus__isset __isset;
+
+  void __set_isWifi(const bool val);
+
+  void __set_Name(const std::string& val);
+
+  bool operator == (const RuyiNetworkStatus & rhs) const
+  {
+    if (!(isWifi == rhs.isWifi))
+      return false;
+    if (!(Name == rhs.Name))
+      return false;
+    return true;
+  }
+  bool operator != (const RuyiNetworkStatus &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const RuyiNetworkStatus & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(RuyiNetworkStatus &a, RuyiNetworkStatus &b);
+
+std::ostream& operator<<(std::ostream& out, const RuyiNetworkStatus& obj);
 
 typedef struct _CategoryNode__isset {
   _CategoryNode__isset() : id(false), categoryId(false), sortingPriority(false), children(false) {}
