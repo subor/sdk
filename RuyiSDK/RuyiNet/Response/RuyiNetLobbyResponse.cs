@@ -9,26 +9,9 @@ namespace Ruyi.SDK.Online
     public class RuyiNetLobbyResponse
     {
         /// <summary>
-        /// Data class.
-        /// </summary>
-        [Serializable]
-        public class Data
-        {
-            /// <summary>
-            /// The response.
-            /// </summary>
-            public RuyiNetResponseGroup response;
-
-            /// <summary>
-            /// Whether or not the server-side script was successful.
-            /// </summary>
-            public bool success;
-        }
-
-        /// <summary>
         /// The data.
         /// </summary>
-        public Data data;
+        public RuyiNetLobbyResponseData data;
 
         /// <summary>
         /// The response status.

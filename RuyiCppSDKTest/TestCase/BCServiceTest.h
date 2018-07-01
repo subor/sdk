@@ -13,6 +13,7 @@ using namespace Ruyi::SDK;
 using namespace boost::property_tree;
 using namespace std;
 using namespace Ruyi::SDK::BrainCloudApi;
+using namespace Ruyi::SDK::Online;
 
 class BCServiceTest : public BaseUnitTest
 {
@@ -139,5 +140,5 @@ private:
 
 	string _TestEventId;
 
-	Ruyi::RuyiNetClient* ruyiNetClient;
+	RuyiNetClient* ruyiNetClient;
 };
