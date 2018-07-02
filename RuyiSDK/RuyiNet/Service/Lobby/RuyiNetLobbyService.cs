@@ -65,7 +65,7 @@ namespace Ruyi.SDK.Online
             {
                 try
                 {
-                    return mClient.BCService.Lobby_CreateLobby(lobbyType, maxSlots, isOpen, jsonAttributes, clientIndex);
+                    return mClient.BCService.Lobby_CreateLobby((BrainCloudApi.LobbyType)lobbyType, maxSlots, isOpen, jsonAttributes, clientIndex);
                 }
                 catch (Exception e)
                 {
