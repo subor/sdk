@@ -36,5 +36,13 @@ namespace Ruyi.SDK.PublisherSubscriber
     /// A Service been removed from the broker.
     /// </summary>
     SingleServiceStopped = 5,
+    /// <summary>
+    /// Only used for Layer1Service to tell layer0 to reset all layer1 services state
+    /// </summary>
+    ResetLayer1Services = 6,
+    /// <summary>
+    /// Only used for layer0 to tell Layer1Service that all layer1 services state reset over
+    /// </summary>
+    Layer1ServicesResetOver = 7,
   }
 }

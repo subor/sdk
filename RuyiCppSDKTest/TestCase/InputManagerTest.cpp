@@ -58,7 +58,6 @@ void MouseSetup(INPUT *buffer)
 	buffer->mi.dwExtraInfo = 0;
 }
 
-
 void MouseMoveAbsolute(INPUT *buffer, int x, int y)
 {
 	buffer->mi.dx = (x * (0xFFFF / SCREEN_WIDTH));
@@ -67,7 +66,6 @@ void MouseMoveAbsolute(INPUT *buffer, int x, int y)
 
 	SendInput(1, buffer, sizeof(INPUT));
 }
-
 
 void MouseClick(INPUT *buffer)
 {
@@ -119,6 +117,44 @@ void InputManagerTest::InputManagerReceiveInputMessage()
 	{
 		Assert::IsTrue(true);
 	}
+}
+
+void InputManagerTest::SubscribeListenerOne(std::string topic, apache::thrift::TBase* msg) {}
+
+void t1()
+{
+	Sleep(5000);
+}
+
+void InputManagerTest::SubscribeTimeoutTest() 
+{
+	Logger::WriteMessage("SubscribeTimeoutTest Subscribe topics !!!");
+	
+	ruyiSDK->Subscriber->Subscribe("SubscribeListenerOne");
+	ruyiSDK->Subscriber->AddMessageHandler(this, &InputManagerTest::SubscribeListenerOne);
+
+	std::thread th(t1);
+	th.join();
+
+	Logger::WriteMessage("SubscribeTimeoutTest begin to unsubscribe topics !!!");
+
+	//simulate closing the client
+	//if not setsockopt(ZMQ_RCVTIMEO, &t, sizeof(t));, it'll stuck 
+	try 
+	{
+		ruyiSDK->Subscriber->Unsubscribe("SubscribeListenerOne");
+		delete ruyiSDK;
+		ruyiSDK = nullptr;
+	} catch(std::exception& e)
+	{
+		string str = "SubscribeTimeoutTest exception ";
+		str.append(e.what());
+		Logger::WriteMessage(str.c_str());
+	}
+
+	Logger::WriteMessage("SubscribeTimeoutTest close client successfully !!!");
+
+	Assert::IsTrue(true);
 }
 
 InputManagerTest::InputManagerTest(RuyiSDKContext::Endpoint endpoint, string remoteAddress)

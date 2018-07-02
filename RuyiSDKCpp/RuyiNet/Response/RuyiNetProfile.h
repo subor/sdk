@@ -2,8 +2,7 @@
 
 #include "RuyiNetSummaryFriendData.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
 	/// <summary>
 	/// A profile that can be returned from Ruyi Net operations.
 	/// </summary>
@@ -63,4 +62,4 @@ namespace Ruyi
 			}
 		}
 	};
-}
+}}}

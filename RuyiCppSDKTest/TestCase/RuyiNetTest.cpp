@@ -3,13 +3,15 @@
 #include "RuyiNet/Response/RuyiNetResponse.h"
 #include "RuyiNet/Response/RuyiNetProfile.h"
 
-#include "RuyiNet/Service/RuyiNetFriendService.h"
-#include "RuyiNet/Service/RuyiNetLeaderboardService.h"
-#include "RuyiNet/Service/RuyiNetCloudService.h"
-#include "RuyiNet/Service/RuyiNetLobbyService.h"
-#include "RuyiNet/Service/RuyiNetPartyService.h"
-#include "RuyiNet/Service/RuyiNetTelemetryService.h"
-#include "RuyiNet/Service/RuyiNetUserFileService.h"
+#include "RuyiNet/Service/Friend/RuyiNetFriendService.h"
+#include "RuyiNet/Service/Leaderboard/RuyiNetLeaderboardService.h"
+#include "RuyiNet/Service/Cloud/RuyiNetCloudService.h"
+#include "RuyiNet/Service/Lobby/RuyiNetLobbyService.h"
+#include "RuyiNet/Service/Party/RuyiNetPartyService.h"
+#include "RuyiNet/Service/Telemetry/RuyiNetTelemetryService.h"
+#include "RuyiNet/Service/UserFile/RuyiNetUserFileService.h"
+#include "RuyiNet/Service/Gamification/RuyiNetGamificationService.h"
+#include "RuyiNet/Service/Patch/RuyiNetPatchService.h"
 
 #include "boost/container/detail/json.hpp"
 
@@ -145,14 +147,14 @@ void RuyiNetTest::LobbyServiceTest()
 {
 	//test: create lobby
 	RuyiNetLobbyResponse response1;
-	ruyiSDK->RuyiNet->GetLobbyService()->CreateLobby(0, 4, Ruyi::RuyiNetLobbyType::PLAYER, response1);
+	ruyiSDK->RuyiNet->GetLobbyService()->CreateLobby(0, 4, RuyiNetLobbyType::PLAYER, response1);
 	
 	Assert::IsTrue(STATUS_OK == response1.status);
 
 	//test: find lobby
 	RuyiNetLobbyFindResponse response2;
 	std::list<RuyiNetLobby*> lobbies;
-	ruyiSDK->RuyiNet->GetLobbyService()->FindLobbies(0, 10, Ruyi::RuyiNetLobbyType::PLAYER, lobbies, response2);
+	ruyiSDK->RuyiNet->GetLobbyService()->FindLobbies(0, 10, RuyiNetLobbyType::PLAYER, lobbies, response2);
 
 	Assert::IsTrue(STATUS_OK == response2.status);
 
@@ -285,4 +287,39 @@ void RuyiNetTest::UserFileServiceTest()
 	Logger::WriteMessage(("GetCDNUrl cdn url:" + response4.data.cdnUrl).c_str());
 
 	Assert::IsTrue(STATUS_OK == response4.status);
+}
+
+void RuyiNetTest::GamificationServiceTest() 
+{
+	RuyiNetAchievement achievement;
+	std::string achievementId = ""; //not a clue about id value, update later
+	ruyiSDK->RuyiNet->GetGamificationService()->AwardAchievement(0, achievementId, achievement);
+
+	Assert::IsTrue(0 == achievement.GameId.compare(""));
+
+	std::vector<std::string> achievementIds;
+	std::vector<RuyiNetAchievement*> achievements;
+	ruyiSDK->RuyiNet->GetGamificationService()->AwardAchievements(0, achievementIds, achievements);
+
+	Assert::IsTrue(achievements.size() > 0);
+
+	int includeMetaData = 0; //not a clue about this value;
+	achievements.clear();
+	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievedAchievements(0, includeMetaData, achievements);
+
+	Assert::IsTrue(achievements.size() > 0);
+
+	achievements.clear();
+	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievements(0, includeMetaData, achievements);
+	
+	Assert::IsTrue(achievements.size() > 0);
+}
+
+void RuyiNetTest::PatchServiceTest() 
+{
+	RuyiNetGameManifest gameManifest;
+	std::string gameId = "Shooter";
+	ruyiSDK->RuyiNet->GetPatchService()->GetGameManifest(0, gameId, gameManifest);
+
+	Assert::IsTrue(STATUS_OK == gameManifest.Status);
 }
