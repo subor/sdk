@@ -2,8 +2,7 @@
 
 #include "../RuyiNetClient.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
 	/// <summary>
 	/// Response recieved after making a telemetry session request.
 	/// </summary>
@@ -81,4 +80,4 @@ namespace Ruyi
 			}
 		}
 	};
-}
+}}}

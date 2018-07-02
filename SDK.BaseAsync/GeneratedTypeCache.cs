@@ -35,6 +35,36 @@ namespace Ruyi.Layer0
             }
         }
 
+        /// <summary>
+        /// get type by not fully qualified class name, or qualified with full namespace
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <param name="className"></param>
+        /// <returns></returns>
+        public static Type GetTypeByClassName(string className)
+        {
+            lock (sync)
+            {
+                if (cachedClassnames.TryGetValue(className, out var ret))
+                    return ret;
+
+                foreach (var assem in assemblies)
+                {
+                    Type[] types = assem.GetTypes();
+                    foreach (var type in types)
+                    {
+                        if (type.Name.Equals(className, StringComparison.OrdinalIgnoreCase)
+                            || type.FullName.Equals(className, StringComparison.OrdinalIgnoreCase))
+                        {
+                            cachedClassnames.Add(className, type);
+                            return type;
+                        }
+                    }
+                }
+                return null;
+            }
+        }
+
         static GeneratedTypeCache()
         {
             lock (sync)
@@ -59,6 +89,7 @@ namespace Ruyi.Layer0
 
         static object sync = new object();
         static Dictionary<string, Type> cachedTypes = new Dictionary<string, Type>();
+        static Dictionary<string, Type> cachedClassnames = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
         static Assembly[] assemblies;
     }
 }

@@ -2,8 +2,7 @@
 
 #include "../RuyiNetClient.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
 	/// <summary>
 	/// The response from GetFriendsVideos
 	/// </summary>
@@ -164,6 +163,5 @@ namespace Ruyi
 				}
 			}
 		}
-	};
-	
-}
+	};	
+}}}

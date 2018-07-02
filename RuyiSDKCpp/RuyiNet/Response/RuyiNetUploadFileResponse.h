@@ -4,8 +4,8 @@
 
 #include "../RuyiNetClient.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
 	/// <summary>
 	/// The response after uploading a file.
 	/// </summary>
@@ -115,54 +115,55 @@ namespace Ruyi
 					}
 					if (!fileDetailsJson["fileSize"].is_null())
 					{
-						data.fileDetails.updatedAt = fileDetailsJson["fileSize"];
+						data.fileDetails.fileSize = fileDetailsJson["fileSize"];
 					}
 					if (!fileDetailsJson["fileType"].is_null())
 					{
-						data.fileDetails.updatedAt = fileDetailsJson["fileType"];
+						data.fileDetails.fileType = fileDetailsJson["fileType"];
 					}
 					if (!fileDetailsJson["expiresAt"].is_null())
 					{
-						data.fileDetails.updatedAt = fileDetailsJson["expiresAt"];
+						data.fileDetails.expiresAt = fileDetailsJson["expiresAt"];
 					}
 					if (!fileDetailsJson["shareable"].is_null())
 					{
-						data.fileDetails.updatedAt = fileDetailsJson["shareable"];
+						data.fileDetails.shareable = fileDetailsJson["shareable"];
 					}
 					if (!fileDetailsJson["uploadId"].is_null())
 					{
-						data.fileDetails.updatedAt = fileDetailsJson["uploadId"];
+						data.fileDetails.uploadId = fileDetailsJson["uploadId"];
 					}
 					if (!fileDetailsJson["createdAt"].is_null())
 					{
-						data.fileDetails.updatedAt = fileDetailsJson["createdAt"];
+						data.fileDetails.createdAt = fileDetailsJson["createdAt"];
 					}
 					if (!fileDetailsJson["profileId"].is_null())
 					{
-						data.fileDetails.updatedAt = fileDetailsJson["profileId"];
+						data.fileDetails.profileId = fileDetailsJson["profileId"];
 					}
 					if (!fileDetailsJson["gameId"].is_null())
 					{
-						data.fileDetails.updatedAt = fileDetailsJson["gameId"];
+						data.fileDetails.gameId = fileDetailsJson["gameId"];
 					}
 					if (!fileDetailsJson["path"].is_null())
 					{
-						data.fileDetails.updatedAt = fileDetailsJson["path"];
+						data.fileDetails.path = fileDetailsJson["path"];
 					}
 					if (!fileDetailsJson["filename"].is_null())
 					{
-						data.fileDetails.updatedAt = fileDetailsJson["filename"];
+						data.fileDetails.filename = fileDetailsJson["filename"];
 					}
 					if (!fileDetailsJson["replaceIfExists"].is_null())
 					{
-						data.fileDetails.updatedAt = fileDetailsJson["replaceIfExists"];
+						data.fileDetails.replaceIfExists = fileDetailsJson["replaceIfExists"];
 					}
 					if (!fileDetailsJson["cloudPath"].is_null())
 					{
-						data.fileDetails.updatedAt = fileDetailsJson["cloudPath"];
+						data.fileDetails.cloudPath = fileDetailsJson["cloudPath"];
 					}
 				}
 			}
 		}
 	};
-}
+
+}}} 
