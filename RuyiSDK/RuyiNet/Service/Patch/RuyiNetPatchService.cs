@@ -32,7 +32,7 @@ namespace Ruyi.SDK.Online
                 {
                     // just log it for now, otherwise layer0 will crash, it happens when no response while switching high-low power mode
                     // throw;
-                    Logging.Logger.Log("", Logging.LogLevel.Error);
+                    Logging.Logger.Log(e.Message, Logging.LogLevel.Error);
                     var response = new RuyiNetResponse()
                     {
                         status = 999,
