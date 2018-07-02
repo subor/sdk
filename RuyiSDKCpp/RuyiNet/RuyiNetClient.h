@@ -3,14 +3,15 @@
 #include "../Generated/BrainCloudService/BrainCloudService.h"
 #include "../RuyiString.h"
 #include "RuyiNetException.h"
+#include "RuyiNetHttpStatus.h"
 
 #include "thrift/protocol/TMultiplexedProtocol.h"
 #include "boost/container/detail/json.hpp"
 
 using TProtocol1 = apache::thrift::protocol::TMultiplexedProtocol;
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
+
 	#define STATUS_OK 200
 	
 	class RuyiNetCloudService;
@@ -23,6 +24,8 @@ namespace Ruyi
 	class RuyiNetMatchmakingService;
 	class RuyiNetLobbyService;
 	class RuyiNetTelemetryService;
+	class RuyiNetGamificationService;
+	class RuyiNetPatchService;
 
 	class RuyiNetClient
 	{
@@ -96,10 +99,6 @@ namespace Ruyi
 		/// </summary>
 		RuyiNetVideoService* const GetVideoService() { return mVideoService; }
 		/// <summary>
-		/// Allows users to locate players to play against each other.
-		/// </summary>
-		RuyiNetMatchmakingService* const GetMatchmakingService() { return mMatchmakingService; }
-		/// <summary>
 		/// Manages lobbies for network games.
 		/// </summary>
 		RuyiNetLobbyService* const GetLobbyService() { return mLobbyService; }
@@ -107,6 +106,13 @@ namespace Ruyi
 		/// Handles pushing telemetry data to the cloud.
 		/// </summary>
 		RuyiNetTelemetryService* const GetTelemetryService() { return mTelemetryService; }
+
+		RuyiNetGamificationService* const GetGamificationService() { return mGamificationService; }
+
+		/// <summary>
+		/// Get manifest info for a game.
+		/// </summary>
+		RuyiNetPatchService* const GetPatchService() { return mPatchService; }
 
 		static const int MAX_PLAYERS = 4;
 
@@ -152,9 +158,10 @@ namespace Ruyi
 		RuyiNetProfileService* mProfileService;
 		RuyiNetUserFileService* mUserFileService;
 		RuyiNetVideoService* mVideoService;
-		RuyiNetMatchmakingService* mMatchmakingService;
 		RuyiNetLobbyService* mLobbyService;
 		RuyiNetTelemetryService* mTelemetryService;
+		RuyiNetGamificationService* mGamificationService;
+		RuyiNetPatchService* mPatchService;
 
 		struct RuyiNetProfile* mCurrentPlayers[MAX_PLAYERS];
 
@@ -162,4 +169,5 @@ namespace Ruyi
 		std::string mAppSecret;
 		bool mInitialised;
 	};
-}
+
+}}}

@@ -135,7 +135,7 @@ bool RuyiSDK::Init()
 
 	// init Ruyi Net
 	auto ruyiNetClientProtocol = std::make_shared<TMultiplexedProtocol>(sharedHighProto, "SER_BCSERVICE");
-	RuyiNet = new Ruyi::RuyiNetClient(ruyiNetClientProtocol);
+	RuyiNet = new Ruyi::SDK::Online::RuyiNetClient(ruyiNetClientProtocol);
 	
 	// init brain cloud service
 	auto bcProtocal = std::make_shared<TMultiplexedProtocol>(sharedHighProto, "SER_BCSERVICE");

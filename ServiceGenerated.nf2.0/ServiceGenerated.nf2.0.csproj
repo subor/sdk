@@ -41,6 +41,7 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\FileUploadFailedResult.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\FileUploadSuccessResult.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\FriendPlatform.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\LobbyType.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\Role.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\RotationType.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\BrainCloudApi\SocialLeaderboardType.cs" />
@@ -86,7 +87,9 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\QueryResultMsg.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\RemovePathMsg.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\RequestMsg.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkSettingNameValue.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkSettings.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkStatus.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Speech\File.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Http\HttpService.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Http\SubscribeReply.cs" />
