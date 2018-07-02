@@ -17,11 +17,11 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="clientIndex">The index of user</param>
         /// <param name="maxSlots">The maximum number of players that can join this lobby.</param>
-        /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
+        /// <param name="RuyiNetLobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void CreateLobby(int clientIndex, int maxSlots, LobbyType lobbyType, Action<RuyiNetLobby> callback)
+        public void CreateLobby(int clientIndex, int maxSlots, RuyiNetLobbyType RuyiNetLobbyType, Action<RuyiNetLobby> callback)
         {
-            CreateLobby(clientIndex, maxSlots, lobbyType, true, "{}", callback);
+            CreateLobby(clientIndex, maxSlots, RuyiNetLobbyType, true, "{}", callback);
         }
 
         /// <summary>
@@ -29,12 +29,12 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="clientIndex">The index of user</param>
         /// <param name="maxSlots">The maximum number of players that can join this lobby.</param>
-        /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
+        /// <param name="RuyiNetLobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
         /// <param name="jsonAttributes">JSON string of custom attributes to attach to this lobby.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void CreateLobby(int clientIndex, int maxSlots, LobbyType lobbyType, string jsonAttributes, Action<RuyiNetLobby> callback)
+        public void CreateLobby(int clientIndex, int maxSlots, RuyiNetLobbyType RuyiNetLobbyType, string jsonAttributes, Action<RuyiNetLobby> callback)
         {
-            CreateLobby(clientIndex, maxSlots, lobbyType, true, jsonAttributes, callback);
+            CreateLobby(clientIndex, maxSlots, RuyiNetLobbyType, true, jsonAttributes, callback);
         }
 
         /// <summary>
@@ -43,11 +43,11 @@ namespace Ruyi.SDK.Online
         /// <param name="clientIndex">The index of user</param>
         /// <param name="maxSlots">The maximum number of players that can join this lobby.</param>
         /// <param name="isOpen">Whether or not the lobby is open by default.</param>
-        /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
+        /// <param name="RuyiNetLobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void CreateLobby(int clientIndex, int maxSlots, LobbyType lobbyType, bool isOpen, Action<RuyiNetLobby> callback)
+        public void CreateLobby(int clientIndex, int maxSlots, RuyiNetLobbyType RuyiNetLobbyType, bool isOpen, Action<RuyiNetLobby> callback)
         {
-            CreateLobby(clientIndex, maxSlots, lobbyType, isOpen, "{}", callback);
+            CreateLobby(clientIndex, maxSlots, RuyiNetLobbyType, isOpen, "{}", callback);
         }
 
         /// <summary>
@@ -56,16 +56,16 @@ namespace Ruyi.SDK.Online
         /// <param name="clientIndex">The index of user</param>
         /// <param name="maxSlots">The maximum number of players that can join this lobby.</param>
         /// <param name="isOpen">Whether or not the lobby is open by default.</param>
-        /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
+        /// <param name="RuyiNetLobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
         /// <param name="jsonAttributes">JSON string of custom attributes to attach to this lobby.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void CreateLobby(int clientIndex, int maxSlots, LobbyType lobbyType, bool isOpen, string jsonAttributes, Action<RuyiNetLobby> callback)
+        public void CreateLobby(int clientIndex, int maxSlots, RuyiNetLobbyType RuyiNetLobbyType, bool isOpen, string jsonAttributes, Action<RuyiNetLobby> callback)
         {
             EnqueueTask(() =>
             {
                 try
                 {
-                    return mClient.BCService.Lobby_CreateLobby(lobbyType, maxSlots, isOpen, jsonAttributes, clientIndex);
+                    return mClient.BCService.Lobby_CreateLobby(RuyiNetLobbyType, maxSlots, isOpen, jsonAttributes, clientIndex);
                 }
                 catch (Exception e)
                 {
@@ -182,12 +182,12 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="clientIndex">The index of user</param>
         /// <param name="numResults">The maximum number of lobbies to return.</param>
-        /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
+        /// <param name="RuyiNetLobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void FindLobbies(int clientIndex, int numResults, LobbyType lobbyType,
+        public void FindLobbies(int clientIndex, int numResults, RuyiNetLobbyType RuyiNetLobbyType,
             Action<RuyiNetLobby[]> callback)
         {
-            FindLobbies(clientIndex, numResults, lobbyType, 0, callback);
+            FindLobbies(clientIndex, numResults, RuyiNetLobbyType, 0, callback);
         }
 
         /// <summary>
@@ -195,12 +195,12 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="clientIndex">The index of user</param>
         /// <param name="numResults">The maximum number of lobbies to return.</param>
-        /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
+        /// <param name="RuyiNetLobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
         /// <param name="freeSlots">The number of free slots needed.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void FindLobbies(int clientIndex, int numResults, LobbyType lobbyType, int freeSlots, Action<RuyiNetLobby[]> callback)
+        public void FindLobbies(int clientIndex, int numResults, RuyiNetLobbyType RuyiNetLobbyType, int freeSlots, Action<RuyiNetLobby[]> callback)
         {
-            FindLobbies(clientIndex, numResults, lobbyType, freeSlots, "{}", callback);
+            FindLobbies(clientIndex, numResults, RuyiNetLobbyType, freeSlots, "{}", callback);
         }
 
         /// <summary>
@@ -208,11 +208,11 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="clientIndex">The index of user</param>
         /// <param name="numResults">The maximum number of lobbies to return.</param>
-        /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
+        /// <param name="RuyiNetLobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
         /// <param name="freeSlots">The number of free slots needed.</param>
         /// <param name="jsonAttributes">JSON string representing parameters to search for.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void FindLobbies(int clientIndex, int numResults, LobbyType lobbyType, int freeSlots, string jsonAttributes, Action<RuyiNetLobby[]> callback)
+        public void FindLobbies(int clientIndex, int numResults, RuyiNetLobbyType RuyiNetLobbyType, int freeSlots, string jsonAttributes, Action<RuyiNetLobby[]> callback)
         {
             EnqueueTask(() =>
             {
