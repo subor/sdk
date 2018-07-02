@@ -3096,7 +3096,7 @@ service BrainCloudService {
 	/** Create a new lobby. */
 	string Lobby_CreateLobby(
 		/** The type of lobby to create, either "PLAYER" or "RANKED". */
-		1:  lobbyType, 
+		1: BrainCloudServiceSDKDataTypes.LobbyType lobbyType, 
 		
 		/** The maximum number of players that can join the lobby. */
 		2: i32 maxSlots, 
