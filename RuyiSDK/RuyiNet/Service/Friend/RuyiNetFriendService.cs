@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Ruyi.SDK.BrainCloudApi;
-using System;
 
 namespace Ruyi.SDK.Online
 {
@@ -21,7 +19,12 @@ namespace Ruyi.SDK.Online
         {
         }
 
-        [Obsolete("Use SendFriendInvitation instead")]
+        /// <summary>
+        /// Adds a user to the player's friend list.
+        /// </summary>
+        /// <param name="index">The index of user</param>
+        /// <param name="profileId">The profile ID of the user to add.</param>
+        /// <param name="callback">The function to call when the task completes.</param>
         public void AddFriend(int index, string profileId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
         {
             EnqueueTask(() =>
@@ -35,13 +38,14 @@ namespace Ruyi.SDK.Online
         /// Removes a user from the player's friend list.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="playerId">The  ID of the player to remove.</param>
+        /// <param name="profileId">The profile ID of the user to remove.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void RemoveFriend(int index, string playerId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public void RemoveFriend(int index, string profileId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
         {
             EnqueueTask(() =>
             {
-                return mClient.BCService.Friend_RemoveFriend(playerId, index);
+                var payload = new RuyiNetProfileIdRequest() { profileId = profileId };
+                return mClient.BCService.Script_RunParentScript("RemoveFriend", JsonConvert.SerializeObject(payload), "RUYI", index);
             }, callback);
         }
 
@@ -54,11 +58,16 @@ namespace Ruyi.SDK.Online
         {
             EnqueueTask(() =>
             {
-                return mClient.BCService.Friend_ListFriends(FriendPlatform.brainCloud, true, index);
+                return mClient.BCService.Script_RunParentScript("ListFriends", "{}", "RUYI", index);
             }, callback);
         }
-        
-        [Obsolete("Use GetSummaryDataForProfileId instead")]
+
+        /// <summary>
+        /// Get the profile of the specified user.
+        /// </summary>
+        /// <param name="index">The index of user</param>
+        /// <param name="profileId">The profile ID of the user to get the profile for.</param>
+        /// <param name="callback">The function to call when the task completes.</param>
         public void GetProfile(int index, string profileId, RuyiNetTask<RuyiNetGetProfileResponse>.CallbackType callback)
         {
             EnqueueTask(() =>
@@ -68,7 +77,12 @@ namespace Ruyi.SDK.Online
             }, callback);
         }
 
-        [Obsolete("Use ListFriends instead")]
+        /// <summary>
+        /// Get the profile of the specified users.
+        /// </summary>
+        /// <param name="index">The index of user</param>
+        /// <param name="profileIds">A list of profile IDs of the users to get the profiles for.</param>
+        /// <param name="callback">The function to call when the task completes.</param>
         public void GetProfiles(int index, string[] profileIds, RuyiNetTask<RuyiNetGetProfilesResponse>.CallbackType callback)
         {
             EnqueueTask(() =>
