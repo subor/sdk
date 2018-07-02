@@ -31,6 +31,7 @@ namespace Ruyi.Layer0
         SPEECH,
         MEDIA,
         LAYER1,
+        NOTIFICATION,
 
         LOW_POWER_END,
         #endregion
