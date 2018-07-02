@@ -94,17 +94,6 @@ extern const std::map<int, const char*> _RotationType_VALUES_TO_NAMES;
 
 std::ostream& operator<<(std::ostream& out, const RotationType::type& val);
 
-struct LobbyType {
-  enum type {
-    PLAYER = 0,
-    RANKED = 1
-  };
-};
-
-extern const std::map<int, const char*> _LobbyType_VALUES_TO_NAMES;
-
-std::ostream& operator<<(std::ostream& out, const LobbyType::type& val);
-
 typedef std::string JSON;
 
 typedef int64_t date;

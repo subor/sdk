@@ -1,8 +1,5 @@
-namespace cpp Ruyi.SDK.BrainCloudApi
 namespace csharp Ruyi.SDK.BrainCloudApi
-namespace java Ruyi.SDK.BrainCloudApi
-namespace netcore Ruyi.SDK.BrainCloudApi
-namespace rs Ruyi.SDK.BrainCloudApi
+namespace cpp Ruyi.SDK.BrainCloudApi
 
 typedef string JSON
 typedef i64 date
@@ -43,11 +40,6 @@ enum RotationType {
     WEEKLY = 2,
     MONTHLY = 3,
     YEARLY = 4,
-}
-
-enum LobbyType {
-    PLAYER = 0,
-    RANKED = 1,
 }
 
 
