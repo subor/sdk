@@ -1,7 +1,10 @@
 include "BrainCloudServiceSDKDataTypes.thrift"
 
-namespace csharp Ruyi.SDK.BrainCloudApi
 namespace cpp Ruyi.SDK.BrainCloudApi
+namespace csharp Ruyi.SDK.BrainCloudApi
+namespace java Ruyi.SDK.BrainCloudApi
+namespace netcore Ruyi.SDK.BrainCloudApi
+namespace rs Ruyi.SDK.BrainCloudApi
 
 
 service BrainCloudService {
