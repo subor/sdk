@@ -4,8 +4,7 @@
 
 #include "../RuyiNetClient.h"
 
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
 	/// <summary>
 	/// The response from a List User Files request.
 	/// </summary>
@@ -156,4 +155,4 @@ namespace Ruyi
 			}
 		}
 	};
-}
+}}}

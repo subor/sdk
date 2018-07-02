@@ -97,6 +97,7 @@ class SettingSystemServiceIf {
    */
   virtual bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents) = 0;
   virtual void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) = 0;
+  virtual void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return) = 0;
 };
 
 class SettingSystemServiceIfFactory {
@@ -177,6 +178,9 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
     return _return;
   }
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& /* _return */) {
+    return;
+  }
+  void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& /* _return */) {
     return;
   }
 };
@@ -1928,6 +1932,106 @@ class SettingSystemService_GetNetworkSettings_presult {
 
 };
 
+
+class SettingSystemService_GetNetworkStatus_args {
+ public:
+
+  SettingSystemService_GetNetworkStatus_args(const SettingSystemService_GetNetworkStatus_args&);
+  SettingSystemService_GetNetworkStatus_args& operator=(const SettingSystemService_GetNetworkStatus_args&);
+  SettingSystemService_GetNetworkStatus_args() {
+  }
+
+  virtual ~SettingSystemService_GetNetworkStatus_args() throw();
+
+  bool operator == (const SettingSystemService_GetNetworkStatus_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const SettingSystemService_GetNetworkStatus_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_GetNetworkStatus_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_GetNetworkStatus_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_GetNetworkStatus_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_GetNetworkStatus_result__isset {
+  _SettingSystemService_GetNetworkStatus_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_GetNetworkStatus_result__isset;
+
+class SettingSystemService_GetNetworkStatus_result {
+ public:
+
+  SettingSystemService_GetNetworkStatus_result(const SettingSystemService_GetNetworkStatus_result&);
+  SettingSystemService_GetNetworkStatus_result& operator=(const SettingSystemService_GetNetworkStatus_result&);
+  SettingSystemService_GetNetworkStatus_result() {
+  }
+
+  virtual ~SettingSystemService_GetNetworkStatus_result() throw();
+   ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_GetNetworkStatus_result__isset __isset;
+
+  void __set_success(const  ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_GetNetworkStatus_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_GetNetworkStatus_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_GetNetworkStatus_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_GetNetworkStatus_presult__isset {
+  _SettingSystemService_GetNetworkStatus_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_GetNetworkStatus_presult__isset;
+
+class SettingSystemService_GetNetworkStatus_presult {
+ public:
+
+
+  virtual ~SettingSystemService_GetNetworkStatus_presult() throw();
+   ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus* success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_GetNetworkStatus_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
  public:
   SettingSystemServiceClient(apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) {
@@ -1998,6 +2102,9 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return);
   void send_GetNetworkSettings();
   void recv_GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return);
+  void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return);
+  void send_GetNetworkStatus();
+  void recv_GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return);
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -2028,6 +2135,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
   void process_RemoveUserAppData(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SettingItemNotify(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetNetworkSettings(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_GetNetworkStatus(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   SettingSystemServiceProcessor(::apache::thrift::stdcxx::shared_ptr<SettingSystemServiceIf> iface) :
     iface_(iface) {
@@ -2046,6 +2154,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
     processMap_["RemoveUserAppData"] = &SettingSystemServiceProcessor::process_RemoveUserAppData;
     processMap_["SettingItemNotify"] = &SettingSystemServiceProcessor::process_SettingItemNotify;
     processMap_["GetNetworkSettings"] = &SettingSystemServiceProcessor::process_GetNetworkSettings;
+    processMap_["GetNetworkStatus"] = &SettingSystemServiceProcessor::process_GetNetworkStatus;
   }
 
   virtual ~SettingSystemServiceProcessor() {}
@@ -2216,6 +2325,16 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return;
   }
 
+  void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->GetNetworkStatus(_return);
+    }
+    ifaces_[i]->GetNetworkStatus(_return);
+    return;
+  }
+
 };
 
 // The 'concurrent' client is a thread safe client that correctly handles
@@ -2291,6 +2410,9 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return);
   int32_t send_GetNetworkSettings();
   void recv_GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return, const int32_t seqid);
+  void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return);
+  int32_t send_GetNetworkStatus();
+  void recv_GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return, const int32_t seqid);
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;

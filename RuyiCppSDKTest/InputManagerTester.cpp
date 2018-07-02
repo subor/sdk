@@ -32,6 +32,11 @@ namespace RuyiCppSDKTest
 		{
 			pInputManagerTest->InputManagerReceiveInputMessage();
 		}
+
+		TEST_METHOD(SubsribeTimeTest)
+		{
+			pInputManagerTest->SubscribeTimeoutTest();
+		}
 	};
 
 	InputManagerTest* InputManagerTester::pInputManagerTest;
