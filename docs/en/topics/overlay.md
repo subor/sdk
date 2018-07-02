@@ -17,6 +17,36 @@ It is implemented via dll hooking (also called dll injection) so it works withou
 
 ## Compatibility
 
+A compatibility string may be placed in the [application manifest](app_metadata.md):
+
+```
+meta_data:[
+    {
+    name:"gamedb_string",
+    value:"
+    
+        <game>
+            <id>6002</id>
+            <name>UE4Game</name>
+            <conditions>
+                <cond name='is-UE4Game.exe-present' type='exe-present' exe='UE4Game.exe'/>
+            </conditions>
+            <detection>
+                <variant order='1' name='default'>
+                    <if cond='is-UE4Game.exe-present'/>
+                </variant>
+            </detection>
+        </game>
+
+    "
+    }
+	]
+```
+
+Here the value in gamedb_string is a "game block" which copy from gamedb.xml.  Here you need to pay attention to use `' '` instead of `" "` in `<game></game>`, in order to correctly include XML in JSON file.
+
+## Gamesdb.xml
+
 Compatible apps are listed in `RuyiOverlay/Resources/DeployRes/gamesdb.xml`.
 
 Currently, making a game compatible requires adding an entry to gamesdb.xml.  Later we will make this part of the [application manifest](app_metadata.md).
