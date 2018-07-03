@@ -42,6 +42,11 @@ enum RotationType {
     YEARLY = 4,
 }
 
+enum LobbyType {
+    PLAYER = 0,
+    RANKED = 1,
+}
+
 
 struct BCServiceStartedNotification {
 }

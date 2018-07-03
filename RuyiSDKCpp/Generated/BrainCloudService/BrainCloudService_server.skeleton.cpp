@@ -4407,6 +4407,132 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Tournament_ViewReward\n");
   }
 
+  /**
+   * Create a new lobby.
+   * 
+   * @param lobbyType The type of lobby to create, either "PLAYER" or "RANKED".
+   * 
+   * @param maxSlots The maximum number of players that can join the lobby.
+   * 
+   * @param isOpen Whether or not the lobby is open by default.
+   * 
+   * @param jsonAttributes A json string containing any custom attributes to attach to the lobby.
+   * 
+   * @param clientIndex
+   */
+  void Lobby_CreateLobby(std::string& _return, const  ::Ruyi::SDK::BrainCloudApi::LobbyType::type lobbyType, const int32_t maxSlots, const bool isOpen, const std::string& jsonAttributes, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_CreateLobby\n");
+  }
+
+  /**
+   * Open a lobby so players can join.
+   * 
+   * @param lobbyId The ID of the lobby to open.
+   * 
+   * @param clientIndex
+   */
+  void Lobby_OpenLobby(std::string& _return, const std::string& lobbyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_OpenLobby\n");
+  }
+
+  /**
+   * Close a lobby so players can't join.
+   * 
+   * @param lobbyId The ID of the lobby to close.
+   * 
+   * @param clientIndex
+   */
+  void Lobby_CloseLobby(std::string& _return, const std::string& lobbyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_CloseLobby\n");
+  }
+
+  /**
+   * Find lobbies the player can join.
+   * 
+   * @param freeSlots
+   * @param maxResults
+   * @param jsonAttributes A json string containing any custom attributes to search for.
+   * 
+   * @param clientIndex
+   */
+  void Lobby_FindLobbies(std::string& _return, const int32_t freeSlots, const int32_t maxResults, const std::string& jsonAttributes, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_FindLobbies\n");
+  }
+
+  /**
+   * Find lobbies with the player's friends in them.
+   * 
+   * @param clientIndex
+   */
+  void Lobby_FindFriendsLobbies(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_FindFriendsLobbies\n");
+  }
+
+  /**
+   * Join a lobby.
+   * 
+   * @param lobbyId The ID of the lobby to join.
+   * 
+   * @param clientIndex
+   */
+  void Lobby_JoinLobby(std::string& _return, const std::string& lobbyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_JoinLobby\n");
+  }
+
+  /**
+   * Leave a lobby.
+   * 
+   * @param lobbyId The ID of the lobby to leave.
+   * 
+   * @param clientIndex
+   */
+  void Lobby_LeaveLobby(std::string& _return, const std::string& lobbyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_LeaveLobby\n");
+  }
+
+  /**
+   * Destroy a lobby.
+   * 
+   * @param lobbyId The ID of the lobby to destroy.
+   * 
+   * @param clientIndex
+   */
+  void Lobby_DestroyLobby(std::string& _return, const std::string& lobbyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_DestroyLobby\n");
+  }
+
+  /**
+   * Start a lobby game.
+   * 
+   * @param lobbyId The ID of the lobby to destroy.
+   * 
+   * @param connectionString A string that can be used to connect to a real game (e.g an IP Address/port).
+   * 
+   * @param clientIndex
+   */
+  void Lobby_StartGame(std::string& _return, const std::string& lobbyId, const std::string& connectionString, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_StartGame\n");
+  }
+
+  /**
+   * Get a list of lobbies the player is a member of.
+   * 
+   * @param clientIndex
+   */
+  void Lobby_GetMyLobbies(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Lobby_GetMyLobbies\n");
+  }
+
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Patch_GetGameManifest\n");
@@ -4525,6 +4651,16 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void SocialFeed_UnhidePlayer(std::string& _return, const std::string& playerId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("SocialFeed_UnhidePlayer\n");
+  }
+
+  void SocialFeed_GetActivity(std::string& _return, const std::string& socialFeedId, const int32_t depth, const int32_t skip, const int32_t limit, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("SocialFeed_GetActivity\n");
+  }
+
+  void SocialFeed_GetComment(std::string& _return, const std::string& socialFeedId, const int32_t depth, const int32_t skip, const int32_t limit, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("SocialFeed_GetComment\n");
   }
 
   void Telemetry_StartTelemetrySession(std::string& _return, const int32_t timestamp, const int32_t clientIndex) {

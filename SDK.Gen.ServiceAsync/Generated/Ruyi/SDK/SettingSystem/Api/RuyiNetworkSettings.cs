@@ -27,22 +27,22 @@ namespace Ruyi.SDK.SettingSystem.Api
 
   public partial class RuyiNetworkSettings : TBase
   {
-    private bool _connection;
-    private bool _isWifi;
-    private int _quality;
-    private string _SSID;
-    private string _BSSID;
-    private string _Authentication;
-    private bool _DHCPEnabled;
-    private string _IpAddress;
-    private string _SubMask;
-    private string _Gateway;
-    private string _MainDNS;
-    private string _SubDNS;
-    private string _MacAddress;
-    private string _Proxy;
+    private RuyiNetworkSettingNameValue _connection;
+    private RuyiNetworkSettingNameValue _networkType;
+    private RuyiNetworkSettingNameValue _quality;
+    private RuyiNetworkSettingNameValue _SSID;
+    private RuyiNetworkSettingNameValue _BSSID;
+    private RuyiNetworkSettingNameValue _Authentication;
+    private RuyiNetworkSettingNameValue _DHCPEnabled;
+    private RuyiNetworkSettingNameValue _IpAddress;
+    private RuyiNetworkSettingNameValue _SubMask;
+    private RuyiNetworkSettingNameValue _Gateway;
+    private RuyiNetworkSettingNameValue _MainDNS;
+    private RuyiNetworkSettingNameValue _SubDNS;
+    private RuyiNetworkSettingNameValue _MacAddress;
+    private RuyiNetworkSettingNameValue _Proxy;
 
-    public bool Connection
+    public RuyiNetworkSettingNameValue Connection
     {
       get
       {
@@ -55,20 +55,20 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public bool IsWifi
+    public RuyiNetworkSettingNameValue NetworkType
     {
       get
       {
-        return _isWifi;
+        return _networkType;
       }
       set
       {
-        __isset.isWifi = true;
-        this._isWifi = value;
+        __isset.networkType = true;
+        this._networkType = value;
       }
     }
 
-    public int Quality
+    public RuyiNetworkSettingNameValue Quality
     {
       get
       {
@@ -81,7 +81,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public string SSID
+    public RuyiNetworkSettingNameValue SSID
     {
       get
       {
@@ -94,7 +94,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public string BSSID
+    public RuyiNetworkSettingNameValue BSSID
     {
       get
       {
@@ -107,7 +107,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public string Authentication
+    public RuyiNetworkSettingNameValue Authentication
     {
       get
       {
@@ -120,7 +120,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public bool DHCPEnabled
+    public RuyiNetworkSettingNameValue DHCPEnabled
     {
       get
       {
@@ -133,7 +133,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public string IpAddress
+    public RuyiNetworkSettingNameValue IpAddress
     {
       get
       {
@@ -146,7 +146,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public string SubMask
+    public RuyiNetworkSettingNameValue SubMask
     {
       get
       {
@@ -159,7 +159,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public string Gateway
+    public RuyiNetworkSettingNameValue Gateway
     {
       get
       {
@@ -172,7 +172,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public string MainDNS
+    public RuyiNetworkSettingNameValue MainDNS
     {
       get
       {
@@ -185,7 +185,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public string SubDNS
+    public RuyiNetworkSettingNameValue SubDNS
     {
       get
       {
@@ -198,7 +198,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public string MacAddress
+    public RuyiNetworkSettingNameValue MacAddress
     {
       get
       {
@@ -211,7 +211,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public string Proxy
+    public RuyiNetworkSettingNameValue Proxy
     {
       get
       {
@@ -229,7 +229,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     public struct Isset
     {
       public bool connection;
-      public bool isWifi;
+      public bool networkType;
       public bool quality;
       public bool SSID;
       public bool BSSID;
@@ -266,9 +266,10 @@ namespace Ruyi.SDK.SettingSystem.Api
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.Bool)
+              if (field.Type == TType.Struct)
               {
-                Connection = await iprot.ReadBoolAsync(cancellationToken);
+                Connection = new RuyiNetworkSettingNameValue();
+                await Connection.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -276,9 +277,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 2:
-              if (field.Type == TType.Bool)
+              if (field.Type == TType.Struct)
               {
-                IsWifi = await iprot.ReadBoolAsync(cancellationToken);
+                NetworkType = new RuyiNetworkSettingNameValue();
+                await NetworkType.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -286,9 +288,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 3:
-              if (field.Type == TType.I32)
+              if (field.Type == TType.Struct)
               {
-                Quality = await iprot.ReadI32Async(cancellationToken);
+                Quality = new RuyiNetworkSettingNameValue();
+                await Quality.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -296,9 +299,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 4:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                SSID = await iprot.ReadStringAsync(cancellationToken);
+                SSID = new RuyiNetworkSettingNameValue();
+                await SSID.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -306,9 +310,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 5:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                BSSID = await iprot.ReadStringAsync(cancellationToken);
+                BSSID = new RuyiNetworkSettingNameValue();
+                await BSSID.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -316,9 +321,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 6:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                Authentication = await iprot.ReadStringAsync(cancellationToken);
+                Authentication = new RuyiNetworkSettingNameValue();
+                await Authentication.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -326,9 +332,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 7:
-              if (field.Type == TType.Bool)
+              if (field.Type == TType.Struct)
               {
-                DHCPEnabled = await iprot.ReadBoolAsync(cancellationToken);
+                DHCPEnabled = new RuyiNetworkSettingNameValue();
+                await DHCPEnabled.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -336,9 +343,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 8:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                IpAddress = await iprot.ReadStringAsync(cancellationToken);
+                IpAddress = new RuyiNetworkSettingNameValue();
+                await IpAddress.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -346,9 +354,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 9:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                SubMask = await iprot.ReadStringAsync(cancellationToken);
+                SubMask = new RuyiNetworkSettingNameValue();
+                await SubMask.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -356,9 +365,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 10:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                Gateway = await iprot.ReadStringAsync(cancellationToken);
+                Gateway = new RuyiNetworkSettingNameValue();
+                await Gateway.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -366,9 +376,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 11:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                MainDNS = await iprot.ReadStringAsync(cancellationToken);
+                MainDNS = new RuyiNetworkSettingNameValue();
+                await MainDNS.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -376,9 +387,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 12:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                SubDNS = await iprot.ReadStringAsync(cancellationToken);
+                SubDNS = new RuyiNetworkSettingNameValue();
+                await SubDNS.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -386,9 +398,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 13:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                MacAddress = await iprot.ReadStringAsync(cancellationToken);
+                MacAddress = new RuyiNetworkSettingNameValue();
+                await MacAddress.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -396,9 +409,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 14:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                Proxy = await iprot.ReadStringAsync(cancellationToken);
+                Proxy = new RuyiNetworkSettingNameValue();
+                await Proxy.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -429,130 +443,130 @@ namespace Ruyi.SDK.SettingSystem.Api
         var struc = new TStruct("RuyiNetworkSettings");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (__isset.connection)
+        if (Connection != null && __isset.connection)
         {
           field.Name = "connection";
-          field.Type = TType.Bool;
+          field.Type = TType.Struct;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(Connection, cancellationToken);
+          await Connection.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.isWifi)
+        if (NetworkType != null && __isset.networkType)
         {
-          field.Name = "isWifi";
-          field.Type = TType.Bool;
+          field.Name = "networkType";
+          field.Type = TType.Struct;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(IsWifi, cancellationToken);
+          await NetworkType.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.quality)
+        if (Quality != null && __isset.quality)
         {
           field.Name = "quality";
-          field.Type = TType.I32;
+          field.Type = TType.Struct;
           field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(Quality, cancellationToken);
+          await Quality.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (SSID != null && __isset.SSID)
         {
           field.Name = "SSID";
-          field.Type = TType.String;
+          field.Type = TType.Struct;
           field.ID = 4;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(SSID, cancellationToken);
+          await SSID.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (BSSID != null && __isset.BSSID)
         {
           field.Name = "BSSID";
-          field.Type = TType.String;
+          field.Type = TType.Struct;
           field.ID = 5;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(BSSID, cancellationToken);
+          await BSSID.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (Authentication != null && __isset.Authentication)
         {
           field.Name = "Authentication";
-          field.Type = TType.String;
+          field.Type = TType.Struct;
           field.ID = 6;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Authentication, cancellationToken);
+          await Authentication.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.DHCPEnabled)
+        if (DHCPEnabled != null && __isset.DHCPEnabled)
         {
           field.Name = "DHCPEnabled";
-          field.Type = TType.Bool;
+          field.Type = TType.Struct;
           field.ID = 7;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(DHCPEnabled, cancellationToken);
+          await DHCPEnabled.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (IpAddress != null && __isset.IpAddress)
         {
           field.Name = "IpAddress";
-          field.Type = TType.String;
+          field.Type = TType.Struct;
           field.ID = 8;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(IpAddress, cancellationToken);
+          await IpAddress.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (SubMask != null && __isset.SubMask)
         {
           field.Name = "SubMask";
-          field.Type = TType.String;
+          field.Type = TType.Struct;
           field.ID = 9;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(SubMask, cancellationToken);
+          await SubMask.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (Gateway != null && __isset.Gateway)
         {
           field.Name = "Gateway";
-          field.Type = TType.String;
+          field.Type = TType.Struct;
           field.ID = 10;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Gateway, cancellationToken);
+          await Gateway.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (MainDNS != null && __isset.MainDNS)
         {
           field.Name = "MainDNS";
-          field.Type = TType.String;
+          field.Type = TType.Struct;
           field.ID = 11;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(MainDNS, cancellationToken);
+          await MainDNS.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (SubDNS != null && __isset.SubDNS)
         {
           field.Name = "SubDNS";
-          field.Type = TType.String;
+          field.Type = TType.Struct;
           field.ID = 12;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(SubDNS, cancellationToken);
+          await SubDNS.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (MacAddress != null && __isset.MacAddress)
         {
           field.Name = "MacAddress";
-          field.Type = TType.String;
+          field.Type = TType.Struct;
           field.ID = 13;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(MacAddress, cancellationToken);
+          await MacAddress.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (Proxy != null && __isset.Proxy)
         {
           field.Name = "Proxy";
-          field.Type = TType.String;
+          field.Type = TType.Struct;
           field.ID = 14;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Proxy, cancellationToken);
+          await Proxy.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -568,103 +582,103 @@ namespace Ruyi.SDK.SettingSystem.Api
     {
       var sb = new StringBuilder("RuyiNetworkSettings(");
       bool __first = true;
-      if (__isset.connection)
+      if (Connection != null && __isset.connection)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("Connection: ");
-        sb.Append(Connection);
+        sb.Append(Connection== null ? "<null>" : Connection.ToString());
       }
-      if (__isset.isWifi)
+      if (NetworkType != null && __isset.networkType)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("IsWifi: ");
-        sb.Append(IsWifi);
+        sb.Append("NetworkType: ");
+        sb.Append(NetworkType== null ? "<null>" : NetworkType.ToString());
       }
-      if (__isset.quality)
+      if (Quality != null && __isset.quality)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("Quality: ");
-        sb.Append(Quality);
+        sb.Append(Quality== null ? "<null>" : Quality.ToString());
       }
       if (SSID != null && __isset.SSID)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("SSID: ");
-        sb.Append(SSID);
+        sb.Append(SSID== null ? "<null>" : SSID.ToString());
       }
       if (BSSID != null && __isset.BSSID)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("BSSID: ");
-        sb.Append(BSSID);
+        sb.Append(BSSID== null ? "<null>" : BSSID.ToString());
       }
       if (Authentication != null && __isset.Authentication)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("Authentication: ");
-        sb.Append(Authentication);
+        sb.Append(Authentication== null ? "<null>" : Authentication.ToString());
       }
-      if (__isset.DHCPEnabled)
+      if (DHCPEnabled != null && __isset.DHCPEnabled)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("DHCPEnabled: ");
-        sb.Append(DHCPEnabled);
+        sb.Append(DHCPEnabled== null ? "<null>" : DHCPEnabled.ToString());
       }
       if (IpAddress != null && __isset.IpAddress)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("IpAddress: ");
-        sb.Append(IpAddress);
+        sb.Append(IpAddress== null ? "<null>" : IpAddress.ToString());
       }
       if (SubMask != null && __isset.SubMask)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("SubMask: ");
-        sb.Append(SubMask);
+        sb.Append(SubMask== null ? "<null>" : SubMask.ToString());
       }
       if (Gateway != null && __isset.Gateway)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("Gateway: ");
-        sb.Append(Gateway);
+        sb.Append(Gateway== null ? "<null>" : Gateway.ToString());
       }
       if (MainDNS != null && __isset.MainDNS)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("MainDNS: ");
-        sb.Append(MainDNS);
+        sb.Append(MainDNS== null ? "<null>" : MainDNS.ToString());
       }
       if (SubDNS != null && __isset.SubDNS)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("SubDNS: ");
-        sb.Append(SubDNS);
+        sb.Append(SubDNS== null ? "<null>" : SubDNS.ToString());
       }
       if (MacAddress != null && __isset.MacAddress)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("MacAddress: ");
-        sb.Append(MacAddress);
+        sb.Append(MacAddress== null ? "<null>" : MacAddress.ToString());
       }
       if (Proxy != null && __isset.Proxy)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("Proxy: ");
-        sb.Append(Proxy);
+        sb.Append(Proxy== null ? "<null>" : Proxy.ToString());
       }
       sb.Append(")");
       return sb.ToString();

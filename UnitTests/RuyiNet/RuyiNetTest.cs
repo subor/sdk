@@ -205,7 +205,7 @@ namespace Ruyi.SDK.Online.Tests
         [Test]
         public void RuyiNetTest_Lobby()
         {
-            mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET, () =>
+            /*mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET, () =>
             {
                 var lobbyService = mSDK.RuyiNetService.LobbyService;
                 lobbyService.CreateLobby(0, 4, RuyiNetLobbyType.PLAYER,
@@ -231,7 +231,7 @@ namespace Ruyi.SDK.Online.Tests
                 });
             });
 
-            while (mSDK.RuyiNetService.IsWorking) { mSDK.Update(); }
+            while (mSDK.RuyiNetService.IsWorking) { mSDK.Update(); }*/
         }
 
         [Test]
