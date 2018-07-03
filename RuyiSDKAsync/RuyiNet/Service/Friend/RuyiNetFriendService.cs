@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace Ruyi.SDK.Online
 {
@@ -24,14 +25,11 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="profileId">The profile ID of the user to add.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void AddFriend(int index, string profileId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public async Task<RuyiNetResponse> AddFriend(int index, string profileId)
         {
-            EnqueueTask(() =>
-            {
-                var payload = new RuyiNetProfileIdRequest() { profileId = profileId };
-                return mClient.BCService.Script_RunParentScriptAsync("AddFriend", JsonConvert.SerializeObject(payload), "RUYI", index, token).Result;
-            }, callback);
+            var payload = new RuyiNetProfileIdRequest() { profileId = profileId };
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("AddFriend", JsonConvert.SerializeObject(payload), "RUYI", index, token);
+            return mClient.Process<RuyiNetResponse>(resp);
         }
 
         /// <summary>
@@ -39,27 +37,21 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="profileId">The profile ID of the user to remove.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void RemoveFriend(int index, string profileId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public async Task<RuyiNetResponse> RemoveFriend(int index, string profileId)
         {
-            EnqueueTask(() =>
-            {
-                var payload = new RuyiNetProfileIdRequest() { profileId = profileId };
-                return mClient.BCService.Script_RunParentScriptAsync("RemoveFriend", JsonConvert.SerializeObject(payload), "RUYI", index, token).Result;
-            }, callback);
+            var payload = new RuyiNetProfileIdRequest() { profileId = profileId };
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("RemoveFriend", JsonConvert.SerializeObject(payload), "RUYI", index, token);
+            return mClient.Process<RuyiNetResponse>(resp);
         }
 
         /// <summary>
         /// Returns a list of the user's friends.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void ListFriends(int index, RuyiNetTask<RuyiNetListFriendsResponse>.CallbackType callback)
+        public async Task<RuyiNetListFriendsResponse> ListFriends(int index)
         {
-            EnqueueTask(() =>
-            {
-                return mClient.BCService.Script_RunParentScriptAsync("ListFriends", "{}", "RUYI", index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("ListFriends", "{}", "RUYI", index, token);
+            return mClient.Process<RuyiNetListFriendsResponse>(resp);
         }
 
         /// <summary>
@@ -67,14 +59,11 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="profileId">The profile ID of the user to get the profile for.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void GetProfile(int index, string profileId, RuyiNetTask<RuyiNetGetProfileResponse>.CallbackType callback)
+        public async Task<RuyiNetGetProfileResponse> GetProfile(int index, string profileId)
         {
-            EnqueueTask(() =>
-            {
-                var payload = new RuyiNetProfileIdRequest() { profileId = profileId };
-                return mClient.BCService.Script_RunParentScriptAsync("GetProfile", JsonConvert.SerializeObject(payload), "RUYI", index, token).Result;
-            }, callback);
+            var payload = new RuyiNetProfileIdRequest() { profileId = profileId };
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("GetProfile", JsonConvert.SerializeObject(payload), "RUYI", index, token);
+            return mClient.Process<RuyiNetGetProfileResponse>(resp);
         }
 
         /// <summary>
@@ -82,16 +71,11 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="profileIds">A list of profile IDs of the users to get the profiles for.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void GetProfiles(int index, string[] profileIds, RuyiNetTask<RuyiNetGetProfilesResponse>.CallbackType callback)
+        public async Task<RuyiNetGetProfilesResponse> GetProfiles(int index, string[] profileIds)
         {
-            EnqueueTask(() =>
-            {
-                var payload = new RuyiNetProfileIdsRequest() { profileIds = profileIds };
-                return mClient.BCService.Script_RunParentScriptAsync("GetProfiles", JsonConvert.SerializeObject(payload), "RUYI", index, token).Result;
-            }, callback);
+            var payload = new RuyiNetProfileIdsRequest() { profileIds = profileIds };
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("GetProfiles", JsonConvert.SerializeObject(payload), "RUYI", index, token);
+            return mClient.Process<RuyiNetGetProfilesResponse>(resp);
         }
-
-        static System.Threading.CancellationToken token = System.Threading.CancellationToken.None;
     }
 }

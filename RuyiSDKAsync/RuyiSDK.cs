@@ -344,15 +344,7 @@ namespace Ruyi
 
             return true;
         }
-
-        /// <summary>
-        /// Basic update loop.
-        /// </summary>
-        public void Update()
-        {
-            RuyiNetService.Update();
-        }
-
+        
         /// <summary>
         /// Dispose the SDK instance, don't miss this after SDK usage.
         /// </summary>
