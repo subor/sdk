@@ -165,9 +165,8 @@ namespace Ruyi.Layer0
             }
             catch (Exception e)
             {
-                if (e is TargetInvocationException)
+                if (e is TargetInvocationException ee)
                 {
-                    var ee = e as TargetInvocationException;
                     Log($"SubscribeClient, invoke exception: {(ee).InnerException.Message} \n {ee.InnerException.StackTrace}", Logging.LogLevel.Warn);
                     return true;
                 }
