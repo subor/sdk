@@ -1,12 +1,29 @@
 ﻿using System.Collections.Generic;
 
-namespace Ruyi.SDK.RuyiNet
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// Represents an entity
     /// </summary>
     public class RuyiNetEntity
     {
+        /// <summary>
+        /// Construct from response data.
+        /// </summary>
+        /// <param name="data">The data from a response.</param>
+        public static implicit operator RuyiNetEntity(RuyiNetEntityData data)
+        {
+            return new RuyiNetEntity()
+            {
+                EntityId = data.entityId,
+                EntityType = data.entityType,
+                Version = data.version,
+                CreatedAt = data.createdAt,
+                UpdatedAt = data.updatedAt,
+                Data = data.data,
+            };
+        }
+        
         /// <summary>
         /// The ID of the entity.
         /// </summary>
