@@ -1,27 +1,26 @@
 
 #include "RuyiNetClient.h"
-#include "Service/RuyiNetCloudService.h"
-#include "Service/RuyiNetFriendService.h"
-#include "Service/RuyiNetLeaderboardService.h"
-#include "Service/RuyiNetPartyService.h"
-#include "Service/RuyiNetProfileService.h"
-#include "Service/RuyiNetUserFileService.h"
-#include "Service/RuyiNetVideoService.h"
-#include "Service/RuyiNetMatchmakingService.h"
-#include "Service/RuyiNetLobbyService.h"
-#include "Service/RuyiNetTelemetryService.h"
+#include "Service/Cloud/RuyiNetCloudService.h"
+#include "Service/Friend/RuyiNetFriendService.h"
+#include "Service/Leaderboard/RuyiNetLeaderboardService.h"
+#include "Service/Party/RuyiNetPartyService.h"
+#include "Service/Profile/RuyiNetProfileService.h"
+#include "Service/UserFile/RuyiNetUserFileService.h"
+#include "Service/Video/RuyiNetVideoService.h"
+#include "Service/Lobby/RuyiNetLobbyService.h"
+#include "Service/Telemetry/RuyiNetTelemetryService.h"
+#include "Service/Gamification/RuyiNetGamificationService.h"
+#include "Service/Patch/RuyiNetPatchService.h"
 
 #include "Response/RuyiNetGetProfileResponse.h"
 #include "Response/RuyiNetProfile.h"
 
-namespace Ruyi
-{
-	
+namespace Ruyi { namespace SDK { namespace Online {
 
 	RuyiNetClient::RuyiNetClient(const std::shared_ptr<TProtocol1> & protocol)
 		: BCService(nullptr), mCloudService(nullptr), mFriendService(nullptr), mLeaderboardService(nullptr),
-		mPartyService(nullptr), mProfileService(nullptr), 
-		mVideoService(nullptr), mMatchmakingService(nullptr), mLobbyService(nullptr), mTelemetryService(nullptr), mInitialised(false)
+		mPartyService(nullptr), mProfileService(nullptr), mVideoService(nullptr), mLobbyService(nullptr), 
+		mTelemetryService(nullptr), mGamificationService(nullptr), mPatchService(nullptr), mInitialised(false)
 	{
 		BCService = new SDK::BrainCloudApi::BrainCloudServiceClient(protocol);
 
@@ -32,9 +31,10 @@ namespace Ruyi
 		mProfileService = new RuyiNetProfileService(this);
 		mUserFileService = new RuyiNetUserFileService(this);
 		mVideoService = new RuyiNetVideoService(this);
-		mMatchmakingService = new RuyiNetMatchmakingService(this);
 		mLobbyService = new RuyiNetLobbyService(this);
 		mTelemetryService = new RuyiNetTelemetryService(this);
+		mGamificationService = new RuyiNetGamificationService(this);
+		mPatchService = new RuyiNetPatchService(this);
 
 		for (int i = 0; i < MAX_PLAYERS; ++i)
 		{ 
@@ -51,10 +51,7 @@ namespace Ruyi
 
 		delete mLobbyService;
 		mLobbyService = nullptr;
-
-		delete mMatchmakingService;
-		mMatchmakingService = nullptr;
-
+		
 		delete mVideoService;
 		mVideoService = nullptr;
 
@@ -75,6 +72,12 @@ namespace Ruyi
 
 		delete mCloudService;
 		mCloudService = nullptr;
+
+		delete mGamificationService;
+		mGamificationService = nullptr;
+
+		delete mPatchService;
+		mPatchService = nullptr;
 
 		if (BCService != nullptr)
 		{
@@ -176,4 +179,4 @@ namespace Ruyi
 		return 0;
 	}
 
-}
+}}} 

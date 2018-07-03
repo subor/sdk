@@ -1,10 +1,7 @@
 include "BrainCloudServiceSDKDataTypes.thrift"
 
-namespace cpp Ruyi.SDK.BrainCloudApi
 namespace csharp Ruyi.SDK.BrainCloudApi
-namespace java Ruyi.SDK.BrainCloudApi
-namespace netcore Ruyi.SDK.BrainCloudApi
-namespace rs Ruyi.SDK.BrainCloudApi
+namespace cpp Ruyi.SDK.BrainCloudApi
 
 
 service BrainCloudService {
@@ -252,6 +249,58 @@ service BrainCloudService {
 		2: i32 clientIndex
 	),
 
+	/** Returns the sessionId or empty string if no session present. */
+	string Client_GetSessionId(1: i32 clientIndex),
+
+	/** Returns true if the user is currently authenticated.
+            If a session time out or session invalidation is returned from executing a
+            sever API call, this flag will reset back to false. */
+	bool Client_IsAuthenticated(1: i32 clientIndex),
+
+	/** Returns true if brainCloud has been initialized. */
+	bool Client_IsInitialized(1: i32 clientIndex),
+
+	/** Method initializes the BrainCloudClient. */
+	void Client_Initialize_SSS(
+		/** The secret key for your app */
+		1: string secretKey, 
+		2: string appId, 
+		
+		/** The app version */
+		3: string appVersion, 
+		4: i32 clientIndex
+	),
+
+	/** Method initializes the BrainCloudClient. */
+	void Client_Initialize_SSSS(
+		/** The URL to the brainCloud server */
+		1: string serverURL, 
+		
+		/** The secret key for your app */
+		2: string secretKey, 
+		
+		/** The app id */
+		3: string appId, 
+		
+		/** The app version */
+		4: string appVersion, 
+		5: i32 clientIndex
+	),
+
+	/** Initialize the identity aspects of brainCloud. */
+	void Client_InitializeIdentity(
+		/** The profile id */
+		1: string profileId, 
+		
+		/** The anonymous id */
+		2: string anonymousId, 
+		3: i32 clientIndex
+	),
+
+	/** Update method needs to be called regularly in order
+            to process incoming and outgoing messages. */
+	void Client_Update(1: i32 clientIndex),
+
 	/** Enable logging of brainCloud transactions (comms etc) */
 	void Client_EnableLogging(
 		/** True if logging is to be enabled */
@@ -395,58 +444,6 @@ service BrainCloudService {
 		1: string languageCode, 
 		2: i32 clientIndex
 	),
-
-	/** Returns the sessionId or empty string if no session present. */
-	string Client_GetSessionId(1: i32 clientIndex),
-
-	/** Returns true if the user is currently authenticated.
-            If a session time out or session invalidation is returned from executing a
-            sever API call, this flag will reset back to false. */
-	bool Client_IsAuthenticated(1: i32 clientIndex),
-
-	/** Returns true if brainCloud has been initialized. */
-	bool Client_IsInitialized(1: i32 clientIndex),
-
-	/** Method initializes the BrainCloudClient. */
-	void Client_Initialize_SSS(
-		/** The secret key for your app */
-		1: string secretKey, 
-		2: string appId, 
-		
-		/** The app version */
-		3: string appVersion, 
-		4: i32 clientIndex
-	),
-
-	/** Method initializes the BrainCloudClient. */
-	void Client_Initialize_SSSS(
-		/** The URL to the brainCloud server */
-		1: string serverURL, 
-		
-		/** The secret key for your app */
-		2: string secretKey, 
-		
-		/** The app id */
-		3: string appId, 
-		
-		/** The app version */
-		4: string appVersion, 
-		5: i32 clientIndex
-	),
-
-	/** Initialize the identity aspects of brainCloud. */
-	void Client_InitializeIdentity(
-		/** The profile id */
-		1: string profileId, 
-		
-		/** The anonymous id */
-		2: string anonymousId, 
-		3: i32 clientIndex
-	),
-
-	/** Update method needs to be called regularly in order
-            to process incoming and outgoing messages. */
-	void Client_Update(1: i32 clientIndex),
 
 	/** Creates custom data stream page event */
 	string DataStream_CustomPageEvent(
@@ -3096,6 +3093,80 @@ service BrainCloudService {
 		3: i32 clientIndex
 	),
 
+	/** Create a new lobby. */
+	string Lobby_CreateLobby(
+		/** The type of lobby to create, either "PLAYER" or "RANKED". */
+		1: BrainCloudServiceSDKDataTypes.LobbyType lobbyType, 
+		
+		/** The maximum number of players that can join the lobby. */
+		2: i32 maxSlots, 
+		
+		/** Whether or not the lobby is open by default. */
+		3: bool isOpen, 
+		
+		/** A json string containing any custom attributes to attach to the lobby. */
+		4: string jsonAttributes, 
+		5: i32 clientIndex
+	),
+
+	/** Open a lobby so players can join. */
+	string Lobby_OpenLobby(
+		/** The ID of the lobby to open. */
+		1: string lobbyId, 
+		2: i32 clientIndex
+	),
+
+	/** Close a lobby so players can't join. */
+	string Lobby_CloseLobby(
+		/** The ID of the lobby to close. */
+		1: string lobbyId, 
+		2: i32 clientIndex
+	),
+
+	/** Find lobbies the player can join. */
+	string Lobby_FindLobbies(1: i32 freeSlots, 2: i32 maxResults, 
+		/** A json string containing any custom attributes to search for. */
+		3: string jsonAttributes, 
+		4: i32 clientIndex
+	),
+
+	/** Find lobbies with the player's friends in them. */
+	string Lobby_FindFriendsLobbies(1: i32 clientIndex),
+
+	/** Join a lobby. */
+	string Lobby_JoinLobby(
+		/** The ID of the lobby to join. */
+		1: string lobbyId, 
+		2: i32 clientIndex
+	),
+
+	/** Leave a lobby. */
+	string Lobby_LeaveLobby(
+		/** The ID of the lobby to leave. */
+		1: string lobbyId, 
+		2: i32 clientIndex
+	),
+
+	/** Destroy a lobby. */
+	string Lobby_DestroyLobby(
+		/** The ID of the lobby to destroy. */
+		1: string lobbyId, 
+		2: i32 clientIndex
+	),
+
+	/** Start a lobby game. */
+	string Lobby_StartGame(
+		/** The ID of the lobby to destroy. */
+		1: string lobbyId, 
+		
+		/** A string that can be used to connect to a real game (e.g an IP Address/port). */
+		2: string connectionString, 
+		3: i32 clientIndex
+	),
+
+	/** Get a list of lobbies the player is a member of. */
+	string Lobby_GetMyLobbies(1: i32 clientIndex),
+
 	string Patch_GetGameManifest(1: string gameId, 2: i32 clientIndex),
 
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
@@ -3143,6 +3214,10 @@ service BrainCloudService {
 	string SocialFeed_UnblockPlayer(1: string playerId, 2: i32 clientIndex),
 
 	string SocialFeed_UnhidePlayer(1: string playerId, 2: i32 clientIndex),
+
+	string SocialFeed_GetActivity(1: string socialFeedId, 2: i32 depth, 3: i32 skip, 4: i32 limit, 5: i32 clientIndex),
+
+	string SocialFeed_GetComment(1: string socialFeedId, 2: i32 depth, 3: i32 skip, 4: i32 limit, 5: i32 clientIndex),
 
 	string Telemetry_StartTelemetrySession(1: i32 timestamp, 2: i32 clientIndex),
 

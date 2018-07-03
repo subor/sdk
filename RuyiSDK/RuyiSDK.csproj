@@ -25,6 +25,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="RuyiNet\Response\RuyiNetLobbyCreateJoinResponse.cs" />
+    <Compile Remove="RuyiNet\Response\RuyiNetLobbyResponse.cs" />
     <Compile Remove="RuyiNet\Skill\TrueSkill\Layers\TrueSkillFactorGraphLayers.cs" />
   </ItemGroup>
   <ItemGroup>
