@@ -48,6 +48,7 @@ namespace Ruyi.Layer0
         INPUTMANAGER_EXTERNAL,
         L10NSERVICE,
         OVERLAYMANAGER_INTERNAL,
+        OVERLAYMANAGER_EXTERNAL,
         UPDATESERVICE,
 #if DEBUG
         TEST,
