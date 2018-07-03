@@ -17,6 +17,9 @@ SubscribeClient* SubscribeClient::CreateInstance(string serverUri)
 	ret->context = new context_t(1);
 
 	ret->subscriber = new socket_t(*ret->context, ZMQ_SUB);
+
+	int t = 0;
+	ret->subscriber->setsockopt(ZMQ_RCVTIMEO, &t, sizeof(t));
 	ret->subscriber->connect(serverUri);
 
 	return ret;
@@ -31,6 +34,13 @@ SubscribeClient::SubscribeClient()
 
 SubscribeClient::~SubscribeClient()
 {
+	//close the receiving thread when destroying ruyiSDK
+	if (receivingThread != NULL)
+	{
+		std::shared_ptr<boost::thread> theThread = receivingThread;
+		receivingThread = nullptr;
+		theThread->join();
+	}
 	if (subscriber != NULL)
 	{
 		delete subscriber;
@@ -66,19 +76,6 @@ void SubscribeClient::Unsubscribe(string topic)
 	const char* filter = topic.c_str();
 	subscriber->setsockopt(ZMQ_UNSUBSCRIBE, filter, strlen(filter));
 }
-/*
-template<typename R, typename Object>
-int SubscribeClient::AddMessageHandler(Object* object, R(Object::*method)(string, TBase*))
-{
-	MessageHandler<void, std::string, apache::thrift::TBase*>* mh = new MessageHandler<void, std::string, apache::thrift::TBase*>();
-
-	mh->AddHandler(object, method);
-
-	//handlers.push_back(mh);
-	handlers[++handlerKey] = mh;
-
-	return handlerKey;
-}*/
 
 int SubscribeClient::AddMessageHandler(void(*method)(string, TBase*))
 {
@@ -90,25 +87,6 @@ int SubscribeClient::AddMessageHandler(void(*method)(string, TBase*))
 
 	return handlerKey;
 }
-
-/*
-void SubscribeClient::AddMessageHandler(MessageHandler<void, string, TBase*>* mh)
-{
-	for (auto itr = handlers.begin(); itr != handlers.end(); itr++)
-	{
-		if (*itr == mh)
-			return;
-	}
-	handlers.push_back(mh);
-}*/
-
-/*
-void SubscribeClient::RemoveMessageHandler(MessageHandler<void, string, TBase*>* mh)
-{
-	auto itr = std::find(handlers.begin(), handlers.end(), mh);
-	if (itr != handlers.end())
-		handlers.erase(itr);
-}*/
 
 void SubscribeClient::RemoveMessageHandler(int handlerKey)
 {
@@ -132,7 +110,7 @@ bool SubscribeClient::ContainsTopic(string topic)
 
 void SubscribeClient::Receive()
 {
-	while (true)
+	while (receivingThread)
 	{
 		// get the topic in 1st frame.
 		char topicchar[256];
@@ -166,14 +144,7 @@ void SubscribeClient::Receive()
 		if (submsg != NULL)
 		{
 			submsg->read(&bp);
-			
-			/*
-			for (int i = 0; i < handlers.size(); i++)
-			{
-				//(*handlers[i])(topic, submsg);
-				handlers[i]->listen(topic, submsg);
-			}*/
-
+					
 			for (std::map<int, MessageHandler<void, string, TBase*>*>::iterator it = handlers.begin(); it != handlers.end(); ++it)
 			{
 				it->second->listen(topic, submsg);
@@ -186,14 +157,4 @@ void SubscribeClient::Receive()
 
 void SubscribeClient::Dispose()
 {
-	if (receivingThread != NULL)
-	{
-		try {
-			receivingThread->interrupt();
-			receivingThread->join();
-		}
-		catch (exception e)
-		{
-		}
-	}
 }

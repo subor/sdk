@@ -55,8 +55,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp7.ErrorCode = ExternalErrorCode.Err_7;
       EXTERNALERRORLIST.Add(tmp7);
       ExternalErrorInfos tmp8 = new ExternalErrorInfos();
-      tmp8.Description = "specified user {0} is not playing app {1}";
       tmp8.ErrorCode = ExternalErrorCode.Err_8;
+      tmp8.Description = "specified user {0} is not playing app {1}";
       EXTERNALERRORLIST.Add(tmp8);
       ExternalErrorInfos tmp9 = new ExternalErrorInfos();
       tmp9.ErrorCode = ExternalErrorCode.Err_9;
@@ -67,16 +67,16 @@ namespace Ruyi.SDK.ExternalErrors
       tmp10.Description = "";
       EXTERNALERRORLIST.Add(tmp10);
       ExternalErrorInfos tmp11 = new ExternalErrorInfos();
-      tmp11.ErrorCode = ExternalErrorCode.Err_11;
       tmp11.Description = "";
+      tmp11.ErrorCode = ExternalErrorCode.Err_11;
       EXTERNALERRORLIST.Add(tmp11);
       ExternalErrorInfos tmp12 = new ExternalErrorInfos();
       tmp12.ErrorCode = ExternalErrorCode.Err_12;
       tmp12.Description = "";
       EXTERNALERRORLIST.Add(tmp12);
       ExternalErrorInfos tmp13 = new ExternalErrorInfos();
-      tmp13.ErrorCode = ExternalErrorCode.Err_13;
       tmp13.Description = "";
+      tmp13.ErrorCode = ExternalErrorCode.Err_13;
       EXTERNALERRORLIST.Add(tmp13);
       ExternalErrorInfos tmp14 = new ExternalErrorInfos();
       tmp14.Description = "";

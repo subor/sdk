@@ -149,6 +149,26 @@ std::ostream& operator<<(std::ostream& out, const RotationType::type& val) {
   return out;
 }
 
+int _kLobbyTypeValues[] = {
+  LobbyType::PLAYER,
+  LobbyType::RANKED
+};
+const char* _kLobbyTypeNames[] = {
+  "PLAYER",
+  "RANKED"
+};
+const std::map<int, const char*> _LobbyType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(2, _kLobbyTypeValues, _kLobbyTypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
+std::ostream& operator<<(std::ostream& out, const LobbyType::type& val) {
+  std::map<int, const char*>::const_iterator it = _LobbyType_VALUES_TO_NAMES.find(val);
+  if (it != _LobbyType_VALUES_TO_NAMES.end()) {
+    out << it->second;
+  } else {
+    out << static_cast<int>(val);
+  }
+  return out;
+}
+
 
 BCServiceStartedNotification::~BCServiceStartedNotification() throw() {
 }
