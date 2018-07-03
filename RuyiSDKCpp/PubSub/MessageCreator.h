@@ -8,6 +8,7 @@
 #include "../Generated/BrainCloudService/BrainCloudServiceSDKDataTypes_types.h"
 #include "../Generated/LocalizationService/LocalizationServiceSDKDataTypes_types.h"
 #include "../Generated/UserServiceExternal/UserServiceExternalSDKDataTypes_types.h"
+#include "../Generated/OverlayManager/OverlayManagerSDKDataTypes_types.h"
 #include "../RuyiSDK.h"
 
 using namespace std;

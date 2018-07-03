@@ -458,6 +458,11 @@
     <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKServices_constants.cpp" />
     <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKServices_types.cpp" />
     <ClCompile Include="Generated\MessageCreator.cpp" />
+    <ClCompile Include="Generated\OverlayManager\ExternalOverlayManagerService.cpp" />
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_constants.cpp" />
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_types.cpp" />
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKServices_constants.cpp" />
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKServices_types.cpp" />
     <ClCompile Include="Generated\SDKValidator\SDKValidatorSDKDataTypes_constants.cpp" />
     <ClCompile Include="Generated\SDKValidator\SDKValidatorSDKDataTypes_types.cpp" />
     <ClCompile Include="Generated\SDKValidator\SDKValidatorSDKServices_constants.cpp" />
@@ -518,6 +523,11 @@
     <ClInclude Include="Generated\LocalizationService\LocalizationServiceSDKDataTypes_types.h" />
     <ClInclude Include="Generated\LocalizationService\LocalizationServiceSDKServices_constants.h" />
     <ClInclude Include="Generated\LocalizationService\LocalizationServiceSDKServices_types.h" />
+    <ClInclude Include="Generated\OverlayManager\ExternalOverlayManagerService.h" />
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_constants.h" />
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_types.h" />
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKServices_constants.h" />
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKServices_types.h" />
     <ClInclude Include="Generated\SDKValidator\SDKValidatorSDKDataTypes_constants.h" />
     <ClInclude Include="Generated\SDKValidator\SDKValidatorSDKDataTypes_types.h" />
     <ClInclude Include="Generated\SDKValidator\SDKValidatorSDKServices_constants.h" />
