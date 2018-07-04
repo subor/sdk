@@ -47,6 +47,7 @@ RuyiSDK::RuyiSDK()
 	: Storage(NULL)
 	, Subscriber(NULL)
 	, SettingSys(NULL)
+	, InputMgr(NULL)
 	, UserService(NULL)
 	, context(NULL)
 	, validator(NULL)
@@ -66,6 +67,9 @@ RuyiSDK::~RuyiSDK()
 
 	delete SettingSys;
 	SettingSys = NULL;
+
+	delete InputMgr;
+	InputMgr = NULL;
 
 	delete UserService;
 	UserService = NULL;
@@ -128,6 +132,10 @@ bool RuyiSDK::Init()
 	// init localization service
 	boost::shared_ptr<TMultiplexedProtocol> locProtocol = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedLowProto, "SER_L10NSERVICE"));
 	L10NService = new SDK::LocalizationService::LocalizationServiceClient(locProtocol);
+
+	// init input service
+	boost::shared_ptr<TMultiplexedProtocol> inputProtocol = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedLowProto, "SER_INPUTMANAGER_EXTERNAL"));
+	InputMgr = new SDK::InputManager::InputManagerServiceClient(inputProtocol);
 
 	// init user service 
 	boost::shared_ptr<TMultiplexedProtocol> userProtocol = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedHighProto, "SER_USER_SERVICE_EXTERNAL"));

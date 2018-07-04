@@ -17,6 +17,7 @@ public:
 	InputManagerTest(RuyiSDKContext::Endpoint endpoint = RuyiSDKContext::Endpoint::Console, string remoteAddress = "localhost");
 
 	void InputManagerReceiveInputMessage();
+	void InputManagerVibration();
 
 	unsigned int SubscriberMessage();
 

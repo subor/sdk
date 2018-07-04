@@ -10,6 +10,7 @@
 #include "Generated/SDKValidator/ValidatorService.h"
 #include "Generated/LocalizationService/LocalizationService.h"
 #include "Generated/UserServiceExternal/UserServExternal.h"
+#include "Generated/InputManager/InputManagerService.h"
 
 #include "Generated/Constants/ConstantsSDKDataTypes_constants.h"
 #include "Generated/InputManager/InputManagerSDKDataTypes_types.h"
@@ -111,6 +112,11 @@ namespace Ruyi
 		/// to access the l10n service from Ruyi
 		/// </summary>
 		SDK::LocalizationService::LocalizationServiceClient* L10NService;
+
+		/// <summary>
+		/// input related services
+		/// </summary>
+		SDK::InputManager::InputManagerServiceClient* InputMgr;
 
 		/// <summary>
 		/// User-related services

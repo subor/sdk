@@ -121,6 +121,16 @@ void InputManagerTest::InputManagerReceiveInputMessage()
 	}
 }
 
+void InputManagerTest::InputManagerVibration()
+{
+	for (int i = 0; i < 7; ++i) 
+	{
+		ruyiSDK->InputMgr->SetRuyiControllerStatus(i, false, false, false, true, true, false, 0, 0, 0, 255, 30, 255, 30);
+	}
+
+	Assert::IsTrue(true);
+}
+
 InputManagerTest::InputManagerTest(RuyiSDKContext::Endpoint endpoint, string remoteAddress)
 	:BaseUnitTest(endpoint, remoteAddress)
 {

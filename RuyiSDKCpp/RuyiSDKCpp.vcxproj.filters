@@ -226,6 +226,9 @@
     <ClCompile Include="RuyiNet\Service\RuyiNetTelemetryService.cpp">
       <Filter>Sources\RuyiNet\Service</Filter>
     </ClCompile>
+    <ClCompile Include="Generated\InputManager\InputManagerService.cpp">
+      <Filter>Generated\InputManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_constants.h">
@@ -465,6 +468,9 @@
     </ClInclude>
     <ClInclude Include="RuyiNet\Service\RuyiNetTelemetryService.h">
       <Filter>Sources\RuyiNet\Service</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\InputManager\InputManagerService.h">
+      <Filter>Generated\InputManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

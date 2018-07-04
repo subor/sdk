@@ -32,6 +32,11 @@ namespace RuyiCppSDKTest
 		{
 			pInputManagerTest->InputManagerReceiveInputMessage();
 		}
+
+		TEST_METHOD(InputManagerVibration)
+		{
+			pInputManagerTest->InputManagerVibration();
+		}
 	};
 
 	InputManagerTest* InputManagerTester::pInputManagerTest;
