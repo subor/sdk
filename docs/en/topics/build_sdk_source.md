@@ -15,7 +15,7 @@ __Prerequisites__
 
 * See [C++ prerequsites](cplusplus.md#prerequisites)
 * External libs [provided by us](https://bitbucket.org/playruyi/sdk_source/downloads/externals.zip), or built on your own:
-    * [thrift](https://thrift.apache.org/) version 0.10.0 [Download](http://archive.apache.org/dist/thrift/0.10.0/)   
+    * [thrift](https://thrift.apache.org/) version 0.11 [Download](https://thrift.apache.org/download)
         * [boost](http://www.boost.org/) version 1.64.0 (used by thrift) [Download](https://sourceforge.net/projects/boost/files/boost-binaries/1.64.0/)
         * [openssl](https://www.openssl.org/) version 1.1.1-dev (used by thrift)
     * [jsoncpp](https://github.com/open-source-parsers/jsoncpp) version version 1.8.3 (used by cpp unit test) [Download](https://github.com/open-source-parsers/jsoncpp/releases/tag/1.8.3)
@@ -42,11 +42,10 @@ __Instructions__
         |   |   |   \---openssl
         |   |   \---lib
         |   |       \---engines-1_1
-        |   +---thrift.cpp
         |   |   +---src
         |   |   |   \---thrift
         |   |   \---test
-        |   +---thrift0.10.0
+        |   +---thrift.csharp
         |   \---ZeroMQ
         |       +---include
         |       \---lib
@@ -68,7 +67,7 @@ __Instructions__
 
 __Prerequisites__
 
-* [thrift](https://thrift.apache.org/) version 0.10.0 [Download](http://archive.apache.org/dist/thrift/0.10.0/)
+* [thrift](https://thrift.apache.org/) version 0.11 [Download](https://thrift.apache.org/download)
 * [netmq](https://netmq.readthedocs.io/en/latest/) version 4.0.0.1 (via nuget)
 
 __Instructions__
