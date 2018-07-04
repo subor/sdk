@@ -836,46 +836,6 @@ service BrainCloudService {
 		3: i32 clientIndex
 	),
 
-	/** Retrieves profile information for the partial matches of the specified text. */
-	string Friend_FindUserByUniversalId(
-		/** Universal ID text on which to search. */
-		1: string searchText, 
-		
-		/** Maximum number of results to return. */
-		2: i32 maxResults, 
-		3: i32 clientIndex
-	),
-
-	/** Retrieves profile information of the specified user. */
-	string Friend_GetProfileInfoForCredential(
-		/** External id of the user to find */
-		1: string externalId, 
-		
-		/** The authentication type used for the user's ID */
-		2: string authenticationType, 
-		3: i32 clientIndex
-	),
-
-	/** Retrieves profile information for the specified external auth user. */
-	string Friend_GetProfileInfoForExternalAuthId(
-		/** External id of the friend to find */
-		1: string externalId, 
-		
-		/** The external authentication type used for this friend's external id */
-		2: string externalAuthType, 
-		3: i32 clientIndex
-	),
-
-	/** Retrieves the external ID for the specified user profile ID on the specified social platform. */
-	string Friend_GetExternalIdForProfileId(
-		/** Profile (user) ID. */
-		1: string profileId, 
-		
-		/** Associated authentication type. */
-		2: string authenticationType, 
-		3: i32 clientIndex
-	),
-
 	/** Returns a particular entity of a particular friend. */
 	string Friend_ReadFriendEntity(
 		/** Id of entity to retrieve. */
@@ -959,6 +919,18 @@ service BrainCloudService {
 		1: list<string> profileIds, 
 		2: i32 clientIndex
 	),
+
+	string Friend_SendFriendInvitation(1: string toPlayerId, 2: i32 clientIndex),
+
+	string Friend_ListFriendInvitationsReceived(1: i32 clientIndex),
+
+	string Friend_ListFriendInvitationsSent(1: i32 clientIndex),
+
+	string Friend_AcceptFriendInvitation(1: string fromPlayerId, 2: i32 clientIndex),
+
+	string Friend_RejectFriendInvitation(1: string fromPlayerId, 2: i32 clientIndex),
+
+	string Friend_RemoveFriend(1: string playerId, 2: i32 clientIndex),
 
 	/** Method retrieves all gamification data for the player. */
 	string Gamification_ReadAllGamification(1: bool includeMetaData, 2: i32 clientIndex),
