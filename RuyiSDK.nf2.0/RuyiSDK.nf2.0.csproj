@@ -51,9 +51,6 @@
     <Compile Include="..\RuyiSDK\RuyiNet\Response\RuyiNetGetProfileResponse.cs">
       <Link>RuyiNet\Response\RuyiNetGetProfileResponse.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Response\RuyiNetListFriendsResponse.cs">
-      <Link>RuyiNet\Response\RuyiNetListFriendsResponse.cs</Link>
-    </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Response\RuyiNetResponseGroup.cs">
       <Link>RuyiNet\Response\RuyiNetResponseGroup.cs</Link>
     </Compile>
@@ -62,6 +59,9 @@
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\RuyiNetClient.cs">
       <Link>RuyiNet\RuyiNetClient.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\RuyiNetEntity.cs">
+      <Link>RuyiNet\Service\RuyiNetEntity.cs</Link>
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\RuyiNetException.cs">
       <Link>RuyiNet\RuyiNetException.cs</Link>
@@ -72,8 +72,53 @@
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Cloud\RuyiNetCloudService.cs">
       <Link>RuyiNet\Service\Cloud\RuyiNetCloudService.cs</Link>
     </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetEntityData.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetEntityData.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendFindUsersResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendFindUsersResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendGetUsersOnlineStatusResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendGetUsersOnlineStatusResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendListInvitationsResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendListInvitationsResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendResponseInvite.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendResponseInvite.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendResponseOnlineStatus.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendResponseOnlineStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendResponseSummaryData.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendResponseSummaryData.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendSummaryData.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendSummaryData.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetGetSummaryDataForProfileIdResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetGetSummaryDataForProfileIdResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetListFriendsResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetListFriendsResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetReadFriendEntityResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetReadFriendEntityResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetReadFriendsEntitiesResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetReadFriendsEntitiesResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\RuyiNetFriendInvite.cs">
+      <Link>RuyiNet\Service\Friend\RuyiNetFriendInvite.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\RuyiNetFriendOnlineStatus.cs">
+      <Link>RuyiNet\Service\Friend\RuyiNetFriendOnlineStatus.cs</Link>
+    </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\RuyiNetFriendService.cs">
       <Link>RuyiNet\Service\Friend\RuyiNetFriendService.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\RuyiNetFriendSummaryData.cs">
+      <Link>RuyiNet\Service\Friend\RuyiNetFriendSummaryData.cs</Link>
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Gamification\RuyiNetAchievement.cs">
       <Link>RuyiNet\Service\Gamification\RuyiNetAchievement.cs</Link>
