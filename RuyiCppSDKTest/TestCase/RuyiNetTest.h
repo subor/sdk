@@ -8,6 +8,7 @@
 using namespace Ruyi;
 using namespace Ruyi::SDK;
 using namespace std;
+using namespace Ruyi::SDK::Online;
 
 class RuyiNetTest : public BaseUnitTest
 {
@@ -24,6 +25,8 @@ public:
 	void PartyServiceTest();
 	void TelemetryServiceTest();
 	void UserFileServiceTest();
+	void GamificationServiceTest();
+	void PatchServiceTest();
 
 private:
 
