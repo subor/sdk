@@ -33,6 +33,32 @@ std::ostream& operator<<(std::ostream& out, const LoginState::type& val) {
   return out;
 }
 
+int _kNotificationTypeValues[] = {
+  NotificationType::Battery,
+  NotificationType::Interactive,
+  NotificationType::Voice,
+  NotificationType::GameInfo,
+  NotificationType::ScreenshotInfo
+};
+const char* _kNotificationTypeNames[] = {
+  "Battery",
+  "Interactive",
+  "Voice",
+  "GameInfo",
+  "ScreenshotInfo"
+};
+const std::map<int, const char*> _NotificationType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(5, _kNotificationTypeValues, _kNotificationTypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
+std::ostream& operator<<(std::ostream& out, const NotificationType::type& val) {
+  std::map<int, const char*>::const_iterator it = _NotificationType_VALUES_TO_NAMES.find(val);
+  if (it != _NotificationType_VALUES_TO_NAMES.end()) {
+    out << it->second;
+  } else {
+    out << static_cast<int>(val);
+  }
+  return out;
+}
+
 int _kInputCategoryValues[] = {
   InputCategory::GamePad,
   InputCategory::Keyboard,
@@ -2591,6 +2617,160 @@ void AppData::printTo(std::ostream& out) const {
   out << "AppData(";
   out << "appId=" << to_string(appId);
   out << ", " << "data=" << to_string(data);
+  out << ")";
+}
+
+
+PopupNotification::~PopupNotification() throw() {
+}
+
+
+void PopupNotification::__set_NotificationType(const NotificationType::type val) {
+  this->NotificationType = val;
+}
+
+void PopupNotification::__set_MainIcon(const std::string& val) {
+  this->MainIcon = val;
+}
+
+void PopupNotification::__set_Text(const std::string& val) {
+  this->Text = val;
+}
+
+void PopupNotification::__set_Description(const std::string& val) {
+  this->Description = val;
+}
+std::ostream& operator<<(std::ostream& out, const PopupNotification& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+uint32_t PopupNotification::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          int32_t ecast93;
+          xfer += iprot->readI32(ecast93);
+          this->NotificationType = (NotificationType::type)ecast93;
+          this->__isset.NotificationType = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->MainIcon);
+          this->__isset.MainIcon = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->Text);
+          this->__isset.Text = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->Description);
+          this->__isset.Description = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t PopupNotification::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("PopupNotification");
+
+  xfer += oprot->writeFieldBegin("NotificationType", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32((int32_t)this->NotificationType);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("MainIcon", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->MainIcon);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Text", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString(this->Text);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Description", ::apache::thrift::protocol::T_STRING, 4);
+  xfer += oprot->writeString(this->Description);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(PopupNotification &a, PopupNotification &b) {
+  using ::std::swap;
+  swap(a.NotificationType, b.NotificationType);
+  swap(a.MainIcon, b.MainIcon);
+  swap(a.Text, b.Text);
+  swap(a.Description, b.Description);
+  swap(a.__isset, b.__isset);
+}
+
+PopupNotification::PopupNotification(const PopupNotification& other94) {
+  NotificationType = other94.NotificationType;
+  MainIcon = other94.MainIcon;
+  Text = other94.Text;
+  Description = other94.Description;
+  __isset = other94.__isset;
+}
+PopupNotification& PopupNotification::operator=(const PopupNotification& other95) {
+  NotificationType = other95.NotificationType;
+  MainIcon = other95.MainIcon;
+  Text = other95.Text;
+  Description = other95.Description;
+  __isset = other95.__isset;
+  return *this;
+}
+void PopupNotification::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "PopupNotification(";
+  out << "NotificationType=" << to_string(NotificationType);
+  out << ", " << "MainIcon=" << to_string(MainIcon);
+  out << ", " << "Text=" << to_string(Text);
+  out << ", " << "Description=" << to_string(Description);
   out << ")";
 }
 
