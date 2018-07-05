@@ -304,7 +304,7 @@ namespace Ruyi
             }
             if (IsFeatureEnabled(SDKFeatures.Overlay))
             {
-                var proto = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.OVERLAYMANAGER_EXTERNAL.ServiceID());
+                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.OVERLAYMANAGER_EXTERNAL.ServiceID());
                 OverlayService = new ExternalOverlayManagerService.Client(proto);
             }
             return true;
