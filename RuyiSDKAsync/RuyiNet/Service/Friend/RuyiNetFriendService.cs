@@ -7,7 +7,7 @@ namespace Ruyi.SDK.Online
     /// A service for handling players' friend lists.
     /// </summary>
     /// <example>
-    /// <code source="layer0/sdktest/doctests.cs" region="RuyiNet_Friends"></code>
+    /// <code source="sdk/unittests/doctests.cs" region="RuyiNet_Friends"></code>
     /// </example>
     public class RuyiNetFriendService : RuyiNetService
     {

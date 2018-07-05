@@ -28,7 +28,7 @@ namespace Ruyi.SDK.Online
     /// </para>
     /// </remarks>
     /// <example>
-    /// <code source="layer0/sdktest/doctests.cs" region="RuyiNetClient"></code>
+    /// <code source="sdk/unittests/doctests.cs" region="RuyiNetClient"></code>
     /// </example>
     public class RuyiNetClient : IDisposable
     {
