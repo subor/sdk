@@ -48,6 +48,7 @@ namespace Ruyi.Layer0
         BCSERVICE,
         L10NSERVICE,
         OVERLAYMANAGER_INTERNAL,
+        OVERLAYMANAGER_EXTERNAL,
         UPDATESERVICE,
 #if DEBUG
         TEST,

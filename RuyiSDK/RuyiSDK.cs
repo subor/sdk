@@ -16,6 +16,7 @@ using System.Linq;
 using System.Reflection;
 using Thrift.Protocol;
 using Thrift.Transport;
+using Ruyi.SDK.OverlayManagerExternal;
 
 namespace Ruyi
 {
@@ -84,6 +85,10 @@ namespace Ruyi
             /// </summary>
             Media = 1 << 7,
             /// <summary>
+            /// Overlay service
+            /// </summary>
+            Overlay = 1 << 8,
+            /// <summary>
             /// <see cref="RuyiSDK.Subscriber">Subscriber</see> for publisher/subscriber messaging
             /// </summary>
             Subscriber = 1 << 16,
@@ -96,7 +101,7 @@ namespace Ruyi
             /// <summary>
             /// All SDK features
             /// </summary>
-            All = Basic | Storage | L10N | Speech | Media,
+            All = Basic | Storage | L10N | Speech | Media | Overlay,
         }
 
         /// <summary>
@@ -164,6 +169,11 @@ namespace Ruyi
         /// Must set <see cref="SDKFeatures.Speech"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
         /// </remarks>
         public SpeechService.Client SpeechService { get; private set; }
+
+        /// <summary>
+        /// the overlay service
+        /// </summary>
+        public ExternalOverlayManagerService.Client OverlayService { get; private set; }
 
         /// <summary>
         /// Multimedia-related services
@@ -305,6 +315,12 @@ namespace Ruyi
                 Media = new MediaService.Client(proto);
             }
 
+            if (IsFeatureEnabled(SDKFeatures.Overlay))
+            {
+                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.OVERLAYMANAGER_EXTERNAL.ServiceID());
+                OverlayService = new ExternalOverlayManagerService.Client(proto);
+            }
+
             return true;
         }
 
@@ -392,6 +408,15 @@ namespace Ruyi
 
             InputMgr?.Dispose();
             InputMgr = null;
+
+            SpeechService?.Dispose();
+            SpeechService = null;
+
+            Media?.Dispose();
+            Media = null;
+
+            OverlayService?.Dispose();
+            OverlayService = null;
 
             lowLatencyTransport?.Close();
             LowLatencyProtocol?.Dispose();

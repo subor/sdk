@@ -1235,20 +1235,6 @@ void BCServiceTest::BCS_Friend_ReadFriendUserState()
 	}
 }
 
-//order(550)
-void BCServiceTest::BCS_Friend_FindUserByUniversalId()
-{
-	LoginTestUser();
-
-	string ret;
-	ruyiSDK->BCService->Friend_FindUserByUniversalId(ret, "ray", 10, 0);
-	Json::Value root;
-	if (JsonReader.parse(ret, root)) 
-	{
-		Assert::IsTrue(200 == root["status"].asInt64());
-	}
-}
-
 //order(560)
 void BCServiceTest::BCS_Friend_FindUserByExactName()
 {
@@ -1272,42 +1258,6 @@ void BCServiceTest::BCS_Friend_FindUsersBySubstrName()
 	string ret;
 	ruyiSDK->BCService->Friend_FindUsersBySubstrName(ret, "ray", 10, 0);
 	Json::Value root;
-	if (JsonReader.parse(ret, root)) 
-	{
-		Assert::IsTrue(200 == root["status"].asInt64());
-	}
-}
-
-//order(580)
-void BCServiceTest::BCS_Friend_GetExternalIdForProfileId() 
-{
-	auto profileId = LoginTestUser();
-
-	string ret;
-	ruyiSDK->BCService->Friend_GetExternalIdForProfileId(ret, profileId, "Email", 0);
-	Json::Value root;
-	if (JsonReader.parse(ret, root)) 
-	{
-		Assert::IsTrue(200 == root["status"].asInt64());
-	}
-}
-
-//order(590)
-void BCServiceTest::BCS_Friend_GetProfileInfoForCredential() 
-{
-	auto profileId = LoginTestUser();
-
-	string ret;
-	ruyiSDK->BCService->Friend_GetExternalIdForProfileId(ret, profileId, "Email", 0);
-	Json::Value root;
-	if (JsonReader.parse(ret, root)) 
-	{
-		Assert::IsTrue(200 == root["status"].asInt64());
-	}
-
-	auto externalId = root["data"]["externalId"].asString();
-
-	ruyiSDK->BCService->Friend_GetProfileInfoForCredential(ret, externalId, "Email", 0);
 	if (JsonReader.parse(ret, root)) 
 	{
 		Assert::IsTrue(200 == root["status"].asInt64());
