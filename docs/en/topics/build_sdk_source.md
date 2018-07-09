@@ -94,7 +94,7 @@ The runtime, [layer0](layer0.md), checks the version of the SDK used by client a
 
 ## Thrift
 
-The SDK source also includes the underlying [Thrift interface definitions](https://bitbucket.org/playruyi/sdk_source/src/master/ThriftFiles/).  This means the Ruyi SDK can be generated for a [large number of different langauges](https://thrift.apache.org/docs/Languages).
+The SDK source also includes the underlying [Thrift interface definitions](https://bitbucket.org/playruyi/sdk_source/src/development/ThriftFiles/).  This means the Ruyi SDK can be generated for a [large number of different langauges](https://thrift.apache.org/docs/Languages).
 
 Run `thrift.exe --help` for a full list of supported languages (generators) and options.
 
