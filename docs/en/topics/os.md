@@ -50,28 +50,28 @@ Installation should take 20-40 minutes.
 1. Download [Ruyi OS image](http://dev.playruyi.com/uservices)
     - We only provide a link to the latest version.  If you need an older version, contact [support](support.md).
 1. Unzip OS files to root of bootable USB drive.  It should be similar to the following:  
-    ```
-    │   bootmgr
-    │   bootmgr.efi
-    │
-    ├───Boot
-    │   │   BCD
-    │   │   boot.sdi
-    │   │   bootfix.bin
-    │   │   memtest.exe
-    │   ├───Resources
-    │
-    ├───sources
-    │       boot.wim
-    │       dd.wim
-    │       install.swm
-    │       install2.swm
-    │
-    └───EFI
+
+        │   bootmgr
+        │   bootmgr.efi
+        │
         ├───Boot
-        │   │   bootx64.efi
-        │   │   RUYIboot.efi
-    ```
+        │   │   BCD
+        │   │   boot.sdi
+        │   │   bootfix.bin
+        │   │   memtest.exe
+        │   ├───Resources
+        │
+        ├───sources
+        │       boot.wim
+        │       dd.wim
+        │       install.swm
+        │       install2.swm
+        │
+        └───EFI
+            ├───Boot
+            │   │   bootx64.efi
+            │   │   RUYIboot.efi
+
 1. Once copying/unzipping is finished, eject/unmount the USB drive.  Then plug the USB drive into the machine it should be installed to, and reboot that machine.
 1. A Command Prompt should appear, wait while the OS installs
 1. When prompted, remove the USB drive and press `Enter` to reboot and continue
