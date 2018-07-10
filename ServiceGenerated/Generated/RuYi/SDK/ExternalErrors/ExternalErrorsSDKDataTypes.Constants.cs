@@ -38,8 +38,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp3.Description = "json string convert failed: {0}";
       EXTERNALERRORLIST.Add(tmp3);
       ExternalErrorInfos tmp4 = new ExternalErrorInfos();
-      tmp4.ErrorCode = ExternalErrorCode.Err_4;
       tmp4.Description = "lambda expression error: {0}";
+      tmp4.ErrorCode = ExternalErrorCode.Err_4;
       EXTERNALERRORLIST.Add(tmp4);
       ExternalErrorInfos tmp5 = new ExternalErrorInfos();
       tmp5.ErrorCode = ExternalErrorCode.Err_5;
@@ -70,8 +70,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp11.Description = "";
       EXTERNALERRORLIST.Add(tmp11);
       ExternalErrorInfos tmp12 = new ExternalErrorInfos();
-      tmp12.ErrorCode = ExternalErrorCode.Err_12;
       tmp12.Description = "";
+      tmp12.ErrorCode = ExternalErrorCode.Err_12;
       EXTERNALERRORLIST.Add(tmp12);
       ExternalErrorInfos tmp13 = new ExternalErrorInfos();
       tmp13.Description = "";
@@ -82,20 +82,20 @@ namespace Ruyi.SDK.ExternalErrors
       tmp14.Description = "";
       EXTERNALERRORLIST.Add(tmp14);
       ExternalErrorInfos tmp15 = new ExternalErrorInfos();
-      tmp15.Description = "";
       tmp15.ErrorCode = ExternalErrorCode.Err_15;
+      tmp15.Description = "";
       EXTERNALERRORLIST.Add(tmp15);
       ExternalErrorInfos tmp16 = new ExternalErrorInfos();
-      tmp16.ErrorCode = ExternalErrorCode.Err_16;
       tmp16.Description = "";
+      tmp16.ErrorCode = ExternalErrorCode.Err_16;
       EXTERNALERRORLIST.Add(tmp16);
       ExternalErrorInfos tmp17 = new ExternalErrorInfos();
-      tmp17.ErrorCode = ExternalErrorCode.Err_17;
       tmp17.Description = "";
+      tmp17.ErrorCode = ExternalErrorCode.Err_17;
       EXTERNALERRORLIST.Add(tmp17);
       ExternalErrorInfos tmp18 = new ExternalErrorInfos();
-      tmp18.ErrorCode = ExternalErrorCode.Err_18;
       tmp18.Description = "trigger action failed when changing setting {0}!";
+      tmp18.ErrorCode = ExternalErrorCode.Err_18;
       EXTERNALERRORLIST.Add(tmp18);
     }
   }
