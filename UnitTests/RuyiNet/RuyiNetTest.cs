@@ -241,35 +241,13 @@ namespace Ruyi.SDK.Online.Tests
             {
                 var partyService = mSDK.RuyiNetService.PartyService;
                 partyService.SendPartyInvitation(0, PLAYER_IDS[0],
-                    (RuyiNetResponse sendResponse) =>
+                    (RuyiNetParty party) =>
                 {
-                    CheckResponseStatus(sendResponse.status);
-                    partyService.GetPartyInfo(0, (RuyiNetGetPartyInfoResponse getPartyResponse) =>
+                    partyService.GetPartyInfo(0, party.PartyId, (RuyiNetParty partyInfo) =>
                     {
-                        CheckResponseStatus(getPartyResponse.status);
-                        Assert.IsTrue(getPartyResponse.data.success);
-
-                        var groups = getPartyResponse.data.response.groups;
-
-                        Assert.GreaterOrEqual(groups.Length, 1);
-                        partyService.GetPartyMembersInfo(0, (RuyiNetGetProfilesResponse getMembersResponse) =>
+                        partyService.LeaveParty(0, partyInfo.PartyId, (RuyiNetParty oldParty) =>
                         {
-                            CheckResponseStatus(getMembersResponse.status);
-                            Assert.IsTrue(getMembersResponse.data.success);
 
-                            var members = getMembersResponse.data.response;
-
-                            Assert.IsTrue(members.Length >= 0);
-
-                            var playerId = mSDK.RuyiNetService.ActivePlayer.profileId;
-
-                            var i = Array.FindIndex(members, (x) => (x.profileId == playerId));
-                            Assert.IsTrue(i >= 0);
-
-                            partyService.LeaveParty(0, groups[0].groupId, (RuyiNetResponse leaveResponse) =>
-                            {
-                                CheckResponseStatus(leaveResponse.status);
-                            });
                         });
                     });
                 });

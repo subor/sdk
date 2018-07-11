@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Linq;
 
 namespace Ruyi.SDK.Online
 {
@@ -20,123 +21,218 @@ namespace Ruyi.SDK.Online
         /// <summary>
         /// Get the current party information for the player.
         /// </summary>
-        /// <param name="index">The index of user</param>
+        /// <param name="index">The index of user.</param>
+        /// <param name="partyId">The ID of the party.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void GetPartyInfo(int index, RuyiNetTask<RuyiNetGetPartyInfoResponse>.CallbackType callback)
+        public void GetPartyInfo(int index, string partyId, Action<RuyiNetParty> callback)
         {
             EnqueueTask(() =>
             {
-                return mClient.BCService.Script_RunParentScript("GetPartyInfo", "{}", "RUYI", index);
-            }, callback);
-        }
-
-        /// <summary>
-        /// Get information on the party members in the current party.
-        /// </summary>
-        /// <param name="index">The index of user</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void GetPartyMembersInfo(int index, RuyiNetTask<RuyiNetGetProfilesResponse>.CallbackType callback)
-        {
-            EnqueueTask(() =>
+                return mClient.BCService.Party_GetPartyInfo(partyId, index);
+            }, (RuyiNetPartyResponse response) =>
             {
-                return mClient.BCService.Script_RunParentScript("GetPartyMembers", "{}", "RUYI", index);
-            }, callback);
+                if (callback != null)
+                {
+                    if (response.status == RuyiNetHttpStatus.OK)
+                    {
+                        callback(response.data.party);
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+            });
         }
 
         /// <summary>
         /// Invite someone to join a party.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="profileId">The profile ID of the player to invite.</param>
+        /// <param name="playerId">The ID of the player to invite.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void SendPartyInvitation(int index, string profileId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public void SendPartyInvitation(int index, string playerId, Action<RuyiNetParty> callback)
         {
             EnqueueTask(() =>
             {
-                var payload = new RuyiNetProfileIdRequest()
+                return mClient.BCService.Party_SendPartyInvitation(playerId, index);
+            }, (RuyiNetPartyResponse response) =>
+            {
+                if (callback != null)
                 {
-                    profileId = profileId
-                };
-
-                var response = mClient.BCService.Script_RunParentScript("SendPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index);
-                return response;
-            }, callback);
+                    if (response.status == RuyiNetHttpStatus.OK)
+                    {
+                        callback(response.data.party);
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+            });
         }
 
         /// <summary>
         /// Accept a party invitation.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="groupId">The group ID of the party to join.</param>
+        /// <param name="partyId">The ID of the party to join.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void AcceptPartyInvitation(int index, string groupId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public void AcceptPartyInvitation(int index, string partyId, Action<RuyiNetParty> callback)
         {
             EnqueueTask(() =>
             {
-                var payload = new RuyiNetGroupIdRequest()
+                return mClient.BCService.Party_AcceptPartyInvitation(partyId, index);
+            }, (RuyiNetPartyResponse response) =>
+            {
+                if (callback != null)
                 {
-                    groupId = groupId
-                };
-
-                return mClient.BCService.Script_RunParentScript("AcceptPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index);
-            }, callback);
+                    if (response.status == RuyiNetHttpStatus.OK)
+                    {
+                        callback(response.data.party);
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+            });
         }
 
         /// <summary>
         /// Reject a party invitation.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="groupId">The group ID of the party to reject.</param>
+        /// <param name="partyId">The ID of the party to reject.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void RejectPartyInvitation(int index, string groupId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public void RejectPartyInvitation(int index, string partyId, Action<RuyiNetParty> callback)
         {
             EnqueueTask(() =>
             {
-                var payload = new RuyiNetGroupIdRequest()
+                return mClient.BCService.Party_RejectPartyInvitation(partyId, index);
+            }, (RuyiNetPartyResponse response) =>
+            {
+                if (callback != null)
                 {
-                    groupId = groupId
-                };
-
-                return mClient.BCService.Script_RunParentScript("RejectPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index);
-            }, callback);
+                    if (response.status == RuyiNetHttpStatus.OK)
+                    {
+                        callback(response.data.party);
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+            });
         }
 
         /// <summary>
         /// Join a friend's party.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="groupId">The group ID of the party to join.</param>
+        /// <param name="partyId">The ID of the party to join.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void JoinParty(int index, string groupId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public void JoinParty(int index, string partyId, Action<RuyiNetParty> callback)
         {
             EnqueueTask(() =>
             {
-                var payload = new RuyiNetGroupIdRequest()
+                return mClient.BCService.Party_JoinParty(partyId, index);
+            }, (RuyiNetPartyResponse response) =>
+            {
+                if (callback != null)
                 {
-                    groupId = groupId
-                };
-
-                return mClient.BCService.Script_RunParentScript("JoinParty", JsonConvert.SerializeObject(payload), "RUYI", index);
-            }, callback);
+                    if (response.status == RuyiNetHttpStatus.OK)
+                    {
+                        callback(response.data.party);
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+            });
         }
 
         /// <summary>
         /// Leave a party.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="groupId">The group ID of the party to leave.</param>
+        /// <param name="partyId">The ID of the party to leave.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void LeaveParty(int index, string groupId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public void LeaveParty(int index, string partyId, Action<RuyiNetParty> callback)
         {
             EnqueueTask(() =>
             {
-                var payload = new RuyiNetGroupIdRequest()
+                return mClient.BCService.Party_LeaveParty(partyId, index);
+            }, (RuyiNetPartyResponse response) =>
+            {
+                if (callback != null)
                 {
-                    groupId = groupId
-                };
+                    if (response.status == RuyiNetHttpStatus.OK)
+                    {
+                        callback(response.data.party);
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+            });
+        }
 
-                return mClient.BCService.Script_RunParentScript("LeaveParty", JsonConvert.SerializeObject(payload), "RUYI", index);
-            }, callback);
+        /// <summary>
+        /// Get friends' parties.
+        /// </summary>
+        /// <param name="index">The index of user</param>
+        /// <param name="maxResults">The maximum, number of results to return .</param>
+        /// <param name="callback">The function to call when the task completes.</param>
+        public void GetFriendsParties(int index, int maxResults, Action<RuyiNetParty[]> callback)
+        {
+            EnqueueTask(() =>
+            {
+                return mClient.BCService.Party_GetFriendsParties(maxResults, index);
+            }, (RuyiNetPartyListResponse response) =>
+            {
+                if (callback != null)
+                {
+                    if (response.status == RuyiNetHttpStatus.OK)
+                    {
+                        var results = response.data.parties.Cast<RuyiNetParty>().ToArray();
+                        callback(results);
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// List Party Invitations
+        /// </summary>
+        /// <param name="index">The index of user</param>
+        /// <param name="callback">The function to call when the task completes.</param>
+        public void ListPartyInvitations(int index, Action<RuyiNetPartyInvitation[]> callback)
+        {
+            EnqueueTask(() =>
+            {
+                return mClient.BCService.Party_ListPartyInvitations(index);
+            }, (RuyiNetPartyInvitationResponse response) =>
+            {
+                if (callback != null)
+                {
+                    if (response.status == RuyiNetHttpStatus.OK)
+                    {
+                        var results = response.data.invites.Cast<RuyiNetPartyInvitation>().ToArray();
+                        callback(results);
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+            });
         }
 
         [Serializable]
