@@ -3289,6 +3289,476 @@ uint32_t SettingSystemService_SettingItemNotify_presult::read(::apache::thrift::
 }
 
 
+SettingSystemService_SetNetworkSettings_args::~SettingSystemService_SetNetworkSettings_args() throw() {
+}
+
+
+uint32_t SettingSystemService_SetNetworkSettings_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->EnableDHCP);
+          this->__isset.EnableDHCP = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->IpAddress);
+          this->__isset.IpAddress = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->SubMask);
+          this->__isset.SubMask = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->Gateway);
+          this->__isset.Gateway = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->MainDNS);
+          this->__isset.MainDNS = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 6:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->SubDNS);
+          this->__isset.SubDNS = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_SetNetworkSettings_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_SetNetworkSettings_args");
+
+  xfer += oprot->writeFieldBegin("EnableDHCP", ::apache::thrift::protocol::T_BOOL, 1);
+  xfer += oprot->writeBool(this->EnableDHCP);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("IpAddress", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->IpAddress);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("SubMask", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString(this->SubMask);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Gateway", ::apache::thrift::protocol::T_STRING, 4);
+  xfer += oprot->writeString(this->Gateway);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("MainDNS", ::apache::thrift::protocol::T_STRING, 5);
+  xfer += oprot->writeString(this->MainDNS);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("SubDNS", ::apache::thrift::protocol::T_STRING, 6);
+  xfer += oprot->writeString(this->SubDNS);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_SetNetworkSettings_pargs::~SettingSystemService_SetNetworkSettings_pargs() throw() {
+}
+
+
+uint32_t SettingSystemService_SetNetworkSettings_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_SetNetworkSettings_pargs");
+
+  xfer += oprot->writeFieldBegin("EnableDHCP", ::apache::thrift::protocol::T_BOOL, 1);
+  xfer += oprot->writeBool((*(this->EnableDHCP)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("IpAddress", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString((*(this->IpAddress)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("SubMask", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString((*(this->SubMask)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Gateway", ::apache::thrift::protocol::T_STRING, 4);
+  xfer += oprot->writeString((*(this->Gateway)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("MainDNS", ::apache::thrift::protocol::T_STRING, 5);
+  xfer += oprot->writeString((*(this->MainDNS)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("SubDNS", ::apache::thrift::protocol::T_STRING, 6);
+  xfer += oprot->writeString((*(this->SubDNS)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_SetNetworkSettings_result::~SettingSystemService_SetNetworkSettings_result() throw() {
+}
+
+
+uint32_t SettingSystemService_SetNetworkSettings_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_SetNetworkSettings_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("SettingSystemService_SetNetworkSettings_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
+    xfer += oprot->writeBool(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_SetNetworkSettings_presult::~SettingSystemService_SetNetworkSettings_presult() throw() {
+}
+
+
+uint32_t SettingSystemService_SetNetworkSettings_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+
+SettingSystemService_SetNetworkProxy_args::~SettingSystemService_SetNetworkProxy_args() throw() {
+}
+
+
+uint32_t SettingSystemService_SetNetworkProxy_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->ProxyServer);
+          this->__isset.ProxyServer = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->ProxyPort);
+          this->__isset.ProxyPort = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_SetNetworkProxy_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_SetNetworkProxy_args");
+
+  xfer += oprot->writeFieldBegin("ProxyServer", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->ProxyServer);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("ProxyPort", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->ProxyPort);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_SetNetworkProxy_pargs::~SettingSystemService_SetNetworkProxy_pargs() throw() {
+}
+
+
+uint32_t SettingSystemService_SetNetworkProxy_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_SetNetworkProxy_pargs");
+
+  xfer += oprot->writeFieldBegin("ProxyServer", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString((*(this->ProxyServer)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("ProxyPort", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString((*(this->ProxyPort)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_SetNetworkProxy_result::~SettingSystemService_SetNetworkProxy_result() throw() {
+}
+
+
+uint32_t SettingSystemService_SetNetworkProxy_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_SetNetworkProxy_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("SettingSystemService_SetNetworkProxy_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
+    xfer += oprot->writeBool(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_SetNetworkProxy_presult::~SettingSystemService_SetNetworkProxy_presult() throw() {
+}
+
+
+uint32_t SettingSystemService_SetNetworkProxy_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+
 SettingSystemService_ConnectToWifi_args::~SettingSystemService_ConnectToWifi_args() throw() {
 }
 
@@ -4749,6 +5219,128 @@ bool SettingSystemServiceClient::recv_SettingItemNotify()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "SettingItemNotify failed: unknown result");
 }
 
+bool SettingSystemServiceClient::SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS)
+{
+  send_SetNetworkSettings(EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
+  return recv_SetNetworkSettings();
+}
+
+void SettingSystemServiceClient::send_SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("SetNetworkSettings", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_SetNetworkSettings_pargs args;
+  args.EnableDHCP = &EnableDHCP;
+  args.IpAddress = &IpAddress;
+  args.SubMask = &SubMask;
+  args.Gateway = &Gateway;
+  args.MainDNS = &MainDNS;
+  args.SubDNS = &SubDNS;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+bool SettingSystemServiceClient::recv_SetNetworkSettings()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("SetNetworkSettings") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  bool _return;
+  SettingSystemService_SetNetworkSettings_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "SetNetworkSettings failed: unknown result");
+}
+
+bool SettingSystemServiceClient::SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort)
+{
+  send_SetNetworkProxy(ProxyServer, ProxyPort);
+  return recv_SetNetworkProxy();
+}
+
+void SettingSystemServiceClient::send_SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("SetNetworkProxy", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_SetNetworkProxy_pargs args;
+  args.ProxyServer = &ProxyServer;
+  args.ProxyPort = &ProxyPort;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+bool SettingSystemServiceClient::recv_SetNetworkProxy()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("SetNetworkProxy") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  bool _return;
+  SettingSystemService_SetNetworkProxy_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "SetNetworkProxy failed: unknown result");
+}
+
 bool SettingSystemServiceClient::ConnectToWifi(const std::string& profileName, const std::string& key)
 {
   send_ConnectToWifi(profileName, key);
@@ -5745,6 +6337,114 @@ void SettingSystemServiceProcessor::process_SettingItemNotify(int32_t seqid, ::a
 
   if (this->eventHandler_.get() != NULL) {
     this->eventHandler_->postWrite(ctx, "SettingSystemService.SettingItemNotify", bytes);
+  }
+}
+
+void SettingSystemServiceProcessor::process_SetNetworkSettings(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("SettingSystemService.SetNetworkSettings", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "SettingSystemService.SetNetworkSettings");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "SettingSystemService.SetNetworkSettings");
+  }
+
+  SettingSystemService_SetNetworkSettings_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "SettingSystemService.SetNetworkSettings", bytes);
+  }
+
+  SettingSystemService_SetNetworkSettings_result result;
+  try {
+    result.success = iface_->SetNetworkSettings(args.EnableDHCP, args.IpAddress, args.SubMask, args.Gateway, args.MainDNS, args.SubDNS);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "SettingSystemService.SetNetworkSettings");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("SetNetworkSettings", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "SettingSystemService.SetNetworkSettings");
+  }
+
+  oprot->writeMessageBegin("SetNetworkSettings", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "SettingSystemService.SetNetworkSettings", bytes);
+  }
+}
+
+void SettingSystemServiceProcessor::process_SetNetworkProxy(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("SettingSystemService.SetNetworkProxy", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "SettingSystemService.SetNetworkProxy");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "SettingSystemService.SetNetworkProxy");
+  }
+
+  SettingSystemService_SetNetworkProxy_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "SettingSystemService.SetNetworkProxy", bytes);
+  }
+
+  SettingSystemService_SetNetworkProxy_result result;
+  try {
+    result.success = iface_->SetNetworkProxy(args.ProxyServer, args.ProxyPort);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "SettingSystemService.SetNetworkProxy");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("SetNetworkProxy", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "SettingSystemService.SetNetworkProxy");
+  }
+
+  oprot->writeMessageBegin("SetNetworkProxy", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "SettingSystemService.SetNetworkProxy", bytes);
   }
 }
 
@@ -7161,6 +7861,180 @@ bool SettingSystemServiceConcurrentClient::recv_SettingItemNotify(const int32_t 
       }
       // in a bad state, don't commit
       throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "SettingItemNotify failed: unknown result");
+    }
+    // seqid != rseqid
+    this->sync_.updatePending(fname, mtype, rseqid);
+
+    // this will temporarily unlock the readMutex, and let other clients get work done
+    this->sync_.waitForWork(seqid);
+  } // end while(true)
+}
+
+bool SettingSystemServiceConcurrentClient::SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS)
+{
+  int32_t seqid = send_SetNetworkSettings(EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
+  return recv_SetNetworkSettings(seqid);
+}
+
+int32_t SettingSystemServiceConcurrentClient::send_SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS)
+{
+  int32_t cseqid = this->sync_.generateSeqId();
+  ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
+  oprot_->writeMessageBegin("SetNetworkSettings", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_SetNetworkSettings_pargs args;
+  args.EnableDHCP = &EnableDHCP;
+  args.IpAddress = &IpAddress;
+  args.SubMask = &SubMask;
+  args.Gateway = &Gateway;
+  args.MainDNS = &MainDNS;
+  args.SubDNS = &SubDNS;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+
+  sentry.commit();
+  return cseqid;
+}
+
+bool SettingSystemServiceConcurrentClient::recv_SetNetworkSettings(const int32_t seqid)
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  // the read mutex gets dropped and reacquired as part of waitForWork()
+  // The destructor of this sentry wakes up other clients
+  ::apache::thrift::async::TConcurrentRecvSentry sentry(&this->sync_, seqid);
+
+  while(true) {
+    if(!this->sync_.getPending(fname, mtype, rseqid)) {
+      iprot_->readMessageBegin(fname, mtype, rseqid);
+    }
+    if(seqid == rseqid) {
+      if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+        ::apache::thrift::TApplicationException x;
+        x.read(iprot_);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+        sentry.commit();
+        throw x;
+      }
+      if (mtype != ::apache::thrift::protocol::T_REPLY) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+      }
+      if (fname.compare("SetNetworkSettings") != 0) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+
+        // in a bad state, don't commit
+        using ::apache::thrift::protocol::TProtocolException;
+        throw TProtocolException(TProtocolException::INVALID_DATA);
+      }
+      bool _return;
+      SettingSystemService_SetNetworkSettings_presult result;
+      result.success = &_return;
+      result.read(iprot_);
+      iprot_->readMessageEnd();
+      iprot_->getTransport()->readEnd();
+
+      if (result.__isset.success) {
+        sentry.commit();
+        return _return;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "SetNetworkSettings failed: unknown result");
+    }
+    // seqid != rseqid
+    this->sync_.updatePending(fname, mtype, rseqid);
+
+    // this will temporarily unlock the readMutex, and let other clients get work done
+    this->sync_.waitForWork(seqid);
+  } // end while(true)
+}
+
+bool SettingSystemServiceConcurrentClient::SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort)
+{
+  int32_t seqid = send_SetNetworkProxy(ProxyServer, ProxyPort);
+  return recv_SetNetworkProxy(seqid);
+}
+
+int32_t SettingSystemServiceConcurrentClient::send_SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort)
+{
+  int32_t cseqid = this->sync_.generateSeqId();
+  ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
+  oprot_->writeMessageBegin("SetNetworkProxy", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_SetNetworkProxy_pargs args;
+  args.ProxyServer = &ProxyServer;
+  args.ProxyPort = &ProxyPort;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+
+  sentry.commit();
+  return cseqid;
+}
+
+bool SettingSystemServiceConcurrentClient::recv_SetNetworkProxy(const int32_t seqid)
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  // the read mutex gets dropped and reacquired as part of waitForWork()
+  // The destructor of this sentry wakes up other clients
+  ::apache::thrift::async::TConcurrentRecvSentry sentry(&this->sync_, seqid);
+
+  while(true) {
+    if(!this->sync_.getPending(fname, mtype, rseqid)) {
+      iprot_->readMessageBegin(fname, mtype, rseqid);
+    }
+    if(seqid == rseqid) {
+      if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+        ::apache::thrift::TApplicationException x;
+        x.read(iprot_);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+        sentry.commit();
+        throw x;
+      }
+      if (mtype != ::apache::thrift::protocol::T_REPLY) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+      }
+      if (fname.compare("SetNetworkProxy") != 0) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+
+        // in a bad state, don't commit
+        using ::apache::thrift::protocol::TProtocolException;
+        throw TProtocolException(TProtocolException::INVALID_DATA);
+      }
+      bool _return;
+      SettingSystemService_SetNetworkProxy_presult result;
+      result.success = &_return;
+      result.read(iprot_);
+      iprot_->readMessageEnd();
+      iprot_->getTransport()->readEnd();
+
+      if (result.__isset.success) {
+        sentry.commit();
+        return _return;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "SetNetworkProxy failed: unknown result");
     }
     // seqid != rseqid
     this->sync_.updatePending(fname, mtype, rseqid);
