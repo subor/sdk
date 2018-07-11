@@ -70,3 +70,23 @@ You can also download the SDK from our [sdk_source](https://bitbucket.org/playru
 - Since the sdk uses [boost](http://www.boost.org/), you may encounter `error LNK2038: mismatch detected for 'boost__type_index__abi': value 'RTTI is used'`.  You can solve this by adding `bUseRTTI = true;` to __xxxx.build.cs__.
 
 - Similarly: `Error C4577: 'noexcept' used with no exception handling mode specified`.  You can solve this by adding `bEnableExceptions = true;` to __xxx.build.cs__.
+
+- if you have problem like below:
+
+![](/docs/img/unreal_compile_01.png)
+
+  this is the problem cause by using v140 toolset in UE4.18.
+  you can use generate your VS porject file in cmd by add "-2017" param 
+  "UnrealBuildTool.exe -projectfiles -project="C:/XXX.uproject" -game -engine -progress -2017"
+  if it stills use v140 toolset, do as below:
+  1 Open Registry Editor by input "regedit" in Search Window  
+  2 enter path "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\VisualStudio\SxS\VC7"
+  3 Normally there is "14.0" and "15.0" key
+  value of "14.0" should be "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC” 
+  “15.0” should be ”C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC"
+  please delete "14.0", leave "15.0". If there is no "15.0", add one or modify
+  
+  ![](/docs/img/unreal_compile_02.png)
+  
+  4 re-generate the project file in cmd, note "-2017" is needed
+  5 open the sln project file, compile it, it should work fine.
