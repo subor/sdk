@@ -90,3 +90,4 @@ You can also download the SDK from our [sdk_source](https://bitbucket.org/playru
   
   4 re-generate the project file in cmd, note "-2017" is needed
   5 open the sln project file, compile it, it should work fine.
+  6 you can add the "14.0" key back after you generate the porject file
