@@ -83,6 +83,8 @@ According to the format of json string your write, searching can be separated to
 		2: SettingSystemSDKDataTypes.JSON contents
 	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
+	bool ConnectToWifi(1: string profileName, 2: string key) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
 	SettingSystemSDKDataTypes.RuyiNetworkSettings GetNetworkSettings() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	SettingSystemSDKDataTypes.RuyiNetworkStatus GetNetworkStatus() throws (1: CommonTypeSDKDataTypes.ErrorException error1),

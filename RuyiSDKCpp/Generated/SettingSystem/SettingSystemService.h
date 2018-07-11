@@ -96,6 +96,7 @@ class SettingSystemServiceIf {
    * @param contents Optional. The arguments of the notification. In json string format
    */
   virtual bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents) = 0;
+  virtual bool ConnectToWifi(const std::string& profileName, const std::string& key) = 0;
   virtual void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) = 0;
   virtual void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return) = 0;
 };
@@ -174,6 +175,10 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
     return _return;
   }
   bool SettingItemNotify(const std::string& /* key */, const  ::Ruyi::SDK::SettingSystem::Api::JSON& /* contents */) {
+    bool _return = false;
+    return _return;
+  }
+  bool ConnectToWifi(const std::string& /* profileName */, const std::string& /* key */) {
     bool _return = false;
     return _return;
   }
@@ -1832,6 +1837,125 @@ class SettingSystemService_SettingItemNotify_presult {
 
 };
 
+typedef struct _SettingSystemService_ConnectToWifi_args__isset {
+  _SettingSystemService_ConnectToWifi_args__isset() : profileName(false), key(false) {}
+  bool profileName :1;
+  bool key :1;
+} _SettingSystemService_ConnectToWifi_args__isset;
+
+class SettingSystemService_ConnectToWifi_args {
+ public:
+
+  SettingSystemService_ConnectToWifi_args(const SettingSystemService_ConnectToWifi_args&);
+  SettingSystemService_ConnectToWifi_args& operator=(const SettingSystemService_ConnectToWifi_args&);
+  SettingSystemService_ConnectToWifi_args() : profileName(), key() {
+  }
+
+  virtual ~SettingSystemService_ConnectToWifi_args() throw();
+  std::string profileName;
+  std::string key;
+
+  _SettingSystemService_ConnectToWifi_args__isset __isset;
+
+  void __set_profileName(const std::string& val);
+
+  void __set_key(const std::string& val);
+
+  bool operator == (const SettingSystemService_ConnectToWifi_args & rhs) const
+  {
+    if (!(profileName == rhs.profileName))
+      return false;
+    if (!(key == rhs.key))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_ConnectToWifi_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_ConnectToWifi_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_ConnectToWifi_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_ConnectToWifi_pargs() throw();
+  const std::string* profileName;
+  const std::string* key;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_ConnectToWifi_result__isset {
+  _SettingSystemService_ConnectToWifi_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_ConnectToWifi_result__isset;
+
+class SettingSystemService_ConnectToWifi_result {
+ public:
+
+  SettingSystemService_ConnectToWifi_result(const SettingSystemService_ConnectToWifi_result&);
+  SettingSystemService_ConnectToWifi_result& operator=(const SettingSystemService_ConnectToWifi_result&);
+  SettingSystemService_ConnectToWifi_result() : success(0) {
+  }
+
+  virtual ~SettingSystemService_ConnectToWifi_result() throw();
+  bool success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_ConnectToWifi_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_ConnectToWifi_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_ConnectToWifi_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_ConnectToWifi_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_ConnectToWifi_presult__isset {
+  _SettingSystemService_ConnectToWifi_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_ConnectToWifi_presult__isset;
+
+class SettingSystemService_ConnectToWifi_presult {
+ public:
+
+
+  virtual ~SettingSystemService_ConnectToWifi_presult() throw();
+  bool* success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_ConnectToWifi_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 
 class SettingSystemService_GetNetworkSettings_args {
  public:
@@ -2099,6 +2223,9 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
   void send_SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
   bool recv_SettingItemNotify();
+  bool ConnectToWifi(const std::string& profileName, const std::string& key);
+  void send_ConnectToWifi(const std::string& profileName, const std::string& key);
+  bool recv_ConnectToWifi();
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return);
   void send_GetNetworkSettings();
   void recv_GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return);
@@ -2134,6 +2261,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
   void process_GetUserAppData(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_RemoveUserAppData(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SettingItemNotify(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_ConnectToWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetNetworkSettings(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetNetworkStatus(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
@@ -2153,6 +2281,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
     processMap_["GetUserAppData"] = &SettingSystemServiceProcessor::process_GetUserAppData;
     processMap_["RemoveUserAppData"] = &SettingSystemServiceProcessor::process_RemoveUserAppData;
     processMap_["SettingItemNotify"] = &SettingSystemServiceProcessor::process_SettingItemNotify;
+    processMap_["ConnectToWifi"] = &SettingSystemServiceProcessor::process_ConnectToWifi;
     processMap_["GetNetworkSettings"] = &SettingSystemServiceProcessor::process_GetNetworkSettings;
     processMap_["GetNetworkStatus"] = &SettingSystemServiceProcessor::process_GetNetworkStatus;
   }
@@ -2315,6 +2444,15 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return ifaces_[i]->SettingItemNotify(key, contents);
   }
 
+  bool ConnectToWifi(const std::string& profileName, const std::string& key) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->ConnectToWifi(profileName, key);
+    }
+    return ifaces_[i]->ConnectToWifi(profileName, key);
+  }
+
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -2407,6 +2545,9 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
   int32_t send_SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
   bool recv_SettingItemNotify(const int32_t seqid);
+  bool ConnectToWifi(const std::string& profileName, const std::string& key);
+  int32_t send_ConnectToWifi(const std::string& profileName, const std::string& key);
+  bool recv_ConnectToWifi(const int32_t seqid);
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return);
   int32_t send_GetNetworkSettings();
   void recv_GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return, const int32_t seqid);
