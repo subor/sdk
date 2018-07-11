@@ -3604,6 +3604,14 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual void Lobby_GetMyLobbies(std::string& _return, const int32_t clientIndex) = 0;
+  virtual void Party_AcceptPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex) = 0;
+  virtual void Party_GetPartyInfo(std::string& _return, const std::string& partyId, const int32_t clientIndex) = 0;
+  virtual void Party_JoinParty(std::string& _return, const std::string& partyId, const int32_t clientIndex) = 0;
+  virtual void Party_LeaveParty(std::string& _return, const std::string& partyId, const int32_t clientIndex) = 0;
+  virtual void Party_RejectPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex) = 0;
+  virtual void Party_SendPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex) = 0;
+  virtual void Party_ListPartyInvitations(std::string& _return, const std::string& partyId, const int32_t clientIndex) = 0;
+  virtual void Party_GetFriendsParties(std::string& _return, const std::string& partyId, const int32_t clientIndex) = 0;
   virtual void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareScreenshot(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
@@ -4597,6 +4605,30 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
     return;
   }
   void Lobby_GetMyLobbies(std::string& /* _return */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Party_AcceptPartyInvitation(std::string& /* _return */, const std::string& /* partyId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Party_GetPartyInfo(std::string& /* _return */, const std::string& /* partyId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Party_JoinParty(std::string& /* _return */, const std::string& /* partyId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Party_LeaveParty(std::string& /* _return */, const std::string& /* partyId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Party_RejectPartyInvitation(std::string& /* _return */, const std::string& /* partyId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Party_SendPartyInvitation(std::string& /* _return */, const std::string& /* partyId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Party_ListPartyInvitations(std::string& /* _return */, const std::string& /* partyId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Party_GetFriendsParties(std::string& /* _return */, const std::string& /* partyId */, const int32_t /* clientIndex */) {
     return;
   }
   void Patch_GetGameManifest(std::string& /* _return */, const std::string& /* gameId */, const int32_t /* clientIndex */) {
@@ -40407,6 +40439,894 @@ class BrainCloudService_Lobby_GetMyLobbies_presult {
 
 };
 
+typedef struct _BrainCloudService_Party_AcceptPartyInvitation_args__isset {
+  _BrainCloudService_Party_AcceptPartyInvitation_args__isset() : partyId(false), clientIndex(false) {}
+  bool partyId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Party_AcceptPartyInvitation_args__isset;
+
+class BrainCloudService_Party_AcceptPartyInvitation_args {
+ public:
+
+  BrainCloudService_Party_AcceptPartyInvitation_args(const BrainCloudService_Party_AcceptPartyInvitation_args&);
+  BrainCloudService_Party_AcceptPartyInvitation_args& operator=(const BrainCloudService_Party_AcceptPartyInvitation_args&);
+  BrainCloudService_Party_AcceptPartyInvitation_args() : partyId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Party_AcceptPartyInvitation_args() throw();
+  std::string partyId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Party_AcceptPartyInvitation_args__isset __isset;
+
+  void __set_partyId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Party_AcceptPartyInvitation_args & rhs) const
+  {
+    if (!(partyId == rhs.partyId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_AcceptPartyInvitation_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_AcceptPartyInvitation_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Party_AcceptPartyInvitation_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Party_AcceptPartyInvitation_pargs() throw();
+  const std::string* partyId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_AcceptPartyInvitation_result__isset {
+  _BrainCloudService_Party_AcceptPartyInvitation_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_AcceptPartyInvitation_result__isset;
+
+class BrainCloudService_Party_AcceptPartyInvitation_result {
+ public:
+
+  BrainCloudService_Party_AcceptPartyInvitation_result(const BrainCloudService_Party_AcceptPartyInvitation_result&);
+  BrainCloudService_Party_AcceptPartyInvitation_result& operator=(const BrainCloudService_Party_AcceptPartyInvitation_result&);
+  BrainCloudService_Party_AcceptPartyInvitation_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Party_AcceptPartyInvitation_result() throw();
+  std::string success;
+
+  _BrainCloudService_Party_AcceptPartyInvitation_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Party_AcceptPartyInvitation_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_AcceptPartyInvitation_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_AcceptPartyInvitation_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_AcceptPartyInvitation_presult__isset {
+  _BrainCloudService_Party_AcceptPartyInvitation_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_AcceptPartyInvitation_presult__isset;
+
+class BrainCloudService_Party_AcceptPartyInvitation_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Party_AcceptPartyInvitation_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Party_AcceptPartyInvitation_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Party_GetPartyInfo_args__isset {
+  _BrainCloudService_Party_GetPartyInfo_args__isset() : partyId(false), clientIndex(false) {}
+  bool partyId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Party_GetPartyInfo_args__isset;
+
+class BrainCloudService_Party_GetPartyInfo_args {
+ public:
+
+  BrainCloudService_Party_GetPartyInfo_args(const BrainCloudService_Party_GetPartyInfo_args&);
+  BrainCloudService_Party_GetPartyInfo_args& operator=(const BrainCloudService_Party_GetPartyInfo_args&);
+  BrainCloudService_Party_GetPartyInfo_args() : partyId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Party_GetPartyInfo_args() throw();
+  std::string partyId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Party_GetPartyInfo_args__isset __isset;
+
+  void __set_partyId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Party_GetPartyInfo_args & rhs) const
+  {
+    if (!(partyId == rhs.partyId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_GetPartyInfo_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_GetPartyInfo_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Party_GetPartyInfo_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Party_GetPartyInfo_pargs() throw();
+  const std::string* partyId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_GetPartyInfo_result__isset {
+  _BrainCloudService_Party_GetPartyInfo_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_GetPartyInfo_result__isset;
+
+class BrainCloudService_Party_GetPartyInfo_result {
+ public:
+
+  BrainCloudService_Party_GetPartyInfo_result(const BrainCloudService_Party_GetPartyInfo_result&);
+  BrainCloudService_Party_GetPartyInfo_result& operator=(const BrainCloudService_Party_GetPartyInfo_result&);
+  BrainCloudService_Party_GetPartyInfo_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Party_GetPartyInfo_result() throw();
+  std::string success;
+
+  _BrainCloudService_Party_GetPartyInfo_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Party_GetPartyInfo_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_GetPartyInfo_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_GetPartyInfo_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_GetPartyInfo_presult__isset {
+  _BrainCloudService_Party_GetPartyInfo_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_GetPartyInfo_presult__isset;
+
+class BrainCloudService_Party_GetPartyInfo_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Party_GetPartyInfo_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Party_GetPartyInfo_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Party_JoinParty_args__isset {
+  _BrainCloudService_Party_JoinParty_args__isset() : partyId(false), clientIndex(false) {}
+  bool partyId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Party_JoinParty_args__isset;
+
+class BrainCloudService_Party_JoinParty_args {
+ public:
+
+  BrainCloudService_Party_JoinParty_args(const BrainCloudService_Party_JoinParty_args&);
+  BrainCloudService_Party_JoinParty_args& operator=(const BrainCloudService_Party_JoinParty_args&);
+  BrainCloudService_Party_JoinParty_args() : partyId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Party_JoinParty_args() throw();
+  std::string partyId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Party_JoinParty_args__isset __isset;
+
+  void __set_partyId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Party_JoinParty_args & rhs) const
+  {
+    if (!(partyId == rhs.partyId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_JoinParty_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_JoinParty_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Party_JoinParty_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Party_JoinParty_pargs() throw();
+  const std::string* partyId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_JoinParty_result__isset {
+  _BrainCloudService_Party_JoinParty_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_JoinParty_result__isset;
+
+class BrainCloudService_Party_JoinParty_result {
+ public:
+
+  BrainCloudService_Party_JoinParty_result(const BrainCloudService_Party_JoinParty_result&);
+  BrainCloudService_Party_JoinParty_result& operator=(const BrainCloudService_Party_JoinParty_result&);
+  BrainCloudService_Party_JoinParty_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Party_JoinParty_result() throw();
+  std::string success;
+
+  _BrainCloudService_Party_JoinParty_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Party_JoinParty_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_JoinParty_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_JoinParty_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_JoinParty_presult__isset {
+  _BrainCloudService_Party_JoinParty_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_JoinParty_presult__isset;
+
+class BrainCloudService_Party_JoinParty_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Party_JoinParty_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Party_JoinParty_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Party_LeaveParty_args__isset {
+  _BrainCloudService_Party_LeaveParty_args__isset() : partyId(false), clientIndex(false) {}
+  bool partyId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Party_LeaveParty_args__isset;
+
+class BrainCloudService_Party_LeaveParty_args {
+ public:
+
+  BrainCloudService_Party_LeaveParty_args(const BrainCloudService_Party_LeaveParty_args&);
+  BrainCloudService_Party_LeaveParty_args& operator=(const BrainCloudService_Party_LeaveParty_args&);
+  BrainCloudService_Party_LeaveParty_args() : partyId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Party_LeaveParty_args() throw();
+  std::string partyId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Party_LeaveParty_args__isset __isset;
+
+  void __set_partyId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Party_LeaveParty_args & rhs) const
+  {
+    if (!(partyId == rhs.partyId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_LeaveParty_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_LeaveParty_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Party_LeaveParty_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Party_LeaveParty_pargs() throw();
+  const std::string* partyId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_LeaveParty_result__isset {
+  _BrainCloudService_Party_LeaveParty_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_LeaveParty_result__isset;
+
+class BrainCloudService_Party_LeaveParty_result {
+ public:
+
+  BrainCloudService_Party_LeaveParty_result(const BrainCloudService_Party_LeaveParty_result&);
+  BrainCloudService_Party_LeaveParty_result& operator=(const BrainCloudService_Party_LeaveParty_result&);
+  BrainCloudService_Party_LeaveParty_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Party_LeaveParty_result() throw();
+  std::string success;
+
+  _BrainCloudService_Party_LeaveParty_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Party_LeaveParty_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_LeaveParty_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_LeaveParty_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_LeaveParty_presult__isset {
+  _BrainCloudService_Party_LeaveParty_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_LeaveParty_presult__isset;
+
+class BrainCloudService_Party_LeaveParty_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Party_LeaveParty_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Party_LeaveParty_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Party_RejectPartyInvitation_args__isset {
+  _BrainCloudService_Party_RejectPartyInvitation_args__isset() : partyId(false), clientIndex(false) {}
+  bool partyId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Party_RejectPartyInvitation_args__isset;
+
+class BrainCloudService_Party_RejectPartyInvitation_args {
+ public:
+
+  BrainCloudService_Party_RejectPartyInvitation_args(const BrainCloudService_Party_RejectPartyInvitation_args&);
+  BrainCloudService_Party_RejectPartyInvitation_args& operator=(const BrainCloudService_Party_RejectPartyInvitation_args&);
+  BrainCloudService_Party_RejectPartyInvitation_args() : partyId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Party_RejectPartyInvitation_args() throw();
+  std::string partyId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Party_RejectPartyInvitation_args__isset __isset;
+
+  void __set_partyId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Party_RejectPartyInvitation_args & rhs) const
+  {
+    if (!(partyId == rhs.partyId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_RejectPartyInvitation_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_RejectPartyInvitation_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Party_RejectPartyInvitation_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Party_RejectPartyInvitation_pargs() throw();
+  const std::string* partyId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_RejectPartyInvitation_result__isset {
+  _BrainCloudService_Party_RejectPartyInvitation_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_RejectPartyInvitation_result__isset;
+
+class BrainCloudService_Party_RejectPartyInvitation_result {
+ public:
+
+  BrainCloudService_Party_RejectPartyInvitation_result(const BrainCloudService_Party_RejectPartyInvitation_result&);
+  BrainCloudService_Party_RejectPartyInvitation_result& operator=(const BrainCloudService_Party_RejectPartyInvitation_result&);
+  BrainCloudService_Party_RejectPartyInvitation_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Party_RejectPartyInvitation_result() throw();
+  std::string success;
+
+  _BrainCloudService_Party_RejectPartyInvitation_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Party_RejectPartyInvitation_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_RejectPartyInvitation_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_RejectPartyInvitation_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_RejectPartyInvitation_presult__isset {
+  _BrainCloudService_Party_RejectPartyInvitation_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_RejectPartyInvitation_presult__isset;
+
+class BrainCloudService_Party_RejectPartyInvitation_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Party_RejectPartyInvitation_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Party_RejectPartyInvitation_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Party_SendPartyInvitation_args__isset {
+  _BrainCloudService_Party_SendPartyInvitation_args__isset() : partyId(false), clientIndex(false) {}
+  bool partyId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Party_SendPartyInvitation_args__isset;
+
+class BrainCloudService_Party_SendPartyInvitation_args {
+ public:
+
+  BrainCloudService_Party_SendPartyInvitation_args(const BrainCloudService_Party_SendPartyInvitation_args&);
+  BrainCloudService_Party_SendPartyInvitation_args& operator=(const BrainCloudService_Party_SendPartyInvitation_args&);
+  BrainCloudService_Party_SendPartyInvitation_args() : partyId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Party_SendPartyInvitation_args() throw();
+  std::string partyId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Party_SendPartyInvitation_args__isset __isset;
+
+  void __set_partyId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Party_SendPartyInvitation_args & rhs) const
+  {
+    if (!(partyId == rhs.partyId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_SendPartyInvitation_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_SendPartyInvitation_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Party_SendPartyInvitation_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Party_SendPartyInvitation_pargs() throw();
+  const std::string* partyId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_SendPartyInvitation_result__isset {
+  _BrainCloudService_Party_SendPartyInvitation_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_SendPartyInvitation_result__isset;
+
+class BrainCloudService_Party_SendPartyInvitation_result {
+ public:
+
+  BrainCloudService_Party_SendPartyInvitation_result(const BrainCloudService_Party_SendPartyInvitation_result&);
+  BrainCloudService_Party_SendPartyInvitation_result& operator=(const BrainCloudService_Party_SendPartyInvitation_result&);
+  BrainCloudService_Party_SendPartyInvitation_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Party_SendPartyInvitation_result() throw();
+  std::string success;
+
+  _BrainCloudService_Party_SendPartyInvitation_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Party_SendPartyInvitation_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_SendPartyInvitation_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_SendPartyInvitation_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_SendPartyInvitation_presult__isset {
+  _BrainCloudService_Party_SendPartyInvitation_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_SendPartyInvitation_presult__isset;
+
+class BrainCloudService_Party_SendPartyInvitation_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Party_SendPartyInvitation_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Party_SendPartyInvitation_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Party_ListPartyInvitations_args__isset {
+  _BrainCloudService_Party_ListPartyInvitations_args__isset() : partyId(false), clientIndex(false) {}
+  bool partyId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Party_ListPartyInvitations_args__isset;
+
+class BrainCloudService_Party_ListPartyInvitations_args {
+ public:
+
+  BrainCloudService_Party_ListPartyInvitations_args(const BrainCloudService_Party_ListPartyInvitations_args&);
+  BrainCloudService_Party_ListPartyInvitations_args& operator=(const BrainCloudService_Party_ListPartyInvitations_args&);
+  BrainCloudService_Party_ListPartyInvitations_args() : partyId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Party_ListPartyInvitations_args() throw();
+  std::string partyId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Party_ListPartyInvitations_args__isset __isset;
+
+  void __set_partyId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Party_ListPartyInvitations_args & rhs) const
+  {
+    if (!(partyId == rhs.partyId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_ListPartyInvitations_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_ListPartyInvitations_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Party_ListPartyInvitations_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Party_ListPartyInvitations_pargs() throw();
+  const std::string* partyId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_ListPartyInvitations_result__isset {
+  _BrainCloudService_Party_ListPartyInvitations_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_ListPartyInvitations_result__isset;
+
+class BrainCloudService_Party_ListPartyInvitations_result {
+ public:
+
+  BrainCloudService_Party_ListPartyInvitations_result(const BrainCloudService_Party_ListPartyInvitations_result&);
+  BrainCloudService_Party_ListPartyInvitations_result& operator=(const BrainCloudService_Party_ListPartyInvitations_result&);
+  BrainCloudService_Party_ListPartyInvitations_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Party_ListPartyInvitations_result() throw();
+  std::string success;
+
+  _BrainCloudService_Party_ListPartyInvitations_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Party_ListPartyInvitations_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_ListPartyInvitations_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_ListPartyInvitations_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_ListPartyInvitations_presult__isset {
+  _BrainCloudService_Party_ListPartyInvitations_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_ListPartyInvitations_presult__isset;
+
+class BrainCloudService_Party_ListPartyInvitations_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Party_ListPartyInvitations_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Party_ListPartyInvitations_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Party_GetFriendsParties_args__isset {
+  _BrainCloudService_Party_GetFriendsParties_args__isset() : partyId(false), clientIndex(false) {}
+  bool partyId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Party_GetFriendsParties_args__isset;
+
+class BrainCloudService_Party_GetFriendsParties_args {
+ public:
+
+  BrainCloudService_Party_GetFriendsParties_args(const BrainCloudService_Party_GetFriendsParties_args&);
+  BrainCloudService_Party_GetFriendsParties_args& operator=(const BrainCloudService_Party_GetFriendsParties_args&);
+  BrainCloudService_Party_GetFriendsParties_args() : partyId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Party_GetFriendsParties_args() throw();
+  std::string partyId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Party_GetFriendsParties_args__isset __isset;
+
+  void __set_partyId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Party_GetFriendsParties_args & rhs) const
+  {
+    if (!(partyId == rhs.partyId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_GetFriendsParties_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_GetFriendsParties_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Party_GetFriendsParties_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Party_GetFriendsParties_pargs() throw();
+  const std::string* partyId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_GetFriendsParties_result__isset {
+  _BrainCloudService_Party_GetFriendsParties_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_GetFriendsParties_result__isset;
+
+class BrainCloudService_Party_GetFriendsParties_result {
+ public:
+
+  BrainCloudService_Party_GetFriendsParties_result(const BrainCloudService_Party_GetFriendsParties_result&);
+  BrainCloudService_Party_GetFriendsParties_result& operator=(const BrainCloudService_Party_GetFriendsParties_result&);
+  BrainCloudService_Party_GetFriendsParties_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Party_GetFriendsParties_result() throw();
+  std::string success;
+
+  _BrainCloudService_Party_GetFriendsParties_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Party_GetFriendsParties_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_GetFriendsParties_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_GetFriendsParties_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_GetFriendsParties_presult__isset {
+  _BrainCloudService_Party_GetFriendsParties_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_GetFriendsParties_presult__isset;
+
+class BrainCloudService_Party_GetFriendsParties_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Party_GetFriendsParties_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Party_GetFriendsParties_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 typedef struct _BrainCloudService_Patch_GetGameManifest_args__isset {
   _BrainCloudService_Patch_GetGameManifest_args__isset() : gameId(false), clientIndex(false) {}
   bool gameId :1;
@@ -45571,6 +46491,30 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Lobby_GetMyLobbies(std::string& _return, const int32_t clientIndex);
   void send_Lobby_GetMyLobbies(const int32_t clientIndex);
   void recv_Lobby_GetMyLobbies(std::string& _return);
+  void Party_AcceptPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  void send_Party_AcceptPartyInvitation(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_AcceptPartyInvitation(std::string& _return);
+  void Party_GetPartyInfo(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  void send_Party_GetPartyInfo(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_GetPartyInfo(std::string& _return);
+  void Party_JoinParty(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  void send_Party_JoinParty(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_JoinParty(std::string& _return);
+  void Party_LeaveParty(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  void send_Party_LeaveParty(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_LeaveParty(std::string& _return);
+  void Party_RejectPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  void send_Party_RejectPartyInvitation(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_RejectPartyInvitation(std::string& _return);
+  void Party_SendPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  void send_Party_SendPartyInvitation(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_SendPartyInvitation(std::string& _return);
+  void Party_ListPartyInvitations(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  void send_Party_ListPartyInvitations(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_ListPartyInvitations(std::string& _return);
+  void Party_GetFriendsParties(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  void send_Party_GetFriendsParties(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_GetFriendsParties(std::string& _return);
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex);
   void send_Patch_GetGameManifest(const std::string& gameId, const int32_t clientIndex);
   void recv_Patch_GetGameManifest(std::string& _return);
@@ -45996,6 +46940,14 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Lobby_DestroyLobby(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Lobby_StartGame(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Lobby_GetMyLobbies(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Party_AcceptPartyInvitation(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Party_GetPartyInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Party_JoinParty(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Party_LeaveParty(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Party_RejectPartyInvitation(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Party_SendPartyInvitation(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Party_ListPartyInvitations(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Party_GetFriendsParties(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Patch_GetGameManifest(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SocialFeed_ShareVideo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SocialFeed_ShareScreenshot(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -46341,6 +47293,14 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Lobby_DestroyLobby"] = &BrainCloudServiceProcessor::process_Lobby_DestroyLobby;
     processMap_["Lobby_StartGame"] = &BrainCloudServiceProcessor::process_Lobby_StartGame;
     processMap_["Lobby_GetMyLobbies"] = &BrainCloudServiceProcessor::process_Lobby_GetMyLobbies;
+    processMap_["Party_AcceptPartyInvitation"] = &BrainCloudServiceProcessor::process_Party_AcceptPartyInvitation;
+    processMap_["Party_GetPartyInfo"] = &BrainCloudServiceProcessor::process_Party_GetPartyInfo;
+    processMap_["Party_JoinParty"] = &BrainCloudServiceProcessor::process_Party_JoinParty;
+    processMap_["Party_LeaveParty"] = &BrainCloudServiceProcessor::process_Party_LeaveParty;
+    processMap_["Party_RejectPartyInvitation"] = &BrainCloudServiceProcessor::process_Party_RejectPartyInvitation;
+    processMap_["Party_SendPartyInvitation"] = &BrainCloudServiceProcessor::process_Party_SendPartyInvitation;
+    processMap_["Party_ListPartyInvitations"] = &BrainCloudServiceProcessor::process_Party_ListPartyInvitations;
+    processMap_["Party_GetFriendsParties"] = &BrainCloudServiceProcessor::process_Party_GetFriendsParties;
     processMap_["Patch_GetGameManifest"] = &BrainCloudServiceProcessor::process_Patch_GetGameManifest;
     processMap_["SocialFeed_ShareVideo"] = &BrainCloudServiceProcessor::process_SocialFeed_ShareVideo;
     processMap_["SocialFeed_ShareScreenshot"] = &BrainCloudServiceProcessor::process_SocialFeed_ShareScreenshot;
@@ -49455,6 +50415,86 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
     return;
   }
 
+  void Party_AcceptPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Party_AcceptPartyInvitation(_return, partyId, clientIndex);
+    }
+    ifaces_[i]->Party_AcceptPartyInvitation(_return, partyId, clientIndex);
+    return;
+  }
+
+  void Party_GetPartyInfo(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Party_GetPartyInfo(_return, partyId, clientIndex);
+    }
+    ifaces_[i]->Party_GetPartyInfo(_return, partyId, clientIndex);
+    return;
+  }
+
+  void Party_JoinParty(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Party_JoinParty(_return, partyId, clientIndex);
+    }
+    ifaces_[i]->Party_JoinParty(_return, partyId, clientIndex);
+    return;
+  }
+
+  void Party_LeaveParty(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Party_LeaveParty(_return, partyId, clientIndex);
+    }
+    ifaces_[i]->Party_LeaveParty(_return, partyId, clientIndex);
+    return;
+  }
+
+  void Party_RejectPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Party_RejectPartyInvitation(_return, partyId, clientIndex);
+    }
+    ifaces_[i]->Party_RejectPartyInvitation(_return, partyId, clientIndex);
+    return;
+  }
+
+  void Party_SendPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Party_SendPartyInvitation(_return, partyId, clientIndex);
+    }
+    ifaces_[i]->Party_SendPartyInvitation(_return, partyId, clientIndex);
+    return;
+  }
+
+  void Party_ListPartyInvitations(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Party_ListPartyInvitations(_return, partyId, clientIndex);
+    }
+    ifaces_[i]->Party_ListPartyInvitations(_return, partyId, clientIndex);
+    return;
+  }
+
+  void Party_GetFriendsParties(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Party_GetFriendsParties(_return, partyId, clientIndex);
+    }
+    ifaces_[i]->Party_GetFriendsParties(_return, partyId, clientIndex);
+    return;
+  }
+
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -50749,6 +51789,30 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Lobby_GetMyLobbies(std::string& _return, const int32_t clientIndex);
   int32_t send_Lobby_GetMyLobbies(const int32_t clientIndex);
   void recv_Lobby_GetMyLobbies(std::string& _return, const int32_t seqid);
+  void Party_AcceptPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  int32_t send_Party_AcceptPartyInvitation(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_AcceptPartyInvitation(std::string& _return, const int32_t seqid);
+  void Party_GetPartyInfo(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  int32_t send_Party_GetPartyInfo(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_GetPartyInfo(std::string& _return, const int32_t seqid);
+  void Party_JoinParty(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  int32_t send_Party_JoinParty(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_JoinParty(std::string& _return, const int32_t seqid);
+  void Party_LeaveParty(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  int32_t send_Party_LeaveParty(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_LeaveParty(std::string& _return, const int32_t seqid);
+  void Party_RejectPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  int32_t send_Party_RejectPartyInvitation(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_RejectPartyInvitation(std::string& _return, const int32_t seqid);
+  void Party_SendPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  int32_t send_Party_SendPartyInvitation(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_SendPartyInvitation(std::string& _return, const int32_t seqid);
+  void Party_ListPartyInvitations(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  int32_t send_Party_ListPartyInvitations(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_ListPartyInvitations(std::string& _return, const int32_t seqid);
+  void Party_GetFriendsParties(std::string& _return, const std::string& partyId, const int32_t clientIndex);
+  int32_t send_Party_GetFriendsParties(const std::string& partyId, const int32_t clientIndex);
+  void recv_Party_GetFriendsParties(std::string& _return, const int32_t seqid);
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex);
   int32_t send_Patch_GetGameManifest(const std::string& gameId, const int32_t clientIndex);
   void recv_Patch_GetGameManifest(std::string& _return, const int32_t seqid);

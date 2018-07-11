@@ -4533,6 +4533,46 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Lobby_GetMyLobbies\n");
   }
 
+  void Party_AcceptPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_AcceptPartyInvitation\n");
+  }
+
+  void Party_GetPartyInfo(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_GetPartyInfo\n");
+  }
+
+  void Party_JoinParty(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_JoinParty\n");
+  }
+
+  void Party_LeaveParty(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_LeaveParty\n");
+  }
+
+  void Party_RejectPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_RejectPartyInvitation\n");
+  }
+
+  void Party_SendPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_SendPartyInvitation\n");
+  }
+
+  void Party_ListPartyInvitations(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_ListPartyInvitations\n");
+  }
+
+  void Party_GetFriendsParties(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_GetFriendsParties\n");
+  }
+
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Patch_GetGameManifest\n");

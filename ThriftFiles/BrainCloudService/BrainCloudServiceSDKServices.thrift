@@ -3142,6 +3142,22 @@ service BrainCloudService {
 	/** Get a list of lobbies the player is a member of. */
 	string Lobby_GetMyLobbies(1: i32 clientIndex),
 
+	string Party_AcceptPartyInvitation(1: string partyId, 2: i32 clientIndex),
+
+	string Party_GetPartyInfo(1: string partyId, 2: i32 clientIndex),
+
+	string Party_JoinParty(1: string partyId, 2: i32 clientIndex),
+
+	string Party_LeaveParty(1: string partyId, 2: i32 clientIndex),
+
+	string Party_RejectPartyInvitation(1: string partyId, 2: i32 clientIndex),
+
+	string Party_SendPartyInvitation(1: string partyId, 2: i32 clientIndex),
+
+	string Party_ListPartyInvitations(1: string partyId, 2: i32 clientIndex),
+
+	string Party_GetFriendsParties(1: string partyId, 2: i32 clientIndex),
+
 	string Patch_GetGameManifest(1: string gameId, 2: i32 clientIndex),
 
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
