@@ -35,6 +35,8 @@ std::ostream& operator<<(std::ostream& out, const NodeType::type& val);
 
 typedef std::string JSON;
 
+typedef int32_t _int;
+
 class RuyiNetworkSettingNameValue;
 
 class RuyiNetworkSettings;
@@ -50,6 +52,8 @@ class SettingTree;
 class NodeList;
 
 class SettingItemNotification;
+
+class WifiEntity;
 
 typedef struct _RuyiNetworkSettingNameValue__isset {
   _RuyiNetworkSettingNameValue__isset() : name(false), value(false) {}
@@ -524,6 +528,90 @@ class SettingItemNotification : public virtual ::apache::thrift::TBase {
 void swap(SettingItemNotification &a, SettingItemNotification &b);
 
 std::ostream& operator<<(std::ostream& out, const SettingItemNotification& obj);
+
+typedef struct _WifiEntity__isset {
+  _WifiEntity__isset() : Name(false), MacAddress(false), Channel(false), CenterFrequancy(false), Rssi(false), Connected(false), SecurityEnabled(false), HasProfile(false) {}
+  bool Name :1;
+  bool MacAddress :1;
+  bool Channel :1;
+  bool CenterFrequancy :1;
+  bool Rssi :1;
+  bool Connected :1;
+  bool SecurityEnabled :1;
+  bool HasProfile :1;
+} _WifiEntity__isset;
+
+class WifiEntity : public virtual ::apache::thrift::TBase {
+ public:
+
+  WifiEntity(const WifiEntity&);
+  WifiEntity& operator=(const WifiEntity&);
+  WifiEntity() : Name(), MacAddress(), Channel(0), CenterFrequancy(0), Rssi(0), Connected(0), SecurityEnabled(0), HasProfile(0) {
+  }
+
+  virtual ~WifiEntity() throw();
+  std::string Name;
+  std::string MacAddress;
+  _int Channel;
+  _int CenterFrequancy;
+  _int Rssi;
+  bool Connected;
+  bool SecurityEnabled;
+  bool HasProfile;
+
+  _WifiEntity__isset __isset;
+
+  void __set_Name(const std::string& val);
+
+  void __set_MacAddress(const std::string& val);
+
+  void __set_Channel(const _int val);
+
+  void __set_CenterFrequancy(const _int val);
+
+  void __set_Rssi(const _int val);
+
+  void __set_Connected(const bool val);
+
+  void __set_SecurityEnabled(const bool val);
+
+  void __set_HasProfile(const bool val);
+
+  bool operator == (const WifiEntity & rhs) const
+  {
+    if (!(Name == rhs.Name))
+      return false;
+    if (!(MacAddress == rhs.MacAddress))
+      return false;
+    if (!(Channel == rhs.Channel))
+      return false;
+    if (!(CenterFrequancy == rhs.CenterFrequancy))
+      return false;
+    if (!(Rssi == rhs.Rssi))
+      return false;
+    if (!(Connected == rhs.Connected))
+      return false;
+    if (!(SecurityEnabled == rhs.SecurityEnabled))
+      return false;
+    if (!(HasProfile == rhs.HasProfile))
+      return false;
+    return true;
+  }
+  bool operator != (const WifiEntity &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const WifiEntity & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(WifiEntity &a, WifiEntity &b);
+
+std::ostream& operator<<(std::ostream& out, const WifiEntity& obj);
 
 }}}} // namespace
 

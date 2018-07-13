@@ -92,5 +92,7 @@ According to the format of json string your write, searching can be separated to
 	SettingSystemSDKDataTypes.RuyiNetworkSettings GetNetworkSettings() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	SettingSystemSDKDataTypes.RuyiNetworkStatus GetNetworkStatus() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	list<SettingSystemSDKDataTypes.WifiEntity> GetAvailableWifi() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 }
 
