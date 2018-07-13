@@ -280,6 +280,9 @@
     <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKServices_types.cpp">
       <Filter>Generated\OverlayManager</Filter>
     </ClCompile>
+    <ClCompile Include="Generated\InputManager\InputManagerService.cpp">
+      <Filter>Generated\InputManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_constants.h">
@@ -552,6 +555,9 @@
     </ClInclude>
     <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKServices_types.h">
       <Filter>Generated\OverlayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\InputManager\InputManagerService.h">
+      <Filter>Generated\InputManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
