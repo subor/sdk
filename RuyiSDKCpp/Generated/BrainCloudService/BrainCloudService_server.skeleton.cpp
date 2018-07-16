@@ -4573,6 +4573,11 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Party_GetFriendsParties\n");
   }
 
+  void Party_GetMyParty(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_GetMyParty\n");
+  }
+
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Patch_GetGameManifest\n");

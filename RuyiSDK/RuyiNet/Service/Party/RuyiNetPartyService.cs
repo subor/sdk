@@ -235,113 +235,30 @@ namespace Ruyi.SDK.Online
             });
         }
 
-        [Serializable]
-        private class RuyiNetGroupIdRequest
-        {
-            public string groupId;
-        }
-    }
-
-    /// <summary>
-    /// The response when getting party information.
-    /// </summary>
-    [Serializable]
-    public class RuyiNetGetPartyInfoResponse
-    {
         /// <summary>
-        /// The response data.
+        /// Returns the party the current player is a member of, if any.
         /// </summary>
-        [Serializable]
-        public class Data
+        /// <param name="index">The index of user</param>
+        /// <param name="callback">The function to call when the task completes.</param>
+        public void GetMyParty(int index, Action<RuyiNetParty> callback)
         {
-            /// <summary>
-            /// The response.
-            /// </summary>
-            [Serializable]
-            public class Response
+            EnqueueTask(() =>
             {
-                /// <summary>
-                /// Information on a group.
-                /// </summary>
-                [Serializable]
-                public class Group
+                return mClient.BCService.Party_GetMyParty(index);
+            }, (RuyiNetPartyResponse response) =>
+            {
+                if (callback != null)
                 {
-                    /// <summary>
-                    /// The type of this group (should be "PARTY")
-                    /// </summary>
-                    public string groupType;
-
-                    /// <summary>
-                    /// The ID of the group.
-                    /// </summary>
-                    public string groupId;
-
-                    /// <summary>
-                    /// Whether or not the group is open.
-                    /// </summary>
-                    public bool isOpenGroup;
-
-                    /// <summary>
-                    /// Number of players requesting membership.
-                    /// </summary>
-                    public int requestingPendingMemberCount;
-
-                    /// <summary>
-                    /// Number of players invited to the group.
-                    /// </summary>
-                    public int invitedPendingMemberCount;
-
-                    /// <summary>
-                    /// The profile ID of the owner
-                    /// </summary>
-                    public string ownerId;
-
-                    /// <summary>
-                    /// The name of the group (should be the owner's username)
-                    /// </summary>
-                    public string name;
-
-                    /// <summary>
-                    /// Number of people in the group.
-                    /// </summary>
-                    public int memberCount;
+                    if (response.status == RuyiNetHttpStatus.OK)
+                    {
+                        callback(response.data.party);
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
                 }
-
-                /// <summary>
-                /// Groups the player has requested membership of.
-                /// </summary>
-                public Group[] requested;
-
-                /// <summary>
-                /// Groups the player has been invited to.
-                /// </summary>
-                public Group[] invited;
-
-                /// <summary>
-                /// Groups the player is a member of.
-                /// </summary>
-                public Group[] groups;
-            }
-
-            /// <summary>
-            /// The response.
-            /// </summary>
-            public Response response;
-
-            /// <summary>
-            /// Whether or not the server-side script ran successfully.
-            /// </summary>
-            public bool success;
+            });
         }
-
-        /// <summary>
-        /// The response data.
-        /// </summary>
-        public Data data;
-
-        /// <summary>
-        /// The status of the response.
-        /// </summary>
-        public int status;
     }
 }

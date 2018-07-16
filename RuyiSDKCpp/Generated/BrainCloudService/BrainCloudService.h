@@ -3612,6 +3612,7 @@ class BrainCloudServiceIf {
   virtual void Party_SendPartyInvitation(std::string& _return, const std::string& playerId, const int32_t clientIndex) = 0;
   virtual void Party_ListPartyInvitations(std::string& _return, const int32_t clientIndex) = 0;
   virtual void Party_GetFriendsParties(std::string& _return, const int32_t maxResults, const int32_t clientIndex) = 0;
+  virtual void Party_GetMyParty(std::string& _return, const int32_t clientIndex) = 0;
   virtual void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareScreenshot(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
@@ -4629,6 +4630,9 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
     return;
   }
   void Party_GetFriendsParties(std::string& /* _return */, const int32_t /* maxResults */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Party_GetMyParty(std::string& /* _return */, const int32_t /* clientIndex */) {
     return;
   }
   void Patch_GetGameManifest(std::string& /* _return */, const std::string& /* gameId */, const int32_t /* clientIndex */) {
@@ -41320,6 +41324,110 @@ class BrainCloudService_Party_GetFriendsParties_presult {
 
 };
 
+typedef struct _BrainCloudService_Party_GetMyParty_args__isset {
+  _BrainCloudService_Party_GetMyParty_args__isset() : clientIndex(false) {}
+  bool clientIndex :1;
+} _BrainCloudService_Party_GetMyParty_args__isset;
+
+class BrainCloudService_Party_GetMyParty_args {
+ public:
+
+  BrainCloudService_Party_GetMyParty_args(const BrainCloudService_Party_GetMyParty_args&);
+  BrainCloudService_Party_GetMyParty_args& operator=(const BrainCloudService_Party_GetMyParty_args&);
+  BrainCloudService_Party_GetMyParty_args() : clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Party_GetMyParty_args() throw();
+  int32_t clientIndex;
+
+  _BrainCloudService_Party_GetMyParty_args__isset __isset;
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Party_GetMyParty_args & rhs) const
+  {
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_GetMyParty_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_GetMyParty_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Party_GetMyParty_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Party_GetMyParty_pargs() throw();
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_GetMyParty_result__isset {
+  _BrainCloudService_Party_GetMyParty_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_GetMyParty_result__isset;
+
+class BrainCloudService_Party_GetMyParty_result {
+ public:
+
+  BrainCloudService_Party_GetMyParty_result(const BrainCloudService_Party_GetMyParty_result&);
+  BrainCloudService_Party_GetMyParty_result& operator=(const BrainCloudService_Party_GetMyParty_result&);
+  BrainCloudService_Party_GetMyParty_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Party_GetMyParty_result() throw();
+  std::string success;
+
+  _BrainCloudService_Party_GetMyParty_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Party_GetMyParty_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Party_GetMyParty_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Party_GetMyParty_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Party_GetMyParty_presult__isset {
+  _BrainCloudService_Party_GetMyParty_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Party_GetMyParty_presult__isset;
+
+class BrainCloudService_Party_GetMyParty_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Party_GetMyParty_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Party_GetMyParty_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 typedef struct _BrainCloudService_Patch_GetGameManifest_args__isset {
   _BrainCloudService_Patch_GetGameManifest_args__isset() : gameId(false), clientIndex(false) {}
   bool gameId :1;
@@ -46508,6 +46616,9 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Party_GetFriendsParties(std::string& _return, const int32_t maxResults, const int32_t clientIndex);
   void send_Party_GetFriendsParties(const int32_t maxResults, const int32_t clientIndex);
   void recv_Party_GetFriendsParties(std::string& _return);
+  void Party_GetMyParty(std::string& _return, const int32_t clientIndex);
+  void send_Party_GetMyParty(const int32_t clientIndex);
+  void recv_Party_GetMyParty(std::string& _return);
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex);
   void send_Patch_GetGameManifest(const std::string& gameId, const int32_t clientIndex);
   void recv_Patch_GetGameManifest(std::string& _return);
@@ -46941,6 +47052,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Party_SendPartyInvitation(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Party_ListPartyInvitations(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Party_GetFriendsParties(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Party_GetMyParty(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Patch_GetGameManifest(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SocialFeed_ShareVideo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SocialFeed_ShareScreenshot(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -47294,6 +47406,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Party_SendPartyInvitation"] = &BrainCloudServiceProcessor::process_Party_SendPartyInvitation;
     processMap_["Party_ListPartyInvitations"] = &BrainCloudServiceProcessor::process_Party_ListPartyInvitations;
     processMap_["Party_GetFriendsParties"] = &BrainCloudServiceProcessor::process_Party_GetFriendsParties;
+    processMap_["Party_GetMyParty"] = &BrainCloudServiceProcessor::process_Party_GetMyParty;
     processMap_["Patch_GetGameManifest"] = &BrainCloudServiceProcessor::process_Patch_GetGameManifest;
     processMap_["SocialFeed_ShareVideo"] = &BrainCloudServiceProcessor::process_SocialFeed_ShareVideo;
     processMap_["SocialFeed_ShareScreenshot"] = &BrainCloudServiceProcessor::process_SocialFeed_ShareScreenshot;
@@ -50488,6 +50601,16 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
     return;
   }
 
+  void Party_GetMyParty(std::string& _return, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Party_GetMyParty(_return, clientIndex);
+    }
+    ifaces_[i]->Party_GetMyParty(_return, clientIndex);
+    return;
+  }
+
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -51806,6 +51929,9 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Party_GetFriendsParties(std::string& _return, const int32_t maxResults, const int32_t clientIndex);
   int32_t send_Party_GetFriendsParties(const int32_t maxResults, const int32_t clientIndex);
   void recv_Party_GetFriendsParties(std::string& _return, const int32_t seqid);
+  void Party_GetMyParty(std::string& _return, const int32_t clientIndex);
+  int32_t send_Party_GetMyParty(const int32_t clientIndex);
+  void recv_Party_GetMyParty(std::string& _return, const int32_t seqid);
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex);
   int32_t send_Patch_GetGameManifest(const std::string& gameId, const int32_t clientIndex);
   void recv_Patch_GetGameManifest(std::string& _return, const int32_t seqid);

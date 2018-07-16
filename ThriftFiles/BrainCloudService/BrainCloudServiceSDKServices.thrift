@@ -3158,6 +3158,8 @@ service BrainCloudService {
 
 	string Party_GetFriendsParties(1: i32 maxResults, 2: i32 clientIndex),
 
+	string Party_GetMyParty(1: i32 clientIndex),
+
 	string Patch_GetGameManifest(1: string gameId, 2: i32 clientIndex),
 
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
