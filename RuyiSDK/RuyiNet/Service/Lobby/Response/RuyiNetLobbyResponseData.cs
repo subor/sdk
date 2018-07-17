@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Ruyi.SDK.Online
 {
@@ -21,7 +22,7 @@ namespace Ruyi.SDK.Online
         /// <summary>
         /// JSON string containing custom attributes.
         /// </summary>
-        public string attributes;
+        public Dictionary<string, object> attributes;
 
         /// <summary>
         /// A list of player IDs of the members.

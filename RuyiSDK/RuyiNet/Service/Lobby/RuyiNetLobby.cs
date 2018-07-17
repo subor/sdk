@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Ruyi.SDK.Online
 {
@@ -11,9 +12,9 @@ namespace Ruyi.SDK.Online
         /// Implicit conversion operator.
         /// </summary>
         /// <param name="other">The response after creating a lobby.</param>
-        public static implicit operator RuyiNetLobby(RuyiNetLobbyResponse other)
+        public static implicit operator RuyiNetLobby(RuyiNetLobbyResponseData data)
         {
-            return new RuyiNetLobby(other.data);
+            return new RuyiNetLobby(data);
         }
 
         /// <summary>
@@ -22,19 +23,22 @@ namespace Ruyi.SDK.Online
         /// <param name="data">The data containing the lobby information.</param>
         public RuyiNetLobby(RuyiNetLobbyResponseData data)
         {
-            GameId = data.gameId;
-            LobbyId = data.lobbyId;
-            JSONAttributes = data.attributes;
-            MemberPlayerIds = data.memberPlayerIds;
-            ConnectionString = data.connectionString;
-            LobbyState = (RuyiNetLobbyState)Enum.Parse(typeof(RuyiNetLobbyState), data.lobbyState);
-            LobbyType = (RuyiNetLobbyType)Enum.Parse(typeof(RuyiNetLobbyType), data.lobbyState);
-            Created = data.created;
-            Updated = data.updated;
-            MaxSlots = data.maxSlots;
-            IsOpen = data.isOpen;
-            FreeSlots = data.freeSlots;
-            OwnerPlayerId = data.ownerPlayerId;
+            if (data != null)
+            {
+                GameId = data.gameId;
+                LobbyId = data.lobbyId;
+                JSONAttributes = data.attributes;
+                MemberPlayerIds = data.memberPlayerIds;
+                ConnectionString = data.connectionString;
+                LobbyState = (RuyiNetLobbyState)Enum.Parse(typeof(RuyiNetLobbyState), data.lobbyState);
+                LobbyType = (RuyiNetLobbyType)Enum.Parse(typeof(RuyiNetLobbyType), data.lobbyType);
+                Created = data.created;
+                Updated = data.updated;
+                MaxSlots = data.maxSlots;
+                IsOpen = data.isOpen;
+                FreeSlots = data.freeSlots;
+                OwnerPlayerId = data.ownerPlayerId;
+            }
         }
 
         /// <summary>
@@ -50,7 +54,7 @@ namespace Ruyi.SDK.Online
         /// <summary>
         /// JSON string containing custom attributes.
         /// </summary>
-        public string JSONAttributes { get; private set; }
+        public Dictionary<string, object> JSONAttributes { get; private set; }
 
         /// <summary>
         /// A list of player IDs of the members.

@@ -80,7 +80,14 @@ namespace Ruyi.SDK.Online
                 }
             }, (RuyiNetLobbyResponse response) =>
             {
-                callback(response);
+                if (response.status == RuyiNetHttpStatus.OK)
+                {
+                    callback(response.data);
+                }
+                else
+                {
+                    callback(null);
+                }
             });
         }
 
@@ -111,7 +118,14 @@ namespace Ruyi.SDK.Online
                 }
             }, (RuyiNetLobbyResponse response) =>
             {
-                callback(response);
+                if (response.status == RuyiNetHttpStatus.OK)
+                {
+                    callback(response.data);
+                }
+                else
+                {
+                    callback(null);
+                }
             });
         }
 
@@ -142,7 +156,14 @@ namespace Ruyi.SDK.Online
                 }
             }, (RuyiNetLobbyResponse response) =>
             {
-                callback(response);
+                if (response.status == RuyiNetHttpStatus.OK)
+                {
+                    callback(response.data);
+                }
+                else
+                {
+                    callback(null);
+                }
             });
         }
 
@@ -173,7 +194,14 @@ namespace Ruyi.SDK.Online
                 }
             }, (RuyiNetLobbyResponse response) =>
             {
-                callback(response);
+                if (response.status == RuyiNetHttpStatus.OK)
+                {
+                    callback(response.data);
+                }
+                else
+                {
+                    callback(null);
+                }
             });
         }
 
@@ -345,7 +373,15 @@ namespace Ruyi.SDK.Online
                 }
             }, (RuyiNetLobbyResponse response) =>
             {
-                callback(response);
+
+                if (response.status == RuyiNetHttpStatus.OK)
+                {
+                    callback(response.data);
+                }
+                else
+                {
+                    callback(null);
+                }
             });
         }
 
@@ -376,7 +412,14 @@ namespace Ruyi.SDK.Online
                 }
             }, (RuyiNetLobbyResponse response) =>
             {
-                callback(response);
+                if (response.status == RuyiNetHttpStatus.OK)
+                {
+                    callback(response.data);
+                }
+                else
+                {
+                    callback(null);
+                }
             });
         }
 
@@ -408,7 +451,14 @@ namespace Ruyi.SDK.Online
                 }
             }, (RuyiNetLobbyResponse response) =>
             {
-                callback(response);
+                if (response.status == RuyiNetHttpStatus.OK)
+                {
+                    callback(response.data);
+                }
+                else
+                {
+                    callback(null);
+                }
             });
         }
 
