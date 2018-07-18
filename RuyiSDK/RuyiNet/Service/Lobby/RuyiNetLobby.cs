@@ -28,7 +28,7 @@ namespace Ruyi.SDK.Online
                 GameId = data.gameId;
                 LobbyId = data.lobbyId;
                 JSONAttributes = data.attributes;
-                MemberPlayerIds = data.memberPlayerIds;
+                MemberPlayerIds = new List<string>(data.memberPlayerIds);
                 ConnectionString = data.connectionString;
                 LobbyState = (RuyiNetLobbyState)Enum.Parse(typeof(RuyiNetLobbyState), data.lobbyState);
                 LobbyType = (RuyiNetLobbyType)Enum.Parse(typeof(RuyiNetLobbyType), data.lobbyType);
@@ -59,7 +59,7 @@ namespace Ruyi.SDK.Online
         /// <summary>
         /// A list of player IDs of the members.
         /// </summary>
-        public string[] MemberPlayerIds { get; private set; }
+        public List<string> MemberPlayerIds { get; set; }
 
         /// <summary>
         /// The connection string for starting a game.

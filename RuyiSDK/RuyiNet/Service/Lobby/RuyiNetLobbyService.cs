@@ -78,17 +78,7 @@ namespace Ruyi.SDK.Online
 
                     return JsonConvert.SerializeObject(response);
                 }
-            }, (RuyiNetLobbyResponse response) =>
-            {
-                if (response.status == RuyiNetHttpStatus.OK)
-                {
-                    callback(response.data);
-                }
-                else
-                {
-                    callback(null);
-                }
-            });
+            }, (RuyiNetLobbyResponse response) => OnLobbyResponse(callback, response));
         }
 
         /// <summary>
@@ -116,17 +106,7 @@ namespace Ruyi.SDK.Online
 
                     return JsonConvert.SerializeObject(response);
                 }
-            }, (RuyiNetLobbyResponse response) =>
-            {
-                if (response.status == RuyiNetHttpStatus.OK)
-                {
-                    callback(response.data);
-                }
-                else
-                {
-                    callback(null);
-                }
-            });
+            }, (RuyiNetLobbyResponse response) => OnLobbyResponse(callback, response));
         }
 
         /// <summary>
@@ -154,17 +134,7 @@ namespace Ruyi.SDK.Online
 
                     return JsonConvert.SerializeObject(response);
                 }
-            }, (RuyiNetLobbyResponse response) =>
-            {
-                if (response.status == RuyiNetHttpStatus.OK)
-                {
-                    callback(response.data);
-                }
-                else
-                {
-                    callback(null);
-                }
-            });
+            }, (RuyiNetLobbyResponse response) => OnLobbyResponse(callback, response));
         }
 
         /// <summary>
@@ -173,7 +143,7 @@ namespace Ruyi.SDK.Online
         /// <param name="clientIndex">The index of user</param>
         /// <param name="lobbyId">The ID of the lobby to close.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void CloseLobby(int clientIndex, string lobbyId, Action<RuyiNetLobby> callback)
+        public void CloseLobby(int clientIndex, string lobbyId, Action callback)
         {
             EnqueueTask(() =>
             {
@@ -192,17 +162,7 @@ namespace Ruyi.SDK.Online
 
                     return JsonConvert.SerializeObject(response);
                 }
-            }, (RuyiNetLobbyResponse response) =>
-            {
-                if (response.status == RuyiNetHttpStatus.OK)
-                {
-                    callback(response.data);
-                }
-                else
-                {
-                    callback(null);
-                }
-            });
+            }, (RuyiNetResponse response) => OnResponse(callback));
         }
 
         /// <summary>
@@ -259,17 +219,7 @@ namespace Ruyi.SDK.Online
 
                     return JsonConvert.SerializeObject(response);
                 }
-            }, (RuyiNetLobbyFindResponse response) =>
-            {
-                var results = response.data.lobbies;
-                var lobbies = new RuyiNetLobby[results.Length];
-                for (int i = 0; i < results.Length; ++i)
-                {
-                    lobbies[i] = new RuyiNetLobby(results[i]);
-                }
-
-                callback(lobbies);
-            });
+            }, (RuyiNetLobbyFindResponse response) => OnLobbyFindResponse(callback, response));
         }
 
         /// <summary>
@@ -296,17 +246,7 @@ namespace Ruyi.SDK.Online
 
                     return JsonConvert.SerializeObject(response);
                 }
-            }, (RuyiNetLobbyFindResponse response) =>
-            {
-                var results = response.data.lobbies;
-                var lobbies = new RuyiNetLobby[results.Length];
-                for (int i = 0; i < results.Length; ++i)
-                {
-                    lobbies[i] = new RuyiNetLobby(results[i]);
-                }
-
-                callback(lobbies);
-            });
+            }, (RuyiNetLobbyFindResponse response) => OnLobbyFindResponse(callback, response));
         }
 
         /// <summary>
@@ -333,17 +273,7 @@ namespace Ruyi.SDK.Online
 
                     return JsonConvert.SerializeObject(response);
                 }
-            }, (RuyiNetLobbyFindResponse response) =>
-            {
-                var results = response.data.lobbies;
-                var lobbies = new RuyiNetLobby[results.Length];
-                for (int i = 0; i < results.Length; ++i)
-                {
-                    lobbies[i] = new RuyiNetLobby(results[i]);
-                }
-
-                callback(lobbies);
-            });
+            }, (RuyiNetLobbyFindResponse response) => OnLobbyFindResponse(callback, response));
         }
 
         /// <summary>
@@ -371,18 +301,7 @@ namespace Ruyi.SDK.Online
 
                     return JsonConvert.SerializeObject(response);
                 }
-            }, (RuyiNetLobbyResponse response) =>
-            {
-
-                if (response.status == RuyiNetHttpStatus.OK)
-                {
-                    callback(response.data);
-                }
-                else
-                {
-                    callback(null);
-                }
-            });
+            }, (RuyiNetLobbyResponse response) => OnLobbyResponse(callback, response));
         }
 
         /// <summary>
@@ -391,7 +310,7 @@ namespace Ruyi.SDK.Online
         /// <param name="clientIndex">The index of user</param>
         /// <param name="lobbyId">The ID of the lobby to leave.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void LeaveLobby(int clientIndex, string lobbyId, Action<RuyiNetLobby> callback)
+        public void LeaveLobby(int clientIndex, string lobbyId, Action callback)
         {
             EnqueueTask(() =>
             {
@@ -410,17 +329,7 @@ namespace Ruyi.SDK.Online
 
                     return JsonConvert.SerializeObject(response);
                 }
-            }, (RuyiNetLobbyResponse response) =>
-            {
-                if (response.status == RuyiNetHttpStatus.OK)
-                {
-                    callback(response.data);
-                }
-                else
-                {
-                    callback(null);
-                }
-            });
+            }, (RuyiNetResponse response) => OnResponse(callback));
         }
 
         /// <summary>
@@ -449,17 +358,7 @@ namespace Ruyi.SDK.Online
 
                     return JsonConvert.SerializeObject(response);
                 }
-            }, (RuyiNetLobbyResponse response) =>
-            {
-                if (response.status == RuyiNetHttpStatus.OK)
-                {
-                    callback(response.data);
-                }
-                else
-                {
-                    callback(null);
-                }
-            });
+            }, (RuyiNetLobbyResponse response) => OnLobbyResponse(callback, response));
         }
 
         /// <summary>
@@ -648,6 +547,44 @@ namespace Ruyi.SDK.Online
             mTimer.Elapsed += Update;
             mTimer.AutoReset = false;
             mTimer.Enabled = true;
+        }
+
+        private void OnResponse(Action callback)
+        {
+            if (callback != null)
+            {
+                callback();
+            }
+        }
+
+        private void OnLobbyResponse(Action<RuyiNetLobby> callback, RuyiNetLobbyResponse response)
+        {
+            if (callback != null)
+            {
+                if (response.status == RuyiNetHttpStatus.OK)
+                {
+                    callback(response.data);
+                }
+                else
+                {
+                    callback(null);
+                }
+            }
+        }
+
+        private void OnLobbyFindResponse(Action<RuyiNetLobby[]> callback, RuyiNetLobbyFindResponse response)
+        {
+            if (callback != null)
+            {
+                var results = response.data.lobbies;
+                var lobbies = new RuyiNetLobby[results.Length];
+                for (int i = 0; i < results.Length; ++i)
+                {
+                    lobbies[i] = new RuyiNetLobby(results[i]);
+                }
+
+                callback(lobbies);
+            }
         }
 
         private Dictionary<string, RuyiNetLobby> mLobbies;
