@@ -1359,4 +1359,236 @@ void SettingItemNotification::printTo(std::ostream& out) const {
   out << ")";
 }
 
+
+WifiEntity::~WifiEntity() throw() {
+}
+
+
+void WifiEntity::__set_Name(const std::string& val) {
+  this->Name = val;
+}
+
+void WifiEntity::__set_MacAddress(const std::string& val) {
+  this->MacAddress = val;
+}
+
+void WifiEntity::__set_Channel(const _int val) {
+  this->Channel = val;
+}
+
+void WifiEntity::__set_CenterFrequancy(const _int val) {
+  this->CenterFrequancy = val;
+}
+
+void WifiEntity::__set_Rssi(const _int val) {
+  this->Rssi = val;
+}
+
+void WifiEntity::__set_Connected(const bool val) {
+  this->Connected = val;
+}
+
+void WifiEntity::__set_SecurityEnabled(const bool val) {
+  this->SecurityEnabled = val;
+}
+
+void WifiEntity::__set_HasProfile(const bool val) {
+  this->HasProfile = val;
+}
+std::ostream& operator<<(std::ostream& out, const WifiEntity& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+uint32_t WifiEntity::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->Name);
+          this->__isset.Name = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->MacAddress);
+          this->__isset.MacAddress = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->Channel);
+          this->__isset.Channel = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->CenterFrequancy);
+          this->__isset.CenterFrequancy = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->Rssi);
+          this->__isset.Rssi = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 6:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->Connected);
+          this->__isset.Connected = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 7:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->SecurityEnabled);
+          this->__isset.SecurityEnabled = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 8:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->HasProfile);
+          this->__isset.HasProfile = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t WifiEntity::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("WifiEntity");
+
+  xfer += oprot->writeFieldBegin("Name", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->Name);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("MacAddress", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->MacAddress);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Channel", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->Channel);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("CenterFrequancy", ::apache::thrift::protocol::T_I32, 4);
+  xfer += oprot->writeI32(this->CenterFrequancy);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Rssi", ::apache::thrift::protocol::T_I32, 5);
+  xfer += oprot->writeI32(this->Rssi);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Connected", ::apache::thrift::protocol::T_BOOL, 6);
+  xfer += oprot->writeBool(this->Connected);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("SecurityEnabled", ::apache::thrift::protocol::T_BOOL, 7);
+  xfer += oprot->writeBool(this->SecurityEnabled);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("HasProfile", ::apache::thrift::protocol::T_BOOL, 8);
+  xfer += oprot->writeBool(this->HasProfile);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(WifiEntity &a, WifiEntity &b) {
+  using ::std::swap;
+  swap(a.Name, b.Name);
+  swap(a.MacAddress, b.MacAddress);
+  swap(a.Channel, b.Channel);
+  swap(a.CenterFrequancy, b.CenterFrequancy);
+  swap(a.Rssi, b.Rssi);
+  swap(a.Connected, b.Connected);
+  swap(a.SecurityEnabled, b.SecurityEnabled);
+  swap(a.HasProfile, b.HasProfile);
+  swap(a.__isset, b.__isset);
+}
+
+WifiEntity::WifiEntity(const WifiEntity& other56) {
+  Name = other56.Name;
+  MacAddress = other56.MacAddress;
+  Channel = other56.Channel;
+  CenterFrequancy = other56.CenterFrequancy;
+  Rssi = other56.Rssi;
+  Connected = other56.Connected;
+  SecurityEnabled = other56.SecurityEnabled;
+  HasProfile = other56.HasProfile;
+  __isset = other56.__isset;
+}
+WifiEntity& WifiEntity::operator=(const WifiEntity& other57) {
+  Name = other57.Name;
+  MacAddress = other57.MacAddress;
+  Channel = other57.Channel;
+  CenterFrequancy = other57.CenterFrequancy;
+  Rssi = other57.Rssi;
+  Connected = other57.Connected;
+  SecurityEnabled = other57.SecurityEnabled;
+  HasProfile = other57.HasProfile;
+  __isset = other57.__isset;
+  return *this;
+}
+void WifiEntity::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "WifiEntity(";
+  out << "Name=" << to_string(Name);
+  out << ", " << "MacAddress=" << to_string(MacAddress);
+  out << ", " << "Channel=" << to_string(Channel);
+  out << ", " << "CenterFrequancy=" << to_string(CenterFrequancy);
+  out << ", " << "Rssi=" << to_string(Rssi);
+  out << ", " << "Connected=" << to_string(Connected);
+  out << ", " << "SecurityEnabled=" << to_string(SecurityEnabled);
+  out << ", " << "HasProfile=" << to_string(HasProfile);
+  out << ")";
+}
+
 }}}} // namespace

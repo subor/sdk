@@ -78,6 +78,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       bool ConnectToWifi(string profileName, string key);
       Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings GetNetworkSettings();
       Ruyi.SDK.SettingSystem.Api.RuyiNetworkStatus GetNetworkStatus();
+      List<Ruyi.SDK.SettingSystem.Api.WifiEntity> GetAvailableWifi();
     }
 
     public interface Iface : ISync {
@@ -196,6 +197,10 @@ namespace Ruyi.SDK.SettingSystem.Api
       #if SILVERLIGHT
       IAsyncResult Begin_GetNetworkStatus(AsyncCallback callback, object state);
       Ruyi.SDK.SettingSystem.Api.RuyiNetworkStatus End_GetNetworkStatus(IAsyncResult asyncResult);
+      #endif
+      #if SILVERLIGHT
+      IAsyncResult Begin_GetAvailableWifi(AsyncCallback callback, object state);
+      List<Ruyi.SDK.SettingSystem.Api.WifiEntity> End_GetAvailableWifi(IAsyncResult asyncResult);
       #endif
     }
 
@@ -1541,6 +1546,70 @@ namespace Ruyi.SDK.SettingSystem.Api
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetNetworkStatus failed: unknown result");
       }
 
+      
+      #if SILVERLIGHT
+      public IAsyncResult Begin_GetAvailableWifi(AsyncCallback callback, object state)
+      {
+        return send_GetAvailableWifi(callback, state);
+      }
+
+      public List<Ruyi.SDK.SettingSystem.Api.WifiEntity> End_GetAvailableWifi(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_GetAvailableWifi();
+      }
+
+      #endif
+
+      public List<Ruyi.SDK.SettingSystem.Api.WifiEntity> GetAvailableWifi()
+      {
+        #if !SILVERLIGHT
+        send_GetAvailableWifi();
+        return recv_GetAvailableWifi();
+
+        #else
+        var asyncResult = Begin_GetAvailableWifi(null, null);
+        return End_GetAvailableWifi(asyncResult);
+
+        #endif
+      }
+      #if SILVERLIGHT
+      public IAsyncResult send_GetAvailableWifi(AsyncCallback callback, object state)
+      #else
+      public void send_GetAvailableWifi()
+      #endif
+      {
+        oprot_.WriteMessageBegin(new TMessage("GetAvailableWifi", TMessageType.Call, seqid_));
+        GetAvailableWifi_args args = new GetAvailableWifi_args();
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        #if SILVERLIGHT
+        return oprot_.Transport.BeginFlush(callback, state);
+        #else
+        oprot_.Transport.Flush();
+        #endif
+      }
+
+      public List<Ruyi.SDK.SettingSystem.Api.WifiEntity> recv_GetAvailableWifi()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        GetAvailableWifi_result result = new GetAvailableWifi_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        if (result.__isset.error1) {
+          throw result.Error1;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetAvailableWifi failed: unknown result");
+      }
+
     }
     public class Processor : TProcessor {
       public Processor(ISync iface)
@@ -1565,6 +1634,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         processMap_["ConnectToWifi"] = ConnectToWifi_Process;
         processMap_["GetNetworkSettings"] = GetNetworkSettings_Process;
         processMap_["GetNetworkStatus"] = GetNetworkStatus_Process;
+        processMap_["GetAvailableWifi"] = GetAvailableWifi_Process;
       }
 
       protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -2242,6 +2312,41 @@ namespace Ruyi.SDK.SettingSystem.Api
           Console.Error.WriteLine(ex.ToString());
           TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
           oprot.WriteMessageBegin(new TMessage("GetNetworkStatus", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void GetAvailableWifi_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetAvailableWifi_args args = new GetAvailableWifi_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetAvailableWifi_result result = new GetAvailableWifi_result();
+        try
+        {
+          try
+          {
+            result.Success = iface_.GetAvailableWifi();
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          oprot.WriteMessageBegin(new TMessage("GetAvailableWifi", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetAvailableWifi", TMessageType.Exception, seqid));
           x.Write(oprot);
         }
         oprot.WriteMessageEnd();
@@ -7764,6 +7869,235 @@ namespace Ruyi.SDK.SettingSystem.Api
           __first = false;
           __sb.Append("Success: ");
           __sb.Append(Success== null ? "<null>" : Success.ToString());
+        }
+        if (Error1 != null && __isset.error1) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Error1: ");
+          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetAvailableWifi_args : TBase
+    {
+
+      public GetAvailableWifi_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("GetAvailableWifi_args");
+          oprot.WriteStructBegin(struc);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetAvailableWifi_args(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetAvailableWifi_result : TBase
+    {
+      private List<Ruyi.SDK.SettingSystem.Api.WifiEntity> _success;
+      private Ruyi.SDK.CommonType.ErrorException _error1;
+
+      public List<Ruyi.SDK.SettingSystem.Api.WifiEntity> Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+      public Ruyi.SDK.CommonType.ErrorException Error1
+      {
+        get
+        {
+          return _error1;
+        }
+        set
+        {
+          __isset.error1 = true;
+          this._error1 = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+        public bool error1;
+      }
+
+      public GetAvailableWifi_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.List) {
+                  {
+                    Success = new List<Ruyi.SDK.SettingSystem.Api.WifiEntity>();
+                    TList _list27 = iprot.ReadListBegin();
+                    for( int _i28 = 0; _i28 < _list27.Count; ++_i28)
+                    {
+                      Ruyi.SDK.SettingSystem.Api.WifiEntity _elem29;
+                      _elem29 = new Ruyi.SDK.SettingSystem.Api.WifiEntity();
+                      _elem29.Read(iprot);
+                      Success.Add(_elem29);
+                    }
+                    iprot.ReadListEnd();
+                  }
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 1:
+                if (field.Type == TType.Struct) {
+                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1.Read(iprot);
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("GetAvailableWifi_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.List;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              {
+                oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
+                foreach (Ruyi.SDK.SettingSystem.Api.WifiEntity _iter30 in Success)
+                {
+                  _iter30.Write(oprot);
+                }
+                oprot.WriteListEnd();
+              }
+              oprot.WriteFieldEnd();
+            }
+          } else if (this.__isset.error1) {
+            if (Error1 != null) {
+              field.Name = "Error1";
+              field.Type = TType.Struct;
+              field.ID = 1;
+              oprot.WriteFieldBegin(field);
+              Error1.Write(oprot);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetAvailableWifi_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
         }
         if (Error1 != null && __isset.error1) {
           if(!__first) { __sb.Append(", "); }
