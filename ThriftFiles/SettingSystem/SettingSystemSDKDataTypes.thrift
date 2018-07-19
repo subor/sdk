@@ -41,6 +41,14 @@ struct RuyiNetworkSettings {
 struct RuyiNetworkStatus {
     1: bool isWifi,
     2: string Name,
+    3: bool AdapterStatus,
+    4: bool InternetStatus,
+}
+
+struct RuyiNetworkTestResult {
+    1: RuyiNetworkSettingNameValue localconnection,
+    2: RuyiNetworkSettingNameValue ipaddress,
+    3: RuyiNetworkSettingNameValue internetconnection,
 }
 
 struct CategoryNode {
