@@ -101,6 +101,7 @@ class SettingSystemServiceIf {
   virtual bool ConnectToWifi(const std::string& profileName, const std::string& key) = 0;
   virtual void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) = 0;
   virtual void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return) = 0;
+  virtual void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return) = 0;
   virtual void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return) = 0;
 };
 
@@ -197,6 +198,9 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
     return;
   }
   void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& /* _return */) {
+    return;
+  }
+  void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& /* _return */) {
     return;
   }
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & /* _return */) {
@@ -2421,6 +2425,106 @@ class SettingSystemService_GetNetworkStatus_presult {
 };
 
 
+class SettingSystemService_RuyiTestNetwork_args {
+ public:
+
+  SettingSystemService_RuyiTestNetwork_args(const SettingSystemService_RuyiTestNetwork_args&);
+  SettingSystemService_RuyiTestNetwork_args& operator=(const SettingSystemService_RuyiTestNetwork_args&);
+  SettingSystemService_RuyiTestNetwork_args() {
+  }
+
+  virtual ~SettingSystemService_RuyiTestNetwork_args() throw();
+
+  bool operator == (const SettingSystemService_RuyiTestNetwork_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const SettingSystemService_RuyiTestNetwork_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_RuyiTestNetwork_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_RuyiTestNetwork_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_RuyiTestNetwork_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_RuyiTestNetwork_result__isset {
+  _SettingSystemService_RuyiTestNetwork_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_RuyiTestNetwork_result__isset;
+
+class SettingSystemService_RuyiTestNetwork_result {
+ public:
+
+  SettingSystemService_RuyiTestNetwork_result(const SettingSystemService_RuyiTestNetwork_result&);
+  SettingSystemService_RuyiTestNetwork_result& operator=(const SettingSystemService_RuyiTestNetwork_result&);
+  SettingSystemService_RuyiTestNetwork_result() {
+  }
+
+  virtual ~SettingSystemService_RuyiTestNetwork_result() throw();
+   ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_RuyiTestNetwork_result__isset __isset;
+
+  void __set_success(const  ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_RuyiTestNetwork_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_RuyiTestNetwork_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_RuyiTestNetwork_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_RuyiTestNetwork_presult__isset {
+  _SettingSystemService_RuyiTestNetwork_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_RuyiTestNetwork_presult__isset;
+
+class SettingSystemService_RuyiTestNetwork_presult {
+ public:
+
+
+  virtual ~SettingSystemService_RuyiTestNetwork_presult() throw();
+   ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult* success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_RuyiTestNetwork_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
 class SettingSystemService_GetAvailableWifi_args {
  public:
 
@@ -2602,6 +2706,9 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return);
   void send_GetNetworkStatus();
   void recv_GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return);
+  void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return);
+  void send_RuyiTestNetwork();
+  void recv_RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return);
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return);
   void send_GetAvailableWifi();
   void recv_GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return);
@@ -2639,6 +2746,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
   void process_ConnectToWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetNetworkSettings(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetNetworkStatus(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_RuyiTestNetwork(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetAvailableWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   SettingSystemServiceProcessor(::apache::thrift::stdcxx::shared_ptr<SettingSystemServiceIf> iface) :
@@ -2662,6 +2770,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
     processMap_["ConnectToWifi"] = &SettingSystemServiceProcessor::process_ConnectToWifi;
     processMap_["GetNetworkSettings"] = &SettingSystemServiceProcessor::process_GetNetworkSettings;
     processMap_["GetNetworkStatus"] = &SettingSystemServiceProcessor::process_GetNetworkStatus;
+    processMap_["RuyiTestNetwork"] = &SettingSystemServiceProcessor::process_RuyiTestNetwork;
     processMap_["GetAvailableWifi"] = &SettingSystemServiceProcessor::process_GetAvailableWifi;
   }
 
@@ -2870,6 +2979,16 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return;
   }
 
+  void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->RuyiTestNetwork(_return);
+    }
+    ifaces_[i]->RuyiTestNetwork(_return);
+    return;
+  }
+
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -2967,6 +3086,9 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return);
   int32_t send_GetNetworkStatus();
   void recv_GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return, const int32_t seqid);
+  void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return);
+  int32_t send_RuyiTestNetwork();
+  void recv_RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return, const int32_t seqid);
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return);
   int32_t send_GetAvailableWifi();
   void recv_GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return, const int32_t seqid);
