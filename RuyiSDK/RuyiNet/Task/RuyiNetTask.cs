@@ -95,7 +95,8 @@ namespace Ruyi.SDK.Online
                 System.Console.Write(base.Response);
                 var data = JsonConvert.DeserializeObject<Response>(base.Response, new JsonSerializerSettings
                 {
-                    NullValueHandling = NullValueHandling.Ignore
+                    NullValueHandling = NullValueHandling.Ignore,
+                    TypeNameHandling = TypeNameHandling.Objects
                 });
 
                 Callback(data);
