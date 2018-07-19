@@ -7,6 +7,7 @@ namespace netcore Ruyi.SDK.SettingSystem.Api
 namespace rs Ruyi.SDK.SettingSystem.Api
 
 typedef string JSON
+typedef i32 _int
 
 enum NodeType {
     Category = 1,
@@ -71,6 +72,17 @@ struct SettingItemNotification {
 	1: string key,
     /** Optional. The arguments of the notification. In json string format */
 	2: JSON contents = "{}",
+}
+
+struct WifiEntity {
+    1: string Name,
+    2: string MacAddress,
+    3: _int Channel,
+    4: _int CenterFrequancy,
+    5: _int Rssi,
+    6: bool Connected,
+    7: bool SecurityEnabled,
+    8: bool HasProfile,
 }
 
 

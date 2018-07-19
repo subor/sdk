@@ -62,8 +62,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp9.Description = "user is not found by id {0}";
       EXTERNALERRORLIST.Add(tmp9);
       ExternalErrorInfos tmp10 = new ExternalErrorInfos();
-      tmp10.ErrorCode = ExternalErrorCode.Err_10;
       tmp10.Description = "";
+      tmp10.ErrorCode = ExternalErrorCode.Err_10;
       EXTERNALERRORLIST.Add(tmp10);
       ExternalErrorInfos tmp11 = new ExternalErrorInfos();
       tmp11.Description = "";

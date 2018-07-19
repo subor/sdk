@@ -39,8 +39,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp3.Description = "json string convert failed: {0}";
       EXTERNALERRORLIST.Add(tmp3);
       ExternalErrorInfos tmp4 = new ExternalErrorInfos();
-      tmp4.ErrorCode = ExternalErrorCode.Err_4;
       tmp4.Description = "lambda expression error: {0}";
+      tmp4.ErrorCode = ExternalErrorCode.Err_4;
       EXTERNALERRORLIST.Add(tmp4);
       ExternalErrorInfos tmp5 = new ExternalErrorInfos();
       tmp5.Description = "[type error] trying to assign a {0} to setting category {1} 's property {2}, whose data type is {3}";
@@ -83,8 +83,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp14.ErrorCode = ExternalErrorCode.Err_14;
       EXTERNALERRORLIST.Add(tmp14);
       ExternalErrorInfos tmp15 = new ExternalErrorInfos();
-      tmp15.Description = "";
       tmp15.ErrorCode = ExternalErrorCode.Err_15;
+      tmp15.Description = "";
       EXTERNALERRORLIST.Add(tmp15);
       ExternalErrorInfos tmp16 = new ExternalErrorInfos();
       tmp16.Description = "";
