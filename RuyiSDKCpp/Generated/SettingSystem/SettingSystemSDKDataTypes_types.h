@@ -224,9 +224,11 @@ void swap(RuyiNetworkSettings &a, RuyiNetworkSettings &b);
 std::ostream& operator<<(std::ostream& out, const RuyiNetworkSettings& obj);
 
 typedef struct _RuyiNetworkStatus__isset {
-  _RuyiNetworkStatus__isset() : isWifi(false), Name(false) {}
+  _RuyiNetworkStatus__isset() : isWifi(false), Name(false), AdapterStatus(false), InternetStatus(false) {}
   bool isWifi :1;
   bool Name :1;
+  bool AdapterStatus :1;
+  bool InternetStatus :1;
 } _RuyiNetworkStatus__isset;
 
 class RuyiNetworkStatus : public virtual ::apache::thrift::TBase {
@@ -234,12 +236,14 @@ class RuyiNetworkStatus : public virtual ::apache::thrift::TBase {
 
   RuyiNetworkStatus(const RuyiNetworkStatus&);
   RuyiNetworkStatus& operator=(const RuyiNetworkStatus&);
-  RuyiNetworkStatus() : isWifi(0), Name() {
+  RuyiNetworkStatus() : isWifi(0), Name(), AdapterStatus(0), InternetStatus(0) {
   }
 
   virtual ~RuyiNetworkStatus() throw();
   bool isWifi;
   std::string Name;
+  bool AdapterStatus;
+  bool InternetStatus;
 
   _RuyiNetworkStatus__isset __isset;
 
@@ -247,11 +251,19 @@ class RuyiNetworkStatus : public virtual ::apache::thrift::TBase {
 
   void __set_Name(const std::string& val);
 
+  void __set_AdapterStatus(const bool val);
+
+  void __set_InternetStatus(const bool val);
+
   bool operator == (const RuyiNetworkStatus & rhs) const
   {
     if (!(isWifi == rhs.isWifi))
       return false;
     if (!(Name == rhs.Name))
+      return false;
+    if (!(AdapterStatus == rhs.AdapterStatus))
+      return false;
+    if (!(InternetStatus == rhs.InternetStatus))
       return false;
     return true;
   }

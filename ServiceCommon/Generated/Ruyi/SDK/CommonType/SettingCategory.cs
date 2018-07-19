@@ -33,6 +33,7 @@ namespace Ruyi.SDK.CommonType
     private Dictionary<string, int> _items;
     private bool _enable;
     private bool _showInUI;
+    private string _script;
 
     public string Id
     {
@@ -151,6 +152,19 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    public string Script
+    {
+      get
+      {
+        return _script;
+      }
+      set
+      {
+        __isset.script = true;
+        this._script = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -166,6 +180,7 @@ namespace Ruyi.SDK.CommonType
       public bool items;
       public bool enable;
       public bool showInUI;
+      public bool script;
     }
 
     public SettingCategory() {
@@ -257,6 +272,13 @@ namespace Ruyi.SDK.CommonType
             case 9:
               if (field.Type == TType.Bool) {
                 ShowInUI = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 10:
+              if (field.Type == TType.String) {
+                Script = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -362,6 +384,14 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteBool(ShowInUI);
           oprot.WriteFieldEnd();
         }
+        if (Script != null && __isset.script) {
+          field.Name = "script";
+          field.Type = TType.String;
+          field.ID = 10;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Script);
+          oprot.WriteFieldEnd();
+        }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
@@ -427,6 +457,12 @@ namespace Ruyi.SDK.CommonType
         __first = false;
         __sb.Append("ShowInUI: ");
         __sb.Append(ShowInUI);
+      }
+      if (Script != null && __isset.script) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Script: ");
+        __sb.Append(Script);
       }
       __sb.Append(")");
       return __sb.ToString();

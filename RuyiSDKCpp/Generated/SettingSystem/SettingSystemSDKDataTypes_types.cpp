@@ -511,6 +511,14 @@ void RuyiNetworkStatus::__set_isWifi(const bool val) {
 void RuyiNetworkStatus::__set_Name(const std::string& val) {
   this->Name = val;
 }
+
+void RuyiNetworkStatus::__set_AdapterStatus(const bool val) {
+  this->AdapterStatus = val;
+}
+
+void RuyiNetworkStatus::__set_InternetStatus(const bool val) {
+  this->InternetStatus = val;
+}
 std::ostream& operator<<(std::ostream& out, const RuyiNetworkStatus& obj)
 {
   obj.printTo(out);
@@ -555,6 +563,22 @@ uint32_t RuyiNetworkStatus::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->AdapterStatus);
+          this->__isset.AdapterStatus = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->InternetStatus);
+          this->__isset.InternetStatus = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -580,6 +604,14 @@ uint32_t RuyiNetworkStatus::write(::apache::thrift::protocol::TProtocol* oprot) 
   xfer += oprot->writeString(this->Name);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("AdapterStatus", ::apache::thrift::protocol::T_BOOL, 3);
+  xfer += oprot->writeBool(this->AdapterStatus);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("InternetStatus", ::apache::thrift::protocol::T_BOOL, 4);
+  xfer += oprot->writeBool(this->InternetStatus);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -589,17 +621,23 @@ void swap(RuyiNetworkStatus &a, RuyiNetworkStatus &b) {
   using ::std::swap;
   swap(a.isWifi, b.isWifi);
   swap(a.Name, b.Name);
+  swap(a.AdapterStatus, b.AdapterStatus);
+  swap(a.InternetStatus, b.InternetStatus);
   swap(a.__isset, b.__isset);
 }
 
 RuyiNetworkStatus::RuyiNetworkStatus(const RuyiNetworkStatus& other4) {
   isWifi = other4.isWifi;
   Name = other4.Name;
+  AdapterStatus = other4.AdapterStatus;
+  InternetStatus = other4.InternetStatus;
   __isset = other4.__isset;
 }
 RuyiNetworkStatus& RuyiNetworkStatus::operator=(const RuyiNetworkStatus& other5) {
   isWifi = other5.isWifi;
   Name = other5.Name;
+  AdapterStatus = other5.AdapterStatus;
+  InternetStatus = other5.InternetStatus;
   __isset = other5.__isset;
   return *this;
 }
@@ -608,6 +646,8 @@ void RuyiNetworkStatus::printTo(std::ostream& out) const {
   out << "RuyiNetworkStatus(";
   out << "isWifi=" << to_string(isWifi);
   out << ", " << "Name=" << to_string(Name);
+  out << ", " << "AdapterStatus=" << to_string(AdapterStatus);
+  out << ", " << "InternetStatus=" << to_string(InternetStatus);
   out << ")";
 }
 
