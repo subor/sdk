@@ -177,6 +177,11 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("GetAvailableWifi\n");
   }
 
+  bool DisconnectWifi() {
+    // Your implementation goes here
+    printf("DisconnectWifi\n");
+  }
+
 };
 
 int main(int argc, char **argv) {

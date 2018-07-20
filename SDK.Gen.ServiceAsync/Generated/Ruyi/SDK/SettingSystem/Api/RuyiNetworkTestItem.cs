@@ -25,48 +25,34 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
-  public partial class RuyiNetworkTestResult : TBase
+  public partial class RuyiNetworkTestItem : TBase
   {
-    private RuyiNetworkTestItem _localconnection;
-    private RuyiNetworkTestItem _ipaddress;
-    private RuyiNetworkTestItem _internetconnection;
+    private RuyiNetworkSettingNameValue _item;
+    private bool _result;
 
-    public RuyiNetworkTestItem Localconnection
+    public RuyiNetworkSettingNameValue Item
     {
       get
       {
-        return _localconnection;
+        return _item;
       }
       set
       {
-        __isset.localconnection = true;
-        this._localconnection = value;
+        __isset.item = true;
+        this._item = value;
       }
     }
 
-    public RuyiNetworkTestItem Ipaddress
+    public bool Result
     {
       get
       {
-        return _ipaddress;
+        return _result;
       }
       set
       {
-        __isset.ipaddress = true;
-        this._ipaddress = value;
-      }
-    }
-
-    public RuyiNetworkTestItem Internetconnection
-    {
-      get
-      {
-        return _internetconnection;
-      }
-      set
-      {
-        __isset.internetconnection = true;
-        this._internetconnection = value;
+        __isset.result = true;
+        this._result = value;
       }
     }
 
@@ -74,12 +60,11 @@ namespace Ruyi.SDK.SettingSystem.Api
     public Isset __isset;
     public struct Isset
     {
-      public bool localconnection;
-      public bool ipaddress;
-      public bool internetconnection;
+      public bool item;
+      public bool result;
     }
 
-    public RuyiNetworkTestResult()
+    public RuyiNetworkTestItem()
     {
     }
 
@@ -103,8 +88,8 @@ namespace Ruyi.SDK.SettingSystem.Api
             case 1:
               if (field.Type == TType.Struct)
               {
-                Localconnection = new RuyiNetworkTestItem();
-                await Localconnection.ReadAsync(iprot, cancellationToken);
+                Item = new RuyiNetworkSettingNameValue();
+                await Item.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -112,21 +97,9 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 2:
-              if (field.Type == TType.Struct)
+              if (field.Type == TType.Bool)
               {
-                Ipaddress = new RuyiNetworkTestItem();
-                await Ipaddress.ReadAsync(iprot, cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 3:
-              if (field.Type == TType.Struct)
-              {
-                Internetconnection = new RuyiNetworkTestItem();
-                await Internetconnection.ReadAsync(iprot, cancellationToken);
+                Result = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -154,34 +127,25 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("RuyiNetworkTestResult");
+        var struc = new TStruct("RuyiNetworkTestItem");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Localconnection != null && __isset.localconnection)
+        if (Item != null && __isset.item)
         {
-          field.Name = "localconnection";
+          field.Name = "item";
           field.Type = TType.Struct;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Localconnection.WriteAsync(oprot, cancellationToken);
+          await Item.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Ipaddress != null && __isset.ipaddress)
+        if (__isset.result)
         {
-          field.Name = "ipaddress";
-          field.Type = TType.Struct;
+          field.Name = "result";
+          field.Type = TType.Bool;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Ipaddress.WriteAsync(oprot, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (Internetconnection != null && __isset.internetconnection)
-        {
-          field.Name = "internetconnection";
-          field.Type = TType.Struct;
-          field.ID = 3;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Internetconnection.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteBoolAsync(Result, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -195,28 +159,21 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("RuyiNetworkTestResult(");
+      var sb = new StringBuilder("RuyiNetworkTestItem(");
       bool __first = true;
-      if (Localconnection != null && __isset.localconnection)
+      if (Item != null && __isset.item)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Localconnection: ");
-        sb.Append(Localconnection== null ? "<null>" : Localconnection.ToString());
+        sb.Append("Item: ");
+        sb.Append(Item== null ? "<null>" : Item.ToString());
       }
-      if (Ipaddress != null && __isset.ipaddress)
+      if (__isset.result)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Ipaddress: ");
-        sb.Append(Ipaddress== null ? "<null>" : Ipaddress.ToString());
-      }
-      if (Internetconnection != null && __isset.internetconnection)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("Internetconnection: ");
-        sb.Append(Internetconnection== null ? "<null>" : Internetconnection.ToString());
+        sb.Append("Result: ");
+        sb.Append(Result);
       }
       sb.Append(")");
       return sb.ToString();

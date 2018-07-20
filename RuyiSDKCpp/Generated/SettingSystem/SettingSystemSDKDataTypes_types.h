@@ -39,6 +39,8 @@ typedef int32_t _int;
 
 class RuyiNetworkSettingNameValue;
 
+class RuyiNetworkTestItem;
+
 class RuyiNetworkSettings;
 
 class RuyiNetworkStatus;
@@ -104,6 +106,54 @@ class RuyiNetworkSettingNameValue : public virtual ::apache::thrift::TBase {
 void swap(RuyiNetworkSettingNameValue &a, RuyiNetworkSettingNameValue &b);
 
 std::ostream& operator<<(std::ostream& out, const RuyiNetworkSettingNameValue& obj);
+
+typedef struct _RuyiNetworkTestItem__isset {
+  _RuyiNetworkTestItem__isset() : item(false), result(false) {}
+  bool item :1;
+  bool result :1;
+} _RuyiNetworkTestItem__isset;
+
+class RuyiNetworkTestItem : public virtual ::apache::thrift::TBase {
+ public:
+
+  RuyiNetworkTestItem(const RuyiNetworkTestItem&);
+  RuyiNetworkTestItem& operator=(const RuyiNetworkTestItem&);
+  RuyiNetworkTestItem() : result(0) {
+  }
+
+  virtual ~RuyiNetworkTestItem() throw();
+  RuyiNetworkSettingNameValue item;
+  bool result;
+
+  _RuyiNetworkTestItem__isset __isset;
+
+  void __set_item(const RuyiNetworkSettingNameValue& val);
+
+  void __set_result(const bool val);
+
+  bool operator == (const RuyiNetworkTestItem & rhs) const
+  {
+    if (!(item == rhs.item))
+      return false;
+    if (!(result == rhs.result))
+      return false;
+    return true;
+  }
+  bool operator != (const RuyiNetworkTestItem &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const RuyiNetworkTestItem & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(RuyiNetworkTestItem &a, RuyiNetworkTestItem &b);
+
+std::ostream& operator<<(std::ostream& out, const RuyiNetworkTestItem& obj);
 
 typedef struct _RuyiNetworkSettings__isset {
   _RuyiNetworkSettings__isset() : connection(false), networkType(false), quality(false), SSID(false), BSSID(false), Authentication(false), DHCPEnabled(false), IpAddress(false), SubMask(false), Gateway(false), MainDNS(false), SubDNS(false), MacAddress(false), Proxy(false) {}
@@ -301,17 +351,17 @@ class RuyiNetworkTestResult : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~RuyiNetworkTestResult() throw();
-  RuyiNetworkSettingNameValue localconnection;
-  RuyiNetworkSettingNameValue ipaddress;
-  RuyiNetworkSettingNameValue internetconnection;
+  RuyiNetworkTestItem localconnection;
+  RuyiNetworkTestItem ipaddress;
+  RuyiNetworkTestItem internetconnection;
 
   _RuyiNetworkTestResult__isset __isset;
 
-  void __set_localconnection(const RuyiNetworkSettingNameValue& val);
+  void __set_localconnection(const RuyiNetworkTestItem& val);
 
-  void __set_ipaddress(const RuyiNetworkSettingNameValue& val);
+  void __set_ipaddress(const RuyiNetworkTestItem& val);
 
-  void __set_internetconnection(const RuyiNetworkSettingNameValue& val);
+  void __set_internetconnection(const RuyiNetworkTestItem& val);
 
   bool operator == (const RuyiNetworkTestResult & rhs) const
   {

@@ -103,6 +103,7 @@ class SettingSystemServiceIf {
   virtual void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return) = 0;
   virtual void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return) = 0;
   virtual void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return) = 0;
+  virtual bool DisconnectWifi() = 0;
 };
 
 class SettingSystemServiceIfFactory {
@@ -205,6 +206,10 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
   }
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & /* _return */) {
     return;
+  }
+  bool DisconnectWifi() {
+    bool _return = false;
+    return _return;
   }
 };
 
@@ -2624,6 +2629,106 @@ class SettingSystemService_GetAvailableWifi_presult {
 
 };
 
+
+class SettingSystemService_DisconnectWifi_args {
+ public:
+
+  SettingSystemService_DisconnectWifi_args(const SettingSystemService_DisconnectWifi_args&);
+  SettingSystemService_DisconnectWifi_args& operator=(const SettingSystemService_DisconnectWifi_args&);
+  SettingSystemService_DisconnectWifi_args() {
+  }
+
+  virtual ~SettingSystemService_DisconnectWifi_args() throw();
+
+  bool operator == (const SettingSystemService_DisconnectWifi_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const SettingSystemService_DisconnectWifi_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_DisconnectWifi_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_DisconnectWifi_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_DisconnectWifi_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_DisconnectWifi_result__isset {
+  _SettingSystemService_DisconnectWifi_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_DisconnectWifi_result__isset;
+
+class SettingSystemService_DisconnectWifi_result {
+ public:
+
+  SettingSystemService_DisconnectWifi_result(const SettingSystemService_DisconnectWifi_result&);
+  SettingSystemService_DisconnectWifi_result& operator=(const SettingSystemService_DisconnectWifi_result&);
+  SettingSystemService_DisconnectWifi_result() : success(0) {
+  }
+
+  virtual ~SettingSystemService_DisconnectWifi_result() throw();
+  bool success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_DisconnectWifi_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_DisconnectWifi_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_DisconnectWifi_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_DisconnectWifi_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_DisconnectWifi_presult__isset {
+  _SettingSystemService_DisconnectWifi_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_DisconnectWifi_presult__isset;
+
+class SettingSystemService_DisconnectWifi_presult {
+ public:
+
+
+  virtual ~SettingSystemService_DisconnectWifi_presult() throw();
+  bool* success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_DisconnectWifi_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
  public:
   SettingSystemServiceClient(apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) {
@@ -2712,6 +2817,9 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return);
   void send_GetAvailableWifi();
   void recv_GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return);
+  bool DisconnectWifi();
+  void send_DisconnectWifi();
+  bool recv_DisconnectWifi();
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -2748,6 +2856,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
   void process_GetNetworkStatus(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_RuyiTestNetwork(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetAvailableWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_DisconnectWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   SettingSystemServiceProcessor(::apache::thrift::stdcxx::shared_ptr<SettingSystemServiceIf> iface) :
     iface_(iface) {
@@ -2772,6 +2881,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
     processMap_["GetNetworkStatus"] = &SettingSystemServiceProcessor::process_GetNetworkStatus;
     processMap_["RuyiTestNetwork"] = &SettingSystemServiceProcessor::process_RuyiTestNetwork;
     processMap_["GetAvailableWifi"] = &SettingSystemServiceProcessor::process_GetAvailableWifi;
+    processMap_["DisconnectWifi"] = &SettingSystemServiceProcessor::process_DisconnectWifi;
   }
 
   virtual ~SettingSystemServiceProcessor() {}
@@ -2999,6 +3109,15 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return;
   }
 
+  bool DisconnectWifi() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->DisconnectWifi();
+    }
+    return ifaces_[i]->DisconnectWifi();
+  }
+
 };
 
 // The 'concurrent' client is a thread safe client that correctly handles
@@ -3092,6 +3211,9 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return);
   int32_t send_GetAvailableWifi();
   void recv_GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return, const int32_t seqid);
+  bool DisconnectWifi();
+  int32_t send_DisconnectWifi();
+  bool recv_DisconnectWifi(const int32_t seqid);
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;

@@ -24,11 +24,11 @@ namespace Ruyi.SDK.SettingSystem.Api
   #endif
   public partial class RuyiNetworkTestResult : TBase
   {
-    private RuyiNetworkSettingNameValue _localconnection;
-    private RuyiNetworkSettingNameValue _ipaddress;
-    private RuyiNetworkSettingNameValue _internetconnection;
+    private RuyiNetworkTestItem _localconnection;
+    private RuyiNetworkTestItem _ipaddress;
+    private RuyiNetworkTestItem _internetconnection;
 
-    public RuyiNetworkSettingNameValue Localconnection
+    public RuyiNetworkTestItem Localconnection
     {
       get
       {
@@ -41,7 +41,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public RuyiNetworkSettingNameValue Ipaddress
+    public RuyiNetworkTestItem Ipaddress
     {
       get
       {
@@ -54,7 +54,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    public RuyiNetworkSettingNameValue Internetconnection
+    public RuyiNetworkTestItem Internetconnection
     {
       get
       {
@@ -98,7 +98,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             case 1:
               if (field.Type == TType.Struct) {
-                Localconnection = new RuyiNetworkSettingNameValue();
+                Localconnection = new RuyiNetworkTestItem();
                 Localconnection.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
@@ -106,7 +106,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               break;
             case 2:
               if (field.Type == TType.Struct) {
-                Ipaddress = new RuyiNetworkSettingNameValue();
+                Ipaddress = new RuyiNetworkTestItem();
                 Ipaddress.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
@@ -114,7 +114,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               break;
             case 3:
               if (field.Type == TType.Struct) {
-                Internetconnection = new RuyiNetworkSettingNameValue();
+                Internetconnection = new RuyiNetworkTestItem();
                 Internetconnection.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
