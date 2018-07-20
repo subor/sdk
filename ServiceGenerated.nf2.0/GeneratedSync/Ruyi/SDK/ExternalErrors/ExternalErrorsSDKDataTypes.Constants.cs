@@ -21,12 +21,12 @@ namespace Ruyi.SDK.ExternalErrors
     static ExternalErrorsSDKDataTypesConstants()
     {
       ExternalErrorInfos tmp0 = new ExternalErrorInfos();
-      tmp0.Description = "";
       tmp0.ErrorCode = ExternalErrorCode.Err_0;
+      tmp0.Description = "";
       EXTERNALERRORLIST.Add(tmp0);
       ExternalErrorInfos tmp1 = new ExternalErrorInfos();
-      tmp1.Description = "setting {0} is not found!";
       tmp1.ErrorCode = ExternalErrorCode.Err_1;
+      tmp1.Description = "setting {0} is not found!";
       EXTERNALERRORLIST.Add(tmp1);
       ExternalErrorInfos tmp2 = new ExternalErrorInfos();
       tmp2.ErrorCode = ExternalErrorCode.Err_2;
@@ -45,20 +45,20 @@ namespace Ruyi.SDK.ExternalErrors
       tmp5.Description = "[type error] trying to assign a {0} to setting category {1} 's property {2}, whose data type is {3}";
       EXTERNALERRORLIST.Add(tmp5);
       ExternalErrorInfos tmp6 = new ExternalErrorInfos();
-      tmp6.ErrorCode = ExternalErrorCode.Err_6;
       tmp6.Description = "currently no player logged in. please login a player first.";
+      tmp6.ErrorCode = ExternalErrorCode.Err_6;
       EXTERNALERRORLIST.Add(tmp6);
       ExternalErrorInfos tmp7 = new ExternalErrorInfos();
       tmp7.ErrorCode = ExternalErrorCode.Err_7;
       tmp7.Description = "can not find configuration file: {0}.";
       EXTERNALERRORLIST.Add(tmp7);
       ExternalErrorInfos tmp8 = new ExternalErrorInfos();
-      tmp8.Description = "specified user {0} is not playing app {1}";
       tmp8.ErrorCode = ExternalErrorCode.Err_8;
+      tmp8.Description = "specified user {0} is not playing app {1}";
       EXTERNALERRORLIST.Add(tmp8);
       ExternalErrorInfos tmp9 = new ExternalErrorInfos();
-      tmp9.Description = "user is not found by id {0}";
       tmp9.ErrorCode = ExternalErrorCode.Err_9;
+      tmp9.Description = "user is not found by id {0}";
       EXTERNALERRORLIST.Add(tmp9);
       ExternalErrorInfos tmp10 = new ExternalErrorInfos();
       tmp10.ErrorCode = ExternalErrorCode.Err_10;
@@ -77,8 +77,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp13.Description = "";
       EXTERNALERRORLIST.Add(tmp13);
       ExternalErrorInfos tmp14 = new ExternalErrorInfos();
-      tmp14.Description = "";
       tmp14.ErrorCode = ExternalErrorCode.Err_14;
+      tmp14.Description = "";
       EXTERNALERRORLIST.Add(tmp14);
       ExternalErrorInfos tmp15 = new ExternalErrorInfos();
       tmp15.ErrorCode = ExternalErrorCode.Err_15;
@@ -93,8 +93,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp17.ErrorCode = ExternalErrorCode.Err_17;
       EXTERNALERRORLIST.Add(tmp17);
       ExternalErrorInfos tmp18 = new ExternalErrorInfos();
-      tmp18.Description = "trigger action failed when changing setting {0}!";
       tmp18.ErrorCode = ExternalErrorCode.Err_18;
+      tmp18.Description = "trigger action failed when changing setting {0}!";
       EXTERNALERRORLIST.Add(tmp18);
     }
   }
