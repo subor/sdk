@@ -36,6 +36,7 @@ namespace Ruyi.SDK.CommonType
     private Dictionary<string, int> _items;
     private bool _enable;
     private bool _showInUI;
+    private string _script;
 
     public string Id
     {
@@ -154,6 +155,19 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    public string Script
+    {
+      get
+      {
+        return _script;
+      }
+      set
+      {
+        __isset.script = true;
+        this._script = value;
+      }
+    }
+
 
     public Isset __isset;
     public struct Isset
@@ -167,6 +181,7 @@ namespace Ruyi.SDK.CommonType
       public bool items;
       public bool enable;
       public bool showInUI;
+      public bool script;
     }
 
     public SettingCategory()
@@ -292,6 +307,16 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
+            case 10:
+              if (field.Type == TType.String)
+              {
+                Script = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
             default: 
               await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
@@ -405,6 +430,15 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteBoolAsync(ShowInUI, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
+        if (Script != null && __isset.script)
+        {
+          field.Name = "script";
+          field.Type = TType.String;
+          field.ID = 10;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Script, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
         await oprot.WriteFieldStopAsync(cancellationToken);
         await oprot.WriteStructEndAsync(cancellationToken);
       }
@@ -480,6 +514,13 @@ namespace Ruyi.SDK.CommonType
         __first = false;
         sb.Append("ShowInUI: ");
         sb.Append(ShowInUI);
+      }
+      if (Script != null && __isset.script)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Script: ");
+        sb.Append(Script);
       }
       sb.Append(")");
       return sb.ToString();

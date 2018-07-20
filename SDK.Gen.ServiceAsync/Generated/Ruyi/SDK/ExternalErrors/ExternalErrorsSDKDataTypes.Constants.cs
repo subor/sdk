@@ -43,8 +43,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp4.Description = "lambda expression error: {0}";
       EXTERNALERRORLIST.Add(tmp4);
       ExternalErrorInfos tmp5 = new ExternalErrorInfos();
-      tmp5.Description = "[type error] trying to assign a {0} to setting category {1} 's property {2}, whose data type is {3}";
       tmp5.ErrorCode = ExternalErrorCode.Err_5;
+      tmp5.Description = "[type error] trying to assign a {0} to setting category {1} 's property {2}, whose data type is {3}";
       EXTERNALERRORLIST.Add(tmp5);
       ExternalErrorInfos tmp6 = new ExternalErrorInfos();
       tmp6.ErrorCode = ExternalErrorCode.Err_6;
@@ -55,8 +55,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp7.ErrorCode = ExternalErrorCode.Err_7;
       EXTERNALERRORLIST.Add(tmp7);
       ExternalErrorInfos tmp8 = new ExternalErrorInfos();
-      tmp8.ErrorCode = ExternalErrorCode.Err_8;
       tmp8.Description = "specified user {0} is not playing app {1}";
+      tmp8.ErrorCode = ExternalErrorCode.Err_8;
       EXTERNALERRORLIST.Add(tmp8);
       ExternalErrorInfos tmp9 = new ExternalErrorInfos();
       tmp9.Description = "user is not found by id {0}";
@@ -87,8 +87,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp15.Description = "";
       EXTERNALERRORLIST.Add(tmp15);
       ExternalErrorInfos tmp16 = new ExternalErrorInfos();
-      tmp16.ErrorCode = ExternalErrorCode.Err_16;
       tmp16.Description = "";
+      tmp16.ErrorCode = ExternalErrorCode.Err_16;
       EXTERNALERRORLIST.Add(tmp16);
       ExternalErrorInfos tmp17 = new ExternalErrorInfos();
       tmp17.ErrorCode = ExternalErrorCode.Err_17;

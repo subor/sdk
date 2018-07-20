@@ -74,9 +74,13 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="key">The item's ID</param>
       /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
       bool SettingItemNotify(string key, string contents);
+      bool SetNetworkSettings(bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS);
+      bool SetNetworkProxy(string ProxyServer, string ProxyPort);
       bool ConnectToWifi(string profileName, string key);
       Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings GetNetworkSettings();
       Ruyi.SDK.SettingSystem.Api.RuyiNetworkStatus GetNetworkStatus();
+      Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult RuyiTestNetwork();
+      List<Ruyi.SDK.SettingSystem.Api.WifiEntity> GetAvailableWifi();
     }
 
     public interface IAsync {
@@ -134,9 +138,13 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="key">The item's ID</param>
       /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
       Task<bool> SettingItemNotifyAsync(string key, string contents);
+      Task<bool> SetNetworkSettingsAsync(bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS);
+      Task<bool> SetNetworkProxyAsync(string ProxyServer, string ProxyPort);
       Task<bool> ConnectToWifiAsync(string profileName, string key);
       Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings> GetNetworkSettingsAsync();
       Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkStatus> GetNetworkStatusAsync();
+      Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult> RuyiTestNetworkAsync();
+      Task<List<Ruyi.SDK.SettingSystem.Api.WifiEntity>> GetAvailableWifiAsync();
     }
 
     public interface Iface : ISync, IAsync {
@@ -208,12 +216,20 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
       IAsyncResult Begin_SettingItemNotify(AsyncCallback callback, object state, string key, string contents);
       bool End_SettingItemNotify(IAsyncResult asyncResult);
+      IAsyncResult Begin_SetNetworkSettings(AsyncCallback callback, object state, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS);
+      bool End_SetNetworkSettings(IAsyncResult asyncResult);
+      IAsyncResult Begin_SetNetworkProxy(AsyncCallback callback, object state, string ProxyServer, string ProxyPort);
+      bool End_SetNetworkProxy(IAsyncResult asyncResult);
       IAsyncResult Begin_ConnectToWifi(AsyncCallback callback, object state, string profileName, string key);
       bool End_ConnectToWifi(IAsyncResult asyncResult);
       IAsyncResult Begin_GetNetworkSettings(AsyncCallback callback, object state);
       Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings End_GetNetworkSettings(IAsyncResult asyncResult);
       IAsyncResult Begin_GetNetworkStatus(AsyncCallback callback, object state);
       Ruyi.SDK.SettingSystem.Api.RuyiNetworkStatus End_GetNetworkStatus(IAsyncResult asyncResult);
+      IAsyncResult Begin_RuyiTestNetwork(AsyncCallback callback, object state);
+      Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult End_RuyiTestNetwork(IAsyncResult asyncResult);
+      IAsyncResult Begin_GetAvailableWifi(AsyncCallback callback, object state);
+      List<Ruyi.SDK.SettingSystem.Api.WifiEntity> End_GetAvailableWifi(IAsyncResult asyncResult);
     }
 
     public class Client : IDisposable, Iface {
@@ -1137,6 +1153,122 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
 
       
+      public IAsyncResult Begin_SetNetworkSettings(AsyncCallback callback, object state, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS)
+      {
+        return send_SetNetworkSettings(callback, state, EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
+      }
+
+      public bool End_SetNetworkSettings(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_SetNetworkSettings();
+      }
+
+      public async Task<bool> SetNetworkSettingsAsync(bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS)
+      {
+        bool retval;
+        retval = await Task.Run(() =>
+        {
+          return SetNetworkSettings(EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
+        });
+        return retval;
+      }
+
+      public bool SetNetworkSettings(bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS)
+      {
+        var asyncResult = Begin_SetNetworkSettings(null, null, EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
+        return End_SetNetworkSettings(asyncResult);
+
+      }
+      public IAsyncResult send_SetNetworkSettings(AsyncCallback callback, object state, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS)
+      {
+        oprot_.WriteMessageBegin(new TMessage("SetNetworkSettings", TMessageType.Call, seqid_));
+        SetNetworkSettings_args args = new SetNetworkSettings_args();
+        args.EnableDHCP = EnableDHCP;
+        args.IpAddress = IpAddress;
+        args.SubMask = SubMask;
+        args.Gateway = Gateway;
+        args.MainDNS = MainDNS;
+        args.SubDNS = SubDNS;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public bool recv_SetNetworkSettings()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        SetNetworkSettings_result result = new SetNetworkSettings_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SetNetworkSettings failed: unknown result");
+      }
+
+      
+      public IAsyncResult Begin_SetNetworkProxy(AsyncCallback callback, object state, string ProxyServer, string ProxyPort)
+      {
+        return send_SetNetworkProxy(callback, state, ProxyServer, ProxyPort);
+      }
+
+      public bool End_SetNetworkProxy(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_SetNetworkProxy();
+      }
+
+      public async Task<bool> SetNetworkProxyAsync(string ProxyServer, string ProxyPort)
+      {
+        bool retval;
+        retval = await Task.Run(() =>
+        {
+          return SetNetworkProxy(ProxyServer, ProxyPort);
+        });
+        return retval;
+      }
+
+      public bool SetNetworkProxy(string ProxyServer, string ProxyPort)
+      {
+        var asyncResult = Begin_SetNetworkProxy(null, null, ProxyServer, ProxyPort);
+        return End_SetNetworkProxy(asyncResult);
+
+      }
+      public IAsyncResult send_SetNetworkProxy(AsyncCallback callback, object state, string ProxyServer, string ProxyPort)
+      {
+        oprot_.WriteMessageBegin(new TMessage("SetNetworkProxy", TMessageType.Call, seqid_));
+        SetNetworkProxy_args args = new SetNetworkProxy_args();
+        args.ProxyServer = ProxyServer;
+        args.ProxyPort = ProxyPort;
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public bool recv_SetNetworkProxy()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        SetNetworkProxy_result result = new SetNetworkProxy_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SetNetworkProxy failed: unknown result");
+      }
+
+      
       public IAsyncResult Begin_ConnectToWifi(AsyncCallback callback, object state, string profileName, string key)
       {
         return send_ConnectToWifi(callback, state, profileName, key);
@@ -1309,6 +1441,120 @@ namespace Ruyi.SDK.SettingSystem.Api
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetNetworkStatus failed: unknown result");
       }
 
+      
+      public IAsyncResult Begin_RuyiTestNetwork(AsyncCallback callback, object state)
+      {
+        return send_RuyiTestNetwork(callback, state);
+      }
+
+      public Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult End_RuyiTestNetwork(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_RuyiTestNetwork();
+      }
+
+      public async Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult> RuyiTestNetworkAsync()
+      {
+        Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult retval;
+        retval = await Task.Run(() =>
+        {
+          return RuyiTestNetwork();
+        });
+        return retval;
+      }
+
+      public Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult RuyiTestNetwork()
+      {
+        var asyncResult = Begin_RuyiTestNetwork(null, null);
+        return End_RuyiTestNetwork(asyncResult);
+
+      }
+      public IAsyncResult send_RuyiTestNetwork(AsyncCallback callback, object state)
+      {
+        oprot_.WriteMessageBegin(new TMessage("RuyiTestNetwork", TMessageType.Call, seqid_));
+        RuyiTestNetwork_args args = new RuyiTestNetwork_args();
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult recv_RuyiTestNetwork()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        RuyiTestNetwork_result result = new RuyiTestNetwork_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        if (result.__isset.error1) {
+          throw result.Error1;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "RuyiTestNetwork failed: unknown result");
+      }
+
+      
+      public IAsyncResult Begin_GetAvailableWifi(AsyncCallback callback, object state)
+      {
+        return send_GetAvailableWifi(callback, state);
+      }
+
+      public List<Ruyi.SDK.SettingSystem.Api.WifiEntity> End_GetAvailableWifi(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_GetAvailableWifi();
+      }
+
+      public async Task<List<Ruyi.SDK.SettingSystem.Api.WifiEntity>> GetAvailableWifiAsync()
+      {
+        List<Ruyi.SDK.SettingSystem.Api.WifiEntity> retval;
+        retval = await Task.Run(() =>
+        {
+          return GetAvailableWifi();
+        });
+        return retval;
+      }
+
+      public List<Ruyi.SDK.SettingSystem.Api.WifiEntity> GetAvailableWifi()
+      {
+        var asyncResult = Begin_GetAvailableWifi(null, null);
+        return End_GetAvailableWifi(asyncResult);
+
+      }
+      public IAsyncResult send_GetAvailableWifi(AsyncCallback callback, object state)
+      {
+        oprot_.WriteMessageBegin(new TMessage("GetAvailableWifi", TMessageType.Call, seqid_));
+        GetAvailableWifi_args args = new GetAvailableWifi_args();
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public List<Ruyi.SDK.SettingSystem.Api.WifiEntity> recv_GetAvailableWifi()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        GetAvailableWifi_result result = new GetAvailableWifi_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        if (result.__isset.error1) {
+          throw result.Error1;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetAvailableWifi failed: unknown result");
+      }
+
     }
     public class AsyncProcessor : TAsyncProcessor {
       public AsyncProcessor(IAsync iface)
@@ -1328,9 +1574,13 @@ namespace Ruyi.SDK.SettingSystem.Api
         processMap_["GetUserAppData"] = GetUserAppData_ProcessAsync;
         processMap_["RemoveUserAppData"] = RemoveUserAppData_ProcessAsync;
         processMap_["SettingItemNotify"] = SettingItemNotify_ProcessAsync;
+        processMap_["SetNetworkSettings"] = SetNetworkSettings_ProcessAsync;
+        processMap_["SetNetworkProxy"] = SetNetworkProxy_ProcessAsync;
         processMap_["ConnectToWifi"] = ConnectToWifi_ProcessAsync;
         processMap_["GetNetworkSettings"] = GetNetworkSettings_ProcessAsync;
         processMap_["GetNetworkStatus"] = GetNetworkStatus_ProcessAsync;
+        processMap_["RuyiTestNetwork"] = RuyiTestNetwork_ProcessAsync;
+        processMap_["GetAvailableWifi"] = GetAvailableWifi_ProcessAsync;
       }
 
       protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -1853,6 +2103,62 @@ namespace Ruyi.SDK.SettingSystem.Api
         oprot.Transport.Flush();
       }
 
+      public async Task SetNetworkSettings_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        SetNetworkSettings_args args = new SetNetworkSettings_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        SetNetworkSettings_result result = new SetNetworkSettings_result();
+        try
+        {
+          result.Success = await iface_.SetNetworkSettingsAsync(args.EnableDHCP, args.IpAddress, args.SubMask, args.Gateway, args.MainDNS, args.SubDNS);
+          oprot.WriteMessageBegin(new TMessage("SetNetworkSettings", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("SetNetworkSettings", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public async Task SetNetworkProxy_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        SetNetworkProxy_args args = new SetNetworkProxy_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        SetNetworkProxy_result result = new SetNetworkProxy_result();
+        try
+        {
+          result.Success = await iface_.SetNetworkProxyAsync(args.ProxyServer, args.ProxyPort);
+          oprot.WriteMessageBegin(new TMessage("SetNetworkProxy", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("SetNetworkProxy", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
       public async Task ConnectToWifi_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
       {
         ConnectToWifi_args args = new ConnectToWifi_args();
@@ -1958,6 +2264,76 @@ namespace Ruyi.SDK.SettingSystem.Api
         oprot.Transport.Flush();
       }
 
+      public async Task RuyiTestNetwork_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        RuyiTestNetwork_args args = new RuyiTestNetwork_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        RuyiTestNetwork_result result = new RuyiTestNetwork_result();
+        try
+        {
+          try
+          {
+            result.Success = await iface_.RuyiTestNetworkAsync();
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          oprot.WriteMessageBegin(new TMessage("RuyiTestNetwork", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("RuyiTestNetwork", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public async Task GetAvailableWifi_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetAvailableWifi_args args = new GetAvailableWifi_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetAvailableWifi_result result = new GetAvailableWifi_result();
+        try
+        {
+          try
+          {
+            result.Success = await iface_.GetAvailableWifiAsync();
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          oprot.WriteMessageBegin(new TMessage("GetAvailableWifi", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetAvailableWifi", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
     }
 
     public class Processor : TProcessor {
@@ -1978,9 +2354,13 @@ namespace Ruyi.SDK.SettingSystem.Api
         processMap_["GetUserAppData"] = GetUserAppData_Process;
         processMap_["RemoveUserAppData"] = RemoveUserAppData_Process;
         processMap_["SettingItemNotify"] = SettingItemNotify_Process;
+        processMap_["SetNetworkSettings"] = SetNetworkSettings_Process;
+        processMap_["SetNetworkProxy"] = SetNetworkProxy_Process;
         processMap_["ConnectToWifi"] = ConnectToWifi_Process;
         processMap_["GetNetworkSettings"] = GetNetworkSettings_Process;
         processMap_["GetNetworkStatus"] = GetNetworkStatus_Process;
+        processMap_["RuyiTestNetwork"] = RuyiTestNetwork_Process;
+        processMap_["GetAvailableWifi"] = GetAvailableWifi_Process;
       }
 
       protected delegate void ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
@@ -2503,6 +2883,62 @@ namespace Ruyi.SDK.SettingSystem.Api
         oprot.Transport.Flush();
       }
 
+      public void SetNetworkSettings_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        SetNetworkSettings_args args = new SetNetworkSettings_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        SetNetworkSettings_result result = new SetNetworkSettings_result();
+        try
+        {
+          result.Success = iface_.SetNetworkSettings(args.EnableDHCP, args.IpAddress, args.SubMask, args.Gateway, args.MainDNS, args.SubDNS);
+          oprot.WriteMessageBegin(new TMessage("SetNetworkSettings", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("SetNetworkSettings", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void SetNetworkProxy_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        SetNetworkProxy_args args = new SetNetworkProxy_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        SetNetworkProxy_result result = new SetNetworkProxy_result();
+        try
+        {
+          result.Success = iface_.SetNetworkProxy(args.ProxyServer, args.ProxyPort);
+          oprot.WriteMessageBegin(new TMessage("SetNetworkProxy", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("SetNetworkProxy", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
       public void ConnectToWifi_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
         ConnectToWifi_args args = new ConnectToWifi_args();
@@ -2602,6 +3038,76 @@ namespace Ruyi.SDK.SettingSystem.Api
           Console.Error.WriteLine(ex.ToString());
           TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
           oprot.WriteMessageBegin(new TMessage("GetNetworkStatus", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void RuyiTestNetwork_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        RuyiTestNetwork_args args = new RuyiTestNetwork_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        RuyiTestNetwork_result result = new RuyiTestNetwork_result();
+        try
+        {
+          try
+          {
+            result.Success = iface_.RuyiTestNetwork();
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          oprot.WriteMessageBegin(new TMessage("RuyiTestNetwork", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("RuyiTestNetwork", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void GetAvailableWifi_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetAvailableWifi_args args = new GetAvailableWifi_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetAvailableWifi_result result = new GetAvailableWifi_result();
+        try
+        {
+          try
+          {
+            result.Success = iface_.GetAvailableWifi();
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          oprot.WriteMessageBegin(new TMessage("GetAvailableWifi", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetAvailableWifi", TMessageType.Exception, seqid));
           x.Write(oprot);
         }
         oprot.WriteMessageEnd();
@@ -6776,6 +7282,656 @@ namespace Ruyi.SDK.SettingSystem.Api
     #if !SILVERLIGHT
     [Serializable]
     #endif
+    public partial class SetNetworkSettings_args : TBase
+    {
+      private bool _EnableDHCP;
+      private string _IpAddress;
+      private string _SubMask;
+      private string _Gateway;
+      private string _MainDNS;
+      private string _SubDNS;
+
+      public bool EnableDHCP
+      {
+        get
+        {
+          return _EnableDHCP;
+        }
+        set
+        {
+          __isset.EnableDHCP = true;
+          this._EnableDHCP = value;
+        }
+      }
+
+      public string IpAddress
+      {
+        get
+        {
+          return _IpAddress;
+        }
+        set
+        {
+          __isset.IpAddress = true;
+          this._IpAddress = value;
+        }
+      }
+
+      public string SubMask
+      {
+        get
+        {
+          return _SubMask;
+        }
+        set
+        {
+          __isset.SubMask = true;
+          this._SubMask = value;
+        }
+      }
+
+      public string Gateway
+      {
+        get
+        {
+          return _Gateway;
+        }
+        set
+        {
+          __isset.Gateway = true;
+          this._Gateway = value;
+        }
+      }
+
+      public string MainDNS
+      {
+        get
+        {
+          return _MainDNS;
+        }
+        set
+        {
+          __isset.MainDNS = true;
+          this._MainDNS = value;
+        }
+      }
+
+      public string SubDNS
+      {
+        get
+        {
+          return _SubDNS;
+        }
+        set
+        {
+          __isset.SubDNS = true;
+          this._SubDNS = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool EnableDHCP;
+        public bool IpAddress;
+        public bool SubMask;
+        public bool Gateway;
+        public bool MainDNS;
+        public bool SubDNS;
+      }
+
+      public SetNetworkSettings_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.Bool) {
+                  EnableDHCP = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String) {
+                  IpAddress = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.String) {
+                  SubMask = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.String) {
+                  Gateway = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 5:
+                if (field.Type == TType.String) {
+                  MainDNS = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 6:
+                if (field.Type == TType.String) {
+                  SubDNS = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("SetNetworkSettings_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (__isset.EnableDHCP) {
+            field.Name = "EnableDHCP";
+            field.Type = TType.Bool;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(EnableDHCP);
+            oprot.WriteFieldEnd();
+          }
+          if (IpAddress != null && __isset.IpAddress) {
+            field.Name = "IpAddress";
+            field.Type = TType.String;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(IpAddress);
+            oprot.WriteFieldEnd();
+          }
+          if (SubMask != null && __isset.SubMask) {
+            field.Name = "SubMask";
+            field.Type = TType.String;
+            field.ID = 3;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(SubMask);
+            oprot.WriteFieldEnd();
+          }
+          if (Gateway != null && __isset.Gateway) {
+            field.Name = "Gateway";
+            field.Type = TType.String;
+            field.ID = 4;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Gateway);
+            oprot.WriteFieldEnd();
+          }
+          if (MainDNS != null && __isset.MainDNS) {
+            field.Name = "MainDNS";
+            field.Type = TType.String;
+            field.ID = 5;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(MainDNS);
+            oprot.WriteFieldEnd();
+          }
+          if (SubDNS != null && __isset.SubDNS) {
+            field.Name = "SubDNS";
+            field.Type = TType.String;
+            field.ID = 6;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(SubDNS);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("SetNetworkSettings_args(");
+        bool __first = true;
+        if (__isset.EnableDHCP) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("EnableDHCP: ");
+          __sb.Append(EnableDHCP);
+        }
+        if (IpAddress != null && __isset.IpAddress) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("IpAddress: ");
+          __sb.Append(IpAddress);
+        }
+        if (SubMask != null && __isset.SubMask) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("SubMask: ");
+          __sb.Append(SubMask);
+        }
+        if (Gateway != null && __isset.Gateway) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Gateway: ");
+          __sb.Append(Gateway);
+        }
+        if (MainDNS != null && __isset.MainDNS) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("MainDNS: ");
+          __sb.Append(MainDNS);
+        }
+        if (SubDNS != null && __isset.SubDNS) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("SubDNS: ");
+          __sb.Append(SubDNS);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class SetNetworkSettings_result : TBase
+    {
+      private bool _success;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public SetNetworkSettings_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool) {
+                  Success = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("SetNetworkSettings_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(Success);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("SetNetworkSettings_result(");
+        bool __first = true;
+        if (__isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class SetNetworkProxy_args : TBase
+    {
+      private string _ProxyServer;
+      private string _ProxyPort;
+
+      public string ProxyServer
+      {
+        get
+        {
+          return _ProxyServer;
+        }
+        set
+        {
+          __isset.ProxyServer = true;
+          this._ProxyServer = value;
+        }
+      }
+
+      public string ProxyPort
+      {
+        get
+        {
+          return _ProxyPort;
+        }
+        set
+        {
+          __isset.ProxyPort = true;
+          this._ProxyPort = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool ProxyServer;
+        public bool ProxyPort;
+      }
+
+      public SetNetworkProxy_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String) {
+                  ProxyServer = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String) {
+                  ProxyPort = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("SetNetworkProxy_args");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+          if (ProxyServer != null && __isset.ProxyServer) {
+            field.Name = "ProxyServer";
+            field.Type = TType.String;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(ProxyServer);
+            oprot.WriteFieldEnd();
+          }
+          if (ProxyPort != null && __isset.ProxyPort) {
+            field.Name = "ProxyPort";
+            field.Type = TType.String;
+            field.ID = 2;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(ProxyPort);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("SetNetworkProxy_args(");
+        bool __first = true;
+        if (ProxyServer != null && __isset.ProxyServer) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ProxyServer: ");
+          __sb.Append(ProxyServer);
+        }
+        if (ProxyPort != null && __isset.ProxyPort) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("ProxyPort: ");
+          __sb.Append(ProxyPort);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class SetNetworkProxy_result : TBase
+    {
+      private bool _success;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public SetNetworkProxy_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool) {
+                  Success = iprot.ReadBool();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("SetNetworkProxy_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(Success);
+            oprot.WriteFieldEnd();
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("SetNetworkProxy_result(");
+        bool __first = true;
+        if (__isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
     public partial class ConnectToWifi_args : TBase
     {
       private string _profileName;
@@ -7474,6 +8630,447 @@ namespace Ruyi.SDK.SettingSystem.Api
           __first = false;
           __sb.Append("Success: ");
           __sb.Append(Success== null ? "<null>" : Success.ToString());
+        }
+        if (Error1 != null && __isset.error1) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Error1: ");
+          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class RuyiTestNetwork_args : TBase
+    {
+
+      public RuyiTestNetwork_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("RuyiTestNetwork_args");
+          oprot.WriteStructBegin(struc);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("RuyiTestNetwork_args(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class RuyiTestNetwork_result : TBase
+    {
+      private Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult _success;
+      private Ruyi.SDK.CommonType.ErrorException _error1;
+
+      public Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+      public Ruyi.SDK.CommonType.ErrorException Error1
+      {
+        get
+        {
+          return _error1;
+        }
+        set
+        {
+          __isset.error1 = true;
+          this._error1 = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+        public bool error1;
+      }
+
+      public RuyiTestNetwork_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Struct) {
+                  Success = new Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult();
+                  Success.Read(iprot);
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 1:
+                if (field.Type == TType.Struct) {
+                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1.Read(iprot);
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("RuyiTestNetwork_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.Struct;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              Success.Write(oprot);
+              oprot.WriteFieldEnd();
+            }
+          } else if (this.__isset.error1) {
+            if (Error1 != null) {
+              field.Name = "Error1";
+              field.Type = TType.Struct;
+              field.ID = 1;
+              oprot.WriteFieldBegin(field);
+              Error1.Write(oprot);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("RuyiTestNetwork_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success== null ? "<null>" : Success.ToString());
+        }
+        if (Error1 != null && __isset.error1) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Error1: ");
+          __sb.Append(Error1== null ? "<null>" : Error1.ToString());
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetAvailableWifi_args : TBase
+    {
+
+      public GetAvailableWifi_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("GetAvailableWifi_args");
+          oprot.WriteStructBegin(struc);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetAvailableWifi_args(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetAvailableWifi_result : TBase
+    {
+      private List<Ruyi.SDK.SettingSystem.Api.WifiEntity> _success;
+      private Ruyi.SDK.CommonType.ErrorException _error1;
+
+      public List<Ruyi.SDK.SettingSystem.Api.WifiEntity> Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+      public Ruyi.SDK.CommonType.ErrorException Error1
+      {
+        get
+        {
+          return _error1;
+        }
+        set
+        {
+          __isset.error1 = true;
+          this._error1 = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+        public bool error1;
+      }
+
+      public GetAvailableWifi_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.List) {
+                  {
+                    Success = new List<Ruyi.SDK.SettingSystem.Api.WifiEntity>();
+                    TList _list27 = iprot.ReadListBegin();
+                    for( int _i28 = 0; _i28 < _list27.Count; ++_i28)
+                    {
+                      Ruyi.SDK.SettingSystem.Api.WifiEntity _elem29;
+                      _elem29 = new Ruyi.SDK.SettingSystem.Api.WifiEntity();
+                      _elem29.Read(iprot);
+                      Success.Add(_elem29);
+                    }
+                    iprot.ReadListEnd();
+                  }
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 1:
+                if (field.Type == TType.Struct) {
+                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  Error1.Read(iprot);
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("GetAvailableWifi_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.List;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              {
+                oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
+                foreach (Ruyi.SDK.SettingSystem.Api.WifiEntity _iter30 in Success)
+                {
+                  _iter30.Write(oprot);
+                }
+                oprot.WriteListEnd();
+              }
+              oprot.WriteFieldEnd();
+            }
+          } else if (this.__isset.error1) {
+            if (Error1 != null) {
+              field.Name = "Error1";
+              field.Type = TType.Struct;
+              field.ID = 1;
+              oprot.WriteFieldBegin(field);
+              Error1.Write(oprot);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetAvailableWifi_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
         }
         if (Error1 != null && __isset.error1) {
           if(!__first) { __sb.Append(", "); }

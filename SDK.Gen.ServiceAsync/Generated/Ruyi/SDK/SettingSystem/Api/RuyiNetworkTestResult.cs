@@ -25,62 +25,48 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
-  public partial class RuyiNetworkStatus : TBase
+  public partial class RuyiNetworkTestResult : TBase
   {
-    private bool _isWifi;
-    private string _Name;
-    private bool _AdapterStatus;
-    private bool _InternetStatus;
+    private RuyiNetworkSettingNameValue _localconnection;
+    private RuyiNetworkSettingNameValue _ipaddress;
+    private RuyiNetworkSettingNameValue _internetconnection;
 
-    public bool IsWifi
+    public RuyiNetworkSettingNameValue Localconnection
     {
       get
       {
-        return _isWifi;
+        return _localconnection;
       }
       set
       {
-        __isset.isWifi = true;
-        this._isWifi = value;
+        __isset.localconnection = true;
+        this._localconnection = value;
       }
     }
 
-    public string Name
+    public RuyiNetworkSettingNameValue Ipaddress
     {
       get
       {
-        return _Name;
+        return _ipaddress;
       }
       set
       {
-        __isset.Name = true;
-        this._Name = value;
+        __isset.ipaddress = true;
+        this._ipaddress = value;
       }
     }
 
-    public bool AdapterStatus
+    public RuyiNetworkSettingNameValue Internetconnection
     {
       get
       {
-        return _AdapterStatus;
+        return _internetconnection;
       }
       set
       {
-        __isset.AdapterStatus = true;
-        this._AdapterStatus = value;
-      }
-    }
-
-    public bool InternetStatus
-    {
-      get
-      {
-        return _InternetStatus;
-      }
-      set
-      {
-        __isset.InternetStatus = true;
-        this._InternetStatus = value;
+        __isset.internetconnection = true;
+        this._internetconnection = value;
       }
     }
 
@@ -88,13 +74,12 @@ namespace Ruyi.SDK.SettingSystem.Api
     public Isset __isset;
     public struct Isset
     {
-      public bool isWifi;
-      public bool Name;
-      public bool AdapterStatus;
-      public bool InternetStatus;
+      public bool localconnection;
+      public bool ipaddress;
+      public bool internetconnection;
     }
 
-    public RuyiNetworkStatus()
+    public RuyiNetworkTestResult()
     {
     }
 
@@ -116,9 +101,10 @@ namespace Ruyi.SDK.SettingSystem.Api
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.Bool)
+              if (field.Type == TType.Struct)
               {
-                IsWifi = await iprot.ReadBoolAsync(cancellationToken);
+                Localconnection = new RuyiNetworkSettingNameValue();
+                await Localconnection.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -126,9 +112,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 2:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                Name = await iprot.ReadStringAsync(cancellationToken);
+                Ipaddress = new RuyiNetworkSettingNameValue();
+                await Ipaddress.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -136,19 +123,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 3:
-              if (field.Type == TType.Bool)
+              if (field.Type == TType.Struct)
               {
-                AdapterStatus = await iprot.ReadBoolAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 4:
-              if (field.Type == TType.Bool)
-              {
-                InternetStatus = await iprot.ReadBoolAsync(cancellationToken);
+                Internetconnection = new RuyiNetworkSettingNameValue();
+                await Internetconnection.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -176,43 +154,34 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("RuyiNetworkStatus");
+        var struc = new TStruct("RuyiNetworkTestResult");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (__isset.isWifi)
+        if (Localconnection != null && __isset.localconnection)
         {
-          field.Name = "isWifi";
-          field.Type = TType.Bool;
+          field.Name = "localconnection";
+          field.Type = TType.Struct;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(IsWifi, cancellationToken);
+          await Localconnection.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Name != null && __isset.Name)
+        if (Ipaddress != null && __isset.ipaddress)
         {
-          field.Name = "Name";
-          field.Type = TType.String;
+          field.Name = "ipaddress";
+          field.Type = TType.Struct;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Name, cancellationToken);
+          await Ipaddress.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.AdapterStatus)
+        if (Internetconnection != null && __isset.internetconnection)
         {
-          field.Name = "AdapterStatus";
-          field.Type = TType.Bool;
+          field.Name = "internetconnection";
+          field.Type = TType.Struct;
           field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(AdapterStatus, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (__isset.InternetStatus)
-        {
-          field.Name = "InternetStatus";
-          field.Type = TType.Bool;
-          field.ID = 4;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(InternetStatus, cancellationToken);
+          await Internetconnection.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -226,35 +195,28 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("RuyiNetworkStatus(");
+      var sb = new StringBuilder("RuyiNetworkTestResult(");
       bool __first = true;
-      if (__isset.isWifi)
+      if (Localconnection != null && __isset.localconnection)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("IsWifi: ");
-        sb.Append(IsWifi);
+        sb.Append("Localconnection: ");
+        sb.Append(Localconnection== null ? "<null>" : Localconnection.ToString());
       }
-      if (Name != null && __isset.Name)
+      if (Ipaddress != null && __isset.ipaddress)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Name: ");
-        sb.Append(Name);
+        sb.Append("Ipaddress: ");
+        sb.Append(Ipaddress== null ? "<null>" : Ipaddress.ToString());
       }
-      if (__isset.AdapterStatus)
+      if (Internetconnection != null && __isset.internetconnection)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("AdapterStatus: ");
-        sb.Append(AdapterStatus);
-      }
-      if (__isset.InternetStatus)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("InternetStatus: ");
-        sb.Append(InternetStatus);
+        sb.Append("Internetconnection: ");
+        sb.Append(Internetconnection== null ? "<null>" : Internetconnection.ToString());
       }
       sb.Append(")");
       return sb.ToString();

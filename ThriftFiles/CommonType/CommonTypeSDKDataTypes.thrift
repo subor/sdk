@@ -145,6 +145,7 @@ struct SettingCategory {
     7: map<string, i32> items,
     8: bool enable,
     9: bool showInUI,
+    10: string script,
 }
 
 struct ModuleSetting {
