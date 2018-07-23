@@ -40,7 +40,13 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// Get settings and categories in a tree
       /// </summary>
       Ruyi.SDK.SettingSystem.Api.SettingTree GetCategoryNode();
-      Ruyi.SDK.SettingSystem.Api.NodeList GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType);
+      /// <summary>
+      /// Get child nodes of specified setting item or setting category
+      /// </summary>
+      /// <param name="parent">The parent node</param>
+      /// <param name="nodeType">Specifies whether the child nodes containing setting item or setting category, or both</param>
+      /// <param name="param">The parameter passed to the function which will be called while getting the item value</param>
+      Ruyi.SDK.SettingSystem.Api.NodeList GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param);
       /// <summary>
       /// Set the specified setting's "dataValue" with the new value
       /// </summary>
@@ -117,8 +123,14 @@ namespace Ruyi.SDK.SettingSystem.Api
       IAsyncResult Begin_GetCategoryNode(AsyncCallback callback, object state);
       Ruyi.SDK.SettingSystem.Api.SettingTree End_GetCategoryNode(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// Get child nodes of specified setting item or setting category
+      /// </summary>
+      /// <param name="parent">The parent node</param>
+      /// <param name="nodeType">Specifies whether the child nodes containing setting item or setting category, or both</param>
+      /// <param name="param">The parameter passed to the function which will be called while getting the item value</param>
       #if SILVERLIGHT
-      IAsyncResult Begin_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType);
+      IAsyncResult Begin_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param);
       Ruyi.SDK.SettingSystem.Api.NodeList End_GetChildNode(IAsyncResult asyncResult);
       #endif
       /// <summary>
@@ -549,9 +561,9 @@ namespace Ruyi.SDK.SettingSystem.Api
 
       
       #if SILVERLIGHT
-      public IAsyncResult Begin_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType)
+      public IAsyncResult Begin_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param)
       {
-        return send_GetChildNode(callback, state, parent, nodeType);
+        return send_GetChildNode(callback, state, parent, nodeType, param);
       }
 
       public Ruyi.SDK.SettingSystem.Api.NodeList End_GetChildNode(IAsyncResult asyncResult)
@@ -562,28 +574,35 @@ namespace Ruyi.SDK.SettingSystem.Api
 
       #endif
 
-      public Ruyi.SDK.SettingSystem.Api.NodeList GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType)
+      /// <summary>
+      /// Get child nodes of specified setting item or setting category
+      /// </summary>
+      /// <param name="parent">The parent node</param>
+      /// <param name="nodeType">Specifies whether the child nodes containing setting item or setting category, or both</param>
+      /// <param name="param">The parameter passed to the function which will be called while getting the item value</param>
+      public Ruyi.SDK.SettingSystem.Api.NodeList GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param)
       {
         #if !SILVERLIGHT
-        send_GetChildNode(parent, nodeType);
+        send_GetChildNode(parent, nodeType, param);
         return recv_GetChildNode();
 
         #else
-        var asyncResult = Begin_GetChildNode(null, null, parent, nodeType);
+        var asyncResult = Begin_GetChildNode(null, null, parent, nodeType, param);
         return End_GetChildNode(asyncResult);
 
         #endif
       }
       #if SILVERLIGHT
-      public IAsyncResult send_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType)
+      public IAsyncResult send_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param)
       #else
-      public void send_GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType)
+      public void send_GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param)
       #endif
       {
         oprot_.WriteMessageBegin(new TMessage("GetChildNode", TMessageType.Call, seqid_));
         GetChildNode_args args = new GetChildNode_args();
         args.Parent = parent;
         args.NodeType = nodeType;
+        args.Param = param;
         args.Write(oprot_);
         oprot_.WriteMessageEnd();
         #if SILVERLIGHT
@@ -1957,7 +1976,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           try
           {
-            result.Success = iface_.GetChildNode(args.Parent, args.NodeType);
+            result.Success = iface_.GetChildNode(args.Parent, args.NodeType, args.Param);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
@@ -3644,7 +3663,11 @@ namespace Ruyi.SDK.SettingSystem.Api
     {
       private string _parent;
       private Ruyi.SDK.SettingSystem.Api.NodeType _nodeType;
+      private string _param;
 
+      /// <summary>
+      /// The parent node
+      /// </summary>
       public string Parent
       {
         get
@@ -3659,6 +3682,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
 
       /// <summary>
+      /// Specifies whether the child nodes containing setting item or setting category, or both
       /// 
       /// <seealso cref="Ruyi.SDK.SettingSystem.Api.NodeType"/>
       /// </summary>
@@ -3675,6 +3699,22 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// The parameter passed to the function which will be called while getting the item value
+      /// </summary>
+      public string Param
+      {
+        get
+        {
+          return _param;
+        }
+        set
+        {
+          __isset.param = true;
+          this._param = value;
+        }
+      }
+
 
       public Isset __isset;
       #if !SILVERLIGHT
@@ -3683,6 +3723,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       public struct Isset {
         public bool parent;
         public bool nodeType;
+        public bool param;
       }
 
       public GetChildNode_args() {
@@ -3713,6 +3754,13 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 2:
                 if (field.Type == TType.I32) {
                   NodeType = (Ruyi.SDK.SettingSystem.Api.NodeType)iprot.ReadI32();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.String) {
+                  Param = iprot.ReadString();
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }
@@ -3754,6 +3802,14 @@ namespace Ruyi.SDK.SettingSystem.Api
             oprot.WriteI32((int)NodeType);
             oprot.WriteFieldEnd();
           }
+          if (Param != null && __isset.param) {
+            field.Name = "param";
+            field.Type = TType.String;
+            field.ID = 3;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteString(Param);
+            oprot.WriteFieldEnd();
+          }
           oprot.WriteFieldStop();
           oprot.WriteStructEnd();
         }
@@ -3777,6 +3833,12 @@ namespace Ruyi.SDK.SettingSystem.Api
           __first = false;
           __sb.Append("NodeType: ");
           __sb.Append(NodeType);
+        }
+        if (Param != null && __isset.param) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Param: ");
+          __sb.Append(Param);
         }
         __sb.Append(")");
         return __sb.ToString();

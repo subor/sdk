@@ -34,7 +34,17 @@ According to the format of json string your write, searching can be separated to
 	/** Get settings and categories in a tree */
 	SettingSystemSDKDataTypes.SettingTree GetCategoryNode() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
-	SettingSystemSDKDataTypes.NodeList GetChildNode(1: string parent, 2: SettingSystemSDKDataTypes.NodeType nodeType) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+	/** Get child nodes of specified setting item or setting category */
+	SettingSystemSDKDataTypes.NodeList GetChildNode(
+		/** The parent node */
+		1: string parent, 
+		
+		/** Specifies whether the child nodes containing setting item or setting category, or both */
+		2: SettingSystemSDKDataTypes.NodeType nodeType, 
+		
+		/** The parameter passed to the function which will be called while getting the item value */
+		3: string param
+	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	/** Set the specified setting's "dataValue" with the new value */
 	bool SetSettingItem(

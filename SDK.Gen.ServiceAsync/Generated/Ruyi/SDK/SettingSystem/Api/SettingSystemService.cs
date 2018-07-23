@@ -53,7 +53,13 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// </summary>
       Task<Ruyi.SDK.SettingSystem.Api.SettingTree> GetCategoryNodeAsync(CancellationToken cancellationToken);
 
-      Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, CancellationToken cancellationToken);
+      /// <summary>
+      /// Get child nodes of specified setting item or setting category
+      /// </summary>
+      /// <param name="parent">The parent node</param>
+      /// <param name="nodeType">Specifies whether the child nodes containing setting item or setting category, or both</param>
+      /// <param name="param">The parameter passed to the function which will be called while getting the item value</param>
+      Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, CancellationToken cancellationToken);
 
       /// <summary>
       /// Set the specified setting's "dataValue" with the new value
@@ -255,13 +261,14 @@ namespace Ruyi.SDK.SettingSystem.Api
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetCategoryNode failed: unknown result");
       }
 
-      public async Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, CancellationToken cancellationToken)
+      public async Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetChildNode", TMessageType.Call, SeqId), cancellationToken);
         
         var args = new GetChildNodeArgs();
         args.Parent = parent;
         args.NodeType = nodeType;
+        args.Param = param;
         
         await args.WriteAsync(OutputProtocol, cancellationToken);
         await OutputProtocol.WriteMessageEndAsync(cancellationToken);
@@ -1080,7 +1087,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           try
           {
-            result.Success = await _iAsync.GetChildNodeAsync(args.Parent, args.NodeType, cancellationToken);
+            result.Success = await _iAsync.GetChildNodeAsync(args.Parent, args.NodeType, args.Param, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
@@ -2846,7 +2853,11 @@ namespace Ruyi.SDK.SettingSystem.Api
     {
       private string _parent;
       private Ruyi.SDK.SettingSystem.Api.NodeType _nodeType;
+      private string _param;
 
+      /// <summary>
+      /// The parent node
+      /// </summary>
       public string Parent
       {
         get
@@ -2861,6 +2872,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
 
       /// <summary>
+      /// Specifies whether the child nodes containing setting item or setting category, or both
       /// 
       /// <seealso cref="Ruyi.SDK.SettingSystem.Api.NodeType"/>
       /// </summary>
@@ -2877,12 +2889,29 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// The parameter passed to the function which will be called while getting the item value
+      /// </summary>
+      public string Param
+      {
+        get
+        {
+          return _param;
+        }
+        set
+        {
+          __isset.param = true;
+          this._param = value;
+        }
+      }
+
 
       public Isset __isset;
       public struct Isset
       {
         public bool parent;
         public bool nodeType;
+        public bool param;
       }
 
       public GetChildNodeArgs()
@@ -2920,6 +2949,16 @@ namespace Ruyi.SDK.SettingSystem.Api
                 if (field.Type == TType.I32)
                 {
                   NodeType = (Ruyi.SDK.SettingSystem.Api.NodeType)await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.String)
+                {
+                  Param = await iprot.ReadStringAsync(cancellationToken);
                 }
                 else
                 {
@@ -2968,6 +3007,15 @@ namespace Ruyi.SDK.SettingSystem.Api
             await oprot.WriteI32Async((int)NodeType, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
           }
+          if (Param != null && __isset.param)
+          {
+            field.Name = "param";
+            field.Type = TType.String;
+            field.ID = 3;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Param, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
           await oprot.WriteFieldStopAsync(cancellationToken);
           await oprot.WriteStructEndAsync(cancellationToken);
         }
@@ -2994,6 +3042,13 @@ namespace Ruyi.SDK.SettingSystem.Api
           __first = false;
           sb.Append("NodeType: ");
           sb.Append(NodeType);
+        }
+        if (Param != null && __isset.param)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Param: ");
+          sb.Append(Param);
         }
         sb.Append(")");
         return sb.ToString();

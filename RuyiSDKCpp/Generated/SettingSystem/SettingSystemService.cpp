@@ -946,6 +946,14 @@ uint32_t SettingSystemService_GetChildNode_args::read(::apache::thrift::protocol
           xfer += iprot->skip(ftype);
         }
         break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->param);
+          this->__isset.param = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -971,6 +979,10 @@ uint32_t SettingSystemService_GetChildNode_args::write(::apache::thrift::protoco
   xfer += oprot->writeI32((int32_t)this->nodeType);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("param", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString(this->param);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -992,6 +1004,10 @@ uint32_t SettingSystemService_GetChildNode_pargs::write(::apache::thrift::protoc
 
   xfer += oprot->writeFieldBegin("nodeType", ::apache::thrift::protocol::T_I32, 2);
   xfer += oprot->writeI32((int32_t)(*(this->nodeType)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("param", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString((*(this->param)));
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -5187,13 +5203,13 @@ void SettingSystemServiceClient::recv_GetCategoryNode( ::Ruyi::SDK::SettingSyste
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "GetCategoryNode failed: unknown result");
 }
 
-void SettingSystemServiceClient::GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType)
+void SettingSystemServiceClient::GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param)
 {
-  send_GetChildNode(parent, nodeType);
+  send_GetChildNode(parent, nodeType, param);
   recv_GetChildNode(_return);
 }
 
-void SettingSystemServiceClient::send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType)
+void SettingSystemServiceClient::send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("GetChildNode", ::apache::thrift::protocol::T_CALL, cseqid);
@@ -5201,6 +5217,7 @@ void SettingSystemServiceClient::send_GetChildNode(const std::string& parent, co
   SettingSystemService_GetChildNode_pargs args;
   args.parent = &parent;
   args.nodeType = &nodeType;
+  args.param = &param;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -6563,7 +6580,7 @@ void SettingSystemServiceProcessor::process_GetChildNode(int32_t seqid, ::apache
 
   SettingSystemService_GetChildNode_result result;
   try {
-    iface_->GetChildNode(result.success, args.parent, args.nodeType);
+    iface_->GetChildNode(result.success, args.parent, args.nodeType, args.param);
     result.__isset.success = true;
   } catch ( ::Ruyi::SDK::CommonType::ErrorException &error1) {
     result.error1 = error1;
@@ -7919,13 +7936,13 @@ void SettingSystemServiceConcurrentClient::recv_GetCategoryNode( ::Ruyi::SDK::Se
   } // end while(true)
 }
 
-void SettingSystemServiceConcurrentClient::GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType)
+void SettingSystemServiceConcurrentClient::GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param)
 {
-  int32_t seqid = send_GetChildNode(parent, nodeType);
+  int32_t seqid = send_GetChildNode(parent, nodeType, param);
   recv_GetChildNode(_return, seqid);
 }
 
-int32_t SettingSystemServiceConcurrentClient::send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType)
+int32_t SettingSystemServiceConcurrentClient::send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param)
 {
   int32_t cseqid = this->sync_.generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
@@ -7934,6 +7951,7 @@ int32_t SettingSystemServiceConcurrentClient::send_GetChildNode(const std::strin
   SettingSystemService_GetChildNode_pargs args;
   args.parent = &parent;
   args.nodeType = &nodeType;
+  args.param = &param;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
