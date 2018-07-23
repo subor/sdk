@@ -1814,6 +1814,10 @@ void SettingCategory::__set_enable(const bool val) {
 void SettingCategory::__set_showInUI(const bool val) {
   this->showInUI = val;
 }
+
+void SettingCategory::__set_script(const std::string& val) {
+  this->script = val;
+}
 std::ostream& operator<<(std::ostream& out, const SettingCategory& obj)
 {
   obj.printTo(out);
@@ -1929,6 +1933,14 @@ uint32_t SettingCategory::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
+      case 10:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->script);
+          this->__isset.script = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -1993,6 +2005,10 @@ uint32_t SettingCategory::write(::apache::thrift::protocol::TProtocol* oprot) co
   xfer += oprot->writeBool(this->showInUI);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("script", ::apache::thrift::protocol::T_STRING, 10);
+  xfer += oprot->writeString(this->script);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -2009,6 +2025,7 @@ void swap(SettingCategory &a, SettingCategory &b) {
   swap(a.items, b.items);
   swap(a.enable, b.enable);
   swap(a.showInUI, b.showInUI);
+  swap(a.script, b.script);
   swap(a.__isset, b.__isset);
 }
 
@@ -2022,6 +2039,7 @@ SettingCategory::SettingCategory(const SettingCategory& other59) {
   items = other59.items;
   enable = other59.enable;
   showInUI = other59.showInUI;
+  script = other59.script;
   __isset = other59.__isset;
 }
 SettingCategory& SettingCategory::operator=(const SettingCategory& other60) {
@@ -2034,6 +2052,7 @@ SettingCategory& SettingCategory::operator=(const SettingCategory& other60) {
   items = other60.items;
   enable = other60.enable;
   showInUI = other60.showInUI;
+  script = other60.script;
   __isset = other60.__isset;
   return *this;
 }
@@ -2049,6 +2068,7 @@ void SettingCategory::printTo(std::ostream& out) const {
   out << ", " << "items=" << to_string(items);
   out << ", " << "enable=" << to_string(enable);
   out << ", " << "showInUI=" << to_string(showInUI);
+  out << ", " << "script=" << to_string(script);
   out << ")";
 }
 

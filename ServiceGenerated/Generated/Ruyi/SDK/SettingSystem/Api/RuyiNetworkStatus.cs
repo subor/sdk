@@ -26,6 +26,8 @@ namespace Ruyi.SDK.SettingSystem.Api
   {
     private bool _isWifi;
     private string _Name;
+    private bool _AdapterStatus;
+    private bool _InternetStatus;
 
     public bool IsWifi
     {
@@ -53,6 +55,32 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    public bool AdapterStatus
+    {
+      get
+      {
+        return _AdapterStatus;
+      }
+      set
+      {
+        __isset.AdapterStatus = true;
+        this._AdapterStatus = value;
+      }
+    }
+
+    public bool InternetStatus
+    {
+      get
+      {
+        return _InternetStatus;
+      }
+      set
+      {
+        __isset.InternetStatus = true;
+        this._InternetStatus = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -61,6 +89,8 @@ namespace Ruyi.SDK.SettingSystem.Api
     public struct Isset {
       public bool isWifi;
       public bool Name;
+      public bool AdapterStatus;
+      public bool InternetStatus;
     }
 
     public RuyiNetworkStatus() {
@@ -91,6 +121,20 @@ namespace Ruyi.SDK.SettingSystem.Api
             case 2:
               if (field.Type == TType.String) {
                 Name = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.Bool) {
+                AdapterStatus = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 4:
+              if (field.Type == TType.Bool) {
+                InternetStatus = iprot.ReadBool();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -132,6 +176,22 @@ namespace Ruyi.SDK.SettingSystem.Api
           oprot.WriteString(Name);
           oprot.WriteFieldEnd();
         }
+        if (__isset.AdapterStatus) {
+          field.Name = "AdapterStatus";
+          field.Type = TType.Bool;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(AdapterStatus);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.InternetStatus) {
+          field.Name = "InternetStatus";
+          field.Type = TType.Bool;
+          field.ID = 4;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(InternetStatus);
+          oprot.WriteFieldEnd();
+        }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
@@ -155,6 +215,18 @@ namespace Ruyi.SDK.SettingSystem.Api
         __first = false;
         __sb.Append("Name: ");
         __sb.Append(Name);
+      }
+      if (__isset.AdapterStatus) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("AdapterStatus: ");
+        __sb.Append(AdapterStatus);
+      }
+      if (__isset.InternetStatus) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("InternetStatus: ");
+        __sb.Append(InternetStatus);
       }
       __sb.Append(")");
       return __sb.ToString();

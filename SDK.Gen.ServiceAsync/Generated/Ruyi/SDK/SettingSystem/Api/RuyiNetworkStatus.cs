@@ -29,6 +29,8 @@ namespace Ruyi.SDK.SettingSystem.Api
   {
     private bool _isWifi;
     private string _Name;
+    private bool _AdapterStatus;
+    private bool _InternetStatus;
 
     public bool IsWifi
     {
@@ -56,12 +58,40 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    public bool AdapterStatus
+    {
+      get
+      {
+        return _AdapterStatus;
+      }
+      set
+      {
+        __isset.AdapterStatus = true;
+        this._AdapterStatus = value;
+      }
+    }
+
+    public bool InternetStatus
+    {
+      get
+      {
+        return _InternetStatus;
+      }
+      set
+      {
+        __isset.InternetStatus = true;
+        this._InternetStatus = value;
+      }
+    }
+
 
     public Isset __isset;
     public struct Isset
     {
       public bool isWifi;
       public bool Name;
+      public bool AdapterStatus;
+      public bool InternetStatus;
     }
 
     public RuyiNetworkStatus()
@@ -99,6 +129,26 @@ namespace Ruyi.SDK.SettingSystem.Api
               if (field.Type == TType.String)
               {
                 Name = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.Bool)
+              {
+                AdapterStatus = await iprot.ReadBoolAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 4:
+              if (field.Type == TType.Bool)
+              {
+                InternetStatus = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -147,6 +197,24 @@ namespace Ruyi.SDK.SettingSystem.Api
           await oprot.WriteStringAsync(Name, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
+        if (__isset.AdapterStatus)
+        {
+          field.Name = "AdapterStatus";
+          field.Type = TType.Bool;
+          field.ID = 3;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteBoolAsync(AdapterStatus, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (__isset.InternetStatus)
+        {
+          field.Name = "InternetStatus";
+          field.Type = TType.Bool;
+          field.ID = 4;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteBoolAsync(InternetStatus, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
         await oprot.WriteFieldStopAsync(cancellationToken);
         await oprot.WriteStructEndAsync(cancellationToken);
       }
@@ -173,6 +241,20 @@ namespace Ruyi.SDK.SettingSystem.Api
         __first = false;
         sb.Append("Name: ");
         sb.Append(Name);
+      }
+      if (__isset.AdapterStatus)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("AdapterStatus: ");
+        sb.Append(AdapterStatus);
+      }
+      if (__isset.InternetStatus)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("InternetStatus: ");
+        sb.Append(InternetStatus);
       }
       sb.Append(")");
       return sb.ToString();
