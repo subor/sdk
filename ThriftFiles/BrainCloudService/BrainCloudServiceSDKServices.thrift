@@ -3842,6 +3842,51 @@ service BrainCloudService {
 		1: i32 clientIndex
 	),
 
+	string Party_AcceptPartyInvitation(1: string partyId, 
+		/** The braincloud client index */
+		2: i32 clientIndex
+	),
+
+	string Party_GetPartyInfo(1: string partyId, 
+		/** The braincloud client index */
+		2: i32 clientIndex
+	),
+
+	string Party_JoinParty(1: string partyId, 
+		/** The braincloud client index */
+		2: i32 clientIndex
+	),
+
+	string Party_LeaveParty(1: string partyId, 
+		/** The braincloud client index */
+		2: i32 clientIndex
+	),
+
+	string Party_RejectPartyInvitation(1: string partyId, 
+		/** The braincloud client index */
+		2: i32 clientIndex
+	),
+
+	string Party_SendPartyInvitation(1: string playerId, 
+		/** The braincloud client index */
+		2: i32 clientIndex
+	),
+
+	string Party_ListPartyInvitations(
+		/** The braincloud client index */
+		1: i32 clientIndex
+	),
+
+	string Party_GetFriendsParties(1: i32 maxResults, 
+		/** The braincloud client index */
+		2: i32 clientIndex
+	),
+
+	string Party_GetMyParty(
+		/** The braincloud client index */
+		1: i32 clientIndex
+	),
+
 	string Patch_GetGameManifest(1: string gameId, 
 		/** The braincloud client index */
 		2: i32 clientIndex
@@ -3997,7 +4042,7 @@ service BrainCloudService {
 		6: i32 clientIndex
 	),
 
-	/** Authenticate the user via wecha */
+	/** Get wechat QR page URL */
 	string Authentication_GetWeChatQRPageURL(
 		/** The braincloud client index */
 		1: i32 clientIndex
@@ -4005,7 +4050,7 @@ service BrainCloudService {
 
 	/** Download file from server */
 	string File_DownloadFile(
-		/** The file path */
+		/** The file path on the server */
 		1: string cloudPath, 
 		
 		/** The file name */
@@ -4020,7 +4065,7 @@ service BrainCloudService {
 
 	/** Get the download information */
 	string File_GetDownloadInfo(
-		/** The file path */
+		/** The file path on the server */
 		1: string cloudPath, 
 		
 		/** The file name */
@@ -4032,7 +4077,7 @@ service BrainCloudService {
 
 	/** Cancel download */
 	string File_CancelDownload(
-		/** The file path */
+		/** The file path on the server */
 		1: string cloudPath, 
 		
 		/** The file name */

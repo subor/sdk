@@ -4549,6 +4549,51 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Lobby_GetMyLobbies\n");
   }
 
+  void Party_AcceptPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_AcceptPartyInvitation\n");
+  }
+
+  void Party_GetPartyInfo(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_GetPartyInfo\n");
+  }
+
+  void Party_JoinParty(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_JoinParty\n");
+  }
+
+  void Party_LeaveParty(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_LeaveParty\n");
+  }
+
+  void Party_RejectPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_RejectPartyInvitation\n");
+  }
+
+  void Party_SendPartyInvitation(std::string& _return, const std::string& playerId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_SendPartyInvitation\n");
+  }
+
+  void Party_ListPartyInvitations(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_ListPartyInvitations\n");
+  }
+
+  void Party_GetFriendsParties(std::string& _return, const int32_t maxResults, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_GetFriendsParties\n");
+  }
+
+  void Party_GetMyParty(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_GetMyParty\n");
+  }
+
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Patch_GetGameManifest\n");
@@ -4705,7 +4750,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   }
 
   /**
-   * Authenticate the user via wecha
+   * Get wechat QR page URL
    * 
    * @param clientIndex The braincloud client index
    */
@@ -4717,7 +4762,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Download file from server
    * 
-   * @param cloudPath The file path
+   * @param cloudPath The file path on the server
    * 
    * @param cloudFilename The file name
    * 
@@ -4733,7 +4778,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Get the download information
    * 
-   * @param cloudPath The file path
+   * @param cloudPath The file path on the server
    * 
    * @param cloudFilename The file name
    * 
@@ -4747,7 +4792,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Cancel download
    * 
-   * @param cloudPath The file path
+   * @param cloudPath The file path on the server
    * 
    * @param cloudFilename The file name
    * 
