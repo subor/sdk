@@ -69,20 +69,32 @@ namespace Ruyi.Layer0
         {
             lock (sync)
             {
+                assemblies = new List<Assembly>();
+
 #if NASYNC
-                assemblies = new[]
-                    {
-                        Assembly.Load("ServiceGenerated"),
-                        Assembly.Load("ServiceCommon"),
-                        Assembly.Load("InternalServiceGenerated"),
-                    };
+                assemblies.Add( Assembly.Load("ServiceGenerated") );
+                assemblies.Add( Assembly.Load("ServiceCommon") );
+                try
+                {
+                    var internalServ = Assembly.Load("InternalServiceGenerated");
+                    assemblies.Add(internalServ);
+                }
+                catch (Exception)
+                {
+                    // sdk external do not need to load InternalServiceGenerated
+                }
 #else
-                assemblies = new[]
-                    {
-                        Assembly.Load("SDK.Gen.ServiceAsync"),
-                        Assembly.Load("SDK.Gen.CommonAsync"),
-                        Assembly.Load("SDK.Gen.InternalServiceAsync"),
-                    };
+                assemblies.Add( Assembly.Load("SDK.Gen.ServiceAsync") );
+                assemblies.Add( Assembly.Load("SDK.Gen.CommonAsync") );
+                try
+                {
+                    var internalServ = Assembly.Load("SDK.Gen.InternalServiceAsync");
+                    assemblies.Add(internalServ);
+                }
+                catch (Exception)
+                {
+                    // sdk external do not need to load InternalServiceGenerated
+                }
 #endif
             }
         }
@@ -90,6 +102,6 @@ namespace Ruyi.Layer0
         static object sync = new object();
         static Dictionary<string, Type> cachedTypes = new Dictionary<string, Type>();
         static Dictionary<string, Type> cachedClassnames = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
-        static Assembly[] assemblies;
+        static List<Assembly> assemblies;
     }
 }
