@@ -1,5 +1,8 @@
-namespace csharp Ruyi.SDK.CommonType
 namespace cpp Ruyi.SDK.CommonType
+namespace csharp Ruyi.SDK.CommonType
+namespace java Ruyi.SDK.CommonType
+namespace netcore Ruyi.SDK.CommonType
+namespace rs Ruyi.SDK.CommonType
 
 enum LoginState {
     /** Logout state */
@@ -8,10 +11,43 @@ enum LoginState {
 	Login = 1,
 }
 
-enum InputCagetory {
-    RuyiGamePad = 0,
-    KeyboardMouse = 1,
-    XBox360 = 2,
+enum NotificationType {
+    Battery = 0,
+    Interactive = 1,
+    Voice = 2,
+    GameInfo = 3,
+    ScreenshotInfo = 4,
+}
+
+enum InputCategory {
+    GamePad = 0,
+    Keyboard = 1,
+    Mouse = 2,
+    JoyStick = 3,
+    MaxCount = 4,
+}
+
+enum RuyiGamePadButtonFlags {
+    GamePad_Up = 1,
+    GamePad_Down = 2,
+    GamePad_Left = 4,
+    GamePad_Right = 8,
+    GamePad_Start = 16,
+    GamePad_Back = 32,
+    GamePad_L3 = 64,
+    GamePad_R3 = 128,
+    GamePad_LB = 256,
+    GamePad_RB = 512,
+    GamePad_A = 4096,
+    GamePad_B = 8192,
+    GamePad_X = 16384,
+    GamePad_Y = 32768,
+    GamePad_LT = 131072,
+    GamePad_RT = 262144,
+    GamePad_LJoyX = 524288,
+    GamePad_LJoyY = 1048576,
+    GamePad_RJoyX = 2097152,
+    GamePad_RJoyY = 4194304,
 }
 
 enum ePlatform {
@@ -48,23 +84,10 @@ struct InputModifier {
     2: double Scale,
 }
 
-struct InputIdentifier {
-    1: string Device,
-    2: string Value,
-    3: optional string ActivateEvent,
-    4: optional InputModifier Modifier,
-}
-
-struct ActionTriggerInfo {
-    1: InputCagetory InputCagetory,
-    2: list<InputIdentifier> TriggerConditions,
-    3: optional bool AutoTrigger,
-    4: optional i32 TriggerInterval,
-}
-
-struct InputActionInfo {
-    1: string ActionName,
-    2: ActionTriggerInfo TriggerInfo,
+struct ActionTrigger {
+    1: InputCategory InputCagetory,
+    2: list<i32> TriggerButtons,
+    3: list<i32> TriggerValue,
 }
 
 struct notification {
@@ -106,9 +129,10 @@ struct SettingItem {
     14: bool isActive,
     15: optional string validation,
     16: optional list<activeDependency> activeDependencies,
-    17: string ActionName,
-    18: string ActionObject,
-    19: string ActionMethodName,
+    17: optional string ActionName,
+    18: optional string ActionObject,
+    19: optional string ActionOnSetValue,
+    20: optional string ActionOnGetValue,
 }
 
 struct SettingCategory {
@@ -121,6 +145,7 @@ struct SettingCategory {
     7: map<string, i32> items,
     8: bool enable,
     9: bool showInUI,
+    10: string script,
 }
 
 struct ModuleSetting {
@@ -149,6 +174,13 @@ struct AppData {
 	1: string appId,
     /** The user data of the App. See AppDataCollection */
 	2: list<AppDataCollection> data,
+}
+
+struct PopupNotification {
+    1: NotificationType NotificationType,
+    2: string MainIcon,
+    3: string Text,
+    4: string Description,
 }
 
 

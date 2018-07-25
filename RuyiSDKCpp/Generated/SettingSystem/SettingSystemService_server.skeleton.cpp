@@ -12,8 +12,6 @@ using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
 using namespace ::apache::thrift::server;
 
-using boost::shared_ptr;
-
 using namespace  ::Ruyi::SDK::SettingSystem::Api;
 
 class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
@@ -144,15 +142,55 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("SettingItemNotify\n");
   }
 
+  bool SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS) {
+    // Your implementation goes here
+    printf("SetNetworkSettings\n");
+  }
+
+  bool SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort) {
+    // Your implementation goes here
+    printf("SetNetworkProxy\n");
+  }
+
+  bool ConnectToWifi(const std::string& profileName, const std::string& key) {
+    // Your implementation goes here
+    printf("ConnectToWifi\n");
+  }
+
+  void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) {
+    // Your implementation goes here
+    printf("GetNetworkSettings\n");
+  }
+
+  void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return) {
+    // Your implementation goes here
+    printf("GetNetworkStatus\n");
+  }
+
+  void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return) {
+    // Your implementation goes here
+    printf("RuyiTestNetwork\n");
+  }
+
+  void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return) {
+    // Your implementation goes here
+    printf("GetAvailableWifi\n");
+  }
+
+  bool DisconnectWifi() {
+    // Your implementation goes here
+    printf("DisconnectWifi\n");
+  }
+
 };
 
 int main(int argc, char **argv) {
   int port = 9090;
-  shared_ptr<SettingSystemServiceHandler> handler(new SettingSystemServiceHandler());
-  shared_ptr<TProcessor> processor(new SettingSystemServiceProcessor(handler));
-  shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
-  shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-  shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+  ::apache::thrift::stdcxx::shared_ptr<SettingSystemServiceHandler> handler(new SettingSystemServiceHandler());
+  ::apache::thrift::stdcxx::shared_ptr<TProcessor> processor(new SettingSystemServiceProcessor(handler));
+  ::apache::thrift::stdcxx::shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
+  ::apache::thrift::stdcxx::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
+  ::apache::thrift::stdcxx::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
 
   TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
   server.serve();

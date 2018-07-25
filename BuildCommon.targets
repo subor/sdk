@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup Condition="'$(TargetFrameworkVersion)' == 'v3.5'">
+    <DefineConstants>$(DefineConstants);NASYNC;DOTNET_20</DefineConstants>
+  </PropertyGroup>
   <!--
 	http://www.lionhack.com/2014/02/13/msbuild-override-assembly-version/
 -->

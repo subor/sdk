@@ -95,7 +95,7 @@ namespace Ruyi.Logging
 
         override public string ToString()
         {
-            return $"[{Category,10}]\t[{MsgSource,10}]\t[{MsgTarget,10}]\t{Message}";
+            return $"[{Category,12}]\t[{MsgSource,25}]\t[{MsgTarget,10}]\t{Message}";
         }
 
         public string ToPluginString()

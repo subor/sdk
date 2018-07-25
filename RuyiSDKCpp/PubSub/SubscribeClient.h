@@ -11,8 +11,6 @@ using namespace std;
 using namespace apache::thrift;
 using namespace apache::thrift::protocol;
 
-//typedef void(*MessageHandler)(string, TBase*);
-
 ///<summary>
 /// MessageHandler<void, std::string, apache::thrift::TBase*>* mh1 = new MessageHandler<void, std::string, apache::thrift::TBase*>();
 ///	mh->AddHandler(OnFileUploadSuccess);
@@ -82,11 +80,7 @@ namespace Ruyi
 
 			void Subscribe(string topic);
 			void Unsubscribe(string topic);
-
-			//void AddMessageHandler(MessageHandler mh);
-			//void RemoveMessageHandler(MessageHandler mh);
-			//void AddMessageHandler(MessageHandler<void, string, TBase*>* mh);
-			//void RemoveMessageHandler(MessageHandler<void, string, TBase*>* mh);
+			
 			void RemoveMessageHandler(int handlerKey);
 
 			template<typename R = void, typename Object>
@@ -96,7 +90,6 @@ namespace Ruyi
 
 				mh->AddHandler(object, method);
 
-				//handlers.push_back(mh);
 				handlers[++handlerKey] = mh;
 
 				return handlerKey;
@@ -111,20 +104,11 @@ namespace Ruyi
 			zmq::socket_t* subscriber;
 			zmq::context_t* context;
 
-			boost::shared_ptr<boost::thread> receivingThread;
+			std::shared_ptr<boost::thread> receivingThread;
+			//boost::shared_ptr<boost::thread> receivingThread;
 
 			vector<string> topics;
 
-			//std::vector<MessageHandler> handlers;
-			//std::vector<MessageHandler<void, string, TBase*>*> handlers;
-			
-			//because in "AddMessageHandler" I "new" a instance of MessageHandler and add it to the handler
-			//So when users want to end the listener event by Removing the MessageHandler, there is no way 
-			//for them to pass a point of MH to achieve that
-			//and theorily they should only pass the pointer of the function or/and the pointer of the object
-			//but it's kind of complicated to iterate the target of std::function in the Calls of MessangeHandler
-			//So I think we can save a key of MH, everytime user pass a MH, we ++key and return it
-			//when users want to remove the MH, they just pass the key, and we can easily find it,erase it and deconstruct it
 			int handlerKey;
 			std::map<int, MessageHandler<void, string, TBase*>*> handlers;
 

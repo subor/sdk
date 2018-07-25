@@ -93,21 +93,21 @@ bool RuyiSDK::Init()
 {
 	int lowTimeout = 10000;		// 10s
 	// init and open high/low latency transport, create protocols
-	sharedLowTrans = boost::shared_ptr<TSocket>(new TSocket(context->remoteAddress, g_ConstantsSDKDataTypes_constants.low_latency_socket_port));
+	sharedLowTrans = std::make_shared<TSocket>(context->remoteAddress, g_ConstantsSDKDataTypes_constants.low_latency_socket_port);
 	sharedLowTrans->setSendTimeout(lowTimeout);
 	sharedLowTrans->setRecvTimeout(lowTimeout);
-	boost::shared_ptr<TBinaryProtocol> sharedLowProto(new TBinaryProtocol(sharedLowTrans));
+	std::shared_ptr<TBinaryProtocol> sharedLowProto(new TBinaryProtocol(sharedLowTrans));
 
 	int highTimeout = 20000;	// 20s
-	sharedHighTrans = boost::shared_ptr<TSocket>(new TSocket(context->remoteAddress, g_ConstantsSDKDataTypes_constants.high_latency_socket_port));
+	sharedHighTrans = std::make_shared<TSocket>(context->remoteAddress, g_ConstantsSDKDataTypes_constants.high_latency_socket_port);
 	sharedHighTrans->setSendTimeout(highTimeout);
 	sharedHighTrans->setRecvTimeout(highTimeout);
-	boost::shared_ptr<TBinaryProtocol> sharedHighProto(new TBinaryProtocol(sharedHighTrans));
+	std::shared_ptr<TBinaryProtocol> sharedHighProto(new TBinaryProtocol(sharedHighTrans));
 
 	sharedLowTrans->open();
 	sharedHighTrans->open();
 
-	auto validationProtocol = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedLowProto, "SER_VALIDATOR"));
+	auto validationProtocol = std::make_shared<TMultiplexedProtocol>(sharedLowProto, "SER_VALIDATOR");
 	validator = new SDK::SDKValidator::ValidatorServiceClient(validationProtocol);
 	if (!ValidateVersion())
 		return false;
@@ -118,27 +118,27 @@ bool RuyiSDK::Init()
 	Subscriber = SubscribeClient::CreateInstance(pubout);
 
 	// init storage layer
-	boost::shared_ptr<TMultiplexedProtocol> stoProtocol = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedHighProto, "SER_STORAGELAYER"));
+	auto stoProtocol = std::make_shared<TMultiplexedProtocol>(sharedHighProto, "SER_STORAGELAYER");
 	Storage = new SDK::StorageLayer::StorageLayerServiceClient(stoProtocol);
 
 	// init setting system
-	boost::shared_ptr<TMultiplexedProtocol> proto = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedLowProto, "SER_L0SETTINGSYSTEM_EXTERNAL"));
+	auto proto = std::make_shared<TMultiplexedProtocol>(sharedLowProto, "SER_SETTINGSYSTEM_EXTERNAL");
 	SettingSys = new SDK::SettingSystem::Api::SettingSystemServiceClient(proto);
 
 	// init localization service
-	boost::shared_ptr<TMultiplexedProtocol> locProtocol = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedLowProto, "SER_L10NSERVICE"));
+	auto locProtocol = std::make_shared<TMultiplexedProtocol>(sharedLowProto, "SER_L10NSERVICE");
 	L10NService = new SDK::LocalizationService::LocalizationServiceClient(locProtocol);
 
 	// init user service 
-	boost::shared_ptr<TMultiplexedProtocol> userProtocol = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedHighProto, "SER_USER_SERVICE_EXTERNAL"));
+	auto userProtocol = std::make_shared<TMultiplexedProtocol>(sharedHighProto, "SER_USER_SERVICE_EXTERNAL");
 	UserService = new SDK::UserServiceExternal::UserServExternalClient(userProtocol);
 
 	// init Ruyi Net
-	boost::shared_ptr<TMultiplexedProtocol> ruyiNetClientProtocol = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedHighProto, "SER_BCSERVICE"));
-	RuyiNet = new Ruyi::RuyiNetClient(ruyiNetClientProtocol);
+	auto ruyiNetClientProtocol = std::make_shared<TMultiplexedProtocol>(sharedHighProto, "SER_BCSERVICE");
+	RuyiNet = new Ruyi::SDK::Online::RuyiNetClient(ruyiNetClientProtocol);
 	
 	// init brain cloud service
-	boost::shared_ptr<TMultiplexedProtocol> bcProtocal = boost::shared_ptr<TMultiplexedProtocol>(new TMultiplexedProtocol(sharedHighProto, "SER_BCSERVICE"));
+	auto bcProtocal = std::make_shared<TMultiplexedProtocol>(sharedHighProto, "SER_BCSERVICE");
 	BCService = new SDK::BrainCloudApi::BrainCloudServiceClient(bcProtocal);
 	
 	return true;

@@ -97,87 +97,87 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared">
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release_mt|x64'">
+    <Import Project="..\Ruyi.cpp.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_mt|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Ruyi.cpp.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Ruyi.cpp.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="..\Ruyi.cpp.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\Ruyi.cpp.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release_mt|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release_mt|Win32'">
+    <Import Project="..\Ruyi.cpp.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug_mt|Win32'">
+    <Import Project="..\Ruyi.cpp.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug_mt|x64'">
+    <Import Project="..\Ruyi.cpp.props" />
+  </ImportGroup>
+  <ImportGroup Label="Shared">
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)\..\output\$(Configuration)\RuyiSDKCpp</OutDir>
+    <OutDir>$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
     <TargetExt>.lib</TargetExt>
     <IncludePath>$(ProjectDir)Generated\CommonType;$(ProjectDir)..\..\externals\ZeroMQ\include;$(IncludePath)</IncludePath>
-    <TargetName>RuyiSDK</TargetName>
+    <TargetName>RuyiSDK$(LinkageSuffix)</TargetName>
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <EnableManagedIncrementalBuild>false</EnableManagedIncrementalBuild>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|x64'">
-    <OutDir>$(SolutionDir)\..\output\Debug\RuyiSDKCpp</OutDir>
+    <OutDir>$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
     <TargetExt>.lib</TargetExt>
     <IncludePath>$(ProjectDir)Generated\CommonType;$(ProjectDir)..\..\externals\ZeroMQ\include;$(IncludePath)</IncludePath>
-    <TargetName>RuyiSDK</TargetName>
+    <TargetName>RuyiSDK$(LinkageSuffix)</TargetName>
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <EnableManagedIncrementalBuild>false</EnableManagedIncrementalBuild>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(IncludePath)</IncludePath>
-    <OutDir>$(SolutionDir)\..\output\$(Configuration)\RuyiSDKCpp</OutDir>
+    <OutDir>$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
-    <TargetName>RuyiSDK</TargetName>
+    <TargetName>RuyiSDK$(LinkageSuffix)</TargetName>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|Win32'">
     <IncludePath>$(IncludePath)</IncludePath>
-    <OutDir>$(SolutionDir)\..\output\Debug\RuyiSDKCpp</OutDir>
+    <OutDir>$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
-    <TargetName>RuyiSDK</TargetName>
+    <TargetName>RuyiSDK$(LinkageSuffix)</TargetName>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)\..\output\$(Configuration)\RuyiSDKCpp</OutDir>
+    <OutDir>$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
-    <TargetName>RuyiSDK</TargetName>
+    <TargetName>RuyiSDK$(LinkageSuffix)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_mt|Win32'">
-    <OutDir>$(SolutionDir)\..\output\Release\RuyiSDKCpp</OutDir>
+    <OutDir>$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
-    <TargetName>RuyiSDK</TargetName>
+    <TargetName>RuyiSDK$(LinkageSuffix)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)\..\output\$(Configuration)\RuyiSDKCpp</OutDir>
+    <OutDir>$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
-    <TargetName>RuyiSDK</TargetName>
+    <TargetName>RuyiSDK$(LinkageSuffix)</TargetName>
     <IncludePath>$(ProjectDir)Generated\CommonType;$(ProjectDir)..\..\externals\ZeroMQ\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_mt|x64'">
-    <OutDir>$(SolutionDir)\..\output\Release\RuyiSDKCpp</OutDir>
+    <OutDir>$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
-    <TargetName>RuyiSDK</TargetName>
+    <TargetName>RuyiSDK$(LinkageSuffix)</TargetName>
     <IncludePath>$(ProjectDir)Generated\CommonType;$(ProjectDir)..\..\externals\ZeroMQ\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -185,8 +185,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;$(ProjectDir)..\..\externals\ZeroMQ\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>OPENSSL_USE_DEPRECATED</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOMINMAX=1;OPENSSL_USE_DEPRECATED</PreprocessorDefinitions>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
     </ClCompile>
     <Link>
@@ -200,7 +200,9 @@
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\externals\ZeroMQ\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
+      <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
@@ -211,8 +213,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;$(ProjectDir)..\..\externals\ZeroMQ\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>OPENSSL_USE_DEPRECATED</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOMINMAX=1;OPENSSL_USE_DEPRECATED</PreprocessorDefinitions>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
     </ClCompile>
     <Link>
@@ -226,7 +228,9 @@
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <Lib>
-      <AdditionalLibraryDirectories>..\..\externals\ZeroMQ\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
+      <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
       <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
@@ -238,7 +242,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>OPENSSL_USE_DEPRECATED;_UNICODE;UNICODE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX=1;OPENSSL_USE_DEPRECATED;_UNICODE;UNICODE</PreprocessorDefinitions>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <PrecompiledHeaderOutputFile />
@@ -258,9 +262,9 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
-      <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\externals\thrift.cpp\$(ConfigurationName);$(ProjectDir)..\..\externals\ZeroMQ\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <OutputFile>$(OutDir)lib\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
     </Lib>
     <PreBuildEvent>
       <Command>
@@ -276,7 +280,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>OPENSSL_USE_DEPRECATED;_UNICODE;UNICODE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX=1;OPENSSL_USE_DEPRECATED;_UNICODE;UNICODE</PreprocessorDefinitions>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <PrecompiledHeaderOutputFile>
@@ -297,9 +301,9 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Lib>
-      <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\externals\thrift.cpp\$(ConfigurationName);$(ProjectDir)..\..\externals\ZeroMQ\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <OutputFile>$(OutDir)lib\$(TargetName)_mt$(TargetExt)</OutputFile>
+      <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
     </Lib>
     <PreBuildEvent>
       <Command>
@@ -316,7 +320,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;$(ProjectDir)..\..\externals\ZeroMQ\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -327,6 +332,11 @@
     <PostBuildEvent>
       <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
     </PostBuildEvent>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
+      <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_mt|Win32'">
     <ClCompile>
@@ -335,7 +345,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;$(ProjectDir)..\..\externals\ZeroMQ\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -346,6 +357,11 @@
     <PostBuildEvent>
       <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
     </PostBuildEvent>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
+      <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -356,7 +372,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>NDEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX=1;NDEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -366,9 +382,9 @@
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib%;libcrypto.lib;libssl.lib;(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\externals\thrift.cpp\$(ConfigurationName);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
-      <OutputFile>$(OutDir)lib\$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
     <PreBuildEvent>
@@ -391,7 +407,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>NDEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX=1;NDEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -402,9 +418,9 @@
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib%;libcrypto.lib;libssl.lib;(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\externals\thrift.cpp\$(ConfigurationName);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
-      <OutputFile>$(OutDir)lib\$(TargetName)_mt$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
     <PreBuildEvent>
@@ -432,20 +448,22 @@
     <ClCompile Include="Generated\Constants\ConstantsSDKDataTypes_types.cpp" />
     <ClCompile Include="Generated\Constants\ConstantsSDKServices_constants.cpp" />
     <ClCompile Include="Generated\Constants\ConstantsSDKServices_types.cpp" />
-    <ClCompile Include="Generated\GlobalInputDefine\GlobalInputDefineSDKDataTypes_constants.cpp" />
-    <ClCompile Include="Generated\GlobalInputDefine\GlobalInputDefineSDKDataTypes_types.cpp" />
-    <ClCompile Include="Generated\GlobalInputDefine\GlobalInputDefineSDKServices_constants.cpp" />
-    <ClCompile Include="Generated\GlobalInputDefine\GlobalInputDefineSDKServices_types.cpp" />
     <ClCompile Include="Generated\InputManager\InputManagerSDKDataTypes_constants.cpp" />
     <ClCompile Include="Generated\InputManager\InputManagerSDKDataTypes_types.cpp" />
     <ClCompile Include="Generated\InputManager\InputManagerSDKServices_constants.cpp" />
     <ClCompile Include="Generated\InputManager\InputManagerSDKServices_types.cpp" />
+    <ClCompile Include="Generated\InputManager\InputManagerService.cpp" />
     <ClCompile Include="Generated\LocalizationService\LocalizationService.cpp" />
     <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKDataTypes_constants.cpp" />
     <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKDataTypes_types.cpp" />
     <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKServices_constants.cpp" />
     <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKServices_types.cpp" />
     <ClCompile Include="Generated\MessageCreator.cpp" />
+    <ClCompile Include="Generated\OverlayManager\ExternalOverlayManagerService.cpp" />
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_constants.cpp" />
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_types.cpp" />
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKServices_constants.cpp" />
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKServices_types.cpp" />
     <ClCompile Include="Generated\SDKValidator\SDKValidatorSDKDataTypes_constants.cpp" />
     <ClCompile Include="Generated\SDKValidator\SDKValidatorSDKDataTypes_types.cpp" />
     <ClCompile Include="Generated\SDKValidator\SDKValidatorSDKServices_constants.cpp" />
@@ -468,18 +486,19 @@
     <ClCompile Include="Generated\UserServiceExternal\UserServiceExternalSDKServices_types.cpp" />
     <ClCompile Include="PubSub\SubscribeClient.cpp" />
     <ClCompile Include="RuyiNet\RuyiNetClient.cpp" />
-    <ClCompile Include="RuyiNet\Service\RuyiNetCloudService.cpp" />
-    <ClCompile Include="RuyiNet\Service\RuyiNetFriendService.cpp" />
-    <ClCompile Include="RuyiNet\Service\RuyiNetLeaderboardService.cpp" />
-    <ClCompile Include="RuyiNet\Service\RuyiNetLobby.cpp" />
-    <ClCompile Include="RuyiNet\Service\RuyiNetLobbyService.cpp" />
-    <ClCompile Include="RuyiNet\Service\RuyiNetMatchmakingService.cpp" />
-    <ClCompile Include="RuyiNet\Service\RuyiNetPartyService.cpp" />
-    <ClCompile Include="RuyiNet\Service\RuyiNetProfileService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Cloud\RuyiNetCloudService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Friend\RuyiNetFriendService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Gamification\RuyiNetGamificationService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Lobby\RuyiNetLobby.cpp" />
+    <ClCompile Include="RuyiNet\Service\Lobby\RuyiNetLobbyService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Party\RuyiNetPartyService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Patch\RuyiNetPatchService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Profile\RuyiNetProfileService.cpp" />
     <ClCompile Include="RuyiNet\Service\RuyiNetService.cpp" />
-    <ClCompile Include="RuyiNet\Service\RuyiNetTelemetryService.cpp" />
-    <ClCompile Include="RuyiNet\Service\RuyiNetUserFileService.cpp" />
-    <ClCompile Include="RuyiNet\Service\RuyiNetVideoService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Telemetry\RuyiNetTelemetryService.cpp" />
+    <ClCompile Include="RuyiNet\Service\UserFile\RuyiNetUserFileService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Video\RuyiNetVideoService.cpp" />
     <ClCompile Include="RuyiSDK.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -496,19 +515,21 @@
     <ClInclude Include="Generated\Constants\ConstantsSDKDataTypes_types.h" />
     <ClInclude Include="Generated\Constants\ConstantsSDKServices_constants.h" />
     <ClInclude Include="Generated\Constants\ConstantsSDKServices_types.h" />
-    <ClInclude Include="Generated\GlobalInputDefine\GlobalInputDefineSDKDataTypes_constants.h" />
-    <ClInclude Include="Generated\GlobalInputDefine\GlobalInputDefineSDKDataTypes_types.h" />
-    <ClInclude Include="Generated\GlobalInputDefine\GlobalInputDefineSDKServices_constants.h" />
-    <ClInclude Include="Generated\GlobalInputDefine\GlobalInputDefineSDKServices_types.h" />
     <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_constants.h" />
     <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_types.h" />
     <ClInclude Include="Generated\InputManager\InputManagerSDKServices_constants.h" />
     <ClInclude Include="Generated\InputManager\InputManagerSDKServices_types.h" />
+    <ClInclude Include="Generated\InputManager\InputManagerService.h" />
     <ClInclude Include="Generated\LocalizationService\LocalizationService.h" />
     <ClInclude Include="Generated\LocalizationService\LocalizationServiceSDKDataTypes_constants.h" />
     <ClInclude Include="Generated\LocalizationService\LocalizationServiceSDKDataTypes_types.h" />
     <ClInclude Include="Generated\LocalizationService\LocalizationServiceSDKServices_constants.h" />
     <ClInclude Include="Generated\LocalizationService\LocalizationServiceSDKServices_types.h" />
+    <ClInclude Include="Generated\OverlayManager\ExternalOverlayManagerService.h" />
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_constants.h" />
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_types.h" />
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKServices_constants.h" />
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKServices_types.h" />
     <ClInclude Include="Generated\SDKValidator\SDKValidatorSDKDataTypes_constants.h" />
     <ClInclude Include="Generated\SDKValidator\SDKValidatorSDKDataTypes_types.h" />
     <ClInclude Include="Generated\SDKValidator\SDKValidatorSDKServices_constants.h" />
@@ -533,10 +554,12 @@
     <ClInclude Include="PubSub\SubscribeClient.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RuyiNet\Enum.h" />
+    <ClInclude Include="RuyiNet\Response\RuyiNetAchievementResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetFindPlayersResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetFriendResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetCDNResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetFriendsVideosResponse.h" />
+    <ClInclude Include="RuyiNet\Response\RuyiNetGetGameManifestResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetPartyInfoResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetProfileResponse.h" />
     <ClInclude Include="RuyiNet\Response\RuyiNetGetProfilesResponse.h" />
@@ -551,20 +574,24 @@
     <ClInclude Include="RuyiNet\Response\RuyiNetUploadFileResponse.h" />
     <ClInclude Include="RuyiNet\RuyiNetClient.h" />
     <ClInclude Include="RuyiNet\RuyiNetException.h" />
-    <ClInclude Include="RuyiNet\Service\RuyiNetCloudService.h" />
-    <ClInclude Include="RuyiNet\Service\RuyiNetFriendService.h" />
-    <ClInclude Include="RuyiNet\Service\RuyiNetLeaderboardService.h" />
-    <ClInclude Include="RuyiNet\Service\RuyiNetLeaderboardType.h" />
-    <ClInclude Include="RuyiNet\Service\RuyiNetLobby.h" />
-    <ClInclude Include="RuyiNet\Service\RuyiNetLobbyService.h" />
-    <ClInclude Include="RuyiNet\Service\RuyiNetMatchmakingService.h" />
-    <ClInclude Include="RuyiNet\Service\RuyiNetPartyService.h" />
-    <ClInclude Include="RuyiNet\Service\RuyiNetProfileService.h" />
-    <ClInclude Include="RuyiNet\Service\RuyiNetRotationType.h" />
+    <ClInclude Include="RuyiNet\RuyiNetHttpStatus.h" />
+    <ClInclude Include="RuyiNet\Service\Cloud\RuyiNetCloudService.h" />
+    <ClInclude Include="RuyiNet\Service\Friend\RuyiNetFriendService.h" />
+    <ClInclude Include="RuyiNet\Service\Gamification\RuyiNetAchievement.h" />
+    <ClInclude Include="RuyiNet\Service\Gamification\RuyiNetGamificationService.h" />
+    <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardService.h" />
+    <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardType.h" />
+    <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetRotationType.h" />
+    <ClInclude Include="RuyiNet\Service\Lobby\RuyiNetLobby.h" />
+    <ClInclude Include="RuyiNet\Service\Lobby\RuyiNetLobbyService.h" />
+    <ClInclude Include="RuyiNet\Service\Party\RuyiNetPartyService.h" />
+    <ClInclude Include="RuyiNet\Service\Patch\RuyiNetGameManifest.h" />
+    <ClInclude Include="RuyiNet\Service\Patch\RuyiNetPatchService.h" />
+    <ClInclude Include="RuyiNet\Service\Profile\RuyiNetProfileService.h" />
     <ClInclude Include="RuyiNet\Service\RuyiNetService.h" />
-    <ClInclude Include="RuyiNet\Service\RuyiNetTelemetryService.h" />
-    <ClInclude Include="RuyiNet\Service\RuyiNetUserFileService.h" />
-    <ClInclude Include="RuyiNet\Service\RuyiNetVideoService.h" />
+    <ClInclude Include="RuyiNet\Service\Telemetry\RuyiNetTelemetryService.h" />
+    <ClInclude Include="RuyiNet\Service\UserFile\RuyiNetUserFileService.h" />
+    <ClInclude Include="RuyiNet\Service\Video\RuyiNetVideoService.h" />
     <ClInclude Include="RuyiSDK.h">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug_mt|x64'">true</DeploymentContent>

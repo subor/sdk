@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\output\Debug\RuyiSDK.nf2.0\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET20</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -26,7 +26,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\output\Release\RuyiSDK.nf2.0\</OutputPath>
-    <DefineConstants>TRACE;NET20</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -39,24 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\RuyiSDK\RuyiNet\Request\RuyiNetLobbyCloseRequest.cs">
-      <Link>RuyiNet\Request\RuyiNetLobbyCloseRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Request\RuyiNetLobbyCreateRequest.cs">
-      <Link>RuyiNet\Request\RuyiNetLobbyCreateRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Request\RuyiNetLobbyFindRequest.cs">
-      <Link>RuyiNet\Request\RuyiNetLobbyFindRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Request\RuyiNetLobbyJoinRequest.cs">
-      <Link>RuyiNet\Request\RuyiNetLobbyJoinRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Request\RuyiNetLobbyLeaveRequest.cs">
-      <Link>RuyiNet\Request\RuyiNetLobbyLeaveRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Request\RuyiNetLobbyStartGameRequest.cs">
-      <Link>RuyiNet\Request\RuyiNetLobbyStartGameRequest.cs</Link>
-    </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Request\RuyiNetProfileIdRequest.cs">
       <Link>RuyiNet\Request\RuyiNetProfileIdRequest.cs</Link>
     </Compile>
@@ -69,15 +51,6 @@
     <Compile Include="..\RuyiSDK\RuyiNet\Response\RuyiNetGetProfileResponse.cs">
       <Link>RuyiNet\Response\RuyiNetGetProfileResponse.cs</Link>
     </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Response\RuyiNetListFriendsResponse.cs">
-      <Link>RuyiNet\Response\RuyiNetListFriendsResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Response\RuyiNetLobbyFindResponse.cs">
-      <Link>RuyiNet\Response\RuyiNetLobbyFindResponse.cs</Link>
-    </Compile>
-    <Compile Include="..\RuyiSDK\RuyiNet\Response\RuyiNetLobbyResponse.cs">
-      <Link>RuyiNet\Response\RuyiNetLobbyResponse.cs</Link>
-    </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Response\RuyiNetResponseGroup.cs">
       <Link>RuyiNet\Response\RuyiNetResponseGroup.cs</Link>
     </Compile>
@@ -86,6 +59,9 @@
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\RuyiNetClient.cs">
       <Link>RuyiNet\RuyiNetClient.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\RuyiNetEntity.cs">
+      <Link>RuyiNet\Service\RuyiNetEntity.cs</Link>
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\RuyiNetException.cs">
       <Link>RuyiNet\RuyiNetException.cs</Link>
@@ -96,8 +72,53 @@
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Cloud\RuyiNetCloudService.cs">
       <Link>RuyiNet\Service\Cloud\RuyiNetCloudService.cs</Link>
     </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetEntityData.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetEntityData.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendFindUsersResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendFindUsersResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendGetUsersOnlineStatusResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendGetUsersOnlineStatusResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendListInvitationsResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendListInvitationsResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendResponseInvite.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendResponseInvite.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendResponseOnlineStatus.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendResponseOnlineStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendResponseSummaryData.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendResponseSummaryData.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetFriendSummaryData.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetFriendSummaryData.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetGetSummaryDataForProfileIdResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetGetSummaryDataForProfileIdResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetListFriendsResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetListFriendsResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetReadFriendEntityResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetReadFriendEntityResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetReadFriendsEntitiesResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetReadFriendsEntitiesResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\RuyiNetFriendInvite.cs">
+      <Link>RuyiNet\Service\Friend\RuyiNetFriendInvite.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\RuyiNetFriendOnlineStatus.cs">
+      <Link>RuyiNet\Service\Friend\RuyiNetFriendOnlineStatus.cs</Link>
+    </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\RuyiNetFriendService.cs">
       <Link>RuyiNet\Service\Friend\RuyiNetFriendService.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\RuyiNetFriendSummaryData.cs">
+      <Link>RuyiNet\Service\Friend\RuyiNetFriendSummaryData.cs</Link>
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Gamification\RuyiNetAchievement.cs">
       <Link>RuyiNet\Service\Gamification\RuyiNetAchievement.cs</Link>
@@ -159,14 +180,47 @@
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\RuyiNetRotationType.cs">
       <Link>RuyiNet\Service\Leaderboard\RuyiNetRotationType.cs</Link>
     </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Lobby\Response\RuyiNetLobbyFindResponse.cs">
+      <Link>RuyiNet\Service\Lobby\Response\RuyiNetLobbyFindResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Lobby\Response\RuyiNetLobbyResponse.cs">
+      <Link>RuyiNet\Service\Lobby\Response\RuyiNetLobbyResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Lobby\Response\RuyiNetLobbyResponseData.cs">
+      <Link>RuyiNet\Service\Lobby\Response\RuyiNetLobbyResponseData.cs</Link>
+    </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Lobby\RuyiNetLobby.cs">
       <Link>RuyiNet\Service\Lobby\RuyiNetLobby.cs</Link>
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Lobby\RuyiNetLobbyService.cs">
       <Link>RuyiNet\Service\Lobby\RuyiNetLobbyService.cs</Link>
     </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Lobby\RuyiNetLobbyState.cs">
+      <Link>RuyiNet\Service\Lobby\RuyiNetLobbyState.cs</Link>
+    </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Lobby\RuyiNetLobbyType.cs">
       <Link>RuyiNet\Service\Lobby\RuyiNetLobbyType.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Party\Response\RuyiNetPartyData.cs">
+      <Link>RuyiNet\Service\Party\Response\RuyiNetPartyData.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Party\Response\RuyiNetPartyInvitationData.cs">
+      <Link>RuyiNet\Service\Party\Response\RuyiNetPartyInvitationData.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Party\Response\RuyiNetPartyInvitationResponse.cs">
+      <Link>RuyiNet\Service\Party\Response\RuyiNetPartyInvitationResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Party\Response\RuyiNetPartyListResponse.cs">
+      <Link>RuyiNet\Service\Party\Response\RuyiNetPartyListResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Party\Response\RuyiNetPartyResponse.cs">
+      <Link>RuyiNet\Service\Party\Response\RuyiNetPartyResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Party\RuyiNetParty.cs">
+      <Link>RuyiNet\Service\Party\RuyiNetParty.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Party\RuyiNetPartyInvitation.cs">
+      <Link>RuyiNet\Service\Party\RuyiNetPartyInvitation.cs</Link>
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Party\RuyiNetPartyService.cs">
       <Link>RuyiNet\Service\Party\RuyiNetPartyService.cs</Link>
@@ -210,7 +264,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\externals\thrift0.10.0\Thrift.csproj">
+    <ProjectReference Include="..\..\externals\thrift.csharp\Thrift.csproj">
       <Project>{499eb63c-d74c-47e8-ae48-a2fc94538e9d}</Project>
       <Name>Thrift</Name>
     </ProjectReference>

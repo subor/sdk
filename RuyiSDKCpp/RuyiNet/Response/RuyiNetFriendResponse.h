@@ -9,9 +9,7 @@
 /// <summary>
 /// BrainCloud Friend related data structure
 /// <summary>
-
-namespace Ruyi
-{
+namespace Ruyi { namespace SDK { namespace Online {
 	/// <summary>
 	/// The response after a add/remove friend is requested.
 	/// </summary>
@@ -237,4 +235,4 @@ namespace Ruyi
 			}
 		}
 	};
-}
+}}}

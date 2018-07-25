@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\externals\thrift0.10.0\Thrift.ns2.0.csproj" />
+    <ProjectReference Include="..\..\externals\thrift.csharp\Thrift.ns2.0.csproj" />
   </ItemGroup>
 
 </Project>

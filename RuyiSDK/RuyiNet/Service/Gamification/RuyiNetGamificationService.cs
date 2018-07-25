@@ -32,7 +32,8 @@ namespace Ruyi.SDK.Online
                     if (response.status == RuyiNetHttpStatus.OK)
                     {
                         var achievements = response.data.achievements;
-                        if (achievements.Length == 0)
+                        //if (achievements.Length == 0)
+                        if (achievements.Length > 0)
                         {
                             callback(new RuyiNetAchievement(achievements[0]));
                             return;

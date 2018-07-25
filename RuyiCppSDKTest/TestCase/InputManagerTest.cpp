@@ -21,8 +21,8 @@ unsigned int InputManagerTest::SubscriberMessage()
 	string* modifier = const_cast<string*>(pChar);
 	replace_all(*modifier, "{addr}", "localhost");
 
-	//ruyiSDK->Subscriber->Subscribe("service/inputmanager_internal");
-	ruyiSDK->Subscriber->Subscribe("service/user_service_external");
+	ruyiSDK->Subscriber->Subscribe("service/inputmgr_int");
+	//ruyiSDK->Subscriber->Subscribe("service/user_service_external");
 	ruyiSDK->Subscriber->AddMessageHandler(this, &InputManagerTest::SubStateChangeHandler2);
 
 	return 0;
@@ -34,12 +34,12 @@ void InputManagerTest::SubStateChangeHandler2(std::string topic, apache::thrift:
 	//auto idcc = dynamic_cast<InputManager::InputDeviceConnectionChanged*>(msg);
 	//if (idsc == NULL && idcc == NULL)
 	//	return;
-	auto iae = dynamic_cast<UserServiceExternal::InputActionEvent*>(msg);
-	if (iae == NULL)
+	auto rgpi = dynamic_cast<InputManager::RuyiGamePadInput*>(msg);
+	if (rgpi == NULL)
 		return;
 
 	std::string output = "SubStateChangeHandler ";
-	output += iae->action + "\n";
+	output += rgpi->DeviceId + "\n";
 	Logger::WriteMessage(output.c_str());
 	SetEvent(ResetHandles[STATE_CHANGED]);
 }
@@ -58,7 +58,6 @@ void MouseSetup(INPUT *buffer)
 	buffer->mi.dwExtraInfo = 0;
 }
 
-
 void MouseMoveAbsolute(INPUT *buffer, int x, int y)
 {
 	buffer->mi.dx = (x * (0xFFFF / SCREEN_WIDTH));
@@ -67,7 +66,6 @@ void MouseMoveAbsolute(INPUT *buffer, int x, int y)
 
 	SendInput(1, buffer, sizeof(INPUT));
 }
-
 
 void MouseClick(INPUT *buffer)
 {
@@ -119,6 +117,44 @@ void InputManagerTest::InputManagerReceiveInputMessage()
 	{
 		Assert::IsTrue(true);
 	}
+}
+
+void InputManagerTest::SubscribeListenerOne(std::string topic, apache::thrift::TBase* msg) {}
+
+void t1()
+{
+	Sleep(5000);
+}
+
+void InputManagerTest::SubscribeTimeoutTest() 
+{
+	Logger::WriteMessage("SubscribeTimeoutTest Subscribe topics !!!");
+	
+	ruyiSDK->Subscriber->Subscribe("SubscribeListenerOne");
+	ruyiSDK->Subscriber->AddMessageHandler(this, &InputManagerTest::SubscribeListenerOne);
+
+	std::thread th(t1);
+	th.join();
+
+	Logger::WriteMessage("SubscribeTimeoutTest begin to unsubscribe topics !!!");
+
+	//simulate closing the client
+	//if not setsockopt(ZMQ_RCVTIMEO, &t, sizeof(t));, it'll stuck 
+	try 
+	{
+		ruyiSDK->Subscriber->Unsubscribe("SubscribeListenerOne");
+		delete ruyiSDK;
+		ruyiSDK = nullptr;
+	} catch(std::exception& e)
+	{
+		string str = "SubscribeTimeoutTest exception ";
+		str.append(e.what());
+		Logger::WriteMessage(str.c_str());
+	}
+
+	Logger::WriteMessage("SubscribeTimeoutTest close client successfully !!!");
+
+	Assert::IsTrue(true);
 }
 
 InputManagerTest::InputManagerTest(RuyiSDKContext::Endpoint endpoint, string remoteAddress)

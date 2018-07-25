@@ -1,7 +1,10 @@
 include "BrainCloudServiceSDKDataTypes.thrift"
 
-namespace csharp Ruyi.SDK.BrainCloudApi
 namespace cpp Ruyi.SDK.BrainCloudApi
+namespace csharp Ruyi.SDK.BrainCloudApi
+namespace java Ruyi.SDK.BrainCloudApi
+namespace netcore Ruyi.SDK.BrainCloudApi
+namespace rs Ruyi.SDK.BrainCloudApi
 
 
 service BrainCloudService {
@@ -833,46 +836,6 @@ service BrainCloudService {
 		3: i32 clientIndex
 	),
 
-	/** Retrieves profile information for the partial matches of the specified text. */
-	string Friend_FindUserByUniversalId(
-		/** Universal ID text on which to search. */
-		1: string searchText, 
-		
-		/** Maximum number of results to return. */
-		2: i32 maxResults, 
-		3: i32 clientIndex
-	),
-
-	/** Retrieves profile information of the specified user. */
-	string Friend_GetProfileInfoForCredential(
-		/** External id of the user to find */
-		1: string externalId, 
-		
-		/** The authentication type used for the user's ID */
-		2: string authenticationType, 
-		3: i32 clientIndex
-	),
-
-	/** Retrieves profile information for the specified external auth user. */
-	string Friend_GetProfileInfoForExternalAuthId(
-		/** External id of the friend to find */
-		1: string externalId, 
-		
-		/** The external authentication type used for this friend's external id */
-		2: string externalAuthType, 
-		3: i32 clientIndex
-	),
-
-	/** Retrieves the external ID for the specified user profile ID on the specified social platform. */
-	string Friend_GetExternalIdForProfileId(
-		/** Profile (user) ID. */
-		1: string profileId, 
-		
-		/** Associated authentication type. */
-		2: string authenticationType, 
-		3: i32 clientIndex
-	),
-
 	/** Returns a particular entity of a particular friend. */
 	string Friend_ReadFriendEntity(
 		/** Id of entity to retrieve. */
@@ -956,6 +919,18 @@ service BrainCloudService {
 		1: list<string> profileIds, 
 		2: i32 clientIndex
 	),
+
+	string Friend_SendFriendInvitation(1: string toPlayerId, 2: i32 clientIndex),
+
+	string Friend_ListFriendInvitationsReceived(1: i32 clientIndex),
+
+	string Friend_ListFriendInvitationsSent(1: i32 clientIndex),
+
+	string Friend_AcceptFriendInvitation(1: string fromPlayerId, 2: i32 clientIndex),
+
+	string Friend_RejectFriendInvitation(1: string fromPlayerId, 2: i32 clientIndex),
+
+	string Friend_RemoveFriend(1: string playerId, 2: i32 clientIndex),
 
 	/** Method retrieves all gamification data for the player. */
 	string Gamification_ReadAllGamification(1: bool includeMetaData, 2: i32 clientIndex),
@@ -3093,6 +3068,98 @@ service BrainCloudService {
 		3: i32 clientIndex
 	),
 
+	/** Create a new lobby. */
+	string Lobby_CreateLobby(
+		/** The type of lobby to create, either "PLAYER" or "RANKED". */
+		1: BrainCloudServiceSDKDataTypes.LobbyType lobbyType, 
+		
+		/** The maximum number of players that can join the lobby. */
+		2: i32 maxSlots, 
+		
+		/** Whether or not the lobby is open by default. */
+		3: bool isOpen, 
+		
+		/** A json string containing any custom attributes to attach to the lobby. */
+		4: string jsonAttributes, 
+		5: i32 clientIndex
+	),
+
+	/** Open a lobby so players can join. */
+	string Lobby_OpenLobby(
+		/** The ID of the lobby to open. */
+		1: string lobbyId, 
+		2: i32 clientIndex
+	),
+
+	/** Close a lobby so players can't join. */
+	string Lobby_CloseLobby(
+		/** The ID of the lobby to close. */
+		1: string lobbyId, 
+		2: i32 clientIndex
+	),
+
+	/** Find lobbies the player can join. */
+	string Lobby_FindLobbies(1: i32 freeSlots, 2: i32 maxResults, 
+		/** A json string containing any custom attributes to search for. */
+		3: string jsonAttributes, 
+		4: i32 clientIndex
+	),
+
+	/** Find lobbies with the player's friends in them. */
+	string Lobby_FindFriendsLobbies(1: i32 clientIndex),
+
+	/** Join a lobby. */
+	string Lobby_JoinLobby(
+		/** The ID of the lobby to join. */
+		1: string lobbyId, 
+		2: i32 clientIndex
+	),
+
+	/** Leave a lobby. */
+	string Lobby_LeaveLobby(
+		/** The ID of the lobby to leave. */
+		1: string lobbyId, 
+		2: i32 clientIndex
+	),
+
+	/** Destroy a lobby. */
+	string Lobby_DestroyLobby(
+		/** The ID of the lobby to destroy. */
+		1: string lobbyId, 
+		2: i32 clientIndex
+	),
+
+	/** Start a lobby game. */
+	string Lobby_StartGame(
+		/** The ID of the lobby to destroy. */
+		1: string lobbyId, 
+		
+		/** A string that can be used to connect to a real game (e.g an IP Address/port). */
+		2: string connectionString, 
+		3: i32 clientIndex
+	),
+
+	/** Get a list of lobbies the player is a member of. */
+	string Lobby_GetMyLobbies(1: i32 clientIndex),
+
+	string Party_AcceptPartyInvitation(1: string partyId, 2: i32 clientIndex),
+
+	string Party_GetPartyInfo(1: string partyId, 2: i32 clientIndex),
+
+	string Party_JoinParty(1: string partyId, 2: i32 clientIndex),
+
+	string Party_LeaveParty(1: string partyId, 2: i32 clientIndex),
+
+	string Party_RejectPartyInvitation(1: string partyId, 2: i32 clientIndex),
+
+	string Party_SendPartyInvitation(1: string playerId, 2: i32 clientIndex),
+
+	string Party_ListPartyInvitations(1: i32 clientIndex),
+
+	string Party_GetFriendsParties(1: i32 maxResults, 2: i32 clientIndex),
+
+	string Party_GetMyParty(1: i32 clientIndex),
+
 	string Patch_GetGameManifest(1: string gameId, 2: i32 clientIndex),
 
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
@@ -3140,6 +3207,10 @@ service BrainCloudService {
 	string SocialFeed_UnblockPlayer(1: string playerId, 2: i32 clientIndex),
 
 	string SocialFeed_UnhidePlayer(1: string playerId, 2: i32 clientIndex),
+
+	string SocialFeed_GetActivity(1: string socialFeedId, 2: i32 depth, 3: i32 skip, 4: i32 limit, 5: i32 clientIndex),
+
+	string SocialFeed_GetComment(1: string socialFeedId, 2: i32 depth, 3: i32 skip, 4: i32 limit, 5: i32 clientIndex),
 
 	string Telemetry_StartTelemetrySession(1: i32 timestamp, 2: i32 clientIndex),
 
