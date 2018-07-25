@@ -69,39 +69,31 @@ namespace Ruyi.Layer0
         {
             lock (sync)
             {
-                assemblies = new List<Assembly>();
-
 #if NASYNC
-                assemblies.Add( Assembly.Load("ServiceGenerated") );
-                assemblies.Add( Assembly.Load("ServiceCommon") );
-                try
-                {
-                    var internalServ = Assembly.Load("InternalServiceGenerated");
-                    assemblies.Add(internalServ);
-                }
-                catch (Exception)
-                {
-                    // sdk external do not need to load InternalServiceGenerated
-                }
+                tryLoadAssembly("ServiceGenerated");
+                tryLoadAssembly("ServiceCommon");
+                tryLoadAssembly("InternalServiceGenerated");
 #else
-                assemblies.Add( Assembly.Load("SDK.Gen.ServiceAsync") );
-                assemblies.Add( Assembly.Load("SDK.Gen.CommonAsync") );
-                try
-                {
-                    var internalServ = Assembly.Load("SDK.Gen.InternalServiceAsync");
-                    assemblies.Add(internalServ);
-                }
-                catch (Exception)
-                {
-                    // sdk external do not need to load InternalServiceGenerated
-                }
+                tryLoadAssembly("SDK.Gen.ServiceAsync");
+                tryLoadAssembly("SDK.Gen.CommonAsync");
+                tryLoadAssembly("SDK.Gen.InternalServiceAsync");
 #endif
             }
+        }
+
+        static void tryLoadAssembly(string name)
+        {
+            try
+            {
+                assemblies.Add(Assembly.Load(name));
+            }
+            catch
+            { }
         }
 
         static object sync = new object();
         static Dictionary<string, Type> cachedTypes = new Dictionary<string, Type>();
         static Dictionary<string, Type> cachedClassnames = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
-        static List<Assembly> assemblies;
+        static List<Assembly> assemblies = new List<Assembly>();
     }
 }
