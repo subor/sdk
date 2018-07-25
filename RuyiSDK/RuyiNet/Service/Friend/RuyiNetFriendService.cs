@@ -72,7 +72,7 @@ namespace Ruyi.SDK.Online
         /// <param name="name">The name of the user to search for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void FindUsersBySubstrName(int index, string name, int maxResults, Action<RuyiNetFriendSummaryData[]> callback)
+        public void FindUsersBySubstrName(int index, string substring, int maxResults, Action<RuyiNetFriendSummaryData[]> callback)
         {
             EnqueueTask(() =>
             {
@@ -264,7 +264,7 @@ namespace Ruyi.SDK.Online
         /// <param name="index">The index of user</param>
         /// <param name="entityType">The type of entities to retrieve.</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void ReadFriendEntity(int index, string entityType, Action<RuyiNetEntity[]> callback)
+        public void ReadFriendsEntities(int index, string entityType, Action<RuyiNetEntity[]> callback)
         {
             EnqueueTask(() =>
             {
