@@ -22,110 +22,121 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.GlobalInputDefine
+namespace Ruyi.SDK.SettingSystem.Api
 {
 
-  public partial class Gamepad : TBase
+  public partial class WifiEntity : TBase
   {
-    private int _Buttons;
-    private sbyte _LeftTrigger;
-    private sbyte _RightTrigger;
-    private short _LeftThumbX;
-    private short _LeftThumbY;
-    private short _RightThumbX;
-    private short _RightThumbY;
+    private string _Name;
+    private string _MacAddress;
+    private int _Channel;
+    private int _CenterFrequancy;
+    private int _Rssi;
+    private bool _Connected;
+    private bool _SecurityEnabled;
+    private bool _HasProfile;
 
-    /// <summary>
-    /// enum.GamepadButtonFlags
-    /// </summary>
-    public int Buttons
+    public string Name
     {
       get
       {
-        return _Buttons;
+        return _Name;
       }
       set
       {
-        __isset.Buttons = true;
-        this._Buttons = value;
+        __isset.Name = true;
+        this._Name = value;
       }
     }
 
-    public sbyte LeftTrigger
+    public string MacAddress
     {
       get
       {
-        return _LeftTrigger;
+        return _MacAddress;
       }
       set
       {
-        __isset.LeftTrigger = true;
-        this._LeftTrigger = value;
+        __isset.MacAddress = true;
+        this._MacAddress = value;
       }
     }
 
-    public sbyte RightTrigger
+    public int Channel
     {
       get
       {
-        return _RightTrigger;
+        return _Channel;
       }
       set
       {
-        __isset.RightTrigger = true;
-        this._RightTrigger = value;
+        __isset.Channel = true;
+        this._Channel = value;
       }
     }
 
-    public short LeftThumbX
+    public int CenterFrequancy
     {
       get
       {
-        return _LeftThumbX;
+        return _CenterFrequancy;
       }
       set
       {
-        __isset.LeftThumbX = true;
-        this._LeftThumbX = value;
+        __isset.CenterFrequancy = true;
+        this._CenterFrequancy = value;
       }
     }
 
-    public short LeftThumbY
+    public int Rssi
     {
       get
       {
-        return _LeftThumbY;
+        return _Rssi;
       }
       set
       {
-        __isset.LeftThumbY = true;
-        this._LeftThumbY = value;
+        __isset.Rssi = true;
+        this._Rssi = value;
       }
     }
 
-    public short RightThumbX
+    public bool Connected
     {
       get
       {
-        return _RightThumbX;
+        return _Connected;
       }
       set
       {
-        __isset.RightThumbX = true;
-        this._RightThumbX = value;
+        __isset.Connected = true;
+        this._Connected = value;
       }
     }
 
-    public short RightThumbY
+    public bool SecurityEnabled
     {
       get
       {
-        return _RightThumbY;
+        return _SecurityEnabled;
       }
       set
       {
-        __isset.RightThumbY = true;
-        this._RightThumbY = value;
+        __isset.SecurityEnabled = true;
+        this._SecurityEnabled = value;
+      }
+    }
+
+    public bool HasProfile
+    {
+      get
+      {
+        return _HasProfile;
+      }
+      set
+      {
+        __isset.HasProfile = true;
+        this._HasProfile = value;
       }
     }
 
@@ -133,16 +144,17 @@ namespace Ruyi.SDK.GlobalInputDefine
     public Isset __isset;
     public struct Isset
     {
-      public bool Buttons;
-      public bool LeftTrigger;
-      public bool RightTrigger;
-      public bool LeftThumbX;
-      public bool LeftThumbY;
-      public bool RightThumbX;
-      public bool RightThumbY;
+      public bool Name;
+      public bool MacAddress;
+      public bool Channel;
+      public bool CenterFrequancy;
+      public bool Rssi;
+      public bool Connected;
+      public bool SecurityEnabled;
+      public bool HasProfile;
     }
 
-    public Gamepad()
+    public WifiEntity()
     {
     }
 
@@ -164,9 +176,9 @@ namespace Ruyi.SDK.GlobalInputDefine
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32)
+              if (field.Type == TType.String)
               {
-                Buttons = await iprot.ReadI32Async(cancellationToken);
+                Name = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -174,9 +186,9 @@ namespace Ruyi.SDK.GlobalInputDefine
               }
               break;
             case 2:
-              if (field.Type == TType.Byte)
+              if (field.Type == TType.String)
               {
-                LeftTrigger = await iprot.ReadByteAsync(cancellationToken);
+                MacAddress = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -184,9 +196,9 @@ namespace Ruyi.SDK.GlobalInputDefine
               }
               break;
             case 3:
-              if (field.Type == TType.Byte)
+              if (field.Type == TType.I32)
               {
-                RightTrigger = await iprot.ReadByteAsync(cancellationToken);
+                Channel = await iprot.ReadI32Async(cancellationToken);
               }
               else
               {
@@ -194,9 +206,9 @@ namespace Ruyi.SDK.GlobalInputDefine
               }
               break;
             case 4:
-              if (field.Type == TType.I16)
+              if (field.Type == TType.I32)
               {
-                LeftThumbX = await iprot.ReadI16Async(cancellationToken);
+                CenterFrequancy = await iprot.ReadI32Async(cancellationToken);
               }
               else
               {
@@ -204,9 +216,9 @@ namespace Ruyi.SDK.GlobalInputDefine
               }
               break;
             case 5:
-              if (field.Type == TType.I16)
+              if (field.Type == TType.I32)
               {
-                LeftThumbY = await iprot.ReadI16Async(cancellationToken);
+                Rssi = await iprot.ReadI32Async(cancellationToken);
               }
               else
               {
@@ -214,9 +226,9 @@ namespace Ruyi.SDK.GlobalInputDefine
               }
               break;
             case 6:
-              if (field.Type == TType.I16)
+              if (field.Type == TType.Bool)
               {
-                RightThumbX = await iprot.ReadI16Async(cancellationToken);
+                Connected = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -224,9 +236,19 @@ namespace Ruyi.SDK.GlobalInputDefine
               }
               break;
             case 7:
-              if (field.Type == TType.I16)
+              if (field.Type == TType.Bool)
               {
-                RightThumbY = await iprot.ReadI16Async(cancellationToken);
+                SecurityEnabled = await iprot.ReadBoolAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 8:
+              if (field.Type == TType.Bool)
+              {
+                HasProfile = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -254,70 +276,79 @@ namespace Ruyi.SDK.GlobalInputDefine
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("Gamepad");
+        var struc = new TStruct("WifiEntity");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (__isset.Buttons)
+        if (Name != null && __isset.Name)
         {
-          field.Name = "Buttons";
-          field.Type = TType.I32;
+          field.Name = "Name";
+          field.Type = TType.String;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(Buttons, cancellationToken);
+          await oprot.WriteStringAsync(Name, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.LeftTrigger)
+        if (MacAddress != null && __isset.MacAddress)
         {
-          field.Name = "LeftTrigger";
-          field.Type = TType.Byte;
+          field.Name = "MacAddress";
+          field.Type = TType.String;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteByteAsync(LeftTrigger, cancellationToken);
+          await oprot.WriteStringAsync(MacAddress, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.RightTrigger)
+        if (__isset.Channel)
         {
-          field.Name = "RightTrigger";
-          field.Type = TType.Byte;
+          field.Name = "Channel";
+          field.Type = TType.I32;
           field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteByteAsync(RightTrigger, cancellationToken);
+          await oprot.WriteI32Async(Channel, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.LeftThumbX)
+        if (__isset.CenterFrequancy)
         {
-          field.Name = "LeftThumbX";
-          field.Type = TType.I16;
+          field.Name = "CenterFrequancy";
+          field.Type = TType.I32;
           field.ID = 4;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI16Async(LeftThumbX, cancellationToken);
+          await oprot.WriteI32Async(CenterFrequancy, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.LeftThumbY)
+        if (__isset.Rssi)
         {
-          field.Name = "LeftThumbY";
-          field.Type = TType.I16;
+          field.Name = "Rssi";
+          field.Type = TType.I32;
           field.ID = 5;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI16Async(LeftThumbY, cancellationToken);
+          await oprot.WriteI32Async(Rssi, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.RightThumbX)
+        if (__isset.Connected)
         {
-          field.Name = "RightThumbX";
-          field.Type = TType.I16;
+          field.Name = "Connected";
+          field.Type = TType.Bool;
           field.ID = 6;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI16Async(RightThumbX, cancellationToken);
+          await oprot.WriteBoolAsync(Connected, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.RightThumbY)
+        if (__isset.SecurityEnabled)
         {
-          field.Name = "RightThumbY";
-          field.Type = TType.I16;
+          field.Name = "SecurityEnabled";
+          field.Type = TType.Bool;
           field.ID = 7;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI16Async(RightThumbY, cancellationToken);
+          await oprot.WriteBoolAsync(SecurityEnabled, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (__isset.HasProfile)
+        {
+          field.Name = "HasProfile";
+          field.Type = TType.Bool;
+          field.ID = 8;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteBoolAsync(HasProfile, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -331,56 +362,63 @@ namespace Ruyi.SDK.GlobalInputDefine
 
     public override string ToString()
     {
-      var sb = new StringBuilder("Gamepad(");
+      var sb = new StringBuilder("WifiEntity(");
       bool __first = true;
-      if (__isset.Buttons)
+      if (Name != null && __isset.Name)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Buttons: ");
-        sb.Append(Buttons);
+        sb.Append("Name: ");
+        sb.Append(Name);
       }
-      if (__isset.LeftTrigger)
+      if (MacAddress != null && __isset.MacAddress)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("LeftTrigger: ");
-        sb.Append(LeftTrigger);
+        sb.Append("MacAddress: ");
+        sb.Append(MacAddress);
       }
-      if (__isset.RightTrigger)
+      if (__isset.Channel)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("RightTrigger: ");
-        sb.Append(RightTrigger);
+        sb.Append("Channel: ");
+        sb.Append(Channel);
       }
-      if (__isset.LeftThumbX)
+      if (__isset.CenterFrequancy)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("LeftThumbX: ");
-        sb.Append(LeftThumbX);
+        sb.Append("CenterFrequancy: ");
+        sb.Append(CenterFrequancy);
       }
-      if (__isset.LeftThumbY)
+      if (__isset.Rssi)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("LeftThumbY: ");
-        sb.Append(LeftThumbY);
+        sb.Append("Rssi: ");
+        sb.Append(Rssi);
       }
-      if (__isset.RightThumbX)
+      if (__isset.Connected)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("RightThumbX: ");
-        sb.Append(RightThumbX);
+        sb.Append("Connected: ");
+        sb.Append(Connected);
       }
-      if (__isset.RightThumbY)
+      if (__isset.SecurityEnabled)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("RightThumbY: ");
-        sb.Append(RightThumbY);
+        sb.Append("SecurityEnabled: ");
+        sb.Append(SecurityEnabled);
+      }
+      if (__isset.HasProfile)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("HasProfile: ");
+        sb.Append(HasProfile);
       }
       sb.Append(")");
       return sb.ToString();

@@ -22,37 +22,51 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.GlobalInputDefine
+namespace Ruyi.SDK.SettingSystem.Api
 {
 
-  public partial class RuyiInputStateXB360 : TBase
+  public partial class RuyiNetworkTestResult : TBase
   {
-    private int _PacketNumber;
-    private Gamepad _gamepad;
+    private RuyiNetworkTestItem _localconnection;
+    private RuyiNetworkTestItem _ipaddress;
+    private RuyiNetworkTestItem _internetconnection;
 
-    public int PacketNumber
+    public RuyiNetworkTestItem Localconnection
     {
       get
       {
-        return _PacketNumber;
+        return _localconnection;
       }
       set
       {
-        __isset.PacketNumber = true;
-        this._PacketNumber = value;
+        __isset.localconnection = true;
+        this._localconnection = value;
       }
     }
 
-    public Gamepad Gamepad
+    public RuyiNetworkTestItem Ipaddress
     {
       get
       {
-        return _gamepad;
+        return _ipaddress;
       }
       set
       {
-        __isset.gamepad = true;
-        this._gamepad = value;
+        __isset.ipaddress = true;
+        this._ipaddress = value;
+      }
+    }
+
+    public RuyiNetworkTestItem Internetconnection
+    {
+      get
+      {
+        return _internetconnection;
+      }
+      set
+      {
+        __isset.internetconnection = true;
+        this._internetconnection = value;
       }
     }
 
@@ -60,11 +74,12 @@ namespace Ruyi.SDK.GlobalInputDefine
     public Isset __isset;
     public struct Isset
     {
-      public bool PacketNumber;
-      public bool gamepad;
+      public bool localconnection;
+      public bool ipaddress;
+      public bool internetconnection;
     }
 
-    public RuyiInputStateXB360()
+    public RuyiNetworkTestResult()
     {
     }
 
@@ -86,9 +101,10 @@ namespace Ruyi.SDK.GlobalInputDefine
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32)
+              if (field.Type == TType.Struct)
               {
-                PacketNumber = await iprot.ReadI32Async(cancellationToken);
+                Localconnection = new RuyiNetworkTestItem();
+                await Localconnection.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -98,8 +114,19 @@ namespace Ruyi.SDK.GlobalInputDefine
             case 2:
               if (field.Type == TType.Struct)
               {
-                Gamepad = new Gamepad();
-                await Gamepad.ReadAsync(iprot, cancellationToken);
+                Ipaddress = new RuyiNetworkTestItem();
+                await Ipaddress.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.Struct)
+              {
+                Internetconnection = new RuyiNetworkTestItem();
+                await Internetconnection.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -127,25 +154,34 @@ namespace Ruyi.SDK.GlobalInputDefine
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("RuyiInputStateXB360");
+        var struc = new TStruct("RuyiNetworkTestResult");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (__isset.PacketNumber)
+        if (Localconnection != null && __isset.localconnection)
         {
-          field.Name = "PacketNumber";
-          field.Type = TType.I32;
+          field.Name = "localconnection";
+          field.Type = TType.Struct;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(PacketNumber, cancellationToken);
+          await Localconnection.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Gamepad != null && __isset.gamepad)
+        if (Ipaddress != null && __isset.ipaddress)
         {
-          field.Name = "gamepad";
+          field.Name = "ipaddress";
           field.Type = TType.Struct;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Gamepad.WriteAsync(oprot, cancellationToken);
+          await Ipaddress.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (Internetconnection != null && __isset.internetconnection)
+        {
+          field.Name = "internetconnection";
+          field.Type = TType.Struct;
+          field.ID = 3;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Internetconnection.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -159,21 +195,28 @@ namespace Ruyi.SDK.GlobalInputDefine
 
     public override string ToString()
     {
-      var sb = new StringBuilder("RuyiInputStateXB360(");
+      var sb = new StringBuilder("RuyiNetworkTestResult(");
       bool __first = true;
-      if (__isset.PacketNumber)
+      if (Localconnection != null && __isset.localconnection)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("PacketNumber: ");
-        sb.Append(PacketNumber);
+        sb.Append("Localconnection: ");
+        sb.Append(Localconnection== null ? "<null>" : Localconnection.ToString());
       }
-      if (Gamepad != null && __isset.gamepad)
+      if (Ipaddress != null && __isset.ipaddress)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Gamepad: ");
-        sb.Append(Gamepad== null ? "<null>" : Gamepad.ToString());
+        sb.Append("Ipaddress: ");
+        sb.Append(Ipaddress== null ? "<null>" : Ipaddress.ToString());
+      }
+      if (Internetconnection != null && __isset.internetconnection)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Internetconnection: ");
+        sb.Append(Internetconnection== null ? "<null>" : Internetconnection.ToString());
       }
       sb.Append(")");
       return sb.ToString();

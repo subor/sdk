@@ -22,83 +22,69 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.GlobalInputDefine
+namespace Ruyi.SDK.CommonType
 {
 
-  public partial class RuyiInputStateGamepad : TBase
+  public partial class PopupNotification : TBase
   {
-    private int _RawOffset;
-    private int _Value;
-    private int _Timestamp;
-    private int _Sequence;
-    private JoystickOffset _Offset;
-
-    public int RawOffset
-    {
-      get
-      {
-        return _RawOffset;
-      }
-      set
-      {
-        __isset.RawOffset = true;
-        this._RawOffset = value;
-      }
-    }
-
-    public int Value
-    {
-      get
-      {
-        return _Value;
-      }
-      set
-      {
-        __isset.@Value = true;
-        this._Value = value;
-      }
-    }
-
-    public int Timestamp
-    {
-      get
-      {
-        return _Timestamp;
-      }
-      set
-      {
-        __isset.Timestamp = true;
-        this._Timestamp = value;
-      }
-    }
-
-    public int Sequence
-    {
-      get
-      {
-        return _Sequence;
-      }
-      set
-      {
-        __isset.Sequence = true;
-        this._Sequence = value;
-      }
-    }
+    private NotificationType _NotificationType;
+    private string _MainIcon;
+    private string _Text;
+    private string _Description;
 
     /// <summary>
     /// 
-    /// <seealso cref="JoystickOffset"/>
+    /// <seealso cref="NotificationType"/>
     /// </summary>
-    public JoystickOffset Offset
+    public NotificationType NotificationType
     {
       get
       {
-        return _Offset;
+        return _NotificationType;
       }
       set
       {
-        __isset.Offset = true;
-        this._Offset = value;
+        __isset.NotificationType = true;
+        this._NotificationType = value;
+      }
+    }
+
+    public string MainIcon
+    {
+      get
+      {
+        return _MainIcon;
+      }
+      set
+      {
+        __isset.MainIcon = true;
+        this._MainIcon = value;
+      }
+    }
+
+    public string Text
+    {
+      get
+      {
+        return _Text;
+      }
+      set
+      {
+        __isset.Text = true;
+        this._Text = value;
+      }
+    }
+
+    public string Description
+    {
+      get
+      {
+        return _Description;
+      }
+      set
+      {
+        __isset.Description = true;
+        this._Description = value;
       }
     }
 
@@ -106,14 +92,13 @@ namespace Ruyi.SDK.GlobalInputDefine
     public Isset __isset;
     public struct Isset
     {
-      public bool RawOffset;
-      public bool @Value;
-      public bool Timestamp;
-      public bool Sequence;
-      public bool Offset;
+      public bool NotificationType;
+      public bool MainIcon;
+      public bool Text;
+      public bool Description;
     }
 
-    public RuyiInputStateGamepad()
+    public PopupNotification()
     {
     }
 
@@ -137,7 +122,7 @@ namespace Ruyi.SDK.GlobalInputDefine
             case 1:
               if (field.Type == TType.I32)
               {
-                RawOffset = await iprot.ReadI32Async(cancellationToken);
+                NotificationType = (NotificationType)await iprot.ReadI32Async(cancellationToken);
               }
               else
               {
@@ -145,9 +130,9 @@ namespace Ruyi.SDK.GlobalInputDefine
               }
               break;
             case 2:
-              if (field.Type == TType.I32)
+              if (field.Type == TType.String)
               {
-                Value = await iprot.ReadI32Async(cancellationToken);
+                MainIcon = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -155,9 +140,9 @@ namespace Ruyi.SDK.GlobalInputDefine
               }
               break;
             case 3:
-              if (field.Type == TType.I32)
+              if (field.Type == TType.String)
               {
-                Timestamp = await iprot.ReadI32Async(cancellationToken);
+                Text = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -165,19 +150,9 @@ namespace Ruyi.SDK.GlobalInputDefine
               }
               break;
             case 4:
-              if (field.Type == TType.I32)
+              if (field.Type == TType.String)
               {
-                Sequence = await iprot.ReadI32Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 5:
-              if (field.Type == TType.I32)
-              {
-                Offset = (JoystickOffset)await iprot.ReadI32Async(cancellationToken);
+                Description = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -205,52 +180,43 @@ namespace Ruyi.SDK.GlobalInputDefine
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("RuyiInputStateGamepad");
+        var struc = new TStruct("PopupNotification");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (__isset.RawOffset)
+        if (__isset.NotificationType)
         {
-          field.Name = "RawOffset";
+          field.Name = "NotificationType";
           field.Type = TType.I32;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(RawOffset, cancellationToken);
+          await oprot.WriteI32Async((int)NotificationType, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.@Value)
+        if (MainIcon != null && __isset.MainIcon)
         {
-          field.Name = "Value";
-          field.Type = TType.I32;
+          field.Name = "MainIcon";
+          field.Type = TType.String;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(Value, cancellationToken);
+          await oprot.WriteStringAsync(MainIcon, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.Timestamp)
+        if (Text != null && __isset.Text)
         {
-          field.Name = "Timestamp";
-          field.Type = TType.I32;
+          field.Name = "Text";
+          field.Type = TType.String;
           field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(Timestamp, cancellationToken);
+          await oprot.WriteStringAsync(Text, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.Sequence)
+        if (Description != null && __isset.Description)
         {
-          field.Name = "Sequence";
-          field.Type = TType.I32;
+          field.Name = "Description";
+          field.Type = TType.String;
           field.ID = 4;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(Sequence, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (__isset.Offset)
-        {
-          field.Name = "Offset";
-          field.Type = TType.I32;
-          field.ID = 5;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async((int)Offset, cancellationToken);
+          await oprot.WriteStringAsync(Description, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -264,42 +230,35 @@ namespace Ruyi.SDK.GlobalInputDefine
 
     public override string ToString()
     {
-      var sb = new StringBuilder("RuyiInputStateGamepad(");
+      var sb = new StringBuilder("PopupNotification(");
       bool __first = true;
-      if (__isset.RawOffset)
+      if (__isset.NotificationType)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("RawOffset: ");
-        sb.Append(RawOffset);
+        sb.Append("NotificationType: ");
+        sb.Append(NotificationType);
       }
-      if (__isset.@Value)
+      if (MainIcon != null && __isset.MainIcon)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Value: ");
-        sb.Append(Value);
+        sb.Append("MainIcon: ");
+        sb.Append(MainIcon);
       }
-      if (__isset.Timestamp)
+      if (Text != null && __isset.Text)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Timestamp: ");
-        sb.Append(Timestamp);
+        sb.Append("Text: ");
+        sb.Append(Text);
       }
-      if (__isset.Sequence)
+      if (Description != null && __isset.Description)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Sequence: ");
-        sb.Append(Sequence);
-      }
-      if (__isset.Offset)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("Offset: ");
-        sb.Append(Offset);
+        sb.Append("Description: ");
+        sb.Append(Description);
       }
       sb.Append(")");
       return sb.ToString();

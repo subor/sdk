@@ -70,26 +70,30 @@ namespace Ruyi.Layer0
             lock (sync)
             {
 #if NASYNC
-                assemblies = new[]
-                    {
-                        Assembly.Load("ServiceGenerated"),
-                        Assembly.Load("ServiceCommon"),
-                        Assembly.Load("InternalServiceGenerated"),
-                    };
+                tryLoadAssembly("ServiceGenerated");
+                tryLoadAssembly("ServiceCommon");
+                tryLoadAssembly("InternalServiceGenerated");
 #else
-                assemblies = new[]
-                    {
-                        Assembly.Load("SDK.Gen.ServiceAsync"),
-                        Assembly.Load("SDK.Gen.CommonAsync"),
-                        Assembly.Load("SDK.Gen.InternalServiceAsync"),
-                    };
+                tryLoadAssembly("SDK.Gen.ServiceAsync");
+                tryLoadAssembly("SDK.Gen.CommonAsync");
+                tryLoadAssembly("SDK.Gen.InternalServiceAsync");
 #endif
             }
+        }
+
+        static void tryLoadAssembly(string name)
+        {
+            try
+            {
+                assemblies.Add(Assembly.Load(name));
+            }
+            catch
+            { }
         }
 
         static object sync = new object();
         static Dictionary<string, Type> cachedTypes = new Dictionary<string, Type>();
         static Dictionary<string, Type> cachedClassnames = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
-        static Assembly[] assemblies;
+        static List<Assembly> assemblies = new List<Assembly>();
     }
 }

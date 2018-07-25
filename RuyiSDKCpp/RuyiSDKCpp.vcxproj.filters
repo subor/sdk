@@ -83,6 +83,9 @@
     <Filter Include="Sources\RuyiNet\Service\Video">
       <UniqueIdentifier>{ea609dc1-5921-4840-aa0c-8210ed949340}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Generated\OverlayManager">
+      <UniqueIdentifier>{54197cb3-8eab-4c53-b514-7116c6621bca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Generated\InputManager\InputManagerSDKDataTypes_constants.cpp">
@@ -261,6 +264,24 @@
     </ClCompile>
     <ClCompile Include="RuyiNet\Service\Patch\RuyiNetPatchService.cpp">
       <Filter>Sources\RuyiNet\Service\Patch</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\OverlayManager\ExternalOverlayManagerService.cpp">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_constants.cpp">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_types.cpp">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKServices_constants.cpp">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKServices_types.cpp">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\InputManager\InputManagerService.cpp">
+      <Filter>Generated\InputManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -519,6 +540,24 @@
     </ClInclude>
     <ClInclude Include="RuyiNet\Service\Patch\RuyiNetPatchService.h">
       <Filter>Sources\RuyiNet\Service\Patch</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\OverlayManager\ExternalOverlayManagerService.h">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_constants.h">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_types.h">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKServices_constants.h">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKServices_types.h">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\InputManager\InputManagerService.h">
+      <Filter>Generated\InputManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -31,6 +31,20 @@ extern const std::map<int, const char*> _LoginState_VALUES_TO_NAMES;
 
 std::ostream& operator<<(std::ostream& out, const LoginState::type& val);
 
+struct NotificationType {
+  enum type {
+    Battery = 0,
+    Interactive = 1,
+    Voice = 2,
+    GameInfo = 3,
+    ScreenshotInfo = 4
+  };
+};
+
+extern const std::map<int, const char*> _NotificationType_VALUES_TO_NAMES;
+
+std::ostream& operator<<(std::ostream& out, const NotificationType::type& val);
+
 struct InputCategory {
   enum type {
     GamePad = 0,
@@ -131,6 +145,8 @@ class AppDataRecord;
 class AppDataCollection;
 
 class AppData;
+
+class PopupNotification;
 
 typedef struct _ErrorException__isset {
   _ErrorException__isset() : errId(false), errMsg(false) {}
@@ -723,7 +739,7 @@ void swap(SettingItem &a, SettingItem &b);
 std::ostream& operator<<(std::ostream& out, const SettingItem& obj);
 
 typedef struct _SettingCategory__isset {
-  _SettingCategory__isset() : id(false), display(false), summary(false), description(false), sortingPriority(false), isSystemCategory(false), items(false), enable(false), showInUI(false) {}
+  _SettingCategory__isset() : id(false), display(false), summary(false), description(false), sortingPriority(false), isSystemCategory(false), items(false), enable(false), showInUI(false), script(false) {}
   bool id :1;
   bool display :1;
   bool summary :1;
@@ -733,6 +749,7 @@ typedef struct _SettingCategory__isset {
   bool items :1;
   bool enable :1;
   bool showInUI :1;
+  bool script :1;
 } _SettingCategory__isset;
 
 class SettingCategory : public virtual ::apache::thrift::TBase {
@@ -740,7 +757,7 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
 
   SettingCategory(const SettingCategory&);
   SettingCategory& operator=(const SettingCategory&);
-  SettingCategory() : id(), display(), summary(), description(), sortingPriority(0), isSystemCategory(0), enable(0), showInUI(0) {
+  SettingCategory() : id(), display(), summary(), description(), sortingPriority(0), isSystemCategory(0), enable(0), showInUI(0), script() {
   }
 
   virtual ~SettingCategory() throw();
@@ -753,6 +770,7 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
   std::map<std::string, int32_t>  items;
   bool enable;
   bool showInUI;
+  std::string script;
 
   _SettingCategory__isset __isset;
 
@@ -773,6 +791,8 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
   void __set_enable(const bool val);
 
   void __set_showInUI(const bool val);
+
+  void __set_script(const std::string& val);
 
   bool operator == (const SettingCategory & rhs) const
   {
@@ -797,6 +817,8 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
     if (!(enable == rhs.enable))
       return false;
     if (!(showInUI == rhs.showInUI))
+      return false;
+    if (!(script == rhs.script))
       return false;
     return true;
   }
@@ -1019,6 +1041,66 @@ class AppData : public virtual ::apache::thrift::TBase {
 void swap(AppData &a, AppData &b);
 
 std::ostream& operator<<(std::ostream& out, const AppData& obj);
+
+typedef struct _PopupNotification__isset {
+  _PopupNotification__isset() : NotificationType(false), MainIcon(false), Text(false), Description(false) {}
+  bool NotificationType :1;
+  bool MainIcon :1;
+  bool Text :1;
+  bool Description :1;
+} _PopupNotification__isset;
+
+class PopupNotification : public virtual ::apache::thrift::TBase {
+ public:
+
+  PopupNotification(const PopupNotification&);
+  PopupNotification& operator=(const PopupNotification&);
+  PopupNotification() : NotificationType((NotificationType::type)0), MainIcon(), Text(), Description() {
+  }
+
+  virtual ~PopupNotification() throw();
+  NotificationType::type NotificationType;
+  std::string MainIcon;
+  std::string Text;
+  std::string Description;
+
+  _PopupNotification__isset __isset;
+
+  void __set_NotificationType(const NotificationType::type val);
+
+  void __set_MainIcon(const std::string& val);
+
+  void __set_Text(const std::string& val);
+
+  void __set_Description(const std::string& val);
+
+  bool operator == (const PopupNotification & rhs) const
+  {
+    if (!(NotificationType == rhs.NotificationType))
+      return false;
+    if (!(MainIcon == rhs.MainIcon))
+      return false;
+    if (!(Text == rhs.Text))
+      return false;
+    if (!(Description == rhs.Description))
+      return false;
+    return true;
+  }
+  bool operator != (const PopupNotification &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const PopupNotification & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(PopupNotification &a, PopupNotification &b);
+
+std::ostream& operator<<(std::ostream& out, const PopupNotification& obj);
 
 }}} // namespace
 

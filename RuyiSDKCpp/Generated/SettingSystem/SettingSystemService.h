@@ -96,8 +96,14 @@ class SettingSystemServiceIf {
    * @param contents Optional. The arguments of the notification. In json string format
    */
   virtual bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents) = 0;
+  virtual bool SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS) = 0;
+  virtual bool SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort) = 0;
+  virtual bool ConnectToWifi(const std::string& profileName, const std::string& key) = 0;
   virtual void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) = 0;
   virtual void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return) = 0;
+  virtual void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return) = 0;
+  virtual void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return) = 0;
+  virtual bool DisconnectWifi() = 0;
 };
 
 class SettingSystemServiceIfFactory {
@@ -177,11 +183,33 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
     bool _return = false;
     return _return;
   }
+  bool SetNetworkSettings(const bool /* EnableDHCP */, const std::string& /* IpAddress */, const std::string& /* SubMask */, const std::string& /* Gateway */, const std::string& /* MainDNS */, const std::string& /* SubDNS */) {
+    bool _return = false;
+    return _return;
+  }
+  bool SetNetworkProxy(const std::string& /* ProxyServer */, const std::string& /* ProxyPort */) {
+    bool _return = false;
+    return _return;
+  }
+  bool ConnectToWifi(const std::string& /* profileName */, const std::string& /* key */) {
+    bool _return = false;
+    return _return;
+  }
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& /* _return */) {
     return;
   }
   void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& /* _return */) {
     return;
+  }
+  void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& /* _return */) {
+    return;
+  }
+  void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & /* _return */) {
+    return;
+  }
+  bool DisconnectWifi() {
+    bool _return = false;
+    return _return;
   }
 };
 
@@ -1832,6 +1860,375 @@ class SettingSystemService_SettingItemNotify_presult {
 
 };
 
+typedef struct _SettingSystemService_SetNetworkSettings_args__isset {
+  _SettingSystemService_SetNetworkSettings_args__isset() : EnableDHCP(false), IpAddress(false), SubMask(false), Gateway(false), MainDNS(false), SubDNS(false) {}
+  bool EnableDHCP :1;
+  bool IpAddress :1;
+  bool SubMask :1;
+  bool Gateway :1;
+  bool MainDNS :1;
+  bool SubDNS :1;
+} _SettingSystemService_SetNetworkSettings_args__isset;
+
+class SettingSystemService_SetNetworkSettings_args {
+ public:
+
+  SettingSystemService_SetNetworkSettings_args(const SettingSystemService_SetNetworkSettings_args&);
+  SettingSystemService_SetNetworkSettings_args& operator=(const SettingSystemService_SetNetworkSettings_args&);
+  SettingSystemService_SetNetworkSettings_args() : EnableDHCP(0), IpAddress(), SubMask(), Gateway(), MainDNS(), SubDNS() {
+  }
+
+  virtual ~SettingSystemService_SetNetworkSettings_args() throw();
+  bool EnableDHCP;
+  std::string IpAddress;
+  std::string SubMask;
+  std::string Gateway;
+  std::string MainDNS;
+  std::string SubDNS;
+
+  _SettingSystemService_SetNetworkSettings_args__isset __isset;
+
+  void __set_EnableDHCP(const bool val);
+
+  void __set_IpAddress(const std::string& val);
+
+  void __set_SubMask(const std::string& val);
+
+  void __set_Gateway(const std::string& val);
+
+  void __set_MainDNS(const std::string& val);
+
+  void __set_SubDNS(const std::string& val);
+
+  bool operator == (const SettingSystemService_SetNetworkSettings_args & rhs) const
+  {
+    if (!(EnableDHCP == rhs.EnableDHCP))
+      return false;
+    if (!(IpAddress == rhs.IpAddress))
+      return false;
+    if (!(SubMask == rhs.SubMask))
+      return false;
+    if (!(Gateway == rhs.Gateway))
+      return false;
+    if (!(MainDNS == rhs.MainDNS))
+      return false;
+    if (!(SubDNS == rhs.SubDNS))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_SetNetworkSettings_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_SetNetworkSettings_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_SetNetworkSettings_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_SetNetworkSettings_pargs() throw();
+  const bool* EnableDHCP;
+  const std::string* IpAddress;
+  const std::string* SubMask;
+  const std::string* Gateway;
+  const std::string* MainDNS;
+  const std::string* SubDNS;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_SetNetworkSettings_result__isset {
+  _SettingSystemService_SetNetworkSettings_result__isset() : success(false) {}
+  bool success :1;
+} _SettingSystemService_SetNetworkSettings_result__isset;
+
+class SettingSystemService_SetNetworkSettings_result {
+ public:
+
+  SettingSystemService_SetNetworkSettings_result(const SettingSystemService_SetNetworkSettings_result&);
+  SettingSystemService_SetNetworkSettings_result& operator=(const SettingSystemService_SetNetworkSettings_result&);
+  SettingSystemService_SetNetworkSettings_result() : success(0) {
+  }
+
+  virtual ~SettingSystemService_SetNetworkSettings_result() throw();
+  bool success;
+
+  _SettingSystemService_SetNetworkSettings_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const SettingSystemService_SetNetworkSettings_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_SetNetworkSettings_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_SetNetworkSettings_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_SetNetworkSettings_presult__isset {
+  _SettingSystemService_SetNetworkSettings_presult__isset() : success(false) {}
+  bool success :1;
+} _SettingSystemService_SetNetworkSettings_presult__isset;
+
+class SettingSystemService_SetNetworkSettings_presult {
+ public:
+
+
+  virtual ~SettingSystemService_SetNetworkSettings_presult() throw();
+  bool* success;
+
+  _SettingSystemService_SetNetworkSettings_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _SettingSystemService_SetNetworkProxy_args__isset {
+  _SettingSystemService_SetNetworkProxy_args__isset() : ProxyServer(false), ProxyPort(false) {}
+  bool ProxyServer :1;
+  bool ProxyPort :1;
+} _SettingSystemService_SetNetworkProxy_args__isset;
+
+class SettingSystemService_SetNetworkProxy_args {
+ public:
+
+  SettingSystemService_SetNetworkProxy_args(const SettingSystemService_SetNetworkProxy_args&);
+  SettingSystemService_SetNetworkProxy_args& operator=(const SettingSystemService_SetNetworkProxy_args&);
+  SettingSystemService_SetNetworkProxy_args() : ProxyServer(), ProxyPort() {
+  }
+
+  virtual ~SettingSystemService_SetNetworkProxy_args() throw();
+  std::string ProxyServer;
+  std::string ProxyPort;
+
+  _SettingSystemService_SetNetworkProxy_args__isset __isset;
+
+  void __set_ProxyServer(const std::string& val);
+
+  void __set_ProxyPort(const std::string& val);
+
+  bool operator == (const SettingSystemService_SetNetworkProxy_args & rhs) const
+  {
+    if (!(ProxyServer == rhs.ProxyServer))
+      return false;
+    if (!(ProxyPort == rhs.ProxyPort))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_SetNetworkProxy_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_SetNetworkProxy_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_SetNetworkProxy_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_SetNetworkProxy_pargs() throw();
+  const std::string* ProxyServer;
+  const std::string* ProxyPort;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_SetNetworkProxy_result__isset {
+  _SettingSystemService_SetNetworkProxy_result__isset() : success(false) {}
+  bool success :1;
+} _SettingSystemService_SetNetworkProxy_result__isset;
+
+class SettingSystemService_SetNetworkProxy_result {
+ public:
+
+  SettingSystemService_SetNetworkProxy_result(const SettingSystemService_SetNetworkProxy_result&);
+  SettingSystemService_SetNetworkProxy_result& operator=(const SettingSystemService_SetNetworkProxy_result&);
+  SettingSystemService_SetNetworkProxy_result() : success(0) {
+  }
+
+  virtual ~SettingSystemService_SetNetworkProxy_result() throw();
+  bool success;
+
+  _SettingSystemService_SetNetworkProxy_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const SettingSystemService_SetNetworkProxy_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_SetNetworkProxy_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_SetNetworkProxy_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_SetNetworkProxy_presult__isset {
+  _SettingSystemService_SetNetworkProxy_presult__isset() : success(false) {}
+  bool success :1;
+} _SettingSystemService_SetNetworkProxy_presult__isset;
+
+class SettingSystemService_SetNetworkProxy_presult {
+ public:
+
+
+  virtual ~SettingSystemService_SetNetworkProxy_presult() throw();
+  bool* success;
+
+  _SettingSystemService_SetNetworkProxy_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _SettingSystemService_ConnectToWifi_args__isset {
+  _SettingSystemService_ConnectToWifi_args__isset() : profileName(false), key(false) {}
+  bool profileName :1;
+  bool key :1;
+} _SettingSystemService_ConnectToWifi_args__isset;
+
+class SettingSystemService_ConnectToWifi_args {
+ public:
+
+  SettingSystemService_ConnectToWifi_args(const SettingSystemService_ConnectToWifi_args&);
+  SettingSystemService_ConnectToWifi_args& operator=(const SettingSystemService_ConnectToWifi_args&);
+  SettingSystemService_ConnectToWifi_args() : profileName(), key() {
+  }
+
+  virtual ~SettingSystemService_ConnectToWifi_args() throw();
+  std::string profileName;
+  std::string key;
+
+  _SettingSystemService_ConnectToWifi_args__isset __isset;
+
+  void __set_profileName(const std::string& val);
+
+  void __set_key(const std::string& val);
+
+  bool operator == (const SettingSystemService_ConnectToWifi_args & rhs) const
+  {
+    if (!(profileName == rhs.profileName))
+      return false;
+    if (!(key == rhs.key))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_ConnectToWifi_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_ConnectToWifi_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_ConnectToWifi_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_ConnectToWifi_pargs() throw();
+  const std::string* profileName;
+  const std::string* key;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_ConnectToWifi_result__isset {
+  _SettingSystemService_ConnectToWifi_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_ConnectToWifi_result__isset;
+
+class SettingSystemService_ConnectToWifi_result {
+ public:
+
+  SettingSystemService_ConnectToWifi_result(const SettingSystemService_ConnectToWifi_result&);
+  SettingSystemService_ConnectToWifi_result& operator=(const SettingSystemService_ConnectToWifi_result&);
+  SettingSystemService_ConnectToWifi_result() : success(0) {
+  }
+
+  virtual ~SettingSystemService_ConnectToWifi_result() throw();
+  bool success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_ConnectToWifi_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_ConnectToWifi_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_ConnectToWifi_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_ConnectToWifi_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_ConnectToWifi_presult__isset {
+  _SettingSystemService_ConnectToWifi_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_ConnectToWifi_presult__isset;
+
+class SettingSystemService_ConnectToWifi_presult {
+ public:
+
+
+  virtual ~SettingSystemService_ConnectToWifi_presult() throw();
+  bool* success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_ConnectToWifi_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 
 class SettingSystemService_GetNetworkSettings_args {
  public:
@@ -2032,6 +2429,306 @@ class SettingSystemService_GetNetworkStatus_presult {
 
 };
 
+
+class SettingSystemService_RuyiTestNetwork_args {
+ public:
+
+  SettingSystemService_RuyiTestNetwork_args(const SettingSystemService_RuyiTestNetwork_args&);
+  SettingSystemService_RuyiTestNetwork_args& operator=(const SettingSystemService_RuyiTestNetwork_args&);
+  SettingSystemService_RuyiTestNetwork_args() {
+  }
+
+  virtual ~SettingSystemService_RuyiTestNetwork_args() throw();
+
+  bool operator == (const SettingSystemService_RuyiTestNetwork_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const SettingSystemService_RuyiTestNetwork_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_RuyiTestNetwork_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_RuyiTestNetwork_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_RuyiTestNetwork_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_RuyiTestNetwork_result__isset {
+  _SettingSystemService_RuyiTestNetwork_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_RuyiTestNetwork_result__isset;
+
+class SettingSystemService_RuyiTestNetwork_result {
+ public:
+
+  SettingSystemService_RuyiTestNetwork_result(const SettingSystemService_RuyiTestNetwork_result&);
+  SettingSystemService_RuyiTestNetwork_result& operator=(const SettingSystemService_RuyiTestNetwork_result&);
+  SettingSystemService_RuyiTestNetwork_result() {
+  }
+
+  virtual ~SettingSystemService_RuyiTestNetwork_result() throw();
+   ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_RuyiTestNetwork_result__isset __isset;
+
+  void __set_success(const  ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_RuyiTestNetwork_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_RuyiTestNetwork_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_RuyiTestNetwork_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_RuyiTestNetwork_presult__isset {
+  _SettingSystemService_RuyiTestNetwork_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_RuyiTestNetwork_presult__isset;
+
+class SettingSystemService_RuyiTestNetwork_presult {
+ public:
+
+
+  virtual ~SettingSystemService_RuyiTestNetwork_presult() throw();
+   ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult* success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_RuyiTestNetwork_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class SettingSystemService_GetAvailableWifi_args {
+ public:
+
+  SettingSystemService_GetAvailableWifi_args(const SettingSystemService_GetAvailableWifi_args&);
+  SettingSystemService_GetAvailableWifi_args& operator=(const SettingSystemService_GetAvailableWifi_args&);
+  SettingSystemService_GetAvailableWifi_args() {
+  }
+
+  virtual ~SettingSystemService_GetAvailableWifi_args() throw();
+
+  bool operator == (const SettingSystemService_GetAvailableWifi_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const SettingSystemService_GetAvailableWifi_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_GetAvailableWifi_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_GetAvailableWifi_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_GetAvailableWifi_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_GetAvailableWifi_result__isset {
+  _SettingSystemService_GetAvailableWifi_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_GetAvailableWifi_result__isset;
+
+class SettingSystemService_GetAvailableWifi_result {
+ public:
+
+  SettingSystemService_GetAvailableWifi_result(const SettingSystemService_GetAvailableWifi_result&);
+  SettingSystemService_GetAvailableWifi_result& operator=(const SettingSystemService_GetAvailableWifi_result&);
+  SettingSystemService_GetAvailableWifi_result() {
+  }
+
+  virtual ~SettingSystemService_GetAvailableWifi_result() throw();
+  std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity>  success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_GetAvailableWifi_result__isset __isset;
+
+  void __set_success(const std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_GetAvailableWifi_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_GetAvailableWifi_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_GetAvailableWifi_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_GetAvailableWifi_presult__isset {
+  _SettingSystemService_GetAvailableWifi_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_GetAvailableWifi_presult__isset;
+
+class SettingSystemService_GetAvailableWifi_presult {
+ public:
+
+
+  virtual ~SettingSystemService_GetAvailableWifi_presult() throw();
+  std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> * success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_GetAvailableWifi_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class SettingSystemService_DisconnectWifi_args {
+ public:
+
+  SettingSystemService_DisconnectWifi_args(const SettingSystemService_DisconnectWifi_args&);
+  SettingSystemService_DisconnectWifi_args& operator=(const SettingSystemService_DisconnectWifi_args&);
+  SettingSystemService_DisconnectWifi_args() {
+  }
+
+  virtual ~SettingSystemService_DisconnectWifi_args() throw();
+
+  bool operator == (const SettingSystemService_DisconnectWifi_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const SettingSystemService_DisconnectWifi_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_DisconnectWifi_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_DisconnectWifi_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_DisconnectWifi_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_DisconnectWifi_result__isset {
+  _SettingSystemService_DisconnectWifi_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_DisconnectWifi_result__isset;
+
+class SettingSystemService_DisconnectWifi_result {
+ public:
+
+  SettingSystemService_DisconnectWifi_result(const SettingSystemService_DisconnectWifi_result&);
+  SettingSystemService_DisconnectWifi_result& operator=(const SettingSystemService_DisconnectWifi_result&);
+  SettingSystemService_DisconnectWifi_result() : success(0) {
+  }
+
+  virtual ~SettingSystemService_DisconnectWifi_result() throw();
+  bool success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_DisconnectWifi_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_DisconnectWifi_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_DisconnectWifi_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_DisconnectWifi_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_DisconnectWifi_presult__isset {
+  _SettingSystemService_DisconnectWifi_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_DisconnectWifi_presult__isset;
+
+class SettingSystemService_DisconnectWifi_presult {
+ public:
+
+
+  virtual ~SettingSystemService_DisconnectWifi_presult() throw();
+  bool* success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_DisconnectWifi_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
  public:
   SettingSystemServiceClient(apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) {
@@ -2099,12 +2796,30 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
   void send_SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
   bool recv_SettingItemNotify();
+  bool SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS);
+  void send_SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS);
+  bool recv_SetNetworkSettings();
+  bool SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort);
+  void send_SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort);
+  bool recv_SetNetworkProxy();
+  bool ConnectToWifi(const std::string& profileName, const std::string& key);
+  void send_ConnectToWifi(const std::string& profileName, const std::string& key);
+  bool recv_ConnectToWifi();
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return);
   void send_GetNetworkSettings();
   void recv_GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return);
   void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return);
   void send_GetNetworkStatus();
   void recv_GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return);
+  void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return);
+  void send_RuyiTestNetwork();
+  void recv_RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return);
+  void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return);
+  void send_GetAvailableWifi();
+  void recv_GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return);
+  bool DisconnectWifi();
+  void send_DisconnectWifi();
+  bool recv_DisconnectWifi();
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -2134,8 +2849,14 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
   void process_GetUserAppData(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_RemoveUserAppData(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SettingItemNotify(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_SetNetworkSettings(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_SetNetworkProxy(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_ConnectToWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetNetworkSettings(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetNetworkStatus(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_RuyiTestNetwork(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_GetAvailableWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_DisconnectWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   SettingSystemServiceProcessor(::apache::thrift::stdcxx::shared_ptr<SettingSystemServiceIf> iface) :
     iface_(iface) {
@@ -2153,8 +2874,14 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
     processMap_["GetUserAppData"] = &SettingSystemServiceProcessor::process_GetUserAppData;
     processMap_["RemoveUserAppData"] = &SettingSystemServiceProcessor::process_RemoveUserAppData;
     processMap_["SettingItemNotify"] = &SettingSystemServiceProcessor::process_SettingItemNotify;
+    processMap_["SetNetworkSettings"] = &SettingSystemServiceProcessor::process_SetNetworkSettings;
+    processMap_["SetNetworkProxy"] = &SettingSystemServiceProcessor::process_SetNetworkProxy;
+    processMap_["ConnectToWifi"] = &SettingSystemServiceProcessor::process_ConnectToWifi;
     processMap_["GetNetworkSettings"] = &SettingSystemServiceProcessor::process_GetNetworkSettings;
     processMap_["GetNetworkStatus"] = &SettingSystemServiceProcessor::process_GetNetworkStatus;
+    processMap_["RuyiTestNetwork"] = &SettingSystemServiceProcessor::process_RuyiTestNetwork;
+    processMap_["GetAvailableWifi"] = &SettingSystemServiceProcessor::process_GetAvailableWifi;
+    processMap_["DisconnectWifi"] = &SettingSystemServiceProcessor::process_DisconnectWifi;
   }
 
   virtual ~SettingSystemServiceProcessor() {}
@@ -2315,6 +3042,33 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return ifaces_[i]->SettingItemNotify(key, contents);
   }
 
+  bool SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->SetNetworkSettings(EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
+    }
+    return ifaces_[i]->SetNetworkSettings(EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
+  }
+
+  bool SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->SetNetworkProxy(ProxyServer, ProxyPort);
+    }
+    return ifaces_[i]->SetNetworkProxy(ProxyServer, ProxyPort);
+  }
+
+  bool ConnectToWifi(const std::string& profileName, const std::string& key) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->ConnectToWifi(profileName, key);
+    }
+    return ifaces_[i]->ConnectToWifi(profileName, key);
+  }
+
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -2333,6 +3087,35 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     }
     ifaces_[i]->GetNetworkStatus(_return);
     return;
+  }
+
+  void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->RuyiTestNetwork(_return);
+    }
+    ifaces_[i]->RuyiTestNetwork(_return);
+    return;
+  }
+
+  void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->GetAvailableWifi(_return);
+    }
+    ifaces_[i]->GetAvailableWifi(_return);
+    return;
+  }
+
+  bool DisconnectWifi() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->DisconnectWifi();
+    }
+    return ifaces_[i]->DisconnectWifi();
   }
 
 };
@@ -2407,12 +3190,30 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
   int32_t send_SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
   bool recv_SettingItemNotify(const int32_t seqid);
+  bool SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS);
+  int32_t send_SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS);
+  bool recv_SetNetworkSettings(const int32_t seqid);
+  bool SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort);
+  int32_t send_SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort);
+  bool recv_SetNetworkProxy(const int32_t seqid);
+  bool ConnectToWifi(const std::string& profileName, const std::string& key);
+  int32_t send_ConnectToWifi(const std::string& profileName, const std::string& key);
+  bool recv_ConnectToWifi(const int32_t seqid);
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return);
   int32_t send_GetNetworkSettings();
   void recv_GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return, const int32_t seqid);
   void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return);
   int32_t send_GetNetworkStatus();
   void recv_GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return, const int32_t seqid);
+  void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return);
+  int32_t send_RuyiTestNetwork();
+  void recv_RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return, const int32_t seqid);
+  void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return);
+  int32_t send_GetAvailableWifi();
+  void recv_GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return, const int32_t seqid);
+  bool DisconnectWifi();
+  int32_t send_DisconnectWifi();
+  bool recv_DisconnectWifi(const int32_t seqid);
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;

@@ -11,6 +11,14 @@ enum LoginState {
 	Login = 1,
 }
 
+enum NotificationType {
+    Battery = 0,
+    Interactive = 1,
+    Voice = 2,
+    GameInfo = 3,
+    ScreenshotInfo = 4,
+}
+
 enum InputCategory {
     GamePad = 0,
     Keyboard = 1,
@@ -137,6 +145,7 @@ struct SettingCategory {
     7: map<string, i32> items,
     8: bool enable,
     9: bool showInUI,
+    10: string script,
 }
 
 struct ModuleSetting {
@@ -165,6 +174,13 @@ struct AppData {
 	1: string appId,
     /** The user data of the App. See AppDataCollection */
 	2: list<AppDataCollection> data,
+}
+
+struct PopupNotification {
+    1: NotificationType NotificationType,
+    2: string MainIcon,
+    3: string Text,
+    4: string Description,
 }
 
 
