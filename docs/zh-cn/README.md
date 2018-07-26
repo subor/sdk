@@ -1,7 +1,7 @@
-# Ruyi
+# 如意
 
 ---
-## ![](/docs/img/warning.png) NOTICE
+## ![](/docs/img/warning.png) 注意
 目前Ruyi平台仍在开发中，您在使用过程中可能会遇到以下情况：
 
 * 平台整体尚不完整
