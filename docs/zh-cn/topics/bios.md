@@ -57,7 +57,7 @@ __重要__:
 
 可以在Windows系统下(推荐方法)，或使用装有EFI(Extensible Firmware Interface可扩展固件接口)内核的U盘刷新BIOS。
 
-![](/docs/img/warning.png) 必须且仅能在[Ruyi系统](os.md)下更新[BIOS](bios.md)。在更新之前保证在[主机模式]而非[PC模式](pc_mode.md)。
+![](/docs/img/warning.png) 必须且仅能在[Ruyi系统](os.md)下更新[BIOS](bios.md)。从系统0.6版本开始，在更新之前请确保处于[主机模式]而非[PC模式](pc_mode.md)。
 
 __在Windows下刷新BIOS__
 
