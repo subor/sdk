@@ -264,7 +264,7 @@
     <Lib>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)\lib\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
     </Lib>
     <PreBuildEvent>
       <Command>
@@ -303,7 +303,7 @@
     <Lib>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)\lib\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
     </Lib>
     <PreBuildEvent>
       <Command>
@@ -384,7 +384,7 @@
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
-      <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)\lib\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
     <PreBuildEvent>
@@ -420,7 +420,7 @@
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
-      <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)\lib\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
     <PreBuildEvent>
