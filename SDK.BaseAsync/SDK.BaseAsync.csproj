@@ -22,4 +22,10 @@
     <ProjectReference Include="..\SDK.Gen.ServiceAsync\SDK.Gen.ServiceAsync.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="NNanomsg.NETStandard">
+      <HintPath>..\..\..\..\NNanomsg\NNanomsg.NETStandard\bin\Debug\netstandard2.0\NNanomsg.NETStandard.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

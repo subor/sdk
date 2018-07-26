@@ -20,4 +20,15 @@ namespace Ruyi.Layer0
         }
         #endregion
     }
+
+    public sealed class PubSubUtil
+    {
+        public static readonly byte[] StopMsg = System.Text.Encoding.ASCII.GetBytes("258B00D9-820A-41B0-B991-953EDA18A398");
+
+        public static bool IsStoppingMessage(byte[] msg)
+        {
+            System.Collections.IStructuralEquatable equ = msg;
+            return equ.Equals(StopMsg, System.Collections.StructuralComparisons.StructuralEqualityComparer);
+        }
+    }
 }

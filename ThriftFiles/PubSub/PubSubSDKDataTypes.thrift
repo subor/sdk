@@ -43,6 +43,10 @@ struct UserShellEvent {
     1: UserShellEventType EventType,
 }
 
+struct PubHeader {
+    1: string PayloadType,
+}
+
 
 /** The service channel of layer0 */
 const string layer0_service_channel = "layer0/service"
