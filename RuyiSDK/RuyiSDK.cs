@@ -326,7 +326,7 @@ namespace Ruyi
 
         bool IsFeatureEnabled(SDKFeatures fea)
         {
-#if NET20
+#if DOTNET_20
             return ((int)context.EnabledFeatures & (int)fea) != 0;
 #else
             return context.EnabledFeatures.HasFlag(fea);
