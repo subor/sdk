@@ -40,6 +40,7 @@ Get __[Support](topics/support.md)__
         * [UE4](topics/ue4.md)
         * [Unity](topics/unity.md)
         * [Build SDK source](topics/build_sdk_source.md) (advanced)
+        * [RuyiNet](topics/ruyinet.md)
     * [Console](topics/console_dev.md)
     * Specialized Areas
         * [App Manifest](topics/app_metadata.md)
@@ -48,7 +49,6 @@ Get __[Support](topics/support.md)__
             * [DVR](topics/dvr.md)
             * [Gamesdb.xml Format](topics/gamesdb_format.md) (advanced)
         * [Low-Power Mode](topics/lpm.md)
-        * [RuyiNet](topics/ruyinet.md)
     * Advanced
         * [Optimization](topics/optimization.md)
         * [AMD GPU Services (AGS)](topics/amd_gpu_services.md)
