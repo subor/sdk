@@ -11,3 +11,27 @@ Layer0是一种在系统后台运行的[守护进程](https://en.wikipedia.org/w
 数据交互（异步）通过订阅[ZeroMQ](http://zeromq.org/)的消息模型来实现。 
 
 网络服务由定制化[brainCloud](http://getbraincloud.com/)提供。
+
+
+## 启动
+
+Layer0的设计是作为一个Windows服务运行的。
+
+1. 以 __（管理员）Administrator__ 账户权限运行`cmd.exe` 
+1. 运行`layer0.exe --install --start`安装、启动layer0
+
+安装完成后，layer0可以在`services.msc`中开启/关闭:  
+![](/docs/img/services.png)
+
+1. 启动 __开始(Start) / Windows管理员工具(Windows Administrative Tools) / 服务（Services）__ (或者运行`services.msc`)
+1. 右击名为 __Ruyi Layer0__ 服务，选择 __Start__/__Stop__
+
+或者，从命令行关闭layer0:
+
+1. 以 __（管理员）Administrator__ 账户权限运行`cmd.exe` 
+1. 运行`layer0.exe --stop`
+
+或者，layer0也可以作为一个终端程序来运行:
+
+1. 如果layer0已作为服务（service）运行，直接关闭
+1. 双击`layer0.exe`启动

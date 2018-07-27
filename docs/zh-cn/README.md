@@ -1,7 +1,7 @@
-# Ruyi
+# 如意
 
 ---
-## ![](/docs/img/warning.png) NOTICE
+## ![](/docs/img/warning.png) 注意
 目前Ruyi平台仍在开发中，您在使用过程中可能会遇到以下情况：
 
 * 平台整体尚不完整
@@ -35,30 +35,34 @@ __进阶内容:__
 
 ## 主题
 
-* [整体平台架构](topics/layer0.md)
+* 开发
+    * [整体平台架构](topics/layer0.md)
+    * [开发者工具)](topics/devtool.md)
+    * [SDK](topics/sdk.md)
+        * [C++](topics/cplusplus.md)
+        * [UE4](topics/ue4.md)
+        * [Unity](topics/unity.md)
+        * [Build SDK source](topics/build_sdk_source.md) (advanced)
+    * [主机](topics/console_dev.md)
+    * 专题
+        * [程序配置文件(App Manifest)](topics/app_metadata.md)
+        * [外设输入](topics/input.md)
+        * [游戏内弹出界面(Overlay)](topics/overlay.md)
+            * [DVR](topics/dvr.md)
+            * [配置文件Gamesdb.xml格式](topics/gamesdb_format.md) (advanced)
+        * [省电模式](topics/lpm.md)
+    * 进阶
+        * [性能优化](topics/optimization.md)
+        * [AMD图形处理器服务(AGS)](topics/amd_gpu_services.md)
 * [硬件](topics/hardware.md)
     * [硬盘驱动](topics/harddrive.md)
+    * [虚拟系统](topics/simulation_system.md)
 * [Ruyi操作系统](topics/os.md)
     * [BIOS](topics/bios.md)
     * [PC模式](topics/pc_mode.md)
-* [开发者工具](topics/devtool.md)
-* [SDK](topics/sdk.md)
-    * [C++](topics/cplusplus.md)
-    * [虚幻4](topics/ue4.md)
-    * [Unity3D](topics/unity.md)
-* [文档](topics/docs.md)
-* [模拟系统](topics/simulation_system.md)
-* [应用配置文件](topics/app_metadata.md)
+    * [系统恢复](topics/os_recovery.md)
 * [技术支持](topics/support.md)
     * [常见问题](faq.md)
-    * [版本发布说明](topics/release_notes.md)
-
-* [外设输入](topics/input.md)
-* [游戏呼出界面](topics/overlay.md)
-    * [DVR](topics/dvr.md)
-* [省电模式](topics/lpm.md)
-
-__进阶内容:__
-
-* [优化](topics/optimization.md)
-* [AMD图形处理器服务(AGS)](topics/amd_gpu_services.md)
+    * [文档](topics/docs.md)
+    * [版本更新说明](topics/release_notes.md)
+    * [MIT许可证](../../LICENSE.md)

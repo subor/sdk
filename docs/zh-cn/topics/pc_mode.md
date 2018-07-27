@@ -10,7 +10,7 @@ PC模式和Ruyi模式很接近。相同版本的Windows，只不过部分安全�
 
 可以在Ruyi模式和PC模式之前相互切换。
 
-__使用 Administrator__账户 运行 `SwitchOS.cmd` (可以在桌面上找到)，然后重启。
+__使用 Administrator__账户 运行 `SwitchOS.cmd` (可以在桌面上找到,或者在这里[下载](https://bitbucket.org/playruyi/support/src/master/files/scripts/))，然后重启。
 
 ## 设置默认语言
 

@@ -57,7 +57,7 @@ DevTools/ | RuyiDev.exe | [开发者工具](devtool.md)
 | Ruyi/Presentation/Web/index.html | SDK API文档 (即[线上文档](http://dev.playruyi.com/api))
 Layer0/ | Layer0.exe | 客户端的保护进程(参考[平台架构](layer0.md))
 MainClient/ | WpfClient.exe | 面向用户端界面(需要先layer0运行)
-MiniPower | MiniPower.exe | "Ruyi助手"; [PC模式](pc_mode.md)的电量控制和硬件信息
+MiniPower | MiniPower.exe | [Ruyi Assist](ruyi_assist.md); [PC模式](pc_mode.md)的电量控制和硬件信息
 OverlayClient/ | RuyiOverlayClient.exe | [游戏内界面](overlay.md) (由layer0管理)
 RuyiSDK/ | | .Net/C# SDK (.Net标准2.0)
 RuyiSDK.nf2.0/ | | .Net/C#支持.Net Framework 3.5 (Unity使用)
