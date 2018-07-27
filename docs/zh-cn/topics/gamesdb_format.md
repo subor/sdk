@@ -2,9 +2,9 @@
 
 如果你的游戏在默认的[标签记录](overlay.md#Compatibility)下无法使用,可以添加更多标签，在以下情况下可能会适用：
 
-* 你的exe文件是一个常用通用的游戏
+* 你的exe文件是一个通用的游戏运行程序
 * 你的游戏由很多可执行文件组成
-* 你需要开启/不开启[<runtime><features>]标签内的enabled值(true/false)(#Runtime-element)
+* 你需要开启/关闭[<runtime><features>]标签内的enabled值(true/false)(#Runtime-element)
 
 本文档会详细解释gamesdb.xml文件的所有标签结构。如果你的游戏仍然无法使用游戏内界面(Overlay)功能，可以在这里[请求帮助](support.md).
 
@@ -32,7 +32,7 @@ Gamesdb.xml包含大量如下所示的标签结构:
 ```
 
 如果在`<variant>`标签中定义的规则和启动游戏的可执行文件匹配，该游戏则会被识别为<game>标签所定义的游戏实例。
-之后游戏内界面（overlay）程序会根据`<runtime>`内的值是否附加到该游戏进程中。
+之后游戏内界面（overlay）程序会根据`<runtime>`内的值附加到该游戏进程中。
 
 | XML 元素 | 说明 | 是否必须 | 详细
 |-|-|-|-
@@ -40,7 +40,7 @@ Gamesdb.xml包含大量如下所示的标签结构:
 | name | 游戏名称（注意是运行时进程名称） | 是 | 比如`<name>Ruyi Test App</name>`
 | conditions | 游戏运行的外部环境条件，需要在`<detection>``<variant>`内具体定义 | 是 | 参考[Conditions 元素](#conditions-element)
 | detection | 在`<variant>`定义的规则，以此来识别程序 | 是 | 参考[Detection 元素](#detection-element)
-| runtime | 运行时是否启动/不启动`<features>` | 否 | 参考[Runtime 元素](#conditions-element)
+| runtime | 运行时是否启动/关闭`<features>` | 否 | 参考[Runtime 元素](#conditions-element)
 
 ## Conditions 元素
 
@@ -58,7 +58,7 @@ Gamesdb.xml包含大量如下所示的标签结构:
 | file-present | 检测对应文件是否存在 | `file` | 文件路径
 | file-absent | 检测对应文件是否不存在 | `file` | 文件路径
 | arg-present | 检测对应命令行参数是否存在 | `arg` | 命令行参数
-| arg-absent | 检测对应命令行参数是否存在 | `arg` | 命令行参数
+| arg-absent | 检测对应命令行参数是否不存在 | `arg` | 命令行参数
 | reg-value-op | 已过时 | 
 
 如果 __TYPE__ 为`file-present`或`file-absent`，那么`file`属性值可以使用以下宏:
