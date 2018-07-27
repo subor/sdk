@@ -48,6 +48,7 @@ Get __[Support](topics/support.md)__
             * [DVR](topics/dvr.md)
             * [Gamesdb.xml Format](topics/gamesdb_format.md) (advanced)
         * [Low-Power Mode](topics/lpm.md)
+        * [RuyiNet](topics/ruyinet.md)
     * Advanced
         * [Optimization](topics/optimization.md)
         * [AMD GPU Services (AGS)](topics/amd_gpu_services.md)
