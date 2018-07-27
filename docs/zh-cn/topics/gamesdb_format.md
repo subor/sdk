@@ -1,16 +1,16 @@
-# Gamesdb.xml Format
+# Gamesdb.xml格式
 
-If a [simple entry](overlay.md#Compatibility) isn't working for your application, you might need to create a more advanced entry.  It might be necessary in the following cases:
+如果你的游戏在默认的[标签记录](overlay.md#Compatibility)下无法使用,可以添加更多标签，在以下情况下可能会适用：
 
-* Your exe is a commonly used or very generic name
-* Your application is composed of multiple executables
-* You need to enable/disable [runtime features](#Runtime-element)
+* 你的exe文件是一个常用通用的游戏
+* 你的游戏由很多可执行文件组成
+* 你需要开启/不开启[<runtime><features>]标签内的enabled值(true/false)(#Runtime-element)
 
-This section describes the full grammar of the gamesdb.xml file.  If you still can't get it working, [get help](support.md).
+本文档会详细解释gamesdb.xml文件的所有标签结构。如果你的游戏仍然无法使用游戏内界面(Overlay)功能，可以在这里[请求帮助](support.md).
 
-## Overview
+## 综述
 
-Gamesdb.xml contains numerous entries similar to:
+Gamesdb.xml包含大量如下所示的标签结构:
 ```
 <game>
     <id>9999</id> 
@@ -31,59 +31,60 @@ Gamesdb.xml contains numerous entries similar to:
 </game>
 ```
 
-If the rules specified by a `<variant>` matches for a running executable, it will be identified as an instance of the application specified by `<game>`.  Then the overlay will attach to the application based on `<runtime>`.
+如果在`<variant>`标签中定义的规则和启动游戏的可执行文件匹配，该游戏则会被识别为<game>标签所定义的游戏实例。
+之后游戏内界面（overlay）程序会根据`<runtime>`内的值是否附加到该游戏进程中。
 
-| XML Element | Description | Required | Details
+| XML 元素 | 说明 | 是否必须 | 详细
 |-|-|-|-
-| id | App ID assigned to you by Subor ([link](dev_onboarding.md)) | Yes | E.g. `<id>12345</id>`
-| name | Title of your application | Yes | E.g. `<name>Ruyi Test App</name>`
-| conditions | All the environment conditions used in `<detection>` to specify `<variant>` rules | Yes | See [Conditions Element](#conditions-element)
-| detection | Specify `<variant>` rules used to identify applications | Yes | See [Detection Element](#detection-element)
-| runtime | Enables/disables `<features>` at runtime | No | See [Runtime Element](#conditions-element)
+| id | 小霸王提供的App ID([link](dev_onboarding.md)) | 是 | 比如`<id>12345</id>`
+| name | 游戏名称（注意是运行时进程名称） | 是 | 比如`<name>Ruyi Test App</name>`
+| conditions | 游戏运行的外部环境条件，需要在`<detection>``<variant>`内具体定义 | 是 | 参考[Conditions 元素](#conditions-element)
+| detection | 在`<variant>`定义的规则，以此来识别程序 | 是 | 参考[Detection 元素](#detection-element)
+| runtime | 运行时是否启动/不启动`<features>` | 否 | 参考[Runtime 元素](#conditions-element)
 
-## Conditions Element
+## Conditions 元素
 
-`<conditions>` contains one or more `<cond>` elements.  These are simple environment checks that are combined in [`<detection>`](#Detection-element).
+`<conditions>`可以包含一个或多个`<cond>`。`<cond>`内容是程序运行的条件检测（判断程序是否运行等等），具体在[`<detection>`](#Detection-element)中定义是否检测该条件.
 
-Format is: `<cond name="CONDITION_NAME" type="TYPE" TYPE_ATTR="ADDITIONAL_ARG" />`
+格式: `<cond name="CONDITION_NAME" type="TYPE" TYPE_ATTR="ADDITIONAL_ARG" />`
 
-Where `CONDITION_NAME` is the unique name of the condition.
+`CONDITION_NAME`是条件的名称（唯一）
 
-And `TYPE`, `TYPE_ATTR`, and `ADDITIONAL_ARG` are defined as follows:
+`TYPE`、`TYPE_ATTR`和`ADDITIONAL_ARG`定义如下:
 
-| TYPE | Description | TYPE_ATTR | ADDITIONAL_ARG
+| TYPE | 描述 | TYPE_ATTR | ADDITIONAL_ARG
 |-|-|-|-
-| exe-present | Matches name of executable | `exe` | Name of running executable
-| file-present | Checks for presence of a file | `file` | Path of file
-| file-absent | Checks for absence of a file | `file` | Path of file
-| arg-present | Checks for presense of command-line argument | `arg` | Command line argument
-| arg-absent | Checks for absence of command-line argument | `arg` | Command line argument
-| reg-value-op | Deprecated | 
+| exe-present | 可执行文件名检测 | `exe` | 可执行文件名称
+| file-present | 检测对应文件是否存在 | `file` | 文件路径
+| file-absent | 检测对应文件是否不存在 | `file` | 文件路径
+| arg-present | 检测对应命令行参数是否存在 | `arg` | 命令行参数
+| arg-absent | 检测对应命令行参数是否存在 | `arg` | 命令行参数
+| reg-value-op | 已过时 | 
 
-If __TYPE__ is `file-present` or `file-absent`, the `file` attribute may use the following macros:
+如果 __TYPE__ 为`file-present`或`file-absent`，那么`file`属性值可以使用以下宏:
 
 | Macro | Description
 |-|-|-
-| `{exedir}` | Directory containing running executable
-| `{exe}` | Name of running executable
+| `{exedir}` | 包含可执行文件的文件夹
+| `{exe}` | 可执行文件名称
 
-## Detection Element
+## Detection 元素
 
-`<detection>` contains one or more `<variant>` elements.  Each `<variant>` contains one or more rules.  If all the rules in a `<variant>` match, then an instance of an application is detected.
+`<detection>`包含一个或多个`<variant>`。每个`<variant>`包含一个或多个规则。如果所有在`<variant>`定义的规则都匹配，那么该游戏实例会被检测到。
 
-The following rules are supported:
+支持以下规则:
 
-| Rule | Description | Example
+| 规则 | 描述 | 例子
 |-|-|-
-| `if` | Check if `<cond>` specified in [`<conditions>`](#Conditions-element) is true | `<if name="CONDITION_NAME" />`
+| `if` | 检查在`<cond>`下对应 [`<conditions>`](#Conditions-element)定义的条件是否满足 | `<if name="CONDITION_NAME" />`
 
-## Runtime Element
+## Runtime 元素
 
-When the overlay attaches to an application, `<runtime>` configures some aspect of the hooking or rendering.
+当游戏内界面(overlay)程序附加到游戏进程后，`<runtime>`决定其是否挂钩或渲染。
 
-All are similar to `<ELEMENT ATTR="VALUE" />`:
+具体格式类似`<ELEMENT ATTR="VALUE" />`:
 
-| ELEMENT | ATTR | VALUE | Description | Default
+| ELEMENT | ATTR | VALUE | 说明 | 默认值
 |-|-|-|-|-
 | overlay | enabled | true/false | | true
 | forcebind | enabled | true/false | | false
@@ -91,7 +92,7 @@ All are similar to `<ELEMENT ATTR="VALUE" />`:
 | opengl-vbo-rendering | enabled | true/false | | true
 | opengl-state-hooking | enabled | true/false | | true
 | game-window-subclassing | enabled | true/false | Deprecated | true
-| forcerenderer | type | direct3d/opengl | Force overlay to use specified rendering API | `""`; Auto-detect
-| forcecursor | type | software/hardware | Force overlay to use hardware/software cursor | `""`; Auto
-| renderer-hooking | method | normal/intrusive/factory | Deprecated | normal
-| party-network | | | Deprecated
+| forcerenderer | type | direct3d/opengl | 强制 overlay使用特定渲染API | `""`; Auto-detect
+| forcecursor | type | software/hardware | 强制 overlay使用硬件/软件光标 | `""`; Auto
+| renderer-hooking | method | normal/intrusive/factory | 已过时 | normal
+| party-network | | | 已过时
