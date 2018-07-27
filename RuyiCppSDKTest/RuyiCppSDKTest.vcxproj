@@ -218,7 +218,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\lib;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -237,7 +237,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\lib;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -297,7 +297,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\lib;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -320,7 +320,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\lib;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
