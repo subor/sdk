@@ -112,6 +112,8 @@ class SettingSystemServiceIf {
   virtual void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) = 0;
   virtual void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return) = 0;
   virtual void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return) = 0;
+  virtual void RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex) = 0;
+  virtual bool RuyiStopNetworkSpeedTest(const int32_t userindex) = 0;
   virtual void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return) = 0;
   virtual bool DisconnectWifi() = 0;
 };
@@ -213,6 +215,13 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
   }
   void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& /* _return */) {
     return;
+  }
+  void RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& /* _return */, const int32_t /* userindex */) {
+    return;
+  }
+  bool RuyiStopNetworkSpeedTest(const int32_t /* userindex */) {
+    bool _return = false;
+    return _return;
   }
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & /* _return */) {
     return;
@@ -2546,6 +2555,230 @@ class SettingSystemService_RuyiTestNetwork_presult {
 
 };
 
+typedef struct _SettingSystemService_RuyiStartNetworkSpeedTest_args__isset {
+  _SettingSystemService_RuyiStartNetworkSpeedTest_args__isset() : userindex(false) {}
+  bool userindex :1;
+} _SettingSystemService_RuyiStartNetworkSpeedTest_args__isset;
+
+class SettingSystemService_RuyiStartNetworkSpeedTest_args {
+ public:
+
+  SettingSystemService_RuyiStartNetworkSpeedTest_args(const SettingSystemService_RuyiStartNetworkSpeedTest_args&);
+  SettingSystemService_RuyiStartNetworkSpeedTest_args& operator=(const SettingSystemService_RuyiStartNetworkSpeedTest_args&);
+  SettingSystemService_RuyiStartNetworkSpeedTest_args() : userindex(0) {
+  }
+
+  virtual ~SettingSystemService_RuyiStartNetworkSpeedTest_args() throw();
+  int32_t userindex;
+
+  _SettingSystemService_RuyiStartNetworkSpeedTest_args__isset __isset;
+
+  void __set_userindex(const int32_t val);
+
+  bool operator == (const SettingSystemService_RuyiStartNetworkSpeedTest_args & rhs) const
+  {
+    if (!(userindex == rhs.userindex))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_RuyiStartNetworkSpeedTest_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_RuyiStartNetworkSpeedTest_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_RuyiStartNetworkSpeedTest_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_RuyiStartNetworkSpeedTest_pargs() throw();
+  const int32_t* userindex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_RuyiStartNetworkSpeedTest_result__isset {
+  _SettingSystemService_RuyiStartNetworkSpeedTest_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_RuyiStartNetworkSpeedTest_result__isset;
+
+class SettingSystemService_RuyiStartNetworkSpeedTest_result {
+ public:
+
+  SettingSystemService_RuyiStartNetworkSpeedTest_result(const SettingSystemService_RuyiStartNetworkSpeedTest_result&);
+  SettingSystemService_RuyiStartNetworkSpeedTest_result& operator=(const SettingSystemService_RuyiStartNetworkSpeedTest_result&);
+  SettingSystemService_RuyiStartNetworkSpeedTest_result() {
+  }
+
+  virtual ~SettingSystemService_RuyiStartNetworkSpeedTest_result() throw();
+   ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_RuyiStartNetworkSpeedTest_result__isset __isset;
+
+  void __set_success(const  ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_RuyiStartNetworkSpeedTest_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_RuyiStartNetworkSpeedTest_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_RuyiStartNetworkSpeedTest_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_RuyiStartNetworkSpeedTest_presult__isset {
+  _SettingSystemService_RuyiStartNetworkSpeedTest_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_RuyiStartNetworkSpeedTest_presult__isset;
+
+class SettingSystemService_RuyiStartNetworkSpeedTest_presult {
+ public:
+
+
+  virtual ~SettingSystemService_RuyiStartNetworkSpeedTest_presult() throw();
+   ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed* success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_RuyiStartNetworkSpeedTest_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _SettingSystemService_RuyiStopNetworkSpeedTest_args__isset {
+  _SettingSystemService_RuyiStopNetworkSpeedTest_args__isset() : userindex(false) {}
+  bool userindex :1;
+} _SettingSystemService_RuyiStopNetworkSpeedTest_args__isset;
+
+class SettingSystemService_RuyiStopNetworkSpeedTest_args {
+ public:
+
+  SettingSystemService_RuyiStopNetworkSpeedTest_args(const SettingSystemService_RuyiStopNetworkSpeedTest_args&);
+  SettingSystemService_RuyiStopNetworkSpeedTest_args& operator=(const SettingSystemService_RuyiStopNetworkSpeedTest_args&);
+  SettingSystemService_RuyiStopNetworkSpeedTest_args() : userindex(0) {
+  }
+
+  virtual ~SettingSystemService_RuyiStopNetworkSpeedTest_args() throw();
+  int32_t userindex;
+
+  _SettingSystemService_RuyiStopNetworkSpeedTest_args__isset __isset;
+
+  void __set_userindex(const int32_t val);
+
+  bool operator == (const SettingSystemService_RuyiStopNetworkSpeedTest_args & rhs) const
+  {
+    if (!(userindex == rhs.userindex))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_RuyiStopNetworkSpeedTest_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_RuyiStopNetworkSpeedTest_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_RuyiStopNetworkSpeedTest_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_RuyiStopNetworkSpeedTest_pargs() throw();
+  const int32_t* userindex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_RuyiStopNetworkSpeedTest_result__isset {
+  _SettingSystemService_RuyiStopNetworkSpeedTest_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_RuyiStopNetworkSpeedTest_result__isset;
+
+class SettingSystemService_RuyiStopNetworkSpeedTest_result {
+ public:
+
+  SettingSystemService_RuyiStopNetworkSpeedTest_result(const SettingSystemService_RuyiStopNetworkSpeedTest_result&);
+  SettingSystemService_RuyiStopNetworkSpeedTest_result& operator=(const SettingSystemService_RuyiStopNetworkSpeedTest_result&);
+  SettingSystemService_RuyiStopNetworkSpeedTest_result() : success(0) {
+  }
+
+  virtual ~SettingSystemService_RuyiStopNetworkSpeedTest_result() throw();
+  bool success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_RuyiStopNetworkSpeedTest_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_RuyiStopNetworkSpeedTest_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_RuyiStopNetworkSpeedTest_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_RuyiStopNetworkSpeedTest_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_RuyiStopNetworkSpeedTest_presult__isset {
+  _SettingSystemService_RuyiStopNetworkSpeedTest_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_RuyiStopNetworkSpeedTest_presult__isset;
+
+class SettingSystemService_RuyiStopNetworkSpeedTest_presult {
+ public:
+
+
+  virtual ~SettingSystemService_RuyiStopNetworkSpeedTest_presult() throw();
+  bool* success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_RuyiStopNetworkSpeedTest_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 
 class SettingSystemService_GetAvailableWifi_args {
  public:
@@ -2831,6 +3064,12 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return);
   void send_RuyiTestNetwork();
   void recv_RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return);
+  void RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex);
+  void send_RuyiStartNetworkSpeedTest(const int32_t userindex);
+  void recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return);
+  bool RuyiStopNetworkSpeedTest(const int32_t userindex);
+  void send_RuyiStopNetworkSpeedTest(const int32_t userindex);
+  bool recv_RuyiStopNetworkSpeedTest();
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return);
   void send_GetAvailableWifi();
   void recv_GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return);
@@ -2872,6 +3111,8 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
   void process_GetNetworkSettings(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetNetworkStatus(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_RuyiTestNetwork(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_RuyiStartNetworkSpeedTest(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_RuyiStopNetworkSpeedTest(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetAvailableWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_DisconnectWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
@@ -2897,6 +3138,8 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
     processMap_["GetNetworkSettings"] = &SettingSystemServiceProcessor::process_GetNetworkSettings;
     processMap_["GetNetworkStatus"] = &SettingSystemServiceProcessor::process_GetNetworkStatus;
     processMap_["RuyiTestNetwork"] = &SettingSystemServiceProcessor::process_RuyiTestNetwork;
+    processMap_["RuyiStartNetworkSpeedTest"] = &SettingSystemServiceProcessor::process_RuyiStartNetworkSpeedTest;
+    processMap_["RuyiStopNetworkSpeedTest"] = &SettingSystemServiceProcessor::process_RuyiStopNetworkSpeedTest;
     processMap_["GetAvailableWifi"] = &SettingSystemServiceProcessor::process_GetAvailableWifi;
     processMap_["DisconnectWifi"] = &SettingSystemServiceProcessor::process_DisconnectWifi;
   }
@@ -3116,6 +3359,25 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return;
   }
 
+  void RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->RuyiStartNetworkSpeedTest(_return, userindex);
+    }
+    ifaces_[i]->RuyiStartNetworkSpeedTest(_return, userindex);
+    return;
+  }
+
+  bool RuyiStopNetworkSpeedTest(const int32_t userindex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->RuyiStopNetworkSpeedTest(userindex);
+    }
+    return ifaces_[i]->RuyiStopNetworkSpeedTest(userindex);
+  }
+
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -3225,6 +3487,12 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return);
   int32_t send_RuyiTestNetwork();
   void recv_RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return, const int32_t seqid);
+  void RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex);
+  int32_t send_RuyiStartNetworkSpeedTest(const int32_t userindex);
+  void recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t seqid);
+  bool RuyiStopNetworkSpeedTest(const int32_t userindex);
+  int32_t send_RuyiStopNetworkSpeedTest(const int32_t userindex);
+  bool recv_RuyiStopNetworkSpeedTest(const int32_t seqid);
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return);
   int32_t send_GetAvailableWifi();
   void recv_GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return, const int32_t seqid);

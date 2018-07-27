@@ -148,7 +148,7 @@ namespace Ruyi.Layer0
                 case ServiceIDs.INPUTMANAGER_INTERNAL:
                 case ServiceIDs.INPUTMANAGER_EXTERNAL:
                 case ServiceIDs.LAUNCHER:
-                case ServiceIDs.UPDATESERVICE:
+                //case ServiceIDs.UPDATESERVICE:
                 case ServiceIDs.POWERMANAGER:
                     return true;
             }

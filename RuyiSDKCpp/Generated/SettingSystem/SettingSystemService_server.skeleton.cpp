@@ -181,6 +181,16 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("RuyiTestNetwork\n");
   }
 
+  void RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex) {
+    // Your implementation goes here
+    printf("RuyiStartNetworkSpeedTest\n");
+  }
+
+  bool RuyiStopNetworkSpeedTest(const int32_t userindex) {
+    // Your implementation goes here
+    printf("RuyiStopNetworkSpeedTest\n");
+  }
+
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return) {
     // Your implementation goes here
     printf("GetAvailableWifi\n");
