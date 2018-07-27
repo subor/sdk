@@ -69,14 +69,14 @@ namespace Ruyi.SDK.Online
         /// Attempts to find users with names containing the substring.
         /// </summary>
         /// <param name="index">The index of user.</param>
-        /// <param name="name">The name of the user to search for.</param>
+        /// <param name="substring">The substring to search for.</param>
         /// <param name="maxResults">The maximum number of results to return.</param>
         /// <param name="callback">The function to call when the task completes.</param>
         public void FindUsersBySubstrName(int index, string substring, int maxResults, Action<RuyiNetFriendSummaryData[]> callback)
         {
             EnqueueTask(() =>
             {
-                return mClient.BCService.Friend_FindUsersBySubstrName(name, maxResults, index);
+                return mClient.BCService.Friend_FindUsersBySubstrName(substring, maxResults, index);
             }, (RuyiNetFriendFindUsersResponse response) =>
             {
                 if (callback != null)
