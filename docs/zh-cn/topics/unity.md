@@ -13,6 +13,7 @@ RuyiNet类提供了Ruyi C# API的上层封装。
 1. [下载SDK的Unity组件包](http://dev.playruyi.com/udownloadslist/SDK)，导入项目中(Assets->Import Package->Custom Package...). 
 1. 创建一个RuyiNet类的实例，填写应用ID/密码:  
 ![](/docs/img/unity_ruyinet.png)
+1. 在__Edit/Project Settings/Player__, 点开 _Other Settings_, 设置 __Api Compatibility Level__ 为`.NET 2.0`
 
 ## 进阶使用
 
