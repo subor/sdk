@@ -14,15 +14,28 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using Thrift.Protocol;
 using Thrift.Transport;
+using Ruyi.SDK.OverlayManagerExternal;
 
 namespace Ruyi
 {
     /// <summary>
-    /// the main class used to communicate with the Ruyi platform
+    /// The root namespace of the Ruyi platform.  Most functionality is available via a <see cref="Ruyi.RuyiSDK"/> instance.
     /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    class NamespaceDoc
+    { }
+
+    /// <summary>
+    /// The main class used to communicate with the Ruyi platform.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="RuyiSDK.Update"/> must be called periodically (e.g. each frame) for all service clients to function correctly.
+    /// </remarks>
+    /// <example>
+    /// <code source="layer0/sdktest/doctests.cs" region="RuyiSDK"></code>
+    /// </example>
     public class RuyiSDK : IDisposable
     {
         /// <summary>
@@ -36,39 +49,47 @@ namespace Ruyi
             /// </summary>
             None = 0,
             /// <summary>
-            /// Storage layer
+            /// <see cref="RuyiSDK.Storage">Storage layer</see>
             /// </summary>
             Storage = 1 << 0,
             /// <summary>
-            /// Localization service
+            /// <see cref="RuyiSDK.L10NService">Localization service</see>
             /// </summary>
             L10N = 1 << 1,
             /// <summary>
-            /// RuyiNet online platform
+            /// <see cref="RuyiSDK.RuyiNetService">Online functionality</see>
             /// </summary>
-            Online = 1 << 2,
+            RuyiNet = 1 << 2,
             /// <summary>
-            /// Settings system
+            /// Alias for <see cref="SDKFeatures.RuyiNet"/>
+            /// </summary>
+            Online = RuyiNet,
+            /// <summary>
+            /// <see cref="RuyiSDK.SettingSys">Settings system</see>
             /// </summary>
             Settings = 1 << 3,
             /// <summary>
-            /// User service
+            /// <see cref="RuyiSDK.UserService">User service</see>
             /// </summary>
             Users = 1 << 4,
             /// <summary>
-            /// Input Manager
+            /// <see cref="RuyiSDK.InputMgr">Input Manager</see>
             /// </summary>
             Input = 1 << 5,
             /// <summary>
-            /// Speech
+            /// <see cref="RuyiSDK.SpeechService">Speech recognition</see>
             /// </summary>
             Speech = 1 << 6,
             /// <summary>
-            /// Media player service
+            /// <see cref="RuyiSDK.Media">Media player service</see>
             /// </summary>
             Media = 1 << 7,
             /// <summary>
-            /// Initialize subscriber for publisher/subscriber messaging
+            /// Overlay service
+            /// </summary>
+            Overlay = 1 << 8,
+            /// <summary>
+            /// <see cref="RuyiSDK.Subscriber">Subscriber</see> for publisher/subscriber messaging
             /// </summary>
             Subscriber = 1 << 16,
 
@@ -80,52 +101,86 @@ namespace Ruyi
             /// <summary>
             /// All SDK features
             /// </summary>
-            All = Basic | Storage | L10N | Speech | Media,
+            All = Basic | Storage | L10N | Speech | Media | Overlay,
         }
 
         /// <summary>
-        /// to subscribe to a topic
+        /// To subscribe to published topics.
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.Subscriber"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public SubscribeClient Subscriber { get; private set; }
 
         /// <summary>
-        /// to access the ruyi platform storage interface
+        /// Storage service
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.Storage"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public StorageLayerService.Client Storage { get; private set; }
 
         /// <summary>
-        /// to access the l10n service from Ruyi
+        /// Localization service
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.L10N"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public LocalizationService.Client L10NService { get; private set; }
 
         /// <summary>
-        /// to access the ruyi platform back end service interface
+        /// Online functionality
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.Online"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public RuyiNetClient RuyiNetService { get; private set; }
 
         /// <summary>
-        /// to access the setting system
+        /// Setting system
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.Settings"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public SDK.SettingSystem.Api.SettingSystemService.Client SettingSys { get; private set; }
 
         /// <summary>
         /// User-related services
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.Users"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public UserServExternal.Client UserService { get; private set; }
 
         /// <summary>
-        /// Input related services
+        /// Input-related services
         /// </summary>
+        /// <remarks>
+        /// To get gamepad/controller input events use <see cref="SubscribeClient"/> instance via <see cref="Subscriber"/> property.
+        /// 
+        /// Must set <see cref="SDKFeatures.Input"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public InputManagerService.Client InputMgr { get; private set; }
 
         /// <summary>
-        /// the speech service
+        /// Speech service
         /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.Speech"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public SpeechService.Client SpeechService { get; private set; }
 
         /// <summary>
-        /// Media player services
+        /// the overlay service
         /// </summary>
+        public ExternalOverlayManagerService.Client OverlayService { get; private set; }
+
+        /// <summary>
+        /// Multimedia-related services
+        /// </summary>
+        /// <remarks>
+        /// Must set <see cref="SDKFeatures.Media"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
+        /// </remarks>
         public MediaService.Client Media { get; private set; }
 
         private RuyiSDKContext context = null;
@@ -134,6 +189,7 @@ namespace Ruyi
         /// <summary>
         /// Underlying transport and protocol for low-latency messages
         /// </summary>
+        /// <exclude/>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public TBinaryProtocolTS LowLatencyProtocol { get; private set; }
 
@@ -141,6 +197,7 @@ namespace Ruyi
         /// <summary>
         /// Underlying transport and protocol for high-latency messages
         /// </summary>
+        /// <exclude/>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public TBinaryProtocolTS HighLatencyProtocol { get; private set; }
 
@@ -203,21 +260,18 @@ namespace Ruyi
             if (!ValidateVersion())
                 return false;
 
-            // init subscriber
             if (IsFeatureEnabled(SDKFeatures.Subscriber))
             {
                 var pubout = ConstantsSDKDataTypesConstants.layer0_publisher_out_uri.SetAddress(context.RemoteAddress);
                 Subscriber = SubscribeClient.CreateInstance(pubout);
             }
 
-            // init storage layer
             if (IsFeatureEnabled(SDKFeatures.Storage))
             {
                 var stoProtocol = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.STORAGELAYER.ServiceID());
                 Storage = new StorageLayerService.Client(stoProtocol);
             }
 
-            // init braincloud service
             if (IsFeatureEnabled(SDKFeatures.Online))
             {
                 var bcProtocol = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.BCSERVICE.ServiceID());
@@ -225,28 +279,24 @@ namespace Ruyi
                 //BCService = new BrainCloudService.Client(bcProtocal);
             }
 
-            // init setting system
             if (IsFeatureEnabled(SDKFeatures.Settings))
             {
                 var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.SETTINGSYSTEM_EXTERNAL.ServiceID());
                 SettingSys = new SDK.SettingSystem.Api.SettingSystemService.Client(proto);
             }
 
-            // init L10N
             if (IsFeatureEnabled(SDKFeatures.L10N))
             {
                 var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.L10NSERVICE.ServiceID());
                 L10NService = new LocalizationService.Client(proto);
             }
 
-            // user manager
             if (IsFeatureEnabled(SDKFeatures.Users))
             {
                 var proto = new TMultiplexedProtocol(HighLatencyProtocol, ServiceIDs.USER_SERVICE_EXTERNAL.ServiceID());
                 UserService = new UserServExternal.Client(proto);
             }
 
-            // input manger
             if (IsFeatureEnabled(SDKFeatures.Input))
             {
                 var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.INPUTMANAGER_EXTERNAL.ServiceID());
@@ -265,13 +315,18 @@ namespace Ruyi
                 Media = new MediaService.Client(proto);
             }
 
+            if (IsFeatureEnabled(SDKFeatures.Overlay))
+            {
+                var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.OVERLAYMANAGER_EXTERNAL.ServiceID());
+                OverlayService = new ExternalOverlayManagerService.Client(proto);
+            }
+
             return true;
         }
 
         bool IsFeatureEnabled(SDKFeatures fea)
         {
-
-#if NET20
+#if DOTNET_20
             return ((int)context.EnabledFeatures & (int)fea) != 0;
 #else
             return context.EnabledFeatures.HasFlag(fea);
@@ -318,8 +373,11 @@ namespace Ruyi
         }
 
         /// <summary>
-        /// Basic update loop.
+        /// Update loop for all service clients that need it.
         /// </summary>
+        /// <remarks>
+        /// This must be called periodically (e.g. each frame) for all service clients to function correctly.
+        /// </remarks>
         public void Update()
         {
             RuyiNetService.Update();
@@ -350,6 +408,15 @@ namespace Ruyi
 
             InputMgr?.Dispose();
             InputMgr = null;
+
+            SpeechService?.Dispose();
+            SpeechService = null;
+
+            Media?.Dispose();
+            Media = null;
+
+            OverlayService?.Dispose();
+            OverlayService = null;
 
             lowLatencyTransport?.Close();
             LowLatencyProtocol?.Dispose();

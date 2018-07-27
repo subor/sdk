@@ -50,6 +50,42 @@
     <Filter Include="Generated\CommonType">
       <UniqueIdentifier>{776c8dbb-1613-4255-a6f7-895f0bc7b711}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\RuyiNet\Service\Cloud">
+      <UniqueIdentifier>{64cab54c-9d11-4d00-a6a6-828fe34fa645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\RuyiNet\Service\Friend">
+      <UniqueIdentifier>{a898a8d2-5b05-458d-b70f-7ff4146b2ef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\RuyiNet\Service\Leaderboard">
+      <UniqueIdentifier>{37fdfe80-e4f7-47bf-bbb4-97d6498e1e6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\RuyiNet\Service\Gamification">
+      <UniqueIdentifier>{f550bd0a-d296-4569-a245-55467dd022b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\RuyiNet\Service\Lobby">
+      <UniqueIdentifier>{9115d8c4-c987-4695-b1b6-adc7541789f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\RuyiNet\Service\Party">
+      <UniqueIdentifier>{4d4d9464-f2df-418a-852b-24ac662f3e6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\RuyiNet\Service\Patch">
+      <UniqueIdentifier>{b5e0b330-fe31-4660-a69b-0de2ebe169c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\RuyiNet\Service\Profile">
+      <UniqueIdentifier>{4c1802d5-5096-479e-9aed-e173c0dcc74d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\RuyiNet\Service\Telemetry">
+      <UniqueIdentifier>{908a9d23-ca53-4c58-ac50-bb8a47ec933e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\RuyiNet\Service\UserFile">
+      <UniqueIdentifier>{f9e07b25-add6-499b-bab5-e9c37c45a010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\RuyiNet\Service\Video">
+      <UniqueIdentifier>{ea609dc1-5921-4840-aa0c-8210ed949340}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Generated\OverlayManager">
+      <UniqueIdentifier>{54197cb3-8eab-4c53-b514-7116c6621bca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Generated\InputManager\InputManagerSDKDataTypes_constants.cpp">
@@ -178,28 +214,7 @@
     <ClCompile Include="RuyiNet\RuyiNetClient.cpp">
       <Filter>Sources\RuyiNet</Filter>
     </ClCompile>
-    <ClCompile Include="RuyiNet\Service\RuyiNetCloudService.cpp">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Service\RuyiNetFriendService.cpp">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Service\RuyiNetLeaderboardService.cpp">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClCompile>
     <ClCompile Include="RuyiNet\Service\RuyiNetService.cpp">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Service\RuyiNetPartyService.cpp">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Service\RuyiNetProfileService.cpp">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Service\RuyiNetUserFileService.cpp">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClCompile>
-    <ClCompile Include="RuyiNet\Service\RuyiNetVideoService.cpp">
       <Filter>Sources\RuyiNet\Service</Filter>
     </ClCompile>
     <ClCompile Include="Generated\CommonType\CommonTypeSDKDataTypes_constants.cpp">
@@ -214,17 +229,56 @@
     <ClCompile Include="Generated\CommonType\CommonTypeSDKServices_types.cpp">
       <Filter>Generated\CommonType</Filter>
     </ClCompile>
-    <ClCompile Include="RuyiNet\Service\RuyiNetMatchmakingService.cpp">
-      <Filter>Sources\RuyiNet\Service</Filter>
+    <ClCompile Include="RuyiNet\Service\Cloud\RuyiNetCloudService.cpp">
+      <Filter>Sources\RuyiNet\Service\Cloud</Filter>
     </ClCompile>
-    <ClCompile Include="RuyiNet\Service\RuyiNetLobby.cpp">
-      <Filter>Sources\RuyiNet\Service</Filter>
+    <ClCompile Include="RuyiNet\Service\Friend\RuyiNetFriendService.cpp">
+      <Filter>Sources\RuyiNet\Service\Friend</Filter>
     </ClCompile>
-    <ClCompile Include="RuyiNet\Service\RuyiNetLobbyService.cpp">
-      <Filter>Sources\RuyiNet\Service</Filter>
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardService.cpp">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
     </ClCompile>
-    <ClCompile Include="RuyiNet\Service\RuyiNetTelemetryService.cpp">
-      <Filter>Sources\RuyiNet\Service</Filter>
+    <ClCompile Include="RuyiNet\Service\Lobby\RuyiNetLobby.cpp">
+      <Filter>Sources\RuyiNet\Service\Lobby</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Lobby\RuyiNetLobbyService.cpp">
+      <Filter>Sources\RuyiNet\Service\Lobby</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Party\RuyiNetPartyService.cpp">
+      <Filter>Sources\RuyiNet\Service\Party</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Profile\RuyiNetProfileService.cpp">
+      <Filter>Sources\RuyiNet\Service\Profile</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Telemetry\RuyiNetTelemetryService.cpp">
+      <Filter>Sources\RuyiNet\Service\Telemetry</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\UserFile\RuyiNetUserFileService.cpp">
+      <Filter>Sources\RuyiNet\Service\UserFile</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Video\RuyiNetVideoService.cpp">
+      <Filter>Sources\RuyiNet\Service\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Gamification\RuyiNetGamificationService.cpp">
+      <Filter>Sources\RuyiNet\Service\Gamification</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Patch\RuyiNetPatchService.cpp">
+      <Filter>Sources\RuyiNet\Service\Patch</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\OverlayManager\ExternalOverlayManagerService.cpp">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_constants.cpp">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_types.cpp">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKServices_constants.cpp">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKServices_types.cpp">
+      <Filter>Generated\OverlayManager</Filter>
     </ClCompile>
     <ClCompile Include="Generated\InputManager\InputManagerService.cpp">
       <Filter>Generated\InputManager</Filter>
@@ -367,24 +421,6 @@
     <ClInclude Include="RuyiNet\RuyiNetException.h">
       <Filter>Sources\RuyiNet</Filter>
     </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetCloudService.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetFriendService.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetLeaderboardService.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetLeaderboardType.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetPartyService.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetRotationType.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClInclude>
     <ClInclude Include="RuyiNet\Service\RuyiNetService.h">
       <Filter>Sources\RuyiNet\Service</Filter>
     </ClInclude>
@@ -412,20 +448,11 @@
     <ClInclude Include="RuyiNet\Response\RuyiNetGetProfilesResponse.h">
       <Filter>Sources\RuyiNet\Response</Filter>
     </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetProfileService.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClInclude>
     <ClInclude Include="RuyiNet\Response\RuyiNetGetCDNResponse.h">
       <Filter>Sources\RuyiNet\Response</Filter>
     </ClInclude>
     <ClInclude Include="RuyiNet\Response\RuyiNetUploadFileResponse.h">
       <Filter>Sources\RuyiNet\Response</Filter>
-    </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetUserFileService.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetVideoService.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
     </ClInclude>
     <ClInclude Include="RuyiNet\Response\RuyiNetGetFriendsVideosResponse.h">
       <Filter>Sources\RuyiNet\Response</Filter>
@@ -448,26 +475,86 @@
     <ClInclude Include="RuyiNet\Response\RuyiNetResponse.h">
       <Filter>Sources\RuyiNet\Response</Filter>
     </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetMatchmakingService.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClInclude>
     <ClInclude Include="RuyiNet\Response\RuyiNetFindPlayersResponse.h">
       <Filter>Sources\RuyiNet\Response</Filter>
     </ClInclude>
     <ClInclude Include="RuyiNet\Response\RuyiNetLobbyResponse.h">
       <Filter>Sources\RuyiNet\Response</Filter>
     </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetLobby.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetLobbyService.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
-    </ClInclude>
     <ClInclude Include="RuyiNet\Response\RuyiNetTelemetrySessionResponse.h">
       <Filter>Sources\RuyiNet\Response</Filter>
     </ClInclude>
-    <ClInclude Include="RuyiNet\Service\RuyiNetTelemetryService.h">
-      <Filter>Sources\RuyiNet\Service</Filter>
+    <ClInclude Include="RuyiNet\Service\Cloud\RuyiNetCloudService.h">
+      <Filter>Sources\RuyiNet\Service\Cloud</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Friend\RuyiNetFriendService.h">
+      <Filter>Sources\RuyiNet\Service\Friend</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardService.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardType.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetRotationType.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Lobby\RuyiNetLobby.h">
+      <Filter>Sources\RuyiNet\Service\Lobby</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Lobby\RuyiNetLobbyService.h">
+      <Filter>Sources\RuyiNet\Service\Lobby</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Party\RuyiNetPartyService.h">
+      <Filter>Sources\RuyiNet\Service\Party</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Profile\RuyiNetProfileService.h">
+      <Filter>Sources\RuyiNet\Service\Profile</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Telemetry\RuyiNetTelemetryService.h">
+      <Filter>Sources\RuyiNet\Service\Telemetry</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\UserFile\RuyiNetUserFileService.h">
+      <Filter>Sources\RuyiNet\Service\UserFile</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Video\RuyiNetVideoService.h">
+      <Filter>Sources\RuyiNet\Service\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Gamification\RuyiNetAchievement.h">
+      <Filter>Sources\RuyiNet\Service\Gamification</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetAchievementResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\RuyiNetHttpStatus.h">
+      <Filter>Sources\RuyiNet</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Gamification\RuyiNetGamificationService.h">
+      <Filter>Sources\RuyiNet\Service\Gamification</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Response\RuyiNetGetGameManifestResponse.h">
+      <Filter>Sources\RuyiNet\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Patch\RuyiNetGameManifest.h">
+      <Filter>Sources\RuyiNet\Service\Patch</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Patch\RuyiNetPatchService.h">
+      <Filter>Sources\RuyiNet\Service\Patch</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\OverlayManager\ExternalOverlayManagerService.h">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_constants.h">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_types.h">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKServices_constants.h">
+      <Filter>Generated\OverlayManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\OverlayManager\OverlayManagerSDKServices_types.h">
+      <Filter>Generated\OverlayManager</Filter>
     </ClInclude>
     <ClInclude Include="Generated\InputManager\InputManagerService.h">
       <Filter>Generated\InputManager</Filter>

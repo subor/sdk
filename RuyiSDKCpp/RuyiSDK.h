@@ -10,7 +10,6 @@
 #include "Generated/SDKValidator/ValidatorService.h"
 #include "Generated/LocalizationService/LocalizationService.h"
 #include "Generated/UserServiceExternal/UserServExternal.h"
-#include "Generated/InputManager/InputManagerService.h"
 
 #include "Generated/Constants/ConstantsSDKDataTypes_constants.h"
 #include "Generated/InputManager/InputManagerSDKDataTypes_types.h"
@@ -92,8 +91,8 @@ namespace Ruyi
 	class RuyiSDK
 	{
 	private:
-		boost::shared_ptr<TSocket> sharedLowTrans;
-		boost::shared_ptr<TSocket> sharedHighTrans;
+		std::shared_ptr<TSocket> sharedLowTrans;
+		std::shared_ptr<TSocket> sharedHighTrans;
 
 		RuyiSDKContext* context;
 		SDK::SDKValidator::ValidatorServiceClient* validator;
@@ -114,11 +113,6 @@ namespace Ruyi
 		SDK::LocalizationService::LocalizationServiceClient* L10NService;
 
 		/// <summary>
-		/// input related services
-		/// </summary>
-		SDK::InputManager::InputManagerServiceClient* InputMgr;
-
-		/// <summary>
 		/// User-related services
 		/// </summary>
 		SDK::UserServiceExternal::UserServExternalClient* UserService;
@@ -131,7 +125,7 @@ namespace Ruyi
 		/// <summary>
 		/// to access the ruyi platform back end service interface
 		/// </summary>
-		Ruyi::RuyiNetClient* RuyiNet;
+		Ruyi::SDK::Online::RuyiNetClient* RuyiNet;
 
 		__declspec(deprecated("Use RuyiNet instead, BCService is deprecated and will be removed in future release"))
 		SDK::BrainCloudApi::BrainCloudServiceClient* BCService;

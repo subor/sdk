@@ -1,11 +1,22 @@
-namespace csharp Ruyi.SDK.CommonType
 namespace cpp Ruyi.SDK.CommonType
+namespace csharp Ruyi.SDK.CommonType
+namespace java Ruyi.SDK.CommonType
+namespace netcore Ruyi.SDK.CommonType
+namespace rs Ruyi.SDK.CommonType
 
 enum LoginState {
     /** Logout state */
 	Logout = 0,
     /** Login state */
 	Login = 1,
+}
+
+enum NotificationType {
+    Battery = 0,
+    Interactive = 1,
+    Voice = 2,
+    GameInfo = 3,
+    ScreenshotInfo = 4,
 }
 
 enum InputCategory {
@@ -134,6 +145,7 @@ struct SettingCategory {
     7: map<string, i32> items,
     8: bool enable,
     9: bool showInUI,
+    10: string script,
 }
 
 struct ModuleSetting {
@@ -162,6 +174,13 @@ struct AppData {
 	1: string appId,
     /** The user data of the App. See AppDataCollection */
 	2: list<AppDataCollection> data,
+}
+
+struct PopupNotification {
+    1: NotificationType NotificationType,
+    2: string MainIcon,
+    3: string Text,
+    4: string Description,
 }
 
 

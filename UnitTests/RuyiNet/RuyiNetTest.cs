@@ -12,7 +12,7 @@ namespace Ruyi.SDK.Online.Tests
         const string TEST_APP_SECRET = "9918d6c0-88e0-449c-bf27-b5dfbc6a59cd";
         const string TEST_LEADERBOARD_ID = "testCreate";
 
-        public static string[] PLAYER_IDS =
+        static string[] PLAYER_IDS =
         {
             "bfdcafbf-b15d-4c01-93b0-b363b310ef80"
         };
@@ -90,16 +90,11 @@ namespace Ruyi.SDK.Online.Tests
                     CheckResponseStatus(response.status);
 
                     mSDK.RuyiNetService.FriendService.ListFriends(0,
-                        (RuyiNetListFriendsResponse listFriendsResponse) =>
+                        (RuyiNetFriendSummaryData[] friends) =>
                     {
-                        CheckResponseStatus(listFriendsResponse.status);
-                        Assert.IsTrue(listFriendsResponse.data.success);
+                        Assert.GreaterOrEqual(friends.Length, 1);
 
-                        var friendList = listFriendsResponse.data.response.friends;
-
-                        Assert.GreaterOrEqual(friendList.Length, 1);
-
-                        var i = Array.FindIndex(friendList, (x) => (x.playerId == PLAYER_IDS[0]));
+                        var i = Array.FindIndex(friends, (x) => (x.PlayerId == PLAYER_IDS[0]));
 
                         Assert.GreaterOrEqual(i, 0);
 
@@ -109,14 +104,9 @@ namespace Ruyi.SDK.Online.Tests
                             CheckResponseStatus(removeFriendResponse.status);
 
                             mSDK.RuyiNetService.FriendService.ListFriends(0,
-                                (RuyiNetListFriendsResponse listRemovedFriendsResponse) =>
+                                (RuyiNetFriendSummaryData[] friends2) =>
                             {
-                                CheckResponseStatus(listRemovedFriendsResponse.status);
-                                Assert.IsTrue(listRemovedFriendsResponse.data.success);
-
-                                friendList = listRemovedFriendsResponse.data.response.friends;
-
-                                i = Array.FindIndex(friendList, (x) => (x.playerId == PLAYER_IDS[0]));
+                                i = Array.FindIndex(friends2, (x) => (x.PlayerId == PLAYER_IDS[0]));
 
                                 Assert.IsTrue(i < 0);
                             });
@@ -215,7 +205,7 @@ namespace Ruyi.SDK.Online.Tests
         [Test]
         public void RuyiNetTest_Lobby()
         {
-            mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET, () =>
+            /*mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET, () =>
             {
                 var lobbyService = mSDK.RuyiNetService.LobbyService;
                 lobbyService.CreateLobby(0, 4, RuyiNetLobbyType.PLAYER,
@@ -241,7 +231,7 @@ namespace Ruyi.SDK.Online.Tests
                 });
             });
 
-            while (mSDK.RuyiNetService.IsWorking) { mSDK.Update(); }
+            while (mSDK.RuyiNetService.IsWorking) { mSDK.Update(); }*/
         }
 
         [Test]
@@ -251,35 +241,13 @@ namespace Ruyi.SDK.Online.Tests
             {
                 var partyService = mSDK.RuyiNetService.PartyService;
                 partyService.SendPartyInvitation(0, PLAYER_IDS[0],
-                    (RuyiNetResponse sendResponse) =>
+                    (RuyiNetParty party) =>
                 {
-                    CheckResponseStatus(sendResponse.status);
-                    partyService.GetPartyInfo(0, (RuyiNetGetPartyInfoResponse getPartyResponse) =>
+                    partyService.GetPartyInfo(0, party.PartyId, (RuyiNetParty partyInfo) =>
                     {
-                        CheckResponseStatus(getPartyResponse.status);
-                        Assert.IsTrue(getPartyResponse.data.success);
-
-                        var groups = getPartyResponse.data.response.groups;
-
-                        Assert.GreaterOrEqual(groups.Length, 1);
-                        partyService.GetPartyMembersInfo(0, (RuyiNetGetProfilesResponse getMembersResponse) =>
+                        partyService.LeaveParty(0, partyInfo.PartyId, (RuyiNetParty oldParty) =>
                         {
-                            CheckResponseStatus(getMembersResponse.status);
-                            Assert.IsTrue(getMembersResponse.data.success);
 
-                            var members = getMembersResponse.data.response;
-
-                            Assert.IsTrue(members.Length >= 0);
-
-                            var playerId = mSDK.RuyiNetService.ActivePlayer.profileId;
-
-                            var i = Array.FindIndex(members, (x) => (x.profileId == playerId));
-                            Assert.IsTrue(i >= 0);
-
-                            partyService.LeaveParty(0, groups[0].groupId, (RuyiNetResponse leaveResponse) =>
-                            {
-                                CheckResponseStatus(leaveResponse.status);
-                            });
                         });
                     });
                 });

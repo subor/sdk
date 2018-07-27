@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -29,9 +29,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFrameworkVersion)' == 'v3.5'">
-    <DefineConstants>$(DefineConstants);DOTNET_20</DefineConstants>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -41,19 +38,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SDK.BaseAsync\GeneratedTypeCache.cs">
+      <Link>GeneratedTypeCache.cs</Link>
+    </Compile>
     <Compile Include="..\SDK.Base\Protocols.cs">
       <Link>Protocols.cs</Link>
     </Compile>
-    <Compile Include="..\SDK.Base\PublisherLogger.cs">
+    <Compile Include="..\SDK.BaseAsync\PublisherLogger.cs">
       <Link>PublisherLogger.cs</Link>
     </Compile>
     <Compile Include="..\SDK.Base\PubsubUtil.cs">
       <Link>PubsubUtil.cs</Link>
     </Compile>
-    <Compile Include="..\SDK.Base\SDKUtility.cs">
+    <Compile Include="..\SDK.BaseAsync\SDKUtility.cs">
       <Link>SDKUtility.cs</Link>
     </Compile>
-    <Compile Include="..\SDK.Base\ServiceIDs.cs">
+    <Compile Include="..\SDK.BaseAsync\ServiceIDs.cs">
       <Link>ServiceIDs.cs</Link>
     </Compile>
     <Compile Include="..\SDK.Base\SubscribeClient.cs">
@@ -65,7 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\externals\thrift0.10.0\Thrift.csproj">
+    <ProjectReference Include="..\..\externals\thrift.csharp\Thrift.csproj">
       <Project>{499eb63c-d74c-47e8-ae48-a2fc94538e9d}</Project>
       <Name>Thrift</Name>
     </ProjectReference>

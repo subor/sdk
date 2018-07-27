@@ -33,9 +33,9 @@ namespace RuyiCppSDKTest
 			pInputManagerTest->InputManagerReceiveInputMessage();
 		}
 
-		TEST_METHOD(InputManagerVibration)
+		TEST_METHOD(SubsribeTimeTest)
 		{
-			pInputManagerTest->InputManagerVibration();
+			pInputManagerTest->SubscribeTimeoutTest();
 		}
 	};
 

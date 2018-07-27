@@ -25,10 +25,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="RuyiNet\Response\RuyiNetLobbyCreateJoinResponse.cs" />
+    <Compile Remove="RuyiNet\Response\RuyiNetLobbyResponse.cs" />
     <Compile Remove="RuyiNet\Skill\TrueSkill\Layers\TrueSkillFactorGraphLayers.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\externals\thrift0.10.0\Thrift.ns2.0.csproj" />
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj">
     </ProjectReference>
     <ProjectReference Include="..\SDK.Base\SDK.Base.csproj" />
