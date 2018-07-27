@@ -245,7 +245,7 @@ namespace Ruyi
             // init subscriber
             if (context.endpoint != RuyiSDKContext.Endpoint.Web && IsFeatureEnabled(SDKFeatures.Subscriber))
             {
-                Subscriber = factory.CreatePubSubClient();
+                Subscriber = factory.CreateSubscriber();
             }
 
             // init storage layer
@@ -417,7 +417,7 @@ namespace Ruyi
             InstanceCount--;
             if (InstanceCount <= 0)
             {
-                factory.Cleanup();
+                factory.SDKCleanup();
             }
         }
 
