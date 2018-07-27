@@ -143,7 +143,7 @@ namespace Ruyi.Layer0
                     if (MsgHandlers.TryGetValue(msgType, out Delegate mh))
                     {
                         var respBytes = msg[2].Buffer;
-                        var stream = new MemoryStream(respBytes, 0, respBytes.Length);
+                        using (var stream = Common.MemoryPool.GetStream(respBytes))
                         using (var trans = new TStreamClientTransport(stream, stream))
                         using (var proto = new TBinaryProtocol(trans))
                         {
