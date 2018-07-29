@@ -20,13 +20,17 @@ namespace Ruyi.Common
         }
 
         /// <summary>
-        /// Gets a <see cref="MemoryStream"/> from the pool initialized with <paramref name="buffer"/>.
+        /// Gets a <see cref="MemoryStream" /> from the pool initialized with <paramref name="buffer" />.
         /// </summary>
         /// <param name="buffer">The buffer.</param>
+        /// <param name="offset">The buffer offset.  Defaults to start of buffer.</param>
+        /// <param name="length">The buffer length.  Default (or when 0 or less) goes to end of buffer.</param>
         /// <returns></returns>
-        public static MemoryStream GetStream(byte[] buffer)
+        public static MemoryStream GetStream(byte[] buffer, int offset = 0, int length = -1)
         {
-            return streamManager.GetStream(string.Empty, buffer, 0, buffer.Length);
+            if (length <= 0)
+                length = buffer.Length - offset;
+            return streamManager.GetStream(string.Empty, buffer, offset, length);
         }
 
         static Microsoft.IO.RecyclableMemoryStreamManager streamManager = new Microsoft.IO.RecyclableMemoryStreamManager();

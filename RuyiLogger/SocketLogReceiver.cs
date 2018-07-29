@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ruyi.DevTool
 {
+    // FIXME: Ask jinlei about moving this to MDPCommon
     public class SocketLogReceiver
     {
         public delegate void ReceiveCallback(LoggerMessage msg);
