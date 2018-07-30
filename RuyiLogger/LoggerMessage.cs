@@ -28,6 +28,8 @@ namespace Ruyi.Logging
         /// DevTool
         /// </summary>
         DevTool,
+
+        RuyiNet,
     }
 
     public enum LogLevel

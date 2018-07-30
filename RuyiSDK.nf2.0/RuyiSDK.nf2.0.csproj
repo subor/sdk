@@ -129,11 +129,53 @@
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Gamification\RuyiNetGamificationService.cs">
       <Link>RuyiNet\Service\Gamification\RuyiNetGamificationService.cs</Link>
     </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\Response\RuyiNetGetGlobalLeaderboardEntryCountResponse.cs">
+      <Link>RuyiNet\Service\Leaderboard\Response\RuyiNetGetGlobalLeaderboardEntryCountResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\Response\RuyiNetGetGlobalLeaderboardPageResponse.cs">
+      <Link>RuyiNet\Service\Leaderboard\Response\RuyiNetGetGlobalLeaderboardPageResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\Response\RuyiNetGetGlobalLeaderboardVersionsResponse.cs">
+      <Link>RuyiNet\Service\Leaderboard\Response\RuyiNetGetGlobalLeaderboardVersionsResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\Response\RuyiNetGetGroupSocialLeaderboardResponse.cs">
+      <Link>RuyiNet\Service\Leaderboard\Response\RuyiNetGetGroupSocialLeaderboardResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\Response\RuyiNetGetPlayerScoreResponse.cs">
+      <Link>RuyiNet\Service\Leaderboard\Response\RuyiNetGetPlayerScoreResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\Response\RuyiNetGetPlayerScoresFromLeaderboardsResponse.cs">
+      <Link>RuyiNet\Service\Leaderboard\Response\RuyiNetGetPlayerScoresFromLeaderboardsResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\Response\RuyiNetGetSocialLeaderboardResponse.cs">
+      <Link>RuyiNet\Service\Leaderboard\Response\RuyiNetGetSocialLeaderboardResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\Response\RuyiNetListAllLeaderboardsResponse.cs">
+      <Link>RuyiNet\Service\Leaderboard\Response\RuyiNetListAllLeaderboardsResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\RuyiNetLeaderboardConfig.cs">
+      <Link>RuyiNet\Service\Leaderboard\RuyiNetLeaderboardConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\RuyiNetLeaderboardEntry.cs">
+      <Link>RuyiNet\Service\Leaderboard\RuyiNetLeaderboardEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\RuyiNetLeaderboardInfo.cs">
+      <Link>RuyiNet\Service\Leaderboard\RuyiNetLeaderboardInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\RuyiNetLeaderboardPage.cs">
+      <Link>RuyiNet\Service\Leaderboard\RuyiNetLeaderboardPage.cs</Link>
+    </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\RuyiNetLeaderboardService.cs">
       <Link>RuyiNet\Service\Leaderboard\RuyiNetLeaderboardService.cs</Link>
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\RuyiNetLeaderboardType.cs">
       <Link>RuyiNet\Service\Leaderboard\RuyiNetLeaderboardType.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\RuyiNetLeaderboardVersionInfo.cs">
+      <Link>RuyiNet\Service\Leaderboard\RuyiNetLeaderboardVersionInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\RuyiNetPlayerScore.cs">
+      <Link>RuyiNet\Service\Leaderboard\RuyiNetPlayerScore.cs</Link>
     </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Leaderboard\RuyiNetRotationType.cs">
       <Link>RuyiNet\Service\Leaderboard\RuyiNetRotationType.cs</Link>
