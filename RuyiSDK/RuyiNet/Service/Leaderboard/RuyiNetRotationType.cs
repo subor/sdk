@@ -16,11 +16,6 @@
         DAILY,
 
         /// <summary>
-        /// The leaderboard resets every X days.
-        /// </summary>
-        DAYS,
-
-        /// <summary>
         /// The leaderboard resets every week.
         /// </summary>
         WEEKLY,
@@ -33,6 +28,11 @@
         /// <summary>
         /// The leaderboard resets every year.
         /// </summary>
-        YEARLY
+        YEARLY,
+
+        /// <summary>
+        /// The leaderboard resets every X days.
+        /// </summary>
+        DAYS
     }
 }
