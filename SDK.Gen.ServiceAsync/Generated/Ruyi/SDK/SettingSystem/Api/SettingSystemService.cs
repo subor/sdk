@@ -53,7 +53,13 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// </summary>
       Task<Ruyi.SDK.SettingSystem.Api.SettingTree> GetCategoryNodeAsync(CancellationToken cancellationToken);
 
-      Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, CancellationToken cancellationToken);
+      /// <summary>
+      /// Get child nodes of specified setting item or setting category
+      /// </summary>
+      /// <param name="parent">The parent node</param>
+      /// <param name="nodeType">Specifies whether the child nodes containing setting item or setting category, or both</param>
+      /// <param name="param">The parameter passed to the function which will be called while getting the item value</param>
+      Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, CancellationToken cancellationToken);
 
       /// <summary>
       /// Set the specified setting's "dataValue" with the new value
@@ -107,6 +113,10 @@ namespace Ruyi.SDK.SettingSystem.Api
       Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkStatus> GetNetworkStatusAsync(CancellationToken cancellationToken);
 
       Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult> RuyiTestNetworkAsync(CancellationToken cancellationToken);
+
+      Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed> RuyiStartNetworkSpeedTestAsync(int userindex, CancellationToken cancellationToken);
+
+      Task<bool> RuyiStopNetworkSpeedTestAsync(int userindex, CancellationToken cancellationToken);
 
       Task<List<Ruyi.SDK.SettingSystem.Api.WifiEntity>> GetAvailableWifiAsync(CancellationToken cancellationToken);
 
@@ -255,13 +265,14 @@ namespace Ruyi.SDK.SettingSystem.Api
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetCategoryNode failed: unknown result");
       }
 
-      public async Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, CancellationToken cancellationToken)
+      public async Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetChildNode", TMessageType.Call, SeqId), cancellationToken);
         
         var args = new GetChildNodeArgs();
         args.Parent = parent;
         args.NodeType = nodeType;
+        args.Param = param;
         
         await args.WriteAsync(OutputProtocol, cancellationToken);
         await OutputProtocol.WriteMessageEndAsync(cancellationToken);
@@ -791,6 +802,72 @@ namespace Ruyi.SDK.SettingSystem.Api
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "RuyiTestNetwork failed: unknown result");
       }
 
+      public async Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed> RuyiStartNetworkSpeedTestAsync(int userindex, CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("RuyiStartNetworkSpeedTest", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new RuyiStartNetworkSpeedTestArgs();
+        args.Userindex = userindex;
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new RuyiStartNetworkSpeedTestResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
+          return result.Success;
+        }
+        if (result.__isset.error1)
+        {
+          throw result.Error1;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "RuyiStartNetworkSpeedTest failed: unknown result");
+      }
+
+      public async Task<bool> RuyiStopNetworkSpeedTestAsync(int userindex, CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("RuyiStopNetworkSpeedTest", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new RuyiStopNetworkSpeedTestArgs();
+        args.Userindex = userindex;
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new RuyiStopNetworkSpeedTestResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
+          return result.Success;
+        }
+        if (result.__isset.error1)
+        {
+          throw result.Error1;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "RuyiStopNetworkSpeedTest failed: unknown result");
+      }
+
       public async Task<List<Ruyi.SDK.SettingSystem.Api.WifiEntity>> GetAvailableWifiAsync(CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetAvailableWifi", TMessageType.Call, SeqId), cancellationToken);
@@ -886,6 +963,8 @@ namespace Ruyi.SDK.SettingSystem.Api
         processMap_["GetNetworkSettings"] = GetNetworkSettings_ProcessAsync;
         processMap_["GetNetworkStatus"] = GetNetworkStatus_ProcessAsync;
         processMap_["RuyiTestNetwork"] = RuyiTestNetwork_ProcessAsync;
+        processMap_["RuyiStartNetworkSpeedTest"] = RuyiStartNetworkSpeedTest_ProcessAsync;
+        processMap_["RuyiStopNetworkSpeedTest"] = RuyiStopNetworkSpeedTest_ProcessAsync;
         processMap_["GetAvailableWifi"] = GetAvailableWifi_ProcessAsync;
         processMap_["DisconnectWifi"] = DisconnectWifi_ProcessAsync;
       }
@@ -1080,7 +1159,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           try
           {
-            result.Success = await _iAsync.GetChildNodeAsync(args.Parent, args.NodeType, cancellationToken);
+            result.Success = await _iAsync.GetChildNodeAsync(args.Parent, args.NodeType, args.Param, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
@@ -1610,6 +1689,76 @@ namespace Ruyi.SDK.SettingSystem.Api
           Console.Error.WriteLine(ex.ToString());
           var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
           await oprot.WriteMessageBeginAsync(new TMessage("RuyiTestNetwork", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task RuyiStartNetworkSpeedTest_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new RuyiStartNetworkSpeedTestArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new RuyiStartNetworkSpeedTestResult();
+        try
+        {
+          try
+          {
+            result.Success = await _iAsync.RuyiStartNetworkSpeedTestAsync(args.Userindex, cancellationToken);
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          await oprot.WriteMessageBeginAsync(new TMessage("RuyiStartNetworkSpeedTest", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("RuyiStartNetworkSpeedTest", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task RuyiStopNetworkSpeedTest_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new RuyiStopNetworkSpeedTestArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new RuyiStopNetworkSpeedTestResult();
+        try
+        {
+          try
+          {
+            result.Success = await _iAsync.RuyiStopNetworkSpeedTestAsync(args.Userindex, cancellationToken);
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          await oprot.WriteMessageBeginAsync(new TMessage("RuyiStopNetworkSpeedTest", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("RuyiStopNetworkSpeedTest", TMessageType.Exception, seqid), cancellationToken);
           await x.WriteAsync(oprot, cancellationToken);
         }
         await oprot.WriteMessageEndAsync(cancellationToken);
@@ -2846,7 +2995,11 @@ namespace Ruyi.SDK.SettingSystem.Api
     {
       private string _parent;
       private Ruyi.SDK.SettingSystem.Api.NodeType _nodeType;
+      private string _param;
 
+      /// <summary>
+      /// The parent node
+      /// </summary>
       public string Parent
       {
         get
@@ -2861,6 +3014,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
 
       /// <summary>
+      /// Specifies whether the child nodes containing setting item or setting category, or both
       /// 
       /// <seealso cref="Ruyi.SDK.SettingSystem.Api.NodeType"/>
       /// </summary>
@@ -2877,12 +3031,29 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// The parameter passed to the function which will be called while getting the item value
+      /// </summary>
+      public string Param
+      {
+        get
+        {
+          return _param;
+        }
+        set
+        {
+          __isset.param = true;
+          this._param = value;
+        }
+      }
+
 
       public Isset __isset;
       public struct Isset
       {
         public bool parent;
         public bool nodeType;
+        public bool param;
       }
 
       public GetChildNodeArgs()
@@ -2920,6 +3091,16 @@ namespace Ruyi.SDK.SettingSystem.Api
                 if (field.Type == TType.I32)
                 {
                   NodeType = (Ruyi.SDK.SettingSystem.Api.NodeType)await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.String)
+                {
+                  Param = await iprot.ReadStringAsync(cancellationToken);
                 }
                 else
                 {
@@ -2968,6 +3149,15 @@ namespace Ruyi.SDK.SettingSystem.Api
             await oprot.WriteI32Async((int)NodeType, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
           }
+          if (Param != null && __isset.param)
+          {
+            field.Name = "param";
+            field.Type = TType.String;
+            field.ID = 3;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Param, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
           await oprot.WriteFieldStopAsync(cancellationToken);
           await oprot.WriteStructEndAsync(cancellationToken);
         }
@@ -2994,6 +3184,13 @@ namespace Ruyi.SDK.SettingSystem.Api
           __first = false;
           sb.Append("NodeType: ");
           sb.Append(NodeType);
+        }
+        if (Param != null && __isset.param)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Param: ");
+          sb.Append(Param);
         }
         sb.Append(")");
         return sb.ToString();
@@ -7877,6 +8074,558 @@ namespace Ruyi.SDK.SettingSystem.Api
           __first = false;
           sb.Append("Success: ");
           sb.Append(Success== null ? "<null>" : Success.ToString());
+        }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class RuyiStartNetworkSpeedTestArgs : TBase
+    {
+      private int _userindex;
+
+      public int Userindex
+      {
+        get
+        {
+          return _userindex;
+        }
+        set
+        {
+          __isset.userindex = true;
+          this._userindex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool userindex;
+      }
+
+      public RuyiStartNetworkSpeedTestArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32)
+                {
+                  Userindex = await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("RuyiStartNetworkSpeedTest_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (__isset.userindex)
+          {
+            field.Name = "userindex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async(Userindex, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("RuyiStartNetworkSpeedTest_args(");
+        bool __first = true;
+        if (__isset.userindex)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Userindex: ");
+          sb.Append(Userindex);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class RuyiStartNetworkSpeedTestResult : TBase
+    {
+      private Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed _success;
+      private Ruyi.SDK.CommonType.ErrorException _error1;
+
+      public Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+      public Ruyi.SDK.CommonType.ErrorException Error1
+      {
+        get
+        {
+          return _error1;
+        }
+        set
+        {
+          __isset.error1 = true;
+          this._error1 = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool success;
+        public bool error1;
+      }
+
+      public RuyiStartNetworkSpeedTestResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Struct)
+                {
+                  Success = new Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed();
+                  await Success.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 1:
+                if (field.Type == TType.Struct)
+                {
+                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("RuyiStartNetworkSpeedTest_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+
+          if(this.__isset.success)
+          {
+            if (Success != null)
+            {
+              field.Name = "Success";
+              field.Type = TType.Struct;
+              field.ID = 0;
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Success.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
+            }
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
+              field.Name = "Error1";
+              field.Type = TType.Struct;
+              field.ID = 1;
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
+            }
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("RuyiStartNetworkSpeedTest_result(");
+        bool __first = true;
+        if (Success != null && __isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Success: ");
+          sb.Append(Success== null ? "<null>" : Success.ToString());
+        }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class RuyiStopNetworkSpeedTestArgs : TBase
+    {
+      private int _userindex;
+
+      public int Userindex
+      {
+        get
+        {
+          return _userindex;
+        }
+        set
+        {
+          __isset.userindex = true;
+          this._userindex = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool userindex;
+      }
+
+      public RuyiStopNetworkSpeedTestArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.I32)
+                {
+                  Userindex = await iprot.ReadI32Async(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("RuyiStopNetworkSpeedTest_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (__isset.userindex)
+          {
+            field.Name = "userindex";
+            field.Type = TType.I32;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteI32Async(Userindex, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("RuyiStopNetworkSpeedTest_args(");
+        bool __first = true;
+        if (__isset.userindex)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Userindex: ");
+          sb.Append(Userindex);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class RuyiStopNetworkSpeedTestResult : TBase
+    {
+      private bool _success;
+      private Ruyi.SDK.CommonType.ErrorException _error1;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+      public Ruyi.SDK.CommonType.ErrorException Error1
+      {
+        get
+        {
+          return _error1;
+        }
+        set
+        {
+          __isset.error1 = true;
+          this._error1 = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool success;
+        public bool error1;
+      }
+
+      public RuyiStopNetworkSpeedTestResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool)
+                {
+                  Success = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 1:
+                if (field.Type == TType.Struct)
+                {
+                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("RuyiStopNetworkSpeedTest_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+
+          if(this.__isset.success)
+          {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
+              field.Name = "Error1";
+              field.Type = TType.Struct;
+              field.ID = 1;
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
+            }
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("RuyiStopNetworkSpeedTest_result(");
+        bool __first = true;
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Success: ");
+          sb.Append(Success);
         }
         if (Error1 != null && __isset.error1)
         {

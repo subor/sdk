@@ -946,6 +946,14 @@ uint32_t SettingSystemService_GetChildNode_args::read(::apache::thrift::protocol
           xfer += iprot->skip(ftype);
         }
         break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->param);
+          this->__isset.param = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -971,6 +979,10 @@ uint32_t SettingSystemService_GetChildNode_args::write(::apache::thrift::protoco
   xfer += oprot->writeI32((int32_t)this->nodeType);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("param", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString(this->param);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -992,6 +1004,10 @@ uint32_t SettingSystemService_GetChildNode_pargs::write(::apache::thrift::protoc
 
   xfer += oprot->writeFieldBegin("nodeType", ::apache::thrift::protocol::T_I32, 2);
   xfer += oprot->writeI32((int32_t)(*(this->nodeType)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("param", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString((*(this->param)));
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -4540,6 +4556,420 @@ uint32_t SettingSystemService_RuyiTestNetwork_presult::read(::apache::thrift::pr
 }
 
 
+SettingSystemService_RuyiStartNetworkSpeedTest_args::~SettingSystemService_RuyiStartNetworkSpeedTest_args() throw() {
+}
+
+
+uint32_t SettingSystemService_RuyiStartNetworkSpeedTest_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->userindex);
+          this->__isset.userindex = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_RuyiStartNetworkSpeedTest_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_RuyiStartNetworkSpeedTest_args");
+
+  xfer += oprot->writeFieldBegin("userindex", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->userindex);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_RuyiStartNetworkSpeedTest_pargs::~SettingSystemService_RuyiStartNetworkSpeedTest_pargs() throw() {
+}
+
+
+uint32_t SettingSystemService_RuyiStartNetworkSpeedTest_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_RuyiStartNetworkSpeedTest_pargs");
+
+  xfer += oprot->writeFieldBegin("userindex", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32((*(this->userindex)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_RuyiStartNetworkSpeedTest_result::~SettingSystemService_RuyiStartNetworkSpeedTest_result() throw() {
+}
+
+
+uint32_t SettingSystemService_RuyiStartNetworkSpeedTest_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->success.read(iprot);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->error1.read(iprot);
+          this->__isset.error1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_RuyiStartNetworkSpeedTest_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("SettingSystemService_RuyiStartNetworkSpeedTest_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
+    xfer += this->success.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.error1) {
+    xfer += oprot->writeFieldBegin("error1", ::apache::thrift::protocol::T_STRUCT, 1);
+    xfer += this->error1.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_RuyiStartNetworkSpeedTest_presult::~SettingSystemService_RuyiStartNetworkSpeedTest_presult() throw() {
+}
+
+
+uint32_t SettingSystemService_RuyiStartNetworkSpeedTest_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += (*(this->success)).read(iprot);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->error1.read(iprot);
+          this->__isset.error1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+
+SettingSystemService_RuyiStopNetworkSpeedTest_args::~SettingSystemService_RuyiStopNetworkSpeedTest_args() throw() {
+}
+
+
+uint32_t SettingSystemService_RuyiStopNetworkSpeedTest_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->userindex);
+          this->__isset.userindex = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_RuyiStopNetworkSpeedTest_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_RuyiStopNetworkSpeedTest_args");
+
+  xfer += oprot->writeFieldBegin("userindex", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->userindex);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_RuyiStopNetworkSpeedTest_pargs::~SettingSystemService_RuyiStopNetworkSpeedTest_pargs() throw() {
+}
+
+
+uint32_t SettingSystemService_RuyiStopNetworkSpeedTest_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_RuyiStopNetworkSpeedTest_pargs");
+
+  xfer += oprot->writeFieldBegin("userindex", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32((*(this->userindex)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_RuyiStopNetworkSpeedTest_result::~SettingSystemService_RuyiStopNetworkSpeedTest_result() throw() {
+}
+
+
+uint32_t SettingSystemService_RuyiStopNetworkSpeedTest_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->error1.read(iprot);
+          this->__isset.error1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_RuyiStopNetworkSpeedTest_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("SettingSystemService_RuyiStopNetworkSpeedTest_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
+    xfer += oprot->writeBool(this->success);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.error1) {
+    xfer += oprot->writeFieldBegin("error1", ::apache::thrift::protocol::T_STRUCT, 1);
+    xfer += this->error1.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_RuyiStopNetworkSpeedTest_presult::~SettingSystemService_RuyiStopNetworkSpeedTest_presult() throw() {
+}
+
+
+uint32_t SettingSystemService_RuyiStopNetworkSpeedTest_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->error1.read(iprot);
+          this->__isset.error1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+
 SettingSystemService_GetAvailableWifi_args::~SettingSystemService_GetAvailableWifi_args() throw() {
 }
 
@@ -5187,13 +5617,13 @@ void SettingSystemServiceClient::recv_GetCategoryNode( ::Ruyi::SDK::SettingSyste
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "GetCategoryNode failed: unknown result");
 }
 
-void SettingSystemServiceClient::GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType)
+void SettingSystemServiceClient::GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param)
 {
-  send_GetChildNode(parent, nodeType);
+  send_GetChildNode(parent, nodeType, param);
   recv_GetChildNode(_return);
 }
 
-void SettingSystemServiceClient::send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType)
+void SettingSystemServiceClient::send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("GetChildNode", ::apache::thrift::protocol::T_CALL, cseqid);
@@ -5201,6 +5631,7 @@ void SettingSystemServiceClient::send_GetChildNode(const std::string& parent, co
   SettingSystemService_GetChildNode_pargs args;
   args.parent = &parent;
   args.nodeType = &nodeType;
+  args.param = &param;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -6173,6 +6604,128 @@ void SettingSystemServiceClient::recv_RuyiTestNetwork( ::Ruyi::SDK::SettingSyste
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "RuyiTestNetwork failed: unknown result");
 }
 
+void SettingSystemServiceClient::RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex)
+{
+  send_RuyiStartNetworkSpeedTest(userindex);
+  recv_RuyiStartNetworkSpeedTest(_return);
+}
+
+void SettingSystemServiceClient::send_RuyiStartNetworkSpeedTest(const int32_t userindex)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("RuyiStartNetworkSpeedTest", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_RuyiStartNetworkSpeedTest_pargs args;
+  args.userindex = &userindex;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+void SettingSystemServiceClient::recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return)
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("RuyiStartNetworkSpeedTest") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  SettingSystemService_RuyiStartNetworkSpeedTest_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    // _return pointer has now been filled
+    return;
+  }
+  if (result.__isset.error1) {
+    throw result.error1;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "RuyiStartNetworkSpeedTest failed: unknown result");
+}
+
+bool SettingSystemServiceClient::RuyiStopNetworkSpeedTest(const int32_t userindex)
+{
+  send_RuyiStopNetworkSpeedTest(userindex);
+  return recv_RuyiStopNetworkSpeedTest();
+}
+
+void SettingSystemServiceClient::send_RuyiStopNetworkSpeedTest(const int32_t userindex)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("RuyiStopNetworkSpeedTest", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_RuyiStopNetworkSpeedTest_pargs args;
+  args.userindex = &userindex;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+bool SettingSystemServiceClient::recv_RuyiStopNetworkSpeedTest()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("RuyiStopNetworkSpeedTest") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  bool _return;
+  SettingSystemService_RuyiStopNetworkSpeedTest_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  if (result.__isset.error1) {
+    throw result.error1;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "RuyiStopNetworkSpeedTest failed: unknown result");
+}
+
 void SettingSystemServiceClient::GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return)
 {
   send_GetAvailableWifi();
@@ -6563,7 +7116,7 @@ void SettingSystemServiceProcessor::process_GetChildNode(int32_t seqid, ::apache
 
   SettingSystemService_GetChildNode_result result;
   try {
-    iface_->GetChildNode(result.success, args.parent, args.nodeType);
+    iface_->GetChildNode(result.success, args.parent, args.nodeType, args.param);
     result.__isset.success = true;
   } catch ( ::Ruyi::SDK::CommonType::ErrorException &error1) {
     result.error1 = error1;
@@ -7446,6 +7999,120 @@ void SettingSystemServiceProcessor::process_RuyiTestNetwork(int32_t seqid, ::apa
   }
 }
 
+void SettingSystemServiceProcessor::process_RuyiStartNetworkSpeedTest(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("SettingSystemService.RuyiStartNetworkSpeedTest", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "SettingSystemService.RuyiStartNetworkSpeedTest");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "SettingSystemService.RuyiStartNetworkSpeedTest");
+  }
+
+  SettingSystemService_RuyiStartNetworkSpeedTest_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "SettingSystemService.RuyiStartNetworkSpeedTest", bytes);
+  }
+
+  SettingSystemService_RuyiStartNetworkSpeedTest_result result;
+  try {
+    iface_->RuyiStartNetworkSpeedTest(result.success, args.userindex);
+    result.__isset.success = true;
+  } catch ( ::Ruyi::SDK::CommonType::ErrorException &error1) {
+    result.error1 = error1;
+    result.__isset.error1 = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "SettingSystemService.RuyiStartNetworkSpeedTest");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("RuyiStartNetworkSpeedTest", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "SettingSystemService.RuyiStartNetworkSpeedTest");
+  }
+
+  oprot->writeMessageBegin("RuyiStartNetworkSpeedTest", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "SettingSystemService.RuyiStartNetworkSpeedTest", bytes);
+  }
+}
+
+void SettingSystemServiceProcessor::process_RuyiStopNetworkSpeedTest(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("SettingSystemService.RuyiStopNetworkSpeedTest", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "SettingSystemService.RuyiStopNetworkSpeedTest");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "SettingSystemService.RuyiStopNetworkSpeedTest");
+  }
+
+  SettingSystemService_RuyiStopNetworkSpeedTest_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "SettingSystemService.RuyiStopNetworkSpeedTest", bytes);
+  }
+
+  SettingSystemService_RuyiStopNetworkSpeedTest_result result;
+  try {
+    result.success = iface_->RuyiStopNetworkSpeedTest(args.userindex);
+    result.__isset.success = true;
+  } catch ( ::Ruyi::SDK::CommonType::ErrorException &error1) {
+    result.error1 = error1;
+    result.__isset.error1 = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "SettingSystemService.RuyiStopNetworkSpeedTest");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("RuyiStopNetworkSpeedTest", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "SettingSystemService.RuyiStopNetworkSpeedTest");
+  }
+
+  oprot->writeMessageBegin("RuyiStopNetworkSpeedTest", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "SettingSystemService.RuyiStopNetworkSpeedTest", bytes);
+  }
+}
+
 void SettingSystemServiceProcessor::process_GetAvailableWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
@@ -7919,13 +8586,13 @@ void SettingSystemServiceConcurrentClient::recv_GetCategoryNode( ::Ruyi::SDK::Se
   } // end while(true)
 }
 
-void SettingSystemServiceConcurrentClient::GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType)
+void SettingSystemServiceConcurrentClient::GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param)
 {
-  int32_t seqid = send_GetChildNode(parent, nodeType);
+  int32_t seqid = send_GetChildNode(parent, nodeType, param);
   recv_GetChildNode(_return, seqid);
 }
 
-int32_t SettingSystemServiceConcurrentClient::send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType)
+int32_t SettingSystemServiceConcurrentClient::send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param)
 {
   int32_t cseqid = this->sync_.generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
@@ -7934,6 +8601,7 @@ int32_t SettingSystemServiceConcurrentClient::send_GetChildNode(const std::strin
   SettingSystemService_GetChildNode_pargs args;
   args.parent = &parent;
   args.nodeType = &nodeType;
+  args.param = &param;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9326,6 +9994,182 @@ void SettingSystemServiceConcurrentClient::recv_RuyiTestNetwork( ::Ruyi::SDK::Se
       }
       // in a bad state, don't commit
       throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "RuyiTestNetwork failed: unknown result");
+    }
+    // seqid != rseqid
+    this->sync_.updatePending(fname, mtype, rseqid);
+
+    // this will temporarily unlock the readMutex, and let other clients get work done
+    this->sync_.waitForWork(seqid);
+  } // end while(true)
+}
+
+void SettingSystemServiceConcurrentClient::RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex)
+{
+  int32_t seqid = send_RuyiStartNetworkSpeedTest(userindex);
+  recv_RuyiStartNetworkSpeedTest(_return, seqid);
+}
+
+int32_t SettingSystemServiceConcurrentClient::send_RuyiStartNetworkSpeedTest(const int32_t userindex)
+{
+  int32_t cseqid = this->sync_.generateSeqId();
+  ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
+  oprot_->writeMessageBegin("RuyiStartNetworkSpeedTest", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_RuyiStartNetworkSpeedTest_pargs args;
+  args.userindex = &userindex;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+
+  sentry.commit();
+  return cseqid;
+}
+
+void SettingSystemServiceConcurrentClient::recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t seqid)
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  // the read mutex gets dropped and reacquired as part of waitForWork()
+  // The destructor of this sentry wakes up other clients
+  ::apache::thrift::async::TConcurrentRecvSentry sentry(&this->sync_, seqid);
+
+  while(true) {
+    if(!this->sync_.getPending(fname, mtype, rseqid)) {
+      iprot_->readMessageBegin(fname, mtype, rseqid);
+    }
+    if(seqid == rseqid) {
+      if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+        ::apache::thrift::TApplicationException x;
+        x.read(iprot_);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+        sentry.commit();
+        throw x;
+      }
+      if (mtype != ::apache::thrift::protocol::T_REPLY) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+      }
+      if (fname.compare("RuyiStartNetworkSpeedTest") != 0) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+
+        // in a bad state, don't commit
+        using ::apache::thrift::protocol::TProtocolException;
+        throw TProtocolException(TProtocolException::INVALID_DATA);
+      }
+      SettingSystemService_RuyiStartNetworkSpeedTest_presult result;
+      result.success = &_return;
+      result.read(iprot_);
+      iprot_->readMessageEnd();
+      iprot_->getTransport()->readEnd();
+
+      if (result.__isset.success) {
+        // _return pointer has now been filled
+        sentry.commit();
+        return;
+      }
+      if (result.__isset.error1) {
+        sentry.commit();
+        throw result.error1;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "RuyiStartNetworkSpeedTest failed: unknown result");
+    }
+    // seqid != rseqid
+    this->sync_.updatePending(fname, mtype, rseqid);
+
+    // this will temporarily unlock the readMutex, and let other clients get work done
+    this->sync_.waitForWork(seqid);
+  } // end while(true)
+}
+
+bool SettingSystemServiceConcurrentClient::RuyiStopNetworkSpeedTest(const int32_t userindex)
+{
+  int32_t seqid = send_RuyiStopNetworkSpeedTest(userindex);
+  return recv_RuyiStopNetworkSpeedTest(seqid);
+}
+
+int32_t SettingSystemServiceConcurrentClient::send_RuyiStopNetworkSpeedTest(const int32_t userindex)
+{
+  int32_t cseqid = this->sync_.generateSeqId();
+  ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
+  oprot_->writeMessageBegin("RuyiStopNetworkSpeedTest", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_RuyiStopNetworkSpeedTest_pargs args;
+  args.userindex = &userindex;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+
+  sentry.commit();
+  return cseqid;
+}
+
+bool SettingSystemServiceConcurrentClient::recv_RuyiStopNetworkSpeedTest(const int32_t seqid)
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  // the read mutex gets dropped and reacquired as part of waitForWork()
+  // The destructor of this sentry wakes up other clients
+  ::apache::thrift::async::TConcurrentRecvSentry sentry(&this->sync_, seqid);
+
+  while(true) {
+    if(!this->sync_.getPending(fname, mtype, rseqid)) {
+      iprot_->readMessageBegin(fname, mtype, rseqid);
+    }
+    if(seqid == rseqid) {
+      if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+        ::apache::thrift::TApplicationException x;
+        x.read(iprot_);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+        sentry.commit();
+        throw x;
+      }
+      if (mtype != ::apache::thrift::protocol::T_REPLY) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+      }
+      if (fname.compare("RuyiStopNetworkSpeedTest") != 0) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+
+        // in a bad state, don't commit
+        using ::apache::thrift::protocol::TProtocolException;
+        throw TProtocolException(TProtocolException::INVALID_DATA);
+      }
+      bool _return;
+      SettingSystemService_RuyiStopNetworkSpeedTest_presult result;
+      result.success = &_return;
+      result.read(iprot_);
+      iprot_->readMessageEnd();
+      iprot_->getTransport()->readEnd();
+
+      if (result.__isset.success) {
+        sentry.commit();
+        return _return;
+      }
+      if (result.__isset.error1) {
+        sentry.commit();
+        throw result.error1;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "RuyiStopNetworkSpeedTest failed: unknown result");
     }
     // seqid != rseqid
     this->sync_.updatePending(fname, mtype, rseqid);
