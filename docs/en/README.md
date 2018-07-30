@@ -40,6 +40,7 @@ Get __[Support](topics/support.md)__
         * [UE4](topics/ue4.md)
         * [Unity](topics/unity.md)
         * [Build SDK source](topics/build_sdk_source.md) (advanced)
+        * [RuyiNet](topics/ruyinet.md)
     * [Console](topics/console_dev.md)
     * Specialized Areas
         * [App Manifest](topics/app_metadata.md)
