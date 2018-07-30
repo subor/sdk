@@ -240,7 +240,7 @@ namespace Ruyi
                 return false;
 
             var pubout = ConstantsSDKDataTypesConstants.layer0_publisher_out_uri.SetAddress(context.RemoteAddress);
-            factory = new MDPSDKFactory(pubout);
+            factory = new Layer0.ZeroMQ.MDPSDKFactory(string.Empty, pubout);
 
             // init subscriber
             if (context.endpoint != RuyiSDKContext.Endpoint.Web && IsFeatureEnabled(SDKFeatures.Subscriber))
@@ -411,9 +411,7 @@ namespace Ruyi
             HighLatencyProtocol?.Dispose();
             HighLatencyProtocol = null;
             highLatencyTransport = null;
-
-
-            // don't clean up netmq in layer0.
+            
             InstanceCount--;
             if (InstanceCount <= 0)
             {
