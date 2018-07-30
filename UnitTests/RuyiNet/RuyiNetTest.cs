@@ -156,43 +156,34 @@ namespace Ruyi.SDK.Online.Tests
             mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET, () =>
             {
                 var leaderboardService = mSDK.RuyiNetService.LeaderboardService;
-                leaderboardService.PostScoreToLeaderboard(0, TEST_LEADERBOARD_ID, 100,
-                    (RuyiNetResponse postScoreResponse) =>
+                leaderboardService.PostScoreToLeaderboard(0, 100, TEST_LEADERBOARD_ID,
+                    (bool result) =>
                 {
-                    CheckResponseStatus(postScoreResponse.status);
+                    Assert.IsTrue(result);
 
-                    leaderboardService.GetGLobalLeaderboardPage(0, TEST_LEADERBOARD_ID, SortOrder.HIGH_TO_LOW, 0, 10,
-                        (RuyiNetLeaderboardResponse getPageResponse) =>
+                    leaderboardService.GetGlobalLeaderboardPage(0, TEST_LEADERBOARD_ID, SortOrder.HIGH_TO_LOW, 0, 10,
+                        (RuyiNetLeaderboardPage page) =>
                     {
-                        CheckResponseStatus(getPageResponse.status);
-                        Assert.IsTrue(getPageResponse.data.success);
+                        Assert.IsNotNull(page);                        
 
-                        var leaderboard = getPageResponse.data.response;
-
-                        Assert.IsTrue(leaderboard.leaderboard.Length > 0);
-                        Assert.IsTrue(leaderboard.leaderboard.Length <= 10);
+                        Assert.Greater(page.Entries.Count, 0);
+                        Assert.LessOrEqual(page.Entries.Count, 10);
 
                         leaderboardService.GetGlobalLeaderboardView(0, TEST_LEADERBOARD_ID, SortOrder.HIGH_TO_LOW, 5, 5,
-                            (RuyiNetLeaderboardResponse getViewResponse) =>
+                            (RuyiNetLeaderboardPage view) =>
                         {
-                            CheckResponseStatus(getViewResponse.status);
-                            Assert.IsTrue(getViewResponse.data.success);
+                            Assert.IsNotNull(view);
 
-                            leaderboard = getViewResponse.data.response;
-
-                            Assert.Greater(leaderboard.leaderboard.Length, 0);
-                            Assert.LessOrEqual(leaderboard.leaderboard.Length, 10);
+                            Assert.Greater(view.Entries.Count, 0);
+                            Assert.LessOrEqual(view.Entries.Count, 10);
 
                             leaderboardService.GetSocialLeaderboard(0, TEST_LEADERBOARD_ID, true,
-                                (RuyiNetSocialLeaderboardResponse getSocialResponse) =>
+                                (RuyiNetLeaderboardPage socialLeaderboard) =>
                             {
-                                CheckResponseStatus(getSocialResponse.status);
-                                Assert.IsTrue(getSocialResponse.data.success);
+                                Assert.IsNotNull(socialLeaderboard);
 
-                                var socialLeaderboard = getSocialResponse.data.response.social_leaderboard;
-
-                                Assert.Greater(socialLeaderboard.Length, 0);
-                                Assert.LessOrEqual(socialLeaderboard.Length, 10);
+                                Assert.Greater(socialLeaderboard.Entries.Count, 0);
+                                Assert.LessOrEqual(socialLeaderboard.Entries.Count, 10);
                             });
                         });
                     });
