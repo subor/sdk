@@ -1,5 +1,4 @@
-﻿using NetMQ;
-using Ruyi.Layer0;
+﻿using Ruyi.Layer0;
 using Ruyi.Logging;
 using Ruyi.SDK.Constants;
 using Ruyi.SDK.LocalizationService;
@@ -15,7 +14,6 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Thrift.Protocols;
@@ -94,7 +92,7 @@ namespace Ruyi
         /// <summary>
         /// to subscribe to a topic
         /// </summary>
-        public SubscribeClient Subscriber { get; private set; }
+        public ISubscribeClient Subscriber { get; private set; }
 
         /// <summary>
         /// to access the ruyi platform storage interface
@@ -241,11 +239,13 @@ namespace Ruyi
             if (!ValidateVersion())
                 return false;
 
+            var pubout = ConstantsSDKDataTypesConstants.layer0_publisher_out_uri.SetAddress(context.RemoteAddress);
+            factory = new Layer0.ZeroMQ.MDPSDKFactory(string.Empty, pubout);
+
             // init subscriber
             if (context.endpoint != RuyiSDKContext.Endpoint.Web && IsFeatureEnabled(SDKFeatures.Subscriber))
             {
-                var pubout = ConstantsSDKDataTypesConstants.layer0_publisher_out_uri.SetAddress(context.RemoteAddress);
-                Subscriber = SubscribeClient.CreateInstance(pubout);
+                Subscriber = factory.CreateSubscriber();
             }
 
             // init storage layer
@@ -411,27 +411,14 @@ namespace Ruyi
             HighLatencyProtocol?.Dispose();
             HighLatencyProtocol = null;
             highLatencyTransport = null;
-
-
-            // don't clean up netmq in layer0.
+            
             InstanceCount--;
             if (InstanceCount <= 0)
             {
-                var entry = Assembly.GetEntryAssembly();
-                if (entry == null)  // in a unit test
-                {
-                    NetMQConfig.Cleanup(false);
-                    return;
-                }
-
-                // not Layer0 & not Layer1
-                if(!entry.FullName.StartsWith("Layer0,", StringComparison.OrdinalIgnoreCase) 
-                    && !entry.FullName.StartsWith("Layer1,", StringComparison.OrdinalIgnoreCase))
-                {
-                    NetMQConfig.Cleanup(false);
-                    return;
-                }
+                factory.SDKCleanup();
             }
         }
+
+        ISDKFactory factory;
     }
 }

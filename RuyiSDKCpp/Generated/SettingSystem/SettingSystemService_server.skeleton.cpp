@@ -61,7 +61,16 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("GetCategoryNode\n");
   }
 
-  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType) {
+  /**
+   * Get child nodes of specified setting item or setting category
+   * 
+   * @param parent The parent node
+   * 
+   * @param nodeType Specifies whether the child nodes containing setting item or setting category, or both
+   * 
+   * @param param The parameter passed to the function which will be called while getting the item value
+   */
+  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param) {
     // Your implementation goes here
     printf("GetChildNode\n");
   }
@@ -170,6 +179,16 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
   void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return) {
     // Your implementation goes here
     printf("RuyiTestNetwork\n");
+  }
+
+  void RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex) {
+    // Your implementation goes here
+    printf("RuyiStartNetworkSpeedTest\n");
+  }
+
+  bool RuyiStopNetworkSpeedTest(const int32_t userindex) {
+    // Your implementation goes here
+    printf("RuyiStopNetworkSpeedTest\n");
   }
 
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return) {

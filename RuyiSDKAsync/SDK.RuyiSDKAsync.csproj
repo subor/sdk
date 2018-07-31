@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\commons\Common\Common.csproj" />
+    <ProjectReference Include="..\..\commons\MDPCommon\MDPCommon.csproj" />
     <ProjectReference Include="..\..\externals\thrift.netcore\Thrift.csproj" />
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj" />
     <ProjectReference Include="..\SDK.BaseAsync\SDK.BaseAsync.csproj" />
