@@ -86,7 +86,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings GetNetworkSettings();
       Ruyi.SDK.SettingSystem.Api.RuyiNetworkStatus GetNetworkStatus();
       Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult RuyiTestNetwork();
-      Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed RuyiStartNetworkSpeedTest(int userindex);
+      bool RuyiStartNetworkSpeedTest(int userindex);
       bool RuyiStopNetworkSpeedTest(int userindex);
       List<Ruyi.SDK.SettingSystem.Api.WifiEntity> GetAvailableWifi();
       bool DisconnectWifi();
@@ -159,7 +159,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings> GetNetworkSettingsAsync();
       Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkStatus> GetNetworkStatusAsync();
       Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult> RuyiTestNetworkAsync();
-      Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed> RuyiStartNetworkSpeedTestAsync(int userindex);
+      Task<bool> RuyiStartNetworkSpeedTestAsync(int userindex);
       Task<bool> RuyiStopNetworkSpeedTestAsync(int userindex);
       Task<List<Ruyi.SDK.SettingSystem.Api.WifiEntity>> GetAvailableWifiAsync();
       Task<bool> DisconnectWifiAsync();
@@ -253,7 +253,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       IAsyncResult Begin_RuyiTestNetwork(AsyncCallback callback, object state);
       Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestResult End_RuyiTestNetwork(IAsyncResult asyncResult);
       IAsyncResult Begin_RuyiStartNetworkSpeedTest(AsyncCallback callback, object state, int userindex);
-      Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed End_RuyiStartNetworkSpeedTest(IAsyncResult asyncResult);
+      bool End_RuyiStartNetworkSpeedTest(IAsyncResult asyncResult);
       IAsyncResult Begin_RuyiStopNetworkSpeedTest(AsyncCallback callback, object state, int userindex);
       bool End_RuyiStopNetworkSpeedTest(IAsyncResult asyncResult);
       IAsyncResult Begin_GetAvailableWifi(AsyncCallback callback, object state);
@@ -1541,15 +1541,15 @@ namespace Ruyi.SDK.SettingSystem.Api
         return send_RuyiStartNetworkSpeedTest(callback, state, userindex);
       }
 
-      public Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed End_RuyiStartNetworkSpeedTest(IAsyncResult asyncResult)
+      public bool End_RuyiStartNetworkSpeedTest(IAsyncResult asyncResult)
       {
         oprot_.Transport.EndFlush(asyncResult);
         return recv_RuyiStartNetworkSpeedTest();
       }
 
-      public async Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed> RuyiStartNetworkSpeedTestAsync(int userindex)
+      public async Task<bool> RuyiStartNetworkSpeedTestAsync(int userindex)
       {
-        Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed retval;
+        bool retval;
         retval = await Task.Run(() =>
         {
           return RuyiStartNetworkSpeedTest(userindex);
@@ -1557,7 +1557,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         return retval;
       }
 
-      public Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed RuyiStartNetworkSpeedTest(int userindex)
+      public bool RuyiStartNetworkSpeedTest(int userindex)
       {
         var asyncResult = Begin_RuyiStartNetworkSpeedTest(null, null, userindex);
         return End_RuyiStartNetworkSpeedTest(asyncResult);
@@ -1573,7 +1573,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         return oprot_.Transport.BeginFlush(callback, state);
       }
 
-      public Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed recv_RuyiStartNetworkSpeedTest()
+      public bool recv_RuyiStartNetworkSpeedTest()
       {
         TMessage msg = iprot_.ReadMessageBegin();
         if (msg.Type == TMessageType.Exception) {
@@ -9438,10 +9438,10 @@ namespace Ruyi.SDK.SettingSystem.Api
     #endif
     public partial class RuyiStartNetworkSpeedTest_result : TBase
     {
-      private Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed _success;
+      private bool _success;
       private Ruyi.SDK.CommonType.ErrorException _error1;
 
-      public Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed Success
+      public bool Success
       {
         get
         {
@@ -9496,9 +9496,8 @@ namespace Ruyi.SDK.SettingSystem.Api
             switch (field.ID)
             {
               case 0:
-                if (field.Type == TType.Struct) {
-                  Success = new Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed();
-                  Success.Read(iprot);
+                if (field.Type == TType.Bool) {
+                  Success = iprot.ReadBool();
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }
@@ -9534,14 +9533,12 @@ namespace Ruyi.SDK.SettingSystem.Api
           TField field = new TField();
 
           if (this.__isset.success) {
-            if (Success != null) {
-              field.Name = "Success";
-              field.Type = TType.Struct;
-              field.ID = 0;
-              oprot.WriteFieldBegin(field);
-              Success.Write(oprot);
-              oprot.WriteFieldEnd();
-            }
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(Success);
+            oprot.WriteFieldEnd();
           } else if (this.__isset.error1) {
             if (Error1 != null) {
               field.Name = "Error1";
@@ -9564,11 +9561,11 @@ namespace Ruyi.SDK.SettingSystem.Api
       public override string ToString() {
         StringBuilder __sb = new StringBuilder("RuyiStartNetworkSpeedTest_result(");
         bool __first = true;
-        if (Success != null && __isset.success) {
+        if (__isset.success) {
           if(!__first) { __sb.Append(", "); }
           __first = false;
           __sb.Append("Success: ");
-          __sb.Append(Success== null ? "<null>" : Success.ToString());
+          __sb.Append(Success);
         }
         if (Error1 != null && __isset.error1) {
           if(!__first) { __sb.Append(", "); }

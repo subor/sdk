@@ -112,7 +112,7 @@ class SettingSystemServiceIf {
   virtual void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) = 0;
   virtual void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return) = 0;
   virtual void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return) = 0;
-  virtual void RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex) = 0;
+  virtual bool RuyiStartNetworkSpeedTest(const int32_t userindex) = 0;
   virtual bool RuyiStopNetworkSpeedTest(const int32_t userindex) = 0;
   virtual void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return) = 0;
   virtual bool DisconnectWifi() = 0;
@@ -216,8 +216,9 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
   void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& /* _return */) {
     return;
   }
-  void RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& /* _return */, const int32_t /* userindex */) {
-    return;
+  bool RuyiStartNetworkSpeedTest(const int32_t /* userindex */) {
+    bool _return = false;
+    return _return;
   }
   bool RuyiStopNetworkSpeedTest(const int32_t /* userindex */) {
     bool _return = false;
@@ -2615,16 +2616,16 @@ class SettingSystemService_RuyiStartNetworkSpeedTest_result {
 
   SettingSystemService_RuyiStartNetworkSpeedTest_result(const SettingSystemService_RuyiStartNetworkSpeedTest_result&);
   SettingSystemService_RuyiStartNetworkSpeedTest_result& operator=(const SettingSystemService_RuyiStartNetworkSpeedTest_result&);
-  SettingSystemService_RuyiStartNetworkSpeedTest_result() {
+  SettingSystemService_RuyiStartNetworkSpeedTest_result() : success(0) {
   }
 
   virtual ~SettingSystemService_RuyiStartNetworkSpeedTest_result() throw();
-   ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed success;
+  bool success;
    ::Ruyi::SDK::CommonType::ErrorException error1;
 
   _SettingSystemService_RuyiStartNetworkSpeedTest_result__isset __isset;
 
-  void __set_success(const  ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& val);
+  void __set_success(const bool val);
 
   void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
 
@@ -2658,7 +2659,7 @@ class SettingSystemService_RuyiStartNetworkSpeedTest_presult {
 
 
   virtual ~SettingSystemService_RuyiStartNetworkSpeedTest_presult() throw();
-   ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed* success;
+  bool* success;
    ::Ruyi::SDK::CommonType::ErrorException error1;
 
   _SettingSystemService_RuyiStartNetworkSpeedTest_presult__isset __isset;
@@ -3064,9 +3065,9 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return);
   void send_RuyiTestNetwork();
   void recv_RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return);
-  void RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex);
+  bool RuyiStartNetworkSpeedTest(const int32_t userindex);
   void send_RuyiStartNetworkSpeedTest(const int32_t userindex);
-  void recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return);
+  bool recv_RuyiStartNetworkSpeedTest();
   bool RuyiStopNetworkSpeedTest(const int32_t userindex);
   void send_RuyiStopNetworkSpeedTest(const int32_t userindex);
   bool recv_RuyiStopNetworkSpeedTest();
@@ -3359,14 +3360,13 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return;
   }
 
-  void RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex) {
+  bool RuyiStartNetworkSpeedTest(const int32_t userindex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->RuyiStartNetworkSpeedTest(_return, userindex);
+      ifaces_[i]->RuyiStartNetworkSpeedTest(userindex);
     }
-    ifaces_[i]->RuyiStartNetworkSpeedTest(_return, userindex);
-    return;
+    return ifaces_[i]->RuyiStartNetworkSpeedTest(userindex);
   }
 
   bool RuyiStopNetworkSpeedTest(const int32_t userindex) {
@@ -3487,9 +3487,9 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return);
   int32_t send_RuyiTestNetwork();
   void recv_RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return, const int32_t seqid);
-  void RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex);
+  bool RuyiStartNetworkSpeedTest(const int32_t userindex);
   int32_t send_RuyiStartNetworkSpeedTest(const int32_t userindex);
-  void recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t seqid);
+  bool recv_RuyiStartNetworkSpeedTest(const int32_t seqid);
   bool RuyiStopNetworkSpeedTest(const int32_t userindex);
   int32_t send_RuyiStopNetworkSpeedTest(const int32_t userindex);
   bool recv_RuyiStopNetworkSpeedTest(const int32_t seqid);

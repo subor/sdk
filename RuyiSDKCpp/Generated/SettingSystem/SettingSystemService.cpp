@@ -4661,8 +4661,8 @@ uint32_t SettingSystemService_RuyiStartNetworkSpeedTest_result::read(::apache::t
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->success.read(iprot);
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->success);
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -4695,8 +4695,8 @@ uint32_t SettingSystemService_RuyiStartNetworkSpeedTest_result::write(::apache::
   xfer += oprot->writeStructBegin("SettingSystemService_RuyiStartNetworkSpeedTest_result");
 
   if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
-    xfer += this->success.write(oprot);
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
+    xfer += oprot->writeBool(this->success);
     xfer += oprot->writeFieldEnd();
   } else if (this->__isset.error1) {
     xfer += oprot->writeFieldBegin("error1", ::apache::thrift::protocol::T_STRUCT, 1);
@@ -4735,8 +4735,8 @@ uint32_t SettingSystemService_RuyiStartNetworkSpeedTest_presult::read(::apache::
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += (*(this->success)).read(iprot);
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool((*(this->success)));
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -6604,10 +6604,10 @@ void SettingSystemServiceClient::recv_RuyiTestNetwork( ::Ruyi::SDK::SettingSyste
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "RuyiTestNetwork failed: unknown result");
 }
 
-void SettingSystemServiceClient::RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex)
+bool SettingSystemServiceClient::RuyiStartNetworkSpeedTest(const int32_t userindex)
 {
   send_RuyiStartNetworkSpeedTest(userindex);
-  recv_RuyiStartNetworkSpeedTest(_return);
+  return recv_RuyiStartNetworkSpeedTest();
 }
 
 void SettingSystemServiceClient::send_RuyiStartNetworkSpeedTest(const int32_t userindex)
@@ -6624,7 +6624,7 @@ void SettingSystemServiceClient::send_RuyiStartNetworkSpeedTest(const int32_t us
   oprot_->getTransport()->flush();
 }
 
-void SettingSystemServiceClient::recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return)
+bool SettingSystemServiceClient::recv_RuyiStartNetworkSpeedTest()
 {
 
   int32_t rseqid = 0;
@@ -6649,6 +6649,7 @@ void SettingSystemServiceClient::recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::Se
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
+  bool _return;
   SettingSystemService_RuyiStartNetworkSpeedTest_presult result;
   result.success = &_return;
   result.read(iprot_);
@@ -6656,8 +6657,7 @@ void SettingSystemServiceClient::recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::Se
   iprot_->getTransport()->readEnd();
 
   if (result.__isset.success) {
-    // _return pointer has now been filled
-    return;
+    return _return;
   }
   if (result.__isset.error1) {
     throw result.error1;
@@ -8022,7 +8022,7 @@ void SettingSystemServiceProcessor::process_RuyiStartNetworkSpeedTest(int32_t se
 
   SettingSystemService_RuyiStartNetworkSpeedTest_result result;
   try {
-    iface_->RuyiStartNetworkSpeedTest(result.success, args.userindex);
+    result.success = iface_->RuyiStartNetworkSpeedTest(args.userindex);
     result.__isset.success = true;
   } catch ( ::Ruyi::SDK::CommonType::ErrorException &error1) {
     result.error1 = error1;
@@ -10003,10 +10003,10 @@ void SettingSystemServiceConcurrentClient::recv_RuyiTestNetwork( ::Ruyi::SDK::Se
   } // end while(true)
 }
 
-void SettingSystemServiceConcurrentClient::RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex)
+bool SettingSystemServiceConcurrentClient::RuyiStartNetworkSpeedTest(const int32_t userindex)
 {
   int32_t seqid = send_RuyiStartNetworkSpeedTest(userindex);
-  recv_RuyiStartNetworkSpeedTest(_return, seqid);
+  return recv_RuyiStartNetworkSpeedTest(seqid);
 }
 
 int32_t SettingSystemServiceConcurrentClient::send_RuyiStartNetworkSpeedTest(const int32_t userindex)
@@ -10027,7 +10027,7 @@ int32_t SettingSystemServiceConcurrentClient::send_RuyiStartNetworkSpeedTest(con
   return cseqid;
 }
 
-void SettingSystemServiceConcurrentClient::recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t seqid)
+bool SettingSystemServiceConcurrentClient::recv_RuyiStartNetworkSpeedTest(const int32_t seqid)
 {
 
   int32_t rseqid = 0;
@@ -10065,6 +10065,7 @@ void SettingSystemServiceConcurrentClient::recv_RuyiStartNetworkSpeedTest( ::Ruy
         using ::apache::thrift::protocol::TProtocolException;
         throw TProtocolException(TProtocolException::INVALID_DATA);
       }
+      bool _return;
       SettingSystemService_RuyiStartNetworkSpeedTest_presult result;
       result.success = &_return;
       result.read(iprot_);
@@ -10072,9 +10073,8 @@ void SettingSystemServiceConcurrentClient::recv_RuyiStartNetworkSpeedTest( ::Ruy
       iprot_->getTransport()->readEnd();
 
       if (result.__isset.success) {
-        // _return pointer has now been filled
         sentry.commit();
-        return;
+        return _return;
       }
       if (result.__isset.error1) {
         sentry.commit();
