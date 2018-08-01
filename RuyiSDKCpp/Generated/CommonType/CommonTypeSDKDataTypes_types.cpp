@@ -551,6 +551,10 @@ ActionTrigger::~ActionTrigger() throw() {
 }
 
 
+void ActionTrigger::__set_Id(const int32_t val) {
+  this->Id = val;
+}
+
 void ActionTrigger::__set_InputCagetory(const InputCategory::type val) {
   this->InputCagetory = val;
 }
@@ -592,6 +596,14 @@ uint32_t ActionTrigger::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->Id);
+          this->__isset.Id = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
           int32_t ecast6;
           xfer += iprot->readI32(ecast6);
           this->InputCagetory = (InputCategory::type)ecast6;
@@ -600,7 +612,7 @@ uint32_t ActionTrigger::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 2:
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->TriggerButtons.clear();
@@ -620,7 +632,7 @@ uint32_t ActionTrigger::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 3:
+      case 4:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->TriggerValue.clear();
@@ -657,11 +669,15 @@ uint32_t ActionTrigger::write(::apache::thrift::protocol::TProtocol* oprot) cons
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("ActionTrigger");
 
-  xfer += oprot->writeFieldBegin("InputCagetory", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeFieldBegin("Id", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->Id);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("InputCagetory", ::apache::thrift::protocol::T_I32, 2);
   xfer += oprot->writeI32((int32_t)this->InputCagetory);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("TriggerButtons", ::apache::thrift::protocol::T_LIST, 2);
+  xfer += oprot->writeFieldBegin("TriggerButtons", ::apache::thrift::protocol::T_LIST, 3);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I32, static_cast<uint32_t>(this->TriggerButtons.size()));
     std::vector<int32_t> ::const_iterator _iter17;
@@ -673,7 +689,7 @@ uint32_t ActionTrigger::write(::apache::thrift::protocol::TProtocol* oprot) cons
   }
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("TriggerValue", ::apache::thrift::protocol::T_LIST, 3);
+  xfer += oprot->writeFieldBegin("TriggerValue", ::apache::thrift::protocol::T_LIST, 4);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I32, static_cast<uint32_t>(this->TriggerValue.size()));
     std::vector<int32_t> ::const_iterator _iter18;
@@ -692,6 +708,7 @@ uint32_t ActionTrigger::write(::apache::thrift::protocol::TProtocol* oprot) cons
 
 void swap(ActionTrigger &a, ActionTrigger &b) {
   using ::std::swap;
+  swap(a.Id, b.Id);
   swap(a.InputCagetory, b.InputCagetory);
   swap(a.TriggerButtons, b.TriggerButtons);
   swap(a.TriggerValue, b.TriggerValue);
@@ -699,12 +716,14 @@ void swap(ActionTrigger &a, ActionTrigger &b) {
 }
 
 ActionTrigger::ActionTrigger(const ActionTrigger& other19) {
+  Id = other19.Id;
   InputCagetory = other19.InputCagetory;
   TriggerButtons = other19.TriggerButtons;
   TriggerValue = other19.TriggerValue;
   __isset = other19.__isset;
 }
 ActionTrigger& ActionTrigger::operator=(const ActionTrigger& other20) {
+  Id = other20.Id;
   InputCagetory = other20.InputCagetory;
   TriggerButtons = other20.TriggerButtons;
   TriggerValue = other20.TriggerValue;
@@ -714,7 +733,8 @@ ActionTrigger& ActionTrigger::operator=(const ActionTrigger& other20) {
 void ActionTrigger::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
   out << "ActionTrigger(";
-  out << "InputCagetory=" << to_string(InputCagetory);
+  out << "Id=" << to_string(Id);
+  out << ", " << "InputCagetory=" << to_string(InputCagetory);
   out << ", " << "TriggerButtons=" << to_string(TriggerButtons);
   out << ", " << "TriggerValue=" << to_string(TriggerValue);
   out << ")";
@@ -2791,6 +2811,118 @@ void PopupNotification::printTo(std::ostream& out) const {
   out << ", " << "MainIcon=" << to_string(MainIcon);
   out << ", " << "Text=" << to_string(Text);
   out << ", " << "Description=" << to_string(Description);
+  out << ")";
+}
+
+
+EventNotification::~EventNotification() throw() {
+}
+
+
+void EventNotification::__set_key(const std::string& val) {
+  this->key = val;
+}
+
+void EventNotification::__set_contents(const JSON& val) {
+  this->contents = val;
+}
+std::ostream& operator<<(std::ostream& out, const EventNotification& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+uint32_t EventNotification::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->key);
+          this->__isset.key = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->contents);
+          this->__isset.contents = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t EventNotification::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("EventNotification");
+
+  xfer += oprot->writeFieldBegin("key", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->key);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("contents", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->contents);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(EventNotification &a, EventNotification &b) {
+  using ::std::swap;
+  swap(a.key, b.key);
+  swap(a.contents, b.contents);
+  swap(a.__isset, b.__isset);
+}
+
+EventNotification::EventNotification(const EventNotification& other96) {
+  key = other96.key;
+  contents = other96.contents;
+  __isset = other96.__isset;
+}
+EventNotification& EventNotification::operator=(const EventNotification& other97) {
+  key = other97.key;
+  contents = other97.contents;
+  __isset = other97.__isset;
+  return *this;
+}
+void EventNotification::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "EventNotification(";
+  out << "key=" << to_string(key);
+  out << ", " << "contents=" << to_string(contents);
   out << ")";
 }
 

@@ -84,14 +84,6 @@ struct NodeList {
     2: list<CommonTypeSDKDataTypes.SettingItem> SettingItems,
 }
 
-/** Notification of setting item from layer0 */
-struct SettingItemNotification {
-    /** The item's ID */
-	1: string key,
-    /** Optional. The arguments of the notification. In json string format */
-	2: JSON contents = "{}",
-}
-
 struct WifiEntity {
     1: string Name,
     2: string MacAddress,
