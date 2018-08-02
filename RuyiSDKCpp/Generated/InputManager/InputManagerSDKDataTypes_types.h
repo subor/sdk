@@ -382,6 +382,8 @@ class InputActionTriggered;
 
 class AxisActionTriggered;
 
+class GamepadInfo;
+
 typedef struct _RuyiGamePadInput__isset {
   _RuyiGamePadInput__isset() : DeviceId(false), UserId(false), ButtonFlags(false), LeftTrigger(false), RightTrigger(false), LeftThumbX(false), LeftThumbY(false), RightThumbX(false), RightThumbY(false) {}
   bool DeviceId :1;
@@ -855,6 +857,54 @@ class AxisActionTriggered : public virtual ::apache::thrift::TBase {
 void swap(AxisActionTriggered &a, AxisActionTriggered &b);
 
 std::ostream& operator<<(std::ostream& out, const AxisActionTriggered& obj);
+
+typedef struct _GamepadInfo__isset {
+  _GamepadInfo__isset() : deviceId(false), isWireless(false) {}
+  bool deviceId :1;
+  bool isWireless :1;
+} _GamepadInfo__isset;
+
+class GamepadInfo : public virtual ::apache::thrift::TBase {
+ public:
+
+  GamepadInfo(const GamepadInfo&);
+  GamepadInfo& operator=(const GamepadInfo&);
+  GamepadInfo() : deviceId(), isWireless(0) {
+  }
+
+  virtual ~GamepadInfo() throw();
+  std::string deviceId;
+  bool isWireless;
+
+  _GamepadInfo__isset __isset;
+
+  void __set_deviceId(const std::string& val);
+
+  void __set_isWireless(const bool val);
+
+  bool operator == (const GamepadInfo & rhs) const
+  {
+    if (!(deviceId == rhs.deviceId))
+      return false;
+    if (!(isWireless == rhs.isWireless))
+      return false;
+    return true;
+  }
+  bool operator != (const GamepadInfo &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GamepadInfo & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(GamepadInfo &a, GamepadInfo &b);
+
+std::ostream& operator<<(std::ostream& out, const GamepadInfo& obj);
 
 }}} // namespace
 
