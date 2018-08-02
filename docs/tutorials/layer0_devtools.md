@@ -1,13 +1,13 @@
-# Launching Platform and Using Devtools
+# 启动平台及使用开发者工具
 
-## Prerequisites
+## 前提条件
 
-- [Register as a Ruyi developer and setup a development environment](../topics/dev_onboarding.md)
-- [Setup the SDK and login as a guest user](setup.md)
+- [注册成为Ruyi开发者及安装开发环境](../topics/dev_onboarding.md)
+- [安装SDK及访客身份登陆](setup.md)
 
-## Developer tools
+## 开发者工具
 
-All [developer tools](../topics/devtool.md) are available via `DevTools/RuyiDev.exe`.
+所有的[开发者工具](../topics/devtool.md)都可以通过运行`DevTools/RuyiDev.exe`使用.
 
 ```
 +---DevTools
@@ -22,18 +22,18 @@ All [developer tools](../topics/devtool.md) are available via `DevTools/RuyiDev.
 \---SDK
 ```
 
-Double-click RuyiDev.exe to launch the GUI:
+双击RuyiDev.exe来启动图形界面程序：
 ![](/docs/img/ruyidev_gui.png)
 
-All plugins are listed on the left side of the window.
+所有的插件都会在窗口左侧列出。
 
-Open a command prompt and run RuyiDev.exe with an option (e.g. `RuyiDev.exe -h`) to use the commandline interface (CLI):
+打开Windows的命令行窗口(左下角搜索窗输入cmd)，带参数运行RuyiDev.exe(比如`RuyiDev.exe -h`)来启动命令行界面(CLI):
 ![](/docs/img/ruyidev_cli.png)
 	
-All plugins are used via `RuyiDev.exe <plugin> <arguments>`.
-Assistance for any plugin is available via `RuyiDev.exe <plugin> -h`.
+所有插件均可通过`RuyiDev.exe <plugin> <arguments>`的命令格式来运行使用。
+所有插件的帮助说明可以通过`RuyiDev.exe <plugin> -h`来访问。
 
-For example, `RuyiDev.exe settingtool -h` outputs:
+比如, 运行`RuyiDev.exe settingtool -h`会输出:
 
 ```
 D:\git\jade\dev_tools\Main\bin\Debug>ruyidev.exe settingtool -h
@@ -67,21 +67,21 @@ Usage: 'RuyiDev [<Options>+] settingtool [<args>]'
                                [PlaybackFile] [PlaybackHost]
 ```
 
-## View Current Settings
+## 显示当前设置
 
-1. Run `RuyiDev.exe` to launch the GUI
-1. Select `Setting Tool` plugin
-1. For _Format_ select `simple`
-1. Enable `Console`
-1. Click `Run List` button
-1. Output will show all current settings:
+1. 运行`RuyiDev.exe`启动图形界面
+1. 选择`Setting Tool`插件
+1. _Format_栏选`simple`
+1. 勾选`Console`
+1. 点击`Run List`按钮
+1. 输出界面会显示当前所有设置:
 
 ![](/docs/img/ruyidev_gui_settings_list.png)
 
-Alternatively:
+也可以使用命令行:
 
-1. From command prompt run `RuyiDev.exe -v verbose SettingTool --buttonlist --listformat=simple --listtoconsole=true`
-1. Console output is similar to GUI:
+1. 打开命令行窗口，运行`RuyiDev.exe -v verbose SettingTool --buttonlist --listformat=simple --listtoconsole=true`
+1. 输出的信息类似图形界面：
 ```
 [12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    Found setting amount: 22
 [12/29/2017 6:00:57 PM] [         SettingTool]  [      Info]    ScreenShot null systemsetting
@@ -101,16 +101,16 @@ Alternatively:
 ...
 ```
 
-## Change setting value
+## 更改设置参数
 
-1. Get current value of _Mute_:
+1. 得到当前“_静音_(_Mute_)”的参数值:
 
 	> [12/29/2017 6:26:04 PM] [         SettingTool]  [      Info]    Mute false systemsetting
 	
-1. Set _Mute_ to __true__ with `RuyiDev.exe -v verbose SettingTool --buttonset --setkey=Mute --setvalue=true --setmodule=systemsetting`:
+1. 运行`RuyiDev.exe -v verbose SettingTool --buttonset --setkey=Mute --setvalue=true --setmodule=systemsetting`把“_静音_(_Mute_)”值设置为__true__:
 	
 	> [12/29/2017 6:26:39 PM] [         SettingTool]  [      Info]    Set Mute to true result: True
 	
-1. Verify value of _Mute_ changed:
+1. 验证“_静音_(_Mute_)”值是否更新:
 	
 	> [12/29/2017 6:27:53 PM] [         SettingTool]  [      Info]    Mute true systemsetting

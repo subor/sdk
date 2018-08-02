@@ -1,29 +1,29 @@
-# Setup
+# SDK安装
 
-These are instructions to setup and manage the Ruyi SDK on a developer's workstation or the Ruyi console.
+这里是关于开发者在自己的工作机器或者Ruyi主机上安装管理RuyiSDK的指南.
 
-If you received a devkit from us it should already come with the SDK pre-installed to `c:\ruyi`.  But, the following instructions can be used to update it.
+如果你有收到我们发出的开发套件，其中应该已经预装有SDK(`c:\ruyi`). 当然，以下说明仍可以用来升级SDK。
 
-## Prerequisites
+## 前提条件
 
-- [Register as a Ruyi developer and setup a development environment](../topics/dev_onboarding.md)
+- [注册成为Ruyi开发者及安装开发环境](../topics/dev_onboarding.md)
 
-## SDK Download and Installation
+## SDK下载及安装
 
-1. Download the following from the [Development](http://dev.playruyi.com/uservices) area of the website:
-    - All SDKs
-    - Devtools
+1. 在[开发者网站](http://dev.playruyi.com/uservices)下载以下内容:
+    - 所有SDK
+    - 开发工具（Devtools）
     - Layer0
-    - Main Client
-1. Uncompress to local HDD as siblings
-1. If necessary (see [issue](https://bitbucket.org/playruyi/support/issues/3)), __unblock__ executable files:
-    - __Right-click executable, select Properties__, enable the __Unblock__ checkbox  
+    - 主机客户端（Main Client）
+1. 解压到本地硬盘
+1. 如果有需要(参照[遇到问题](https://bitbucket.org/playruyi/support/issues/3)), __解除锁定__文件:
+    - __右击exe文件__, 选择属性（__Properties__）, 勾选__解除锁定__（__Unblock__）  
     ![](/docs/img/exe_unblock.png)
 
-    OR
-    - Run __Windows PowerShell__ as _administrator_ and execute `Get-ChildItem c:\RUYI\*.* -Recurse | Unblock-File`
+    或者
+    - 用__administrator__账户运行__Windows PowerShell__， 执行`Get-ChildItem c:\RUYI\*.* -Recurse | Unblock-File`
 
-End result should be directory structure similar to the following:
+最终文件目录结构应该如下所示:
 ```
 |   
 +---DevTools
@@ -65,40 +65,40 @@ End result should be directory structure similar to the following:
             \---zmq
 ```
 
-Details regarding the SDK can be found [here](../topics/sdk.md).
+更多关于SDK说明请看[这里](../topics/sdk.md).
 
-### Notes
-1. All assemblies above should keep in the same version, you can check that by right click on the exe/dll file, properties->details->file version
-1. Delete the old version when upgrading, don't do a copy -> replacement, make sure files not needed don't exist.
+### 注意
+1. 以上所有组件必须保持版本匹配, 你可以通过右击exe/dll文件，属性->详细->文件版本，来查看版本信息。
+1. 升级时请删除旧版本文件，不要复制->取代，保证所有不需要的文件已被清除.
 
 
-## Launching Client, Registering, and Logging-in
+## 启动客户端，注册，登陆
 
-[Layer0](../topics/layer0.md) must be running on a host machine before you can access most of the Ruyi platform.
+在进入Ruyi平台前请保证在主机上先运行[Layer0](../topics/layer0.md)。
 
-__IMPORTANT__ A user _must be logged in via main client_ for most of the SDK API to work.  The retail version of the console will require a user to be logged in to launch apps.
+__重要__ 在使用SDK的API前请保证用户已通过客户端（main client）登陆. 正式发售的主机需要用户登陆之后才能启动游戏.
 
-1. Run `Layer0\Layer0.exe`  
+1. 运行`Layer0\Layer0.exe`  
 ![](/docs/img/layer0.png)
-1. If installed to `c:\RUYI` the main client will start automatically.  Otherwise run `MainClient\WpfClient.exe` to launch it
-1. Register _guest_ user and login
-    - Select __Guest Login__  
+1. 如果Layer0安装到`c:\RUYI`下，客户端（main client）会自动启动。否则需要手动运行`MainClient\Client.exe`来启动客户端。
+1. 注册成为__访客__用户及登陆
+    - 选择__Guest Login__  
     ![](/docs/img/client_00.png)
-    - Ok (or press `Enter`)  
+    - Ok (或者按`Enter`)  
     ![](/docs/img/client_01.png)
-    - Ok (or press `Enter`)  
+    - Ok (或者按`Enter`)  
     ![](/docs/img/client_02.png)
-    - Ok (or press `Enter`)  
+    - Ok (或者按`Enter`)  
     ![](/docs/img/client_03.png)
 
-At this point you should be looking at placeholder UI for landing page of logged in user.
+这是你应该可以看到用户的登陆页面UI。
 
-__Next step:__
+__下一步:__
 
-- Try running [UE4](run_ue4_sample_pc.md) or [Unity](run_unity_sample_console.md) samples.
+- 尝试运行[虚幻4](run_ue4_sample_pc.md)或者[Unity3D](run_unity_sample_console.md)示例程序.
 
-## Updating SDK
+## 升级SDK
 
-1. Close Main Client and layer0 (if running)
-1. Delete old SDK folder
-1. Follow [download & install steps](#SDK-Download-and-Installation) above
+1. 关闭客户端（Main Client）和layer0(如果有运行)
+1. 删除旧版本的SDK文件夹
+1. 参照之前的[SDK下载及安装]步骤升级SDK(#SDK-Download-and-Installation)
