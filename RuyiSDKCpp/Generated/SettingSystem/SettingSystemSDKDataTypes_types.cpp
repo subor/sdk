@@ -1644,118 +1644,6 @@ void NodeList::printTo(std::ostream& out) const {
 }
 
 
-SettingItemNotification::~SettingItemNotification() throw() {
-}
-
-
-void SettingItemNotification::__set_key(const std::string& val) {
-  this->key = val;
-}
-
-void SettingItemNotification::__set_contents(const JSON& val) {
-  this->contents = val;
-}
-std::ostream& operator<<(std::ostream& out, const SettingItemNotification& obj)
-{
-  obj.printTo(out);
-  return out;
-}
-
-
-uint32_t SettingItemNotification::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->key);
-          this->__isset.key = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->contents);
-          this->__isset.contents = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t SettingItemNotification::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("SettingItemNotification");
-
-  xfer += oprot->writeFieldBegin("key", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->key);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("contents", ::apache::thrift::protocol::T_STRING, 2);
-  xfer += oprot->writeString(this->contents);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-void swap(SettingItemNotification &a, SettingItemNotification &b) {
-  using ::std::swap;
-  swap(a.key, b.key);
-  swap(a.contents, b.contents);
-  swap(a.__isset, b.__isset);
-}
-
-SettingItemNotification::SettingItemNotification(const SettingItemNotification& other60) {
-  key = other60.key;
-  contents = other60.contents;
-  __isset = other60.__isset;
-}
-SettingItemNotification& SettingItemNotification::operator=(const SettingItemNotification& other61) {
-  key = other61.key;
-  contents = other61.contents;
-  __isset = other61.__isset;
-  return *this;
-}
-void SettingItemNotification::printTo(std::ostream& out) const {
-  using ::apache::thrift::to_string;
-  out << "SettingItemNotification(";
-  out << "key=" << to_string(key);
-  out << ", " << "contents=" << to_string(contents);
-  out << ")";
-}
-
-
 WifiEntity::~WifiEntity() throw() {
 }
 
@@ -1950,27 +1838,27 @@ void swap(WifiEntity &a, WifiEntity &b) {
   swap(a.__isset, b.__isset);
 }
 
-WifiEntity::WifiEntity(const WifiEntity& other62) {
-  Name = other62.Name;
-  MacAddress = other62.MacAddress;
-  Channel = other62.Channel;
-  CenterFrequancy = other62.CenterFrequancy;
-  Rssi = other62.Rssi;
-  Connected = other62.Connected;
-  SecurityEnabled = other62.SecurityEnabled;
-  HasProfile = other62.HasProfile;
-  __isset = other62.__isset;
+WifiEntity::WifiEntity(const WifiEntity& other60) {
+  Name = other60.Name;
+  MacAddress = other60.MacAddress;
+  Channel = other60.Channel;
+  CenterFrequancy = other60.CenterFrequancy;
+  Rssi = other60.Rssi;
+  Connected = other60.Connected;
+  SecurityEnabled = other60.SecurityEnabled;
+  HasProfile = other60.HasProfile;
+  __isset = other60.__isset;
 }
-WifiEntity& WifiEntity::operator=(const WifiEntity& other63) {
-  Name = other63.Name;
-  MacAddress = other63.MacAddress;
-  Channel = other63.Channel;
-  CenterFrequancy = other63.CenterFrequancy;
-  Rssi = other63.Rssi;
-  Connected = other63.Connected;
-  SecurityEnabled = other63.SecurityEnabled;
-  HasProfile = other63.HasProfile;
-  __isset = other63.__isset;
+WifiEntity& WifiEntity::operator=(const WifiEntity& other61) {
+  Name = other61.Name;
+  MacAddress = other61.MacAddress;
+  Channel = other61.Channel;
+  CenterFrequancy = other61.CenterFrequancy;
+  Rssi = other61.Rssi;
+  Connected = other61.Connected;
+  SecurityEnabled = other61.SecurityEnabled;
+  HasProfile = other61.HasProfile;
+  __isset = other61.__isset;
   return *this;
 }
 void WifiEntity::printTo(std::ostream& out) const {

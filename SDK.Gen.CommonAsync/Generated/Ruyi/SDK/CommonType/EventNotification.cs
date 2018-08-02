@@ -22,20 +22,14 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.CommonType
 {
 
-  /// <summary>
-  /// Notification of setting item from layer0
-  /// </summary>
-  public partial class SettingItemNotification : TBase
+  public partial class EventNotification : TBase
   {
     private string _key;
     private string _contents;
 
-    /// <summary>
-    /// The item's ID
-    /// </summary>
     public string Key
     {
       get
@@ -49,9 +43,6 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    /// <summary>
-    /// Optional. The arguments of the notification. In json string format
-    /// </summary>
     public string Contents
     {
       get
@@ -73,7 +64,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       public bool contents;
     }
 
-    public SettingItemNotification()
+    public EventNotification()
     {
       this._contents = "{}";
       this.__isset.contents = true;
@@ -137,7 +128,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("SettingItemNotification");
+        var struc = new TStruct("EventNotification");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
         if (Key != null && __isset.key)
@@ -169,7 +160,7 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("SettingItemNotification(");
+      var sb = new StringBuilder("EventNotification(");
       bool __first = true;
       if (Key != null && __isset.key)
       {
