@@ -60,7 +60,9 @@
 
 1. My question isn't answered here, I need help, what do I do?
 
-    There's [more documentation](README.md), [forums](http://dev.playruyi.com/forum/), and [dev support](https://bitbucket.org/playruyi/support) (including [tickets](https://bitbucket.org/playruyi/support/issues?status=new&status=open)).
+    - Try [searching for it](https://bitbucket.org/search?account=%7Bf59fdd59-0a84-4d5b-a424-61eb2b74c84f%7D) ([see Repository Search](https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/support.md#Repository-Search))
+    - Check [online documentation](README.md)
+    - Try [support resources](https://bitbucket.org/playruyi/support) like [forums](http://dev.playruyi.com/forum/) and [tickets](https://bitbucket.org/playruyi/support/issues?status=new&status=open)
 
 ## Platform/Publishing
 

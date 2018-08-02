@@ -80,7 +80,7 @@ __IMPORTANT__ A user _must be logged in via main client_ for most of the SDK API
 
 1. Run `Layer0\Layer0.exe`  
 ![](/docs/img/layer0.png)
-1. If installed to `c:\RUYI` the main client will start automatically.  Otherwise run `MainClient\Client.exe` to launch it
+1. If installed to `c:\RUYI` the main client will start automatically.  Otherwise run `MainClient\WpfClient.exe` to launch it
 1. Register _guest_ user and login
     - Select __Guest Login__  
     ![](/docs/img/client_00.png)

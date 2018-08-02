@@ -70,6 +70,10 @@ Example from the [SDK samples](https://bitbucket.org/playruyi/space_shooter/src/
 }
 ```
 
+## Overlay
+
+See [overlay compatibility](overlay.md#Compatibility)
+
 ## Strings
 
 Localized strings are stored in `res/i18n.json`.

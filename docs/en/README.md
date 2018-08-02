@@ -59,6 +59,7 @@ Get __[Support](topics/support.md)__
     * [BIOS](topics/bios.md)
     * [PC mode](topics/pc_mode.md)
     * [OS recovery](topics/os_recovery.md)
+    * [Drivers](topics/drivers.md)
 * [Support](topics/support.md)
     * [FAQ](faq.md)
     * [Documentation](topics/docs.md)

@@ -77,6 +77,14 @@ The following rules are supported:
 |-|-|-
 | `if` | Check if `<cond>` specified in [`<conditions>`](#Conditions-element) is true | `<if name="CONDITION_NAME" />`
 
+Additional attributes:  
+
+| Attribute | Description
+|-|-
+| name | Name
+| id | Additional tag with no special meaning
+| order | Deprecated
+
 ## Runtime Element
 
 When the overlay attaches to an application, `<runtime>` configures some aspect of the hooking or rendering.
@@ -90,7 +98,7 @@ All are similar to `<ELEMENT ATTR="VALUE" />`:
 | forcetopmost | enabled | true/false | | false
 | opengl-vbo-rendering | enabled | true/false | | true
 | opengl-state-hooking | enabled | true/false | | true
-| game-window-subclassing | enabled | true/false | Deprecated | true
+| game-window-subclassing | enabled | true/false | Hook Windows message pump | true
 | forcerenderer | type | direct3d/opengl | Force overlay to use specified rendering API | `""`; Auto-detect
 | forcecursor | type | software/hardware | Force overlay to use hardware/software cursor | `""`; Auto
 | renderer-hooking | method | normal/intrusive/factory | Deprecated | normal
