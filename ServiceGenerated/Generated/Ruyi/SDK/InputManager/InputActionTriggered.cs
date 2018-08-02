@@ -19,6 +19,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.InputManager
 {
 
+  /// <summary>
+  /// Action triggered by digital input device ( buttons on gamepad or key on key board )
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -30,6 +33,9 @@ namespace Ruyi.SDK.InputManager
     private long _timestamp;
     private Ruyi.SDK.CommonType.ActionTrigger _trigger;
 
+    /// <summary>
+    /// The device id
+    /// </summary>
     public string DeviceId
     {
       get
@@ -43,6 +49,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// The id of user whome is bound to the device
+    /// </summary>
     public string UserId
     {
       get
@@ -56,6 +65,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// The name of the action
+    /// </summary>
     public string Name
     {
       get
@@ -69,6 +81,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// The time the action is triggered
+    /// </summary>
     public long Timestamp
     {
       get
@@ -82,6 +97,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// The device's state when trggering the action
+    /// </summary>
     public Ruyi.SDK.CommonType.ActionTrigger Trigger
     {
       get

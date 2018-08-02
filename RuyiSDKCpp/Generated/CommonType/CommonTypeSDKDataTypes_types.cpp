@@ -551,6 +551,10 @@ ActionTrigger::~ActionTrigger() throw() {
 }
 
 
+void ActionTrigger::__set_Id(const int32_t val) {
+  this->Id = val;
+}
+
 void ActionTrigger::__set_InputCagetory(const InputCategory::type val) {
   this->InputCagetory = val;
 }
@@ -592,6 +596,14 @@ uint32_t ActionTrigger::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->Id);
+          this->__isset.Id = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
           int32_t ecast6;
           xfer += iprot->readI32(ecast6);
           this->InputCagetory = (InputCategory::type)ecast6;
@@ -600,7 +612,7 @@ uint32_t ActionTrigger::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 2:
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->TriggerButtons.clear();
@@ -620,7 +632,7 @@ uint32_t ActionTrigger::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 3:
+      case 4:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->TriggerValue.clear();
@@ -657,11 +669,15 @@ uint32_t ActionTrigger::write(::apache::thrift::protocol::TProtocol* oprot) cons
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("ActionTrigger");
 
-  xfer += oprot->writeFieldBegin("InputCagetory", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeFieldBegin("Id", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->Id);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("InputCagetory", ::apache::thrift::protocol::T_I32, 2);
   xfer += oprot->writeI32((int32_t)this->InputCagetory);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("TriggerButtons", ::apache::thrift::protocol::T_LIST, 2);
+  xfer += oprot->writeFieldBegin("TriggerButtons", ::apache::thrift::protocol::T_LIST, 3);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I32, static_cast<uint32_t>(this->TriggerButtons.size()));
     std::vector<int32_t> ::const_iterator _iter17;
@@ -673,7 +689,7 @@ uint32_t ActionTrigger::write(::apache::thrift::protocol::TProtocol* oprot) cons
   }
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("TriggerValue", ::apache::thrift::protocol::T_LIST, 3);
+  xfer += oprot->writeFieldBegin("TriggerValue", ::apache::thrift::protocol::T_LIST, 4);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_I32, static_cast<uint32_t>(this->TriggerValue.size()));
     std::vector<int32_t> ::const_iterator _iter18;
@@ -692,6 +708,7 @@ uint32_t ActionTrigger::write(::apache::thrift::protocol::TProtocol* oprot) cons
 
 void swap(ActionTrigger &a, ActionTrigger &b) {
   using ::std::swap;
+  swap(a.Id, b.Id);
   swap(a.InputCagetory, b.InputCagetory);
   swap(a.TriggerButtons, b.TriggerButtons);
   swap(a.TriggerValue, b.TriggerValue);
@@ -699,12 +716,14 @@ void swap(ActionTrigger &a, ActionTrigger &b) {
 }
 
 ActionTrigger::ActionTrigger(const ActionTrigger& other19) {
+  Id = other19.Id;
   InputCagetory = other19.InputCagetory;
   TriggerButtons = other19.TriggerButtons;
   TriggerValue = other19.TriggerValue;
   __isset = other19.__isset;
 }
 ActionTrigger& ActionTrigger::operator=(const ActionTrigger& other20) {
+  Id = other20.Id;
   InputCagetory = other20.InputCagetory;
   TriggerButtons = other20.TriggerButtons;
   TriggerValue = other20.TriggerValue;
@@ -714,7 +733,8 @@ ActionTrigger& ActionTrigger::operator=(const ActionTrigger& other20) {
 void ActionTrigger::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
   out << "ActionTrigger(";
-  out << "InputCagetory=" << to_string(InputCagetory);
+  out << "Id=" << to_string(Id);
+  out << ", " << "InputCagetory=" << to_string(InputCagetory);
   out << ", " << "TriggerButtons=" << to_string(TriggerButtons);
   out << ", " << "TriggerValue=" << to_string(TriggerValue);
   out << ")";

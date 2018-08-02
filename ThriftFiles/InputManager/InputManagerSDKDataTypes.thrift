@@ -384,20 +384,40 @@ struct RuyiJoystickInput {
     7: JoystickOffset Offset,
 }
 
+/** Action triggered by digital input device ( buttons on gamepad or key on key board ) */
 struct InputActionTriggered {
-    1: string deviceId,
-    2: string userId,
-    3: string name,
-    4: i64 timestamp,
-    5: CommonTypeSDKDataTypes.ActionTrigger trigger,
+    /** The device id */
+	1: string deviceId,
+    /** The id of user whome is bound to the device */
+	2: string userId,
+    /** The name of the action */
+	3: string name,
+    /** The time the action is triggered */
+	4: i64 timestamp,
+    /** The device's state when trggering the action */
+	5: CommonTypeSDKDataTypes.ActionTrigger trigger,
 }
 
+/** Action triggered by analog input device ( the thumbs or triggers on gamepad ) */
 struct AxisActionTriggered {
-    1: string deviceId,
-    2: string userId,
-    3: string name,
-    4: i64 timestamp,
-    5: _float scale,
+    /** The device id */
+	1: string deviceId,
+    /** The id of user whome is bound to the device */
+	2: string userId,
+    /** The name of the action */
+	3: string name,
+    /** The time the action is triggered */
+	4: i64 timestamp,
+    /** The scale of the action */
+	5: _float scale,
+}
+
+/** Gamepad's information */
+struct GamepadInfo {
+    /** The device id of the gamepad */
+	1: string deviceId,
+    /** Whether the device is wirelessly connected */
+	2: bool isWireless,
 }
 
 

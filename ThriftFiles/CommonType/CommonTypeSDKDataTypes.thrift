@@ -85,9 +85,10 @@ struct InputModifier {
 }
 
 struct ActionTrigger {
-    1: InputCategory InputCagetory,
-    2: list<i32> TriggerButtons,
-    3: list<i32> TriggerValue,
+    1: i32 Id,
+    2: InputCategory InputCagetory,
+    3: list<i32> TriggerButtons,
+    4: list<i32> TriggerValue,
 }
 
 struct notification {
