@@ -1,5 +1,0 @@
-{
-"#": "Configuration file for https://www.gitbook.com/",
-"#": "Bitbucket wiki assumes Home.md is entrypoint so use that as Readme.md",
-"structure.readme": "Home.md"
-}
