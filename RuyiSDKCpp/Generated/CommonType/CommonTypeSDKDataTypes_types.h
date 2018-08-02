@@ -297,7 +297,8 @@ void swap(InputModifier &a, InputModifier &b);
 std::ostream& operator<<(std::ostream& out, const InputModifier& obj);
 
 typedef struct _ActionTrigger__isset {
-  _ActionTrigger__isset() : InputCagetory(false), TriggerButtons(false), TriggerValue(false) {}
+  _ActionTrigger__isset() : Id(false), InputCagetory(false), TriggerButtons(false), TriggerValue(false) {}
+  bool Id :1;
   bool InputCagetory :1;
   bool TriggerButtons :1;
   bool TriggerValue :1;
@@ -308,15 +309,18 @@ class ActionTrigger : public virtual ::apache::thrift::TBase {
 
   ActionTrigger(const ActionTrigger&);
   ActionTrigger& operator=(const ActionTrigger&);
-  ActionTrigger() : InputCagetory((InputCategory::type)0) {
+  ActionTrigger() : Id(0), InputCagetory((InputCategory::type)0) {
   }
 
   virtual ~ActionTrigger() throw();
+  int32_t Id;
   InputCategory::type InputCagetory;
   std::vector<int32_t>  TriggerButtons;
   std::vector<int32_t>  TriggerValue;
 
   _ActionTrigger__isset __isset;
+
+  void __set_Id(const int32_t val);
 
   void __set_InputCagetory(const InputCategory::type val);
 
@@ -326,6 +330,8 @@ class ActionTrigger : public virtual ::apache::thrift::TBase {
 
   bool operator == (const ActionTrigger & rhs) const
   {
+    if (!(Id == rhs.Id))
+      return false;
     if (!(InputCagetory == rhs.InputCagetory))
       return false;
     if (!(TriggerButtons == rhs.TriggerButtons))
