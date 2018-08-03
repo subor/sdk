@@ -150,6 +150,61 @@ namespace Ruyi.SDK.Online
         }
 
         /// <summary>
+        /// Returns the summary data for players.
+        /// </summary>
+        /// <param name="index">The index of user</param>
+        /// <param name="playerIds">The ID of the players to get the summary data for.</param>
+        /// <param name="callback">The function to call when the task completes.</param>
+        public void GetSummaryDataForPlayerIds(int index, List<string> playerIds, Action<RuyiNetFriendSummaryData[]> callback)
+        {
+            EnqueueTask(() =>
+            {
+                return mClient.BCService.Friend_GetSummaryDataForProfileIds(playerIds, index);
+            }, (RuyiNetGetSummaryDataMultipleResponse response) =>
+            {
+                if (callback != null)
+                {
+                    if (response.status == RuyiNetHttpStatus.OK)
+                    {
+                        var results = response.data.profiles.Cast<RuyiNetFriendSummaryData>().ToArray();
+                        callback(results);
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// Returns the summary data for a player's friends.
+        /// </summary>
+        /// <param name="index">The index of user</param>
+        /// <param name="callback">The function to call when the task completes.</param>
+        public void GetSummaryDataForPlayerIds(int index, Action<RuyiNetFriendSummaryData[]> callback)
+        {
+            EnqueueTask(() =>
+            {
+                return mClient.BCService.Friend_GetSummaryDataForFriends(index);
+            }, (RuyiNetGetSummaryDataMultipleResponse response) =>
+            {
+                if (callback != null)
+                {
+                    if (response.status == RuyiNetHttpStatus.OK)
+                    {
+                        var results = response.data.profiles.Cast<RuyiNetFriendSummaryData>().ToArray();
+                        callback(results);
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+            });
+        }
+
+        /// <summary>
         /// Returns a list of invitations sent to this player.
         /// </summary>
         /// <param name="index">The index of user</param>

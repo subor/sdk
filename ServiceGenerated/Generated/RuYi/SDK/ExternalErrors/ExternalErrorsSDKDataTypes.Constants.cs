@@ -22,20 +22,20 @@ namespace Ruyi.SDK.ExternalErrors
     static ExternalErrorsSDKDataTypesConstants()
     {
       ExternalErrorInfos tmp0 = new ExternalErrorInfos();
-      tmp0.ErrorCode = ExternalErrorCode.Err_0;
       tmp0.Description = "";
+      tmp0.ErrorCode = ExternalErrorCode.Err_0;
       EXTERNALERRORLIST.Add(tmp0);
       ExternalErrorInfos tmp1 = new ExternalErrorInfos();
-      tmp1.Description = "setting {0} is not found!";
       tmp1.ErrorCode = ExternalErrorCode.Err_1;
+      tmp1.Description = "setting {0} is not found!";
       EXTERNALERRORLIST.Add(tmp1);
       ExternalErrorInfos tmp2 = new ExternalErrorInfos();
       tmp2.Description = "[type error] trying to assign a {0} to setting item {1}, whose data type is {2}";
       tmp2.ErrorCode = ExternalErrorCode.Err_2;
       EXTERNALERRORLIST.Add(tmp2);
       ExternalErrorInfos tmp3 = new ExternalErrorInfos();
-      tmp3.ErrorCode = ExternalErrorCode.Err_3;
       tmp3.Description = "json string convert failed: {0}";
+      tmp3.ErrorCode = ExternalErrorCode.Err_3;
       EXTERNALERRORLIST.Add(tmp3);
       ExternalErrorInfos tmp4 = new ExternalErrorInfos();
       tmp4.Description = "lambda expression error: {0}";
@@ -66,8 +66,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp10.Description = "";
       EXTERNALERRORLIST.Add(tmp10);
       ExternalErrorInfos tmp11 = new ExternalErrorInfos();
-      tmp11.Description = "";
       tmp11.ErrorCode = ExternalErrorCode.Err_11;
+      tmp11.Description = "";
       EXTERNALERRORLIST.Add(tmp11);
       ExternalErrorInfos tmp12 = new ExternalErrorInfos();
       tmp12.Description = "";

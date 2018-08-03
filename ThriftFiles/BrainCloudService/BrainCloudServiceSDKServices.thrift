@@ -32,8 +32,6 @@ service BrainCloudService {
 		/** Optional push notification message to send to the other party.
              Refer to the Push Notification functions for the syntax required. */
 		2: string pushNotificationMessage, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -70,8 +68,6 @@ service BrainCloudService {
 		
 		/** Optional JSON string defining what the other player will see as a summary of the game when listing their games */
 		5: string jsonSummary, 
-		
-		/** The braincloud client index */
 		6: i32 clientIndex
 	),
 
@@ -101,8 +97,6 @@ service BrainCloudService {
 		
 		/** Optional JSON string blob provided by the caller */
 		8: string jsonStatistics, 
-		
-		/** The braincloud client index */
 		9: i32 clientIndex
 	),
 
@@ -119,8 +113,6 @@ service BrainCloudService {
 		
 		/** JSON string provided by the caller that other players will see as a summary of the game when listing their games */
 		4: string jsonSummary, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -131,8 +123,6 @@ service BrainCloudService {
 		
 		/** Match identifier */
 		2: string matchId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -143,8 +133,6 @@ service BrainCloudService {
 		
 		/** Match identifier */
 		2: string matchId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -155,22 +143,14 @@ service BrainCloudService {
 		
 		/** Match identifier */
 		2: string matchId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
 	/** Returns all matches that are NOT in a COMPLETE state for which the player is involved. */
-	string AsyncMatch_FindMatches(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string AsyncMatch_FindMatches(1: i32 clientIndex),
 
 	/** Returns all matches that are in a COMPLETE state for which the player is involved. */
-	string AsyncMatch_FindCompleteMatches(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string AsyncMatch_FindCompleteMatches(1: i32 clientIndex),
 
 	/** Marks the given match as abandoned. */
 	string AsyncMatch_AbandonMatch(
@@ -179,8 +159,6 @@ service BrainCloudService {
 		
 		/** Match identifier */
 		2: string matchId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -192,16 +170,11 @@ service BrainCloudService {
 		
 		/** Match identifier */
 		2: string matchId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
 	/** Used to create the anonymous installation id for the brainCloud profile. */
-	string Authentication_GenerateAnonymousId(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Authentication_GenerateAnonymousId(1: i32 clientIndex),
 
 	/** Initialize - initializes the identity service with a saved
             anonymous installation id and most recently used profile id */
@@ -211,25 +184,18 @@ service BrainCloudService {
 		
 		/** The anonymous installation id that was generated for this device */
 		2: string anonymousId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
 	/** Used to clear the saved profile id - to use in cases when the user is
             attempting to switch to a different app profile. */
-	void Authentication_ClearSavedProfileID(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	void Authentication_ClearSavedProfileID(1: i32 clientIndex),
 
 	/** Authenticate a user anonymously with brainCloud - used for apps that don't want to bother
             the user to login, or for users who are sensitive to their privacy */
 	string Authentication_AuthenticateAnonymous(
 		/** Should a new profile be created if it does not exist? */
 		1: bool forceCreate, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -247,8 +213,6 @@ service BrainCloudService {
 		
 		/** Should a new profile be created for this user if the account does not exist? */
 		3: bool forceCreate, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -261,8 +225,6 @@ service BrainCloudService {
 		
 		/** Should a new profile be created for this user if the account does not exist? */
 		3: bool forceCreate, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -280,8 +242,6 @@ service BrainCloudService {
 		
 		/** Should a new profile be created for this user if the account does not exist? */
 		4: bool forceCreate, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -295,8 +255,6 @@ service BrainCloudService {
 		
 		/** Should a new profile be created for this user if the account does not exist? */
 		3: bool forceCreate, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -304,30 +262,19 @@ service BrainCloudService {
 	string Authentication_ResetEmailPassword(
 		/** The email address to send the reset email to. */
 		1: string externalId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Returns the sessionId or empty string if no session present. */
-	string Client_GetSessionId(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Client_GetSessionId(1: i32 clientIndex),
 
 	/** Returns true if the user is currently authenticated.
             If a session time out or session invalidation is returned from executing a
             sever API call, this flag will reset back to false. */
-	bool Client_IsAuthenticated(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	bool Client_IsAuthenticated(1: i32 clientIndex),
 
 	/** Returns true if brainCloud has been initialized. */
-	bool Client_IsInitialized(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	bool Client_IsInitialized(1: i32 clientIndex),
 
 	/** Method initializes the BrainCloudClient. */
 	void Client_Initialize_SSS(
@@ -337,8 +284,6 @@ service BrainCloudService {
 		
 		/** The app version */
 		3: string appVersion, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -355,8 +300,6 @@ service BrainCloudService {
 		
 		/** The app version */
 		4: string appVersion, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -367,32 +310,22 @@ service BrainCloudService {
 		
 		/** The anonymous id */
 		2: string anonymousId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
 	/** Update method needs to be called regularly in order
             to process incoming and outgoing messages. */
-	void Client_Update(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	void Client_Update(1: i32 clientIndex),
 
 	/** Enable logging of brainCloud transactions (comms etc) */
 	void Client_EnableLogging(
 		/** True if logging is to be enabled */
 		1: bool enable, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Resets all messages and calls to the server */
-	void Client_ResetCommunication(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	void Client_ResetCommunication(1: i32 clientIndex),
 
 	/** Sets the packet timeouts using a list of integers that
              represent timeout values for each packet retry. The
@@ -409,64 +342,41 @@ service BrainCloudService {
 	void Client_SetPacketTimeouts(
 		/** An array of packet timeouts. */
 		1: list<i32> timeouts, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Sets the packet timeouts back to default. */
-	void Client_SetPacketTimeoutsToDefault(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	void Client_SetPacketTimeoutsToDefault(1: i32 clientIndex),
 
 	/** Returns the list of packet timeouts. */
-	list<i32> Client_GetPacketTimeouts(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	list<i32> Client_GetPacketTimeouts(1: i32 clientIndex),
 
 	/** Sets the authentication packet timeout which is tracked separately
             from all other packets. Note that authentication packets are never
             retried and so this value represents the total time a client would
             wait to receive a reply to an authentication API call. By default
             this timeout is set to 15 seconds. */
-	void Client_SetAuthenticationPacketTimeout(1: i32 timeoutSecs, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	void Client_SetAuthenticationPacketTimeout(1: i32 timeoutSecs, 2: i32 clientIndex),
 
 	/** Gets the authentication packet timeout which is tracked separately
             from all other packets. Note that authentication packets are never
             retried and so this value represents the total time a client would
             wait to receive a reply to an authentication API call. By default
             this timeout is set to 15 seconds. */
-	i32 Client_GetAuthenticationPacketTimeout(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	i32 Client_GetAuthenticationPacketTimeout(1: i32 clientIndex),
 
 	/** Returns the low transfer rate timeout in secs */
-	i32 Client_GetUploadLowTransferRateTimeout(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	i32 Client_GetUploadLowTransferRateTimeout(1: i32 clientIndex),
 
 	/** Sets the timeout in seconds of a low speed upload
             (i.e. transfer rate which is underneath the low transfer rate threshold).
             By default this is set to 120 secs.Setting this value to 0 will
             turn off the timeout. Note that this timeout method
             does not work on Unity mobile platforms. */
-	void Client_SetUploadLowTransferRateTimeout(1: i32 timeoutSecs, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	void Client_SetUploadLowTransferRateTimeout(1: i32 timeoutSecs, 2: i32 clientIndex),
 
 	/** Returns the low transfer rate threshold in bytes/sec */
-	i32 Client_GetUploadLowTransferRateThreshold(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	i32 Client_GetUploadLowTransferRateThreshold(1: i32 clientIndex),
 
 	/** Sets the low transfer rate threshold of an upload in bytes/sec.
             If the transfer rate dips below the given threshold longer
@@ -476,8 +386,6 @@ service BrainCloudService {
 	void Client_SetUploadLowTransferRateThreshold(
 		/** The low transfer rate threshold in bytes/sec */
 		1: i32 bytesPerSec, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -507,17 +415,12 @@ service BrainCloudService {
 	void Client_EnableNetworkErrorMessageCaching(
 		/** True if message should be cached on timeout */
 		1: bool enabled, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Attempts to resend any cached messages. If no messages are in the cache,
             this method does nothing. */
-	void Client_RetryCachedMessages(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	void Client_RetryCachedMessages(1: i32 clientIndex),
 
 	/** Flushes the cached messages to resume API call processing. This will dump
             all of the cached messages in the queue. */
@@ -525,8 +428,6 @@ service BrainCloudService {
 		/** If set to true API error callbacks will
             be called for every cached message with statusCode CLIENT_NETWORK_ERROR and reasonCode CLIENT_NETWORK_ERROR_TIMEOUT. */
 		1: bool sendApiErrorCallbacks, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -541,18 +442,13 @@ service BrainCloudService {
              InsertEndOfMessageBundleMarker()
              SomeApiCall()
              InsertEndOfMessageBundleMarker() */
-	void Client_InsertEndOfMessageBundleMarker(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	void Client_InsertEndOfMessageBundleMarker(1: i32 clientIndex),
 
 	/** Sets the country code sent to brainCloud when a user authenticates.
             Will override any auto detected country. */
 	void Client_OverrideCountryCode(
 		/** ISO 3166-1 two-letter country code */
 		1: string countryCode, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -562,8 +458,6 @@ service BrainCloudService {
 	void Client_OverrideLanguageCode(
 		/** ISO 639-1 two-letter language code */
 		1: string languageCode, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -574,8 +468,6 @@ service BrainCloudService {
 		
 		/** The properties of the event */
 		2: string jsonEventProperties, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -586,8 +478,6 @@ service BrainCloudService {
 		
 		/** The properties of the event */
 		2: string jsonEventProperties, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -598,8 +488,6 @@ service BrainCloudService {
 		
 		/** The properties of the event */
 		2: string jsonEventProperties, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -614,8 +502,6 @@ service BrainCloudService {
 		/** The entity's access control list as json. A null acl implies default
             permissions which make the entity readable/writeable by only the user. */
 		3: string jsonEntityAcl, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -623,8 +509,6 @@ service BrainCloudService {
 	string Entity_GetEntitiesByType(
 		/** The entity type to search for */
 		1: string entityType, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -648,8 +532,6 @@ service BrainCloudService {
             entity on the server does not match the version passed in, the
             server operation will fail. Use -1 to skip version checking. */
 		5: i32 version, 
-		
-		/** The braincloud client index */
 		6: i32 clientIndex
 	),
 
@@ -672,8 +554,6 @@ service BrainCloudService {
              entity on the server does not match the version passed in, the
              server operation will fail. Use -1 to skip version checking. */
 		5: i32 version, 
-		
-		/** The braincloud client index */
 		6: i32 clientIndex
 	),
 
@@ -686,8 +566,6 @@ service BrainCloudService {
              entity on the server does not match the version passed in, the
              server operation will fail. Use -1 to skip version checking. */
 		2: i32 version, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -707,8 +585,6 @@ service BrainCloudService {
              entity on the server does not match the version passed in, the
              server operation will fail. Use -1 to skip version checking. */
 		4: i32 version, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -721,8 +597,6 @@ service BrainCloudService {
              entity on the server does not match the version passed in, the
              server operation will fail. Use -1 to skip version checking. */
 		2: i32 version, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -730,8 +604,6 @@ service BrainCloudService {
 	string Entity_GetEntity(
 		/** The id of the entity */
 		1: string entityId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -739,8 +611,6 @@ service BrainCloudService {
 	string Entity_GetSingleton(
 		/** The entity type as defined by the user */
 		1: string entityType, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -753,8 +623,6 @@ service BrainCloudService {
 		
 		/** The ID of the entity that will be retrieved */
 		2: string entityId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -764,8 +632,6 @@ service BrainCloudService {
 	string Entity_GetSharedEntitiesForProfileId(
 		/** The profile id to retrieve shared entities for */
 		1: string profileId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -779,8 +645,6 @@ service BrainCloudService {
 		
 		/** The maximum number of entities to return */
 		3: i32 maxReturn, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -797,8 +661,6 @@ service BrainCloudService {
 		
 		/** The maximum number of entities to return */
 		4: i32 maxReturn, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -806,8 +668,6 @@ service BrainCloudService {
 	string Entity_GetListCount(
 		/** Mongo style query string */
 		1: string whereJson, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -818,8 +678,6 @@ service BrainCloudService {
 		/** The json context for the page request.
             See the portal appendix documentation for format */
 		1: string jsonContext, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -833,8 +691,6 @@ service BrainCloudService {
 		/** The positive or negative page offset to fetch. Uses the last page
             retrieved using the context string to determine a starting point. */
 		2: i32 pageOffset, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -845,8 +701,6 @@ service BrainCloudService {
 		
 		/** The subset of data to increment */
 		2: string jsonData, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -860,8 +714,6 @@ service BrainCloudService {
 		
 		/** The subset of data to increment */
 		3: string jsonData, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -879,8 +731,6 @@ service BrainCloudService {
 		
 		/** The user-defined data for this event encoded in JSON. */
 		3: string jsonEventData, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -891,8 +741,6 @@ service BrainCloudService {
 		
 		/** The user-defined data for this event encoded in JSON. */
 		2: string jsonEventData, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -900,16 +748,11 @@ service BrainCloudService {
 	string Event_DeleteIncomingEvent(
 		/** The event id */
 		1: string evId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Get the events currently queued for the user. */
-	string Event_GetEvents(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Event_GetEvents(1: i32 clientIndex),
 
 	/** Prepares a user file upload. On success the file will begin uploading
             to the brainCloud server.To be informed of success/failure of the upload
@@ -929,8 +772,6 @@ service BrainCloudService {
 		
 		/** The path and fileName of the local file */
 		5: string localPath, 
-		
-		/** The braincloud client index */
 		6: i32 clientIndex
 	),
 
@@ -941,8 +782,6 @@ service BrainCloudService {
 	void File_CancelUpload(
 		/** Upload ID of the file to cancel */
 		1: string uploadId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -951,8 +790,6 @@ service BrainCloudService {
 	double File_GetUploadProgress(
 		/** The id of the upload */
 		1: string uploadId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -961,8 +798,6 @@ service BrainCloudService {
 	i64 File_GetUploadBytesTransferred(
 		/** The id of the upload */
 		1: string uploadId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -970,16 +805,11 @@ service BrainCloudService {
 	i64 File_GetUploadTotalBytesToTransfer(
 		/** The id of the upload */
 		1: string uploadId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** List all user files */
-	string File_ListUserFiles_SFO(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string File_ListUserFiles_SFO(1: i32 clientIndex),
 
 	/** List user files from the given cloud path */
 	string File_ListUserFiles_SNSFO(
@@ -988,8 +818,6 @@ service BrainCloudService {
 		
 		/** Whether to recurse down the path */
 		2: bool recurse, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -998,8 +826,6 @@ service BrainCloudService {
 		/** File path */
 		1: string cloudPath, 
 		2: string cloudFileName, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1010,8 +836,6 @@ service BrainCloudService {
 		
 		/** Whether to recurse down the path */
 		2: bool recurse, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1022,8 +846,6 @@ service BrainCloudService {
 		
 		/** Name of file */
 		2: string cloudFilename, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1034,8 +856,6 @@ service BrainCloudService {
 		
 		/** Profile Id of friend who owns entity. */
 		2: string friendId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1043,8 +863,6 @@ service BrainCloudService {
 	string Friend_ReadFriendsEntities(
 		/** Types of entities to retrieve. */
 		1: string entityType, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1052,19 +870,21 @@ service BrainCloudService {
 	string Friend_ReadFriendUserState(
 		/** Profile Id of friend to retrieve user state for. */
 		1: string friendId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Returns user state of a particular user. */
-	string Friend_GetSummaryDataForProfileId(
-		/** Profile Id of user to retrieve player state for. */
-		1: string profileId, 
-		
-		/** The braincloud client index */
+	string Friend_GetSummaryDataForProfileId(1: string playerId, 2: i32 clientIndex),
+
+	/** Returns user state of a set of users. */
+	string Friend_GetSummaryDataForProfileIds(
+		/** Player Ids of users to retrieve player state for. */
+		1: list<string> playerIds, 
 		2: i32 clientIndex
 	),
+
+	/** Returns user state of the player's friends. */
+	string Friend_GetSummaryDataForFriends(1: i32 clientIndex),
 
 	/** Finds a list of users matching the search text by performing an exact
             search of all user names. */
@@ -1074,8 +894,6 @@ service BrainCloudService {
 		
 		/** Maximum number of results to return. */
 		2: i32 maxResults, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1087,8 +905,6 @@ service BrainCloudService {
 		
 		/** Maximum number of results to return. */
 		2: i32 maxResults, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1099,8 +915,6 @@ service BrainCloudService {
 		
 		/** True if including summary data; false otherwise. */
 		2: bool includeSummaryData, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1108,8 +922,6 @@ service BrainCloudService {
 	string Friend_AddFriends(
 		/** Collection of profile IDs. */
 		1: list<string> profileIds, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1117,8 +929,6 @@ service BrainCloudService {
 	string Friend_RemoveFriends(
 		/** Collection of profile IDs. */
 		1: list<string> profileIds, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1126,91 +936,48 @@ service BrainCloudService {
 	string Friend_GetUsersOnlineStatus(
 		/** Collection of profile IDs. */
 		1: list<string> profileIds, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
-	string Friend_SendFriendInvitation(1: string toPlayerId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Friend_SendFriendInvitation(1: string toPlayerId, 2: i32 clientIndex),
 
-	string Friend_ListFriendInvitationsReceived(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Friend_ListFriendInvitationsReceived(1: i32 clientIndex),
 
-	string Friend_ListFriendInvitationsSent(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Friend_ListFriendInvitationsSent(1: i32 clientIndex),
 
-	string Friend_AcceptFriendInvitation(1: string fromPlayerId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Friend_AcceptFriendInvitation(1: string fromPlayerId, 2: i32 clientIndex),
 
-	string Friend_RejectFriendInvitation(1: string fromPlayerId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Friend_RejectFriendInvitation(1: string fromPlayerId, 2: i32 clientIndex),
 
-	string Friend_RemoveFriend(1: string playerId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Friend_RemoveFriend(1: string playerId, 2: i32 clientIndex),
 
 	/** Method retrieves all gamification data for the player. */
-	string Gamification_ReadAllGamification(1: bool includeMetaData, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Gamification_ReadAllGamification(1: bool includeMetaData, 2: i32 clientIndex),
 
 	/** Method retrieves all milestones defined for the game. */
-	string Gamification_ReadMilestones(1: bool includeMetaData, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Gamification_ReadMilestones(1: bool includeMetaData, 2: i32 clientIndex),
 
 	/** Read all of the achievements defined for the game. */
-	string Gamification_ReadAchievements(1: bool includeMetaData, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Gamification_ReadAchievements(1: bool includeMetaData, 2: i32 clientIndex),
 
 	/** Method returns all defined xp levels and any rewards associated
             with those xp levels. */
-	string Gamification_ReadXpLevelsMetaData(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Gamification_ReadXpLevelsMetaData(1: i32 clientIndex),
 
 	/** Method retrives the list of achieved achievements. */
-	string Gamification_ReadAchievedAchievements(1: bool includeMetaData, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Gamification_ReadAchievedAchievements(1: bool includeMetaData, 2: i32 clientIndex),
 
 	/** Method retrieves the list of completed milestones. */
-	string Gamification_ReadCompletedMilestones(1: bool includeMetaData, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Gamification_ReadCompletedMilestones(1: bool includeMetaData, 2: i32 clientIndex),
 
 	/** Method retrieves the list of in progress milestones */
-	string Gamification_ReadInProgressMilestones(1: bool includeMetaData, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Gamification_ReadInProgressMilestones(1: bool includeMetaData, 2: i32 clientIndex),
 
 	/** Method retrieves milestones of the given category. */
 	string Gamification_ReadMilestonesByCategory(
 		/** The milestone category */
 		1: string category, 
 		2: bool includeMetaData, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1220,60 +987,35 @@ service BrainCloudService {
 	string Gamification_AwardAchievements(
 		/** A collection of achievement ids to award */
 		1: list<string> achievementIds, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Method retrieves all of the quests defined for the game. */
-	string Gamification_ReadQuests(1: bool includeMetaData, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Gamification_ReadQuests(1: bool includeMetaData, 2: i32 clientIndex),
 
 	/** Method returns all completed quests. */
-	string Gamification_ReadCompletedQuests(1: bool includeMetaData, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Gamification_ReadCompletedQuests(1: bool includeMetaData, 2: i32 clientIndex),
 
 	/** Method returns all in progress quests. */
-	string Gamification_ReadInProgressQuests(1: bool includeMetaData, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Gamification_ReadInProgressQuests(1: bool includeMetaData, 2: i32 clientIndex),
 
 	/** Method returns all quests that haven't been started. */
-	string Gamification_ReadNotStartedQuests(1: bool includeMetaData, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Gamification_ReadNotStartedQuests(1: bool includeMetaData, 2: i32 clientIndex),
 
 	/** Method returns all quests with status. */
-	string Gamification_ReadQuestsWithStatus(1: bool includeMetaData, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Gamification_ReadQuestsWithStatus(1: bool includeMetaData, 2: i32 clientIndex),
 
 	/** Method returns all quests with a basic percentage. */
-	string Gamification_ReadQuestsWithBasicPercentage(1: bool includeMetaData, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Gamification_ReadQuestsWithBasicPercentage(1: bool includeMetaData, 2: i32 clientIndex),
 
 	/** Method returns all quests with a complex percentage. */
-	string Gamification_ReadQuestsWithComplexPercentage(1: bool includeMetaData, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Gamification_ReadQuestsWithComplexPercentage(1: bool includeMetaData, 2: i32 clientIndex),
 
 	/** Method returns all quests for the given category. */
 	string Gamification_ReadQuestsByCategory(
 		/** The quest category */
 		1: string category, 
 		2: bool includeMetaData, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1281,16 +1023,11 @@ service BrainCloudService {
 	string Gamification_ResetMilestones(
 		/** List of milestones to reset */
 		1: list<string> milestoneIds, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Method reads all the global properties of the game */
-	string GlobalApp_ReadProperties(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string GlobalApp_ReadProperties(1: i32 clientIndex),
 
 	/** Method creates a new entity on the server. */
 	string GlobalEntity_CreateEntity(
@@ -1305,8 +1042,6 @@ service BrainCloudService {
 		
 		/** The entity's data as a json string */
 		4: string jsonEntityData, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -1326,8 +1061,6 @@ service BrainCloudService {
 		
 		/** The entity's data as a json string */
 		5: string jsonEntityData, 
-		
-		/** The braincloud client index */
 		6: i32 clientIndex
 	),
 
@@ -1341,8 +1074,6 @@ service BrainCloudService {
 		
 		/** The entity's data as a json string */
 		3: string jsonEntityData, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -1356,8 +1087,6 @@ service BrainCloudService {
 		
 		/** The entity's access control list as json. */
 		3: string jsonEntityAcl, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -1371,8 +1100,6 @@ service BrainCloudService {
 		
 		/** Sets expiry time for entity in milliseconds if > 0 */
 		3: i64 timeToLive, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -1383,8 +1110,6 @@ service BrainCloudService {
 		
 		/** The version of the entity to delete */
 		2: i32 version, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1392,8 +1117,6 @@ service BrainCloudService {
 	string GlobalEntity_ReadEntity(
 		/** The entity ID */
 		1: string entityId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1407,8 +1130,6 @@ service BrainCloudService {
 		
 		/** The maximum number of entities to return */
 		3: i32 maxReturn, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -1419,8 +1140,6 @@ service BrainCloudService {
 		
 		/** The maximum number of entities to return */
 		2: i32 maxReturn, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1428,8 +1147,6 @@ service BrainCloudService {
 	string GlobalEntity_GetListCount(
 		/** Mongo style query string */
 		1: string whereJson, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1440,8 +1157,6 @@ service BrainCloudService {
 		/** The json context for the page request.
             See the portal appendix documentation for format */
 		1: string jsonContext, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1455,8 +1170,6 @@ service BrainCloudService {
 		/** The positive or negative page offset to fetch. Uses the last page
             retrieved using the context string to determine a starting point. */
 		2: i32 pageOffset, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1467,8 +1180,6 @@ service BrainCloudService {
 		
 		/** The subset of data to increment */
 		2: string jsonData, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1476,8 +1187,6 @@ service BrainCloudService {
 	string GlobalEntity_GetRandomEntitiesMatching(1: string whereJson, 
 		/** The maximum number of entities to return */
 		2: i32 maxReturn, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1494,8 +1203,6 @@ service BrainCloudService {
 		
 		/** The entity's access control list */
 		4: BrainCloudServiceSDKDataTypes.JSON acl, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -1509,23 +1216,16 @@ service BrainCloudService {
 		
 		/** The entity's access control list */
 		3: BrainCloudServiceSDKDataTypes.JSON acl, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
 	/** Method returns all of the global statistics. */
-	string GlobalStatistics_ReadAllGlobalStats(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string GlobalStatistics_ReadAllGlobalStats(1: i32 clientIndex),
 
 	/** Reads a subset of global statistics as defined by the input JSON. */
 	string GlobalStatistics_ReadGlobalStatsSubset(
 		/** A list containing the statistics to read */
 		1: list<string> globalStats, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1533,8 +1233,6 @@ service BrainCloudService {
 	string GlobalStatistics_ReadGlobalStatsForCategory(
 		/** The global statistics category */
 		1: string category, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1554,8 +1252,6 @@ service BrainCloudService {
             }
             which increments stat1 by 9 up to a limit of 30. */
 		1: string jsonData, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1570,8 +1266,6 @@ service BrainCloudService {
                 "TREES_CLIMBED": 1
             } */
 		1: map<string, BrainCloudServiceSDKDataTypes.JSON> statisticsData, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1579,8 +1273,6 @@ service BrainCloudService {
 	string Group_AcceptGroupInvitation(
 		/** ID of the group. */
 		1: string groupId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1597,8 +1289,6 @@ service BrainCloudService {
 		
 		/** Attributes of the member being added. */
 		4: string jsonAttributes, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -1615,8 +1305,6 @@ service BrainCloudService {
 		
 		/** Attributes of the member being invited. */
 		4: string jsonAttributes, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -1630,8 +1318,6 @@ service BrainCloudService {
 		
 		/** Query parameters (optional) */
 		3: string dataQueryJson, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -1642,8 +1328,6 @@ service BrainCloudService {
 		
 		/** Profile ID of the invitation being deleted. */
 		2: string profileId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1669,8 +1353,6 @@ service BrainCloudService {
 		
 		/** Default attributes for group members. */
 		7: string jsonDefaultMemberAttributes, 
-		
-		/** The braincloud client index */
 		8: i32 clientIndex
 	),
 
@@ -1688,8 +1370,6 @@ service BrainCloudService {
 		
 		/** Custom application data. */
 		5: string jsonData, 
-		
-		/** The braincloud client index */
 		6: i32 clientIndex
 	),
 
@@ -1700,8 +1380,6 @@ service BrainCloudService {
 		
 		/** Current version of the group */
 		2: i64 version, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1715,16 +1393,11 @@ service BrainCloudService {
 		
 		/** The current version of the group entity (for concurrency checking). */
 		3: i64 version, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
 	/** Read information on groups to which the current user belongs. */
-	string Group_GetMyGroups(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Group_GetMyGroups(1: i32 clientIndex),
 
 	/** Increment elements for the group's data field. */
 	string Group_IncrementGroupData(
@@ -1733,8 +1406,6 @@ service BrainCloudService {
 		
 		/** Partial data map with incremental values. */
 		2: string jsonData, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1748,8 +1419,6 @@ service BrainCloudService {
 		
 		/** Partial data map with incremental values. */
 		3: string jsonData, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -1766,8 +1435,6 @@ service BrainCloudService {
 		
 		/** Attributes of the member being invited. */
 		4: string jsonAttributes, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -1775,8 +1442,6 @@ service BrainCloudService {
 	string Group_JoinGroup(
 		/** ID of the group. */
 		1: string groupId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1784,8 +1449,6 @@ service BrainCloudService {
 	string Group_LeaveGroup(
 		/** ID of the group. */
 		1: string groupId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1793,8 +1456,6 @@ service BrainCloudService {
 	string Group_ListGroupsPage(
 		/** Query context. */
 		1: string jsonContext, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1806,8 +1467,6 @@ service BrainCloudService {
 		
 		/** Number of pages by which to offset the query. */
 		2: i32 pageOffset, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1815,8 +1474,6 @@ service BrainCloudService {
 	string Group_ListGroupsWithMember(
 		/** User to read groups for */
 		1: string profileId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1824,8 +1481,6 @@ service BrainCloudService {
 	string Group_ReadGroup(
 		/** ID of the group. */
 		1: string groupId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1833,8 +1488,6 @@ service BrainCloudService {
 	string Group_ReadGroupData(
 		/** ID of the group. */
 		1: string groupId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1842,8 +1495,6 @@ service BrainCloudService {
 	string Group_ReadGroupEntitiesPage(
 		/** Query context. */
 		1: string jsonContext, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1854,8 +1505,6 @@ service BrainCloudService {
 		
 		/** Number of pages by which to offset the query. */
 		2: i32 pageOffset, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1866,8 +1515,6 @@ service BrainCloudService {
 		
 		/** ID of the entity. */
 		2: string entityId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1875,8 +1522,6 @@ service BrainCloudService {
 	string Group_ReadGroupMembers(
 		/** ID of the group. */
 		1: string groupId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1884,8 +1529,6 @@ service BrainCloudService {
 	string Group_RejectGroupInvitation(
 		/** ID of the group. */
 		1: string groupId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -1896,8 +1539,6 @@ service BrainCloudService {
 		
 		/** Profile ID of the invitation being deleted. */
 		2: string profileId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1908,8 +1549,6 @@ service BrainCloudService {
 		
 		/** Profile ID of the member being deleted. */
 		2: string profileId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1923,8 +1562,6 @@ service BrainCloudService {
 		
 		/** Data to apply. */
 		3: string jsonData, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -1941,8 +1578,6 @@ service BrainCloudService {
 		
 		/** Custom application data. */
 		4: string jsonData, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -1959,8 +1594,6 @@ service BrainCloudService {
 		
 		/** Attributes of the member being updated (optional). */
 		4: string jsonAttributes, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -1971,8 +1604,6 @@ service BrainCloudService {
 		
 		/** Name to apply. */
 		2: string name, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1983,8 +1614,6 @@ service BrainCloudService {
 		
 		/** The user's password */
 		2: string password, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -1995,8 +1624,6 @@ service BrainCloudService {
 		
 		/** The user's password */
 		2: string password, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2007,8 +1634,6 @@ service BrainCloudService {
 		
 		/** Proceed even if the profile will revert to anonymous? */
 		2: bool continueAnon, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2019,8 +1644,6 @@ service BrainCloudService {
 		
 		/** The user's password */
 		2: string password, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2031,8 +1654,6 @@ service BrainCloudService {
 		
 		/** The user's password */
 		2: string password, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2043,8 +1664,6 @@ service BrainCloudService {
 		
 		/** Proceed even if the profile will revert to anonymous? */
 		2: bool continueAnon, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2059,8 +1678,6 @@ service BrainCloudService {
 		
 		/** Should a new profile be created if it does not exist? */
 		3: bool forceCreate, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -2072,8 +1689,6 @@ service BrainCloudService {
 		
 		/** Should a new profile be created if one does not exist? */
 		2: bool forceCreate, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2093,8 +1708,6 @@ service BrainCloudService {
 		
 		/** If the profile does not exist, should it be created? */
 		5: bool forceCreate, 
-		
-		/** The braincloud client index */
 		6: i32 clientIndex
 	),
 
@@ -2102,37 +1715,24 @@ service BrainCloudService {
 	string Identity_SwitchToParentProfile(
 		/** The level of the parent to switch to */
 		1: string parentLevelName, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Detaches parent from this user's profile */
-	string Identity_DetachParent(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Identity_DetachParent(1: i32 clientIndex),
 
 	/** Returns a list of all child profiles in child Apps */
 	string Identity_GetChildProfiles(
 		/** Whether to return the summary friend data along with this call */
 		1: bool includeSummaryData, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Retrieve list of identities */
-	string Identity_GetIdentities(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Identity_GetIdentities(1: i32 clientIndex),
 
 	/** Retrieve list of expired identities */
-	string Identity_GetExpiredIdentities(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Identity_GetExpiredIdentities(1: i32 clientIndex),
 
 	/** Refreshes an identity for this user */
 	string Identity_RefreshIdentity(
@@ -2144,8 +1744,6 @@ service BrainCloudService {
 		
 		/** Type of authentication */
 		3: string authenticationType, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -2162,8 +1760,6 @@ service BrainCloudService {
 		
 		/** Whether to update contact email in profile */
 		4: bool updateContactEmail, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -2186,8 +1782,6 @@ service BrainCloudService {
 		
 		/** If the profile does not exist, should it be created? */
 		6: bool forceCreate, 
-		
-		/** The braincloud client index */
 		7: i32 clientIndex
 	),
 
@@ -2195,16 +1789,11 @@ service BrainCloudService {
 	string Identity_DetachPeer(
 		/** Name of the peer to connect to */
 		1: string peer, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Retrieves a list of attached peer profiles */
-	string Identity_GetPeerProfiles(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Identity_GetPeerProfiles(1: i32 clientIndex),
 
 	/** Sends a simple text email to the specified user */
 	string Mail_SendBasicEmail(1: string profileId, 
@@ -2213,8 +1802,6 @@ service BrainCloudService {
 		
 		/** The email body */
 		3: string body, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -2223,8 +1810,6 @@ service BrainCloudService {
 		/** Parameters to send to the email service. See the documentation for
             a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail */
 		2: string jsonServiceParams, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2236,38 +1821,26 @@ service BrainCloudService {
 		/** Parameters to send to the email service. See the documentation for
             a full list. http://getbraincloud.com/apidocs/apiref/#capi-mail */
 		2: string jsonServiceParams, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
 	/** Read match making record */
-	string MatchMaking_Read(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string MatchMaking_Read(1: i32 clientIndex),
 
 	/** Sets player rating */
 	string MatchMaking_SetPlayerRating(
 		/** The new player rating. */
 		1: i64 playerRating, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Resets player rating */
-	string MatchMaking_ResetPlayerRating(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string MatchMaking_ResetPlayerRating(1: i32 clientIndex),
 
 	/** Increments player rating */
 	string MatchMaking_IncrementPlayerRating(
 		/** The increment amount */
 		1: i64 increment, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2275,38 +1848,26 @@ service BrainCloudService {
 	string MatchMaking_DecrementPlayerRating(
 		/** The decrement amount */
 		1: i64 decrement, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Turns shield on */
-	string MatchMaking_TurnShieldOn(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string MatchMaking_TurnShieldOn(1: i32 clientIndex),
 
 	/** Turns shield on for the specified number of minutes */
 	string MatchMaking_TurnShieldOnFor(
 		/** Number of minutes to turn the shield on for */
 		1: i32 minutes, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Turns shield off */
-	string MatchMaking_TurnShieldOff(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string MatchMaking_TurnShieldOff(1: i32 clientIndex),
 
 	/** Increases the shield on time by specified number of minutes */
 	string MatchMaking_IncrementShieldOnFor(
 		/** Number of minutes to increase the shield time for */
 		1: i32 minutes, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2316,8 +1877,6 @@ service BrainCloudService {
 	string MatchMaking_GetShieldExpiry(
 		/** The player id or use null to retrieve for the current player */
 		1: string playerId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2328,8 +1887,6 @@ service BrainCloudService {
 		
 		/** The maximum number of matches to return */
 		2: i64 numMatches, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2343,8 +1900,6 @@ service BrainCloudService {
 		
 		/** Attributes match criteria */
 		3: string jsonAttributes, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -2358,8 +1913,6 @@ service BrainCloudService {
 		
 		/** Parameters to pass to the CloudCode filter script */
 		3: string jsonExtraParms, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -2377,22 +1930,14 @@ service BrainCloudService {
 		
 		/** Parameters to pass to the CloudCode filter script */
 		4: string jsonExtraParms, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
 	/** Enables Match Making for the Player */
-	string MatchMaking_EnableMatchMaking(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string MatchMaking_EnableMatchMaking(1: i32 clientIndex),
 
 	/** Disables Match Making for the Player */
-	string MatchMaking_DisableMatchMaking(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string MatchMaking_DisableMatchMaking(1: i32 clientIndex),
 
 	/** Starts a match */
 	string OneWayMatch_StartMatch(
@@ -2401,8 +1946,6 @@ service BrainCloudService {
 		
 		/** The range delta used for the initial match search */
 		2: i64 rangeDelta, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2410,8 +1953,6 @@ service BrainCloudService {
 	string OneWayMatch_CancelMatch(
 		/** The playback stream id returned in the start match */
 		1: string playbackStreamId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2419,8 +1960,6 @@ service BrainCloudService {
 	string OneWayMatch_CompleteMatch(
 		/** The playback stream id returned in the initial start match */
 		1: string playbackStreamId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2431,8 +1970,6 @@ service BrainCloudService {
 		
 		/** Whether to include shared data in the stream */
 		2: bool includeSharedData, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2440,8 +1977,6 @@ service BrainCloudService {
 	string PlaybackStream_ReadStream(
 		/** Identifies the stream to read */
 		1: string playbackStreamId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2449,8 +1984,6 @@ service BrainCloudService {
 	string PlaybackStream_EndStream(
 		/** Identifies the stream to read */
 		1: string playbackStreamId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2458,8 +1991,6 @@ service BrainCloudService {
 	string PlaybackStream_DeleteStream(
 		/** Identifies the stream to read */
 		1: string playbackStreamId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2473,8 +2004,6 @@ service BrainCloudService {
 		
 		/** Current summary data as of this event */
 		3: string summary, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -2485,8 +2014,6 @@ service BrainCloudService {
 		
 		/** The player that started the stream */
 		2: i32 maxNumStreams, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2497,8 +2024,6 @@ service BrainCloudService {
 		
 		/** The player that started the stream */
 		2: i32 maxNumStreams, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2507,42 +2032,28 @@ service BrainCloudService {
             player's data: entities, statistics, level, currency.
             Apps will typically call this method after authenticating to get an
             up-to-date view of the user's data. */
-	string PlayerState_ReadUserState(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string PlayerState_ReadUserState(1: i32 clientIndex),
 
 	/** Completely deletes the user record and all data fully owned
             by the user. After calling this method, the user will need
             to re-authenticate and create a new profile.
             This is mostly used for debugging/qa. */
-	string PlayerState_DeleteUser(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string PlayerState_DeleteUser(1: i32 clientIndex),
 
 	/** This method will delete *most* data for the currently logged in user.
             Data which is not deleted includes: currency, credentials, and
             purchase transactions. ResetUser is different from DeleteUser in that
             the player record will continue to exist after the reset (so the user
             does not need to re-authenticate). */
-	string PlayerState_ResetUser(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string PlayerState_ResetUser(1: i32 clientIndex),
 
 	/** Logs user out of server. */
-	string PlayerState_Logout(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string PlayerState_Logout(1: i32 clientIndex),
 
 	/** Sets the user name. */
 	string PlayerState_UpdateUserName(
 		/** The name of the user */
 		1: string userName, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2561,16 +2072,11 @@ service BrainCloudService {
                "highScore":45123
              } */
 		1: string jsonSummaryData, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Retrieve the user's attributes. */
-	string PlayerState_GetAttributes(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string PlayerState_GetAttributes(1: i32 clientIndex),
 
 	/** Update user's attributes. */
 	string PlayerState_UpdateAttributes(
@@ -2579,8 +2085,6 @@ service BrainCloudService {
 		
 		/** Whether to wipe existing attributes prior to update. */
 		2: bool wipeExisting, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2588,8 +2092,6 @@ service BrainCloudService {
 	string PlayerState_RemoveAttributes(
 		/** List of attribute names. */
 		1: list<string> attributeNames, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2597,8 +2099,6 @@ service BrainCloudService {
 	string PlayerState_UpdateUserPictureUrl(
 		/** URL to apply. */
 		1: string pictureUrl, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2607,37 +2107,24 @@ service BrainCloudService {
 	string PlayerState_UpdateContactEmail(
 		/** Updated email */
 		1: string contactEmail, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Read all available user statistics. */
-	string PlayerStatistics_ReadAllUserStats(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string PlayerStatistics_ReadAllUserStats(1: i32 clientIndex),
 
 	/** Reads a subset of user statistics as defined by the input JSON. */
-	string PlayerStatistics_ReadUserStatsSubset(1: list<string> playerStats, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string PlayerStatistics_ReadUserStatsSubset(1: list<string> playerStats, 2: i32 clientIndex),
 
 	/** Method retrieves the user statistics for the given category. */
 	string PlayerStatistics_ReadUserStatsForCategory(
 		/** The user statistics category */
 		1: string category, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Reset all of the statistics for this user back to their initial value. */
-	string PlayerStatistics_ResetAllUserStats(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string PlayerStatistics_ResetAllUserStats(1: i32 clientIndex),
 
 	/** Atomically increment (or decrement) user statistics.
             Any rewards that are triggered from user statistic increments
@@ -2658,8 +2145,6 @@ service BrainCloudService {
             }
             which increments stat1 by 9 up to a limit of 30. */
 		1: string jsonData, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2683,8 +2168,6 @@ service BrainCloudService {
              }
              which increments stat1 by 9 up to a limit of 30. */
 		1: map<string, BrainCloudServiceSDKDataTypes.JSON> dictData, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2699,24 +2182,17 @@ service BrainCloudService {
                 "TREES_CLIMBED": 1
             } */
 		1: map<string, BrainCloudServiceSDKDataTypes.JSON> statisticsData, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Returns JSON representing the next experience level for the user. */
-	string PlayerStatistics_GetNextExperienceLevel(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string PlayerStatistics_GetNextExperienceLevel(1: i32 clientIndex),
 
 	/** Increments the user's experience. If the user goes up a level,
             the new level details will be returned along with a list of rewards. */
 	string PlayerStatistics_IncrementExperiencePoints(
 		/** The amount to increase the user's experience by */
 		1: i32 xpValue, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2726,8 +2202,6 @@ service BrainCloudService {
 	string PlayerStatistics_SetExperiencePoints(
 		/** The amount to set the the player's experience to */
 		1: i32 xpValue, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2739,10 +2213,7 @@ service BrainCloudService {
              This mechanism supercedes the PlayerStatisticsService API methods, since
              PlayerStatisticsService API method only update the raw statistics without
              triggering the rewards. */
-	string PlayerStatisticsEvent_TriggerStatsEvent(1: string eventName, 2: i32 eventMultiplier, 
-		/** The braincloud client index */
-		3: i32 clientIndex
-	),
+	string PlayerStatisticsEvent_TriggerStatsEvent(1: string eventName, 2: i32 eventMultiplier, 3: i32 clientIndex),
 
 	/** See documentation for TriggerStatsEvent for more
             documentation. */
@@ -2759,8 +2230,6 @@ service BrainCloudService {
                 }
               ] */
 		1: string jsonData, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2770,8 +2239,6 @@ service BrainCloudService {
 		/** The currency type to retrieve or null
             if all currency types are being requested. */
 		1: string currencyType, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2791,8 +2258,6 @@ service BrainCloudService {
 		/** The currency to retrieve the sales
             inventory for. This is only used for Steam and Facebook stores. */
 		2: string userCurrency, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2815,8 +2280,6 @@ service BrainCloudService {
 		
 		/** The product category */
 		3: string category, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -2825,24 +2288,17 @@ service BrainCloudService {
 	string Product_VerifyMicrosoftReceipt(
 		/** Receipt XML */
 		1: string receipt, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Returns the eligible promotions for the player. */
-	string Product_GetEligiblePromotions(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Product_GetEligiblePromotions(1: i32 clientIndex),
 
 	/** Verify ITunes Receipt. On success, the player will be awarded the 
             associated currencies. */
 	string Product_VerifyItunesReceipt(
 		/** Base64 encoded receipt data */
 		1: string base64EncReceiptData, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -2862,8 +2318,6 @@ service BrainCloudService {
 		
 		/** Optional processing of urls */
 		5: bool flagUrls, 
-		
-		/** The braincloud client index */
 		6: i32 clientIndex
 	),
 
@@ -2886,8 +2340,6 @@ service BrainCloudService {
 		
 		/** Optional processing of urls */
 		6: bool flagUrls, 
-		
-		/** The braincloud client index */
 		7: i32 clientIndex
 	),
 
@@ -2907,16 +2359,11 @@ service BrainCloudService {
 		
 		/** Optional processing of urls */
 		5: bool flagUrls, 
-		
-		/** The braincloud client index */
 		6: i32 clientIndex
 	),
 
 	/** Deregisters all device tokens currently registered to the user. */
-	string PushNotification_DeregisterAllPushNotificationDeviceTokens(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string PushNotification_DeregisterAllPushNotificationDeviceTokens(1: i32 clientIndex),
 
 	/** Deregisters the given device token from the server to disable this device
             from receiving push notifications. */
@@ -2926,8 +2373,6 @@ service BrainCloudService {
 		
 		/** The platform-dependant device token needed for push notifications. */
 		2: string token, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2936,8 +2381,6 @@ service BrainCloudService {
 	string PushNotification_RegisterPushNotificationDeviceToken(1: string platform, 
 		/** The platform-dependant device token needed for push notifications. */
 		2: string token, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2949,8 +2392,6 @@ service BrainCloudService {
 		
 		/** Text of the push notification */
 		2: string message, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2962,8 +2403,6 @@ service BrainCloudService {
 		
 		/** Id of the notification template */
 		2: i32 notificationTemplateId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -2980,8 +2419,6 @@ service BrainCloudService {
 		
 		/** JSON defining the substitution params to use with the template */
 		3: string substitutionJson, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -2997,8 +2434,6 @@ service BrainCloudService {
 		
 		/** JSON defining the substitution params to use with the template */
 		3: string substitutionsJson, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -3014,8 +2449,6 @@ service BrainCloudService {
 		
 		/** Optional custom data */
 		3: string customDataJson, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -3035,8 +2468,6 @@ service BrainCloudService {
 		
 		/** Start time of sending the push notification */
 		5: i32 startTime, 
-		
-		/** The braincloud client index */
 		6: i32 clientIndex
 	),
 
@@ -3056,8 +2487,6 @@ service BrainCloudService {
 		
 		/** Minutes from now to send the push notification */
 		5: i32 minutesFromNow, 
-		
-		/** The braincloud client index */
 		6: i32 clientIndex
 	),
 
@@ -3074,8 +2503,6 @@ service BrainCloudService {
 		
 		/** Facebook template string */
 		4: string facebookContent, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -3092,8 +2519,6 @@ service BrainCloudService {
 		
 		/** Facebook template string */
 		4: string facebookContent, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -3110,8 +2535,6 @@ service BrainCloudService {
 		
 		/** Facebook template string */
 		4: string facebookContent, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -3128,8 +2551,6 @@ service BrainCloudService {
 		
 		/** Start time of sending the push notification */
 		4: i32 startTime, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -3146,8 +2567,6 @@ service BrainCloudService {
 		
 		/** Minutes from now to send the push notification */
 		4: i32 minutesFromNow, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -3164,8 +2583,6 @@ service BrainCloudService {
 		
 		/** Start time of sending the push notification */
 		4: i32 startTime, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -3182,8 +2599,6 @@ service BrainCloudService {
 		
 		/** Minutes from now to send the push notification */
 		4: i32 minutesFromNow, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -3197,8 +2612,6 @@ service BrainCloudService {
 		
 		/** Optional custom data */
 		3: string customDataJson, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -3212,8 +2625,6 @@ service BrainCloudService {
 		
 		/** Optional custom data */
 		3: string customDataJson, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -3224,8 +2635,6 @@ service BrainCloudService {
 		
 		/** Data to be sent to the script in json format */
 		2: string jsonScriptData, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -3239,8 +2648,6 @@ service BrainCloudService {
 		
 		/** The start date as a DateTime object */
 		3: BrainCloudServiceSDKDataTypes.date startDateInUTC, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -3254,8 +2661,6 @@ service BrainCloudService {
 		
 		/** Number of minutes from now to run script */
 		3: i64 minutesFromNow, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -3269,8 +2674,6 @@ service BrainCloudService {
 		
 		/** The level name of the parent to run the script from */
 		3: string parentLevel, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -3278,8 +2681,6 @@ service BrainCloudService {
 	string Script_CancelScheduledScript(
 		/** ID of script job to cancel */
 		1: string jobId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -3293,8 +2694,6 @@ service BrainCloudService {
 		
 		/** Identifies the peer */
 		3: string peer, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -3309,8 +2708,6 @@ service BrainCloudService {
 		
 		/** Identifies the peer */
 		3: string peer, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -3334,8 +2731,6 @@ service BrainCloudService {
 		/** If true, the currently logged in player's name will be replaced
              by the string "You". */
 		2: bool replaceName, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -3350,8 +2745,6 @@ service BrainCloudService {
 		/** If true, the currently logged in player's name will be replaced
             by the string "You". */
 		3: bool replaceName, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -3373,8 +2766,6 @@ service BrainCloudService {
 		
 		/** The index at which to end the page. */
 		4: i32 endIndex, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -3396,8 +2787,6 @@ service BrainCloudService {
 		
 		/** The historical version to retrieve. */
 		5: i32 versionId, 
-		
-		/** The braincloud client index */
 		6: i32 clientIndex
 	),
 
@@ -3417,8 +2806,6 @@ service BrainCloudService {
 		
 		/** The count of number of players after the current player to include. */
 		4: i32 afterCount, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -3440,8 +2827,6 @@ service BrainCloudService {
 		
 		/** The historial version to retrieve. Use -1 for current leaderboard. */
 		5: i32 versionId, 
-		
-		/** The braincloud client index */
 		6: i32 clientIndex
 	),
 
@@ -3449,8 +2834,6 @@ service BrainCloudService {
 	string SocialLeaderboard_GetGlobalLeaderboardVersions(
 		/** In_leaderboard identifier. */
 		1: string leaderboardId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -3461,8 +2844,6 @@ service BrainCloudService {
 		
 		/** The group ID */
 		2: string groupId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -3481,8 +2862,6 @@ service BrainCloudService {
 		/** The score to post */
 		2: i64 score, 
 		3: string jsonData, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -3493,8 +2872,6 @@ service BrainCloudService {
 		
 		/** The version of the leaderboard */
 		2: i32 versionId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -3522,8 +2899,6 @@ service BrainCloudService {
 		
 		/** How many rotations to keep */
 		7: i32 retainedCount, 
-		
-		/** The braincloud client index */
 		8: i32 clientIndex
 	),
 
@@ -3551,8 +2926,6 @@ service BrainCloudService {
 		
 		/** How many days between each rotation */
 		7: i32 numDaysToRotate, 
-		
-		/** The braincloud client index */
 		8: i32 clientIndex
 	),
 
@@ -3563,23 +2936,16 @@ service BrainCloudService {
 		
 		/** The IDs of the players */
 		2: list<string> profileIds, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
 	/** Retrieve a list of all leaderboards */
-	string SocialLeaderboard_ListLeaderboards(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string SocialLeaderboard_ListLeaderboards(1: i32 clientIndex),
 
 	/** Gets the number of entries in a global leaderboard */
 	string SocialLeaderboard_GetGlobalLeaderboardEntryCount(
 		/** The ID of the leaderboard */
 		1: string leaderboardId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -3590,8 +2956,6 @@ service BrainCloudService {
 		
 		/** The version of the leaderboard */
 		2: i32 versionId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -3602,8 +2966,6 @@ service BrainCloudService {
 		
 		/** The version of the leaderboard. Use -1 for current. */
 		2: i32 versionId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -3611,17 +2973,12 @@ service BrainCloudService {
 	string SocialLeaderboard_GetPlayerScoresFromLeaderboards(
 		/** A collection of leaderboardIds to retrieve scores from */
 		1: list<string> leaderboardIds, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
 	/** Method returns the server time in UTC. This is in UNIX millis time format.
             For instance 1396378241893 represents 2014-04-01 2:50:41.893 in GMT-4. */
-	string Time_ReadServerTime(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Time_ReadServerTime(1: i32 clientIndex),
 
 	/** Processes any outstanding rewards for the given player */
 	string Tournament_ClaimTournamentReward(
@@ -3631,8 +2988,6 @@ service BrainCloudService {
 		/** Version of the tournament to claim rewards for.
             Use -1 for the latest version. */
 		2: i32 versionId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -3643,8 +2998,6 @@ service BrainCloudService {
 		
 		/** Version of the tournament. Use -1 for the latest version. */
 		2: i32 versionId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -3660,8 +3013,6 @@ service BrainCloudService {
 		/** The initial score for players first joining a tournament
             Usually 0, unless leaderboard is LOW_VALUE */
 		3: i64 initialScore, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
@@ -3669,8 +3020,6 @@ service BrainCloudService {
 	string Tournament_LeaveTournament(
 		/** The leaderboard for the tournament */
 		1: string leaderboardId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -3688,8 +3037,6 @@ service BrainCloudService {
 		/** Time the user started the match resulting in the score
             being posted. */
 		4: BrainCloudServiceSDKDataTypes.date roundStartedTime, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -3720,8 +3067,6 @@ service BrainCloudService {
 		/** The initial score for players first joining a tournament
             Usually 0, unless leaderboard is LOW_VALUE */
 		8: i64 initialScore, 
-		
-		/** The braincloud client index */
 		9: i32 clientIndex
 	),
 
@@ -3729,8 +3074,6 @@ service BrainCloudService {
 	string Tournament_ViewCurrentReward(
 		/** The leaderboard for the tournament */
 		1: string leaderboardId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -3741,8 +3084,6 @@ service BrainCloudService {
 		
 		/** Version of the tournament. Use -1 for the latest version. */
 		2: i32 versionId, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
@@ -3759,8 +3100,6 @@ service BrainCloudService {
 		
 		/** A json string containing any custom attributes to attach to the lobby. */
 		4: string jsonAttributes, 
-		
-		/** The braincloud client index */
 		5: i32 clientIndex
 	),
 
@@ -3768,8 +3107,6 @@ service BrainCloudService {
 	string Lobby_OpenLobby(
 		/** The ID of the lobby to open. */
 		1: string lobbyId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -3777,8 +3114,6 @@ service BrainCloudService {
 	string Lobby_CloseLobby(
 		/** The ID of the lobby to close. */
 		1: string lobbyId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -3786,23 +3121,16 @@ service BrainCloudService {
 	string Lobby_FindLobbies(1: i32 freeSlots, 2: i32 maxResults, 
 		/** A json string containing any custom attributes to search for. */
 		3: string jsonAttributes, 
-		
-		/** The braincloud client index */
 		4: i32 clientIndex
 	),
 
 	/** Find lobbies with the player's friends in them. */
-	string Lobby_FindFriendsLobbies(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Lobby_FindFriendsLobbies(1: i32 clientIndex),
 
 	/** Join a lobby. */
 	string Lobby_JoinLobby(
 		/** The ID of the lobby to join. */
 		1: string lobbyId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -3810,8 +3138,6 @@ service BrainCloudService {
 	string Lobby_LeaveLobby(
 		/** The ID of the lobby to leave. */
 		1: string lobbyId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -3819,8 +3145,6 @@ service BrainCloudService {
 	string Lobby_DestroyLobby(
 		/** The ID of the lobby to destroy. */
 		1: string lobbyId, 
-		
-		/** The braincloud client index */
 		2: i32 clientIndex
 	),
 
@@ -3831,260 +3155,98 @@ service BrainCloudService {
 		
 		/** A string that can be used to connect to a real game (e.g an IP Address/port). */
 		2: string connectionString, 
-		
-		/** The braincloud client index */
 		3: i32 clientIndex
 	),
 
 	/** Get a list of lobbies the player is a member of. */
-	string Lobby_GetMyLobbies(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Lobby_GetMyLobbies(1: i32 clientIndex),
 
-	string Party_AcceptPartyInvitation(1: string partyId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Party_AcceptPartyInvitation(1: string partyId, 2: i32 clientIndex),
 
-	string Party_GetPartyInfo(1: string partyId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Party_GetPartyInfo(1: string partyId, 2: i32 clientIndex),
 
-	string Party_JoinParty(1: string partyId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Party_JoinParty(1: string partyId, 2: i32 clientIndex),
 
-	string Party_LeaveParty(1: string partyId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Party_LeaveParty(1: string partyId, 2: i32 clientIndex),
 
-	string Party_RejectPartyInvitation(1: string partyId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Party_RejectPartyInvitation(1: string partyId, 2: i32 clientIndex),
 
-	string Party_SendPartyInvitation(1: string playerId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Party_SendPartyInvitation(1: string playerId, 2: i32 clientIndex),
 
-	string Party_ListPartyInvitations(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Party_ListPartyInvitations(1: i32 clientIndex),
 
-	string Party_GetFriendsParties(1: i32 maxResults, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Party_GetFriendsParties(1: i32 maxResults, 2: i32 clientIndex),
 
-	string Party_GetMyParty(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Party_GetMyParty(1: i32 clientIndex),
 
-	string Patch_GetGameManifest(1: string gameId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Patch_GetGameManifest(1: string gameId, 2: i32 clientIndex),
 
-	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 
-		/** The braincloud client index */
-		6: i32 clientIndex
-	),
+	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 
-	string SocialFeed_ShareScreenshot(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 
-		/** The braincloud client index */
-		6: i32 clientIndex
-	),
+	string SocialFeed_ShareScreenshot(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 
-	string SocialFeed_ShareAchievement(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 
-		/** The braincloud client index */
-		6: i32 clientIndex
-	),
+	string SocialFeed_ShareAchievement(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 
-	string SocialFeed_ShareApp(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 
-		/** The braincloud client index */
-		6: i32 clientIndex
-	),
+	string SocialFeed_ShareApp(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 
-	string SocialFeed_ShareChannel(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 
-		/** The braincloud client index */
-		6: i32 clientIndex
-	),
+	string SocialFeed_ShareChannel(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 
-	string SocialFeed_ShareLink(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 
-		/** The braincloud client index */
-		6: i32 clientIndex
-	),
+	string SocialFeed_ShareLink(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 
-	string SocialFeed_ShareGameGuide(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 
-		/** The braincloud client index */
-		6: i32 clientIndex
-	),
+	string SocialFeed_ShareGameGuide(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 
-	string SocialFeed_ReadSocialFeed(1: i32 skip, 2: i32 limit, 
-		/** The braincloud client index */
-		3: i32 clientIndex
-	),
+	string SocialFeed_ReadSocialFeed(1: i32 skip, 2: i32 limit, 3: i32 clientIndex),
 
-	string SocialFeed_ReadFilteredSocialFeed(1: i32 skip, 2: i32 limit, 3: list<string> playerIds, 
-		/** The braincloud client index */
-		4: i32 clientIndex
-	),
+	string SocialFeed_ReadFilteredSocialFeed(1: i32 skip, 2: i32 limit, 3: list<string> playerIds, 4: i32 clientIndex),
 
-	string SocialFeed_ReadFriendsSocialFeed(1: i32 skip, 2: i32 limit, 
-		/** The braincloud client index */
-		3: i32 clientIndex
-	),
+	string SocialFeed_ReadFriendsSocialFeed(1: i32 skip, 2: i32 limit, 3: i32 clientIndex),
 
-	string SocialFeed_PostComment(1: i32 timestamp, 2: string parentId, 3: string content, 
-		/** The braincloud client index */
-		4: i32 clientIndex
-	),
+	string SocialFeed_PostComment(1: i32 timestamp, 2: string parentId, 3: string content, 4: i32 clientIndex),
 
-	string SocialFeed_PostCommentReply(1: i32 timestamp, 2: string parentId, 3: string content, 
-		/** The braincloud client index */
-		4: i32 clientIndex
-	),
+	string SocialFeed_PostCommentReply(1: i32 timestamp, 2: string parentId, 3: string content, 4: i32 clientIndex),
 
-	string SocialFeed_ReadComments(1: i32 skip, 2: i32 limit, 3: string parentId, 
-		/** The braincloud client index */
-		4: i32 clientIndex
-	),
+	string SocialFeed_ReadComments(1: i32 skip, 2: i32 limit, 3: string parentId, 4: i32 clientIndex),
 
-	string SocialFeed_ReadCommentReplies(1: i32 skip, 2: i32 limit, 3: string parentId, 
-		/** The braincloud client index */
-		4: i32 clientIndex
-	),
+	string SocialFeed_ReadCommentReplies(1: i32 skip, 2: i32 limit, 3: string parentId, 4: i32 clientIndex),
 
-	string SocialFeed_LikeComment(1: string socialFeedId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string SocialFeed_LikeComment(1: string socialFeedId, 2: i32 clientIndex),
 
-	string SocialFeed_LikeActivity(1: string socialFeedId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string SocialFeed_LikeActivity(1: string socialFeedId, 2: i32 clientIndex),
 
-	string SocialFeed_UnlikeComment(1: string socialFeedId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string SocialFeed_UnlikeComment(1: string socialFeedId, 2: i32 clientIndex),
 
-	string SocialFeed_UnlikeActivity(1: string socialFeedId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string SocialFeed_UnlikeActivity(1: string socialFeedId, 2: i32 clientIndex),
 
-	string SocialFeed_SetFeedVisibility(1: string visibility, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string SocialFeed_SetFeedVisibility(1: string visibility, 2: i32 clientIndex),
 
-	string SocialFeed_BlockPlayer(1: string playerId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string SocialFeed_BlockPlayer(1: string playerId, 2: i32 clientIndex),
 
-	string SocialFeed_HidePlayer(1: string playerId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string SocialFeed_HidePlayer(1: string playerId, 2: i32 clientIndex),
 
-	string SocialFeed_UnblockPlayer(1: string playerId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string SocialFeed_UnblockPlayer(1: string playerId, 2: i32 clientIndex),
 
-	string SocialFeed_UnhidePlayer(1: string playerId, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string SocialFeed_UnhidePlayer(1: string playerId, 2: i32 clientIndex),
 
-	string SocialFeed_GetActivity(1: string socialFeedId, 2: i32 depth, 3: i32 skip, 4: i32 limit, 
-		/** The braincloud client index */
-		5: i32 clientIndex
-	),
+	string SocialFeed_GetActivity(1: string socialFeedId, 2: i32 depth, 3: i32 skip, 4: i32 limit, 5: i32 clientIndex),
 
-	string SocialFeed_GetComment(1: string socialFeedId, 2: i32 depth, 3: i32 skip, 4: i32 limit, 
-		/** The braincloud client index */
-		5: i32 clientIndex
-	),
+	string SocialFeed_GetComment(1: string socialFeedId, 2: i32 depth, 3: i32 skip, 4: i32 limit, 5: i32 clientIndex),
 
-	string Telemetry_StartTelemetrySession(1: i32 timestamp, 
-		/** The braincloud client index */
-		2: i32 clientIndex
-	),
+	string Telemetry_StartTelemetrySession(1: i32 timestamp, 2: i32 clientIndex),
 
-	string Telemetry_EndTelemetrySession(1: string telemetrySessionId, 2: i32 timestamp, 
-		/** The braincloud client index */
-		3: i32 clientIndex
-	),
+	string Telemetry_EndTelemetrySession(1: string telemetrySessionId, 2: i32 timestamp, 3: i32 clientIndex),
 
-	string Telemetry_LogTelemetryEvent(1: string telemetrySessionId, 2: i32 timestamp, 3: string eventType, 4: string participantId, 5: map<string, BrainCloudServiceSDKDataTypes.JSON> customData, 
-		/** The braincloud client index */
-		6: i32 clientIndex
-	),
+	string Telemetry_LogTelemetryEvent(1: string telemetrySessionId, 2: i32 timestamp, 3: string eventType, 4: string participantId, 5: map<string, BrainCloudServiceSDKDataTypes.JSON> customData, 6: i32 clientIndex),
 
-	string Telemetry_StartTelemetryEvent(1: string telemetrySessionId, 2: i32 timestamp, 3: string eventType, 4: string participantId, 5: map<string, BrainCloudServiceSDKDataTypes.JSON> customData, 
-		/** The braincloud client index */
-		6: i32 clientIndex
-	),
+	string Telemetry_StartTelemetryEvent(1: string telemetrySessionId, 2: i32 timestamp, 3: string eventType, 4: string participantId, 5: map<string, BrainCloudServiceSDKDataTypes.JSON> customData, 6: i32 clientIndex),
 
-	string Telemetry_EndTelemetryEvent(1: string telemetrySessionId, 2: i32 timestamp, 3: string eventType, 4: string participantId, 5: map<string, BrainCloudServiceSDKDataTypes.JSON> customData, 
-		/** The braincloud client index */
-		6: i32 clientIndex
-	),
+	string Telemetry_EndTelemetryEvent(1: string telemetrySessionId, 2: i32 timestamp, 3: string eventType, 4: string participantId, 5: map<string, BrainCloudServiceSDKDataTypes.JSON> customData, 6: i32 clientIndex),
 
-	/** Get wechat QR page URL */
-	string Authentication_GetWeChatQRPageURL(
-		/** The braincloud client index */
-		1: i32 clientIndex
-	),
+	string Authentication_GetWeChatQRPageURL(1: i32 clientIndex),
 
-	/** Download file from server */
-	string File_DownloadFile(
-		/** The file path on the server */
-		1: string cloudPath, 
-		
-		/** The file name */
-		2: string cloudFilename, 
-		
-		/** Whether to replace file if it exists */
-		3: bool replaceIfExists, 
-		
-		/** The braincloud client index */
-		4: i32 clientIndex
-	),
+	string File_DownloadFile(1: string cloudPath, 2: string cloudFilename, 3: bool replaceIfExists, 4: i32 clientIndex),
 
-	/** Get the download information */
-	string File_GetDownloadInfo(
-		/** The file path on the server */
-		1: string cloudPath, 
-		
-		/** The file name */
-		2: string cloudFilename, 
-		
-		/** The braincloud client index */
-		3: i32 clientIndex
-	),
+	string File_GetDownloadInfo(1: string cloudPath, 2: string cloudFilename, 3: i32 clientIndex),
 
-	/** Cancel download */
-	string File_CancelDownload(
-		/** The file path on the server */
-		1: string cloudPath, 
-		
-		/** The file name */
-		2: string cloudFilename, 
-		
-		/** The braincloud client index */
-		3: i32 clientIndex
-	),
+	string File_CancelDownload(1: string cloudPath, 2: string cloudFilename, 3: i32 clientIndex),
 }
 
