@@ -15,9 +15,10 @@
     <RepositoryUrl>https://github.com/subor/sdk</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/subor/sdk/blob/master/LICENSE.md</PackageLicenseUrl>
     <Product>Subor.SDK</Product>
-    <PackageProjectUrl>http://www.playzplus.com/</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/subor/sdk/</PackageProjectUrl>
     <SignAssembly>true</SignAssembly>
-    <DelaySign>false</DelaySign>
+    <Owners>Subor</Owners>
+    <Description>Subor SDK targetting .NET Standard</Description>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>..\..\output\Debug\RuyiSDK\RuyiSDK.xml</DocumentationFile>
