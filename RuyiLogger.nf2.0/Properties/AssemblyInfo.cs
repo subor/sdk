@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Subor.SDK.Net35")]
+[assembly: AssemblyTitle("RuyiLogger.nf2.0")]
 [assembly: AssemblyDescription("Subor SDK targetting .NET Framework 3.5 (for Unity3D)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Subor Advanced Technology Co., Ltd.")]
-[assembly: AssemblyProduct("Subor.SDK")]
+[assembly: AssemblyProduct("RuyiLogger.nf2.0")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
