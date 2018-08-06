@@ -28,6 +28,47 @@ namespace Ruyi.SDK.InputManager
   {
     public interface IAsync
     {
+      /// <summary>
+      /// Get the gamepads that are connected corrently
+      /// </summary>
+      Task<List<Ruyi.SDK.InputManager.GamepadInfo>> GetConnectedGamepadsAsync(CancellationToken cancellationToken);
+
+      /// <summary>
+      /// Activate the vibration of gamepad
+      /// </summary>
+      /// <param name="deviceId">The deviceid of the gamepad</param>
+      /// <param name="motor1Value"></param>
+      /// <param name="motor1Time"></param>
+      /// <param name="motor2Value"></param>
+      /// <param name="motor2Time"></param>
+      Task<bool> SetGamepadVibrationAsync(string deviceId, sbyte motor1Value, sbyte motor1Time, sbyte motor2Value, sbyte motor2Time, CancellationToken cancellationToken);
+
+      /// <summary>
+      /// SetGamepadLight_desc
+      /// </summary>
+      /// <param name="deviceId">The device id of the gamepad</param>
+      /// <param name="RValue"></param>
+      /// <param name="GValue"></param>
+      /// <param name="BValue"></param>
+      Task<bool> SetGamepadLightAsync(string deviceId, sbyte RValue, sbyte GValue, sbyte BValue, CancellationToken cancellationToken);
+
+      /// <summary>
+      /// Obsolete. Temporary api the change the ruyi controller's state, will be removed later.
+      /// </summary>
+      /// <param name="channel"></param>
+      /// <param name="enableR"></param>
+      /// <param name="enableG"></param>
+      /// <param name="enableB"></param>
+      /// <param name="enableMotor1"></param>
+      /// <param name="enableMotor2"></param>
+      /// <param name="shutdown"></param>
+      /// <param name="RValue"></param>
+      /// <param name="GValue"></param>
+      /// <param name="BValue"></param>
+      /// <param name="motor1Value"></param>
+      /// <param name="motor1Time"></param>
+      /// <param name="motor2Value"></param>
+      /// <param name="motor2Time"></param>
       Task<bool> SetRuyiControllerStatusAsync(sbyte channel, bool enableR, bool enableG, bool enableB, bool enableMotor1, bool enableMotor2, bool shutdown, sbyte RValue, sbyte GValue, sbyte BValue, sbyte motor1Value, sbyte motor1Time, sbyte motor2Value, sbyte motor2Time, CancellationToken cancellationToken);
 
     }
@@ -41,6 +82,99 @@ namespace Ruyi.SDK.InputManager
 
       public Client(TProtocol inputProtocol, TProtocol outputProtocol) : base(inputProtocol, outputProtocol)      {
       }
+      public async Task<List<Ruyi.SDK.InputManager.GamepadInfo>> GetConnectedGamepadsAsync(CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetConnectedGamepads", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new GetConnectedGamepadsArgs();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new GetConnectedGamepadsResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetConnectedGamepads failed: unknown result");
+      }
+
+      public async Task<bool> SetGamepadVibrationAsync(string deviceId, sbyte motor1Value, sbyte motor1Time, sbyte motor2Value, sbyte motor2Time, CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("SetGamepadVibration", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new SetGamepadVibrationArgs();
+        args.DeviceId = deviceId;
+        args.Motor1Value = motor1Value;
+        args.Motor1Time = motor1Time;
+        args.Motor2Value = motor2Value;
+        args.Motor2Time = motor2Time;
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new SetGamepadVibrationResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SetGamepadVibration failed: unknown result");
+      }
+
+      public async Task<bool> SetGamepadLightAsync(string deviceId, sbyte RValue, sbyte GValue, sbyte BValue, CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("SetGamepadLight", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new SetGamepadLightArgs();
+        args.DeviceId = deviceId;
+        args.RValue = RValue;
+        args.GValue = GValue;
+        args.BValue = BValue;
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new SetGamepadLightResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SetGamepadLight failed: unknown result");
+      }
+
       public async Task<bool> SetRuyiControllerStatusAsync(sbyte channel, bool enableR, bool enableG, bool enableB, bool enableMotor1, bool enableMotor2, bool shutdown, sbyte RValue, sbyte GValue, sbyte BValue, sbyte motor1Value, sbyte motor1Time, sbyte motor2Value, sbyte motor2Time, CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("SetRuyiControllerStatus", TMessageType.Call, SeqId), cancellationToken);
@@ -94,6 +228,9 @@ namespace Ruyi.SDK.InputManager
         if (iAsync == null) throw new ArgumentNullException(nameof(iAsync));
 
         _iAsync = iAsync;
+        processMap_["GetConnectedGamepads"] = GetConnectedGamepads_ProcessAsync;
+        processMap_["SetGamepadVibration"] = SetGamepadVibration_ProcessAsync;
+        processMap_["SetGamepadLight"] = SetGamepadLight_ProcessAsync;
         processMap_["SetRuyiControllerStatus"] = SetRuyiControllerStatus_ProcessAsync;
       }
 
@@ -137,6 +274,90 @@ namespace Ruyi.SDK.InputManager
         return true;
       }
 
+      public async Task GetConnectedGamepads_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new GetConnectedGamepadsArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new GetConnectedGamepadsResult();
+        try
+        {
+          result.Success = await _iAsync.GetConnectedGamepadsAsync(cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("GetConnectedGamepads", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("GetConnectedGamepads", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task SetGamepadVibration_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new SetGamepadVibrationArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new SetGamepadVibrationResult();
+        try
+        {
+          result.Success = await _iAsync.SetGamepadVibrationAsync(args.DeviceId, args.Motor1Value, args.Motor1Time, args.Motor2Value, args.Motor2Time, cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("SetGamepadVibration", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("SetGamepadVibration", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task SetGamepadLight_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new SetGamepadLightArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new SetGamepadLightResult();
+        try
+        {
+          result.Success = await _iAsync.SetGamepadLightAsync(args.DeviceId, args.RValue, args.GValue, args.BValue, cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("SetGamepadLight", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("SetGamepadLight", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
       public async Task SetRuyiControllerStatus_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
         var args = new SetRuyiControllerStatusArgs();
@@ -165,6 +386,958 @@ namespace Ruyi.SDK.InputManager
         await oprot.Transport.FlushAsync(cancellationToken);
       }
 
+    }
+
+
+    public partial class GetConnectedGamepadsArgs : TBase
+    {
+
+      public GetConnectedGamepadsArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("GetConnectedGamepads_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetConnectedGamepads_args(");
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class GetConnectedGamepadsResult : TBase
+    {
+      private List<Ruyi.SDK.InputManager.GamepadInfo> _success;
+
+      public List<Ruyi.SDK.InputManager.GamepadInfo> Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool success;
+      }
+
+      public GetConnectedGamepadsResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.List)
+                {
+                  {
+                    Success = new List<Ruyi.SDK.InputManager.GamepadInfo>();
+                    TList _list0 = await iprot.ReadListBeginAsync(cancellationToken);
+                    for(int _i1 = 0; _i1 < _list0.Count; ++_i1)
+                    {
+                      Ruyi.SDK.InputManager.GamepadInfo _elem2;
+                      _elem2 = new Ruyi.SDK.InputManager.GamepadInfo();
+                      await _elem2.ReadAsync(iprot, cancellationToken);
+                      Success.Add(_elem2);
+                    }
+                    await iprot.ReadListEndAsync(cancellationToken);
+                  }
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("GetConnectedGamepads_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+
+          if(this.__isset.success)
+          {
+            if (Success != null)
+            {
+              field.Name = "Success";
+              field.Type = TType.List;
+              field.ID = 0;
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              {
+                await oprot.WriteListBeginAsync(new TList(TType.Struct, Success.Count), cancellationToken);
+                foreach (Ruyi.SDK.InputManager.GamepadInfo _iter3 in Success)
+                {
+                  await _iter3.WriteAsync(oprot, cancellationToken);
+                }
+                await oprot.WriteListEndAsync(cancellationToken);
+              }
+              await oprot.WriteFieldEndAsync(cancellationToken);
+            }
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetConnectedGamepads_result(");
+        bool __first = true;
+        if (Success != null && __isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Success: ");
+          sb.Append(Success);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class SetGamepadVibrationArgs : TBase
+    {
+      private string _deviceId;
+      private sbyte _motor1Value;
+      private sbyte _motor1Time;
+      private sbyte _motor2Value;
+      private sbyte _motor2Time;
+
+      /// <summary>
+      /// The deviceid of the gamepad
+      /// </summary>
+      public string DeviceId
+      {
+        get
+        {
+          return _deviceId;
+        }
+        set
+        {
+          __isset.deviceId = true;
+          this._deviceId = value;
+        }
+      }
+
+      public sbyte Motor1Value
+      {
+        get
+        {
+          return _motor1Value;
+        }
+        set
+        {
+          __isset.motor1Value = true;
+          this._motor1Value = value;
+        }
+      }
+
+      public sbyte Motor1Time
+      {
+        get
+        {
+          return _motor1Time;
+        }
+        set
+        {
+          __isset.motor1Time = true;
+          this._motor1Time = value;
+        }
+      }
+
+      public sbyte Motor2Value
+      {
+        get
+        {
+          return _motor2Value;
+        }
+        set
+        {
+          __isset.motor2Value = true;
+          this._motor2Value = value;
+        }
+      }
+
+      public sbyte Motor2Time
+      {
+        get
+        {
+          return _motor2Time;
+        }
+        set
+        {
+          __isset.motor2Time = true;
+          this._motor2Time = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool deviceId;
+        public bool motor1Value;
+        public bool motor1Time;
+        public bool motor2Value;
+        public bool motor2Time;
+      }
+
+      public SetGamepadVibrationArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String)
+                {
+                  DeviceId = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.Byte)
+                {
+                  Motor1Value = await iprot.ReadByteAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.Byte)
+                {
+                  Motor1Time = await iprot.ReadByteAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.Byte)
+                {
+                  Motor2Value = await iprot.ReadByteAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 5:
+                if (field.Type == TType.Byte)
+                {
+                  Motor2Time = await iprot.ReadByteAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("SetGamepadVibration_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (DeviceId != null && __isset.deviceId)
+          {
+            field.Name = "deviceId";
+            field.Type = TType.String;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(DeviceId, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (__isset.motor1Value)
+          {
+            field.Name = "motor1Value";
+            field.Type = TType.Byte;
+            field.ID = 2;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteByteAsync(Motor1Value, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (__isset.motor1Time)
+          {
+            field.Name = "motor1Time";
+            field.Type = TType.Byte;
+            field.ID = 3;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteByteAsync(Motor1Time, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (__isset.motor2Value)
+          {
+            field.Name = "motor2Value";
+            field.Type = TType.Byte;
+            field.ID = 4;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteByteAsync(Motor2Value, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (__isset.motor2Time)
+          {
+            field.Name = "motor2Time";
+            field.Type = TType.Byte;
+            field.ID = 5;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteByteAsync(Motor2Time, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SetGamepadVibration_args(");
+        bool __first = true;
+        if (DeviceId != null && __isset.deviceId)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("DeviceId: ");
+          sb.Append(DeviceId);
+        }
+        if (__isset.motor1Value)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Motor1Value: ");
+          sb.Append(Motor1Value);
+        }
+        if (__isset.motor1Time)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Motor1Time: ");
+          sb.Append(Motor1Time);
+        }
+        if (__isset.motor2Value)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Motor2Value: ");
+          sb.Append(Motor2Value);
+        }
+        if (__isset.motor2Time)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Motor2Time: ");
+          sb.Append(Motor2Time);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class SetGamepadVibrationResult : TBase
+    {
+      private bool _success;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool success;
+      }
+
+      public SetGamepadVibrationResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool)
+                {
+                  Success = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("SetGamepadVibration_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+
+          if(this.__isset.success)
+          {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SetGamepadVibration_result(");
+        bool __first = true;
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Success: ");
+          sb.Append(Success);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class SetGamepadLightArgs : TBase
+    {
+      private string _deviceId;
+      private sbyte _RValue;
+      private sbyte _GValue;
+      private sbyte _BValue;
+
+      /// <summary>
+      /// The device id of the gamepad
+      /// </summary>
+      public string DeviceId
+      {
+        get
+        {
+          return _deviceId;
+        }
+        set
+        {
+          __isset.deviceId = true;
+          this._deviceId = value;
+        }
+      }
+
+      public sbyte RValue
+      {
+        get
+        {
+          return _RValue;
+        }
+        set
+        {
+          __isset.RValue = true;
+          this._RValue = value;
+        }
+      }
+
+      public sbyte GValue
+      {
+        get
+        {
+          return _GValue;
+        }
+        set
+        {
+          __isset.GValue = true;
+          this._GValue = value;
+        }
+      }
+
+      public sbyte BValue
+      {
+        get
+        {
+          return _BValue;
+        }
+        set
+        {
+          __isset.BValue = true;
+          this._BValue = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool deviceId;
+        public bool RValue;
+        public bool GValue;
+        public bool BValue;
+      }
+
+      public SetGamepadLightArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String)
+                {
+                  DeviceId = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.Byte)
+                {
+                  RValue = await iprot.ReadByteAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.Byte)
+                {
+                  GValue = await iprot.ReadByteAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.Byte)
+                {
+                  BValue = await iprot.ReadByteAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("SetGamepadLight_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (DeviceId != null && __isset.deviceId)
+          {
+            field.Name = "deviceId";
+            field.Type = TType.String;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(DeviceId, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (__isset.RValue)
+          {
+            field.Name = "RValue";
+            field.Type = TType.Byte;
+            field.ID = 2;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteByteAsync(RValue, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (__isset.GValue)
+          {
+            field.Name = "GValue";
+            field.Type = TType.Byte;
+            field.ID = 3;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteByteAsync(GValue, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (__isset.BValue)
+          {
+            field.Name = "BValue";
+            field.Type = TType.Byte;
+            field.ID = 4;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteByteAsync(BValue, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SetGamepadLight_args(");
+        bool __first = true;
+        if (DeviceId != null && __isset.deviceId)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("DeviceId: ");
+          sb.Append(DeviceId);
+        }
+        if (__isset.RValue)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("RValue: ");
+          sb.Append(RValue);
+        }
+        if (__isset.GValue)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("GValue: ");
+          sb.Append(GValue);
+        }
+        if (__isset.BValue)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("BValue: ");
+          sb.Append(BValue);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class SetGamepadLightResult : TBase
+    {
+      private bool _success;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool success;
+      }
+
+      public SetGamepadLightResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool)
+                {
+                  Success = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("SetGamepadLight_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+
+          if(this.__isset.success)
+          {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("SetGamepadLight_result(");
+        bool __first = true;
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Success: ");
+          sb.Append(Success);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
     }
 
 

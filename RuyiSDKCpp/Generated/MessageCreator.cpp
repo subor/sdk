@@ -16,6 +16,7 @@ void MessageCreator::Initialize()
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.RuyiJoystickInput", Ruyi::SDK::InputManager::RuyiJoystickInput);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.InputActionTriggered", Ruyi::SDK::InputManager::InputActionTriggered);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.AxisActionTriggered", Ruyi::SDK::InputManager::AxisActionTriggered);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.GamepadInfo", Ruyi::SDK::InputManager::GamepadInfo);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.StorageLayer.GetLocalPathResult", Ruyi::SDK::StorageLayer::GetLocalPathResult);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettingNameValue", Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettingNameValue);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.RuyiNetworkTestItem", Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestItem);

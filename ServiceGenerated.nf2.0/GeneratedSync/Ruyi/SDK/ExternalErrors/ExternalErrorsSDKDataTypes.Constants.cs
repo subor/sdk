@@ -33,8 +33,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp2.Description = "[type error] trying to assign a {0} to setting item {1}, whose data type is {2}";
       EXTERNALERRORLIST.Add(tmp2);
       ExternalErrorInfos tmp3 = new ExternalErrorInfos();
-      tmp3.ErrorCode = ExternalErrorCode.Err_3;
       tmp3.Description = "json string convert failed: {0}";
+      tmp3.ErrorCode = ExternalErrorCode.Err_3;
       EXTERNALERRORLIST.Add(tmp3);
       ExternalErrorInfos tmp4 = new ExternalErrorInfos();
       tmp4.ErrorCode = ExternalErrorCode.Err_4;
@@ -53,12 +53,12 @@ namespace Ruyi.SDK.ExternalErrors
       tmp7.ErrorCode = ExternalErrorCode.Err_7;
       EXTERNALERRORLIST.Add(tmp7);
       ExternalErrorInfos tmp8 = new ExternalErrorInfos();
-      tmp8.ErrorCode = ExternalErrorCode.Err_8;
       tmp8.Description = "specified user {0} is not playing app {1}";
+      tmp8.ErrorCode = ExternalErrorCode.Err_8;
       EXTERNALERRORLIST.Add(tmp8);
       ExternalErrorInfos tmp9 = new ExternalErrorInfos();
-      tmp9.ErrorCode = ExternalErrorCode.Err_9;
       tmp9.Description = "user is not found by id {0}";
+      tmp9.ErrorCode = ExternalErrorCode.Err_9;
       EXTERNALERRORLIST.Add(tmp9);
       ExternalErrorInfos tmp10 = new ExternalErrorInfos();
       tmp10.ErrorCode = ExternalErrorCode.Err_10;
@@ -77,8 +77,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp13.ErrorCode = ExternalErrorCode.Err_13;
       EXTERNALERRORLIST.Add(tmp13);
       ExternalErrorInfos tmp14 = new ExternalErrorInfos();
-      tmp14.ErrorCode = ExternalErrorCode.Err_14;
       tmp14.Description = "";
+      tmp14.ErrorCode = ExternalErrorCode.Err_14;
       EXTERNALERRORLIST.Add(tmp14);
       ExternalErrorInfos tmp15 = new ExternalErrorInfos();
       tmp15.ErrorCode = ExternalErrorCode.Err_15;
