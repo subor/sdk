@@ -20,6 +20,61 @@ class InputManagerServiceHandler : virtual public InputManagerServiceIf {
     // Your initialization goes here
   }
 
+  /**
+   * Get the gamepads that are connected corrently
+   */
+  void GetConnectedGamepads(std::vector< ::Ruyi::SDK::InputManager::GamepadInfo> & _return) {
+    // Your implementation goes here
+    printf("GetConnectedGamepads\n");
+  }
+
+  /**
+   * Activate the vibration of gamepad
+   * 
+   * @param deviceId The deviceid of the gamepad
+   * 
+   * @param motor1Value
+   * @param motor1Time
+   * @param motor2Value
+   * @param motor2Time
+   */
+  bool SetGamepadVibration(const std::string& deviceId, const int8_t motor1Value, const int8_t motor1Time, const int8_t motor2Value, const int8_t motor2Time) {
+    // Your implementation goes here
+    printf("SetGamepadVibration\n");
+  }
+
+  /**
+   * SetGamepadLight_desc
+   * 
+   * @param deviceId The device id of the gamepad
+   * 
+   * @param RValue
+   * @param GValue
+   * @param BValue
+   */
+  bool SetGamepadLight(const std::string& deviceId, const int8_t RValue, const int8_t GValue, const int8_t BValue) {
+    // Your implementation goes here
+    printf("SetGamepadLight\n");
+  }
+
+  /**
+   * Obsolete. Temporary api the change the ruyi controller's state, will be removed later.
+   * 
+   * @param channel
+   * @param enableR
+   * @param enableG
+   * @param enableB
+   * @param enableMotor1
+   * @param enableMotor2
+   * @param shutdown
+   * @param RValue
+   * @param GValue
+   * @param BValue
+   * @param motor1Value
+   * @param motor1Time
+   * @param motor2Value
+   * @param motor2Time
+   */
   bool SetRuyiControllerStatus(const int8_t channel, const bool enableR, const bool enableG, const bool enableB, const bool enableMotor1, const bool enableMotor2, const bool shutdown, const int8_t RValue, const int8_t GValue, const int8_t BValue, const int8_t motor1Value, const int8_t motor1Time, const int8_t motor2Value, const int8_t motor2Time) {
     // Your implementation goes here
     printf("SetRuyiControllerStatus\n");

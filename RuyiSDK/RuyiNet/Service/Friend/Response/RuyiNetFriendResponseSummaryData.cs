@@ -12,12 +12,12 @@ namespace Ruyi.SDK.Online
         /// <summary>
         /// The name of the player.
         /// </summary>
-        public string profileName;
+        public string playerName;
 
         /// <summary>
         /// The ID of the player.
         /// </summary>
-        public string profileId;
+        public string playerId;
 
         /// <summary>
         /// The resource location of the profile picture.

@@ -99,6 +99,9 @@
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetGetSummaryDataForProfileIdResponse.cs">
       <Link>RuyiNet\Service\Friend\Response\RuyiNetGetSummaryDataForProfileIdResponse.cs</Link>
     </Compile>
+    <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetGetSummaryDataMultipleResponse.cs">
+      <Link>RuyiNet\Service\Friend\Response\RuyiNetGetSummaryDataMultipleResponse.cs</Link>
+    </Compile>
     <Compile Include="..\RuyiSDK\RuyiNet\Service\Friend\Response\RuyiNetListFriendsResponse.cs">
       <Link>RuyiNet\Service\Friend\Response\RuyiNetListFriendsResponse.cs</Link>
     </Compile>

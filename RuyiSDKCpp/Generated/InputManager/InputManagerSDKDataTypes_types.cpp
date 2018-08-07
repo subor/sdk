@@ -1999,4 +1999,116 @@ void AxisActionTriggered::printTo(std::ostream& out) const {
   out << ")";
 }
 
+
+GamepadInfo::~GamepadInfo() throw() {
+}
+
+
+void GamepadInfo::__set_deviceId(const std::string& val) {
+  this->deviceId = val;
+}
+
+void GamepadInfo::__set_isWireless(const bool val) {
+  this->isWireless = val;
+}
+std::ostream& operator<<(std::ostream& out, const GamepadInfo& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+uint32_t GamepadInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->deviceId);
+          this->__isset.deviceId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->isWireless);
+          this->__isset.isWireless = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t GamepadInfo::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("GamepadInfo");
+
+  xfer += oprot->writeFieldBegin("deviceId", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->deviceId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("isWireless", ::apache::thrift::protocol::T_BOOL, 2);
+  xfer += oprot->writeBool(this->isWireless);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(GamepadInfo &a, GamepadInfo &b) {
+  using ::std::swap;
+  swap(a.deviceId, b.deviceId);
+  swap(a.isWireless, b.isWireless);
+  swap(a.__isset, b.__isset);
+}
+
+GamepadInfo::GamepadInfo(const GamepadInfo& other15) {
+  deviceId = other15.deviceId;
+  isWireless = other15.isWireless;
+  __isset = other15.__isset;
+}
+GamepadInfo& GamepadInfo::operator=(const GamepadInfo& other16) {
+  deviceId = other16.deviceId;
+  isWireless = other16.isWireless;
+  __isset = other16.__isset;
+  return *this;
+}
+void GamepadInfo::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "GamepadInfo(";
+  out << "deviceId=" << to_string(deviceId);
+  out << ", " << "isWireless=" << to_string(isWireless);
+  out << ")";
+}
+
 }}} // namespace
