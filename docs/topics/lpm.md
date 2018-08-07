@@ -1,21 +1,21 @@
-# Low-Power Mode
+# 省电模式
 
-Low-power mode (LPM) is a special feature of the Ruyi console where it consumes less power than normal.  Note that this is different from special power states found on normal laptops and desktops (i.e. [S3, S4](https://msdn.microsoft.com/en-us/library/windows/desktop/aa373229(v=vs.85).aspx)) and is actually still S5.
+省电模式(LPM)能让Ruyi主机比正常使用情况下消耗更少电量。注意这和普通的比如笔记本和PC电脑的节能状态不同(比如[S3, S4](https://msdn.microsoft.com/en-us/library/windows/desktop/aa373229(v=vs.85).aspx))，Ruyi省电模式仍然是S5状态。
 
-Reduced hardware functionality/performance:
+硬件的功能/性能减弱:
 
-- Single CPU core at 600 MHz (other 3 cores power-gated)
-- GPU and other IPs (including HW encoder/decoder) clock-gated
-- Display off
-- Memory bandwidth at 51.2 GB/s
+- 一个CPU频率600 MHz (其他3核电源门控)
+- GPU和其他IPs(包括HW编码/解码)时钟门控
+- 关闭显示屏
+- 内存带宽51.2 GB/s
 
-In this mode the [OS](os.md) and [Ruyi platform](layer0.md) are still running- albeit with reduced functionality and performance.
+该模式下[操作系统](os.md)和[Ruyi平台](layer0.md)仍在运行中(性能表现减弱)。
 
-This mode is intended for:
+该模式主要用途:
 
-- Downloading/uploading
-- Patching of both the system and applications
-- "Always-on" fileserver
-- IoT functionality
+- 下载/上传
+- 系统和应用升级补丁
+- 作为一直开启的文件服务器
+- IoT功能
 
-Because of the above constraints, apps will need to react to notifications that the console is about to switch to LPM and shutdown.
+因为以上限制，在主机切换成省电模式时应用收到的通知需要重新激活。

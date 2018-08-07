@@ -1,18 +1,18 @@
-# App Metadata
+# 应用元数据
 
 ---
-## ![](/docs/img/warning.png) NOTICE
-Application meta-data is still being defined.
-The following is meant to be exemplary and will be updated once specification is finalized.
+## ![](/docs/img/warning.png) 注意
+应用程序元数据的具体格式仍在定义中。
+以下内容为具体数据格式的说明，元数据格式定义完成后会更新这些说明
 
 ---	
 
-Application meta-data is comprised of:
+应用程序的元数据包括:
 
-- A manifest describing the application
-- A resource folder containing assets
+- 一个描述应用程序的配置文件
+- 一个包含资源组件的文件夹
 
-The [Unity sample](https://bitbucket.org/playruyi/space_shooter) contains an example of application meta-data used by Ruyi platform.  Running `D:\dev\unity_demo>tree /f pack` displays:
+[Unity示例](https://bitbucket.org/playruyi/space_shooter)中有一个支持Ruyi主机平台的程序元数据列子。在命令行运行`D:\dev\unity_demo>tree /f pack`会显示:
 ```
 D:\DEV\UNITY_DEMO\PACK
 │   RuyiManifest.json
@@ -33,13 +33,13 @@ D:\DEV\UNITY_DEMO\PACK
         ...
 ```
 
-The `space_shooter` folder and `space_shooter.exe` should all match the appID value in the manifest file.
+`space_shooter`文件夹和`space_shooter.exe`文件都必须匹配配置文件中的appID字段的值。
 
-## Manifest
+## 配置文件
 
-App manifest is similar to other platforms and is typically named `RuyiManifest.json`.
+应用配置文件和其他平台的配置文件类似，这里命名为`RuyiManifest.json`.
 
-Example from the [SDK samples](https://bitbucket.org/playruyi/space_shooter/src/master/Pack/RuyiManifest.json):
+[SDK示例](https://bitbucket.org/playruyi/space_shooter/src/master/Pack/RuyiManifest.json)中的配置文件内容:
 ```json
 {
 	"appID": "com.playruyi.space_shooter",
@@ -70,15 +70,11 @@ Example from the [SDK samples](https://bitbucket.org/playruyi/space_shooter/src/
 }
 ```
 
-## Overlay
+## 多语言字符
 
-See [overlay compatibility](overlay.md#Compatibility)
+本地化文字位于`res/i18n.json`文件.
 
-## Strings
-
-Localized strings are stored in `res/i18n.json`.
-
-Example from the [SDK Samples](https://bitbucket.org/playruyi/space_shooter/src/master/Pack/res/i18n.json):
+[SDK示例](https://bitbucket.org/playruyi/space_shooter/src/master/Pack/res/i18n.json)中的本地化配置文件内容
 ```json
 {
   "i18n": {
@@ -95,6 +91,6 @@ Example from the [SDK Samples](https://bitbucket.org/playruyi/space_shooter/src/
 }
 ```
 
-## Images
+## 图片资源
 
-Images are placed in `res/hd/` and `res/ld` for high-resolution and low-resolution assets, respectively.
+图片资源位于`res/hd/`和`res/ld`文件夹下，分为高分辨率和低分辨率。

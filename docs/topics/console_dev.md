@@ -1,9 +1,9 @@
-# Console Development
+# 在主机上进行开发
 
-## Tips
+## 提示
 
-* Stop UAC prompt from disconnecting Remote Desktop
-    1. __Start / Edit group policy__
-    1. Computer Configuration / Windows Settings / Security Settings / Local Policies / Security Options
-    1. Double-click __User Account Control: Switch to the secure desktop when prompting for elevation__
-    1. Click __Disabled__ and __OK__
+* 关闭用户帐户控制设置(UAC)以避免从主机上与远程桌面断开
+    1. 从左下角进入菜单 __开始 / 编辑组策略__
+    1. 路径 计算机配置 / Windows设置 / 安全设置 / 本地策略 / 安全选项
+    1. 双击 __用户账户控制: 提示提升时切换到安全桌面__
+    1. 点击 __关闭__ 和 __确定__

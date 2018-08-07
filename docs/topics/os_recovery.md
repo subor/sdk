@@ -1,34 +1,34 @@
-#Prepare
-1. Connect a keyboard to the RUYI device;
-2. Connect network cable to Internet (Optional);
-3. One USB disk, more than 6GB, fat32 format.
+# 准备工作
+1. 连接到Ruyi主机的键盘
+2. 主机联网(可选项)
+3. U盘，大于6GB，fat32格式
 
-##Step A: Make a Recovery USB drive (USB)  
+##第一步:制作一个USB恢复盘  
 
-###Method 1:  Manually Download source
-1. Download RUYI OS image  
-1. Unzip and copy OS files to root of bootable USB drive. (There is an EFI folder in the root path)  
-1. Plug USB drive into system.   
-1. Press power button to boot the system  
-1. Follow the guide to finish the recovery
+###1: 手动下载源码
+1. 下载Ruyi系统镜像  
+1. 解压并拷贝镜像文件到U盘文根目录(有一个EFI文件夹在根目录)  
+1. 插入U盘到主机   
+1. 按电源键开机  
+1. 参照之后的内容完成系统恢复
 
-###Method 2: Use BIOS Internet Recovery
-1. Press power button to boot the system  
-1. Press F11(Keyboard) or “↑”+”Y”+”L1”+”R1” (gamepad) to Enter into Recovery UI;  
-1. Plug USB drive into RUYI device, Connect network cable to Internet  
-1. Follow the guide to finish the recovery  
+###2: 使用BIOS网络恢复
+1. 按电源键开机  
+1. 按键盘的F11键或手柄的“↑”+”Y”+”L1”+”R1”进入系统恢复界面  
+1. 插入U盘到主机，联网  
+1. 参照之后的内容完成系统恢复
 
-##Step B: Follow the guide to finish the recovery  
-1. Update BIOS (Option)  
-Recovery Process will detect the BIOS and show this step if it need to update the BIOS.  
+##第二部: 参考以下内容完成系统恢复
+1. 更新BIOS(可选)  
+系统恢复过程会侦测到BIOS并提示升级，如有需要可以升级  
 ![](/docs/img/update_bios.png)  
-1. Clean HDD Confirm  
+1. 确认清空硬盘  
 ![](/docs/img/clean_hdd.png)  
-1. Choose developer mode (Optional)  
+1. 选择开发者模式(可选)  
 ![](/docs/img/dev_mode_choose.png)  
-Only for developer  
-1. Remove USB  
+仅适用于开发者
+1. 拔出U盘  
 ![](/docs/img/remove_usb.png)  
-1. Finish  
-During the remainder of the installation process the machine may reboot, open PowerShell/Command Prompt windows, or display a black screen several times.  
+1. 完成
+完成后机器可能会重启，显示PowerShell/命令行窗口，或黑屏几次  
 ![](/docs/img/finish_recovery.png)
