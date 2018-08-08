@@ -1,68 +1,68 @@
-# Ruyi
+# 如意
 
 ---
-## ![](/docs/img/warning.png) NOTICE
-The Ruyi platform is still in an __early beta__ state.  
-You may experience one or more of the following:
+## ![](/docs/img/warning.png) 注意
+目前Ruyi平台仍在开发中，您在使用过程中可能会遇到以下情况：
 
-* General brokenness
-* Features haphazardly added/removed
-* API/CLI/UI in constant flux
-* Severely lacking, non-existent, or just plain misleading documentation
-* Dubious spelling and/or grammar
+* 平台整体尚不完整
+* 功能会不时更新调整
+* API/CLI/UI会频繁调整
+* 文档缺失，或存在歧义
+* 文字语法上存在用语问题
 
-In other words, __here be dragons__.
-
-Get __[Support](topics/support.md)__
+__[技术支持](topics/support.md)__
 
 ---
 
-## Welcome!
+## 欢迎!
 
-1. Complete [developer registration and setup your dev environment](topics/dev_onboarding.md)
-1. Look at the [tutorials](#tutorials).  In particular, how to [setup the SDK](tutorials/setup.md).
+1. 请先完成 [开发者账户注册及安装开发环境](topics/dev_onboarding.md)
+1. 参看[引导](#tutorials). 以及怎样[安装SDK](tutorials/setup.md).
 
-## Tutorials
+## 引导
 
-* [Setup SDK](tutorials/setup.md)
-* [Launch Platform and Use Developer Tools](tutorials/layer0_devtools.md)
-* [Run UE4 sample on local PC](tutorials/run_ue4_sample_pc.md)
-* [Run Unity sample on devkit](tutorials/run_unity_sample_console.md)
-* [Pack The App](tutorials/how_to_pack.md)
+* [安装SDK](tutorials/setup.md)
+* [运行平台和使用开发者工具](tutorials/layer0_devtools.md)
+* [在本地PC上运行虚幻4示例程序](tutorials/run_ue4_sample_pc.md)
+* [在开发样机上运行Unity示例程序](tutorials/run_unity_sample_console.md)
+* [打包程序](tutorials/how_to_pack.md)
 
-## Topics
+__进阶内容:__
 
-* Development
-    * [Platform Architecture](topics/layer0.md)
-    * [Developer Tools](topics/devtool.md)
+* [部署一台和Ruyi开发机近似的PC](topics/simulation_system.md)
+* 在开发机上[安装操作系统](topics/os.md#Installation)
+* 调试SDK
+
+## 主题
+
+* 开发
+    * [整体平台架构](topics/layer0.md)
+    * [开发者工具)](topics/devtool.md)
     * [SDK](topics/sdk.md)
         * [C++](topics/cplusplus.md)
         * [UE4](topics/ue4.md)
         * [Unity](topics/unity.md)
         * [Build SDK source](topics/build_sdk_source.md) (advanced)
-        * [RuyiNet](topics/ruyinet.md)
-    * [Console](topics/console_dev.md)
-    * Specialized Areas
-        * [App Manifest](topics/app_metadata.md)
-        * [Input](topics/input.md)
-        * [Overlay](topics/overlay.md)
+    * [主机](topics/console_dev.md)
+    * 专题
+        * [程序配置文件(App Manifest)](topics/app_metadata.md)
+        * [外设输入](topics/input.md)
+        * [游戏内弹出界面(Overlay)](topics/overlay.md)
             * [DVR](topics/dvr.md)
-            * [Gamesdb.xml Format](topics/gamesdb_format.md) (advanced)
-        * [Low-Power Mode](topics/lpm.md)
-    * Advanced
-        * [Optimization](topics/optimization.md)
-        * [AMD GPU Services (AGS)](topics/amd_gpu_services.md)
-* [Hardware](topics/hardware.md)
-    * [Hard Drive](topics/harddrive.md)
-    * [Simulation System](topics/simulation_system.md)
-* [Ruyi OS](topics/os.md)
+            * [配置文件Gamesdb.xml格式](topics/gamesdb_format.md) (advanced)
+        * [省电模式](topics/lpm.md)
+    * 进阶
+        * [性能优化](topics/optimization.md)
+        * [AMD图形处理器服务(AGS)](topics/amd_gpu_services.md)
+* [硬件](topics/hardware.md)
+    * [硬盘驱动](topics/harddrive.md)
+    * [虚拟系统](topics/simulation_system.md)
+* [Ruyi操作系统](topics/os.md)
     * [BIOS](topics/bios.md)
-    * [PC mode](topics/pc_mode.md)
-    * [OS recovery](topics/os_recovery.md)
-    * [Drivers](topics/drivers.md)
-* [Support](topics/support.md)
-    * [FAQ](faq.md)
-    * [Documentation](topics/docs.md)
-    * [Release notes](topics/release_notes.md)
-    * [MIT License](../../LICENSE.md)
-
+    * [PC模式](topics/pc_mode.md)
+    * [系统恢复](topics/os_recovery.md)
+* [技术支持](topics/support.md)
+    * [常见问题](faq.md)
+    * [文档](topics/docs.md)
+    * [版本更新说明](topics/release_notes.md)
+    * [MIT许可证](../../LICENSE.md)

@@ -1,34 +1,25 @@
 # Unity 3D
 
-[Unity 3D](https://unity3d.com/) is a first-class development environment for Ruyi.
+我们计划在Ruyi主机上对基于[Unity 3D](https://unity3d.com/)的开发提供"第一级别"的支持力度。
 
-## Prerequisites
+## 前提条件
 
-- Unity 2017.1.1f1 (newer versions likely work)
+- Unity 2017.1.1f1 (之后版本也应该适用)
 
-## Quick Start
+## 快速开始
 
-RuyiNet is provided as high-level wrapper around the Ruyi C# API.
+RuyiNet类提供了Ruyi C# API的上层封装。
 
-1. [Download the UnityPackage version of the SDK](http://dev.playruyi.com/udownloadslist/SDK) and import the package into your project (__Assets->Import Package->Custom Package...__). 
-1. Create an instance of RuyiNet script and add your app id/secret:  
+1. [下载SDK的Unity组件包](http://dev.playruyi.com/udownloadslist/SDK)，导入项目中(Assets->Import Package->Custom Package...). 
+1. 创建一个RuyiNet类的实例，填写应用ID/密码:  
 ![](/docs/img/unity_ruyinet.png)
-1. In __Edit/Project Settings/Player__, expand _Other Settings_, set __Api Compatibility Level__ to `.NET 2.0`
+1. 在__Edit/Project Settings/Player__, 点开 _Other Settings_, 设置 __Api Compatibility Level__ 为`.NET 2.0`
 
-## Advanced Usage
+## 进阶使用
 
-__Coming Soon__
+__即将到来__
 
-## Common Problems
+## 链接
 
-```
-ArgumentException: The Assembly System.Web is referenced by log4net ('Assets/plugins/x64/log4net.dll'). But the dll is not allowed to be included or could not be found.
-```
-
-- In __Edit->Project Settings->Player__, expand _Other Settings_, set __Api Compatibility Level__ to `.NET 2.0` (instead of `.Net 2.0 Subset`)
-
-
-## Links
-
-- [Unity sample](https://bitbucket.org/playruyi/space_shooter)
-- [Unity tutorial](../tutorials/run_unity_sample_console.md)
+- [Unity示例GIT](https://bitbucket.org/playruyi/space_shooter)
+- [Unity示例使用说明](../tutorials/run_unity_sample_console.md)

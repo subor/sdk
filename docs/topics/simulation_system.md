@@ -1,58 +1,58 @@
-# Simulation Systems
+# 虚拟主机系统
 
-A _simulation system_ is a standard PC similar to the Ruyi console.
+__虚拟主机系统__指在普通PC上安装和Ruyi主机近似的操作系统环境。
 
-Below follows suggestions and instructions for building a simluation system.
+按照以下建议说明搭建一个虚拟主机系统。
 
-## Recommended Hardware
+## 硬件推荐配置
 
 - [RX470](http://www.amd.com/en-us/products/graphics/radeon-rx-series/radeon-rx-470)
 - [Ryzen 1400](https://www.amd.com/en/products/cpu/amd-ryzen-5-1400)
-- 6 to 8 GB DDR4 2400
+- 6到8GB DDR4 2400
 
-### Differences from Ruyi Console
+### 和Ruyi主机的区别
 
-- Ruyi's APU will be clocked differently (CPU 3Gz, GPU 1.2GHz), but otherwise similar feature-wise
-- Ruyi has 8 GB GDDR5 of shared system memory with 2GB reserved for the GPU
+- Ruyi主机的APU时钟频率不同(CPU 3Gz, GPU 1.2GHz), 其他功能相近
+- Ruyi主机拥有8GB的GDDR5系统共享内存，2GB显存
 
-## Software
+## 软件
 
-Ruyi platform can be installed to a PC.  By default it includes:
+可以在普通PC上安装Ruyi平台，默认内容包括:
 
-- [Windows 10 IoT Enterprise](os.md)
-- [Client software](layer0.md)
-- Device drivers for console hardware
+- [Windows 10 IoT企业版](os.md)
+- [客户端软件](layer0.md)
+- 驱动设备
 
-### Instructions
+### 说明
 
-1. Consult manufacturer documentation to configure system BIOS:
-    - Enable TPM (either iTPM of dTPM)
-    - Enable Intel VT-x / AMD-V (or SVM) virtualization
-    - Enable UEFI boot
-    - Enable Secure boot
-    - Boot from USB before HDD
-1. Follow Ruyi OS [installation instructions](os.md#Installation)
-1. __Optional__  Install any needed device drivers or 3rd-party software
+1. 查看厂商说明书来配置系统BIOS：
+    - 开启TPM (either iTPM of dTPM)
+    - 开启Intel VT-x / AMD-V (或SVM)虚拟化
+    - 开启UEFI boot
+    - 开启Secure boot
+    - 设置USB启动优先于HDD
+1. 参看Ruyi系统[安装说明](os.md#Installation)
+1. __选择性__地安装需要的设备驱动或者第三方软件。
 
-### Ruyi Client
+### Ruyi客户端
 
-Ruyi client-side software should be copied from [SDK](sdk.md) to `c:\ruyi`:
+Ruyi客户端所需软件参照[SDK](sdk.md)，将SDK文件复制到`c:\ruyi`下：
 
 - Layer0
-- MainClient
-- OverlayClient
+- 主客户端（MainClient）
+- 游戏界面客户端（OverlayClient）
 
-See [SDK setup tutorial](../tutorials/setup.md).
+具体参照[SDK安装指引](../tutorials/setup.md).
 
-### Additional Components
+### 附加组件
 
-| Component | Link | Notes
+| 组件 | 链接 | 备注
 |-|-|-
-Visual C++ Redistributable for VS 2008 | [x86](https://www.microsoft.com/en-us/download/details.aspx?id=29) and [x64](https://www.microsoft.com/en-us/download/details.aspx?id=15336) | Needed by some apps/games
-Visual C++ Redistributable for VS 2010 | [x86](https://www.microsoft.com/en-us/download/details.aspx?id=5555) and [x64](https://www.microsoft.com/en-us/download/details.aspx?id=14632) | Needed by some apps/games
-Visual C++ Redistributable for VS 2012 | [x86/x64](https://www.microsoft.com/en-us/download/details.aspx?id=30679) | Needed by some apps/games
-Visual C++ Redistributable for VS 2013 | [x86/x64](https://www.microsoft.com/en-us/download/details.aspx?id=40784) | Needed by main client some apps/games
-Visual C++ Redistributable for VS 2017 | [x86/x64](https://go.microsoft.com/fwlink/?LinkId=746572) | Needed by layer0 and some apps/games.  Also covers VS 2015.
-Vulkan Runtime v1.0.54.0 | [x86/x64](https://vulkan.lunarg.com/sdk/home) | Needed by some apps/games
-DirectX 9.0c End-User Runtime | [link](https://www.microsoft.com/en-us/download/details.aspx?id=34429) | Needed by some apps/games
-.NET Framework 3.5 | [link](https://www.microsoft.com/en-us/download/details.aspx?id=22) | Needed by some apps/games
+Visual C++ Redistributable for VS 2008 | [x86](https://www.microsoft.com/en-us/download/details.aspx?id=29) 和 [x64](https://www.microsoft.com/en-us/download/details.aspx?id=15336) | 部分应用/现有需要
+Visual C++ Redistributable for VS 2010 | [x86](https://www.microsoft.com/en-us/download/details.aspx?id=5555) 和 [x64](https://www.microsoft.com/en-us/download/details.aspx?id=14632) | 部分应用/现有需要
+Visual C++ Redistributable for VS 2012 | [x86/x64](https://www.microsoft.com/en-us/download/details.aspx?id=30679) | 部分应用/现有需要
+Visual C++ Redistributable for VS 2013 | [x86/x64](https://www.microsoft.com/en-us/download/details.aspx?id=40784) | 主客户端及部分应用/现有需要
+Visual C++ Redistributable for VS 2017 | [x86/x64](https://go.microsoft.com/fwlink/?LinkId=746572) | Layer0及部分应用/现有需要。VS 2015亦可
+Vulkan Runtime v1.0.54.0 | [x86/x64](https://vulkan.lunarg.com/sdk/home) | 部分应用/现有需要
+DirectX 9.0c End-User Runtime | [link](https://www.microsoft.com/en-us/download/details.aspx?id=34429) | 部分应用/现有需要
+.NET Framework 3.5 | [link](https://www.microsoft.com/en-us/download/details.aspx?id=22) | 部分应用/现有需要

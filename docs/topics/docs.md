@@ -1,55 +1,55 @@
-# Documentation
+# 文档
 
-This documentation is hosted in [__docs__ repository](https://bitbucket.org/playruyi/docs).  
-Use `git clone https://your_username_here@bitbucket.org/playruyi/docs.git` (or [Sourcetree](https://www.sourcetreeapp.com/)) to the clone the repository.
+本文位于[__docs__ 仓库](https://bitbucket.org/playruyi/docs).  
+GIT仓库地址`git clone https://your_username_here@bitbucket.org/playruyi/docs.git`(或[Sourcetree](https://www.sourcetreeapp.com/))
 
-Create a [pull request](https://bitbucket.org/playruyi/docs/pull-requests/) to submit changes to us for review:  
+创建一个[拉拽请求(pull request)](https://bitbucket.org/playruyi/docs/pull-requests/)来提交更新(我们会负责审核):  
 ![](/docs/img/pull_requests.png)
 
-## Formatting Guidelines
+## 格式说明
 
-- __Bold__
-	- Listing a series of __UI -> menu -> iteractions__
-	- Specifying a __short/path/__ or __filename.txt__.
-- _Italics_
-	- Bringing attention to a _general area_
-	- __Anywhere bold__ _is already_ __overused__
-- `code`
-	- Invidual keys or combinations like: `Enter`, `Ctrl+Alt+Del`
-	- Commands lines or other typed text
-	- Portions or references to file text (including source code), console output, etc.
+- __粗体(Bold)__
+	- __界面 -> 菜单 -> 子菜单等__ 的标题 
+	- 特指 __文件/路径/__ 或 __文件名.txt__.
+- _斜体(Italics)_
+	- _内容区域_ 需要引起注意
+	- __任何粗体内容__ _已经_ __无法再使用斜体__
+- `代码块(code)`
+	- 单个关键字(词)或组合，比如: `Enter`, `Ctrl+Alt+Del`
+	- 命令行语句或者其他打印文字
+	- 文件内容的部分引用(包括源代码)，终端输出等等。
 
-## Editing tips
+## 编辑提示
 
-- Markdown references:
-	- [Bitbucket markdown](https://bitbucket.org/tutorials/markdowndemo/overview)
+- 下标(markdown)参考:
+	- [Bitbucket下标(markdown)说明](https://bitbucket.org/tutorials/markdowndemo/overview)
 	- [Daring Fireball](https://daringfireball.net/projects/markdown/syntax)
 
-- Linking to latest version of a file in Bitbucket:
+- 将某段内容链接到Bitbucket上的某个文件最新版本:
 
-    Note use of `master` (the branch name) rather than SHA1 hash
+    注意下面链接中使用的是`master`分支名而不是SHA1哈希值
 
       https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/support.md
 
-- Linking to support ticket/issue:
+- 将某段内容链接到问题(issue):
 
-    Where `1` is replaced by desired [issue number](https://bitbucket.org/playruyi/support/issues?status=new&status=open)
+    注意替换下面链接中的`1`为需要的[问题(issue)编号](https://bitbucket.org/playruyi/support/issues?status=new&status=open)
 
       https://bitbucket.org/playruyi/support/issues/1
 
-- We use [Visual Studio Code](https://code.visualstudio.com/).  Check their [markdown editing tips](https://code.visualstudio.com/Docs/languages/markdown) for how to preview changes:  
+- 我们使用[Visual Studio Code](https://code.visualstudio.com/)。查看相应的[下标编辑提示](https://code.visualstudio.com/Docs/languages/markdown):  
 ![](/docs/img/docs_vs_code_preview.png)
 
-- Configure VS Code to insert spaces instead of tabs:
+- 配置VS Code，更改插入制表符(tab)为空白符(spaces):
 
-	1. Click __View -> Command Palette...__ (or press `Ctrl+Shift+P`)  
+	1. 点击__View -> Command Palette...__ (或者按`Ctrl+Shift+P`)  
 	![](/docs/img/vscode_command.png)
-	1. Type all or part of `indent using spaces`  
+	1. 输入`indent using spaces`  
 	![](/docs/img/vscode_indent_using.png)
 
-    OR
+    或者
 
-	1. Click in the lower-right of the window  
+	1. 点击窗口右下角  
 	![](/docs/img/vscode_lower_right.png)
-	1. Select `Indent Using Spaces`  
+	1. 选择`Indent Using Spaces`  
 	![](/docs/img/vscode_spaces.png)

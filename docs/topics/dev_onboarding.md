@@ -1,30 +1,30 @@
-# New Developers
+# 新用户
 
-## Development Environment
+## 开发环境
 
-- Workstation running __64-bit Windows 10__ RS2 (aka 1703, Creator's Update) or RS3 (aka 1709, Fall Creator's Update)
-- [git](https://git-scm.com/) or [Sourcetree](https://www.sourcetreeapp.com/)
+- Ruyi平台工作站使用__64位Windows 10__ RS2 (又称为1703, Creator's Update) 或者 RS3 (又称为1709, Fall Creator's Update)
+- [git](https://git-scm.com/) 或者 [Sourcetree](https://www.sourcetreeapp.com/)
 - [Visual Studio 2017](https://www.visualstudio.com/vs/community/) 15.3+
-    - Windows 10 SDK (10.0.15063.0) (under __SDKs, libraries, and frameworks__)
-- [Supported gamepad](input.md#supported-devices)
-- [Additional components](simulation_system.md#additional-components)
+    - Windows 10 SDK (10.0.15063.0) (包括相应 __SDKs, 功能库及框架__)
+- [手柄支持](input.md#supported-devices)
+- [附加组件](simulation_system.md#additional-components)
 
-Other variations _might_ work, but they aren't tested extensively; YMMV.
+其他安装环境变量如有不同，Ruyi平台可能也会正常运行，但我们没有做过大范围测试。
 
-## Registration
+## 注册
 
-You should have received the following from us:
+我们应该已经发送以下内容给您：
 
-* [http://dev.playruyi.com](http://dev.playruyi.com) invite code (need one per team or team member)
-    * e.g. __ABC123__
-* App ID and secret (need one per project- shared by all team members)
-    * App ID similar to __12345__
-    * App Secret similar to __abcd1234-ef12-ab56-7890cdef1234__
-* Email invitation from Atlassian to join playruyi team on [Bitbucket](https://bitbucket.org/):  
+* [http://dev.playruyi.com](http://dev.playruyi.com) 的邀请码 (每个团队或者成员需要一个)
+    * 比如：__ABC123__
+* 应用ID以及密码(每个项目一个，全部成员共享)
+    * 应用ID形如__12345__
+    * 应用密码形如__abcd1234-ef12-ab56-7890cdef1234__
+* Atlassian发送的邀请邮件，可以在[Bitbucket](https://bitbucket.org/)加入playruyi团队:  
 ![](/docs/img/bitbucket_invite.png)
 
-Do the following once (per team or team member as appropriate):
+按以下步骤完成一次(团队或者成员):
 
-1. Use invite code to [register at dev.playruyi.com](http://dev.playruyi.com/register):  
+1. 使用邀请码在[dev.playruyi.com注册](http://dev.playruyi.com/register):  
 ![](/docs/img/devportal_register.png)
-1. Open email from Atlassian to join playruyi team, and click __Accept my invitation__ to gain access to [https://bitbucket.org/playruyi/](https://bitbucket.org/playruyi/)
+1. 打开Atlassian的邀请邮件，点击接受邀请加入playruyi团队,以获得进入[https://bitbucket.org/playruyi/](https://bitbucket.org/playruyi/)的许可
