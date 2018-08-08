@@ -63,7 +63,7 @@ Gamesdb.xml包含大量如下所示的标签结构:
 
 如果 __TYPE__ 为`file-present`或`file-absent`，那么`file`属性值可以使用以下宏:
 
-| Macro | Description
+| 宏 | 说明
 |-|-|-
 | `{exedir}` | 包含可执行文件的文件夹
 | `{exe}` | 可执行文件名称
