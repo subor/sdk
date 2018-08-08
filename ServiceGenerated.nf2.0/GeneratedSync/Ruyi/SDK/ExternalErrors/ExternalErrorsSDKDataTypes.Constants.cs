@@ -89,8 +89,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp16.ErrorCode = ExternalErrorCode.Err_16;
       EXTERNALERRORLIST.Add(tmp16);
       ExternalErrorInfos tmp17 = new ExternalErrorInfos();
-      tmp17.ErrorCode = ExternalErrorCode.Err_17;
       tmp17.Description = "";
+      tmp17.ErrorCode = ExternalErrorCode.Err_17;
       EXTERNALERRORLIST.Add(tmp17);
       ExternalErrorInfos tmp18 = new ExternalErrorInfos();
       tmp18.Description = "trigger action failed when changing setting {0}!";

@@ -28,7 +28,6 @@ void MessageCreator::Initialize()
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.SettingSearchResult", Ruyi::SDK::SettingSystem::Api::SettingSearchResult);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.SettingTree", Ruyi::SDK::SettingSystem::Api::SettingTree);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.NodeList", Ruyi::SDK::SettingSystem::Api::NodeList);
-	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.SettingItemNotification", Ruyi::SDK::SettingSystem::Api::SettingItemNotification);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.WifiEntity", Ruyi::SDK::SettingSystem::Api::WifiEntity);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.BrainCloudApi.BCServiceStartedNotification", Ruyi::SDK::BrainCloudApi::BCServiceStartedNotification);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.BrainCloudApi.FileUploadSuccessResult", Ruyi::SDK::BrainCloudApi::FileUploadSuccessResult);

@@ -9,29 +9,24 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.CommonType
 {
 
-  /// <summary>
-  /// Notification of setting item from layer0
-  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class SettingItemNotification : TBase
+  public partial class EventNotification : TBase
   {
     private string _key;
     private string _contents;
 
-    /// <summary>
-    /// The item's ID
-    /// </summary>
     public string Key
     {
       get
@@ -45,9 +40,6 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
-    /// <summary>
-    /// Optional. The arguments of the notification. In json string format
-    /// </summary>
     public string Contents
     {
       get
@@ -71,7 +63,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       public bool contents;
     }
 
-    public SettingItemNotification() {
+    public EventNotification() {
       this._contents = "{}";
       this.__isset.contents = true;
     }
@@ -123,7 +115,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("SettingItemNotification");
+        TStruct struc = new TStruct("EventNotification");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
         if (Key != null && __isset.key) {
@@ -152,7 +144,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("SettingItemNotification(");
+      StringBuilder __sb = new StringBuilder("EventNotification(");
       bool __first = true;
       if (Key != null && __isset.key) {
         if(!__first) { __sb.Append(", "); }

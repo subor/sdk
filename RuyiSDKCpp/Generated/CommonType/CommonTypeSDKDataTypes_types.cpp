@@ -1815,6 +1815,10 @@ void SettingCategory::__set_description(const std::string& val) {
 __isset.description = true;
 }
 
+void SettingCategory::__set_icon(const std::string& val) {
+  this->icon = val;
+}
+
 void SettingCategory::__set_sortingPriority(const int32_t val) {
   this->sortingPriority = val;
 }
@@ -1899,6 +1903,14 @@ uint32_t SettingCategory::read(::apache::thrift::protocol::TProtocol* iprot) {
         }
         break;
       case 5:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->icon);
+          this->__isset.icon = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 6:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->sortingPriority);
           this->__isset.sortingPriority = true;
@@ -1906,7 +1918,7 @@ uint32_t SettingCategory::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 6:
+      case 7:
         if (ftype == ::apache::thrift::protocol::T_BOOL) {
           xfer += iprot->readBool(this->isSystemCategory);
           this->__isset.isSystemCategory = true;
@@ -1914,7 +1926,7 @@ uint32_t SettingCategory::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 7:
+      case 8:
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->items.clear();
@@ -1937,7 +1949,7 @@ uint32_t SettingCategory::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 8:
+      case 9:
         if (ftype == ::apache::thrift::protocol::T_BOOL) {
           xfer += iprot->readBool(this->enable);
           this->__isset.enable = true;
@@ -1945,7 +1957,7 @@ uint32_t SettingCategory::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 9:
+      case 10:
         if (ftype == ::apache::thrift::protocol::T_BOOL) {
           xfer += iprot->readBool(this->showInUI);
           this->__isset.showInUI = true;
@@ -1953,7 +1965,7 @@ uint32_t SettingCategory::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 10:
+      case 11:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->script);
           this->__isset.script = true;
@@ -1996,15 +2008,19 @@ uint32_t SettingCategory::write(::apache::thrift::protocol::TProtocol* oprot) co
     xfer += oprot->writeString(this->description);
     xfer += oprot->writeFieldEnd();
   }
-  xfer += oprot->writeFieldBegin("sortingPriority", ::apache::thrift::protocol::T_I32, 5);
+  xfer += oprot->writeFieldBegin("icon", ::apache::thrift::protocol::T_STRING, 5);
+  xfer += oprot->writeString(this->icon);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("sortingPriority", ::apache::thrift::protocol::T_I32, 6);
   xfer += oprot->writeI32(this->sortingPriority);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("isSystemCategory", ::apache::thrift::protocol::T_BOOL, 6);
+  xfer += oprot->writeFieldBegin("isSystemCategory", ::apache::thrift::protocol::T_BOOL, 7);
   xfer += oprot->writeBool(this->isSystemCategory);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("items", ::apache::thrift::protocol::T_MAP, 7);
+  xfer += oprot->writeFieldBegin("items", ::apache::thrift::protocol::T_MAP, 8);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_I32, static_cast<uint32_t>(this->items.size()));
     std::map<std::string, int32_t> ::const_iterator _iter58;
@@ -2017,15 +2033,15 @@ uint32_t SettingCategory::write(::apache::thrift::protocol::TProtocol* oprot) co
   }
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("enable", ::apache::thrift::protocol::T_BOOL, 8);
+  xfer += oprot->writeFieldBegin("enable", ::apache::thrift::protocol::T_BOOL, 9);
   xfer += oprot->writeBool(this->enable);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("showInUI", ::apache::thrift::protocol::T_BOOL, 9);
+  xfer += oprot->writeFieldBegin("showInUI", ::apache::thrift::protocol::T_BOOL, 10);
   xfer += oprot->writeBool(this->showInUI);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("script", ::apache::thrift::protocol::T_STRING, 10);
+  xfer += oprot->writeFieldBegin("script", ::apache::thrift::protocol::T_STRING, 11);
   xfer += oprot->writeString(this->script);
   xfer += oprot->writeFieldEnd();
 
@@ -2040,6 +2056,7 @@ void swap(SettingCategory &a, SettingCategory &b) {
   swap(a.display, b.display);
   swap(a.summary, b.summary);
   swap(a.description, b.description);
+  swap(a.icon, b.icon);
   swap(a.sortingPriority, b.sortingPriority);
   swap(a.isSystemCategory, b.isSystemCategory);
   swap(a.items, b.items);
@@ -2054,6 +2071,7 @@ SettingCategory::SettingCategory(const SettingCategory& other59) {
   display = other59.display;
   summary = other59.summary;
   description = other59.description;
+  icon = other59.icon;
   sortingPriority = other59.sortingPriority;
   isSystemCategory = other59.isSystemCategory;
   items = other59.items;
@@ -2067,6 +2085,7 @@ SettingCategory& SettingCategory::operator=(const SettingCategory& other60) {
   display = other60.display;
   summary = other60.summary;
   description = other60.description;
+  icon = other60.icon;
   sortingPriority = other60.sortingPriority;
   isSystemCategory = other60.isSystemCategory;
   items = other60.items;
@@ -2083,6 +2102,7 @@ void SettingCategory::printTo(std::ostream& out) const {
   out << ", " << "display=" << to_string(display);
   out << ", " << "summary="; (__isset.summary ? (out << to_string(summary)) : (out << "<null>"));
   out << ", " << "description="; (__isset.description ? (out << to_string(description)) : (out << "<null>"));
+  out << ", " << "icon=" << to_string(icon);
   out << ", " << "sortingPriority=" << to_string(sortingPriority);
   out << ", " << "isSystemCategory=" << to_string(isSystemCategory);
   out << ", " << "items=" << to_string(items);
@@ -2811,6 +2831,118 @@ void PopupNotification::printTo(std::ostream& out) const {
   out << ", " << "MainIcon=" << to_string(MainIcon);
   out << ", " << "Text=" << to_string(Text);
   out << ", " << "Description=" << to_string(Description);
+  out << ")";
+}
+
+
+EventNotification::~EventNotification() throw() {
+}
+
+
+void EventNotification::__set_key(const std::string& val) {
+  this->key = val;
+}
+
+void EventNotification::__set_contents(const JSON& val) {
+  this->contents = val;
+}
+std::ostream& operator<<(std::ostream& out, const EventNotification& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+uint32_t EventNotification::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->key);
+          this->__isset.key = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->contents);
+          this->__isset.contents = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t EventNotification::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("EventNotification");
+
+  xfer += oprot->writeFieldBegin("key", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->key);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("contents", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->contents);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(EventNotification &a, EventNotification &b) {
+  using ::std::swap;
+  swap(a.key, b.key);
+  swap(a.contents, b.contents);
+  swap(a.__isset, b.__isset);
+}
+
+EventNotification::EventNotification(const EventNotification& other96) {
+  key = other96.key;
+  contents = other96.contents;
+  __isset = other96.__isset;
+}
+EventNotification& EventNotification::operator=(const EventNotification& other97) {
+  key = other97.key;
+  contents = other97.contents;
+  __isset = other97.__isset;
+  return *this;
+}
+void EventNotification::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "EventNotification(";
+  out << "key=" << to_string(key);
+  out << ", " << "contents=" << to_string(contents);
   out << ")";
 }
 
