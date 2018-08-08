@@ -46,7 +46,8 @@ __重要__:
 
 | 安装的BIOS | 待刷新的BIOS | 规则
 |-|-|-
-| 0.09 (或之后) | 0.19 (或之后) | 首先更新到BIOS 0.13，系统更新到0.6。然后更新更高版本的BIOS/OS。
+0.15-0.20 | 1.01(或之后) | 刷EFI: 1. 关闭Secure boot (F2->Secure Boot Option->Erase all Secure Boot Settings);然后更新至[1.00](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220100.zip);最后，更新至最新BIOS/OS. Winflash:  [1.00](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220100.zip); 然后升级到更新版本的BIOS/OS
+| 0.09 (或之后) | 0.19 (或之后) | 刷EFI:首先更新到BIOS [0.15](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220015.zip)，然后更新至[1.00](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220100.zip); 最后，升级到更新版本的IOS/OS. Winflash: 首先更新至[1.00](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220100.zip) (机器会卡住几分钟，请稍等); 然后升级到更新版本的BIOS/OS.
 
 参考:
 
