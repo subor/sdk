@@ -15,7 +15,7 @@ Ruyi的游戏内呼出界面基于[Evolve](www.evolvehq.com)提供的技术实�
 
 使用dll注入技术实现，不需要更改应用程序即可兼容大部分游戏(应用)，数量在5000以上。
 
-## Compatibility
+## 游戏适配
 
 适用程序列表在`RuyiOverlay/Resources/DeployRes/gamesdb.xml`中查看。
 
