@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
@@ -21,34 +22,20 @@ namespace Ruyi.SDK.SettingSystem.Api
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class SettingSearchResult : TBase
+  public partial class ZPBluetoothDeviceList : TBase
   {
-    private string _Version;
-    private List<Ruyi.SDK.CommonType.SettingItem> _SettingItems;
+    private List<ZPBluetoothDeviceInfo> _DeviceList;
 
-    public string Version
+    public List<ZPBluetoothDeviceInfo> DeviceList
     {
       get
       {
-        return _Version;
+        return _DeviceList;
       }
       set
       {
-        __isset.Version = true;
-        this._Version = value;
-      }
-    }
-
-    public List<Ruyi.SDK.CommonType.SettingItem> SettingItems
-    {
-      get
-      {
-        return _SettingItems;
-      }
-      set
-      {
-        __isset.SettingItems = true;
-        this._SettingItems = value;
+        __isset.DeviceList = true;
+        this._DeviceList = value;
       }
     }
 
@@ -58,11 +45,10 @@ namespace Ruyi.SDK.SettingSystem.Api
     [Serializable]
     #endif
     public struct Isset {
-      public bool Version;
-      public bool SettingItems;
+      public bool DeviceList;
     }
 
-    public SettingSearchResult() {
+    public ZPBluetoothDeviceList() {
     }
 
     public void Read (TProtocol iprot)
@@ -81,23 +67,16 @@ namespace Ruyi.SDK.SettingSystem.Api
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String) {
-                Version = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 2:
               if (field.Type == TType.List) {
                 {
-                  SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
-                  TList _list8 = iprot.ReadListBegin();
-                  for( int _i9 = 0; _i9 < _list8.Count; ++_i9)
+                  DeviceList = new List<ZPBluetoothDeviceInfo>();
+                  TList _list0 = iprot.ReadListBegin();
+                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
-                    Ruyi.SDK.CommonType.SettingItem _elem10;
-                    _elem10 = new Ruyi.SDK.CommonType.SettingItem();
-                    _elem10.Read(iprot);
-                    SettingItems.Add(_elem10);
+                    ZPBluetoothDeviceInfo _elem2;
+                    _elem2 = new ZPBluetoothDeviceInfo();
+                    _elem2.Read(iprot);
+                    DeviceList.Add(_elem2);
                   }
                   iprot.ReadListEnd();
                 }
@@ -123,27 +102,19 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("SettingSearchResult");
+        TStruct struc = new TStruct("ZPBluetoothDeviceList");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (Version != null && __isset.Version) {
-          field.Name = "Version";
-          field.Type = TType.String;
+        if (DeviceList != null && __isset.DeviceList) {
+          field.Name = "DeviceList";
+          field.Type = TType.List;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Version);
-          oprot.WriteFieldEnd();
-        }
-        if (SettingItems != null && __isset.SettingItems) {
-          field.Name = "SettingItems";
-          field.Type = TType.List;
-          field.ID = 2;
-          oprot.WriteFieldBegin(field);
           {
-            oprot.WriteListBegin(new TList(TType.Struct, SettingItems.Count));
-            foreach (Ruyi.SDK.CommonType.SettingItem _iter11 in SettingItems)
+            oprot.WriteListBegin(new TList(TType.Struct, DeviceList.Count));
+            foreach (ZPBluetoothDeviceInfo _iter3 in DeviceList)
             {
-              _iter11.Write(oprot);
+              _iter3.Write(oprot);
             }
             oprot.WriteListEnd();
           }
@@ -159,19 +130,13 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("SettingSearchResult(");
+      StringBuilder __sb = new StringBuilder("ZPBluetoothDeviceList(");
       bool __first = true;
-      if (Version != null && __isset.Version) {
+      if (DeviceList != null && __isset.DeviceList) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Version: ");
-        __sb.Append(Version);
-      }
-      if (SettingItems != null && __isset.SettingItems) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("SettingItems: ");
-        __sb.Append(SettingItems);
+        __sb.Append("DeviceList: ");
+        __sb.Append(DeviceList);
       }
       __sb.Append(")");
       return __sb.ToString();

@@ -25,62 +25,76 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
-  public partial class CategoryNode : TBase
+  public partial class ZPBluetoothDeviceInfo : TBase
   {
-    private string _id;
-    private string _categoryId;
-    private int _sortingPriority;
-    private List<CategoryNode> _children;
+    private string _DeviceName;
+    private string _DeviceAddress;
+    private int _DeviceClass;
+    private bool _Connected;
+    private bool _Authenticated;
 
-    public string Id
+    public string DeviceName
     {
       get
       {
-        return _id;
+        return _DeviceName;
       }
       set
       {
-        __isset.id = true;
-        this._id = value;
+        __isset.DeviceName = true;
+        this._DeviceName = value;
       }
     }
 
-    public string CategoryId
+    public string DeviceAddress
     {
       get
       {
-        return _categoryId;
+        return _DeviceAddress;
       }
       set
       {
-        __isset.categoryId = true;
-        this._categoryId = value;
+        __isset.DeviceAddress = true;
+        this._DeviceAddress = value;
       }
     }
 
-    public int SortingPriority
+    public int DeviceClass
     {
       get
       {
-        return _sortingPriority;
+        return _DeviceClass;
       }
       set
       {
-        __isset.sortingPriority = true;
-        this._sortingPriority = value;
+        __isset.DeviceClass = true;
+        this._DeviceClass = value;
       }
     }
 
-    public List<CategoryNode> Children
+    public bool Connected
     {
       get
       {
-        return _children;
+        return _Connected;
       }
       set
       {
-        __isset.children = true;
-        this._children = value;
+        __isset.Connected = true;
+        this._Connected = value;
+      }
+    }
+
+    public bool Authenticated
+    {
+      get
+      {
+        return _Authenticated;
+      }
+      set
+      {
+        __isset.Authenticated = true;
+        this._Authenticated = value;
       }
     }
 
@@ -88,13 +102,14 @@ namespace Ruyi.SDK.SettingSystem.Api
     public Isset __isset;
     public struct Isset
     {
-      public bool id;
-      public bool categoryId;
-      public bool sortingPriority;
-      public bool children;
+      public bool DeviceName;
+      public bool DeviceAddress;
+      public bool DeviceClass;
+      public bool Connected;
+      public bool Authenticated;
     }
 
-    public CategoryNode()
+    public ZPBluetoothDeviceInfo()
     {
     }
 
@@ -118,7 +133,7 @@ namespace Ruyi.SDK.SettingSystem.Api
             case 1:
               if (field.Type == TType.String)
               {
-                Id = await iprot.ReadStringAsync(cancellationToken);
+                DeviceName = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -128,7 +143,7 @@ namespace Ruyi.SDK.SettingSystem.Api
             case 2:
               if (field.Type == TType.String)
               {
-                CategoryId = await iprot.ReadStringAsync(cancellationToken);
+                DeviceAddress = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -138,7 +153,7 @@ namespace Ruyi.SDK.SettingSystem.Api
             case 3:
               if (field.Type == TType.I32)
               {
-                SortingPriority = await iprot.ReadI32Async(cancellationToken);
+                DeviceClass = await iprot.ReadI32Async(cancellationToken);
               }
               else
               {
@@ -146,20 +161,19 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 4:
-              if (field.Type == TType.List)
+              if (field.Type == TType.Bool)
               {
-                {
-                  Children = new List<CategoryNode>();
-                  TList _list4 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i5 = 0; _i5 < _list4.Count; ++_i5)
-                  {
-                    CategoryNode _elem6;
-                    _elem6 = new CategoryNode();
-                    await _elem6.ReadAsync(iprot, cancellationToken);
-                    Children.Add(_elem6);
-                  }
-                  await iprot.ReadListEndAsync(cancellationToken);
-                }
+                Connected = await iprot.ReadBoolAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 5:
+              if (field.Type == TType.Bool)
+              {
+                Authenticated = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -187,50 +201,52 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("CategoryNode");
+        var struc = new TStruct("ZPBluetoothDeviceInfo");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Id != null && __isset.id)
+        if (DeviceName != null && __isset.DeviceName)
         {
-          field.Name = "id";
+          field.Name = "DeviceName";
           field.Type = TType.String;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Id, cancellationToken);
+          await oprot.WriteStringAsync(DeviceName, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (CategoryId != null && __isset.categoryId)
+        if (DeviceAddress != null && __isset.DeviceAddress)
         {
-          field.Name = "categoryId";
+          field.Name = "DeviceAddress";
           field.Type = TType.String;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(CategoryId, cancellationToken);
+          await oprot.WriteStringAsync(DeviceAddress, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.sortingPriority)
+        if (__isset.DeviceClass)
         {
-          field.Name = "sortingPriority";
+          field.Name = "DeviceClass";
           field.Type = TType.I32;
           field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(SortingPriority, cancellationToken);
+          await oprot.WriteI32Async(DeviceClass, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Children != null && __isset.children)
+        if (__isset.Connected)
         {
-          field.Name = "children";
-          field.Type = TType.List;
+          field.Name = "Connected";
+          field.Type = TType.Bool;
           field.ID = 4;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          {
-            await oprot.WriteListBeginAsync(new TList(TType.Struct, Children.Count), cancellationToken);
-            foreach (CategoryNode _iter7 in Children)
-            {
-              await _iter7.WriteAsync(oprot, cancellationToken);
-            }
-            await oprot.WriteListEndAsync(cancellationToken);
-          }
+          await oprot.WriteBoolAsync(Connected, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (__isset.Authenticated)
+        {
+          field.Name = "Authenticated";
+          field.Type = TType.Bool;
+          field.ID = 5;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteBoolAsync(Authenticated, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -244,35 +260,42 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("CategoryNode(");
+      var sb = new StringBuilder("ZPBluetoothDeviceInfo(");
       bool __first = true;
-      if (Id != null && __isset.id)
+      if (DeviceName != null && __isset.DeviceName)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Id: ");
-        sb.Append(Id);
+        sb.Append("DeviceName: ");
+        sb.Append(DeviceName);
       }
-      if (CategoryId != null && __isset.categoryId)
+      if (DeviceAddress != null && __isset.DeviceAddress)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("CategoryId: ");
-        sb.Append(CategoryId);
+        sb.Append("DeviceAddress: ");
+        sb.Append(DeviceAddress);
       }
-      if (__isset.sortingPriority)
+      if (__isset.DeviceClass)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("SortingPriority: ");
-        sb.Append(SortingPriority);
+        sb.Append("DeviceClass: ");
+        sb.Append(DeviceClass);
       }
-      if (Children != null && __isset.children)
+      if (__isset.Connected)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Children: ");
-        sb.Append(Children);
+        sb.Append("Connected: ");
+        sb.Append(Connected);
+      }
+      if (__isset.Authenticated)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Authenticated: ");
+        sb.Append(Authenticated);
       }
       sb.Append(")");
       return sb.ToString();

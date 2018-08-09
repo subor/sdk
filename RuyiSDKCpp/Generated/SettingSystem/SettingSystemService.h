@@ -116,6 +116,8 @@ class SettingSystemServiceIf {
   virtual bool RuyiStopNetworkSpeedTest(const int32_t userindex) = 0;
   virtual void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return) = 0;
   virtual bool DisconnectWifi() = 0;
+  virtual bool DiscoverBluetoothDevice() = 0;
+  virtual bool ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) = 0;
 };
 
 class SettingSystemServiceIfFactory {
@@ -228,6 +230,14 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
     return;
   }
   bool DisconnectWifi() {
+    bool _return = false;
+    return _return;
+  }
+  bool DiscoverBluetoothDevice() {
+    bool _return = false;
+    return _return;
+  }
+  bool ConnectBluetoothDevice(const std::string& /* DeviceName */, const std::string& /* DeviceAddress */) {
     bool _return = false;
     return _return;
   }
@@ -2980,6 +2990,225 @@ class SettingSystemService_DisconnectWifi_presult {
 
 };
 
+
+class SettingSystemService_DiscoverBluetoothDevice_args {
+ public:
+
+  SettingSystemService_DiscoverBluetoothDevice_args(const SettingSystemService_DiscoverBluetoothDevice_args&);
+  SettingSystemService_DiscoverBluetoothDevice_args& operator=(const SettingSystemService_DiscoverBluetoothDevice_args&);
+  SettingSystemService_DiscoverBluetoothDevice_args() {
+  }
+
+  virtual ~SettingSystemService_DiscoverBluetoothDevice_args() throw();
+
+  bool operator == (const SettingSystemService_DiscoverBluetoothDevice_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const SettingSystemService_DiscoverBluetoothDevice_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_DiscoverBluetoothDevice_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_DiscoverBluetoothDevice_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_DiscoverBluetoothDevice_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_DiscoverBluetoothDevice_result__isset {
+  _SettingSystemService_DiscoverBluetoothDevice_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_DiscoverBluetoothDevice_result__isset;
+
+class SettingSystemService_DiscoverBluetoothDevice_result {
+ public:
+
+  SettingSystemService_DiscoverBluetoothDevice_result(const SettingSystemService_DiscoverBluetoothDevice_result&);
+  SettingSystemService_DiscoverBluetoothDevice_result& operator=(const SettingSystemService_DiscoverBluetoothDevice_result&);
+  SettingSystemService_DiscoverBluetoothDevice_result() : success(0) {
+  }
+
+  virtual ~SettingSystemService_DiscoverBluetoothDevice_result() throw();
+  bool success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_DiscoverBluetoothDevice_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_DiscoverBluetoothDevice_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_DiscoverBluetoothDevice_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_DiscoverBluetoothDevice_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_DiscoverBluetoothDevice_presult__isset {
+  _SettingSystemService_DiscoverBluetoothDevice_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_DiscoverBluetoothDevice_presult__isset;
+
+class SettingSystemService_DiscoverBluetoothDevice_presult {
+ public:
+
+
+  virtual ~SettingSystemService_DiscoverBluetoothDevice_presult() throw();
+  bool* success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_DiscoverBluetoothDevice_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _SettingSystemService_ConnectBluetoothDevice_args__isset {
+  _SettingSystemService_ConnectBluetoothDevice_args__isset() : DeviceName(false), DeviceAddress(false) {}
+  bool DeviceName :1;
+  bool DeviceAddress :1;
+} _SettingSystemService_ConnectBluetoothDevice_args__isset;
+
+class SettingSystemService_ConnectBluetoothDevice_args {
+ public:
+
+  SettingSystemService_ConnectBluetoothDevice_args(const SettingSystemService_ConnectBluetoothDevice_args&);
+  SettingSystemService_ConnectBluetoothDevice_args& operator=(const SettingSystemService_ConnectBluetoothDevice_args&);
+  SettingSystemService_ConnectBluetoothDevice_args() : DeviceName(), DeviceAddress() {
+  }
+
+  virtual ~SettingSystemService_ConnectBluetoothDevice_args() throw();
+  std::string DeviceName;
+  std::string DeviceAddress;
+
+  _SettingSystemService_ConnectBluetoothDevice_args__isset __isset;
+
+  void __set_DeviceName(const std::string& val);
+
+  void __set_DeviceAddress(const std::string& val);
+
+  bool operator == (const SettingSystemService_ConnectBluetoothDevice_args & rhs) const
+  {
+    if (!(DeviceName == rhs.DeviceName))
+      return false;
+    if (!(DeviceAddress == rhs.DeviceAddress))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_ConnectBluetoothDevice_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_ConnectBluetoothDevice_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_ConnectBluetoothDevice_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_ConnectBluetoothDevice_pargs() throw();
+  const std::string* DeviceName;
+  const std::string* DeviceAddress;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_ConnectBluetoothDevice_result__isset {
+  _SettingSystemService_ConnectBluetoothDevice_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_ConnectBluetoothDevice_result__isset;
+
+class SettingSystemService_ConnectBluetoothDevice_result {
+ public:
+
+  SettingSystemService_ConnectBluetoothDevice_result(const SettingSystemService_ConnectBluetoothDevice_result&);
+  SettingSystemService_ConnectBluetoothDevice_result& operator=(const SettingSystemService_ConnectBluetoothDevice_result&);
+  SettingSystemService_ConnectBluetoothDevice_result() : success(0) {
+  }
+
+  virtual ~SettingSystemService_ConnectBluetoothDevice_result() throw();
+  bool success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_ConnectBluetoothDevice_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_ConnectBluetoothDevice_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_ConnectBluetoothDevice_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_ConnectBluetoothDevice_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_ConnectBluetoothDevice_presult__isset {
+  _SettingSystemService_ConnectBluetoothDevice_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_ConnectBluetoothDevice_presult__isset;
+
+class SettingSystemService_ConnectBluetoothDevice_presult {
+ public:
+
+
+  virtual ~SettingSystemService_ConnectBluetoothDevice_presult() throw();
+  bool* success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_ConnectBluetoothDevice_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
  public:
   SettingSystemServiceClient(apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) {
@@ -3077,6 +3306,12 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   bool DisconnectWifi();
   void send_DisconnectWifi();
   bool recv_DisconnectWifi();
+  bool DiscoverBluetoothDevice();
+  void send_DiscoverBluetoothDevice();
+  bool recv_DiscoverBluetoothDevice();
+  bool ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress);
+  void send_ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress);
+  bool recv_ConnectBluetoothDevice();
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -3116,6 +3351,8 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
   void process_RuyiStopNetworkSpeedTest(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetAvailableWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_DisconnectWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_DiscoverBluetoothDevice(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_ConnectBluetoothDevice(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   SettingSystemServiceProcessor(::apache::thrift::stdcxx::shared_ptr<SettingSystemServiceIf> iface) :
     iface_(iface) {
@@ -3143,6 +3380,8 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
     processMap_["RuyiStopNetworkSpeedTest"] = &SettingSystemServiceProcessor::process_RuyiStopNetworkSpeedTest;
     processMap_["GetAvailableWifi"] = &SettingSystemServiceProcessor::process_GetAvailableWifi;
     processMap_["DisconnectWifi"] = &SettingSystemServiceProcessor::process_DisconnectWifi;
+    processMap_["DiscoverBluetoothDevice"] = &SettingSystemServiceProcessor::process_DiscoverBluetoothDevice;
+    processMap_["ConnectBluetoothDevice"] = &SettingSystemServiceProcessor::process_ConnectBluetoothDevice;
   }
 
   virtual ~SettingSystemServiceProcessor() {}
@@ -3397,6 +3636,24 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return ifaces_[i]->DisconnectWifi();
   }
 
+  bool DiscoverBluetoothDevice() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->DiscoverBluetoothDevice();
+    }
+    return ifaces_[i]->DiscoverBluetoothDevice();
+  }
+
+  bool ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->ConnectBluetoothDevice(DeviceName, DeviceAddress);
+    }
+    return ifaces_[i]->ConnectBluetoothDevice(DeviceName, DeviceAddress);
+  }
+
 };
 
 // The 'concurrent' client is a thread safe client that correctly handles
@@ -3499,6 +3756,12 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   bool DisconnectWifi();
   int32_t send_DisconnectWifi();
   bool recv_DisconnectWifi(const int32_t seqid);
+  bool DiscoverBluetoothDevice();
+  int32_t send_DiscoverBluetoothDevice();
+  bool recv_DiscoverBluetoothDevice(const int32_t seqid);
+  bool ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress);
+  int32_t send_ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress);
+  bool recv_ConnectBluetoothDevice(const int32_t seqid);
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;

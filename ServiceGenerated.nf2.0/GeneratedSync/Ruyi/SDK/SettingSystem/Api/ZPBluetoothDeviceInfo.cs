@@ -9,7 +9,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
@@ -22,62 +21,76 @@ namespace Ruyi.SDK.SettingSystem.Api
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class CategoryNode : TBase
+  public partial class ZPBluetoothDeviceInfo : TBase
   {
-    private string _id;
-    private string _categoryId;
-    private int _sortingPriority;
-    private List<CategoryNode> _children;
+    private string _DeviceName;
+    private string _DeviceAddress;
+    private int _DeviceClass;
+    private bool _Connected;
+    private bool _Authenticated;
 
-    public string Id
+    public string DeviceName
     {
       get
       {
-        return _id;
+        return _DeviceName;
       }
       set
       {
-        __isset.id = true;
-        this._id = value;
+        __isset.DeviceName = true;
+        this._DeviceName = value;
       }
     }
 
-    public string CategoryId
+    public string DeviceAddress
     {
       get
       {
-        return _categoryId;
+        return _DeviceAddress;
       }
       set
       {
-        __isset.categoryId = true;
-        this._categoryId = value;
+        __isset.DeviceAddress = true;
+        this._DeviceAddress = value;
       }
     }
 
-    public int SortingPriority
+    public int DeviceClass
     {
       get
       {
-        return _sortingPriority;
+        return _DeviceClass;
       }
       set
       {
-        __isset.sortingPriority = true;
-        this._sortingPriority = value;
+        __isset.DeviceClass = true;
+        this._DeviceClass = value;
       }
     }
 
-    public List<CategoryNode> Children
+    public bool Connected
     {
       get
       {
-        return _children;
+        return _Connected;
       }
       set
       {
-        __isset.children = true;
-        this._children = value;
+        __isset.Connected = true;
+        this._Connected = value;
+      }
+    }
+
+    public bool Authenticated
+    {
+      get
+      {
+        return _Authenticated;
+      }
+      set
+      {
+        __isset.Authenticated = true;
+        this._Authenticated = value;
       }
     }
 
@@ -87,13 +100,14 @@ namespace Ruyi.SDK.SettingSystem.Api
     [Serializable]
     #endif
     public struct Isset {
-      public bool id;
-      public bool categoryId;
-      public bool sortingPriority;
-      public bool children;
+      public bool DeviceName;
+      public bool DeviceAddress;
+      public bool DeviceClass;
+      public bool Connected;
+      public bool Authenticated;
     }
 
-    public CategoryNode() {
+    public ZPBluetoothDeviceInfo() {
     }
 
     public void Read (TProtocol iprot)
@@ -113,39 +127,35 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             case 1:
               if (field.Type == TType.String) {
-                Id = iprot.ReadString();
+                DeviceName = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
               if (field.Type == TType.String) {
-                CategoryId = iprot.ReadString();
+                DeviceAddress = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 3:
               if (field.Type == TType.I32) {
-                SortingPriority = iprot.ReadI32();
+                DeviceClass = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 4:
-              if (field.Type == TType.List) {
-                {
-                  Children = new List<CategoryNode>();
-                  TList _list4 = iprot.ReadListBegin();
-                  for( int _i5 = 0; _i5 < _list4.Count; ++_i5)
-                  {
-                    CategoryNode _elem6;
-                    _elem6 = new CategoryNode();
-                    _elem6.Read(iprot);
-                    Children.Add(_elem6);
-                  }
-                  iprot.ReadListEnd();
-                }
+              if (field.Type == TType.Bool) {
+                Connected = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 5:
+              if (field.Type == TType.Bool) {
+                Authenticated = iprot.ReadBool();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -168,46 +178,47 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("CategoryNode");
+        TStruct struc = new TStruct("ZPBluetoothDeviceInfo");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (Id != null && __isset.id) {
-          field.Name = "id";
+        if (DeviceName != null && __isset.DeviceName) {
+          field.Name = "DeviceName";
           field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Id);
+          oprot.WriteString(DeviceName);
           oprot.WriteFieldEnd();
         }
-        if (CategoryId != null && __isset.categoryId) {
-          field.Name = "categoryId";
+        if (DeviceAddress != null && __isset.DeviceAddress) {
+          field.Name = "DeviceAddress";
           field.Type = TType.String;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(CategoryId);
+          oprot.WriteString(DeviceAddress);
           oprot.WriteFieldEnd();
         }
-        if (__isset.sortingPriority) {
-          field.Name = "sortingPriority";
+        if (__isset.DeviceClass) {
+          field.Name = "DeviceClass";
           field.Type = TType.I32;
           field.ID = 3;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32(SortingPriority);
+          oprot.WriteI32(DeviceClass);
           oprot.WriteFieldEnd();
         }
-        if (Children != null && __isset.children) {
-          field.Name = "children";
-          field.Type = TType.List;
+        if (__isset.Connected) {
+          field.Name = "Connected";
+          field.Type = TType.Bool;
           field.ID = 4;
           oprot.WriteFieldBegin(field);
-          {
-            oprot.WriteListBegin(new TList(TType.Struct, Children.Count));
-            foreach (CategoryNode _iter7 in Children)
-            {
-              _iter7.Write(oprot);
-            }
-            oprot.WriteListEnd();
-          }
+          oprot.WriteBool(Connected);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.Authenticated) {
+          field.Name = "Authenticated";
+          field.Type = TType.Bool;
+          field.ID = 5;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(Authenticated);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -220,31 +231,37 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("CategoryNode(");
+      StringBuilder __sb = new StringBuilder("ZPBluetoothDeviceInfo(");
       bool __first = true;
-      if (Id != null && __isset.id) {
+      if (DeviceName != null && __isset.DeviceName) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Id: ");
-        __sb.Append(Id);
+        __sb.Append("DeviceName: ");
+        __sb.Append(DeviceName);
       }
-      if (CategoryId != null && __isset.categoryId) {
+      if (DeviceAddress != null && __isset.DeviceAddress) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("CategoryId: ");
-        __sb.Append(CategoryId);
+        __sb.Append("DeviceAddress: ");
+        __sb.Append(DeviceAddress);
       }
-      if (__isset.sortingPriority) {
+      if (__isset.DeviceClass) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("SortingPriority: ");
-        __sb.Append(SortingPriority);
+        __sb.Append("DeviceClass: ");
+        __sb.Append(DeviceClass);
       }
-      if (Children != null && __isset.children) {
+      if (__isset.Connected) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Children: ");
-        __sb.Append(Children);
+        __sb.Append("Connected: ");
+        __sb.Append(Connected);
+      }
+      if (__isset.Authenticated) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Authenticated: ");
+        __sb.Append(Authenticated);
       }
       __sb.Append(")");
       return __sb.ToString();

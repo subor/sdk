@@ -49,6 +49,10 @@ class RuyiNetworkTestResult;
 
 class RuyiNetworkSpeed;
 
+class ZPBluetoothDeviceInfo;
+
+class ZPBluetoothDeviceList;
+
 class CategoryNode;
 
 class SettingSearchResult;
@@ -436,6 +440,114 @@ class RuyiNetworkSpeed : public virtual ::apache::thrift::TBase {
 void swap(RuyiNetworkSpeed &a, RuyiNetworkSpeed &b);
 
 std::ostream& operator<<(std::ostream& out, const RuyiNetworkSpeed& obj);
+
+typedef struct _ZPBluetoothDeviceInfo__isset {
+  _ZPBluetoothDeviceInfo__isset() : DeviceName(false), DeviceAddress(false), DeviceClass(false), Connected(false), Authenticated(false) {}
+  bool DeviceName :1;
+  bool DeviceAddress :1;
+  bool DeviceClass :1;
+  bool Connected :1;
+  bool Authenticated :1;
+} _ZPBluetoothDeviceInfo__isset;
+
+class ZPBluetoothDeviceInfo : public virtual ::apache::thrift::TBase {
+ public:
+
+  ZPBluetoothDeviceInfo(const ZPBluetoothDeviceInfo&);
+  ZPBluetoothDeviceInfo& operator=(const ZPBluetoothDeviceInfo&);
+  ZPBluetoothDeviceInfo() : DeviceName(), DeviceAddress(), DeviceClass(0), Connected(0), Authenticated(0) {
+  }
+
+  virtual ~ZPBluetoothDeviceInfo() throw();
+  std::string DeviceName;
+  std::string DeviceAddress;
+  int32_t DeviceClass;
+  bool Connected;
+  bool Authenticated;
+
+  _ZPBluetoothDeviceInfo__isset __isset;
+
+  void __set_DeviceName(const std::string& val);
+
+  void __set_DeviceAddress(const std::string& val);
+
+  void __set_DeviceClass(const int32_t val);
+
+  void __set_Connected(const bool val);
+
+  void __set_Authenticated(const bool val);
+
+  bool operator == (const ZPBluetoothDeviceInfo & rhs) const
+  {
+    if (!(DeviceName == rhs.DeviceName))
+      return false;
+    if (!(DeviceAddress == rhs.DeviceAddress))
+      return false;
+    if (!(DeviceClass == rhs.DeviceClass))
+      return false;
+    if (!(Connected == rhs.Connected))
+      return false;
+    if (!(Authenticated == rhs.Authenticated))
+      return false;
+    return true;
+  }
+  bool operator != (const ZPBluetoothDeviceInfo &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ZPBluetoothDeviceInfo & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(ZPBluetoothDeviceInfo &a, ZPBluetoothDeviceInfo &b);
+
+std::ostream& operator<<(std::ostream& out, const ZPBluetoothDeviceInfo& obj);
+
+typedef struct _ZPBluetoothDeviceList__isset {
+  _ZPBluetoothDeviceList__isset() : DeviceList(false) {}
+  bool DeviceList :1;
+} _ZPBluetoothDeviceList__isset;
+
+class ZPBluetoothDeviceList : public virtual ::apache::thrift::TBase {
+ public:
+
+  ZPBluetoothDeviceList(const ZPBluetoothDeviceList&);
+  ZPBluetoothDeviceList& operator=(const ZPBluetoothDeviceList&);
+  ZPBluetoothDeviceList() {
+  }
+
+  virtual ~ZPBluetoothDeviceList() throw();
+  std::vector<ZPBluetoothDeviceInfo>  DeviceList;
+
+  _ZPBluetoothDeviceList__isset __isset;
+
+  void __set_DeviceList(const std::vector<ZPBluetoothDeviceInfo> & val);
+
+  bool operator == (const ZPBluetoothDeviceList & rhs) const
+  {
+    if (!(DeviceList == rhs.DeviceList))
+      return false;
+    return true;
+  }
+  bool operator != (const ZPBluetoothDeviceList &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ZPBluetoothDeviceList & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(ZPBluetoothDeviceList &a, ZPBluetoothDeviceList &b);
+
+std::ostream& operator<<(std::ostream& out, const ZPBluetoothDeviceList& obj);
 
 typedef struct _CategoryNode__isset {
   _CategoryNode__isset() : id(false), categoryId(false), sortingPriority(false), children(false) {}

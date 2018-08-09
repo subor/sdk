@@ -201,6 +201,16 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("DisconnectWifi\n");
   }
 
+  bool DiscoverBluetoothDevice() {
+    // Your implementation goes here
+    printf("DiscoverBluetoothDevice\n");
+  }
+
+  bool ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) {
+    // Your implementation goes here
+    printf("ConnectBluetoothDevice\n");
+  }
+
 };
 
 int main(int argc, char **argv) {

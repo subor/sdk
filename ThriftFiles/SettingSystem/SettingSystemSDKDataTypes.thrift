@@ -61,6 +61,18 @@ struct RuyiNetworkSpeed {
     2: RuyiNetworkTestItem uploadspeed,
 }
 
+struct ZPBluetoothDeviceInfo {
+    1: string DeviceName,
+    2: string DeviceAddress,
+    3: i32 DeviceClass,
+    4: bool Connected,
+    5: bool Authenticated,
+}
+
+struct ZPBluetoothDeviceList {
+    1: list<ZPBluetoothDeviceInfo> DeviceList,
+}
+
 struct CategoryNode {
     1: string id,
     2: string categoryId,

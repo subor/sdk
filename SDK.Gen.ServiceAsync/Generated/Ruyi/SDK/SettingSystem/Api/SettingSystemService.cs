@@ -122,6 +122,10 @@ namespace Ruyi.SDK.SettingSystem.Api
 
       Task<bool> DisconnectWifiAsync(CancellationToken cancellationToken);
 
+      Task<bool> DiscoverBluetoothDeviceAsync(CancellationToken cancellationToken);
+
+      Task<bool> ConnectBluetoothDeviceAsync(string DeviceName, string DeviceAddress, CancellationToken cancellationToken);
+
     }
 
 
@@ -932,6 +936,72 @@ namespace Ruyi.SDK.SettingSystem.Api
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "DisconnectWifi failed: unknown result");
       }
 
+      public async Task<bool> DiscoverBluetoothDeviceAsync(CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("DiscoverBluetoothDevice", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new DiscoverBluetoothDeviceArgs();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new DiscoverBluetoothDeviceResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
+          return result.Success;
+        }
+        if (result.__isset.error1)
+        {
+          throw result.Error1;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "DiscoverBluetoothDevice failed: unknown result");
+      }
+
+      public async Task<bool> ConnectBluetoothDeviceAsync(string DeviceName, string DeviceAddress, CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("ConnectBluetoothDevice", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new ConnectBluetoothDeviceArgs();
+        args.DeviceName = DeviceName;
+        args.DeviceAddress = DeviceAddress;
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new ConnectBluetoothDeviceResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
+          return result.Success;
+        }
+        if (result.__isset.error1)
+        {
+          throw result.Error1;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "ConnectBluetoothDevice failed: unknown result");
+      }
+
     }
 
     public class AsyncProcessor : ITAsyncProcessor
@@ -967,6 +1037,8 @@ namespace Ruyi.SDK.SettingSystem.Api
         processMap_["RuyiStopNetworkSpeedTest"] = RuyiStopNetworkSpeedTest_ProcessAsync;
         processMap_["GetAvailableWifi"] = GetAvailableWifi_ProcessAsync;
         processMap_["DisconnectWifi"] = DisconnectWifi_ProcessAsync;
+        processMap_["DiscoverBluetoothDevice"] = DiscoverBluetoothDevice_ProcessAsync;
+        processMap_["ConnectBluetoothDevice"] = ConnectBluetoothDevice_ProcessAsync;
       }
 
       protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken);
@@ -1829,6 +1901,76 @@ namespace Ruyi.SDK.SettingSystem.Api
           Console.Error.WriteLine(ex.ToString());
           var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
           await oprot.WriteMessageBeginAsync(new TMessage("DisconnectWifi", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task DiscoverBluetoothDevice_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new DiscoverBluetoothDeviceArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new DiscoverBluetoothDeviceResult();
+        try
+        {
+          try
+          {
+            result.Success = await _iAsync.DiscoverBluetoothDeviceAsync(cancellationToken);
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          await oprot.WriteMessageBeginAsync(new TMessage("DiscoverBluetoothDevice", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("DiscoverBluetoothDevice", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task ConnectBluetoothDevice_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new ConnectBluetoothDeviceArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new ConnectBluetoothDeviceResult();
+        try
+        {
+          try
+          {
+            result.Success = await _iAsync.ConnectBluetoothDeviceAsync(args.DeviceName, args.DeviceAddress, cancellationToken);
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          await oprot.WriteMessageBeginAsync(new TMessage("ConnectBluetoothDevice", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("ConnectBluetoothDevice", TMessageType.Exception, seqid), cancellationToken);
           await x.WriteAsync(oprot, cancellationToken);
         }
         await oprot.WriteMessageEndAsync(cancellationToken);
@@ -9086,6 +9228,546 @@ namespace Ruyi.SDK.SettingSystem.Api
       public override string ToString()
       {
         var sb = new StringBuilder("DisconnectWifi_result(");
+        bool __first = true;
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Success: ");
+          sb.Append(Success);
+        }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class DiscoverBluetoothDeviceArgs : TBase
+    {
+
+      public DiscoverBluetoothDeviceArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("DiscoverBluetoothDevice_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("DiscoverBluetoothDevice_args(");
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class DiscoverBluetoothDeviceResult : TBase
+    {
+      private bool _success;
+      private Ruyi.SDK.CommonType.ErrorException _error1;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+      public Ruyi.SDK.CommonType.ErrorException Error1
+      {
+        get
+        {
+          return _error1;
+        }
+        set
+        {
+          __isset.error1 = true;
+          this._error1 = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool success;
+        public bool error1;
+      }
+
+      public DiscoverBluetoothDeviceResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool)
+                {
+                  Success = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 1:
+                if (field.Type == TType.Struct)
+                {
+                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("DiscoverBluetoothDevice_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+
+          if(this.__isset.success)
+          {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
+              field.Name = "Error1";
+              field.Type = TType.Struct;
+              field.ID = 1;
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
+            }
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("DiscoverBluetoothDevice_result(");
+        bool __first = true;
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Success: ");
+          sb.Append(Success);
+        }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class ConnectBluetoothDeviceArgs : TBase
+    {
+      private string _DeviceName;
+      private string _DeviceAddress;
+
+      public string DeviceName
+      {
+        get
+        {
+          return _DeviceName;
+        }
+        set
+        {
+          __isset.DeviceName = true;
+          this._DeviceName = value;
+        }
+      }
+
+      public string DeviceAddress
+      {
+        get
+        {
+          return _DeviceAddress;
+        }
+        set
+        {
+          __isset.DeviceAddress = true;
+          this._DeviceAddress = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool DeviceName;
+        public bool DeviceAddress;
+      }
+
+      public ConnectBluetoothDeviceArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String)
+                {
+                  DeviceName = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String)
+                {
+                  DeviceAddress = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("ConnectBluetoothDevice_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (DeviceName != null && __isset.DeviceName)
+          {
+            field.Name = "DeviceName";
+            field.Type = TType.String;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(DeviceName, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (DeviceAddress != null && __isset.DeviceAddress)
+          {
+            field.Name = "DeviceAddress";
+            field.Type = TType.String;
+            field.ID = 2;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(DeviceAddress, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("ConnectBluetoothDevice_args(");
+        bool __first = true;
+        if (DeviceName != null && __isset.DeviceName)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("DeviceName: ");
+          sb.Append(DeviceName);
+        }
+        if (DeviceAddress != null && __isset.DeviceAddress)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("DeviceAddress: ");
+          sb.Append(DeviceAddress);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class ConnectBluetoothDeviceResult : TBase
+    {
+      private bool _success;
+      private Ruyi.SDK.CommonType.ErrorException _error1;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+      public Ruyi.SDK.CommonType.ErrorException Error1
+      {
+        get
+        {
+          return _error1;
+        }
+        set
+        {
+          __isset.error1 = true;
+          this._error1 = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool success;
+        public bool error1;
+      }
+
+      public ConnectBluetoothDeviceResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool)
+                {
+                  Success = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 1:
+                if (field.Type == TType.Struct)
+                {
+                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("ConnectBluetoothDevice_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+
+          if(this.__isset.success)
+          {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
+              field.Name = "Error1";
+              field.Type = TType.Struct;
+              field.ID = 1;
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
+            }
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("ConnectBluetoothDevice_result(");
         bool __first = true;
         if (__isset.success)
         {
