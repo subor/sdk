@@ -1,15 +1,15 @@
 # C++ SDK Integration
 
-This documentation is about how to intergrate Ruyi C++ SDK to a common VS C++ project.
+This documentation is about how to intergrate C++ SDK to a common VS C++ project.
 
 ## Prerequisites
 
 - [Visual Studio 2017](https://www.visualstudio.com/vs/community/) version 15.3 or later with the following individual components:
     - Windows 10 SDK (10.0.15063.0) (under __SDKs, libraries, and frameworks__)
 
-## Download SDK from developer website Instructions
+## Download
 
-1. Download C++ SDK from our developer website (http://dev.playruyi.com/udownloadslist/SDK). It contains two folders: __include__ and __lib__.  
+1. Download C++ SDK from [here](https://github.com/subor/sdk/releases). It contains two folders: __include__ and __lib__.  
 Put them in one of your source folder.  For example, create a "RuyiSDK" folder, then put them under it.
 
 1. Right click your solution, click "Properties"

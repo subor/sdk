@@ -9,7 +9,7 @@ Details how we integrated Ruyi C++ SDK with [Unreal Engine 4](https://www.unreal
 
 ## Download SDK from developer website Instructions
 
-1. You can directly download our sdk from our developer website(http://dev.playruyi.com). Our SDK files will be in two folders: __include__ and __lib__.  Put them in one of your game module source folder.  For example, `source/ModuleName/include` and `source/ModuleName/lib`.  They may be put in a sub-folder, just make sure they're in the same folder.
+1. You can download our sdk from [here](https://github.com/subor/sdk/releases/).  Our SDK files will be in two folders: __include__ and __lib__.  Put them in one of your game module source folder.  For example, `source/ModuleName/include` and `source/ModuleName/lib`.  They may be put in a sub-folder, just make sure they're in the same folder.
 1. Open __ModuleName.Build.cs__ and add `ModuleName/xxx/include` to the `PublicIncludePaths` property.  For example:
 
         PublicIncludePaths.AddRange(

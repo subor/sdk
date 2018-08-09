@@ -55,14 +55,14 @@
 
 1. How do I get started?
 
-    - Take a look at the [tutorials](https://bitbucket.org/playruyi/docs/src/master/docs/en/tutorials/)
-    - Try [profiling](https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/optimization.md) your game on the hardware
+    - Take a look at the [tutorials](tutorials/)
+    - Try [profiling](topics/optimization.md) your game on the hardware
 
 1. My question isn't answered here, I need help, what do I do?
 
-    - Try [searching for it](https://bitbucket.org/search?account=%7Bf59fdd59-0a84-4d5b-a424-61eb2b74c84f%7D) ([see Repository Search](https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/support.md#Repository-Search))
+    - Try [searching for it](https://github.com/subor/sdk/search) ([see Repository Search](topics/support.md#repository-search))
     - Check [online documentation](README.md)
-    - Try [support resources](https://bitbucket.org/playruyi/support) like [forums](http://dev.playruyi.com/forum/) and [tickets](https://bitbucket.org/playruyi/support/issues?status=new&status=open)
+    - Try [support resources](topics/support.md) like [forums](http://dev.playruyi.com/forum/) and [tickets](https://github.com/subor/sdk/issues)
 
 ## Platform/Publishing
 

@@ -1,22 +1,18 @@
 # Setup
 
-These are instructions to setup and manage the Ruyi SDK on a developer's workstation or the Ruyi console.
+These are instructions to setup and manage the SDK on a developer's workstation or the Z+.
 
 If you received a devkit from us it should already come with the SDK pre-installed to `c:\ruyi`.  But, the following instructions can be used to update it.
 
 ## Prerequisites
 
-- [Register as a Ruyi developer and setup a development environment](../topics/dev_onboarding.md)
+- [Register as a developer and setup a development environment](../topics/dev_onboarding.md)
 
 ## SDK Download and Installation
 
-1. Download the following from the [Development](http://dev.playruyi.com/uservices) area of the website:
-    - All SDKs
-    - Devtools
-    - Layer0
-    - Main Client
+1. Download the most recent, stable [SDK and runtime](https://github.com/subor/sdk/releases)
 1. Uncompress to local HDD as siblings
-1. If necessary (see [issue](https://bitbucket.org/playruyi/support/issues/3)), __unblock__ executable files:
+1. If necessary, __unblock__ executable files:
     - __Right-click executable, select Properties__, enable the __Unblock__ checkbox  
     ![](/docs/img/exe_unblock.png)
 
@@ -68,15 +64,15 @@ End result should be directory structure similar to the following:
 Details regarding the SDK can be found [here](../topics/sdk.md).
 
 ### Notes
-1. All assemblies above should keep in the same version, you can check that by right click on the exe/dll file, properties->details->file version
-1. Delete the old version when upgrading, don't do a copy -> replacement, make sure files not needed don't exist.
+1. All assemblies above should be the same version, you can check by right-clicking a exe/dll, and select __properties->details->file version__
+1. When upgrading, delete the old version first.  That is, don't overwrite the old version with a new one.  This is to ensure files unneeded are removed.
 
 
-## Launching Client, Registering, and Logging-in
+## Login
 
-[Layer0](../topics/layer0.md) must be running on a host machine before you can access most of the Ruyi platform.
+[Layer0](../topics/layer0.md) must be running on a host machine before you can access most of the Z+ platform.
 
-__IMPORTANT__ A user _must be logged in via main client_ for most of the SDK API to work.  The retail version of the console will require a user to be logged in to launch apps.
+__IMPORTANT__ A user _must be logged in via main client_ for most of the SDK to work.  The retail version of the console will require a user to be logged in to launch apps.
 
 1. Run `Layer0\Layer0.exe`  
 ![](/docs/img/layer0.png)
