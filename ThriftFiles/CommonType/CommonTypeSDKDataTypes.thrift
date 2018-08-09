@@ -143,12 +143,13 @@ struct SettingCategory {
     2: string display,
     3: optional string summary,
     4: optional string description,
-    5: i32 sortingPriority,
-    6: bool isSystemCategory,
-    7: map<string, i32> items,
-    8: bool enable,
-    9: bool showInUI,
-    10: string script,
+    5: string icon,
+    6: i32 sortingPriority,
+    7: bool isSystemCategory,
+    8: map<string, i32> items,
+    9: bool enable,
+    10: bool showInUI,
+    11: string script,
 }
 
 struct ModuleSetting {

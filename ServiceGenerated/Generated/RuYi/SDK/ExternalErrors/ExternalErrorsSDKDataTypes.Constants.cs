@@ -22,8 +22,8 @@ namespace Ruyi.SDK.ExternalErrors
     static ExternalErrorsSDKDataTypesConstants()
     {
       ExternalErrorInfos tmp0 = new ExternalErrorInfos();
-      tmp0.Description = "";
       tmp0.ErrorCode = ExternalErrorCode.Err_0;
+      tmp0.Description = "";
       EXTERNALERRORLIST.Add(tmp0);
       ExternalErrorInfos tmp1 = new ExternalErrorInfos();
       tmp1.Description = "setting {0} is not found!";
@@ -50,8 +50,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp6.ErrorCode = ExternalErrorCode.Err_6;
       EXTERNALERRORLIST.Add(tmp6);
       ExternalErrorInfos tmp7 = new ExternalErrorInfos();
-      tmp7.ErrorCode = ExternalErrorCode.Err_7;
       tmp7.Description = "can not find configuration file: {0}.";
+      tmp7.ErrorCode = ExternalErrorCode.Err_7;
       EXTERNALERRORLIST.Add(tmp7);
       ExternalErrorInfos tmp8 = new ExternalErrorInfos();
       tmp8.Description = "specified user {0} is not playing app {1}";
@@ -62,20 +62,20 @@ namespace Ruyi.SDK.ExternalErrors
       tmp9.ErrorCode = ExternalErrorCode.Err_9;
       EXTERNALERRORLIST.Add(tmp9);
       ExternalErrorInfos tmp10 = new ExternalErrorInfos();
-      tmp10.ErrorCode = ExternalErrorCode.Err_10;
       tmp10.Description = "";
+      tmp10.ErrorCode = ExternalErrorCode.Err_10;
       EXTERNALERRORLIST.Add(tmp10);
       ExternalErrorInfos tmp11 = new ExternalErrorInfos();
-      tmp11.ErrorCode = ExternalErrorCode.Err_11;
       tmp11.Description = "";
+      tmp11.ErrorCode = ExternalErrorCode.Err_11;
       EXTERNALERRORLIST.Add(tmp11);
       ExternalErrorInfos tmp12 = new ExternalErrorInfos();
       tmp12.Description = "";
       tmp12.ErrorCode = ExternalErrorCode.Err_12;
       EXTERNALERRORLIST.Add(tmp12);
       ExternalErrorInfos tmp13 = new ExternalErrorInfos();
-      tmp13.ErrorCode = ExternalErrorCode.Err_13;
       tmp13.Description = "";
+      tmp13.ErrorCode = ExternalErrorCode.Err_13;
       EXTERNALERRORLIST.Add(tmp13);
       ExternalErrorInfos tmp14 = new ExternalErrorInfos();
       tmp14.ErrorCode = ExternalErrorCode.Err_14;

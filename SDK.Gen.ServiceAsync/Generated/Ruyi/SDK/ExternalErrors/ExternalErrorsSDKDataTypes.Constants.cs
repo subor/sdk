@@ -23,8 +23,8 @@ namespace Ruyi.SDK.ExternalErrors
     static ExternalErrorsSDKDataTypesConstants()
     {
       ExternalErrorInfos tmp0 = new ExternalErrorInfos();
-      tmp0.Description = "";
       tmp0.ErrorCode = ExternalErrorCode.Err_0;
+      tmp0.Description = "";
       EXTERNALERRORLIST.Add(tmp0);
       ExternalErrorInfos tmp1 = new ExternalErrorInfos();
       tmp1.ErrorCode = ExternalErrorCode.Err_1;
@@ -39,12 +39,12 @@ namespace Ruyi.SDK.ExternalErrors
       tmp3.Description = "json string convert failed: {0}";
       EXTERNALERRORLIST.Add(tmp3);
       ExternalErrorInfos tmp4 = new ExternalErrorInfos();
-      tmp4.ErrorCode = ExternalErrorCode.Err_4;
       tmp4.Description = "lambda expression error: {0}";
+      tmp4.ErrorCode = ExternalErrorCode.Err_4;
       EXTERNALERRORLIST.Add(tmp4);
       ExternalErrorInfos tmp5 = new ExternalErrorInfos();
-      tmp5.ErrorCode = ExternalErrorCode.Err_5;
       tmp5.Description = "[type error] trying to assign a {0} to setting category {1} 's property {2}, whose data type is {3}";
+      tmp5.ErrorCode = ExternalErrorCode.Err_5;
       EXTERNALERRORLIST.Add(tmp5);
       ExternalErrorInfos tmp6 = new ExternalErrorInfos();
       tmp6.ErrorCode = ExternalErrorCode.Err_6;
@@ -59,8 +59,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp8.ErrorCode = ExternalErrorCode.Err_8;
       EXTERNALERRORLIST.Add(tmp8);
       ExternalErrorInfos tmp9 = new ExternalErrorInfos();
-      tmp9.Description = "user is not found by id {0}";
       tmp9.ErrorCode = ExternalErrorCode.Err_9;
+      tmp9.Description = "user is not found by id {0}";
       EXTERNALERRORLIST.Add(tmp9);
       ExternalErrorInfos tmp10 = new ExternalErrorInfos();
       tmp10.ErrorCode = ExternalErrorCode.Err_10;
