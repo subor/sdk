@@ -116,5 +116,9 @@ According to the format of json string your write, searching can be separated to
 	bool DiscoverBluetoothDevice() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	bool ConnectBluetoothDevice(1: string DeviceName, 2: string DeviceAddress) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	bool DisconnectBluetoothDevice(1: string DeviceName, 2: string DeviceAddress) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	bool RemoveBluetoothDevice(1: string DeviceName, 2: string DeviceAddress) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 }
 

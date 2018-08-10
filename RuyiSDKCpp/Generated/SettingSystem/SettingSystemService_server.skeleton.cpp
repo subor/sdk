@@ -211,6 +211,16 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("ConnectBluetoothDevice\n");
   }
 
+  bool DisconnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) {
+    // Your implementation goes here
+    printf("DisconnectBluetoothDevice\n");
+  }
+
+  bool RemoveBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) {
+    // Your implementation goes here
+    printf("RemoveBluetoothDevice\n");
+  }
+
 };
 
 int main(int argc, char **argv) {
