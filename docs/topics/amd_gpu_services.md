@@ -1,4 +1,3 @@
-Test111
 # AMD GPU Services (AGS)
 
 [AMD GPU Services (AGS)](https://gpuopen.com/gaming-product/amd-gpu-services-ags-library/) library provides access to hardware/software functionality not available through standard APIs.  This includes:
