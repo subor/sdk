@@ -99,6 +99,7 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\WifiEntity.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\ZPBluetoothDeviceInfo.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\ZPBluetoothDeviceList.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\ZPBluetoothDevicePinRequest.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Speech\File.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Http\HttpService.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Http\SubscribeReply.cs" />

@@ -73,6 +73,11 @@ struct ZPBluetoothDeviceList {
     1: list<ZPBluetoothDeviceInfo> DeviceList,
 }
 
+struct ZPBluetoothDevicePinRequest {
+    1: string DeviceName,
+    2: string Pin,
+}
+
 struct CategoryNode {
     1: string id,
     2: string categoryId,

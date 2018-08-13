@@ -26,6 +26,7 @@ void MessageCreator::Initialize()
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.RuyiNetworkSpeed", Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.ZPBluetoothDeviceInfo", Ruyi::SDK::SettingSystem::Api::ZPBluetoothDeviceInfo);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.ZPBluetoothDeviceList", Ruyi::SDK::SettingSystem::Api::ZPBluetoothDeviceList);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.ZPBluetoothDevicePinRequest", Ruyi::SDK::SettingSystem::Api::ZPBluetoothDevicePinRequest);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.CategoryNode", Ruyi::SDK::SettingSystem::Api::CategoryNode);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.SettingSearchResult", Ruyi::SDK::SettingSystem::Api::SettingSearchResult);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.SettingSystem.Api.SettingTree", Ruyi::SDK::SettingSystem::Api::SettingTree);

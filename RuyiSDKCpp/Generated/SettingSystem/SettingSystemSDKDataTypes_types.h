@@ -53,6 +53,8 @@ class ZPBluetoothDeviceInfo;
 
 class ZPBluetoothDeviceList;
 
+class ZPBluetoothDevicePinRequest;
+
 class CategoryNode;
 
 class SettingSearchResult;
@@ -548,6 +550,54 @@ class ZPBluetoothDeviceList : public virtual ::apache::thrift::TBase {
 void swap(ZPBluetoothDeviceList &a, ZPBluetoothDeviceList &b);
 
 std::ostream& operator<<(std::ostream& out, const ZPBluetoothDeviceList& obj);
+
+typedef struct _ZPBluetoothDevicePinRequest__isset {
+  _ZPBluetoothDevicePinRequest__isset() : DeviceName(false), Pin(false) {}
+  bool DeviceName :1;
+  bool Pin :1;
+} _ZPBluetoothDevicePinRequest__isset;
+
+class ZPBluetoothDevicePinRequest : public virtual ::apache::thrift::TBase {
+ public:
+
+  ZPBluetoothDevicePinRequest(const ZPBluetoothDevicePinRequest&);
+  ZPBluetoothDevicePinRequest& operator=(const ZPBluetoothDevicePinRequest&);
+  ZPBluetoothDevicePinRequest() : DeviceName(), Pin() {
+  }
+
+  virtual ~ZPBluetoothDevicePinRequest() throw();
+  std::string DeviceName;
+  std::string Pin;
+
+  _ZPBluetoothDevicePinRequest__isset __isset;
+
+  void __set_DeviceName(const std::string& val);
+
+  void __set_Pin(const std::string& val);
+
+  bool operator == (const ZPBluetoothDevicePinRequest & rhs) const
+  {
+    if (!(DeviceName == rhs.DeviceName))
+      return false;
+    if (!(Pin == rhs.Pin))
+      return false;
+    return true;
+  }
+  bool operator != (const ZPBluetoothDevicePinRequest &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ZPBluetoothDevicePinRequest & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(ZPBluetoothDevicePinRequest &a, ZPBluetoothDevicePinRequest &b);
+
+std::ostream& operator<<(std::ostream& out, const ZPBluetoothDevicePinRequest& obj);
 
 typedef struct _CategoryNode__isset {
   _CategoryNode__isset() : id(false), categoryId(false), sortingPriority(false), children(false) {}
