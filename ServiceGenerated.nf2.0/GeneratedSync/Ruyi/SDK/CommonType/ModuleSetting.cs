@@ -23,34 +23,20 @@ namespace Ruyi.SDK.CommonType
   #endif
   public partial class ModuleSetting : TBase
   {
-    private string _name;
-    private string _version;
+    private ModuleBaseInfo _baseInfo;
     private List<SettingItem> _settings;
     private List<SettingCategory> _categories;
 
-    public string Name
+    public ModuleBaseInfo BaseInfo
     {
       get
       {
-        return _name;
+        return _baseInfo;
       }
       set
       {
-        __isset.name = true;
-        this._name = value;
-      }
-    }
-
-    public string Version
-    {
-      get
-      {
-        return _version;
-      }
-      set
-      {
-        __isset.version = true;
-        this._version = value;
+        __isset.baseInfo = true;
+        this._baseInfo = value;
       }
     }
 
@@ -86,8 +72,7 @@ namespace Ruyi.SDK.CommonType
     [Serializable]
     #endif
     public struct Isset {
-      public bool name;
-      public bool version;
+      public bool baseInfo;
       public bool settings;
       public bool categories;
     }
@@ -111,20 +96,14 @@ namespace Ruyi.SDK.CommonType
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String) {
-                Name = iprot.ReadString();
+              if (field.Type == TType.Struct) {
+                BaseInfo = new ModuleBaseInfo();
+                BaseInfo.Read(iprot);
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.String) {
-                Version = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 3:
               if (field.Type == TType.List) {
                 {
                   Settings = new List<SettingItem>();
@@ -142,7 +121,7 @@ namespace Ruyi.SDK.CommonType
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 4:
+            case 3:
               if (field.Type == TType.List) {
                 {
                   Categories = new List<SettingCategory>();
@@ -181,26 +160,18 @@ namespace Ruyi.SDK.CommonType
         TStruct struc = new TStruct("ModuleSetting");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (Name != null && __isset.name) {
-          field.Name = "name";
-          field.Type = TType.String;
+        if (BaseInfo != null && __isset.baseInfo) {
+          field.Name = "baseInfo";
+          field.Type = TType.Struct;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Name);
-          oprot.WriteFieldEnd();
-        }
-        if (Version != null && __isset.version) {
-          field.Name = "version";
-          field.Type = TType.String;
-          field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Version);
+          BaseInfo.Write(oprot);
           oprot.WriteFieldEnd();
         }
         if (Settings != null && __isset.settings) {
           field.Name = "settings";
           field.Type = TType.List;
-          field.ID = 3;
+          field.ID = 2;
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, Settings.Count));
@@ -215,7 +186,7 @@ namespace Ruyi.SDK.CommonType
         if (Categories != null && __isset.categories) {
           field.Name = "categories";
           field.Type = TType.List;
-          field.ID = 4;
+          field.ID = 3;
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, Categories.Count));
@@ -239,17 +210,11 @@ namespace Ruyi.SDK.CommonType
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("ModuleSetting(");
       bool __first = true;
-      if (Name != null && __isset.name) {
+      if (BaseInfo != null && __isset.baseInfo) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Name: ");
-        __sb.Append(Name);
-      }
-      if (Version != null && __isset.version) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Version: ");
-        __sb.Append(Version);
+        __sb.Append("BaseInfo: ");
+        __sb.Append(BaseInfo== null ? "<null>" : BaseInfo.ToString());
       }
       if (Settings != null && __isset.settings) {
         if(!__first) { __sb.Append(", "); }
