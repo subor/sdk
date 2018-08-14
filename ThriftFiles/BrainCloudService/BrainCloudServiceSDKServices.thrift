@@ -246,6 +246,19 @@ service BrainCloudService {
 	),
 
 	/** Authenticate the user via wechat */
+	string Authentication_AuthenticatePhone(
+		/** The phone number to authenticate with */
+		1: string phoneNumber, 
+		
+		/** The code sent to the mobile phone */
+		2: string authCode, 
+		
+		/** Should a new profile be created for this user if the account does not exist? */
+		3: bool forceCreate, 
+		4: i32 clientIndex
+	),
+
+	/** Authenticate the user via wechat */
 	string Authentication_AuthenticateWechat(
 		/** The open id passed from wechat */
 		1: string openId, 
@@ -263,6 +276,16 @@ service BrainCloudService {
 		/** The email address to send the reset email to. */
 		1: string externalId, 
 		2: i32 clientIndex
+	),
+
+	/** Request an SMS code sent to a phone prior to authentication. */
+	string Authentication_RequestSmsCode(
+		/** The phone number to send the code to. */
+		1: string phoneNumber, 
+		
+		/** Whether or not to create a new player if they don't exist. */
+		2: bool forceCreate, 
+		3: i32 clientIndex
 	),
 
 	/** Returns the sessionId or empty string if no session present. */
