@@ -25,11 +25,11 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
-  public partial class ZPBluetoothDeviceList : TBase
+  public partial class BluetoothDeviceList : TBase
   {
-    private List<ZPBluetoothDeviceInfo> _DeviceList;
+    private List<BluetoothDevice> _DeviceList;
 
-    public List<ZPBluetoothDeviceInfo> DeviceList
+    public List<BluetoothDevice> DeviceList
     {
       get
       {
@@ -49,7 +49,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       public bool DeviceList;
     }
 
-    public ZPBluetoothDeviceList()
+    public BluetoothDeviceList()
     {
     }
 
@@ -74,12 +74,12 @@ namespace Ruyi.SDK.SettingSystem.Api
               if (field.Type == TType.List)
               {
                 {
-                  DeviceList = new List<ZPBluetoothDeviceInfo>();
+                  DeviceList = new List<BluetoothDevice>();
                   TList _list0 = await iprot.ReadListBeginAsync(cancellationToken);
                   for(int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
-                    ZPBluetoothDeviceInfo _elem2;
-                    _elem2 = new ZPBluetoothDeviceInfo();
+                    BluetoothDevice _elem2;
+                    _elem2 = new BluetoothDevice();
                     await _elem2.ReadAsync(iprot, cancellationToken);
                     DeviceList.Add(_elem2);
                   }
@@ -112,7 +112,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("ZPBluetoothDeviceList");
+        var struc = new TStruct("BluetoothDeviceList");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
         if (DeviceList != null && __isset.DeviceList)
@@ -123,7 +123,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, DeviceList.Count), cancellationToken);
-            foreach (ZPBluetoothDeviceInfo _iter3 in DeviceList)
+            foreach (BluetoothDevice _iter3 in DeviceList)
             {
               await _iter3.WriteAsync(oprot, cancellationToken);
             }
@@ -142,7 +142,7 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("ZPBluetoothDeviceList(");
+      var sb = new StringBuilder("BluetoothDeviceList(");
       bool __first = true;
       if (DeviceList != null && __isset.DeviceList)
       {

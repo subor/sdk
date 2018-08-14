@@ -21,7 +21,7 @@ namespace Ruyi.SDK.SettingSystem.Api
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class ZPBluetoothDevicePinRequest : TBase
+  public partial class BluetoothDevicePinRequest : TBase
   {
     private string _DeviceName;
     private string _Pin;
@@ -62,7 +62,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       public bool Pin;
     }
 
-    public ZPBluetoothDevicePinRequest() {
+    public BluetoothDevicePinRequest() {
     }
 
     public void Read (TProtocol iprot)
@@ -112,7 +112,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("ZPBluetoothDevicePinRequest");
+        TStruct struc = new TStruct("BluetoothDevicePinRequest");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
         if (DeviceName != null && __isset.DeviceName) {
@@ -141,7 +141,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("ZPBluetoothDevicePinRequest(");
+      StringBuilder __sb = new StringBuilder("BluetoothDevicePinRequest(");
       bool __first = true;
       if (DeviceName != null && __isset.DeviceName) {
         if(!__first) { __sb.Append(", "); }

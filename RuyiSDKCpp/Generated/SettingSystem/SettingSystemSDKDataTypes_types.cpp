@@ -1008,37 +1008,37 @@ void RuyiNetworkSpeed::printTo(std::ostream& out) const {
 }
 
 
-ZPBluetoothDeviceInfo::~ZPBluetoothDeviceInfo() throw() {
+BluetoothDevice::~BluetoothDevice() throw() {
 }
 
 
-void ZPBluetoothDeviceInfo::__set_DeviceName(const std::string& val) {
+void BluetoothDevice::__set_DeviceName(const std::string& val) {
   this->DeviceName = val;
 }
 
-void ZPBluetoothDeviceInfo::__set_DeviceAddress(const std::string& val) {
+void BluetoothDevice::__set_DeviceAddress(const std::string& val) {
   this->DeviceAddress = val;
 }
 
-void ZPBluetoothDeviceInfo::__set_DeviceClass(const int32_t val) {
+void BluetoothDevice::__set_DeviceClass(const int32_t val) {
   this->DeviceClass = val;
 }
 
-void ZPBluetoothDeviceInfo::__set_Connected(const bool val) {
+void BluetoothDevice::__set_Connected(const bool val) {
   this->Connected = val;
 }
 
-void ZPBluetoothDeviceInfo::__set_Authenticated(const bool val) {
+void BluetoothDevice::__set_Authenticated(const bool val) {
   this->Authenticated = val;
 }
-std::ostream& operator<<(std::ostream& out, const ZPBluetoothDeviceInfo& obj)
+std::ostream& operator<<(std::ostream& out, const BluetoothDevice& obj)
 {
   obj.printTo(out);
   return out;
 }
 
 
-uint32_t ZPBluetoothDeviceInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t BluetoothDevice::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -1111,10 +1111,10 @@ uint32_t ZPBluetoothDeviceInfo::read(::apache::thrift::protocol::TProtocol* ipro
   return xfer;
 }
 
-uint32_t ZPBluetoothDeviceInfo::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t BluetoothDevice::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("ZPBluetoothDeviceInfo");
+  xfer += oprot->writeStructBegin("BluetoothDevice");
 
   xfer += oprot->writeFieldBegin("DeviceName", ::apache::thrift::protocol::T_STRING, 1);
   xfer += oprot->writeString(this->DeviceName);
@@ -1141,7 +1141,7 @@ uint32_t ZPBluetoothDeviceInfo::write(::apache::thrift::protocol::TProtocol* opr
   return xfer;
 }
 
-void swap(ZPBluetoothDeviceInfo &a, ZPBluetoothDeviceInfo &b) {
+void swap(BluetoothDevice &a, BluetoothDevice &b) {
   using ::std::swap;
   swap(a.DeviceName, b.DeviceName);
   swap(a.DeviceAddress, b.DeviceAddress);
@@ -1151,7 +1151,7 @@ void swap(ZPBluetoothDeviceInfo &a, ZPBluetoothDeviceInfo &b) {
   swap(a.__isset, b.__isset);
 }
 
-ZPBluetoothDeviceInfo::ZPBluetoothDeviceInfo(const ZPBluetoothDeviceInfo& other12) {
+BluetoothDevice::BluetoothDevice(const BluetoothDevice& other12) {
   DeviceName = other12.DeviceName;
   DeviceAddress = other12.DeviceAddress;
   DeviceClass = other12.DeviceClass;
@@ -1159,7 +1159,7 @@ ZPBluetoothDeviceInfo::ZPBluetoothDeviceInfo(const ZPBluetoothDeviceInfo& other1
   Authenticated = other12.Authenticated;
   __isset = other12.__isset;
 }
-ZPBluetoothDeviceInfo& ZPBluetoothDeviceInfo::operator=(const ZPBluetoothDeviceInfo& other13) {
+BluetoothDevice& BluetoothDevice::operator=(const BluetoothDevice& other13) {
   DeviceName = other13.DeviceName;
   DeviceAddress = other13.DeviceAddress;
   DeviceClass = other13.DeviceClass;
@@ -1168,9 +1168,9 @@ ZPBluetoothDeviceInfo& ZPBluetoothDeviceInfo::operator=(const ZPBluetoothDeviceI
   __isset = other13.__isset;
   return *this;
 }
-void ZPBluetoothDeviceInfo::printTo(std::ostream& out) const {
+void BluetoothDevice::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
-  out << "ZPBluetoothDeviceInfo(";
+  out << "BluetoothDevice(";
   out << "DeviceName=" << to_string(DeviceName);
   out << ", " << "DeviceAddress=" << to_string(DeviceAddress);
   out << ", " << "DeviceClass=" << to_string(DeviceClass);
@@ -1180,21 +1180,21 @@ void ZPBluetoothDeviceInfo::printTo(std::ostream& out) const {
 }
 
 
-ZPBluetoothDeviceList::~ZPBluetoothDeviceList() throw() {
+BluetoothDeviceList::~BluetoothDeviceList() throw() {
 }
 
 
-void ZPBluetoothDeviceList::__set_DeviceList(const std::vector<ZPBluetoothDeviceInfo> & val) {
+void BluetoothDeviceList::__set_DeviceList(const std::vector<BluetoothDevice> & val) {
   this->DeviceList = val;
 }
-std::ostream& operator<<(std::ostream& out, const ZPBluetoothDeviceList& obj)
+std::ostream& operator<<(std::ostream& out, const BluetoothDeviceList& obj)
 {
   obj.printTo(out);
   return out;
 }
 
 
-uint32_t ZPBluetoothDeviceList::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t BluetoothDeviceList::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -1247,15 +1247,15 @@ uint32_t ZPBluetoothDeviceList::read(::apache::thrift::protocol::TProtocol* ipro
   return xfer;
 }
 
-uint32_t ZPBluetoothDeviceList::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t BluetoothDeviceList::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("ZPBluetoothDeviceList");
+  xfer += oprot->writeStructBegin("BluetoothDeviceList");
 
   xfer += oprot->writeFieldBegin("DeviceList", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->DeviceList.size()));
-    std::vector<ZPBluetoothDeviceInfo> ::const_iterator _iter19;
+    std::vector<BluetoothDevice> ::const_iterator _iter19;
     for (_iter19 = this->DeviceList.begin(); _iter19 != this->DeviceList.end(); ++_iter19)
     {
       xfer += (*_iter19).write(oprot);
@@ -1269,48 +1269,48 @@ uint32_t ZPBluetoothDeviceList::write(::apache::thrift::protocol::TProtocol* opr
   return xfer;
 }
 
-void swap(ZPBluetoothDeviceList &a, ZPBluetoothDeviceList &b) {
+void swap(BluetoothDeviceList &a, BluetoothDeviceList &b) {
   using ::std::swap;
   swap(a.DeviceList, b.DeviceList);
   swap(a.__isset, b.__isset);
 }
 
-ZPBluetoothDeviceList::ZPBluetoothDeviceList(const ZPBluetoothDeviceList& other20) {
+BluetoothDeviceList::BluetoothDeviceList(const BluetoothDeviceList& other20) {
   DeviceList = other20.DeviceList;
   __isset = other20.__isset;
 }
-ZPBluetoothDeviceList& ZPBluetoothDeviceList::operator=(const ZPBluetoothDeviceList& other21) {
+BluetoothDeviceList& BluetoothDeviceList::operator=(const BluetoothDeviceList& other21) {
   DeviceList = other21.DeviceList;
   __isset = other21.__isset;
   return *this;
 }
-void ZPBluetoothDeviceList::printTo(std::ostream& out) const {
+void BluetoothDeviceList::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
-  out << "ZPBluetoothDeviceList(";
+  out << "BluetoothDeviceList(";
   out << "DeviceList=" << to_string(DeviceList);
   out << ")";
 }
 
 
-ZPBluetoothDevicePinRequest::~ZPBluetoothDevicePinRequest() throw() {
+BluetoothDevicePinRequest::~BluetoothDevicePinRequest() throw() {
 }
 
 
-void ZPBluetoothDevicePinRequest::__set_DeviceName(const std::string& val) {
+void BluetoothDevicePinRequest::__set_DeviceName(const std::string& val) {
   this->DeviceName = val;
 }
 
-void ZPBluetoothDevicePinRequest::__set_Pin(const std::string& val) {
+void BluetoothDevicePinRequest::__set_Pin(const std::string& val) {
   this->Pin = val;
 }
-std::ostream& operator<<(std::ostream& out, const ZPBluetoothDevicePinRequest& obj)
+std::ostream& operator<<(std::ostream& out, const BluetoothDevicePinRequest& obj)
 {
   obj.printTo(out);
   return out;
 }
 
 
-uint32_t ZPBluetoothDevicePinRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t BluetoothDevicePinRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -1359,10 +1359,10 @@ uint32_t ZPBluetoothDevicePinRequest::read(::apache::thrift::protocol::TProtocol
   return xfer;
 }
 
-uint32_t ZPBluetoothDevicePinRequest::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t BluetoothDevicePinRequest::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("ZPBluetoothDevicePinRequest");
+  xfer += oprot->writeStructBegin("BluetoothDevicePinRequest");
 
   xfer += oprot->writeFieldBegin("DeviceName", ::apache::thrift::protocol::T_STRING, 1);
   xfer += oprot->writeString(this->DeviceName);
@@ -1377,27 +1377,27 @@ uint32_t ZPBluetoothDevicePinRequest::write(::apache::thrift::protocol::TProtoco
   return xfer;
 }
 
-void swap(ZPBluetoothDevicePinRequest &a, ZPBluetoothDevicePinRequest &b) {
+void swap(BluetoothDevicePinRequest &a, BluetoothDevicePinRequest &b) {
   using ::std::swap;
   swap(a.DeviceName, b.DeviceName);
   swap(a.Pin, b.Pin);
   swap(a.__isset, b.__isset);
 }
 
-ZPBluetoothDevicePinRequest::ZPBluetoothDevicePinRequest(const ZPBluetoothDevicePinRequest& other22) {
+BluetoothDevicePinRequest::BluetoothDevicePinRequest(const BluetoothDevicePinRequest& other22) {
   DeviceName = other22.DeviceName;
   Pin = other22.Pin;
   __isset = other22.__isset;
 }
-ZPBluetoothDevicePinRequest& ZPBluetoothDevicePinRequest::operator=(const ZPBluetoothDevicePinRequest& other23) {
+BluetoothDevicePinRequest& BluetoothDevicePinRequest::operator=(const BluetoothDevicePinRequest& other23) {
   DeviceName = other23.DeviceName;
   Pin = other23.Pin;
   __isset = other23.__isset;
   return *this;
 }
-void ZPBluetoothDevicePinRequest::printTo(std::ostream& out) const {
+void BluetoothDevicePinRequest::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
-  out << "ZPBluetoothDevicePinRequest(";
+  out << "BluetoothDevicePinRequest(";
   out << "DeviceName=" << to_string(DeviceName);
   out << ", " << "Pin=" << to_string(Pin);
   out << ")";

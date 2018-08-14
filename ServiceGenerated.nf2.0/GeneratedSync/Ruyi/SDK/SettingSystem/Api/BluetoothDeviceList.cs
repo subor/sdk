@@ -9,7 +9,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
@@ -22,11 +21,11 @@ namespace Ruyi.SDK.SettingSystem.Api
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class ZPBluetoothDeviceList : TBase
+  public partial class BluetoothDeviceList : TBase
   {
-    private List<ZPBluetoothDeviceInfo> _DeviceList;
+    private List<BluetoothDevice> _DeviceList;
 
-    public List<ZPBluetoothDeviceInfo> DeviceList
+    public List<BluetoothDevice> DeviceList
     {
       get
       {
@@ -48,7 +47,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       public bool DeviceList;
     }
 
-    public ZPBluetoothDeviceList() {
+    public BluetoothDeviceList() {
     }
 
     public void Read (TProtocol iprot)
@@ -69,12 +68,12 @@ namespace Ruyi.SDK.SettingSystem.Api
             case 1:
               if (field.Type == TType.List) {
                 {
-                  DeviceList = new List<ZPBluetoothDeviceInfo>();
+                  DeviceList = new List<BluetoothDevice>();
                   TList _list0 = iprot.ReadListBegin();
                   for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
-                    ZPBluetoothDeviceInfo _elem2;
-                    _elem2 = new ZPBluetoothDeviceInfo();
+                    BluetoothDevice _elem2;
+                    _elem2 = new BluetoothDevice();
                     _elem2.Read(iprot);
                     DeviceList.Add(_elem2);
                   }
@@ -102,7 +101,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("ZPBluetoothDeviceList");
+        TStruct struc = new TStruct("BluetoothDeviceList");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
         if (DeviceList != null && __isset.DeviceList) {
@@ -112,7 +111,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, DeviceList.Count));
-            foreach (ZPBluetoothDeviceInfo _iter3 in DeviceList)
+            foreach (BluetoothDevice _iter3 in DeviceList)
             {
               _iter3.Write(oprot);
             }
@@ -130,7 +129,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("ZPBluetoothDeviceList(");
+      StringBuilder __sb = new StringBuilder("BluetoothDeviceList(");
       bool __first = true;
       if (DeviceList != null && __isset.DeviceList) {
         if(!__first) { __sb.Append(", "); }

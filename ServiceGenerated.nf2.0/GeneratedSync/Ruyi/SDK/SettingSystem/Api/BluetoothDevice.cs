@@ -21,7 +21,7 @@ namespace Ruyi.SDK.SettingSystem.Api
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class ZPBluetoothDeviceInfo : TBase
+  public partial class BluetoothDevice : TBase
   {
     private string _DeviceName;
     private string _DeviceAddress;
@@ -107,7 +107,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       public bool Authenticated;
     }
 
-    public ZPBluetoothDeviceInfo() {
+    public BluetoothDevice() {
     }
 
     public void Read (TProtocol iprot)
@@ -178,7 +178,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("ZPBluetoothDeviceInfo");
+        TStruct struc = new TStruct("BluetoothDevice");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
         if (DeviceName != null && __isset.DeviceName) {
@@ -231,7 +231,7 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("ZPBluetoothDeviceInfo(");
+      StringBuilder __sb = new StringBuilder("BluetoothDevice(");
       bool __first = true;
       if (DeviceName != null && __isset.DeviceName) {
         if(!__first) { __sb.Append(", "); }

@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
@@ -21,20 +22,34 @@ namespace Ruyi.SDK.SettingSystem.Api
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class ZPBluetoothDeviceList : TBase
+  public partial class BluetoothDevicePinRequest : TBase
   {
-    private List<ZPBluetoothDeviceInfo> _DeviceList;
+    private string _DeviceName;
+    private string _Pin;
 
-    public List<ZPBluetoothDeviceInfo> DeviceList
+    public string DeviceName
     {
       get
       {
-        return _DeviceList;
+        return _DeviceName;
       }
       set
       {
-        __isset.DeviceList = true;
-        this._DeviceList = value;
+        __isset.DeviceName = true;
+        this._DeviceName = value;
+      }
+    }
+
+    public string Pin
+    {
+      get
+      {
+        return _Pin;
+      }
+      set
+      {
+        __isset.Pin = true;
+        this._Pin = value;
       }
     }
 
@@ -44,10 +59,11 @@ namespace Ruyi.SDK.SettingSystem.Api
     [Serializable]
     #endif
     public struct Isset {
-      public bool DeviceList;
+      public bool DeviceName;
+      public bool Pin;
     }
 
-    public ZPBluetoothDeviceList() {
+    public BluetoothDevicePinRequest() {
     }
 
     public void Read (TProtocol iprot)
@@ -66,19 +82,15 @@ namespace Ruyi.SDK.SettingSystem.Api
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.List) {
-                {
-                  DeviceList = new List<ZPBluetoothDeviceInfo>();
-                  TList _list0 = iprot.ReadListBegin();
-                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
-                  {
-                    ZPBluetoothDeviceInfo _elem2;
-                    _elem2 = new ZPBluetoothDeviceInfo();
-                    _elem2.Read(iprot);
-                    DeviceList.Add(_elem2);
-                  }
-                  iprot.ReadListEnd();
-                }
+              if (field.Type == TType.String) {
+                DeviceName = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.String) {
+                Pin = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -101,22 +113,23 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("ZPBluetoothDeviceList");
+        TStruct struc = new TStruct("BluetoothDevicePinRequest");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (DeviceList != null && __isset.DeviceList) {
-          field.Name = "DeviceList";
-          field.Type = TType.List;
+        if (DeviceName != null && __isset.DeviceName) {
+          field.Name = "DeviceName";
+          field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          {
-            oprot.WriteListBegin(new TList(TType.Struct, DeviceList.Count));
-            foreach (ZPBluetoothDeviceInfo _iter3 in DeviceList)
-            {
-              _iter3.Write(oprot);
-            }
-            oprot.WriteListEnd();
-          }
+          oprot.WriteString(DeviceName);
+          oprot.WriteFieldEnd();
+        }
+        if (Pin != null && __isset.Pin) {
+          field.Name = "Pin";
+          field.Type = TType.String;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Pin);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -129,13 +142,19 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("ZPBluetoothDeviceList(");
+      StringBuilder __sb = new StringBuilder("BluetoothDevicePinRequest(");
       bool __first = true;
-      if (DeviceList != null && __isset.DeviceList) {
+      if (DeviceName != null && __isset.DeviceName) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("DeviceList: ");
-        __sb.Append(DeviceList);
+        __sb.Append("DeviceName: ");
+        __sb.Append(DeviceName);
+      }
+      if (Pin != null && __isset.Pin) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Pin: ");
+        __sb.Append(Pin);
       }
       __sb.Append(")");
       return __sb.ToString();

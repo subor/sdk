@@ -25,7 +25,7 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
-  public partial class ZPBluetoothDevicePinRequest : TBase
+  public partial class BluetoothDevicePinRequest : TBase
   {
     private string _DeviceName;
     private string _Pin;
@@ -64,7 +64,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       public bool Pin;
     }
 
-    public ZPBluetoothDevicePinRequest()
+    public BluetoothDevicePinRequest()
     {
     }
 
@@ -126,7 +126,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("ZPBluetoothDevicePinRequest");
+        var struc = new TStruct("BluetoothDevicePinRequest");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
         if (DeviceName != null && __isset.DeviceName)
@@ -158,7 +158,7 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("ZPBluetoothDevicePinRequest(");
+      var sb = new StringBuilder("BluetoothDevicePinRequest(");
       bool __first = true;
       if (DeviceName != null && __isset.DeviceName)
       {
