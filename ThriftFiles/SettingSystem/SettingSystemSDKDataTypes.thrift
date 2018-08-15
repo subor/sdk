@@ -56,6 +56,28 @@ struct RuyiNetworkTestResult {
     3: RuyiNetworkTestItem internetconnection,
 }
 
+struct RuyiNetworkSpeed {
+    1: RuyiNetworkTestItem downloadspeed,
+    2: RuyiNetworkTestItem uploadspeed,
+}
+
+struct BluetoothDevice {
+    1: string DeviceName,
+    2: string DeviceAddress,
+    3: i32 DeviceClass,
+    4: bool Connected,
+    5: bool Authenticated,
+}
+
+struct BluetoothDeviceList {
+    1: list<BluetoothDevice> DeviceList,
+}
+
+struct BluetoothDevicePinRequest {
+    1: string DeviceName,
+    2: string Pin,
+}
+
 struct CategoryNode {
     1: string id,
     2: string categoryId,
@@ -77,14 +99,6 @@ struct SettingTree {
 struct NodeList {
     1: list<CommonTypeSDKDataTypes.SettingCategory> SettingCategories,
     2: list<CommonTypeSDKDataTypes.SettingItem> SettingItems,
-}
-
-/** Notification of setting item from layer0 */
-struct SettingItemNotification {
-    /** The item's ID */
-	1: string key,
-    /** Optional. The arguments of the notification. In json string format */
-	2: JSON contents = "{}",
 }
 
 struct WifiEntity {

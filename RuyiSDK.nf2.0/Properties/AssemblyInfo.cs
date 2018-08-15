@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("JadeSDK.nf2.0")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Subor.SDK.Net35")]
+[assembly: AssemblyDescription("Subor SDK targetting .NET Framework 3.5 (for Unity3D)")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("JadeSDK.nf2.0")]
+[assembly: AssemblyCompany("Subor Advanced Technology Co., Ltd.")]
+[assembly: AssemblyProduct("Subor.SDK")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

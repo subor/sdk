@@ -31,6 +31,7 @@ namespace Ruyi.SDK.CommonType
     private string _display;
     private string _summary;
     private string _description;
+    private string _icon;
     private int _sortingPriority;
     private bool _isSystemCategory;
     private Dictionary<string, int> _items;
@@ -87,6 +88,19 @@ namespace Ruyi.SDK.CommonType
       {
         __isset.description = true;
         this._description = value;
+      }
+    }
+
+    public string Icon
+    {
+      get
+      {
+        return _icon;
+      }
+      set
+      {
+        __isset.icon = true;
+        this._icon = value;
       }
     }
 
@@ -176,6 +190,7 @@ namespace Ruyi.SDK.CommonType
       public bool display;
       public bool summary;
       public bool description;
+      public bool icon;
       public bool sortingPriority;
       public bool isSystemCategory;
       public bool items;
@@ -246,6 +261,16 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 5:
+              if (field.Type == TType.String)
+              {
+                Icon = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 6:
               if (field.Type == TType.I32)
               {
                 SortingPriority = await iprot.ReadI32Async(cancellationToken);
@@ -255,7 +280,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 6:
+            case 7:
               if (field.Type == TType.Bool)
               {
                 IsSystemCategory = await iprot.ReadBoolAsync(cancellationToken);
@@ -265,7 +290,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 7:
+            case 8:
               if (field.Type == TType.Map)
               {
                 {
@@ -287,7 +312,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 8:
+            case 9:
               if (field.Type == TType.Bool)
               {
                 Enable = await iprot.ReadBoolAsync(cancellationToken);
@@ -297,7 +322,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 9:
+            case 10:
               if (field.Type == TType.Bool)
               {
                 ShowInUI = await iprot.ReadBoolAsync(cancellationToken);
@@ -307,7 +332,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 10:
+            case 11:
               if (field.Type == TType.String)
               {
                 Script = await iprot.ReadStringAsync(cancellationToken);
@@ -377,11 +402,20 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteStringAsync(Description, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
+        if (Icon != null && __isset.icon)
+        {
+          field.Name = "icon";
+          field.Type = TType.String;
+          field.ID = 5;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Icon, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
         if (__isset.sortingPriority)
         {
           field.Name = "sortingPriority";
           field.Type = TType.I32;
-          field.ID = 5;
+          field.ID = 6;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteI32Async(SortingPriority, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -390,7 +424,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "isSystemCategory";
           field.Type = TType.Bool;
-          field.ID = 6;
+          field.ID = 7;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteBoolAsync(IsSystemCategory, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -399,7 +433,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "items";
           field.Type = TType.Map;
-          field.ID = 7;
+          field.ID = 8;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.I32, Items.Count), cancellationToken);
@@ -416,7 +450,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "enable";
           field.Type = TType.Bool;
-          field.ID = 8;
+          field.ID = 9;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteBoolAsync(Enable, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -425,7 +459,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "showInUI";
           field.Type = TType.Bool;
-          field.ID = 9;
+          field.ID = 10;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteBoolAsync(ShowInUI, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -434,7 +468,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "script";
           field.Type = TType.String;
-          field.ID = 10;
+          field.ID = 11;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteStringAsync(Script, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -479,6 +513,13 @@ namespace Ruyi.SDK.CommonType
         __first = false;
         sb.Append("Description: ");
         sb.Append(Description);
+      }
+      if (Icon != null && __isset.icon)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Icon: ");
+        sb.Append(Icon);
       }
       if (__isset.sortingPriority)
       {

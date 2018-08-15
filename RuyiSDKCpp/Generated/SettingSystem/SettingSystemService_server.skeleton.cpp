@@ -61,7 +61,16 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("GetCategoryNode\n");
   }
 
-  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType) {
+  /**
+   * Get child nodes of specified setting item or setting category
+   * 
+   * @param parent The parent node
+   * 
+   * @param nodeType Specifies whether the child nodes containing setting item or setting category, or both
+   * 
+   * @param param The parameter passed to the function which will be called while getting the item value
+   */
+  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param) {
     // Your implementation goes here
     printf("GetChildNode\n");
   }
@@ -172,6 +181,16 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("RuyiTestNetwork\n");
   }
 
+  bool RuyiStartNetworkSpeedTest(const int32_t userindex) {
+    // Your implementation goes here
+    printf("RuyiStartNetworkSpeedTest\n");
+  }
+
+  bool RuyiStopNetworkSpeedTest(const int32_t userindex) {
+    // Your implementation goes here
+    printf("RuyiStopNetworkSpeedTest\n");
+  }
+
   void GetAvailableWifi(std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> & _return) {
     // Your implementation goes here
     printf("GetAvailableWifi\n");
@@ -180,6 +199,26 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
   bool DisconnectWifi() {
     // Your implementation goes here
     printf("DisconnectWifi\n");
+  }
+
+  bool DiscoverBluetoothDevice() {
+    // Your implementation goes here
+    printf("DiscoverBluetoothDevice\n");
+  }
+
+  bool ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) {
+    // Your implementation goes here
+    printf("ConnectBluetoothDevice\n");
+  }
+
+  bool DisconnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) {
+    // Your implementation goes here
+    printf("DisconnectBluetoothDevice\n");
+  }
+
+  bool RemoveBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) {
+    // Your implementation goes here
+    printf("RemoveBluetoothDevice\n");
   }
 
 };

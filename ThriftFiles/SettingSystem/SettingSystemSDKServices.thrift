@@ -34,7 +34,17 @@ According to the format of json string your write, searching can be separated to
 	/** Get settings and categories in a tree */
 	SettingSystemSDKDataTypes.SettingTree GetCategoryNode() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
-	SettingSystemSDKDataTypes.NodeList GetChildNode(1: string parent, 2: SettingSystemSDKDataTypes.NodeType nodeType) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+	/** Get child nodes of specified setting item or setting category */
+	SettingSystemSDKDataTypes.NodeList GetChildNode(
+		/** The parent node */
+		1: string parent, 
+		
+		/** Specifies whether the child nodes containing setting item or setting category, or both */
+		2: SettingSystemSDKDataTypes.NodeType nodeType, 
+		
+		/** The parameter passed to the function which will be called while getting the item value */
+		3: string param
+	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	/** Set the specified setting's "dataValue" with the new value */
 	bool SetSettingItem(
@@ -95,8 +105,20 @@ According to the format of json string your write, searching can be separated to
 
 	SettingSystemSDKDataTypes.RuyiNetworkTestResult RuyiTestNetwork() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
+	bool RuyiStartNetworkSpeedTest(1: i32 userindex) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	bool RuyiStopNetworkSpeedTest(1: i32 userindex) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
 	list<SettingSystemSDKDataTypes.WifiEntity> GetAvailableWifi() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	bool DisconnectWifi() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	bool DiscoverBluetoothDevice() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	bool ConnectBluetoothDevice(1: string DeviceName, 2: string DeviceAddress) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	bool DisconnectBluetoothDevice(1: string DeviceName, 2: string DeviceAddress) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	bool RemoveBluetoothDevice(1: string DeviceName, 2: string DeviceAddress) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 }
 

@@ -330,6 +330,38 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   }
 
   /**
+   * Authenticate the user via wechat
+   * 
+   * @param phoneNumber The phone number to authenticate with
+   * 
+   * @param authCode The code sent to the mobile phone
+   * 
+   * @param forceCreate Should a new profile be created for this user if the account does not exist?
+   * 
+   * @param clientIndex
+   */
+  void Authentication_AuthenticatePhone(std::string& _return, const std::string& phoneNumber, const std::string& authCode, const bool forceCreate, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Authentication_AuthenticatePhone\n");
+  }
+
+  /**
+   * Authenticate the user via wechat
+   * 
+   * @param openId The open id passed from wechat
+   * 
+   * @param token The access token passed from wechat
+   * 
+   * @param forceCreate Should a new profile be created for this user if the account does not exist?
+   * 
+   * @param clientIndex
+   */
+  void Authentication_AuthenticateWechat(std::string& _return, const std::string& openId, const std::string& token, const bool forceCreate, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Authentication_AuthenticateWechat\n");
+  }
+
+  /**
    * Reset Email password - Sends a password reset email to the specified address
    * 
    * @param externalId The email address to send the reset email to.
@@ -339,6 +371,20 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Authentication_ResetEmailPassword(std::string& _return, const std::string& externalId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Authentication_ResetEmailPassword\n");
+  }
+
+  /**
+   * Request an SMS code sent to a phone prior to authentication.
+   * 
+   * @param phoneNumber The phone number to send the code to.
+   * 
+   * @param forceCreate Whether or not to create a new player if they don't exist.
+   * 
+   * @param clientIndex
+   */
+  void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Authentication_RequestSmsCode\n");
   }
 
   /**
@@ -1252,13 +1298,34 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Returns user state of a particular user.
    * 
-   * @param profileId Profile Id of user to retrieve player state for.
+   * @param playerId
+   * @param clientIndex
+   */
+  void Friend_GetSummaryDataForProfileId(std::string& _return, const std::string& playerId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Friend_GetSummaryDataForProfileId\n");
+  }
+
+  /**
+   * Returns user state of a set of users.
+   * 
+   * @param playerIds Player Ids of users to retrieve player state for.
    * 
    * @param clientIndex
    */
-  void Friend_GetSummaryDataForProfileId(std::string& _return, const std::string& profileId, const int32_t clientIndex) {
+  void Friend_GetSummaryDataForProfileIds(std::string& _return, const std::vector<std::string> & playerIds, const int32_t clientIndex) {
     // Your implementation goes here
-    printf("Friend_GetSummaryDataForProfileId\n");
+    printf("Friend_GetSummaryDataForProfileIds\n");
+  }
+
+  /**
+   * Returns user state of the player's friends.
+   * 
+   * @param clientIndex
+   */
+  void Friend_GetSummaryDataForFriends(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Friend_GetSummaryDataForFriends\n");
   }
 
   /**
@@ -4731,6 +4798,11 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Telemetry_EndTelemetryEvent(std::string& _return, const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Telemetry_EndTelemetryEvent\n");
+  }
+
+  void Authentication_GetWeChatQRPageURL(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Authentication_GetWeChatQRPageURL\n");
   }
 
   void File_DownloadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex) {

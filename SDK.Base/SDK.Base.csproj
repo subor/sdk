@@ -15,9 +15,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\SDK.BaseAsync\GeneratedTypeCache.cs" Link="GeneratedTypeCache.cs" />
+    <Compile Include="..\SDK.BaseAsync\ISDKFactory.cs" Link="ISDKFactory.cs" />
     <Compile Include="..\SDK.BaseAsync\PublisherLogger.cs" Link="PublisherLogger.cs" />
     <Compile Include="..\SDK.BaseAsync\SDKUtility.cs" Link="SDKUtility.cs" />
     <Compile Include="..\SDK.BaseAsync\ServiceIDs.cs" Link="ServiceIDs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NetMQ" Version="4.0.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\externals\thrift.csharp\Thrift.ns2.0.csproj" />

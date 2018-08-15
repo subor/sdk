@@ -24,9 +24,23 @@ namespace Ruyi.SDK.CommonType
   #endif
   public partial class ActionTrigger : TBase
   {
+    private int _Id;
     private InputCategory _InputCagetory;
     private List<int> _TriggerButtons;
     private List<int> _TriggerValue;
+
+    public int Id
+    {
+      get
+      {
+        return _Id;
+      }
+      set
+      {
+        __isset.Id = true;
+        this._Id = value;
+      }
+    }
 
     /// <summary>
     /// 
@@ -77,6 +91,7 @@ namespace Ruyi.SDK.CommonType
     [Serializable]
     #endif
     public struct Isset {
+      public bool Id;
       public bool InputCagetory;
       public bool TriggerButtons;
       public bool TriggerValue;
@@ -102,12 +117,19 @@ namespace Ruyi.SDK.CommonType
           {
             case 1:
               if (field.Type == TType.I32) {
-                InputCagetory = (InputCategory)iprot.ReadI32();
+                Id = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
+              if (field.Type == TType.I32) {
+                InputCagetory = (InputCategory)iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
               if (field.Type == TType.List) {
                 {
                   TriggerButtons = new List<int>();
@@ -124,7 +146,7 @@ namespace Ruyi.SDK.CommonType
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 3:
+            case 4:
               if (field.Type == TType.List) {
                 {
                   TriggerValue = new List<int>();
@@ -162,10 +184,18 @@ namespace Ruyi.SDK.CommonType
         TStruct struc = new TStruct("ActionTrigger");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
+        if (__isset.Id) {
+          field.Name = "Id";
+          field.Type = TType.I32;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(Id);
+          oprot.WriteFieldEnd();
+        }
         if (__isset.InputCagetory) {
           field.Name = "InputCagetory";
           field.Type = TType.I32;
-          field.ID = 1;
+          field.ID = 2;
           oprot.WriteFieldBegin(field);
           oprot.WriteI32((int)InputCagetory);
           oprot.WriteFieldEnd();
@@ -173,7 +203,7 @@ namespace Ruyi.SDK.CommonType
         if (TriggerButtons != null && __isset.TriggerButtons) {
           field.Name = "TriggerButtons";
           field.Type = TType.List;
-          field.ID = 2;
+          field.ID = 3;
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.I32, TriggerButtons.Count));
@@ -188,7 +218,7 @@ namespace Ruyi.SDK.CommonType
         if (TriggerValue != null && __isset.TriggerValue) {
           field.Name = "TriggerValue";
           field.Type = TType.List;
-          field.ID = 3;
+          field.ID = 4;
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.I32, TriggerValue.Count));
@@ -212,6 +242,12 @@ namespace Ruyi.SDK.CommonType
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("ActionTrigger(");
       bool __first = true;
+      if (__isset.Id) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Id: ");
+        __sb.Append(Id);
+      }
       if (__isset.InputCagetory) {
         if(!__first) { __sb.Append(", "); }
         __first = false;

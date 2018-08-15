@@ -9,55 +9,33 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.PublisherSubscriber
 {
 
-  /// <summary>
-  /// Notification of setting item from layer0
-  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class SettingItemNotification : TBase
+  public partial class PubHeader : TBase
   {
-    private string _key;
-    private string _contents;
+    private string _PayloadType;
 
-    /// <summary>
-    /// The item's ID
-    /// </summary>
-    public string Key
+    public string PayloadType
     {
       get
       {
-        return _key;
+        return _PayloadType;
       }
       set
       {
-        __isset.key = true;
-        this._key = value;
-      }
-    }
-
-    /// <summary>
-    /// Optional. The arguments of the notification. In json string format
-    /// </summary>
-    public string Contents
-    {
-      get
-      {
-        return _contents;
-      }
-      set
-      {
-        __isset.contents = true;
-        this._contents = value;
+        __isset.PayloadType = true;
+        this._PayloadType = value;
       }
     }
 
@@ -67,13 +45,10 @@ namespace Ruyi.SDK.SettingSystem.Api
     [Serializable]
     #endif
     public struct Isset {
-      public bool key;
-      public bool contents;
+      public bool PayloadType;
     }
 
-    public SettingItemNotification() {
-      this._contents = "{}";
-      this.__isset.contents = true;
+    public PubHeader() {
     }
 
     public void Read (TProtocol iprot)
@@ -93,14 +68,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             case 1:
               if (field.Type == TType.String) {
-                Key = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.String) {
-                Contents = iprot.ReadString();
+                PayloadType = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -123,23 +91,15 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("SettingItemNotification");
+        TStruct struc = new TStruct("PubHeader");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (Key != null && __isset.key) {
-          field.Name = "key";
+        if (PayloadType != null && __isset.PayloadType) {
+          field.Name = "PayloadType";
           field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Key);
-          oprot.WriteFieldEnd();
-        }
-        if (Contents != null && __isset.contents) {
-          field.Name = "contents";
-          field.Type = TType.String;
-          field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Contents);
+          oprot.WriteString(PayloadType);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -152,19 +112,13 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("SettingItemNotification(");
+      StringBuilder __sb = new StringBuilder("PubHeader(");
       bool __first = true;
-      if (Key != null && __isset.key) {
+      if (PayloadType != null && __isset.PayloadType) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Key: ");
-        __sb.Append(Key);
-      }
-      if (Contents != null && __isset.contents) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Contents: ");
-        __sb.Append(Contents);
+        __sb.Append("PayloadType: ");
+        __sb.Append(PayloadType);
       }
       __sb.Append(")");
       return __sb.ToString();

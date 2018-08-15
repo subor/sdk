@@ -15,8 +15,8 @@ namespace Ruyi.SDK.Online
         {
             return new RuyiNetFriendSummaryData()
             {
-                Name = data.profileName,
-                PlayerId = data.profileId,
+                Name = data.playerName,
+                PlayerId = data.playerId,
                 PictureUrl = data.pictureUrl,
                 Data = data.summaryFriendData,
                 Email = data.email,

@@ -25,43 +25,34 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
-  /// <summary>
-  /// Notification of setting item from layer0
-  /// </summary>
-  public partial class SettingItemNotification : TBase
+  public partial class RuyiNetworkSpeed : TBase
   {
-    private string _key;
-    private string _contents;
+    private RuyiNetworkTestItem _downloadspeed;
+    private RuyiNetworkTestItem _uploadspeed;
 
-    /// <summary>
-    /// The item's ID
-    /// </summary>
-    public string Key
+    public RuyiNetworkTestItem Downloadspeed
     {
       get
       {
-        return _key;
+        return _downloadspeed;
       }
       set
       {
-        __isset.key = true;
-        this._key = value;
+        __isset.downloadspeed = true;
+        this._downloadspeed = value;
       }
     }
 
-    /// <summary>
-    /// Optional. The arguments of the notification. In json string format
-    /// </summary>
-    public string Contents
+    public RuyiNetworkTestItem Uploadspeed
     {
       get
       {
-        return _contents;
+        return _uploadspeed;
       }
       set
       {
-        __isset.contents = true;
-        this._contents = value;
+        __isset.uploadspeed = true;
+        this._uploadspeed = value;
       }
     }
 
@@ -69,14 +60,12 @@ namespace Ruyi.SDK.SettingSystem.Api
     public Isset __isset;
     public struct Isset
     {
-      public bool key;
-      public bool contents;
+      public bool downloadspeed;
+      public bool uploadspeed;
     }
 
-    public SettingItemNotification()
+    public RuyiNetworkSpeed()
     {
-      this._contents = "{}";
-      this.__isset.contents = true;
     }
 
     public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
@@ -97,9 +86,10 @@ namespace Ruyi.SDK.SettingSystem.Api
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                Key = await iprot.ReadStringAsync(cancellationToken);
+                Downloadspeed = new RuyiNetworkTestItem();
+                await Downloadspeed.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -107,9 +97,10 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 2:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                Contents = await iprot.ReadStringAsync(cancellationToken);
+                Uploadspeed = new RuyiNetworkTestItem();
+                await Uploadspeed.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -137,25 +128,25 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("SettingItemNotification");
+        var struc = new TStruct("RuyiNetworkSpeed");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Key != null && __isset.key)
+        if (Downloadspeed != null && __isset.downloadspeed)
         {
-          field.Name = "key";
-          field.Type = TType.String;
+          field.Name = "downloadspeed";
+          field.Type = TType.Struct;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Key, cancellationToken);
+          await Downloadspeed.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Contents != null && __isset.contents)
+        if (Uploadspeed != null && __isset.uploadspeed)
         {
-          field.Name = "contents";
-          field.Type = TType.String;
+          field.Name = "uploadspeed";
+          field.Type = TType.Struct;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Contents, cancellationToken);
+          await Uploadspeed.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -169,21 +160,21 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("SettingItemNotification(");
+      var sb = new StringBuilder("RuyiNetworkSpeed(");
       bool __first = true;
-      if (Key != null && __isset.key)
+      if (Downloadspeed != null && __isset.downloadspeed)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Key: ");
-        sb.Append(Key);
+        sb.Append("Downloadspeed: ");
+        sb.Append(Downloadspeed== null ? "<null>" : Downloadspeed.ToString());
       }
-      if (Contents != null && __isset.contents)
+      if (Uploadspeed != null && __isset.uploadspeed)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Contents: ");
-        sb.Append(Contents);
+        sb.Append("Uploadspeed: ");
+        sb.Append(Uploadspeed== null ? "<null>" : Uploadspeed.ToString());
       }
       sb.Append(")");
       return sb.ToString();

@@ -33,7 +33,7 @@ std::string StorageLayerTest::GetLayer0Path()
 {
 	StorageLayer::GetLocalPathResult result;
 	ruyiSDK->Storage->GetLocalPath(result, "/<HDD0>/n.txt");
-	size_t idx = result.path.find("RuyiLocalRoot");
+	size_t idx = result.path.find("LocalRoot");
 	
 	Assert::AreNotEqual((int)idx, -1);
 	return result.path.substr(0, idx);
@@ -68,6 +68,6 @@ string StorageLayerTest::MountedRoot(string mountedRoot, string path)
 string StorageLayerTest::LocalRoot(string source, string local, string path) 
 {
 	std::experimental::filesystem::path p;
-	p.append(source).append("RuyiLocalRoot").append(local).append(path);
+	p.append(source).append("LocalRoot").append(local).append(path);
 	return p.string();
 }
