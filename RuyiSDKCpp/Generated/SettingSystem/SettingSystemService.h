@@ -120,6 +120,7 @@ class SettingSystemServiceIf {
   virtual bool ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) = 0;
   virtual bool DisconnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) = 0;
   virtual bool RemoveBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) = 0;
+  virtual void GetBluetoothDevice(std::vector< ::Ruyi::SDK::SettingSystem::Api::BluetoothDevice> & _return) = 0;
 };
 
 class SettingSystemServiceIfFactory {
@@ -250,6 +251,9 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
   bool RemoveBluetoothDevice(const std::string& /* DeviceName */, const std::string& /* DeviceAddress */) {
     bool _return = false;
     return _return;
+  }
+  void GetBluetoothDevice(std::vector< ::Ruyi::SDK::SettingSystem::Api::BluetoothDevice> & /* _return */) {
+    return;
   }
 };
 
@@ -3457,6 +3461,106 @@ class SettingSystemService_RemoveBluetoothDevice_presult {
 
 };
 
+
+class SettingSystemService_GetBluetoothDevice_args {
+ public:
+
+  SettingSystemService_GetBluetoothDevice_args(const SettingSystemService_GetBluetoothDevice_args&);
+  SettingSystemService_GetBluetoothDevice_args& operator=(const SettingSystemService_GetBluetoothDevice_args&);
+  SettingSystemService_GetBluetoothDevice_args() {
+  }
+
+  virtual ~SettingSystemService_GetBluetoothDevice_args() throw();
+
+  bool operator == (const SettingSystemService_GetBluetoothDevice_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const SettingSystemService_GetBluetoothDevice_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_GetBluetoothDevice_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_GetBluetoothDevice_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_GetBluetoothDevice_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_GetBluetoothDevice_result__isset {
+  _SettingSystemService_GetBluetoothDevice_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_GetBluetoothDevice_result__isset;
+
+class SettingSystemService_GetBluetoothDevice_result {
+ public:
+
+  SettingSystemService_GetBluetoothDevice_result(const SettingSystemService_GetBluetoothDevice_result&);
+  SettingSystemService_GetBluetoothDevice_result& operator=(const SettingSystemService_GetBluetoothDevice_result&);
+  SettingSystemService_GetBluetoothDevice_result() {
+  }
+
+  virtual ~SettingSystemService_GetBluetoothDevice_result() throw();
+  std::vector< ::Ruyi::SDK::SettingSystem::Api::BluetoothDevice>  success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_GetBluetoothDevice_result__isset __isset;
+
+  void __set_success(const std::vector< ::Ruyi::SDK::SettingSystem::Api::BluetoothDevice> & val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_GetBluetoothDevice_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_GetBluetoothDevice_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_GetBluetoothDevice_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_GetBluetoothDevice_presult__isset {
+  _SettingSystemService_GetBluetoothDevice_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_GetBluetoothDevice_presult__isset;
+
+class SettingSystemService_GetBluetoothDevice_presult {
+ public:
+
+
+  virtual ~SettingSystemService_GetBluetoothDevice_presult() throw();
+  std::vector< ::Ruyi::SDK::SettingSystem::Api::BluetoothDevice> * success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_GetBluetoothDevice_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
  public:
   SettingSystemServiceClient(apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) {
@@ -3566,6 +3670,9 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   bool RemoveBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress);
   void send_RemoveBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress);
   bool recv_RemoveBluetoothDevice();
+  void GetBluetoothDevice(std::vector< ::Ruyi::SDK::SettingSystem::Api::BluetoothDevice> & _return);
+  void send_GetBluetoothDevice();
+  void recv_GetBluetoothDevice(std::vector< ::Ruyi::SDK::SettingSystem::Api::BluetoothDevice> & _return);
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -3609,6 +3716,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
   void process_ConnectBluetoothDevice(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_DisconnectBluetoothDevice(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_RemoveBluetoothDevice(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_GetBluetoothDevice(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   SettingSystemServiceProcessor(::apache::thrift::stdcxx::shared_ptr<SettingSystemServiceIf> iface) :
     iface_(iface) {
@@ -3640,6 +3748,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
     processMap_["ConnectBluetoothDevice"] = &SettingSystemServiceProcessor::process_ConnectBluetoothDevice;
     processMap_["DisconnectBluetoothDevice"] = &SettingSystemServiceProcessor::process_DisconnectBluetoothDevice;
     processMap_["RemoveBluetoothDevice"] = &SettingSystemServiceProcessor::process_RemoveBluetoothDevice;
+    processMap_["GetBluetoothDevice"] = &SettingSystemServiceProcessor::process_GetBluetoothDevice;
   }
 
   virtual ~SettingSystemServiceProcessor() {}
@@ -3930,6 +4039,16 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return ifaces_[i]->RemoveBluetoothDevice(DeviceName, DeviceAddress);
   }
 
+  void GetBluetoothDevice(std::vector< ::Ruyi::SDK::SettingSystem::Api::BluetoothDevice> & _return) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->GetBluetoothDevice(_return);
+    }
+    ifaces_[i]->GetBluetoothDevice(_return);
+    return;
+  }
+
 };
 
 // The 'concurrent' client is a thread safe client that correctly handles
@@ -4044,6 +4163,9 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   bool RemoveBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress);
   int32_t send_RemoveBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress);
   bool recv_RemoveBluetoothDevice(const int32_t seqid);
+  void GetBluetoothDevice(std::vector< ::Ruyi::SDK::SettingSystem::Api::BluetoothDevice> & _return);
+  int32_t send_GetBluetoothDevice();
+  void recv_GetBluetoothDevice(std::vector< ::Ruyi::SDK::SettingSystem::Api::BluetoothDevice> & _return, const int32_t seqid);
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;

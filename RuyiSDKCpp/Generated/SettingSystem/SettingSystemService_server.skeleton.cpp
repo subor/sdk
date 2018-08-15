@@ -221,6 +221,11 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("RemoveBluetoothDevice\n");
   }
 
+  void GetBluetoothDevice(std::vector< ::Ruyi::SDK::SettingSystem::Api::BluetoothDevice> & _return) {
+    // Your implementation goes here
+    printf("GetBluetoothDevice\n");
+  }
+
 };
 
 int main(int argc, char **argv) {
