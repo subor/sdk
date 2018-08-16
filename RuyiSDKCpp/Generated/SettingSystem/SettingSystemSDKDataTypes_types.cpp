@@ -1008,6 +1008,402 @@ void RuyiNetworkSpeed::printTo(std::ostream& out) const {
 }
 
 
+BluetoothDevice::~BluetoothDevice() throw() {
+}
+
+
+void BluetoothDevice::__set_DeviceName(const std::string& val) {
+  this->DeviceName = val;
+}
+
+void BluetoothDevice::__set_DeviceAddress(const std::string& val) {
+  this->DeviceAddress = val;
+}
+
+void BluetoothDevice::__set_DeviceClass(const int32_t val) {
+  this->DeviceClass = val;
+}
+
+void BluetoothDevice::__set_Connected(const bool val) {
+  this->Connected = val;
+}
+
+void BluetoothDevice::__set_Authenticated(const bool val) {
+  this->Authenticated = val;
+}
+std::ostream& operator<<(std::ostream& out, const BluetoothDevice& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+uint32_t BluetoothDevice::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceName);
+          this->__isset.DeviceName = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceAddress);
+          this->__isset.DeviceAddress = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->DeviceClass);
+          this->__isset.DeviceClass = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->Connected);
+          this->__isset.Connected = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->Authenticated);
+          this->__isset.Authenticated = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t BluetoothDevice::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("BluetoothDevice");
+
+  xfer += oprot->writeFieldBegin("DeviceName", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->DeviceName);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("DeviceAddress", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->DeviceAddress);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("DeviceClass", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->DeviceClass);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Connected", ::apache::thrift::protocol::T_BOOL, 4);
+  xfer += oprot->writeBool(this->Connected);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Authenticated", ::apache::thrift::protocol::T_BOOL, 5);
+  xfer += oprot->writeBool(this->Authenticated);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(BluetoothDevice &a, BluetoothDevice &b) {
+  using ::std::swap;
+  swap(a.DeviceName, b.DeviceName);
+  swap(a.DeviceAddress, b.DeviceAddress);
+  swap(a.DeviceClass, b.DeviceClass);
+  swap(a.Connected, b.Connected);
+  swap(a.Authenticated, b.Authenticated);
+  swap(a.__isset, b.__isset);
+}
+
+BluetoothDevice::BluetoothDevice(const BluetoothDevice& other12) {
+  DeviceName = other12.DeviceName;
+  DeviceAddress = other12.DeviceAddress;
+  DeviceClass = other12.DeviceClass;
+  Connected = other12.Connected;
+  Authenticated = other12.Authenticated;
+  __isset = other12.__isset;
+}
+BluetoothDevice& BluetoothDevice::operator=(const BluetoothDevice& other13) {
+  DeviceName = other13.DeviceName;
+  DeviceAddress = other13.DeviceAddress;
+  DeviceClass = other13.DeviceClass;
+  Connected = other13.Connected;
+  Authenticated = other13.Authenticated;
+  __isset = other13.__isset;
+  return *this;
+}
+void BluetoothDevice::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "BluetoothDevice(";
+  out << "DeviceName=" << to_string(DeviceName);
+  out << ", " << "DeviceAddress=" << to_string(DeviceAddress);
+  out << ", " << "DeviceClass=" << to_string(DeviceClass);
+  out << ", " << "Connected=" << to_string(Connected);
+  out << ", " << "Authenticated=" << to_string(Authenticated);
+  out << ")";
+}
+
+
+BluetoothDeviceList::~BluetoothDeviceList() throw() {
+}
+
+
+void BluetoothDeviceList::__set_DeviceList(const std::vector<BluetoothDevice> & val) {
+  this->DeviceList = val;
+}
+std::ostream& operator<<(std::ostream& out, const BluetoothDeviceList& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+uint32_t BluetoothDeviceList::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->DeviceList.clear();
+            uint32_t _size14;
+            ::apache::thrift::protocol::TType _etype17;
+            xfer += iprot->readListBegin(_etype17, _size14);
+            this->DeviceList.resize(_size14);
+            uint32_t _i18;
+            for (_i18 = 0; _i18 < _size14; ++_i18)
+            {
+              xfer += this->DeviceList[_i18].read(iprot);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.DeviceList = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t BluetoothDeviceList::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("BluetoothDeviceList");
+
+  xfer += oprot->writeFieldBegin("DeviceList", ::apache::thrift::protocol::T_LIST, 1);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->DeviceList.size()));
+    std::vector<BluetoothDevice> ::const_iterator _iter19;
+    for (_iter19 = this->DeviceList.begin(); _iter19 != this->DeviceList.end(); ++_iter19)
+    {
+      xfer += (*_iter19).write(oprot);
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(BluetoothDeviceList &a, BluetoothDeviceList &b) {
+  using ::std::swap;
+  swap(a.DeviceList, b.DeviceList);
+  swap(a.__isset, b.__isset);
+}
+
+BluetoothDeviceList::BluetoothDeviceList(const BluetoothDeviceList& other20) {
+  DeviceList = other20.DeviceList;
+  __isset = other20.__isset;
+}
+BluetoothDeviceList& BluetoothDeviceList::operator=(const BluetoothDeviceList& other21) {
+  DeviceList = other21.DeviceList;
+  __isset = other21.__isset;
+  return *this;
+}
+void BluetoothDeviceList::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "BluetoothDeviceList(";
+  out << "DeviceList=" << to_string(DeviceList);
+  out << ")";
+}
+
+
+BluetoothDevicePinRequest::~BluetoothDevicePinRequest() throw() {
+}
+
+
+void BluetoothDevicePinRequest::__set_DeviceName(const std::string& val) {
+  this->DeviceName = val;
+}
+
+void BluetoothDevicePinRequest::__set_Pin(const std::string& val) {
+  this->Pin = val;
+}
+std::ostream& operator<<(std::ostream& out, const BluetoothDevicePinRequest& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+uint32_t BluetoothDevicePinRequest::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceName);
+          this->__isset.DeviceName = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->Pin);
+          this->__isset.Pin = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t BluetoothDevicePinRequest::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("BluetoothDevicePinRequest");
+
+  xfer += oprot->writeFieldBegin("DeviceName", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->DeviceName);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Pin", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->Pin);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(BluetoothDevicePinRequest &a, BluetoothDevicePinRequest &b) {
+  using ::std::swap;
+  swap(a.DeviceName, b.DeviceName);
+  swap(a.Pin, b.Pin);
+  swap(a.__isset, b.__isset);
+}
+
+BluetoothDevicePinRequest::BluetoothDevicePinRequest(const BluetoothDevicePinRequest& other22) {
+  DeviceName = other22.DeviceName;
+  Pin = other22.Pin;
+  __isset = other22.__isset;
+}
+BluetoothDevicePinRequest& BluetoothDevicePinRequest::operator=(const BluetoothDevicePinRequest& other23) {
+  DeviceName = other23.DeviceName;
+  Pin = other23.Pin;
+  __isset = other23.__isset;
+  return *this;
+}
+void BluetoothDevicePinRequest::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "BluetoothDevicePinRequest(";
+  out << "DeviceName=" << to_string(DeviceName);
+  out << ", " << "Pin=" << to_string(Pin);
+  out << ")";
+}
+
+
 CategoryNode::~CategoryNode() throw() {
 }
 
@@ -1083,14 +1479,14 @@ uint32_t CategoryNode::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->children.clear();
-            uint32_t _size12;
-            ::apache::thrift::protocol::TType _etype15;
-            xfer += iprot->readListBegin(_etype15, _size12);
-            this->children.resize(_size12);
-            uint32_t _i16;
-            for (_i16 = 0; _i16 < _size12; ++_i16)
+            uint32_t _size24;
+            ::apache::thrift::protocol::TType _etype27;
+            xfer += iprot->readListBegin(_etype27, _size24);
+            this->children.resize(_size24);
+            uint32_t _i28;
+            for (_i28 = 0; _i28 < _size24; ++_i28)
             {
-              xfer += this->children[_i16].read(iprot);
+              xfer += this->children[_i28].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1131,10 +1527,10 @@ uint32_t CategoryNode::write(::apache::thrift::protocol::TProtocol* oprot) const
   xfer += oprot->writeFieldBegin("children", ::apache::thrift::protocol::T_LIST, 4);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->children.size()));
-    std::vector<CategoryNode> ::const_iterator _iter17;
-    for (_iter17 = this->children.begin(); _iter17 != this->children.end(); ++_iter17)
+    std::vector<CategoryNode> ::const_iterator _iter29;
+    for (_iter29 = this->children.begin(); _iter29 != this->children.end(); ++_iter29)
     {
-      xfer += (*_iter17).write(oprot);
+      xfer += (*_iter29).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -1154,19 +1550,19 @@ void swap(CategoryNode &a, CategoryNode &b) {
   swap(a.__isset, b.__isset);
 }
 
-CategoryNode::CategoryNode(const CategoryNode& other18) {
-  id = other18.id;
-  categoryId = other18.categoryId;
-  sortingPriority = other18.sortingPriority;
-  children = other18.children;
-  __isset = other18.__isset;
+CategoryNode::CategoryNode(const CategoryNode& other30) {
+  id = other30.id;
+  categoryId = other30.categoryId;
+  sortingPriority = other30.sortingPriority;
+  children = other30.children;
+  __isset = other30.__isset;
 }
-CategoryNode& CategoryNode::operator=(const CategoryNode& other19) {
-  id = other19.id;
-  categoryId = other19.categoryId;
-  sortingPriority = other19.sortingPriority;
-  children = other19.children;
-  __isset = other19.__isset;
+CategoryNode& CategoryNode::operator=(const CategoryNode& other31) {
+  id = other31.id;
+  categoryId = other31.categoryId;
+  sortingPriority = other31.sortingPriority;
+  children = other31.children;
+  __isset = other31.__isset;
   return *this;
 }
 void CategoryNode::printTo(std::ostream& out) const {
@@ -1231,14 +1627,14 @@ uint32_t SettingSearchResult::read(::apache::thrift::protocol::TProtocol* iprot)
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->SettingItems.clear();
-            uint32_t _size20;
-            ::apache::thrift::protocol::TType _etype23;
-            xfer += iprot->readListBegin(_etype23, _size20);
-            this->SettingItems.resize(_size20);
-            uint32_t _i24;
-            for (_i24 = 0; _i24 < _size20; ++_i24)
+            uint32_t _size32;
+            ::apache::thrift::protocol::TType _etype35;
+            xfer += iprot->readListBegin(_etype35, _size32);
+            this->SettingItems.resize(_size32);
+            uint32_t _i36;
+            for (_i36 = 0; _i36 < _size32; ++_i36)
             {
-              xfer += this->SettingItems[_i24].read(iprot);
+              xfer += this->SettingItems[_i36].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1271,10 +1667,10 @@ uint32_t SettingSearchResult::write(::apache::thrift::protocol::TProtocol* oprot
   xfer += oprot->writeFieldBegin("SettingItems", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingItems.size()));
-    std::vector< ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter25;
-    for (_iter25 = this->SettingItems.begin(); _iter25 != this->SettingItems.end(); ++_iter25)
+    std::vector< ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter37;
+    for (_iter37 = this->SettingItems.begin(); _iter37 != this->SettingItems.end(); ++_iter37)
     {
-      xfer += (*_iter25).write(oprot);
+      xfer += (*_iter37).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -1292,15 +1688,15 @@ void swap(SettingSearchResult &a, SettingSearchResult &b) {
   swap(a.__isset, b.__isset);
 }
 
-SettingSearchResult::SettingSearchResult(const SettingSearchResult& other26) {
-  Version = other26.Version;
-  SettingItems = other26.SettingItems;
-  __isset = other26.__isset;
+SettingSearchResult::SettingSearchResult(const SettingSearchResult& other38) {
+  Version = other38.Version;
+  SettingItems = other38.SettingItems;
+  __isset = other38.__isset;
 }
-SettingSearchResult& SettingSearchResult::operator=(const SettingSearchResult& other27) {
-  Version = other27.Version;
-  SettingItems = other27.SettingItems;
-  __isset = other27.__isset;
+SettingSearchResult& SettingSearchResult::operator=(const SettingSearchResult& other39) {
+  Version = other39.Version;
+  SettingItems = other39.SettingItems;
+  __isset = other39.__isset;
   return *this;
 }
 void SettingSearchResult::printTo(std::ostream& out) const {
@@ -1367,17 +1763,17 @@ uint32_t SettingTree::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->SettingCategories.clear();
-            uint32_t _size28;
-            ::apache::thrift::protocol::TType _ktype29;
-            ::apache::thrift::protocol::TType _vtype30;
-            xfer += iprot->readMapBegin(_ktype29, _vtype30, _size28);
-            uint32_t _i32;
-            for (_i32 = 0; _i32 < _size28; ++_i32)
+            uint32_t _size40;
+            ::apache::thrift::protocol::TType _ktype41;
+            ::apache::thrift::protocol::TType _vtype42;
+            xfer += iprot->readMapBegin(_ktype41, _vtype42, _size40);
+            uint32_t _i44;
+            for (_i44 = 0; _i44 < _size40; ++_i44)
             {
-              std::string _key33;
-              xfer += iprot->readString(_key33);
-               ::Ruyi::SDK::CommonType::SettingCategory& _val34 = this->SettingCategories[_key33];
-              xfer += _val34.read(iprot);
+              std::string _key45;
+              xfer += iprot->readString(_key45);
+               ::Ruyi::SDK::CommonType::SettingCategory& _val46 = this->SettingCategories[_key45];
+              xfer += _val46.read(iprot);
             }
             xfer += iprot->readMapEnd();
           }
@@ -1390,17 +1786,17 @@ uint32_t SettingTree::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->SettingItems.clear();
-            uint32_t _size35;
-            ::apache::thrift::protocol::TType _ktype36;
-            ::apache::thrift::protocol::TType _vtype37;
-            xfer += iprot->readMapBegin(_ktype36, _vtype37, _size35);
-            uint32_t _i39;
-            for (_i39 = 0; _i39 < _size35; ++_i39)
+            uint32_t _size47;
+            ::apache::thrift::protocol::TType _ktype48;
+            ::apache::thrift::protocol::TType _vtype49;
+            xfer += iprot->readMapBegin(_ktype48, _vtype49, _size47);
+            uint32_t _i51;
+            for (_i51 = 0; _i51 < _size47; ++_i51)
             {
-              std::string _key40;
-              xfer += iprot->readString(_key40);
-               ::Ruyi::SDK::CommonType::SettingItem& _val41 = this->SettingItems[_key40];
-              xfer += _val41.read(iprot);
+              std::string _key52;
+              xfer += iprot->readString(_key52);
+               ::Ruyi::SDK::CommonType::SettingItem& _val53 = this->SettingItems[_key52];
+              xfer += _val53.read(iprot);
             }
             xfer += iprot->readMapEnd();
           }
@@ -1433,11 +1829,11 @@ uint32_t SettingTree::write(::apache::thrift::protocol::TProtocol* oprot) const 
   xfer += oprot->writeFieldBegin("SettingCategories", ::apache::thrift::protocol::T_MAP, 2);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingCategories.size()));
-    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingCategory> ::const_iterator _iter42;
-    for (_iter42 = this->SettingCategories.begin(); _iter42 != this->SettingCategories.end(); ++_iter42)
+    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingCategory> ::const_iterator _iter54;
+    for (_iter54 = this->SettingCategories.begin(); _iter54 != this->SettingCategories.end(); ++_iter54)
     {
-      xfer += oprot->writeString(_iter42->first);
-      xfer += _iter42->second.write(oprot);
+      xfer += oprot->writeString(_iter54->first);
+      xfer += _iter54->second.write(oprot);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -1446,11 +1842,11 @@ uint32_t SettingTree::write(::apache::thrift::protocol::TProtocol* oprot) const 
   xfer += oprot->writeFieldBegin("SettingItems", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingItems.size()));
-    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter43;
-    for (_iter43 = this->SettingItems.begin(); _iter43 != this->SettingItems.end(); ++_iter43)
+    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter55;
+    for (_iter55 = this->SettingItems.begin(); _iter55 != this->SettingItems.end(); ++_iter55)
     {
-      xfer += oprot->writeString(_iter43->first);
-      xfer += _iter43->second.write(oprot);
+      xfer += oprot->writeString(_iter55->first);
+      xfer += _iter55->second.write(oprot);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -1469,17 +1865,17 @@ void swap(SettingTree &a, SettingTree &b) {
   swap(a.__isset, b.__isset);
 }
 
-SettingTree::SettingTree(const SettingTree& other44) {
-  CateNode = other44.CateNode;
-  SettingCategories = other44.SettingCategories;
-  SettingItems = other44.SettingItems;
-  __isset = other44.__isset;
+SettingTree::SettingTree(const SettingTree& other56) {
+  CateNode = other56.CateNode;
+  SettingCategories = other56.SettingCategories;
+  SettingItems = other56.SettingItems;
+  __isset = other56.__isset;
 }
-SettingTree& SettingTree::operator=(const SettingTree& other45) {
-  CateNode = other45.CateNode;
-  SettingCategories = other45.SettingCategories;
-  SettingItems = other45.SettingItems;
-  __isset = other45.__isset;
+SettingTree& SettingTree::operator=(const SettingTree& other57) {
+  CateNode = other57.CateNode;
+  SettingCategories = other57.SettingCategories;
+  SettingItems = other57.SettingItems;
+  __isset = other57.__isset;
   return *this;
 }
 void SettingTree::printTo(std::ostream& out) const {
@@ -1535,14 +1931,14 @@ uint32_t NodeList::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->SettingCategories.clear();
-            uint32_t _size46;
-            ::apache::thrift::protocol::TType _etype49;
-            xfer += iprot->readListBegin(_etype49, _size46);
-            this->SettingCategories.resize(_size46);
-            uint32_t _i50;
-            for (_i50 = 0; _i50 < _size46; ++_i50)
+            uint32_t _size58;
+            ::apache::thrift::protocol::TType _etype61;
+            xfer += iprot->readListBegin(_etype61, _size58);
+            this->SettingCategories.resize(_size58);
+            uint32_t _i62;
+            for (_i62 = 0; _i62 < _size58; ++_i62)
             {
-              xfer += this->SettingCategories[_i50].read(iprot);
+              xfer += this->SettingCategories[_i62].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1555,14 +1951,14 @@ uint32_t NodeList::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->SettingItems.clear();
-            uint32_t _size51;
-            ::apache::thrift::protocol::TType _etype54;
-            xfer += iprot->readListBegin(_etype54, _size51);
-            this->SettingItems.resize(_size51);
-            uint32_t _i55;
-            for (_i55 = 0; _i55 < _size51; ++_i55)
+            uint32_t _size63;
+            ::apache::thrift::protocol::TType _etype66;
+            xfer += iprot->readListBegin(_etype66, _size63);
+            this->SettingItems.resize(_size63);
+            uint32_t _i67;
+            for (_i67 = 0; _i67 < _size63; ++_i67)
             {
-              xfer += this->SettingItems[_i55].read(iprot);
+              xfer += this->SettingItems[_i67].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1591,10 +1987,10 @@ uint32_t NodeList::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += oprot->writeFieldBegin("SettingCategories", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingCategories.size()));
-    std::vector< ::Ruyi::SDK::CommonType::SettingCategory> ::const_iterator _iter56;
-    for (_iter56 = this->SettingCategories.begin(); _iter56 != this->SettingCategories.end(); ++_iter56)
+    std::vector< ::Ruyi::SDK::CommonType::SettingCategory> ::const_iterator _iter68;
+    for (_iter68 = this->SettingCategories.begin(); _iter68 != this->SettingCategories.end(); ++_iter68)
     {
-      xfer += (*_iter56).write(oprot);
+      xfer += (*_iter68).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -1603,10 +1999,10 @@ uint32_t NodeList::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += oprot->writeFieldBegin("SettingItems", ::apache::thrift::protocol::T_LIST, 2);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->SettingItems.size()));
-    std::vector< ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter57;
-    for (_iter57 = this->SettingItems.begin(); _iter57 != this->SettingItems.end(); ++_iter57)
+    std::vector< ::Ruyi::SDK::CommonType::SettingItem> ::const_iterator _iter69;
+    for (_iter69 = this->SettingItems.begin(); _iter69 != this->SettingItems.end(); ++_iter69)
     {
-      xfer += (*_iter57).write(oprot);
+      xfer += (*_iter69).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -1624,15 +2020,15 @@ void swap(NodeList &a, NodeList &b) {
   swap(a.__isset, b.__isset);
 }
 
-NodeList::NodeList(const NodeList& other58) {
-  SettingCategories = other58.SettingCategories;
-  SettingItems = other58.SettingItems;
-  __isset = other58.__isset;
+NodeList::NodeList(const NodeList& other70) {
+  SettingCategories = other70.SettingCategories;
+  SettingItems = other70.SettingItems;
+  __isset = other70.__isset;
 }
-NodeList& NodeList::operator=(const NodeList& other59) {
-  SettingCategories = other59.SettingCategories;
-  SettingItems = other59.SettingItems;
-  __isset = other59.__isset;
+NodeList& NodeList::operator=(const NodeList& other71) {
+  SettingCategories = other71.SettingCategories;
+  SettingItems = other71.SettingItems;
+  __isset = other71.__isset;
   return *this;
 }
 void NodeList::printTo(std::ostream& out) const {
@@ -1838,27 +2234,27 @@ void swap(WifiEntity &a, WifiEntity &b) {
   swap(a.__isset, b.__isset);
 }
 
-WifiEntity::WifiEntity(const WifiEntity& other60) {
-  Name = other60.Name;
-  MacAddress = other60.MacAddress;
-  Channel = other60.Channel;
-  CenterFrequancy = other60.CenterFrequancy;
-  Rssi = other60.Rssi;
-  Connected = other60.Connected;
-  SecurityEnabled = other60.SecurityEnabled;
-  HasProfile = other60.HasProfile;
-  __isset = other60.__isset;
+WifiEntity::WifiEntity(const WifiEntity& other72) {
+  Name = other72.Name;
+  MacAddress = other72.MacAddress;
+  Channel = other72.Channel;
+  CenterFrequancy = other72.CenterFrequancy;
+  Rssi = other72.Rssi;
+  Connected = other72.Connected;
+  SecurityEnabled = other72.SecurityEnabled;
+  HasProfile = other72.HasProfile;
+  __isset = other72.__isset;
 }
-WifiEntity& WifiEntity::operator=(const WifiEntity& other61) {
-  Name = other61.Name;
-  MacAddress = other61.MacAddress;
-  Channel = other61.Channel;
-  CenterFrequancy = other61.CenterFrequancy;
-  Rssi = other61.Rssi;
-  Connected = other61.Connected;
-  SecurityEnabled = other61.SecurityEnabled;
-  HasProfile = other61.HasProfile;
-  __isset = other61.__isset;
+WifiEntity& WifiEntity::operator=(const WifiEntity& other73) {
+  Name = other73.Name;
+  MacAddress = other73.MacAddress;
+  Channel = other73.Channel;
+  CenterFrequancy = other73.CenterFrequancy;
+  Rssi = other73.Rssi;
+  Connected = other73.Connected;
+  SecurityEnabled = other73.SecurityEnabled;
+  HasProfile = other73.HasProfile;
+  __isset = other73.__isset;
   return *this;
 }
 void WifiEntity::printTo(std::ostream& out) const {

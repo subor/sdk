@@ -61,6 +61,23 @@ struct RuyiNetworkSpeed {
     2: RuyiNetworkTestItem uploadspeed,
 }
 
+struct BluetoothDevice {
+    1: string DeviceName,
+    2: string DeviceAddress,
+    3: i32 DeviceClass,
+    4: bool Connected,
+    5: bool Authenticated,
+}
+
+struct BluetoothDeviceList {
+    1: list<BluetoothDevice> DeviceList,
+}
+
+struct BluetoothDevicePinRequest {
+    1: string DeviceName,
+    2: string Pin,
+}
+
 struct CategoryNode {
     1: string id,
     2: string categoryId,

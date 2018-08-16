@@ -332,6 +332,22 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Authenticate the user via wechat
    * 
+   * @param phoneNumber The phone number to authenticate with
+   * 
+   * @param authCode The code sent to the mobile phone
+   * 
+   * @param forceCreate Should a new profile be created for this user if the account does not exist?
+   * 
+   * @param clientIndex
+   */
+  void Authentication_AuthenticatePhone(std::string& _return, const std::string& phoneNumber, const std::string& authCode, const bool forceCreate, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Authentication_AuthenticatePhone\n");
+  }
+
+  /**
+   * Authenticate the user via wechat
+   * 
    * @param openId The open id passed from wechat
    * 
    * @param token The access token passed from wechat
@@ -355,6 +371,20 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Authentication_ResetEmailPassword(std::string& _return, const std::string& externalId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Authentication_ResetEmailPassword\n");
+  }
+
+  /**
+   * Request an SMS code sent to a phone prior to authentication.
+   * 
+   * @param phoneNumber The phone number to send the code to.
+   * 
+   * @param forceCreate Whether or not to create a new player if they don't exist.
+   * 
+   * @param clientIndex
+   */
+  void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Authentication_RequestSmsCode\n");
   }
 
   /**
