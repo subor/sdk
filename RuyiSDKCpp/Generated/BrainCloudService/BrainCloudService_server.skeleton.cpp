@@ -330,6 +330,22 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   }
 
   /**
+   * Authenticate the user via wechat
+   * 
+   * @param openId The open id passed from wechat
+   * 
+   * @param token The access token passed from wechat
+   * 
+   * @param forceCreate Should a new profile be created for this user if the account does not exist?
+   * 
+   * @param clientIndex
+   */
+  void Authentication_AuthenticateWechat(std::string& _return, const std::string& openId, const std::string& token, const bool forceCreate, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Authentication_AuthenticateWechat\n");
+  }
+
+  /**
    * Reset Email password - Sends a password reset email to the specified address
    * 
    * @param externalId The email address to send the reset email to.
@@ -339,6 +355,85 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Authentication_ResetEmailPassword(std::string& _return, const std::string& externalId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Authentication_ResetEmailPassword\n");
+  }
+
+  /**
+   * Returns the sessionId or empty string if no session present.
+   * 
+   * @param clientIndex
+   */
+  void Client_GetSessionId(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_GetSessionId\n");
+  }
+
+  /**
+   * Returns true if the user is currently authenticated.
+   * If a session time out or session invalidation is returned from executing a
+   * sever API call, this flag will reset back to false.
+   * 
+   * @param clientIndex
+   */
+  bool Client_IsAuthenticated(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_IsAuthenticated\n");
+  }
+
+  /**
+   * Returns true if brainCloud has been initialized.
+   * 
+   * @param clientIndex
+   */
+  bool Client_IsInitialized(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_IsInitialized\n");
+  }
+
+  /**
+   * Method initializes the BrainCloudClient.
+   * 
+   * @param secretKey The secret key for your app
+   * 
+   * @param appId
+   * @param appVersion The app version
+   * 
+   * @param clientIndex
+   */
+  void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_Initialize_SSS\n");
+  }
+
+  /**
+   * Method initializes the BrainCloudClient.
+   * 
+   * @param serverURL The URL to the brainCloud server
+   * 
+   * @param secretKey The secret key for your app
+   * 
+   * @param appId The app id
+   * 
+   * @param appVersion The app version
+   * 
+   * @param clientIndex
+   */
+  void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_Initialize_SSSS\n");
+  }
+
+  /**
+   * Initialize the identity aspects of brainCloud.
+   * 
+   * @param profileId The profile id
+   * 
+   * @param anonymousId The anonymous id
+   * 
+   * @param clientIndex
+   */
+  void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_InitializeIdentity\n");
   }
 
   /**
@@ -601,85 +696,6 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Client_OverrideLanguageCode(const std::string& languageCode, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Client_OverrideLanguageCode\n");
-  }
-
-  /**
-   * Returns the sessionId or empty string if no session present.
-   * 
-   * @param clientIndex
-   */
-  void Client_GetSessionId(std::string& _return, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_GetSessionId\n");
-  }
-
-  /**
-   * Returns true if the user is currently authenticated.
-   * If a session time out or session invalidation is returned from executing a
-   * sever API call, this flag will reset back to false.
-   * 
-   * @param clientIndex
-   */
-  bool Client_IsAuthenticated(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_IsAuthenticated\n");
-  }
-
-  /**
-   * Returns true if brainCloud has been initialized.
-   * 
-   * @param clientIndex
-   */
-  bool Client_IsInitialized(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_IsInitialized\n");
-  }
-
-  /**
-   * Method initializes the BrainCloudClient.
-   * 
-   * @param secretKey The secret key for your app
-   * 
-   * @param appId
-   * @param appVersion The app version
-   * 
-   * @param clientIndex
-   */
-  void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_Initialize_SSS\n");
-  }
-
-  /**
-   * Method initializes the BrainCloudClient.
-   * 
-   * @param serverURL The URL to the brainCloud server
-   * 
-   * @param secretKey The secret key for your app
-   * 
-   * @param appId The app id
-   * 
-   * @param appVersion The app version
-   * 
-   * @param clientIndex
-   */
-  void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_Initialize_SSSS\n");
-  }
-
-  /**
-   * Initialize the identity aspects of brainCloud.
-   * 
-   * @param profileId The profile id
-   * 
-   * @param anonymousId The anonymous id
-   * 
-   * @param clientIndex
-   */
-  void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_InitializeIdentity\n");
   }
 
   /**
@@ -1252,13 +1268,34 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Returns user state of a particular user.
    * 
-   * @param profileId Profile Id of user to retrieve player state for.
+   * @param playerId
+   * @param clientIndex
+   */
+  void Friend_GetSummaryDataForProfileId(std::string& _return, const std::string& playerId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Friend_GetSummaryDataForProfileId\n");
+  }
+
+  /**
+   * Returns user state of a set of users.
+   * 
+   * @param playerIds Player Ids of users to retrieve player state for.
    * 
    * @param clientIndex
    */
-  void Friend_GetSummaryDataForProfileId(std::string& _return, const std::string& profileId, const int32_t clientIndex) {
+  void Friend_GetSummaryDataForProfileIds(std::string& _return, const std::vector<std::string> & playerIds, const int32_t clientIndex) {
     // Your implementation goes here
-    printf("Friend_GetSummaryDataForProfileId\n");
+    printf("Friend_GetSummaryDataForProfileIds\n");
+  }
+
+  /**
+   * Returns user state of the player's friends.
+   * 
+   * @param clientIndex
+   */
+  void Friend_GetSummaryDataForFriends(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Friend_GetSummaryDataForFriends\n");
   }
 
   /**
@@ -4533,6 +4570,51 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Lobby_GetMyLobbies\n");
   }
 
+  void Party_AcceptPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_AcceptPartyInvitation\n");
+  }
+
+  void Party_GetPartyInfo(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_GetPartyInfo\n");
+  }
+
+  void Party_JoinParty(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_JoinParty\n");
+  }
+
+  void Party_LeaveParty(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_LeaveParty\n");
+  }
+
+  void Party_RejectPartyInvitation(std::string& _return, const std::string& partyId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_RejectPartyInvitation\n");
+  }
+
+  void Party_SendPartyInvitation(std::string& _return, const std::string& playerId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_SendPartyInvitation\n");
+  }
+
+  void Party_ListPartyInvitations(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_ListPartyInvitations\n");
+  }
+
+  void Party_GetFriendsParties(std::string& _return, const int32_t maxResults, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_GetFriendsParties\n");
+  }
+
+  void Party_GetMyParty(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Party_GetMyParty\n");
+  }
+
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Patch_GetGameManifest\n");
@@ -4686,6 +4768,11 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Telemetry_EndTelemetryEvent(std::string& _return, const std::string& telemetrySessionId, const int32_t timestamp, const std::string& eventType, const std::string& participantId, const std::map<std::string,  ::Ruyi::SDK::BrainCloudApi::JSON> & customData, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Telemetry_EndTelemetryEvent\n");
+  }
+
+  void Authentication_GetWeChatQRPageURL(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Authentication_GetWeChatQRPageURL\n");
   }
 
   void File_DownloadFile(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const bool replaceIfExists, const int32_t clientIndex) {

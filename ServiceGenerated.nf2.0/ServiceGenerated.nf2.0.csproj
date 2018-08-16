@@ -69,6 +69,7 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorCode.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorInfos.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\ExternalErrors\ExternalErrorsSDKDataTypes.Constants.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\GamepadInfo.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\InputManagerService.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\JoystickOffset.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\InputManager\Key.cs" />
@@ -91,7 +92,11 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\OverlayManagerExternal\NotifyTakeScreenShot.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkSettingNameValue.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkSettings.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkSpeed.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkStatus.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkTestItem.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkTestResult.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\WifiEntity.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Speech\File.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Http\HttpService.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\Http\SubscribeReply.cs" />

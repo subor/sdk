@@ -245,11 +245,72 @@ service BrainCloudService {
 		5: i32 clientIndex
 	),
 
+	/** Authenticate the user via wechat */
+	string Authentication_AuthenticateWechat(
+		/** The open id passed from wechat */
+		1: string openId, 
+		
+		/** The access token passed from wechat */
+		2: string token, 
+		
+		/** Should a new profile be created for this user if the account does not exist? */
+		3: bool forceCreate, 
+		4: i32 clientIndex
+	),
+
 	/** Reset Email password - Sends a password reset email to the specified address */
 	string Authentication_ResetEmailPassword(
 		/** The email address to send the reset email to. */
 		1: string externalId, 
 		2: i32 clientIndex
+	),
+
+	/** Returns the sessionId or empty string if no session present. */
+	string Client_GetSessionId(1: i32 clientIndex),
+
+	/** Returns true if the user is currently authenticated.
+            If a session time out or session invalidation is returned from executing a
+            sever API call, this flag will reset back to false. */
+	bool Client_IsAuthenticated(1: i32 clientIndex),
+
+	/** Returns true if brainCloud has been initialized. */
+	bool Client_IsInitialized(1: i32 clientIndex),
+
+	/** Method initializes the BrainCloudClient. */
+	void Client_Initialize_SSS(
+		/** The secret key for your app */
+		1: string secretKey, 
+		2: string appId, 
+		
+		/** The app version */
+		3: string appVersion, 
+		4: i32 clientIndex
+	),
+
+	/** Method initializes the BrainCloudClient. */
+	void Client_Initialize_SSSS(
+		/** The URL to the brainCloud server */
+		1: string serverURL, 
+		
+		/** The secret key for your app */
+		2: string secretKey, 
+		
+		/** The app id */
+		3: string appId, 
+		
+		/** The app version */
+		4: string appVersion, 
+		5: i32 clientIndex
+	),
+
+	/** Initialize the identity aspects of brainCloud. */
+	void Client_InitializeIdentity(
+		/** The profile id */
+		1: string profileId, 
+		
+		/** The anonymous id */
+		2: string anonymousId, 
+		3: i32 clientIndex
 	),
 
 	/** Update method needs to be called regularly in order
@@ -398,54 +459,6 @@ service BrainCloudService {
 		/** ISO 639-1 two-letter language code */
 		1: string languageCode, 
 		2: i32 clientIndex
-	),
-
-	/** Returns the sessionId or empty string if no session present. */
-	string Client_GetSessionId(1: i32 clientIndex),
-
-	/** Returns true if the user is currently authenticated.
-            If a session time out or session invalidation is returned from executing a
-            sever API call, this flag will reset back to false. */
-	bool Client_IsAuthenticated(1: i32 clientIndex),
-
-	/** Returns true if brainCloud has been initialized. */
-	bool Client_IsInitialized(1: i32 clientIndex),
-
-	/** Method initializes the BrainCloudClient. */
-	void Client_Initialize_SSS(
-		/** The secret key for your app */
-		1: string secretKey, 
-		2: string appId, 
-		
-		/** The app version */
-		3: string appVersion, 
-		4: i32 clientIndex
-	),
-
-	/** Method initializes the BrainCloudClient. */
-	void Client_Initialize_SSSS(
-		/** The URL to the brainCloud server */
-		1: string serverURL, 
-		
-		/** The secret key for your app */
-		2: string secretKey, 
-		
-		/** The app id */
-		3: string appId, 
-		
-		/** The app version */
-		4: string appVersion, 
-		5: i32 clientIndex
-	),
-
-	/** Initialize the identity aspects of brainCloud. */
-	void Client_InitializeIdentity(
-		/** The profile id */
-		1: string profileId, 
-		
-		/** The anonymous id */
-		2: string anonymousId, 
-		3: i32 clientIndex
 	),
 
 	/** Creates custom data stream page event */
@@ -861,11 +874,17 @@ service BrainCloudService {
 	),
 
 	/** Returns user state of a particular user. */
-	string Friend_GetSummaryDataForProfileId(
-		/** Profile Id of user to retrieve player state for. */
-		1: string profileId, 
+	string Friend_GetSummaryDataForProfileId(1: string playerId, 2: i32 clientIndex),
+
+	/** Returns user state of a set of users. */
+	string Friend_GetSummaryDataForProfileIds(
+		/** Player Ids of users to retrieve player state for. */
+		1: list<string> playerIds, 
 		2: i32 clientIndex
 	),
+
+	/** Returns user state of the player's friends. */
+	string Friend_GetSummaryDataForFriends(1: i32 clientIndex),
 
 	/** Finds a list of users matching the search text by performing an exact
             search of all user names. */
@@ -3142,6 +3161,24 @@ service BrainCloudService {
 	/** Get a list of lobbies the player is a member of. */
 	string Lobby_GetMyLobbies(1: i32 clientIndex),
 
+	string Party_AcceptPartyInvitation(1: string partyId, 2: i32 clientIndex),
+
+	string Party_GetPartyInfo(1: string partyId, 2: i32 clientIndex),
+
+	string Party_JoinParty(1: string partyId, 2: i32 clientIndex),
+
+	string Party_LeaveParty(1: string partyId, 2: i32 clientIndex),
+
+	string Party_RejectPartyInvitation(1: string partyId, 2: i32 clientIndex),
+
+	string Party_SendPartyInvitation(1: string playerId, 2: i32 clientIndex),
+
+	string Party_ListPartyInvitations(1: i32 clientIndex),
+
+	string Party_GetFriendsParties(1: i32 maxResults, 2: i32 clientIndex),
+
+	string Party_GetMyParty(1: i32 clientIndex),
+
 	string Patch_GetGameManifest(1: string gameId, 2: i32 clientIndex),
 
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
@@ -3203,6 +3240,8 @@ service BrainCloudService {
 	string Telemetry_StartTelemetryEvent(1: string telemetrySessionId, 2: i32 timestamp, 3: string eventType, 4: string participantId, 5: map<string, BrainCloudServiceSDKDataTypes.JSON> customData, 6: i32 clientIndex),
 
 	string Telemetry_EndTelemetryEvent(1: string telemetrySessionId, 2: i32 timestamp, 3: string eventType, 4: string participantId, 5: map<string, BrainCloudServiceSDKDataTypes.JSON> customData, 6: i32 clientIndex),
+
+	string Authentication_GetWeChatQRPageURL(1: i32 clientIndex),
 
 	string File_DownloadFile(1: string cloudPath, 2: string cloudFilename, 3: bool replaceIfExists, 4: i32 clientIndex),
 

@@ -7,6 +7,7 @@ namespace netcore Ruyi.SDK.SettingSystem.Api
 namespace rs Ruyi.SDK.SettingSystem.Api
 
 typedef string JSON
+typedef i32 _int
 
 enum NodeType {
     Category = 1,
@@ -18,6 +19,11 @@ enum NodeType {
 struct RuyiNetworkSettingNameValue {
     1: string name,
     2: string value,
+}
+
+struct RuyiNetworkTestItem {
+    1: RuyiNetworkSettingNameValue item,
+    2: bool result,
 }
 
 struct RuyiNetworkSettings {
@@ -40,6 +46,19 @@ struct RuyiNetworkSettings {
 struct RuyiNetworkStatus {
     1: bool isWifi,
     2: string Name,
+    3: bool AdapterStatus,
+    4: bool InternetStatus,
+}
+
+struct RuyiNetworkTestResult {
+    1: RuyiNetworkTestItem localconnection,
+    2: RuyiNetworkTestItem ipaddress,
+    3: RuyiNetworkTestItem internetconnection,
+}
+
+struct RuyiNetworkSpeed {
+    1: RuyiNetworkTestItem downloadspeed,
+    2: RuyiNetworkTestItem uploadspeed,
 }
 
 struct CategoryNode {
@@ -65,12 +84,15 @@ struct NodeList {
     2: list<CommonTypeSDKDataTypes.SettingItem> SettingItems,
 }
 
-/** Notification of setting item from layer0 */
-struct SettingItemNotification {
-    /** The item's ID */
-	1: string key,
-    /** Optional. The arguments of the notification. In json string format */
-	2: JSON contents = "{}",
+struct WifiEntity {
+    1: string Name,
+    2: string MacAddress,
+    3: _int Channel,
+    4: _int CenterFrequancy,
+    5: _int Rssi,
+    6: bool Connected,
+    7: bool SecurityEnabled,
+    8: bool HasProfile,
 }
 
 

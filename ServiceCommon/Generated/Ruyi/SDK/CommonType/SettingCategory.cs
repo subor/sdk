@@ -28,11 +28,13 @@ namespace Ruyi.SDK.CommonType
     private string _display;
     private string _summary;
     private string _description;
+    private string _icon;
     private int _sortingPriority;
     private bool _isSystemCategory;
     private Dictionary<string, int> _items;
     private bool _enable;
     private bool _showInUI;
+    private string _script;
 
     public string Id
     {
@@ -83,6 +85,19 @@ namespace Ruyi.SDK.CommonType
       {
         __isset.description = true;
         this._description = value;
+      }
+    }
+
+    public string Icon
+    {
+      get
+      {
+        return _icon;
+      }
+      set
+      {
+        __isset.icon = true;
+        this._icon = value;
       }
     }
 
@@ -151,6 +166,19 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    public string Script
+    {
+      get
+      {
+        return _script;
+      }
+      set
+      {
+        __isset.script = true;
+        this._script = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -161,11 +189,13 @@ namespace Ruyi.SDK.CommonType
       public bool display;
       public bool summary;
       public bool description;
+      public bool icon;
       public bool sortingPriority;
       public bool isSystemCategory;
       public bool items;
       public bool enable;
       public bool showInUI;
+      public bool script;
     }
 
     public SettingCategory() {
@@ -215,20 +245,27 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 5:
+              if (field.Type == TType.String) {
+                Icon = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 6:
               if (field.Type == TType.I32) {
                 SortingPriority = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 6:
+            case 7:
               if (field.Type == TType.Bool) {
                 IsSystemCategory = iprot.ReadBool();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 7:
+            case 8:
               if (field.Type == TType.Map) {
                 {
                   Items = new Dictionary<string, int>();
@@ -247,16 +284,23 @@ namespace Ruyi.SDK.CommonType
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 8:
+            case 9:
               if (field.Type == TType.Bool) {
                 Enable = iprot.ReadBool();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 9:
+            case 10:
               if (field.Type == TType.Bool) {
                 ShowInUI = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 11:
+              if (field.Type == TType.String) {
+                Script = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -314,10 +358,18 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteString(Description);
           oprot.WriteFieldEnd();
         }
+        if (Icon != null && __isset.icon) {
+          field.Name = "icon";
+          field.Type = TType.String;
+          field.ID = 5;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Icon);
+          oprot.WriteFieldEnd();
+        }
         if (__isset.sortingPriority) {
           field.Name = "sortingPriority";
           field.Type = TType.I32;
-          field.ID = 5;
+          field.ID = 6;
           oprot.WriteFieldBegin(field);
           oprot.WriteI32(SortingPriority);
           oprot.WriteFieldEnd();
@@ -325,7 +377,7 @@ namespace Ruyi.SDK.CommonType
         if (__isset.isSystemCategory) {
           field.Name = "isSystemCategory";
           field.Type = TType.Bool;
-          field.ID = 6;
+          field.ID = 7;
           oprot.WriteFieldBegin(field);
           oprot.WriteBool(IsSystemCategory);
           oprot.WriteFieldEnd();
@@ -333,7 +385,7 @@ namespace Ruyi.SDK.CommonType
         if (Items != null && __isset.items) {
           field.Name = "items";
           field.Type = TType.Map;
-          field.ID = 7;
+          field.ID = 8;
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteMapBegin(new TMap(TType.String, TType.I32, Items.Count));
@@ -349,7 +401,7 @@ namespace Ruyi.SDK.CommonType
         if (__isset.enable) {
           field.Name = "enable";
           field.Type = TType.Bool;
-          field.ID = 8;
+          field.ID = 9;
           oprot.WriteFieldBegin(field);
           oprot.WriteBool(Enable);
           oprot.WriteFieldEnd();
@@ -357,9 +409,17 @@ namespace Ruyi.SDK.CommonType
         if (__isset.showInUI) {
           field.Name = "showInUI";
           field.Type = TType.Bool;
-          field.ID = 9;
+          field.ID = 10;
           oprot.WriteFieldBegin(field);
           oprot.WriteBool(ShowInUI);
+          oprot.WriteFieldEnd();
+        }
+        if (Script != null && __isset.script) {
+          field.Name = "script";
+          field.Type = TType.String;
+          field.ID = 11;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Script);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -398,6 +458,12 @@ namespace Ruyi.SDK.CommonType
         __sb.Append("Description: ");
         __sb.Append(Description);
       }
+      if (Icon != null && __isset.icon) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Icon: ");
+        __sb.Append(Icon);
+      }
       if (__isset.sortingPriority) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
@@ -427,6 +493,12 @@ namespace Ruyi.SDK.CommonType
         __first = false;
         __sb.Append("ShowInUI: ");
         __sb.Append(ShowInUI);
+      }
+      if (Script != null && __isset.script) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Script: ");
+        __sb.Append(Script);
       }
       __sb.Append(")");
       return __sb.ToString();

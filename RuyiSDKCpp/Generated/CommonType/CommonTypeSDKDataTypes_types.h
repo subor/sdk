@@ -118,6 +118,8 @@ extern const std::map<int, const char*> _eUIType_VALUES_TO_NAMES;
 
 std::ostream& operator<<(std::ostream& out, const eUIType::type& val);
 
+typedef std::string JSON;
+
 class ErrorException;
 
 class range;
@@ -147,6 +149,8 @@ class AppDataCollection;
 class AppData;
 
 class PopupNotification;
+
+class EventNotification;
 
 typedef struct _ErrorException__isset {
   _ErrorException__isset() : errId(false), errMsg(false) {}
@@ -297,7 +301,8 @@ void swap(InputModifier &a, InputModifier &b);
 std::ostream& operator<<(std::ostream& out, const InputModifier& obj);
 
 typedef struct _ActionTrigger__isset {
-  _ActionTrigger__isset() : InputCagetory(false), TriggerButtons(false), TriggerValue(false) {}
+  _ActionTrigger__isset() : Id(false), InputCagetory(false), TriggerButtons(false), TriggerValue(false) {}
+  bool Id :1;
   bool InputCagetory :1;
   bool TriggerButtons :1;
   bool TriggerValue :1;
@@ -308,15 +313,18 @@ class ActionTrigger : public virtual ::apache::thrift::TBase {
 
   ActionTrigger(const ActionTrigger&);
   ActionTrigger& operator=(const ActionTrigger&);
-  ActionTrigger() : InputCagetory((InputCategory::type)0) {
+  ActionTrigger() : Id(0), InputCagetory((InputCategory::type)0) {
   }
 
   virtual ~ActionTrigger() throw();
+  int32_t Id;
   InputCategory::type InputCagetory;
   std::vector<int32_t>  TriggerButtons;
   std::vector<int32_t>  TriggerValue;
 
   _ActionTrigger__isset __isset;
+
+  void __set_Id(const int32_t val);
 
   void __set_InputCagetory(const InputCategory::type val);
 
@@ -326,6 +334,8 @@ class ActionTrigger : public virtual ::apache::thrift::TBase {
 
   bool operator == (const ActionTrigger & rhs) const
   {
+    if (!(Id == rhs.Id))
+      return false;
     if (!(InputCagetory == rhs.InputCagetory))
       return false;
     if (!(TriggerButtons == rhs.TriggerButtons))
@@ -739,16 +749,18 @@ void swap(SettingItem &a, SettingItem &b);
 std::ostream& operator<<(std::ostream& out, const SettingItem& obj);
 
 typedef struct _SettingCategory__isset {
-  _SettingCategory__isset() : id(false), display(false), summary(false), description(false), sortingPriority(false), isSystemCategory(false), items(false), enable(false), showInUI(false) {}
+  _SettingCategory__isset() : id(false), display(false), summary(false), description(false), icon(false), sortingPriority(false), isSystemCategory(false), items(false), enable(false), showInUI(false), script(false) {}
   bool id :1;
   bool display :1;
   bool summary :1;
   bool description :1;
+  bool icon :1;
   bool sortingPriority :1;
   bool isSystemCategory :1;
   bool items :1;
   bool enable :1;
   bool showInUI :1;
+  bool script :1;
 } _SettingCategory__isset;
 
 class SettingCategory : public virtual ::apache::thrift::TBase {
@@ -756,7 +768,7 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
 
   SettingCategory(const SettingCategory&);
   SettingCategory& operator=(const SettingCategory&);
-  SettingCategory() : id(), display(), summary(), description(), sortingPriority(0), isSystemCategory(0), enable(0), showInUI(0) {
+  SettingCategory() : id(), display(), summary(), description(), icon(), sortingPriority(0), isSystemCategory(0), enable(0), showInUI(0), script() {
   }
 
   virtual ~SettingCategory() throw();
@@ -764,11 +776,13 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
   std::string display;
   std::string summary;
   std::string description;
+  std::string icon;
   int32_t sortingPriority;
   bool isSystemCategory;
   std::map<std::string, int32_t>  items;
   bool enable;
   bool showInUI;
+  std::string script;
 
   _SettingCategory__isset __isset;
 
@@ -780,6 +794,8 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
 
   void __set_description(const std::string& val);
 
+  void __set_icon(const std::string& val);
+
   void __set_sortingPriority(const int32_t val);
 
   void __set_isSystemCategory(const bool val);
@@ -789,6 +805,8 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
   void __set_enable(const bool val);
 
   void __set_showInUI(const bool val);
+
+  void __set_script(const std::string& val);
 
   bool operator == (const SettingCategory & rhs) const
   {
@@ -804,6 +822,8 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
       return false;
     else if (__isset.description && !(description == rhs.description))
       return false;
+    if (!(icon == rhs.icon))
+      return false;
     if (!(sortingPriority == rhs.sortingPriority))
       return false;
     if (!(isSystemCategory == rhs.isSystemCategory))
@@ -813,6 +833,8 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
     if (!(enable == rhs.enable))
       return false;
     if (!(showInUI == rhs.showInUI))
+      return false;
+    if (!(script == rhs.script))
       return false;
     return true;
   }
@@ -1095,6 +1117,54 @@ class PopupNotification : public virtual ::apache::thrift::TBase {
 void swap(PopupNotification &a, PopupNotification &b);
 
 std::ostream& operator<<(std::ostream& out, const PopupNotification& obj);
+
+typedef struct _EventNotification__isset {
+  _EventNotification__isset() : key(false), contents(true) {}
+  bool key :1;
+  bool contents :1;
+} _EventNotification__isset;
+
+class EventNotification : public virtual ::apache::thrift::TBase {
+ public:
+
+  EventNotification(const EventNotification&);
+  EventNotification& operator=(const EventNotification&);
+  EventNotification() : key(), contents("{}") {
+  }
+
+  virtual ~EventNotification() throw();
+  std::string key;
+  JSON contents;
+
+  _EventNotification__isset __isset;
+
+  void __set_key(const std::string& val);
+
+  void __set_contents(const JSON& val);
+
+  bool operator == (const EventNotification & rhs) const
+  {
+    if (!(key == rhs.key))
+      return false;
+    if (!(contents == rhs.contents))
+      return false;
+    return true;
+  }
+  bool operator != (const EventNotification &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const EventNotification & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(EventNotification &a, EventNotification &b);
+
+std::ostream& operator<<(std::ostream& out, const EventNotification& obj);
 
 }}} // namespace
 
