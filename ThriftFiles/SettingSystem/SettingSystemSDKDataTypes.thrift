@@ -61,6 +61,15 @@ struct RuyiNetworkSpeed {
     2: RuyiNetworkTestItem uploadspeed,
 }
 
+struct NetworkConnectionStatus {
+    1: bool preLanAdapter,
+    2: bool curLanAdapter,
+    3: bool preWlanAdapter,
+    4: bool curWlanAdapter,
+    5: bool preInternetConnection,
+    6: bool curInternetConnection,
+}
+
 struct BluetoothDevice {
     1: string DeviceName,
     2: string DeviceAddress,
