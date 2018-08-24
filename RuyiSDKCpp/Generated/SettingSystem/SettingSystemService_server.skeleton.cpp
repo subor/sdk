@@ -181,7 +181,7 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("RuyiTestNetwork\n");
   }
 
-  void RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex) {
+  bool RuyiStartNetworkSpeedTest(const int32_t userindex) {
     // Your implementation goes here
     printf("RuyiStartNetworkSpeedTest\n");
   }
@@ -199,6 +199,26 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
   bool DisconnectWifi() {
     // Your implementation goes here
     printf("DisconnectWifi\n");
+  }
+
+  bool DiscoverBluetoothDevice() {
+    // Your implementation goes here
+    printf("DiscoverBluetoothDevice\n");
+  }
+
+  bool ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) {
+    // Your implementation goes here
+    printf("ConnectBluetoothDevice\n");
+  }
+
+  bool DisconnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) {
+    // Your implementation goes here
+    printf("DisconnectBluetoothDevice\n");
+  }
+
+  bool RemoveBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress) {
+    // Your implementation goes here
+    printf("RemoveBluetoothDevice\n");
   }
 
 };

@@ -105,12 +105,20 @@ According to the format of json string your write, searching can be separated to
 
 	SettingSystemSDKDataTypes.RuyiNetworkTestResult RuyiTestNetwork() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
-	SettingSystemSDKDataTypes.RuyiNetworkSpeed RuyiStartNetworkSpeedTest(1: i32 userindex) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+	bool RuyiStartNetworkSpeedTest(1: i32 userindex) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	bool RuyiStopNetworkSpeedTest(1: i32 userindex) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	list<SettingSystemSDKDataTypes.WifiEntity> GetAvailableWifi() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	bool DisconnectWifi() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	bool DiscoverBluetoothDevice() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	bool ConnectBluetoothDevice(1: string DeviceName, 2: string DeviceAddress) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	bool DisconnectBluetoothDevice(1: string DeviceName, 2: string DeviceAddress) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	bool RemoveBluetoothDevice(1: string DeviceName, 2: string DeviceAddress) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 }
 

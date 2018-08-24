@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ruyi.SDK.Online
@@ -26,10 +27,12 @@ namespace Ruyi.SDK.Online
         /// <param name="shareable">True if the file is shareable.</param>
         /// <param name="replaceIfExists">Whether to replace file if it exists.</param>
         /// <param name="localPath">The path and fileName of the local file.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
         public async Task<RuyiNetUploadFileResponse> UploadFile(int index, string cloudPath, string cloudFilename,
-            bool shareable, bool replaceIfExists, string localPath)
+            bool shareable, bool replaceIfExists, string localPath, CancellationToken? cancellationToken = null)
         {
-            var resp = await mClient.BCService.File_UploadFileAsync(cloudPath, cloudFilename, shareable, replaceIfExists, localPath, index, token);
+            var resp = await mClient.BCService.File_UploadFileAsync(cloudPath, cloudFilename, shareable, replaceIfExists, localPath, index, cancellationToken ?? token);
             return mClient.Process<RuyiNetUploadFileResponse>(resp);
         }
 

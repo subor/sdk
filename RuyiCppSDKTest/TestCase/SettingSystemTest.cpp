@@ -80,14 +80,14 @@ void SettingSystemTest::SettingSys_SimulateAppAInstalled()
 	
 	StorageLayer::GetLocalPathResult result;
 	ruyiSDK->Storage->GetLocalPath(result, "/<HDD0>/");
-	size_t idx = result.path.find("RuyiLocalRoot");
+	size_t idx = result.path.find("LocalRoot");
 
 	if (idx != -1) 
 	{
 		string layer0Path = result.path.substr(0, idx);
 	
 		std::experimental::filesystem::path targetPath;
-		targetPath.append(layer0Path).append("RuyiLocalRoot\\Resources\\Configs\\AppA.cfg");
+		targetPath.append(layer0Path).append("LocalRoot\\Resources\\Configs\\AppA.cfg");
 		Logger::WriteMessage(("targetPath:" + targetPath.string() + "\n").c_str());
 
 		targetFile = targetPath.string();

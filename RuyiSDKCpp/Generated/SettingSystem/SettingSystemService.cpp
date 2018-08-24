@@ -4661,8 +4661,8 @@ uint32_t SettingSystemService_RuyiStartNetworkSpeedTest_result::read(::apache::t
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->success.read(iprot);
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->success);
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -4695,8 +4695,8 @@ uint32_t SettingSystemService_RuyiStartNetworkSpeedTest_result::write(::apache::
   xfer += oprot->writeStructBegin("SettingSystemService_RuyiStartNetworkSpeedTest_result");
 
   if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_STRUCT, 0);
-    xfer += this->success.write(oprot);
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
+    xfer += oprot->writeBool(this->success);
     xfer += oprot->writeFieldEnd();
   } else if (this->__isset.error1) {
     xfer += oprot->writeFieldBegin("error1", ::apache::thrift::protocol::T_STRUCT, 1);
@@ -4735,8 +4735,8 @@ uint32_t SettingSystemService_RuyiStartNetworkSpeedTest_presult::read(::apache::
     switch (fid)
     {
       case 0:
-        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += (*(this->success)).read(iprot);
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool((*(this->success)));
           this->__isset.success = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -5325,6 +5325,861 @@ SettingSystemService_DisconnectWifi_presult::~SettingSystemService_DisconnectWif
 
 
 uint32_t SettingSystemService_DisconnectWifi_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->error1.read(iprot);
+          this->__isset.error1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+
+SettingSystemService_DiscoverBluetoothDevice_args::~SettingSystemService_DiscoverBluetoothDevice_args() throw() {
+}
+
+
+uint32_t SettingSystemService_DiscoverBluetoothDevice_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    xfer += iprot->skip(ftype);
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_DiscoverBluetoothDevice_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_DiscoverBluetoothDevice_args");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_DiscoverBluetoothDevice_pargs::~SettingSystemService_DiscoverBluetoothDevice_pargs() throw() {
+}
+
+
+uint32_t SettingSystemService_DiscoverBluetoothDevice_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_DiscoverBluetoothDevice_pargs");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_DiscoverBluetoothDevice_result::~SettingSystemService_DiscoverBluetoothDevice_result() throw() {
+}
+
+
+uint32_t SettingSystemService_DiscoverBluetoothDevice_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->error1.read(iprot);
+          this->__isset.error1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_DiscoverBluetoothDevice_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("SettingSystemService_DiscoverBluetoothDevice_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
+    xfer += oprot->writeBool(this->success);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.error1) {
+    xfer += oprot->writeFieldBegin("error1", ::apache::thrift::protocol::T_STRUCT, 1);
+    xfer += this->error1.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_DiscoverBluetoothDevice_presult::~SettingSystemService_DiscoverBluetoothDevice_presult() throw() {
+}
+
+
+uint32_t SettingSystemService_DiscoverBluetoothDevice_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->error1.read(iprot);
+          this->__isset.error1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+
+SettingSystemService_ConnectBluetoothDevice_args::~SettingSystemService_ConnectBluetoothDevice_args() throw() {
+}
+
+
+uint32_t SettingSystemService_ConnectBluetoothDevice_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceName);
+          this->__isset.DeviceName = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceAddress);
+          this->__isset.DeviceAddress = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_ConnectBluetoothDevice_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_ConnectBluetoothDevice_args");
+
+  xfer += oprot->writeFieldBegin("DeviceName", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->DeviceName);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("DeviceAddress", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->DeviceAddress);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_ConnectBluetoothDevice_pargs::~SettingSystemService_ConnectBluetoothDevice_pargs() throw() {
+}
+
+
+uint32_t SettingSystemService_ConnectBluetoothDevice_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_ConnectBluetoothDevice_pargs");
+
+  xfer += oprot->writeFieldBegin("DeviceName", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString((*(this->DeviceName)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("DeviceAddress", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString((*(this->DeviceAddress)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_ConnectBluetoothDevice_result::~SettingSystemService_ConnectBluetoothDevice_result() throw() {
+}
+
+
+uint32_t SettingSystemService_ConnectBluetoothDevice_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->error1.read(iprot);
+          this->__isset.error1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_ConnectBluetoothDevice_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("SettingSystemService_ConnectBluetoothDevice_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
+    xfer += oprot->writeBool(this->success);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.error1) {
+    xfer += oprot->writeFieldBegin("error1", ::apache::thrift::protocol::T_STRUCT, 1);
+    xfer += this->error1.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_ConnectBluetoothDevice_presult::~SettingSystemService_ConnectBluetoothDevice_presult() throw() {
+}
+
+
+uint32_t SettingSystemService_ConnectBluetoothDevice_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->error1.read(iprot);
+          this->__isset.error1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+
+SettingSystemService_DisconnectBluetoothDevice_args::~SettingSystemService_DisconnectBluetoothDevice_args() throw() {
+}
+
+
+uint32_t SettingSystemService_DisconnectBluetoothDevice_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceName);
+          this->__isset.DeviceName = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceAddress);
+          this->__isset.DeviceAddress = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_DisconnectBluetoothDevice_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_DisconnectBluetoothDevice_args");
+
+  xfer += oprot->writeFieldBegin("DeviceName", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->DeviceName);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("DeviceAddress", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->DeviceAddress);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_DisconnectBluetoothDevice_pargs::~SettingSystemService_DisconnectBluetoothDevice_pargs() throw() {
+}
+
+
+uint32_t SettingSystemService_DisconnectBluetoothDevice_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_DisconnectBluetoothDevice_pargs");
+
+  xfer += oprot->writeFieldBegin("DeviceName", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString((*(this->DeviceName)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("DeviceAddress", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString((*(this->DeviceAddress)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_DisconnectBluetoothDevice_result::~SettingSystemService_DisconnectBluetoothDevice_result() throw() {
+}
+
+
+uint32_t SettingSystemService_DisconnectBluetoothDevice_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->error1.read(iprot);
+          this->__isset.error1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_DisconnectBluetoothDevice_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("SettingSystemService_DisconnectBluetoothDevice_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
+    xfer += oprot->writeBool(this->success);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.error1) {
+    xfer += oprot->writeFieldBegin("error1", ::apache::thrift::protocol::T_STRUCT, 1);
+    xfer += this->error1.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_DisconnectBluetoothDevice_presult::~SettingSystemService_DisconnectBluetoothDevice_presult() throw() {
+}
+
+
+uint32_t SettingSystemService_DisconnectBluetoothDevice_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->error1.read(iprot);
+          this->__isset.error1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+
+SettingSystemService_RemoveBluetoothDevice_args::~SettingSystemService_RemoveBluetoothDevice_args() throw() {
+}
+
+
+uint32_t SettingSystemService_RemoveBluetoothDevice_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceName);
+          this->__isset.DeviceName = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->DeviceAddress);
+          this->__isset.DeviceAddress = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_RemoveBluetoothDevice_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_RemoveBluetoothDevice_args");
+
+  xfer += oprot->writeFieldBegin("DeviceName", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->DeviceName);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("DeviceAddress", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->DeviceAddress);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_RemoveBluetoothDevice_pargs::~SettingSystemService_RemoveBluetoothDevice_pargs() throw() {
+}
+
+
+uint32_t SettingSystemService_RemoveBluetoothDevice_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("SettingSystemService_RemoveBluetoothDevice_pargs");
+
+  xfer += oprot->writeFieldBegin("DeviceName", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString((*(this->DeviceName)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("DeviceAddress", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString((*(this->DeviceAddress)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_RemoveBluetoothDevice_result::~SettingSystemService_RemoveBluetoothDevice_result() throw() {
+}
+
+
+uint32_t SettingSystemService_RemoveBluetoothDevice_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->error1.read(iprot);
+          this->__isset.error1 = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t SettingSystemService_RemoveBluetoothDevice_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("SettingSystemService_RemoveBluetoothDevice_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
+    xfer += oprot->writeBool(this->success);
+    xfer += oprot->writeFieldEnd();
+  } else if (this->__isset.error1) {
+    xfer += oprot->writeFieldBegin("error1", ::apache::thrift::protocol::T_STRUCT, 1);
+    xfer += this->error1.write(oprot);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+SettingSystemService_RemoveBluetoothDevice_presult::~SettingSystemService_RemoveBluetoothDevice_presult() throw() {
+}
+
+
+uint32_t SettingSystemService_RemoveBluetoothDevice_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -6604,10 +7459,10 @@ void SettingSystemServiceClient::recv_RuyiTestNetwork( ::Ruyi::SDK::SettingSyste
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "RuyiTestNetwork failed: unknown result");
 }
 
-void SettingSystemServiceClient::RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex)
+bool SettingSystemServiceClient::RuyiStartNetworkSpeedTest(const int32_t userindex)
 {
   send_RuyiStartNetworkSpeedTest(userindex);
-  recv_RuyiStartNetworkSpeedTest(_return);
+  return recv_RuyiStartNetworkSpeedTest();
 }
 
 void SettingSystemServiceClient::send_RuyiStartNetworkSpeedTest(const int32_t userindex)
@@ -6624,7 +7479,7 @@ void SettingSystemServiceClient::send_RuyiStartNetworkSpeedTest(const int32_t us
   oprot_->getTransport()->flush();
 }
 
-void SettingSystemServiceClient::recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return)
+bool SettingSystemServiceClient::recv_RuyiStartNetworkSpeedTest()
 {
 
   int32_t rseqid = 0;
@@ -6649,6 +7504,7 @@ void SettingSystemServiceClient::recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::Se
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
+  bool _return;
   SettingSystemService_RuyiStartNetworkSpeedTest_presult result;
   result.success = &_return;
   result.read(iprot_);
@@ -6656,8 +7512,7 @@ void SettingSystemServiceClient::recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::Se
   iprot_->getTransport()->readEnd();
 
   if (result.__isset.success) {
-    // _return pointer has now been filled
-    return;
+    return _return;
   }
   if (result.__isset.error1) {
     throw result.error1;
@@ -6844,6 +7699,252 @@ bool SettingSystemServiceClient::recv_DisconnectWifi()
     throw result.error1;
   }
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "DisconnectWifi failed: unknown result");
+}
+
+bool SettingSystemServiceClient::DiscoverBluetoothDevice()
+{
+  send_DiscoverBluetoothDevice();
+  return recv_DiscoverBluetoothDevice();
+}
+
+void SettingSystemServiceClient::send_DiscoverBluetoothDevice()
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("DiscoverBluetoothDevice", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_DiscoverBluetoothDevice_pargs args;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+bool SettingSystemServiceClient::recv_DiscoverBluetoothDevice()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("DiscoverBluetoothDevice") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  bool _return;
+  SettingSystemService_DiscoverBluetoothDevice_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  if (result.__isset.error1) {
+    throw result.error1;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "DiscoverBluetoothDevice failed: unknown result");
+}
+
+bool SettingSystemServiceClient::ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress)
+{
+  send_ConnectBluetoothDevice(DeviceName, DeviceAddress);
+  return recv_ConnectBluetoothDevice();
+}
+
+void SettingSystemServiceClient::send_ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("ConnectBluetoothDevice", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_ConnectBluetoothDevice_pargs args;
+  args.DeviceName = &DeviceName;
+  args.DeviceAddress = &DeviceAddress;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+bool SettingSystemServiceClient::recv_ConnectBluetoothDevice()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("ConnectBluetoothDevice") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  bool _return;
+  SettingSystemService_ConnectBluetoothDevice_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  if (result.__isset.error1) {
+    throw result.error1;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "ConnectBluetoothDevice failed: unknown result");
+}
+
+bool SettingSystemServiceClient::DisconnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress)
+{
+  send_DisconnectBluetoothDevice(DeviceName, DeviceAddress);
+  return recv_DisconnectBluetoothDevice();
+}
+
+void SettingSystemServiceClient::send_DisconnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("DisconnectBluetoothDevice", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_DisconnectBluetoothDevice_pargs args;
+  args.DeviceName = &DeviceName;
+  args.DeviceAddress = &DeviceAddress;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+bool SettingSystemServiceClient::recv_DisconnectBluetoothDevice()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("DisconnectBluetoothDevice") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  bool _return;
+  SettingSystemService_DisconnectBluetoothDevice_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  if (result.__isset.error1) {
+    throw result.error1;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "DisconnectBluetoothDevice failed: unknown result");
+}
+
+bool SettingSystemServiceClient::RemoveBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress)
+{
+  send_RemoveBluetoothDevice(DeviceName, DeviceAddress);
+  return recv_RemoveBluetoothDevice();
+}
+
+void SettingSystemServiceClient::send_RemoveBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("RemoveBluetoothDevice", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_RemoveBluetoothDevice_pargs args;
+  args.DeviceName = &DeviceName;
+  args.DeviceAddress = &DeviceAddress;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+bool SettingSystemServiceClient::recv_RemoveBluetoothDevice()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("RemoveBluetoothDevice") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  bool _return;
+  SettingSystemService_RemoveBluetoothDevice_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  if (result.__isset.error1) {
+    throw result.error1;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "RemoveBluetoothDevice failed: unknown result");
 }
 
 bool SettingSystemServiceProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
@@ -8022,7 +9123,7 @@ void SettingSystemServiceProcessor::process_RuyiStartNetworkSpeedTest(int32_t se
 
   SettingSystemService_RuyiStartNetworkSpeedTest_result result;
   try {
-    iface_->RuyiStartNetworkSpeedTest(result.success, args.userindex);
+    result.success = iface_->RuyiStartNetworkSpeedTest(args.userindex);
     result.__isset.success = true;
   } catch ( ::Ruyi::SDK::CommonType::ErrorException &error1) {
     result.error1 = error1;
@@ -8224,6 +9325,234 @@ void SettingSystemServiceProcessor::process_DisconnectWifi(int32_t seqid, ::apac
 
   if (this->eventHandler_.get() != NULL) {
     this->eventHandler_->postWrite(ctx, "SettingSystemService.DisconnectWifi", bytes);
+  }
+}
+
+void SettingSystemServiceProcessor::process_DiscoverBluetoothDevice(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("SettingSystemService.DiscoverBluetoothDevice", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "SettingSystemService.DiscoverBluetoothDevice");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "SettingSystemService.DiscoverBluetoothDevice");
+  }
+
+  SettingSystemService_DiscoverBluetoothDevice_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "SettingSystemService.DiscoverBluetoothDevice", bytes);
+  }
+
+  SettingSystemService_DiscoverBluetoothDevice_result result;
+  try {
+    result.success = iface_->DiscoverBluetoothDevice();
+    result.__isset.success = true;
+  } catch ( ::Ruyi::SDK::CommonType::ErrorException &error1) {
+    result.error1 = error1;
+    result.__isset.error1 = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "SettingSystemService.DiscoverBluetoothDevice");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("DiscoverBluetoothDevice", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "SettingSystemService.DiscoverBluetoothDevice");
+  }
+
+  oprot->writeMessageBegin("DiscoverBluetoothDevice", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "SettingSystemService.DiscoverBluetoothDevice", bytes);
+  }
+}
+
+void SettingSystemServiceProcessor::process_ConnectBluetoothDevice(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("SettingSystemService.ConnectBluetoothDevice", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "SettingSystemService.ConnectBluetoothDevice");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "SettingSystemService.ConnectBluetoothDevice");
+  }
+
+  SettingSystemService_ConnectBluetoothDevice_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "SettingSystemService.ConnectBluetoothDevice", bytes);
+  }
+
+  SettingSystemService_ConnectBluetoothDevice_result result;
+  try {
+    result.success = iface_->ConnectBluetoothDevice(args.DeviceName, args.DeviceAddress);
+    result.__isset.success = true;
+  } catch ( ::Ruyi::SDK::CommonType::ErrorException &error1) {
+    result.error1 = error1;
+    result.__isset.error1 = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "SettingSystemService.ConnectBluetoothDevice");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("ConnectBluetoothDevice", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "SettingSystemService.ConnectBluetoothDevice");
+  }
+
+  oprot->writeMessageBegin("ConnectBluetoothDevice", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "SettingSystemService.ConnectBluetoothDevice", bytes);
+  }
+}
+
+void SettingSystemServiceProcessor::process_DisconnectBluetoothDevice(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("SettingSystemService.DisconnectBluetoothDevice", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "SettingSystemService.DisconnectBluetoothDevice");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "SettingSystemService.DisconnectBluetoothDevice");
+  }
+
+  SettingSystemService_DisconnectBluetoothDevice_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "SettingSystemService.DisconnectBluetoothDevice", bytes);
+  }
+
+  SettingSystemService_DisconnectBluetoothDevice_result result;
+  try {
+    result.success = iface_->DisconnectBluetoothDevice(args.DeviceName, args.DeviceAddress);
+    result.__isset.success = true;
+  } catch ( ::Ruyi::SDK::CommonType::ErrorException &error1) {
+    result.error1 = error1;
+    result.__isset.error1 = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "SettingSystemService.DisconnectBluetoothDevice");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("DisconnectBluetoothDevice", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "SettingSystemService.DisconnectBluetoothDevice");
+  }
+
+  oprot->writeMessageBegin("DisconnectBluetoothDevice", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "SettingSystemService.DisconnectBluetoothDevice", bytes);
+  }
+}
+
+void SettingSystemServiceProcessor::process_RemoveBluetoothDevice(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("SettingSystemService.RemoveBluetoothDevice", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "SettingSystemService.RemoveBluetoothDevice");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "SettingSystemService.RemoveBluetoothDevice");
+  }
+
+  SettingSystemService_RemoveBluetoothDevice_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "SettingSystemService.RemoveBluetoothDevice", bytes);
+  }
+
+  SettingSystemService_RemoveBluetoothDevice_result result;
+  try {
+    result.success = iface_->RemoveBluetoothDevice(args.DeviceName, args.DeviceAddress);
+    result.__isset.success = true;
+  } catch ( ::Ruyi::SDK::CommonType::ErrorException &error1) {
+    result.error1 = error1;
+    result.__isset.error1 = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "SettingSystemService.RemoveBluetoothDevice");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("RemoveBluetoothDevice", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "SettingSystemService.RemoveBluetoothDevice");
+  }
+
+  oprot->writeMessageBegin("RemoveBluetoothDevice", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "SettingSystemService.RemoveBluetoothDevice", bytes);
   }
 }
 
@@ -10003,10 +11332,10 @@ void SettingSystemServiceConcurrentClient::recv_RuyiTestNetwork( ::Ruyi::SDK::Se
   } // end while(true)
 }
 
-void SettingSystemServiceConcurrentClient::RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t userindex)
+bool SettingSystemServiceConcurrentClient::RuyiStartNetworkSpeedTest(const int32_t userindex)
 {
   int32_t seqid = send_RuyiStartNetworkSpeedTest(userindex);
-  recv_RuyiStartNetworkSpeedTest(_return, seqid);
+  return recv_RuyiStartNetworkSpeedTest(seqid);
 }
 
 int32_t SettingSystemServiceConcurrentClient::send_RuyiStartNetworkSpeedTest(const int32_t userindex)
@@ -10027,7 +11356,7 @@ int32_t SettingSystemServiceConcurrentClient::send_RuyiStartNetworkSpeedTest(con
   return cseqid;
 }
 
-void SettingSystemServiceConcurrentClient::recv_RuyiStartNetworkSpeedTest( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSpeed& _return, const int32_t seqid)
+bool SettingSystemServiceConcurrentClient::recv_RuyiStartNetworkSpeedTest(const int32_t seqid)
 {
 
   int32_t rseqid = 0;
@@ -10065,6 +11394,7 @@ void SettingSystemServiceConcurrentClient::recv_RuyiStartNetworkSpeedTest( ::Ruy
         using ::apache::thrift::protocol::TProtocolException;
         throw TProtocolException(TProtocolException::INVALID_DATA);
       }
+      bool _return;
       SettingSystemService_RuyiStartNetworkSpeedTest_presult result;
       result.success = &_return;
       result.read(iprot_);
@@ -10072,9 +11402,8 @@ void SettingSystemServiceConcurrentClient::recv_RuyiStartNetworkSpeedTest( ::Ruy
       iprot_->getTransport()->readEnd();
 
       if (result.__isset.success) {
-        // _return pointer has now been filled
         sentry.commit();
-        return;
+        return _return;
       }
       if (result.__isset.error1) {
         sentry.commit();
@@ -10344,6 +11673,360 @@ bool SettingSystemServiceConcurrentClient::recv_DisconnectWifi(const int32_t seq
       }
       // in a bad state, don't commit
       throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "DisconnectWifi failed: unknown result");
+    }
+    // seqid != rseqid
+    this->sync_.updatePending(fname, mtype, rseqid);
+
+    // this will temporarily unlock the readMutex, and let other clients get work done
+    this->sync_.waitForWork(seqid);
+  } // end while(true)
+}
+
+bool SettingSystemServiceConcurrentClient::DiscoverBluetoothDevice()
+{
+  int32_t seqid = send_DiscoverBluetoothDevice();
+  return recv_DiscoverBluetoothDevice(seqid);
+}
+
+int32_t SettingSystemServiceConcurrentClient::send_DiscoverBluetoothDevice()
+{
+  int32_t cseqid = this->sync_.generateSeqId();
+  ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
+  oprot_->writeMessageBegin("DiscoverBluetoothDevice", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_DiscoverBluetoothDevice_pargs args;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+
+  sentry.commit();
+  return cseqid;
+}
+
+bool SettingSystemServiceConcurrentClient::recv_DiscoverBluetoothDevice(const int32_t seqid)
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  // the read mutex gets dropped and reacquired as part of waitForWork()
+  // The destructor of this sentry wakes up other clients
+  ::apache::thrift::async::TConcurrentRecvSentry sentry(&this->sync_, seqid);
+
+  while(true) {
+    if(!this->sync_.getPending(fname, mtype, rseqid)) {
+      iprot_->readMessageBegin(fname, mtype, rseqid);
+    }
+    if(seqid == rseqid) {
+      if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+        ::apache::thrift::TApplicationException x;
+        x.read(iprot_);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+        sentry.commit();
+        throw x;
+      }
+      if (mtype != ::apache::thrift::protocol::T_REPLY) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+      }
+      if (fname.compare("DiscoverBluetoothDevice") != 0) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+
+        // in a bad state, don't commit
+        using ::apache::thrift::protocol::TProtocolException;
+        throw TProtocolException(TProtocolException::INVALID_DATA);
+      }
+      bool _return;
+      SettingSystemService_DiscoverBluetoothDevice_presult result;
+      result.success = &_return;
+      result.read(iprot_);
+      iprot_->readMessageEnd();
+      iprot_->getTransport()->readEnd();
+
+      if (result.__isset.success) {
+        sentry.commit();
+        return _return;
+      }
+      if (result.__isset.error1) {
+        sentry.commit();
+        throw result.error1;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "DiscoverBluetoothDevice failed: unknown result");
+    }
+    // seqid != rseqid
+    this->sync_.updatePending(fname, mtype, rseqid);
+
+    // this will temporarily unlock the readMutex, and let other clients get work done
+    this->sync_.waitForWork(seqid);
+  } // end while(true)
+}
+
+bool SettingSystemServiceConcurrentClient::ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress)
+{
+  int32_t seqid = send_ConnectBluetoothDevice(DeviceName, DeviceAddress);
+  return recv_ConnectBluetoothDevice(seqid);
+}
+
+int32_t SettingSystemServiceConcurrentClient::send_ConnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress)
+{
+  int32_t cseqid = this->sync_.generateSeqId();
+  ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
+  oprot_->writeMessageBegin("ConnectBluetoothDevice", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_ConnectBluetoothDevice_pargs args;
+  args.DeviceName = &DeviceName;
+  args.DeviceAddress = &DeviceAddress;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+
+  sentry.commit();
+  return cseqid;
+}
+
+bool SettingSystemServiceConcurrentClient::recv_ConnectBluetoothDevice(const int32_t seqid)
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  // the read mutex gets dropped and reacquired as part of waitForWork()
+  // The destructor of this sentry wakes up other clients
+  ::apache::thrift::async::TConcurrentRecvSentry sentry(&this->sync_, seqid);
+
+  while(true) {
+    if(!this->sync_.getPending(fname, mtype, rseqid)) {
+      iprot_->readMessageBegin(fname, mtype, rseqid);
+    }
+    if(seqid == rseqid) {
+      if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+        ::apache::thrift::TApplicationException x;
+        x.read(iprot_);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+        sentry.commit();
+        throw x;
+      }
+      if (mtype != ::apache::thrift::protocol::T_REPLY) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+      }
+      if (fname.compare("ConnectBluetoothDevice") != 0) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+
+        // in a bad state, don't commit
+        using ::apache::thrift::protocol::TProtocolException;
+        throw TProtocolException(TProtocolException::INVALID_DATA);
+      }
+      bool _return;
+      SettingSystemService_ConnectBluetoothDevice_presult result;
+      result.success = &_return;
+      result.read(iprot_);
+      iprot_->readMessageEnd();
+      iprot_->getTransport()->readEnd();
+
+      if (result.__isset.success) {
+        sentry.commit();
+        return _return;
+      }
+      if (result.__isset.error1) {
+        sentry.commit();
+        throw result.error1;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "ConnectBluetoothDevice failed: unknown result");
+    }
+    // seqid != rseqid
+    this->sync_.updatePending(fname, mtype, rseqid);
+
+    // this will temporarily unlock the readMutex, and let other clients get work done
+    this->sync_.waitForWork(seqid);
+  } // end while(true)
+}
+
+bool SettingSystemServiceConcurrentClient::DisconnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress)
+{
+  int32_t seqid = send_DisconnectBluetoothDevice(DeviceName, DeviceAddress);
+  return recv_DisconnectBluetoothDevice(seqid);
+}
+
+int32_t SettingSystemServiceConcurrentClient::send_DisconnectBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress)
+{
+  int32_t cseqid = this->sync_.generateSeqId();
+  ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
+  oprot_->writeMessageBegin("DisconnectBluetoothDevice", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_DisconnectBluetoothDevice_pargs args;
+  args.DeviceName = &DeviceName;
+  args.DeviceAddress = &DeviceAddress;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+
+  sentry.commit();
+  return cseqid;
+}
+
+bool SettingSystemServiceConcurrentClient::recv_DisconnectBluetoothDevice(const int32_t seqid)
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  // the read mutex gets dropped and reacquired as part of waitForWork()
+  // The destructor of this sentry wakes up other clients
+  ::apache::thrift::async::TConcurrentRecvSentry sentry(&this->sync_, seqid);
+
+  while(true) {
+    if(!this->sync_.getPending(fname, mtype, rseqid)) {
+      iprot_->readMessageBegin(fname, mtype, rseqid);
+    }
+    if(seqid == rseqid) {
+      if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+        ::apache::thrift::TApplicationException x;
+        x.read(iprot_);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+        sentry.commit();
+        throw x;
+      }
+      if (mtype != ::apache::thrift::protocol::T_REPLY) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+      }
+      if (fname.compare("DisconnectBluetoothDevice") != 0) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+
+        // in a bad state, don't commit
+        using ::apache::thrift::protocol::TProtocolException;
+        throw TProtocolException(TProtocolException::INVALID_DATA);
+      }
+      bool _return;
+      SettingSystemService_DisconnectBluetoothDevice_presult result;
+      result.success = &_return;
+      result.read(iprot_);
+      iprot_->readMessageEnd();
+      iprot_->getTransport()->readEnd();
+
+      if (result.__isset.success) {
+        sentry.commit();
+        return _return;
+      }
+      if (result.__isset.error1) {
+        sentry.commit();
+        throw result.error1;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "DisconnectBluetoothDevice failed: unknown result");
+    }
+    // seqid != rseqid
+    this->sync_.updatePending(fname, mtype, rseqid);
+
+    // this will temporarily unlock the readMutex, and let other clients get work done
+    this->sync_.waitForWork(seqid);
+  } // end while(true)
+}
+
+bool SettingSystemServiceConcurrentClient::RemoveBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress)
+{
+  int32_t seqid = send_RemoveBluetoothDevice(DeviceName, DeviceAddress);
+  return recv_RemoveBluetoothDevice(seqid);
+}
+
+int32_t SettingSystemServiceConcurrentClient::send_RemoveBluetoothDevice(const std::string& DeviceName, const std::string& DeviceAddress)
+{
+  int32_t cseqid = this->sync_.generateSeqId();
+  ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
+  oprot_->writeMessageBegin("RemoveBluetoothDevice", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  SettingSystemService_RemoveBluetoothDevice_pargs args;
+  args.DeviceName = &DeviceName;
+  args.DeviceAddress = &DeviceAddress;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+
+  sentry.commit();
+  return cseqid;
+}
+
+bool SettingSystemServiceConcurrentClient::recv_RemoveBluetoothDevice(const int32_t seqid)
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  // the read mutex gets dropped and reacquired as part of waitForWork()
+  // The destructor of this sentry wakes up other clients
+  ::apache::thrift::async::TConcurrentRecvSentry sentry(&this->sync_, seqid);
+
+  while(true) {
+    if(!this->sync_.getPending(fname, mtype, rseqid)) {
+      iprot_->readMessageBegin(fname, mtype, rseqid);
+    }
+    if(seqid == rseqid) {
+      if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+        ::apache::thrift::TApplicationException x;
+        x.read(iprot_);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+        sentry.commit();
+        throw x;
+      }
+      if (mtype != ::apache::thrift::protocol::T_REPLY) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+      }
+      if (fname.compare("RemoveBluetoothDevice") != 0) {
+        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+        iprot_->readMessageEnd();
+        iprot_->getTransport()->readEnd();
+
+        // in a bad state, don't commit
+        using ::apache::thrift::protocol::TProtocolException;
+        throw TProtocolException(TProtocolException::INVALID_DATA);
+      }
+      bool _return;
+      SettingSystemService_RemoveBluetoothDevice_presult result;
+      result.success = &_return;
+      result.read(iprot_);
+      iprot_->readMessageEnd();
+      iprot_->getTransport()->readEnd();
+
+      if (result.__isset.success) {
+        sentry.commit();
+        return _return;
+      }
+      if (result.__isset.error1) {
+        sentry.commit();
+        throw result.error1;
+      }
+      // in a bad state, don't commit
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "RemoveBluetoothDevice failed: unknown result");
     }
     // seqid != rseqid
     this->sync_.updatePending(fname, mtype, rseqid);

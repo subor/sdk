@@ -56,11 +56,6 @@ struct RuyiNetworkTestResult {
     3: RuyiNetworkTestItem internetconnection,
 }
 
-struct RuyiNetworkSpeed {
-    1: RuyiNetworkTestItem downloadspeed,
-    2: RuyiNetworkTestItem uploadspeed,
-}
-
 struct CategoryNode {
     1: string id,
     2: string categoryId,

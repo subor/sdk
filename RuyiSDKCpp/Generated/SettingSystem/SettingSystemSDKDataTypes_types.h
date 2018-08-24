@@ -47,8 +47,6 @@ class RuyiNetworkStatus;
 
 class RuyiNetworkTestResult;
 
-class RuyiNetworkSpeed;
-
 class CategoryNode;
 
 class SettingSearchResult;
@@ -388,54 +386,6 @@ class RuyiNetworkTestResult : public virtual ::apache::thrift::TBase {
 void swap(RuyiNetworkTestResult &a, RuyiNetworkTestResult &b);
 
 std::ostream& operator<<(std::ostream& out, const RuyiNetworkTestResult& obj);
-
-typedef struct _RuyiNetworkSpeed__isset {
-  _RuyiNetworkSpeed__isset() : downloadspeed(false), uploadspeed(false) {}
-  bool downloadspeed :1;
-  bool uploadspeed :1;
-} _RuyiNetworkSpeed__isset;
-
-class RuyiNetworkSpeed : public virtual ::apache::thrift::TBase {
- public:
-
-  RuyiNetworkSpeed(const RuyiNetworkSpeed&);
-  RuyiNetworkSpeed& operator=(const RuyiNetworkSpeed&);
-  RuyiNetworkSpeed() {
-  }
-
-  virtual ~RuyiNetworkSpeed() throw();
-  RuyiNetworkTestItem downloadspeed;
-  RuyiNetworkTestItem uploadspeed;
-
-  _RuyiNetworkSpeed__isset __isset;
-
-  void __set_downloadspeed(const RuyiNetworkTestItem& val);
-
-  void __set_uploadspeed(const RuyiNetworkTestItem& val);
-
-  bool operator == (const RuyiNetworkSpeed & rhs) const
-  {
-    if (!(downloadspeed == rhs.downloadspeed))
-      return false;
-    if (!(uploadspeed == rhs.uploadspeed))
-      return false;
-    return true;
-  }
-  bool operator != (const RuyiNetworkSpeed &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const RuyiNetworkSpeed & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-  virtual void printTo(std::ostream& out) const;
-};
-
-void swap(RuyiNetworkSpeed &a, RuyiNetworkSpeed &b);
-
-std::ostream& operator<<(std::ostream& out, const RuyiNetworkSpeed& obj);
 
 typedef struct _CategoryNode__isset {
   _CategoryNode__isset() : id(false), categoryId(false), sortingPriority(false), children(false) {}

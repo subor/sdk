@@ -280,6 +280,19 @@ class BrainCloudServiceIf {
   /**
    * Authenticate the user via wechat
    * 
+   * @param phoneNumber The phone number to authenticate with
+   * 
+   * @param authCode The code sent to the mobile phone
+   * 
+   * @param forceCreate Should a new profile be created for this user if the account does not exist?
+   * 
+   * @param clientIndex
+   */
+  virtual void Authentication_AuthenticatePhone(std::string& _return, const std::string& phoneNumber, const std::string& authCode, const bool forceCreate, const int32_t clientIndex) = 0;
+
+  /**
+   * Authenticate the user via wechat
+   * 
    * @param openId The open id passed from wechat
    * 
    * @param token The access token passed from wechat
@@ -298,6 +311,17 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual void Authentication_ResetEmailPassword(std::string& _return, const std::string& externalId, const int32_t clientIndex) = 0;
+
+  /**
+   * Request an SMS code sent to a phone prior to authentication.
+   * 
+   * @param phoneNumber The phone number to send the code to.
+   * 
+   * @param forceCreate Whether or not to create a new player if they don't exist.
+   * 
+   * @param clientIndex
+   */
+  virtual void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex) = 0;
 
   /**
    * Returns the sessionId or empty string if no session present.
@@ -3759,10 +3783,16 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
   void Authentication_AuthenticateExternal(std::string& /* _return */, const std::string& /* userId */, const std::string& /* token */, const std::string& /* externalAuthName */, const bool /* forceCreate */, const int32_t /* clientIndex */) {
     return;
   }
+  void Authentication_AuthenticatePhone(std::string& /* _return */, const std::string& /* phoneNumber */, const std::string& /* authCode */, const bool /* forceCreate */, const int32_t /* clientIndex */) {
+    return;
+  }
   void Authentication_AuthenticateWechat(std::string& /* _return */, const std::string& /* openId */, const std::string& /* token */, const bool /* forceCreate */, const int32_t /* clientIndex */) {
     return;
   }
   void Authentication_ResetEmailPassword(std::string& /* _return */, const std::string& /* externalId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Authentication_RequestSmsCode(std::string& /* _return */, const std::string& /* phoneNumber */, const bool /* forceCreate */, const int32_t /* clientIndex */) {
     return;
   }
   void Client_GetSessionId(std::string& /* _return */, const int32_t /* clientIndex */) {
@@ -6910,6 +6940,131 @@ class BrainCloudService_Authentication_AuthenticateExternal_presult {
 
 };
 
+typedef struct _BrainCloudService_Authentication_AuthenticatePhone_args__isset {
+  _BrainCloudService_Authentication_AuthenticatePhone_args__isset() : phoneNumber(false), authCode(false), forceCreate(false), clientIndex(false) {}
+  bool phoneNumber :1;
+  bool authCode :1;
+  bool forceCreate :1;
+  bool clientIndex :1;
+} _BrainCloudService_Authentication_AuthenticatePhone_args__isset;
+
+class BrainCloudService_Authentication_AuthenticatePhone_args {
+ public:
+
+  BrainCloudService_Authentication_AuthenticatePhone_args(const BrainCloudService_Authentication_AuthenticatePhone_args&);
+  BrainCloudService_Authentication_AuthenticatePhone_args& operator=(const BrainCloudService_Authentication_AuthenticatePhone_args&);
+  BrainCloudService_Authentication_AuthenticatePhone_args() : phoneNumber(), authCode(), forceCreate(0), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Authentication_AuthenticatePhone_args() throw();
+  std::string phoneNumber;
+  std::string authCode;
+  bool forceCreate;
+  int32_t clientIndex;
+
+  _BrainCloudService_Authentication_AuthenticatePhone_args__isset __isset;
+
+  void __set_phoneNumber(const std::string& val);
+
+  void __set_authCode(const std::string& val);
+
+  void __set_forceCreate(const bool val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Authentication_AuthenticatePhone_args & rhs) const
+  {
+    if (!(phoneNumber == rhs.phoneNumber))
+      return false;
+    if (!(authCode == rhs.authCode))
+      return false;
+    if (!(forceCreate == rhs.forceCreate))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Authentication_AuthenticatePhone_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Authentication_AuthenticatePhone_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Authentication_AuthenticatePhone_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Authentication_AuthenticatePhone_pargs() throw();
+  const std::string* phoneNumber;
+  const std::string* authCode;
+  const bool* forceCreate;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Authentication_AuthenticatePhone_result__isset {
+  _BrainCloudService_Authentication_AuthenticatePhone_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Authentication_AuthenticatePhone_result__isset;
+
+class BrainCloudService_Authentication_AuthenticatePhone_result {
+ public:
+
+  BrainCloudService_Authentication_AuthenticatePhone_result(const BrainCloudService_Authentication_AuthenticatePhone_result&);
+  BrainCloudService_Authentication_AuthenticatePhone_result& operator=(const BrainCloudService_Authentication_AuthenticatePhone_result&);
+  BrainCloudService_Authentication_AuthenticatePhone_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Authentication_AuthenticatePhone_result() throw();
+  std::string success;
+
+  _BrainCloudService_Authentication_AuthenticatePhone_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Authentication_AuthenticatePhone_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Authentication_AuthenticatePhone_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Authentication_AuthenticatePhone_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Authentication_AuthenticatePhone_presult__isset {
+  _BrainCloudService_Authentication_AuthenticatePhone_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Authentication_AuthenticatePhone_presult__isset;
+
+class BrainCloudService_Authentication_AuthenticatePhone_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Authentication_AuthenticatePhone_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Authentication_AuthenticatePhone_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 typedef struct _BrainCloudService_Authentication_AuthenticateWechat_args__isset {
   _BrainCloudService_Authentication_AuthenticateWechat_args__isset() : openId(false), token(false), forceCreate(false), clientIndex(false) {}
   bool openId :1;
@@ -7141,6 +7296,124 @@ class BrainCloudService_Authentication_ResetEmailPassword_presult {
   std::string* success;
 
   _BrainCloudService_Authentication_ResetEmailPassword_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Authentication_RequestSmsCode_args__isset {
+  _BrainCloudService_Authentication_RequestSmsCode_args__isset() : phoneNumber(false), forceCreate(false), clientIndex(false) {}
+  bool phoneNumber :1;
+  bool forceCreate :1;
+  bool clientIndex :1;
+} _BrainCloudService_Authentication_RequestSmsCode_args__isset;
+
+class BrainCloudService_Authentication_RequestSmsCode_args {
+ public:
+
+  BrainCloudService_Authentication_RequestSmsCode_args(const BrainCloudService_Authentication_RequestSmsCode_args&);
+  BrainCloudService_Authentication_RequestSmsCode_args& operator=(const BrainCloudService_Authentication_RequestSmsCode_args&);
+  BrainCloudService_Authentication_RequestSmsCode_args() : phoneNumber(), forceCreate(0), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Authentication_RequestSmsCode_args() throw();
+  std::string phoneNumber;
+  bool forceCreate;
+  int32_t clientIndex;
+
+  _BrainCloudService_Authentication_RequestSmsCode_args__isset __isset;
+
+  void __set_phoneNumber(const std::string& val);
+
+  void __set_forceCreate(const bool val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Authentication_RequestSmsCode_args & rhs) const
+  {
+    if (!(phoneNumber == rhs.phoneNumber))
+      return false;
+    if (!(forceCreate == rhs.forceCreate))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Authentication_RequestSmsCode_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Authentication_RequestSmsCode_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Authentication_RequestSmsCode_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Authentication_RequestSmsCode_pargs() throw();
+  const std::string* phoneNumber;
+  const bool* forceCreate;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Authentication_RequestSmsCode_result__isset {
+  _BrainCloudService_Authentication_RequestSmsCode_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Authentication_RequestSmsCode_result__isset;
+
+class BrainCloudService_Authentication_RequestSmsCode_result {
+ public:
+
+  BrainCloudService_Authentication_RequestSmsCode_result(const BrainCloudService_Authentication_RequestSmsCode_result&);
+  BrainCloudService_Authentication_RequestSmsCode_result& operator=(const BrainCloudService_Authentication_RequestSmsCode_result&);
+  BrainCloudService_Authentication_RequestSmsCode_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Authentication_RequestSmsCode_result() throw();
+  std::string success;
+
+  _BrainCloudService_Authentication_RequestSmsCode_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Authentication_RequestSmsCode_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Authentication_RequestSmsCode_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Authentication_RequestSmsCode_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Authentication_RequestSmsCode_presult__isset {
+  _BrainCloudService_Authentication_RequestSmsCode_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Authentication_RequestSmsCode_presult__isset;
+
+class BrainCloudService_Authentication_RequestSmsCode_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Authentication_RequestSmsCode_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Authentication_RequestSmsCode_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -46207,12 +46480,18 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Authentication_AuthenticateExternal(std::string& _return, const std::string& userId, const std::string& token, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex);
   void send_Authentication_AuthenticateExternal(const std::string& userId, const std::string& token, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex);
   void recv_Authentication_AuthenticateExternal(std::string& _return);
+  void Authentication_AuthenticatePhone(std::string& _return, const std::string& phoneNumber, const std::string& authCode, const bool forceCreate, const int32_t clientIndex);
+  void send_Authentication_AuthenticatePhone(const std::string& phoneNumber, const std::string& authCode, const bool forceCreate, const int32_t clientIndex);
+  void recv_Authentication_AuthenticatePhone(std::string& _return);
   void Authentication_AuthenticateWechat(std::string& _return, const std::string& openId, const std::string& token, const bool forceCreate, const int32_t clientIndex);
   void send_Authentication_AuthenticateWechat(const std::string& openId, const std::string& token, const bool forceCreate, const int32_t clientIndex);
   void recv_Authentication_AuthenticateWechat(std::string& _return);
   void Authentication_ResetEmailPassword(std::string& _return, const std::string& externalId, const int32_t clientIndex);
   void send_Authentication_ResetEmailPassword(const std::string& externalId, const int32_t clientIndex);
   void recv_Authentication_ResetEmailPassword(std::string& _return);
+  void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex);
+  void send_Authentication_RequestSmsCode(const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex);
+  void recv_Authentication_RequestSmsCode(std::string& _return);
   void Client_GetSessionId(std::string& _return, const int32_t clientIndex);
   void send_Client_GetSessionId(const int32_t clientIndex);
   void recv_Client_GetSessionId(std::string& _return);
@@ -47251,8 +47530,10 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Authentication_AuthenticateEmailPassword(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Authentication_AuthenticateUniversal(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Authentication_AuthenticateExternal(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Authentication_AuthenticatePhone(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Authentication_AuthenticateWechat(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Authentication_ResetEmailPassword(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Authentication_RequestSmsCode(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Client_GetSessionId(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Client_IsAuthenticated(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Client_IsInitialized(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -47609,8 +47890,10 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Authentication_AuthenticateEmailPassword"] = &BrainCloudServiceProcessor::process_Authentication_AuthenticateEmailPassword;
     processMap_["Authentication_AuthenticateUniversal"] = &BrainCloudServiceProcessor::process_Authentication_AuthenticateUniversal;
     processMap_["Authentication_AuthenticateExternal"] = &BrainCloudServiceProcessor::process_Authentication_AuthenticateExternal;
+    processMap_["Authentication_AuthenticatePhone"] = &BrainCloudServiceProcessor::process_Authentication_AuthenticatePhone;
     processMap_["Authentication_AuthenticateWechat"] = &BrainCloudServiceProcessor::process_Authentication_AuthenticateWechat;
     processMap_["Authentication_ResetEmailPassword"] = &BrainCloudServiceProcessor::process_Authentication_ResetEmailPassword;
+    processMap_["Authentication_RequestSmsCode"] = &BrainCloudServiceProcessor::process_Authentication_RequestSmsCode;
     processMap_["Client_GetSessionId"] = &BrainCloudServiceProcessor::process_Client_GetSessionId;
     processMap_["Client_IsAuthenticated"] = &BrainCloudServiceProcessor::process_Client_IsAuthenticated;
     processMap_["Client_IsInitialized"] = &BrainCloudServiceProcessor::process_Client_IsInitialized;
@@ -48152,6 +48435,16 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
     return;
   }
 
+  void Authentication_AuthenticatePhone(std::string& _return, const std::string& phoneNumber, const std::string& authCode, const bool forceCreate, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Authentication_AuthenticatePhone(_return, phoneNumber, authCode, forceCreate, clientIndex);
+    }
+    ifaces_[i]->Authentication_AuthenticatePhone(_return, phoneNumber, authCode, forceCreate, clientIndex);
+    return;
+  }
+
   void Authentication_AuthenticateWechat(std::string& _return, const std::string& openId, const std::string& token, const bool forceCreate, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -48169,6 +48462,16 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
       ifaces_[i]->Authentication_ResetEmailPassword(_return, externalId, clientIndex);
     }
     ifaces_[i]->Authentication_ResetEmailPassword(_return, externalId, clientIndex);
+    return;
+  }
+
+  void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Authentication_RequestSmsCode(_return, phoneNumber, forceCreate, clientIndex);
+    }
+    ifaces_[i]->Authentication_RequestSmsCode(_return, phoneNumber, forceCreate, clientIndex);
     return;
   }
 
@@ -51580,12 +51883,18 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Authentication_AuthenticateExternal(std::string& _return, const std::string& userId, const std::string& token, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex);
   int32_t send_Authentication_AuthenticateExternal(const std::string& userId, const std::string& token, const std::string& externalAuthName, const bool forceCreate, const int32_t clientIndex);
   void recv_Authentication_AuthenticateExternal(std::string& _return, const int32_t seqid);
+  void Authentication_AuthenticatePhone(std::string& _return, const std::string& phoneNumber, const std::string& authCode, const bool forceCreate, const int32_t clientIndex);
+  int32_t send_Authentication_AuthenticatePhone(const std::string& phoneNumber, const std::string& authCode, const bool forceCreate, const int32_t clientIndex);
+  void recv_Authentication_AuthenticatePhone(std::string& _return, const int32_t seqid);
   void Authentication_AuthenticateWechat(std::string& _return, const std::string& openId, const std::string& token, const bool forceCreate, const int32_t clientIndex);
   int32_t send_Authentication_AuthenticateWechat(const std::string& openId, const std::string& token, const bool forceCreate, const int32_t clientIndex);
   void recv_Authentication_AuthenticateWechat(std::string& _return, const int32_t seqid);
   void Authentication_ResetEmailPassword(std::string& _return, const std::string& externalId, const int32_t clientIndex);
   int32_t send_Authentication_ResetEmailPassword(const std::string& externalId, const int32_t clientIndex);
   void recv_Authentication_ResetEmailPassword(std::string& _return, const int32_t seqid);
+  void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex);
+  int32_t send_Authentication_RequestSmsCode(const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex);
+  void recv_Authentication_RequestSmsCode(std::string& _return, const int32_t seqid);
   void Client_GetSessionId(std::string& _return, const int32_t clientIndex);
   int32_t send_Client_GetSessionId(const int32_t clientIndex);
   void recv_Client_GetSessionId(std::string& _return, const int32_t seqid);
