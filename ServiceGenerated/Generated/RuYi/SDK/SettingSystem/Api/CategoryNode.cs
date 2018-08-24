@@ -136,13 +136,13 @@ namespace Ruyi.SDK.SettingSystem.Api
               if (field.Type == TType.List) {
                 {
                   Children = new List<CategoryNode>();
-                  TList _list4 = iprot.ReadListBegin();
-                  for( int _i5 = 0; _i5 < _list4.Count; ++_i5)
+                  TList _list0 = iprot.ReadListBegin();
+                  for( int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
-                    CategoryNode _elem6;
-                    _elem6 = new CategoryNode();
-                    _elem6.Read(iprot);
-                    Children.Add(_elem6);
+                    CategoryNode _elem2;
+                    _elem2 = new CategoryNode();
+                    _elem2.Read(iprot);
+                    Children.Add(_elem2);
                   }
                   iprot.ReadListEnd();
                 }
@@ -202,9 +202,9 @@ namespace Ruyi.SDK.SettingSystem.Api
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, Children.Count));
-            foreach (CategoryNode _iter7 in Children)
+            foreach (CategoryNode _iter3 in Children)
             {
-              _iter7.Write(oprot);
+              _iter3.Write(oprot);
             }
             oprot.WriteListEnd();
           }
