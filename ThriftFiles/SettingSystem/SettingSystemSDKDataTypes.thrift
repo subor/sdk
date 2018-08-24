@@ -56,6 +56,15 @@ struct RuyiNetworkTestResult {
     3: RuyiNetworkTestItem internetconnection,
 }
 
+struct NetworkConnectionStatus {
+    1: bool preLanAdapter,
+    2: bool curLanAdapter,
+    3: bool preWlanAdapter,
+    4: bool curWlanAdapter,
+    5: bool preInternetConnection,
+    6: bool curInternetConnection,
+}
+
 struct CategoryNode {
     1: string id,
     2: string categoryId,
