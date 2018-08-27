@@ -16,40 +16,54 @@ using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.CommonType
 {
 
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class BluetoothDevicePinRequest : TBase
+  public partial class ModuleBaseInfo : TBase
   {
-    private string _DeviceName;
-    private string _Pin;
+    private string _name;
+    private string _version;
+    private int _configHash;
 
-    public string DeviceName
+    public string Name
     {
       get
       {
-        return _DeviceName;
+        return _name;
       }
       set
       {
-        __isset.DeviceName = true;
-        this._DeviceName = value;
+        __isset.name = true;
+        this._name = value;
       }
     }
 
-    public string Pin
+    public string Version
     {
       get
       {
-        return _Pin;
+        return _version;
       }
       set
       {
-        __isset.Pin = true;
-        this._Pin = value;
+        __isset.version = true;
+        this._version = value;
+      }
+    }
+
+    public int ConfigHash
+    {
+      get
+      {
+        return _configHash;
+      }
+      set
+      {
+        __isset.configHash = true;
+        this._configHash = value;
       }
     }
 
@@ -59,11 +73,12 @@ namespace Ruyi.SDK.SettingSystem.Api
     [Serializable]
     #endif
     public struct Isset {
-      public bool DeviceName;
-      public bool Pin;
+      public bool name;
+      public bool version;
+      public bool configHash;
     }
 
-    public BluetoothDevicePinRequest() {
+    public ModuleBaseInfo() {
     }
 
     public void Read (TProtocol iprot)
@@ -83,14 +98,21 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             case 1:
               if (field.Type == TType.String) {
-                DeviceName = iprot.ReadString();
+                Name = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
               if (field.Type == TType.String) {
-                Pin = iprot.ReadString();
+                Version = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.I32) {
+                ConfigHash = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -113,23 +135,31 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("BluetoothDevicePinRequest");
+        TStruct struc = new TStruct("ModuleBaseInfo");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (DeviceName != null && __isset.DeviceName) {
-          field.Name = "DeviceName";
+        if (Name != null && __isset.name) {
+          field.Name = "name";
           field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(DeviceName);
+          oprot.WriteString(Name);
           oprot.WriteFieldEnd();
         }
-        if (Pin != null && __isset.Pin) {
-          field.Name = "Pin";
+        if (Version != null && __isset.version) {
+          field.Name = "version";
           field.Type = TType.String;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Pin);
+          oprot.WriteString(Version);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.configHash) {
+          field.Name = "configHash";
+          field.Type = TType.I32;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(ConfigHash);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -142,19 +172,25 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("BluetoothDevicePinRequest(");
+      StringBuilder __sb = new StringBuilder("ModuleBaseInfo(");
       bool __first = true;
-      if (DeviceName != null && __isset.DeviceName) {
+      if (Name != null && __isset.name) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("DeviceName: ");
-        __sb.Append(DeviceName);
+        __sb.Append("Name: ");
+        __sb.Append(Name);
       }
-      if (Pin != null && __isset.Pin) {
+      if (Version != null && __isset.version) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Pin: ");
-        __sb.Append(Pin);
+        __sb.Append("Version: ");
+        __sb.Append(Version);
+      }
+      if (__isset.configHash) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("ConfigHash: ");
+        __sb.Append(ConfigHash);
       }
       __sb.Append(")");
       return __sb.ToString();

@@ -22,37 +22,51 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.CommonType
 {
 
-  public partial class RuyiNetworkSpeed : TBase
+  public partial class ModuleBaseInfo : TBase
   {
-    private RuyiNetworkTestItem _downloadspeed;
-    private RuyiNetworkTestItem _uploadspeed;
+    private string _name;
+    private string _version;
+    private int _configHash;
 
-    public RuyiNetworkTestItem Downloadspeed
+    public string Name
     {
       get
       {
-        return _downloadspeed;
+        return _name;
       }
       set
       {
-        __isset.downloadspeed = true;
-        this._downloadspeed = value;
+        __isset.name = true;
+        this._name = value;
       }
     }
 
-    public RuyiNetworkTestItem Uploadspeed
+    public string Version
     {
       get
       {
-        return _uploadspeed;
+        return _version;
       }
       set
       {
-        __isset.uploadspeed = true;
-        this._uploadspeed = value;
+        __isset.version = true;
+        this._version = value;
+      }
+    }
+
+    public int ConfigHash
+    {
+      get
+      {
+        return _configHash;
+      }
+      set
+      {
+        __isset.configHash = true;
+        this._configHash = value;
       }
     }
 
@@ -60,11 +74,12 @@ namespace Ruyi.SDK.SettingSystem.Api
     public Isset __isset;
     public struct Isset
     {
-      public bool downloadspeed;
-      public bool uploadspeed;
+      public bool name;
+      public bool version;
+      public bool configHash;
     }
 
-    public RuyiNetworkSpeed()
+    public ModuleBaseInfo()
     {
     }
 
@@ -86,10 +101,9 @@ namespace Ruyi.SDK.SettingSystem.Api
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.Struct)
+              if (field.Type == TType.String)
               {
-                Downloadspeed = new RuyiNetworkTestItem();
-                await Downloadspeed.ReadAsync(iprot, cancellationToken);
+                Name = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -97,10 +111,19 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 2:
-              if (field.Type == TType.Struct)
+              if (field.Type == TType.String)
               {
-                Uploadspeed = new RuyiNetworkTestItem();
-                await Uploadspeed.ReadAsync(iprot, cancellationToken);
+                Version = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.I32)
+              {
+                ConfigHash = await iprot.ReadI32Async(cancellationToken);
               }
               else
               {
@@ -128,25 +151,34 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("RuyiNetworkSpeed");
+        var struc = new TStruct("ModuleBaseInfo");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Downloadspeed != null && __isset.downloadspeed)
+        if (Name != null && __isset.name)
         {
-          field.Name = "downloadspeed";
-          field.Type = TType.Struct;
+          field.Name = "name";
+          field.Type = TType.String;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Downloadspeed.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteStringAsync(Name, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Uploadspeed != null && __isset.uploadspeed)
+        if (Version != null && __isset.version)
         {
-          field.Name = "uploadspeed";
-          field.Type = TType.Struct;
+          field.Name = "version";
+          field.Type = TType.String;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Uploadspeed.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteStringAsync(Version, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (__isset.configHash)
+        {
+          field.Name = "configHash";
+          field.Type = TType.I32;
+          field.ID = 3;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async(ConfigHash, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -160,21 +192,28 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("RuyiNetworkSpeed(");
+      var sb = new StringBuilder("ModuleBaseInfo(");
       bool __first = true;
-      if (Downloadspeed != null && __isset.downloadspeed)
+      if (Name != null && __isset.name)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Downloadspeed: ");
-        sb.Append(Downloadspeed== null ? "<null>" : Downloadspeed.ToString());
+        sb.Append("Name: ");
+        sb.Append(Name);
       }
-      if (Uploadspeed != null && __isset.uploadspeed)
+      if (Version != null && __isset.version)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Uploadspeed: ");
-        sb.Append(Uploadspeed== null ? "<null>" : Uploadspeed.ToString());
+        sb.Append("Version: ");
+        sb.Append(Version);
+      }
+      if (__isset.configHash)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("ConfigHash: ");
+        sb.Append(ConfigHash);
       }
       sb.Append(")");
       return sb.ToString();

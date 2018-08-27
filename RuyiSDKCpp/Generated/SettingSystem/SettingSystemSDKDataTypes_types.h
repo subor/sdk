@@ -47,13 +47,7 @@ class RuyiNetworkStatus;
 
 class RuyiNetworkTestResult;
 
-class RuyiNetworkSpeed;
-
-class BluetoothDevice;
-
-class BluetoothDeviceList;
-
-class BluetoothDevicePinRequest;
+class NetworkConnectionStatus;
 
 class CategoryNode;
 
@@ -395,43 +389,67 @@ void swap(RuyiNetworkTestResult &a, RuyiNetworkTestResult &b);
 
 std::ostream& operator<<(std::ostream& out, const RuyiNetworkTestResult& obj);
 
-typedef struct _RuyiNetworkSpeed__isset {
-  _RuyiNetworkSpeed__isset() : downloadspeed(false), uploadspeed(false) {}
-  bool downloadspeed :1;
-  bool uploadspeed :1;
-} _RuyiNetworkSpeed__isset;
+typedef struct _NetworkConnectionStatus__isset {
+  _NetworkConnectionStatus__isset() : preLanAdapter(false), curLanAdapter(false), preWlanAdapter(false), curWlanAdapter(false), preInternetConnection(false), curInternetConnection(false) {}
+  bool preLanAdapter :1;
+  bool curLanAdapter :1;
+  bool preWlanAdapter :1;
+  bool curWlanAdapter :1;
+  bool preInternetConnection :1;
+  bool curInternetConnection :1;
+} _NetworkConnectionStatus__isset;
 
-class RuyiNetworkSpeed : public virtual ::apache::thrift::TBase {
+class NetworkConnectionStatus : public virtual ::apache::thrift::TBase {
  public:
 
-  RuyiNetworkSpeed(const RuyiNetworkSpeed&);
-  RuyiNetworkSpeed& operator=(const RuyiNetworkSpeed&);
-  RuyiNetworkSpeed() {
+  NetworkConnectionStatus(const NetworkConnectionStatus&);
+  NetworkConnectionStatus& operator=(const NetworkConnectionStatus&);
+  NetworkConnectionStatus() : preLanAdapter(0), curLanAdapter(0), preWlanAdapter(0), curWlanAdapter(0), preInternetConnection(0), curInternetConnection(0) {
   }
 
-  virtual ~RuyiNetworkSpeed() throw();
-  RuyiNetworkTestItem downloadspeed;
-  RuyiNetworkTestItem uploadspeed;
+  virtual ~NetworkConnectionStatus() throw();
+  bool preLanAdapter;
+  bool curLanAdapter;
+  bool preWlanAdapter;
+  bool curWlanAdapter;
+  bool preInternetConnection;
+  bool curInternetConnection;
 
-  _RuyiNetworkSpeed__isset __isset;
+  _NetworkConnectionStatus__isset __isset;
 
-  void __set_downloadspeed(const RuyiNetworkTestItem& val);
+  void __set_preLanAdapter(const bool val);
 
-  void __set_uploadspeed(const RuyiNetworkTestItem& val);
+  void __set_curLanAdapter(const bool val);
 
-  bool operator == (const RuyiNetworkSpeed & rhs) const
+  void __set_preWlanAdapter(const bool val);
+
+  void __set_curWlanAdapter(const bool val);
+
+  void __set_preInternetConnection(const bool val);
+
+  void __set_curInternetConnection(const bool val);
+
+  bool operator == (const NetworkConnectionStatus & rhs) const
   {
-    if (!(downloadspeed == rhs.downloadspeed))
+    if (!(preLanAdapter == rhs.preLanAdapter))
       return false;
-    if (!(uploadspeed == rhs.uploadspeed))
+    if (!(curLanAdapter == rhs.curLanAdapter))
+      return false;
+    if (!(preWlanAdapter == rhs.preWlanAdapter))
+      return false;
+    if (!(curWlanAdapter == rhs.curWlanAdapter))
+      return false;
+    if (!(preInternetConnection == rhs.preInternetConnection))
+      return false;
+    if (!(curInternetConnection == rhs.curInternetConnection))
       return false;
     return true;
   }
-  bool operator != (const RuyiNetworkSpeed &rhs) const {
+  bool operator != (const NetworkConnectionStatus &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const RuyiNetworkSpeed & ) const;
+  bool operator < (const NetworkConnectionStatus & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -439,165 +457,9 @@ class RuyiNetworkSpeed : public virtual ::apache::thrift::TBase {
   virtual void printTo(std::ostream& out) const;
 };
 
-void swap(RuyiNetworkSpeed &a, RuyiNetworkSpeed &b);
+void swap(NetworkConnectionStatus &a, NetworkConnectionStatus &b);
 
-std::ostream& operator<<(std::ostream& out, const RuyiNetworkSpeed& obj);
-
-typedef struct _BluetoothDevice__isset {
-  _BluetoothDevice__isset() : DeviceName(false), DeviceAddress(false), DeviceClass(false), Connected(false), Authenticated(false) {}
-  bool DeviceName :1;
-  bool DeviceAddress :1;
-  bool DeviceClass :1;
-  bool Connected :1;
-  bool Authenticated :1;
-} _BluetoothDevice__isset;
-
-class BluetoothDevice : public virtual ::apache::thrift::TBase {
- public:
-
-  BluetoothDevice(const BluetoothDevice&);
-  BluetoothDevice& operator=(const BluetoothDevice&);
-  BluetoothDevice() : DeviceName(), DeviceAddress(), DeviceClass(0), Connected(0), Authenticated(0) {
-  }
-
-  virtual ~BluetoothDevice() throw();
-  std::string DeviceName;
-  std::string DeviceAddress;
-  int32_t DeviceClass;
-  bool Connected;
-  bool Authenticated;
-
-  _BluetoothDevice__isset __isset;
-
-  void __set_DeviceName(const std::string& val);
-
-  void __set_DeviceAddress(const std::string& val);
-
-  void __set_DeviceClass(const int32_t val);
-
-  void __set_Connected(const bool val);
-
-  void __set_Authenticated(const bool val);
-
-  bool operator == (const BluetoothDevice & rhs) const
-  {
-    if (!(DeviceName == rhs.DeviceName))
-      return false;
-    if (!(DeviceAddress == rhs.DeviceAddress))
-      return false;
-    if (!(DeviceClass == rhs.DeviceClass))
-      return false;
-    if (!(Connected == rhs.Connected))
-      return false;
-    if (!(Authenticated == rhs.Authenticated))
-      return false;
-    return true;
-  }
-  bool operator != (const BluetoothDevice &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BluetoothDevice & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-  virtual void printTo(std::ostream& out) const;
-};
-
-void swap(BluetoothDevice &a, BluetoothDevice &b);
-
-std::ostream& operator<<(std::ostream& out, const BluetoothDevice& obj);
-
-typedef struct _BluetoothDeviceList__isset {
-  _BluetoothDeviceList__isset() : DeviceList(false) {}
-  bool DeviceList :1;
-} _BluetoothDeviceList__isset;
-
-class BluetoothDeviceList : public virtual ::apache::thrift::TBase {
- public:
-
-  BluetoothDeviceList(const BluetoothDeviceList&);
-  BluetoothDeviceList& operator=(const BluetoothDeviceList&);
-  BluetoothDeviceList() {
-  }
-
-  virtual ~BluetoothDeviceList() throw();
-  std::vector<BluetoothDevice>  DeviceList;
-
-  _BluetoothDeviceList__isset __isset;
-
-  void __set_DeviceList(const std::vector<BluetoothDevice> & val);
-
-  bool operator == (const BluetoothDeviceList & rhs) const
-  {
-    if (!(DeviceList == rhs.DeviceList))
-      return false;
-    return true;
-  }
-  bool operator != (const BluetoothDeviceList &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BluetoothDeviceList & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-  virtual void printTo(std::ostream& out) const;
-};
-
-void swap(BluetoothDeviceList &a, BluetoothDeviceList &b);
-
-std::ostream& operator<<(std::ostream& out, const BluetoothDeviceList& obj);
-
-typedef struct _BluetoothDevicePinRequest__isset {
-  _BluetoothDevicePinRequest__isset() : DeviceName(false), Pin(false) {}
-  bool DeviceName :1;
-  bool Pin :1;
-} _BluetoothDevicePinRequest__isset;
-
-class BluetoothDevicePinRequest : public virtual ::apache::thrift::TBase {
- public:
-
-  BluetoothDevicePinRequest(const BluetoothDevicePinRequest&);
-  BluetoothDevicePinRequest& operator=(const BluetoothDevicePinRequest&);
-  BluetoothDevicePinRequest() : DeviceName(), Pin() {
-  }
-
-  virtual ~BluetoothDevicePinRequest() throw();
-  std::string DeviceName;
-  std::string Pin;
-
-  _BluetoothDevicePinRequest__isset __isset;
-
-  void __set_DeviceName(const std::string& val);
-
-  void __set_Pin(const std::string& val);
-
-  bool operator == (const BluetoothDevicePinRequest & rhs) const
-  {
-    if (!(DeviceName == rhs.DeviceName))
-      return false;
-    if (!(Pin == rhs.Pin))
-      return false;
-    return true;
-  }
-  bool operator != (const BluetoothDevicePinRequest &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BluetoothDevicePinRequest & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-  virtual void printTo(std::ostream& out) const;
-};
-
-void swap(BluetoothDevicePinRequest &a, BluetoothDevicePinRequest &b);
-
-std::ostream& operator<<(std::ostream& out, const BluetoothDevicePinRequest& obj);
+std::ostream& operator<<(std::ostream& out, const NetworkConnectionStatus& obj);
 
 typedef struct _CategoryNode__isset {
   _CategoryNode__isset() : id(false), categoryId(false), sortingPriority(false), children(false) {}

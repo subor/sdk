@@ -9,47 +9,60 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.SettingSystem.Api
+namespace Ruyi.SDK.CommonType
 {
 
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class RuyiNetworkSpeed : TBase
+  public partial class ModuleBaseInfo : TBase
   {
-    private RuyiNetworkTestItem _downloadspeed;
-    private RuyiNetworkTestItem _uploadspeed;
+    private string _name;
+    private string _version;
+    private int _configHash;
 
-    public RuyiNetworkTestItem Downloadspeed
+    public string Name
     {
       get
       {
-        return _downloadspeed;
+        return _name;
       }
       set
       {
-        __isset.downloadspeed = true;
-        this._downloadspeed = value;
+        __isset.name = true;
+        this._name = value;
       }
     }
 
-    public RuyiNetworkTestItem Uploadspeed
+    public string Version
     {
       get
       {
-        return _uploadspeed;
+        return _version;
       }
       set
       {
-        __isset.uploadspeed = true;
-        this._uploadspeed = value;
+        __isset.version = true;
+        this._version = value;
+      }
+    }
+
+    public int ConfigHash
+    {
+      get
+      {
+        return _configHash;
+      }
+      set
+      {
+        __isset.configHash = true;
+        this._configHash = value;
       }
     }
 
@@ -59,11 +72,12 @@ namespace Ruyi.SDK.SettingSystem.Api
     [Serializable]
     #endif
     public struct Isset {
-      public bool downloadspeed;
-      public bool uploadspeed;
+      public bool name;
+      public bool version;
+      public bool configHash;
     }
 
-    public RuyiNetworkSpeed() {
+    public ModuleBaseInfo() {
     }
 
     public void Read (TProtocol iprot)
@@ -82,17 +96,22 @@ namespace Ruyi.SDK.SettingSystem.Api
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.Struct) {
-                Downloadspeed = new RuyiNetworkTestItem();
-                Downloadspeed.Read(iprot);
+              if (field.Type == TType.String) {
+                Name = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.Struct) {
-                Uploadspeed = new RuyiNetworkTestItem();
-                Uploadspeed.Read(iprot);
+              if (field.Type == TType.String) {
+                Version = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.I32) {
+                ConfigHash = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -115,23 +134,31 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("RuyiNetworkSpeed");
+        TStruct struc = new TStruct("ModuleBaseInfo");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (Downloadspeed != null && __isset.downloadspeed) {
-          field.Name = "downloadspeed";
-          field.Type = TType.Struct;
+        if (Name != null && __isset.name) {
+          field.Name = "name";
+          field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          Downloadspeed.Write(oprot);
+          oprot.WriteString(Name);
           oprot.WriteFieldEnd();
         }
-        if (Uploadspeed != null && __isset.uploadspeed) {
-          field.Name = "uploadspeed";
-          field.Type = TType.Struct;
+        if (Version != null && __isset.version) {
+          field.Name = "version";
+          field.Type = TType.String;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          Uploadspeed.Write(oprot);
+          oprot.WriteString(Version);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.configHash) {
+          field.Name = "configHash";
+          field.Type = TType.I32;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32(ConfigHash);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -144,19 +171,25 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("RuyiNetworkSpeed(");
+      StringBuilder __sb = new StringBuilder("ModuleBaseInfo(");
       bool __first = true;
-      if (Downloadspeed != null && __isset.downloadspeed) {
+      if (Name != null && __isset.name) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Downloadspeed: ");
-        __sb.Append(Downloadspeed== null ? "<null>" : Downloadspeed.ToString());
+        __sb.Append("Name: ");
+        __sb.Append(Name);
       }
-      if (Uploadspeed != null && __isset.uploadspeed) {
+      if (Version != null && __isset.version) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Uploadspeed: ");
-        __sb.Append(Uploadspeed== null ? "<null>" : Uploadspeed.ToString());
+        __sb.Append("Version: ");
+        __sb.Append(Version);
+      }
+      if (__isset.configHash) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("ConfigHash: ");
+        __sb.Append(ConfigHash);
       }
       __sb.Append(")");
       return __sb.ToString();

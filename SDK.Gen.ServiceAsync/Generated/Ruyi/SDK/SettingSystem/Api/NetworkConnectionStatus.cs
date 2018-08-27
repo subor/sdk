@@ -25,76 +25,90 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
-  public partial class BluetoothDevice : TBase
+  public partial class NetworkConnectionStatus : TBase
   {
-    private string _DeviceName;
-    private string _DeviceAddress;
-    private int _DeviceClass;
-    private bool _Connected;
-    private bool _Authenticated;
+    private bool _preLanAdapter;
+    private bool _curLanAdapter;
+    private bool _preWlanAdapter;
+    private bool _curWlanAdapter;
+    private bool _preInternetConnection;
+    private bool _curInternetConnection;
 
-    public string DeviceName
+    public bool PreLanAdapter
     {
       get
       {
-        return _DeviceName;
+        return _preLanAdapter;
       }
       set
       {
-        __isset.DeviceName = true;
-        this._DeviceName = value;
+        __isset.preLanAdapter = true;
+        this._preLanAdapter = value;
       }
     }
 
-    public string DeviceAddress
+    public bool CurLanAdapter
     {
       get
       {
-        return _DeviceAddress;
+        return _curLanAdapter;
       }
       set
       {
-        __isset.DeviceAddress = true;
-        this._DeviceAddress = value;
+        __isset.curLanAdapter = true;
+        this._curLanAdapter = value;
       }
     }
 
-    public int DeviceClass
+    public bool PreWlanAdapter
     {
       get
       {
-        return _DeviceClass;
+        return _preWlanAdapter;
       }
       set
       {
-        __isset.DeviceClass = true;
-        this._DeviceClass = value;
+        __isset.preWlanAdapter = true;
+        this._preWlanAdapter = value;
       }
     }
 
-    public bool Connected
+    public bool CurWlanAdapter
     {
       get
       {
-        return _Connected;
+        return _curWlanAdapter;
       }
       set
       {
-        __isset.Connected = true;
-        this._Connected = value;
+        __isset.curWlanAdapter = true;
+        this._curWlanAdapter = value;
       }
     }
 
-    public bool Authenticated
+    public bool PreInternetConnection
     {
       get
       {
-        return _Authenticated;
+        return _preInternetConnection;
       }
       set
       {
-        __isset.Authenticated = true;
-        this._Authenticated = value;
+        __isset.preInternetConnection = true;
+        this._preInternetConnection = value;
+      }
+    }
+
+    public bool CurInternetConnection
+    {
+      get
+      {
+        return _curInternetConnection;
+      }
+      set
+      {
+        __isset.curInternetConnection = true;
+        this._curInternetConnection = value;
       }
     }
 
@@ -102,14 +116,15 @@ namespace Ruyi.SDK.SettingSystem.Api
     public Isset __isset;
     public struct Isset
     {
-      public bool DeviceName;
-      public bool DeviceAddress;
-      public bool DeviceClass;
-      public bool Connected;
-      public bool Authenticated;
+      public bool preLanAdapter;
+      public bool curLanAdapter;
+      public bool preWlanAdapter;
+      public bool curWlanAdapter;
+      public bool preInternetConnection;
+      public bool curInternetConnection;
     }
 
-    public BluetoothDevice()
+    public NetworkConnectionStatus()
     {
     }
 
@@ -131,9 +146,9 @@ namespace Ruyi.SDK.SettingSystem.Api
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Bool)
               {
-                DeviceName = await iprot.ReadStringAsync(cancellationToken);
+                PreLanAdapter = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -141,9 +156,9 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 2:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Bool)
               {
-                DeviceAddress = await iprot.ReadStringAsync(cancellationToken);
+                CurLanAdapter = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -151,9 +166,9 @@ namespace Ruyi.SDK.SettingSystem.Api
               }
               break;
             case 3:
-              if (field.Type == TType.I32)
+              if (field.Type == TType.Bool)
               {
-                DeviceClass = await iprot.ReadI32Async(cancellationToken);
+                PreWlanAdapter = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -163,7 +178,7 @@ namespace Ruyi.SDK.SettingSystem.Api
             case 4:
               if (field.Type == TType.Bool)
               {
-                Connected = await iprot.ReadBoolAsync(cancellationToken);
+                CurWlanAdapter = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -173,7 +188,17 @@ namespace Ruyi.SDK.SettingSystem.Api
             case 5:
               if (field.Type == TType.Bool)
               {
-                Authenticated = await iprot.ReadBoolAsync(cancellationToken);
+                PreInternetConnection = await iprot.ReadBoolAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 6:
+              if (field.Type == TType.Bool)
+              {
+                CurInternetConnection = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -201,52 +226,61 @@ namespace Ruyi.SDK.SettingSystem.Api
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("BluetoothDevice");
+        var struc = new TStruct("NetworkConnectionStatus");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (DeviceName != null && __isset.DeviceName)
+        if (__isset.preLanAdapter)
         {
-          field.Name = "DeviceName";
-          field.Type = TType.String;
+          field.Name = "preLanAdapter";
+          field.Type = TType.Bool;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(DeviceName, cancellationToken);
+          await oprot.WriteBoolAsync(PreLanAdapter, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (DeviceAddress != null && __isset.DeviceAddress)
+        if (__isset.curLanAdapter)
         {
-          field.Name = "DeviceAddress";
-          field.Type = TType.String;
+          field.Name = "curLanAdapter";
+          field.Type = TType.Bool;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(DeviceAddress, cancellationToken);
+          await oprot.WriteBoolAsync(CurLanAdapter, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.DeviceClass)
+        if (__isset.preWlanAdapter)
         {
-          field.Name = "DeviceClass";
-          field.Type = TType.I32;
+          field.Name = "preWlanAdapter";
+          field.Type = TType.Bool;
           field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(DeviceClass, cancellationToken);
+          await oprot.WriteBoolAsync(PreWlanAdapter, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.Connected)
+        if (__isset.curWlanAdapter)
         {
-          field.Name = "Connected";
+          field.Name = "curWlanAdapter";
           field.Type = TType.Bool;
           field.ID = 4;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(Connected, cancellationToken);
+          await oprot.WriteBoolAsync(CurWlanAdapter, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.Authenticated)
+        if (__isset.preInternetConnection)
         {
-          field.Name = "Authenticated";
+          field.Name = "preInternetConnection";
           field.Type = TType.Bool;
           field.ID = 5;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(Authenticated, cancellationToken);
+          await oprot.WriteBoolAsync(PreInternetConnection, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (__isset.curInternetConnection)
+        {
+          field.Name = "curInternetConnection";
+          field.Type = TType.Bool;
+          field.ID = 6;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteBoolAsync(CurInternetConnection, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -260,42 +294,49 @@ namespace Ruyi.SDK.SettingSystem.Api
 
     public override string ToString()
     {
-      var sb = new StringBuilder("BluetoothDevice(");
+      var sb = new StringBuilder("NetworkConnectionStatus(");
       bool __first = true;
-      if (DeviceName != null && __isset.DeviceName)
+      if (__isset.preLanAdapter)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("DeviceName: ");
-        sb.Append(DeviceName);
+        sb.Append("PreLanAdapter: ");
+        sb.Append(PreLanAdapter);
       }
-      if (DeviceAddress != null && __isset.DeviceAddress)
+      if (__isset.curLanAdapter)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("DeviceAddress: ");
-        sb.Append(DeviceAddress);
+        sb.Append("CurLanAdapter: ");
+        sb.Append(CurLanAdapter);
       }
-      if (__isset.DeviceClass)
+      if (__isset.preWlanAdapter)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("DeviceClass: ");
-        sb.Append(DeviceClass);
+        sb.Append("PreWlanAdapter: ");
+        sb.Append(PreWlanAdapter);
       }
-      if (__isset.Connected)
+      if (__isset.curWlanAdapter)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Connected: ");
-        sb.Append(Connected);
+        sb.Append("CurWlanAdapter: ");
+        sb.Append(CurWlanAdapter);
       }
-      if (__isset.Authenticated)
+      if (__isset.preInternetConnection)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Authenticated: ");
-        sb.Append(Authenticated);
+        sb.Append("PreInternetConnection: ");
+        sb.Append(PreInternetConnection);
+      }
+      if (__isset.curInternetConnection)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("CurInternetConnection: ");
+        sb.Append(CurInternetConnection);
       }
       sb.Append(")");
       return sb.ToString();

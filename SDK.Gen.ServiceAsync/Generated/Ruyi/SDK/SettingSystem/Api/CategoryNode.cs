@@ -150,13 +150,13 @@ namespace Ruyi.SDK.SettingSystem.Api
               {
                 {
                   Children = new List<CategoryNode>();
-                  TList _list4 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i5 = 0; _i5 < _list4.Count; ++_i5)
+                  TList _list0 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i1 = 0; _i1 < _list0.Count; ++_i1)
                   {
-                    CategoryNode _elem6;
-                    _elem6 = new CategoryNode();
-                    await _elem6.ReadAsync(iprot, cancellationToken);
-                    Children.Add(_elem6);
+                    CategoryNode _elem2;
+                    _elem2 = new CategoryNode();
+                    await _elem2.ReadAsync(iprot, cancellationToken);
+                    Children.Add(_elem2);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -225,9 +225,9 @@ namespace Ruyi.SDK.SettingSystem.Api
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, Children.Count), cancellationToken);
-            foreach (CategoryNode _iter7 in Children)
+            foreach (CategoryNode _iter3 in Children)
             {
-              await _iter7.WriteAsync(oprot, cancellationToken);
+              await _iter3.WriteAsync(oprot, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }
