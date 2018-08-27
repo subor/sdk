@@ -140,6 +140,8 @@ class SettingItem;
 
 class SettingCategory;
 
+class ModuleBaseInfo;
+
 class ModuleSetting;
 
 class AppDataRecord;
@@ -854,10 +856,63 @@ void swap(SettingCategory &a, SettingCategory &b);
 
 std::ostream& operator<<(std::ostream& out, const SettingCategory& obj);
 
-typedef struct _ModuleSetting__isset {
-  _ModuleSetting__isset() : name(false), version(false), settings(false), categories(false) {}
+typedef struct _ModuleBaseInfo__isset {
+  _ModuleBaseInfo__isset() : name(false), version(false), configHash(false) {}
   bool name :1;
   bool version :1;
+  bool configHash :1;
+} _ModuleBaseInfo__isset;
+
+class ModuleBaseInfo : public virtual ::apache::thrift::TBase {
+ public:
+
+  ModuleBaseInfo(const ModuleBaseInfo&);
+  ModuleBaseInfo& operator=(const ModuleBaseInfo&);
+  ModuleBaseInfo() : name(), version(), configHash(0) {
+  }
+
+  virtual ~ModuleBaseInfo() throw();
+  std::string name;
+  std::string version;
+  int32_t configHash;
+
+  _ModuleBaseInfo__isset __isset;
+
+  void __set_name(const std::string& val);
+
+  void __set_version(const std::string& val);
+
+  void __set_configHash(const int32_t val);
+
+  bool operator == (const ModuleBaseInfo & rhs) const
+  {
+    if (!(name == rhs.name))
+      return false;
+    if (!(version == rhs.version))
+      return false;
+    if (!(configHash == rhs.configHash))
+      return false;
+    return true;
+  }
+  bool operator != (const ModuleBaseInfo &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ModuleBaseInfo & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(ModuleBaseInfo &a, ModuleBaseInfo &b);
+
+std::ostream& operator<<(std::ostream& out, const ModuleBaseInfo& obj);
+
+typedef struct _ModuleSetting__isset {
+  _ModuleSetting__isset() : baseInfo(false), settings(false), categories(false) {}
+  bool baseInfo :1;
   bool settings :1;
   bool categories :1;
 } _ModuleSetting__isset;
@@ -867,20 +922,17 @@ class ModuleSetting : public virtual ::apache::thrift::TBase {
 
   ModuleSetting(const ModuleSetting&);
   ModuleSetting& operator=(const ModuleSetting&);
-  ModuleSetting() : name(), version() {
+  ModuleSetting() {
   }
 
   virtual ~ModuleSetting() throw();
-  std::string name;
-  std::string version;
+  ModuleBaseInfo baseInfo;
   std::vector<SettingItem>  settings;
   std::vector<SettingCategory>  categories;
 
   _ModuleSetting__isset __isset;
 
-  void __set_name(const std::string& val);
-
-  void __set_version(const std::string& val);
+  void __set_baseInfo(const ModuleBaseInfo& val);
 
   void __set_settings(const std::vector<SettingItem> & val);
 
@@ -888,9 +940,7 @@ class ModuleSetting : public virtual ::apache::thrift::TBase {
 
   bool operator == (const ModuleSetting & rhs) const
   {
-    if (!(name == rhs.name))
-      return false;
-    if (!(version == rhs.version))
+    if (!(baseInfo == rhs.baseInfo))
       return false;
     if (!(settings == rhs.settings))
       return false;
