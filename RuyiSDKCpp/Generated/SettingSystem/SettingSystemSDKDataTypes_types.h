@@ -47,6 +47,8 @@ class RuyiNetworkStatus;
 
 class RuyiNetworkTestResult;
 
+class NetworkConnectionStatus;
+
 class CategoryNode;
 
 class SettingSearchResult;
@@ -386,6 +388,78 @@ class RuyiNetworkTestResult : public virtual ::apache::thrift::TBase {
 void swap(RuyiNetworkTestResult &a, RuyiNetworkTestResult &b);
 
 std::ostream& operator<<(std::ostream& out, const RuyiNetworkTestResult& obj);
+
+typedef struct _NetworkConnectionStatus__isset {
+  _NetworkConnectionStatus__isset() : preLanAdapter(false), curLanAdapter(false), preWlanAdapter(false), curWlanAdapter(false), preInternetConnection(false), curInternetConnection(false) {}
+  bool preLanAdapter :1;
+  bool curLanAdapter :1;
+  bool preWlanAdapter :1;
+  bool curWlanAdapter :1;
+  bool preInternetConnection :1;
+  bool curInternetConnection :1;
+} _NetworkConnectionStatus__isset;
+
+class NetworkConnectionStatus : public virtual ::apache::thrift::TBase {
+ public:
+
+  NetworkConnectionStatus(const NetworkConnectionStatus&);
+  NetworkConnectionStatus& operator=(const NetworkConnectionStatus&);
+  NetworkConnectionStatus() : preLanAdapter(0), curLanAdapter(0), preWlanAdapter(0), curWlanAdapter(0), preInternetConnection(0), curInternetConnection(0) {
+  }
+
+  virtual ~NetworkConnectionStatus() throw();
+  bool preLanAdapter;
+  bool curLanAdapter;
+  bool preWlanAdapter;
+  bool curWlanAdapter;
+  bool preInternetConnection;
+  bool curInternetConnection;
+
+  _NetworkConnectionStatus__isset __isset;
+
+  void __set_preLanAdapter(const bool val);
+
+  void __set_curLanAdapter(const bool val);
+
+  void __set_preWlanAdapter(const bool val);
+
+  void __set_curWlanAdapter(const bool val);
+
+  void __set_preInternetConnection(const bool val);
+
+  void __set_curInternetConnection(const bool val);
+
+  bool operator == (const NetworkConnectionStatus & rhs) const
+  {
+    if (!(preLanAdapter == rhs.preLanAdapter))
+      return false;
+    if (!(curLanAdapter == rhs.curLanAdapter))
+      return false;
+    if (!(preWlanAdapter == rhs.preWlanAdapter))
+      return false;
+    if (!(curWlanAdapter == rhs.curWlanAdapter))
+      return false;
+    if (!(preInternetConnection == rhs.preInternetConnection))
+      return false;
+    if (!(curInternetConnection == rhs.curInternetConnection))
+      return false;
+    return true;
+  }
+  bool operator != (const NetworkConnectionStatus &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const NetworkConnectionStatus & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(NetworkConnectionStatus &a, NetworkConnectionStatus &b);
+
+std::ostream& operator<<(std::ostream& out, const NetworkConnectionStatus& obj);
 
 typedef struct _CategoryNode__isset {
   _CategoryNode__isset() : id(false), categoryId(false), sortingPriority(false), children(false) {}
