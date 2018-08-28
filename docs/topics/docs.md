@@ -1,9 +1,9 @@
 # Documentation
 
-This documentation is hosted in [__docs__ repository](https://bitbucket.org/playruyi/docs).  
-Use `git clone https://your_username_here@bitbucket.org/playruyi/docs.git` (or [Sourcetree](https://www.sourcetreeapp.com/)) to the clone the repository.
+This documentation is found in [__docs__ folder of SDK repository](https://github.com/subor/sdk/tree/master/docs).  Other languages can be found in their respective branch.  For example, Chinese is in the [`zh-cn` repository](https://github.com/subor/sdk/tree/zh-cn/docs).
+Use `git clone https://github.com/subor/sdk.git` (or [Sourcetree](https://www.sourcetreeapp.com/)) to the clone the repository.
 
-Create a [pull request](https://bitbucket.org/playruyi/docs/pull-requests/) to submit changes to us for review:  
+Create a [pull request](https://github.com/subor/sdk/pulls) to submit changes to us for review:  
 ![](/docs/img/pull_requests.png)
 
 ## Formatting Guidelines
@@ -22,20 +22,8 @@ Create a [pull request](https://bitbucket.org/playruyi/docs/pull-requests/) to s
 ## Editing tips
 
 - Markdown references:
-	- [Bitbucket markdown](https://bitbucket.org/tutorials/markdowndemo/overview)
+	- [GitHub markdown](https://help.github.com/articles/about-writing-and-formatting-on-github/)
 	- [Daring Fireball](https://daringfireball.net/projects/markdown/syntax)
-
-- Linking to latest version of a file in Bitbucket:
-
-    Note use of `master` (the branch name) rather than SHA1 hash
-
-      https://bitbucket.org/playruyi/docs/src/master/docs/en/topics/support.md
-
-- Linking to support ticket/issue:
-
-    Where `1` is replaced by desired [issue number](https://bitbucket.org/playruyi/support/issues?status=new&status=open)
-
-      https://bitbucket.org/playruyi/support/issues/1
 
 - We use [Visual Studio Code](https://code.visualstudio.com/).  Check their [markdown editing tips](https://code.visualstudio.com/Docs/languages/markdown) for how to preview changes:  
 ![](/docs/img/docs_vs_code_preview.png)

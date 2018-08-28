@@ -1,13 +1,13 @@
 # Build SDK Source
 
-[SDK binaries](https://dev.playruyi.com/udownloadslist/SDK) are available from the developer portal.  They should be sufficent for the majority of development scenarios (also check the [Unity](unity.md) and [UE4](ue4.md) docs).
+[SDK binaries](https://github.com/subor/sdk/releases) should be sufficent for the majority of development scenarios (also check the [Unity](unity.md) and [UE4](ue4.md) docs).
 
 This document discusses building the SDK yourself.  This may be necessary in the following situations:  
 
 * You use a [supported programming/scripting language](https://thrift.apache.org/docs/Languages) whose API we don't provide
 * You need libraries built with a particular toolchain or certain compiler/linker flags
 
-As discussed [here](layer0.md), the client SDK uses [Apache Thrift](https://thrift.apache.org/).  The Thrift interface definitions, C++/C# Visual Studio projects, and sourcecode for the Ruyi SDK are available from the [sdk_source repository](https://bitbucket.org/playruyi/sdk_source).
+As discussed [here](layer0.md), the client SDK uses [Apache Thrift](https://thrift.apache.org/).  The Thrift interface definitions, C++/C# Visual Studio projects, and sourcecode for the Ruyi SDK are available from the [SDK source repository](https://github.com/subor/sdk/).
 
 ## C++
 
@@ -23,8 +23,8 @@ __Prerequisites__
 
 __Instructions__
 
-1. Clone or download `bitbucket.org/playruyi/sdk_source.git` to __sdk__ folder:  
-    `git clone https://your_username_here@bitbucket.org/playruyi/sdk_source.git sdk`
+1. Clone or download `https://github.com/subor/sdk.git` to __sdk__ folder:  
+    `git clone https://your_username_here@github.com/subor/sdk.git sdk`
 1. Unzip external libs (listed [above in prerequisites](#prerequisites)) to __externals/__ folder beside __sdk/__.  Like this:
 
         +---externals
@@ -100,7 +100,7 @@ Run `thrift.exe --help` for a full list of supported languages (generators) and 
 
 The API Tool provided with [devtool](devtool.md) provdes some assistance working with our Thrift files.
 
-For example, to generate API similar to what we provide in SDK (see [sdk_source](https://bitbucket.org/playruyi/sdk_source)):
+For example, to generate API similar to what we provide in SDK (see [sdk source](https://github.com/subor/sdk)):
 ```
 :: C++
 DevTools\RuyiShell.exe -v Debug ApiTool --ThriftFiles=sdk\ThriftFiles --ThriftExe=..\tools\thrift\thrift.exe --Gen=cpp --ServiceOutput=sdk\ServiceGenerated\Generated --Options=OutputPrefix --Generate
