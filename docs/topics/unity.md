@@ -10,7 +10,7 @@
 
 RuyiNet is provided as high-level wrapper around the Ruyi C# API.
 
-1. [Download the UnityPackage version of the SDK](http://dev.playruyi.com/udownloadslist/SDK) and import the package into your project (__Assets->Import Package->Custom Package...__). 
+1. [Download the UnityPackage version of the SDK](https://github.com/subor/sdk/releases) and import the package into your project (__Assets->Import Package->Custom Package...__). 
 1. Create an instance of RuyiNet script and add your app id/secret:  
 ![](/docs/img/unity_ruyinet.png)
 1. In __Edit/Project Settings/Player__, expand _Other Settings_, set __Api Compatibility Level__ to `.NET 2.0`
