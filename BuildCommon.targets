@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup Condition="'$(TargetFrameworkVersion)' == 'v3.5'">
+    <DefineConstants>$(DefineConstants);NASYNC;DOTNET_20</DefineConstants>
+  </PropertyGroup>
+  <!--
+	http://www.lionhack.com/2014/02/13/msbuild-override-assembly-version/
+-->
+  <PropertyGroup>
+	<!-- This doesn't work -->
+	<BeforeCompile>
+	  CommonBuildDefineModifiedAssemblyVersion;
+	  $(BeforeCompile);
+	</BeforeCompile>
+  </PropertyGroup>
+
+  <!--This works -->
+  <Target Name="BeforeCompile" DependsOnTargets="CommonBuildDefineModifiedAssemblyVersion">
+  </Target>
+
+  <!--
+	Creates modified version of AssemblyInfo.cs, replaces [AssemblyVersion] attribute with the one specifying actual build version (from MSBuild properties), and includes that file instead of the original AssemblyInfo.cs in the compilation.
+	Works with both, .cs and .vb version of the AssemblyInfo file, meaning it supports C# and VB.Net projects simultaneously.
+-->
+  <Target Name="CommonBuildDefineModifiedAssemblyVersion" Condition="'$(AssemblyRevision)' != ''">
+	<PropertyGroup>
+	  <CurrentDate>$([System.DateTime]::Now.ToString(yyyyMMdd HH:mm:ss))</CurrentDate>
+	</PropertyGroup>
+	<!-- Find AssemblyInfo.cs or AssemblyInfo.vb in the "Compile" Items. Remove it from "Compile" Items because we will use a modified version instead. -->
+	<ItemGroup>
+	  <OriginalAssemblyInfo Include="@(Compile)" Condition="%(Filename) == 'AssemblyInfo' And (%(Extension) == '.vb' Or %(Extension) == '.cs')" />
+	  <Compile Remove="**/AssemblyInfo.vb" />
+	  <Compile Remove="**/AssemblyInfo.cs" />
+	</ItemGroup>
+	<!-- Copy the original AssemblyInfo.cs/.vb to obj\ folder, i.e. $(IntermediateOutputPath). The copied filepath is saved into @(ModifiedAssemblyInfo) Item. -->
+	<Copy SourceFiles="@(OriginalAssemblyInfo)"
+		  DestinationFiles="@(OriginalAssemblyInfo->'$(IntermediateOutputPath)%(Identity)')">
+	  <Output TaskParameter="DestinationFiles" ItemName="ModifiedAssemblyInfo"/>
+	</Copy>
+	<!-- Replace the version bit (in AssemblyVersion and AssemblyFileVersion attributes) using regular expression. Use the defined property: $(AssemblyRevision). -->
+	<Message Text="Setting AssemblyVersion to $(AssemblyMain).$(AssemblyRevision)" />
+	<RegexUpdateFile Files="@(ModifiedAssemblyInfo)"
+				MainVersion="dummy$(AssemblyMain)"
+				MainRevision="$(AssemblyRevision)"
+				/>
+	<!-- Include the modified AssemblyInfo.cs/.vb file in "Compile" items (instead of the original). -->
+	<ItemGroup>
+	  <Compile Include="@(ModifiedAssemblyInfo)" />
+	</ItemGroup>
+  </Target>
+
+<!-- for VS 2013 -->
+<!--   <UsingTask TaskName="RegexUpdateFile" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v$(MSBuildToolsVersion).dll"> -->
+<!-- for VS 2015 -->
+<!--  <UsingTask TaskName="RegexUpdateFile" TaskFactory="CodeTaskFactory" AssemblyFile="C:\Program Files (x86)\MSBuild\14.0\Bin\Microsoft.Build.Tasks.Core.dll"> -->
+  <UsingTask TaskName="RegexUpdateFile" TaskFactory="CodeTaskFactory" AssemblyFile="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\Microsoft.Build.Tasks.Core.dll">
+	<ParameterGroup>
+	  <Files ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+	  <MainVersion ParameterType="System.String" Required="true" />
+	  <MainRevision ParameterType="System.String" Required="true" />
+	</ParameterGroup>
+	<Task>
+	  <Reference Include="System.Core" />
+	  <Using Namespace="System" />
+	  <Using Namespace="System.IO" />
+	  <Using Namespace="System.Text.RegularExpressions" />
+	  <Using Namespace="Microsoft.Build.Framework" />
+	  <Using Namespace="Microsoft.Build.Utilities" />
+	  <Code Type="Fragment" Language="cs">
+		<![CDATA[
+			try {
+				for (int i = 0; i < Files.Length; ++i)
+				{
+					var path = Files[i].GetMetadata("FullPath");
+					if (!File.Exists(path)) continue;
+					Console.WriteLine("replace version for file:" + path);
+					StringBuilder sb = new StringBuilder();
+					using (var txt = File.OpenText(path))
+					{
+						var line = txt.ReadLine();
+						while (line != null)
+						{
+							var trimLine = line.Trim();
+							if (trimLine.StartsWith("[assembly: AssemblyVersion(") || trimLine.StartsWith("[assembly: AssemblyFileVersion("))
+							{
+								if(this.MainVersion == "dummy")
+								{
+									int st = line.LastIndexOf(".");
+									sb.Append(line.Substring(0, st+1));
+									sb.Append(this.MainRevision);
+									sb.Append("\")]");
+									sb.AppendLine();
+								}
+								else
+								{
+
+									int st = line.IndexOf("\"");
+									sb.Append(line.Substring(0, st+1));
+									sb.Append(this.MainVersion.Substring(5)).Append(".").Append(this.MainRevision);
+									sb.Append("\")]");
+									sb.AppendLine();
+								}
+							}
+							else
+								sb.AppendLine(line);
+							line = txt.ReadLine();
+						}
+					}
+					File.WriteAllText(path, sb.ToString());
+					// Console.WriteLine(sb.ToString());
+				}
+				return true;
+			}
+			catch (Exception ex) {
+				Log.LogErrorFromException(ex);
+				return false;
+			}
+		]]>
+	  </Code>
+	</Task>
+  </UsingTask>
+</Project>
