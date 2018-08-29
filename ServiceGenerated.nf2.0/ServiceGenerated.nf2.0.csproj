@@ -58,6 +58,7 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\InputCategory.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\InputModifier.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\LoginState.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ModuleBaseInfo.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\ModuleSetting.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\notification.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\CommonType\range.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="GeneratedSync\Ruyi\SDK\MediaService\RequestMsg.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\OverlayManagerExternal\ExternalOverlayManagerService.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\OverlayManagerExternal\NotifyTakeScreenShot.cs" />
+    <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\NetworkConnectionStatus.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkSettingNameValue.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkSettings.cs" />
     <Compile Include="GeneratedSync\Ruyi\SDK\SettingSystem\Api\RuyiNetworkStatus.cs" />
