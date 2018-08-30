@@ -9,18 +9,18 @@ This documentation is about how to intergrate C++ SDK to a common VS C++ project
 
 ## Download
 
-1. Download C++ SDK from [here](https://github.com/subor/sdk/releases). It contains two folders: __include__ and __lib__.  
+1. Download C++ SDK from [here](https://github.com/subor/sdk/releases). `RuyiSDKCpp/` contains two folders: __include__ and __lib__.  
 Put them in one of your source folder.  For example, create a "RuyiSDK" folder, then put them under it.
 
-1. Right click your solution, click "Properties"
+1. Right click your solution, click __Properties__
 
-1. In Configuration Selection, choose "Release" "x64"
+1. In __Configuration Selection__, choose "Release" "x64"
 
-1. Choose "Configuration Properties / C/C++ / General" in Property Page, in "Additional Include Directories" add `$(ProjectDir)..\RuyiSDK\include` 
+1. Choose __Configuration Properties / C/C++ / General__ in Property Page, in __Additional Include Directories__ add `$(ProjectDir)..\RuyiSDK\include` 
 
-1. Choose "Configuration Properties / Linker / General" in Property Page, in "Additional Library Directiories" add `$(ProjectDir)..\RuyiSDK\lib`, `$(ProjectDir)..\RuyiSDK\lib\boost`, and `$(ProjectDir)..\RuyiSDK\lib\zmq`
+1. Choose __Configuration Properties / Linker / General__ in Property Page, in __Additional Library Directiories__ add `$(ProjectDir)..\RuyiSDK\lib`, `$(ProjectDir)..\RuyiSDK\lib\boost`, and `$(ProjectDir)..\RuyiSDK\lib\zmq`
 
-1. Choose "Configuration Properties / Linker / Input" in Property page, to "Additional Dependencies" add `RuyiSDK.lib` and `libzmq.lib`
+1. Choose __Configuration Properties / Linker / Input__ in Property page, to __Additional Dependencies__ add `RuyiSDK.lib` and `libzmq.lib`
 
 1. And `#include "RuyiSDK.h"` to your code and initialize the SDK:
 
@@ -36,4 +36,4 @@ Put them in one of your source folder.  For example, create a "RuyiSDK" folder, 
             std::cout << ret << std::endl;
         }
 
-1. Compile the code, if everything goes well, which means you've intergrate Ruyi SDK successfully.
+1. Compile the code, if it succeeds you've successfully intergrated the SDK.
