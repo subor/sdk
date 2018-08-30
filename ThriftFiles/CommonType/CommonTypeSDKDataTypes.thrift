@@ -152,11 +152,16 @@ struct SettingCategory {
     11: string script,
 }
 
-struct ModuleSetting {
+struct ModuleBaseInfo {
     1: string name,
     2: string version,
-    3: list<SettingItem> settings,
-    4: list<SettingCategory> categories,
+    3: i32 configHash,
+}
+
+struct ModuleSetting {
+    1: ModuleBaseInfo baseInfo,
+    2: list<SettingItem> settings,
+    3: list<SettingCategory> categories,
 }
 
 struct AppDataRecord {
