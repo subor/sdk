@@ -41,8 +41,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp4.Description = "lambda expression error: {0}";
       EXTERNALERRORLIST.Add(tmp4);
       ExternalErrorInfos tmp5 = new ExternalErrorInfos();
-      tmp5.ErrorCode = ExternalErrorCode.Err_5;
       tmp5.Description = "[type error] trying to assign a {0} to setting category {1} 's property {2}, whose data type is {3}";
+      tmp5.ErrorCode = ExternalErrorCode.Err_5;
       EXTERNALERRORLIST.Add(tmp5);
       ExternalErrorInfos tmp6 = new ExternalErrorInfos();
       tmp6.Description = "currently no player logged in. please login a player first.";
@@ -53,8 +53,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp7.Description = "can not find configuration file: {0}.";
       EXTERNALERRORLIST.Add(tmp7);
       ExternalErrorInfos tmp8 = new ExternalErrorInfos();
-      tmp8.ErrorCode = ExternalErrorCode.Err_8;
       tmp8.Description = "specified user {0} is not playing app {1}";
+      tmp8.ErrorCode = ExternalErrorCode.Err_8;
       EXTERNALERRORLIST.Add(tmp8);
       ExternalErrorInfos tmp9 = new ExternalErrorInfos();
       tmp9.ErrorCode = ExternalErrorCode.Err_9;
@@ -65,8 +65,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp10.ErrorCode = ExternalErrorCode.Err_10;
       EXTERNALERRORLIST.Add(tmp10);
       ExternalErrorInfos tmp11 = new ExternalErrorInfos();
-      tmp11.Description = "";
       tmp11.ErrorCode = ExternalErrorCode.Err_11;
+      tmp11.Description = "";
       EXTERNALERRORLIST.Add(tmp11);
       ExternalErrorInfos tmp12 = new ExternalErrorInfos();
       tmp12.ErrorCode = ExternalErrorCode.Err_12;

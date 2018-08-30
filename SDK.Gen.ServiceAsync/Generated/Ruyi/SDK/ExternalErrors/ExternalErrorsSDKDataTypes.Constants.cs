@@ -47,8 +47,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp5.Description = "[type error] trying to assign a {0} to setting category {1} 's property {2}, whose data type is {3}";
       EXTERNALERRORLIST.Add(tmp5);
       ExternalErrorInfos tmp6 = new ExternalErrorInfos();
-      tmp6.ErrorCode = ExternalErrorCode.Err_6;
       tmp6.Description = "currently no player logged in. please login a player first.";
+      tmp6.ErrorCode = ExternalErrorCode.Err_6;
       EXTERNALERRORLIST.Add(tmp6);
       ExternalErrorInfos tmp7 = new ExternalErrorInfos();
       tmp7.ErrorCode = ExternalErrorCode.Err_7;
@@ -59,8 +59,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp8.Description = "specified user {0} is not playing app {1}";
       EXTERNALERRORLIST.Add(tmp8);
       ExternalErrorInfos tmp9 = new ExternalErrorInfos();
-      tmp9.ErrorCode = ExternalErrorCode.Err_9;
       tmp9.Description = "user is not found by id {0}";
+      tmp9.ErrorCode = ExternalErrorCode.Err_9;
       EXTERNALERRORLIST.Add(tmp9);
       ExternalErrorInfos tmp10 = new ExternalErrorInfos();
       tmp10.Description = "";
@@ -71,8 +71,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp11.ErrorCode = ExternalErrorCode.Err_11;
       EXTERNALERRORLIST.Add(tmp11);
       ExternalErrorInfos tmp12 = new ExternalErrorInfos();
-      tmp12.ErrorCode = ExternalErrorCode.Err_12;
       tmp12.Description = "";
+      tmp12.ErrorCode = ExternalErrorCode.Err_12;
       EXTERNALERRORLIST.Add(tmp12);
       ExternalErrorInfos tmp13 = new ExternalErrorInfos();
       tmp13.Description = "";
@@ -83,12 +83,12 @@ namespace Ruyi.SDK.ExternalErrors
       tmp14.Description = "";
       EXTERNALERRORLIST.Add(tmp14);
       ExternalErrorInfos tmp15 = new ExternalErrorInfos();
-      tmp15.ErrorCode = ExternalErrorCode.Err_15;
       tmp15.Description = "";
+      tmp15.ErrorCode = ExternalErrorCode.Err_15;
       EXTERNALERRORLIST.Add(tmp15);
       ExternalErrorInfos tmp16 = new ExternalErrorInfos();
-      tmp16.Description = "";
       tmp16.ErrorCode = ExternalErrorCode.Err_16;
+      tmp16.Description = "";
       EXTERNALERRORLIST.Add(tmp16);
       ExternalErrorInfos tmp17 = new ExternalErrorInfos();
       tmp17.ErrorCode = ExternalErrorCode.Err_17;

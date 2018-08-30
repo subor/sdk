@@ -46,12 +46,12 @@ namespace Ruyi.SDK.ExternalErrors
       tmp5.ErrorCode = ExternalErrorCode.Err_5;
       EXTERNALERRORLIST.Add(tmp5);
       ExternalErrorInfos tmp6 = new ExternalErrorInfos();
-      tmp6.ErrorCode = ExternalErrorCode.Err_6;
       tmp6.Description = "currently no player logged in. please login a player first.";
+      tmp6.ErrorCode = ExternalErrorCode.Err_6;
       EXTERNALERRORLIST.Add(tmp6);
       ExternalErrorInfos tmp7 = new ExternalErrorInfos();
-      tmp7.ErrorCode = ExternalErrorCode.Err_7;
       tmp7.Description = "can not find configuration file: {0}.";
+      tmp7.ErrorCode = ExternalErrorCode.Err_7;
       EXTERNALERRORLIST.Add(tmp7);
       ExternalErrorInfos tmp8 = new ExternalErrorInfos();
       tmp8.ErrorCode = ExternalErrorCode.Err_8;
