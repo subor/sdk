@@ -10,7 +10,7 @@ PC mode is similar to the console OS- same version of Windows- but many of the s
 
 It is possible to switch back and forth between the console and PC mode.
 
-__As Administrator__ run `SwitchOS.cmd` (found on Windows Desktop or [download](https://bitbucket.org/playruyi/support/src/master/files/scripts/)) and restart.
+__As Administrator__ run `sdk/SwitchOS.cmd` and restart.
 
 Starting 0.8.1, in main client or [Z+ Assist](ruyi_assist.md) (only in [PC mode](pc_mode.md)).
 
@@ -30,4 +30,4 @@ Starting 0.8.1, in main client or [Z+ Assist](ruyi_assist.md) (only in [PC mode]
 
 ## Development
 
-One reason for PC mode is to make developing for Ruyi easier.  You can install Visual Studio (note that [VS2017 is __not__ supported on LTSB](https://docs.microsoft.com/en-us/visualstudio/productinfo/vs2017-system-requirements-vs)) and build/debug just like it was a regular PC.  CPU/GPU/disk capabilities and performance, memory configuration and bandwidth, OS environment, and so on will be almost identical.
+One reason for PC mode is to make development easier.  You can install Visual Studio (note that [VS2017 is __not__ supported on LTSB](https://docs.microsoft.com/en-us/visualstudio/productinfo/vs2017-system-requirements-vs)) and build/debug just like it was a regular PC.  CPU/GPU/disk capabilities and performance, memory configuration and bandwidth, OS environment, and so on will be almost identical.
