@@ -42,8 +42,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp4.Description = "lambda expression error: {0}";
       EXTERNALERRORLIST.Add(tmp4);
       ExternalErrorInfos tmp5 = new ExternalErrorInfos();
-      tmp5.Description = "[type error] trying to assign a {0} to setting category {1} 's property {2}, whose data type is {3}";
       tmp5.ErrorCode = ExternalErrorCode.Err_5;
+      tmp5.Description = "[type error] trying to assign a {0} to setting category {1} 's property {2}, whose data type is {3}";
       EXTERNALERRORLIST.Add(tmp5);
       ExternalErrorInfos tmp6 = new ExternalErrorInfos();
       tmp6.ErrorCode = ExternalErrorCode.Err_6;
