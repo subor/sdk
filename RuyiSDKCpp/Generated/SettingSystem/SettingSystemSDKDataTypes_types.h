@@ -49,6 +49,8 @@ class RuyiNetworkTestResult;
 
 class NetworkConnectionStatus;
 
+class NetworkSettings;
+
 class CategoryNode;
 
 class SettingSearchResult;
@@ -460,6 +462,114 @@ class NetworkConnectionStatus : public virtual ::apache::thrift::TBase {
 void swap(NetworkConnectionStatus &a, NetworkConnectionStatus &b);
 
 std::ostream& operator<<(std::ostream& out, const NetworkConnectionStatus& obj);
+
+typedef struct _NetworkSettings__isset {
+  _NetworkSettings__isset() : isWifi(false), proxyUsed(false), DHCPEnabled(false), NetworkName(false), AuthType(false), IPAddress(false), SubMask(false), GateWay(false), mainDNS(false), subDNS(false), proxyServer(false), proxyPort(false) {}
+  bool isWifi :1;
+  bool proxyUsed :1;
+  bool DHCPEnabled :1;
+  bool NetworkName :1;
+  bool AuthType :1;
+  bool IPAddress :1;
+  bool SubMask :1;
+  bool GateWay :1;
+  bool mainDNS :1;
+  bool subDNS :1;
+  bool proxyServer :1;
+  bool proxyPort :1;
+} _NetworkSettings__isset;
+
+class NetworkSettings : public virtual ::apache::thrift::TBase {
+ public:
+
+  NetworkSettings(const NetworkSettings&);
+  NetworkSettings& operator=(const NetworkSettings&);
+  NetworkSettings() : isWifi(0), proxyUsed(0), DHCPEnabled(0), NetworkName(), AuthType(), IPAddress(), SubMask(), GateWay(), mainDNS(), subDNS(), proxyServer(), proxyPort() {
+  }
+
+  virtual ~NetworkSettings() throw();
+  bool isWifi;
+  bool proxyUsed;
+  bool DHCPEnabled;
+  std::string NetworkName;
+  std::string AuthType;
+  std::string IPAddress;
+  std::string SubMask;
+  std::string GateWay;
+  std::string mainDNS;
+  std::string subDNS;
+  std::string proxyServer;
+  std::string proxyPort;
+
+  _NetworkSettings__isset __isset;
+
+  void __set_isWifi(const bool val);
+
+  void __set_proxyUsed(const bool val);
+
+  void __set_DHCPEnabled(const bool val);
+
+  void __set_NetworkName(const std::string& val);
+
+  void __set_AuthType(const std::string& val);
+
+  void __set_IPAddress(const std::string& val);
+
+  void __set_SubMask(const std::string& val);
+
+  void __set_GateWay(const std::string& val);
+
+  void __set_mainDNS(const std::string& val);
+
+  void __set_subDNS(const std::string& val);
+
+  void __set_proxyServer(const std::string& val);
+
+  void __set_proxyPort(const std::string& val);
+
+  bool operator == (const NetworkSettings & rhs) const
+  {
+    if (!(isWifi == rhs.isWifi))
+      return false;
+    if (!(proxyUsed == rhs.proxyUsed))
+      return false;
+    if (!(DHCPEnabled == rhs.DHCPEnabled))
+      return false;
+    if (!(NetworkName == rhs.NetworkName))
+      return false;
+    if (!(AuthType == rhs.AuthType))
+      return false;
+    if (!(IPAddress == rhs.IPAddress))
+      return false;
+    if (!(SubMask == rhs.SubMask))
+      return false;
+    if (!(GateWay == rhs.GateWay))
+      return false;
+    if (!(mainDNS == rhs.mainDNS))
+      return false;
+    if (!(subDNS == rhs.subDNS))
+      return false;
+    if (!(proxyServer == rhs.proxyServer))
+      return false;
+    if (!(proxyPort == rhs.proxyPort))
+      return false;
+    return true;
+  }
+  bool operator != (const NetworkSettings &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const NetworkSettings & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(NetworkSettings &a, NetworkSettings &b);
+
+std::ostream& operator<<(std::ostream& out, const NetworkSettings& obj);
 
 typedef struct _CategoryNode__isset {
   _CategoryNode__isset() : id(false), categoryId(false), sortingPriority(false), children(false) {}
