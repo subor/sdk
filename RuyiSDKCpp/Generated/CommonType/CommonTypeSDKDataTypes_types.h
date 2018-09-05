@@ -35,9 +35,8 @@ struct NotificationType {
   enum type {
     Title = 0,
     TitleAnd2Icons = 1,
-    TitleAndDescription = 2,
-    TitleDetail = 3,
-    Voice = 4
+    TitleDetail = 2,
+    Voice = 3
   };
 };
 
@@ -1109,11 +1108,14 @@ void swap(AppData &a, AppData &b);
 std::ostream& operator<<(std::ostream& out, const AppData& obj);
 
 typedef struct _PopupNotification__isset {
-  _PopupNotification__isset() : NotificationType(false), HasInteractiveBar(false), isLargeMainIcon(false), NotificationData(false) {}
+  _PopupNotification__isset() : title(false), description(false), mainIcon(false), icon(false), NotificationType(false), HasInteractiveBar(false), isLargeMainIcon(false) {}
+  bool title :1;
+  bool description :1;
+  bool mainIcon :1;
+  bool icon :1;
   bool NotificationType :1;
   bool HasInteractiveBar :1;
   bool isLargeMainIcon :1;
-  bool NotificationData :1;
 } _PopupNotification__isset;
 
 class PopupNotification : public virtual ::apache::thrift::TBase {
@@ -1121,16 +1123,27 @@ class PopupNotification : public virtual ::apache::thrift::TBase {
 
   PopupNotification(const PopupNotification&);
   PopupNotification& operator=(const PopupNotification&);
-  PopupNotification() : NotificationType((NotificationType::type)0), HasInteractiveBar(0), isLargeMainIcon(0), NotificationData() {
+  PopupNotification() : title(), description(), mainIcon(), icon(), NotificationType((NotificationType::type)0), HasInteractiveBar(0), isLargeMainIcon(0) {
   }
 
   virtual ~PopupNotification() throw();
+  std::string title;
+  std::string description;
+  std::string mainIcon;
+  std::string icon;
   NotificationType::type NotificationType;
   bool HasInteractiveBar;
   bool isLargeMainIcon;
-  std::string NotificationData;
 
   _PopupNotification__isset __isset;
+
+  void __set_title(const std::string& val);
+
+  void __set_description(const std::string& val);
+
+  void __set_mainIcon(const std::string& val);
+
+  void __set_icon(const std::string& val);
 
   void __set_NotificationType(const NotificationType::type val);
 
@@ -1138,17 +1151,21 @@ class PopupNotification : public virtual ::apache::thrift::TBase {
 
   void __set_isLargeMainIcon(const bool val);
 
-  void __set_NotificationData(const std::string& val);
-
   bool operator == (const PopupNotification & rhs) const
   {
+    if (!(title == rhs.title))
+      return false;
+    if (!(description == rhs.description))
+      return false;
+    if (!(mainIcon == rhs.mainIcon))
+      return false;
+    if (!(icon == rhs.icon))
+      return false;
     if (!(NotificationType == rhs.NotificationType))
       return false;
     if (!(HasInteractiveBar == rhs.HasInteractiveBar))
       return false;
     if (!(isLargeMainIcon == rhs.isLargeMainIcon))
-      return false;
-    if (!(NotificationData == rhs.NotificationData))
       return false;
     return true;
   }

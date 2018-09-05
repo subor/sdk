@@ -36,18 +36,16 @@ std::ostream& operator<<(std::ostream& out, const LoginState::type& val) {
 int _kNotificationTypeValues[] = {
   NotificationType::Title,
   NotificationType::TitleAnd2Icons,
-  NotificationType::TitleAndDescription,
   NotificationType::TitleDetail,
   NotificationType::Voice
 };
 const char* _kNotificationTypeNames[] = {
   "Title",
   "TitleAnd2Icons",
-  "TitleAndDescription",
   "TitleDetail",
   "Voice"
 };
-const std::map<int, const char*> _NotificationType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(5, _kNotificationTypeValues, _kNotificationTypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+const std::map<int, const char*> _NotificationType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(4, _kNotificationTypeValues, _kNotificationTypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
 
 std::ostream& operator<<(std::ostream& out, const NotificationType::type& val) {
   std::map<int, const char*>::const_iterator it = _NotificationType_VALUES_TO_NAMES.find(val);
@@ -2797,6 +2795,22 @@ PopupNotification::~PopupNotification() throw() {
 }
 
 
+void PopupNotification::__set_title(const std::string& val) {
+  this->title = val;
+}
+
+void PopupNotification::__set_description(const std::string& val) {
+  this->description = val;
+}
+
+void PopupNotification::__set_mainIcon(const std::string& val) {
+  this->mainIcon = val;
+}
+
+void PopupNotification::__set_icon(const std::string& val) {
+  this->icon = val;
+}
+
 void PopupNotification::__set_NotificationType(const NotificationType::type val) {
   this->NotificationType = val;
 }
@@ -2807,10 +2821,6 @@ void PopupNotification::__set_HasInteractiveBar(const bool val) {
 
 void PopupNotification::__set_isLargeMainIcon(const bool val) {
   this->isLargeMainIcon = val;
-}
-
-void PopupNotification::__set_NotificationData(const std::string& val) {
-  this->NotificationData = val;
 }
 std::ostream& operator<<(std::ostream& out, const PopupNotification& obj)
 {
@@ -2841,6 +2851,38 @@ uint32_t PopupNotification::read(::apache::thrift::protocol::TProtocol* iprot) {
     switch (fid)
     {
       case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->title);
+          this->__isset.title = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->description);
+          this->__isset.description = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->mainIcon);
+          this->__isset.mainIcon = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->icon);
+          this->__isset.icon = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           int32_t ecast95;
           xfer += iprot->readI32(ecast95);
@@ -2850,7 +2892,7 @@ uint32_t PopupNotification::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 2:
+      case 6:
         if (ftype == ::apache::thrift::protocol::T_BOOL) {
           xfer += iprot->readBool(this->HasInteractiveBar);
           this->__isset.HasInteractiveBar = true;
@@ -2858,18 +2900,10 @@ uint32_t PopupNotification::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 3:
+      case 7:
         if (ftype == ::apache::thrift::protocol::T_BOOL) {
           xfer += iprot->readBool(this->isLargeMainIcon);
           this->__isset.isLargeMainIcon = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 4:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->NotificationData);
-          this->__isset.NotificationData = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -2891,20 +2925,32 @@ uint32_t PopupNotification::write(::apache::thrift::protocol::TProtocol* oprot) 
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("PopupNotification");
 
-  xfer += oprot->writeFieldBegin("NotificationType", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeFieldBegin("title", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->title);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("description", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->description);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("mainIcon", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString(this->mainIcon);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("icon", ::apache::thrift::protocol::T_STRING, 4);
+  xfer += oprot->writeString(this->icon);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("NotificationType", ::apache::thrift::protocol::T_I32, 5);
   xfer += oprot->writeI32((int32_t)this->NotificationType);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("HasInteractiveBar", ::apache::thrift::protocol::T_BOOL, 2);
+  xfer += oprot->writeFieldBegin("HasInteractiveBar", ::apache::thrift::protocol::T_BOOL, 6);
   xfer += oprot->writeBool(this->HasInteractiveBar);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("isLargeMainIcon", ::apache::thrift::protocol::T_BOOL, 3);
+  xfer += oprot->writeFieldBegin("isLargeMainIcon", ::apache::thrift::protocol::T_BOOL, 7);
   xfer += oprot->writeBool(this->isLargeMainIcon);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("NotificationData", ::apache::thrift::protocol::T_STRING, 4);
-  xfer += oprot->writeString(this->NotificationData);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -2914,35 +2960,47 @@ uint32_t PopupNotification::write(::apache::thrift::protocol::TProtocol* oprot) 
 
 void swap(PopupNotification &a, PopupNotification &b) {
   using ::std::swap;
+  swap(a.title, b.title);
+  swap(a.description, b.description);
+  swap(a.mainIcon, b.mainIcon);
+  swap(a.icon, b.icon);
   swap(a.NotificationType, b.NotificationType);
   swap(a.HasInteractiveBar, b.HasInteractiveBar);
   swap(a.isLargeMainIcon, b.isLargeMainIcon);
-  swap(a.NotificationData, b.NotificationData);
   swap(a.__isset, b.__isset);
 }
 
 PopupNotification::PopupNotification(const PopupNotification& other96) {
+  title = other96.title;
+  description = other96.description;
+  mainIcon = other96.mainIcon;
+  icon = other96.icon;
   NotificationType = other96.NotificationType;
   HasInteractiveBar = other96.HasInteractiveBar;
   isLargeMainIcon = other96.isLargeMainIcon;
-  NotificationData = other96.NotificationData;
   __isset = other96.__isset;
 }
 PopupNotification& PopupNotification::operator=(const PopupNotification& other97) {
+  title = other97.title;
+  description = other97.description;
+  mainIcon = other97.mainIcon;
+  icon = other97.icon;
   NotificationType = other97.NotificationType;
   HasInteractiveBar = other97.HasInteractiveBar;
   isLargeMainIcon = other97.isLargeMainIcon;
-  NotificationData = other97.NotificationData;
   __isset = other97.__isset;
   return *this;
 }
 void PopupNotification::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
   out << "PopupNotification(";
-  out << "NotificationType=" << to_string(NotificationType);
+  out << "title=" << to_string(title);
+  out << ", " << "description=" << to_string(description);
+  out << ", " << "mainIcon=" << to_string(mainIcon);
+  out << ", " << "icon=" << to_string(icon);
+  out << ", " << "NotificationType=" << to_string(NotificationType);
   out << ", " << "HasInteractiveBar=" << to_string(HasInteractiveBar);
   out << ", " << "isLargeMainIcon=" << to_string(isLargeMainIcon);
-  out << ", " << "NotificationData=" << to_string(NotificationData);
   out << ")";
 }
 

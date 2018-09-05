@@ -11,8 +11,7 @@ namespace Ruyi.SDK.CommonType
   {
     Title = 0,
     TitleAnd2Icons = 1,
-    TitleAndDescription = 2,
-    TitleDetail = 3,
-    Voice = 4,
+    TitleDetail = 2,
+    Voice = 3,
   }
 }
