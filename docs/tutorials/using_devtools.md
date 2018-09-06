@@ -1,4 +1,4 @@
-# Launching Platform and Using Devtools
+# Using Devtools
 
 ## Prerequisites
 
@@ -9,25 +9,12 @@
 
 All [developer tools](../topics/devtool.md) are available via `DevTools/RuyiDev.exe`.
 
-```
-+---DevTools
-|   |   RuyiDev.exe
-|                       
-+---Layer0
-|   |   Layer0.exe
-|                               
-+---MainClient
-|   |   Client.exe
-|           
-\---SDK
-```
-
 Double-click RuyiDev.exe to launch the GUI:
 ![](/docs/img/ruyidev_gui.png)
 
 All plugins are listed on the left side of the window.
 
-Open a command prompt and run RuyiDev.exe with an option (e.g. `RuyiDev.exe -h`) to use the commandline interface (CLI):
+Open a command prompt and run RuyiDev.exe with an option (e.g. `RuyiDev.exe -h`) to use the commandline interface (CLI):  
 ![](/docs/img/ruyidev_cli.png)
 	
 All plugins are used via `RuyiDev.exe <plugin> <arguments>`.

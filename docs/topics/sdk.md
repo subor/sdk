@@ -26,17 +26,17 @@ SDK has following directory structure (see [SDK Setup](../tutorials/setup.md)):
 |                       
 +---Layer0
 |   |   ...
-|   |   Layer0.exe
+|   |   zpLayer0.exe
 |   \   ...
 |                               
 +---MainClient
 |   |   ...
-|   |   WpfClient.exe
+|   |   zpMainClient.exe
 |   \   ...
 |
 +---OverlayClient
 |   |   ...
-|   |   RuyiOverlayClient.exe
+|   |   zpOverlayClient.exe
 |   \   ...
 |
 \---SDK
@@ -55,10 +55,10 @@ Folder | Path | Description
 -|-|-
 DevTools/ | RuyiDev.exe | [Developer tools](devtool.md)
 | Ruyi/Presentation/Web/index.html | SDK API documentation (same as [online docs](http://dev.playruyi.com/api))
-Layer0/ | Layer0.exe | Daemon portion of client (see [architecture](layer0.md))
-MainClient/ | WpfClient.exe | End-user facing UI (requires layer0 already running)
-MiniPower | MiniPower.exe | [Z+ Assist](ruyi_assist.md); power control and hardware information for [PC mode](pc_mode.md)
-OverlayClient/ | RuyiOverlayClient.exe | [In-game UI overlay](overlay.md) (managed by layer0)
+Layer0/ | zpLayer0.exe | Daemon portion of client (see [architecture](layer0.md))
+MainClient/ | zpMainClient.exe | End-user facing UI (requires layer0 already running)
+MiniPower | zpAssist.exe | [Z+ Assist](ruyi_assist.md); power control and hardware information for [PC mode](pc_mode.md)
+OverlayClient/ | zpOverlayClient.exe | [In-game UI overlay](overlay.md) (managed by layer0)
 RuyiSDK/ | | .Net/C# SDK (.Net Standard 2.0)
 RuyiSDK.nf2.0/ | | .Net/C# SDK targeting .Net Framework 3.5 (for Unity)
 RuyiSDKCpp/ | lib/RuyiSDK.lib | C++ SDK linked with /MD
