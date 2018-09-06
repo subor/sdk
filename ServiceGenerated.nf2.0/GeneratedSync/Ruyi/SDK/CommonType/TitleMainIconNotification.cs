@@ -21,15 +21,11 @@ namespace Ruyi.SDK.CommonType
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class PopupNotification : TBase
+  public partial class TitleMainIconNotification : TBase
   {
     private string _title;
-    private string _description;
     private string _mainIcon;
-    private string _icon;
-    private NotificationType _NotificationType;
-    private bool _HasInteractiveBar;
-    private bool _isLargeMainIcon;
+    private TitleMainIconNotificationType _NotificationType;
 
     public string Title
     {
@@ -41,19 +37,6 @@ namespace Ruyi.SDK.CommonType
       {
         __isset.title = true;
         this._title = value;
-      }
-    }
-
-    public string Description
-    {
-      get
-      {
-        return _description;
-      }
-      set
-      {
-        __isset.description = true;
-        this._description = value;
       }
     }
 
@@ -70,24 +53,11 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public string Icon
-    {
-      get
-      {
-        return _icon;
-      }
-      set
-      {
-        __isset.icon = true;
-        this._icon = value;
-      }
-    }
-
     /// <summary>
     /// 
-    /// <seealso cref="NotificationType"/>
+    /// <seealso cref="TitleMainIconNotificationType"/>
     /// </summary>
-    public NotificationType NotificationType
+    public TitleMainIconNotificationType NotificationType
     {
       get
       {
@@ -100,32 +70,6 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public bool HasInteractiveBar
-    {
-      get
-      {
-        return _HasInteractiveBar;
-      }
-      set
-      {
-        __isset.HasInteractiveBar = true;
-        this._HasInteractiveBar = value;
-      }
-    }
-
-    public bool IsLargeMainIcon
-    {
-      get
-      {
-        return _isLargeMainIcon;
-      }
-      set
-      {
-        __isset.isLargeMainIcon = true;
-        this._isLargeMainIcon = value;
-      }
-    }
-
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -133,15 +77,11 @@ namespace Ruyi.SDK.CommonType
     #endif
     public struct Isset {
       public bool title;
-      public bool description;
       public bool mainIcon;
-      public bool icon;
       public bool NotificationType;
-      public bool HasInteractiveBar;
-      public bool isLargeMainIcon;
     }
 
-    public PopupNotification() {
+    public TitleMainIconNotification() {
     }
 
     public void Read (TProtocol iprot)
@@ -168,42 +108,14 @@ namespace Ruyi.SDK.CommonType
               break;
             case 2:
               if (field.Type == TType.String) {
-                Description = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 3:
-              if (field.Type == TType.String) {
                 MainIcon = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 4:
-              if (field.Type == TType.String) {
-                Icon = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 5:
+            case 3:
               if (field.Type == TType.I32) {
-                NotificationType = (NotificationType)iprot.ReadI32();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 6:
-              if (field.Type == TType.Bool) {
-                HasInteractiveBar = iprot.ReadBool();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 7:
-              if (field.Type == TType.Bool) {
-                IsLargeMainIcon = iprot.ReadBool();
+                NotificationType = (TitleMainIconNotificationType)iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -226,7 +138,7 @@ namespace Ruyi.SDK.CommonType
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("PopupNotification");
+        TStruct struc = new TStruct("TitleMainIconNotification");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
         if (Title != null && __isset.title) {
@@ -237,52 +149,20 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteString(Title);
           oprot.WriteFieldEnd();
         }
-        if (Description != null && __isset.description) {
-          field.Name = "description";
-          field.Type = TType.String;
-          field.ID = 2;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Description);
-          oprot.WriteFieldEnd();
-        }
         if (MainIcon != null && __isset.mainIcon) {
           field.Name = "mainIcon";
           field.Type = TType.String;
-          field.ID = 3;
+          field.ID = 2;
           oprot.WriteFieldBegin(field);
           oprot.WriteString(MainIcon);
-          oprot.WriteFieldEnd();
-        }
-        if (Icon != null && __isset.icon) {
-          field.Name = "icon";
-          field.Type = TType.String;
-          field.ID = 4;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Icon);
           oprot.WriteFieldEnd();
         }
         if (__isset.NotificationType) {
           field.Name = "NotificationType";
           field.Type = TType.I32;
-          field.ID = 5;
+          field.ID = 3;
           oprot.WriteFieldBegin(field);
           oprot.WriteI32((int)NotificationType);
-          oprot.WriteFieldEnd();
-        }
-        if (__isset.HasInteractiveBar) {
-          field.Name = "HasInteractiveBar";
-          field.Type = TType.Bool;
-          field.ID = 6;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteBool(HasInteractiveBar);
-          oprot.WriteFieldEnd();
-        }
-        if (__isset.isLargeMainIcon) {
-          field.Name = "isLargeMainIcon";
-          field.Type = TType.Bool;
-          field.ID = 7;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteBool(IsLargeMainIcon);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -295,7 +175,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("PopupNotification(");
+      StringBuilder __sb = new StringBuilder("TitleMainIconNotification(");
       bool __first = true;
       if (Title != null && __isset.title) {
         if(!__first) { __sb.Append(", "); }
@@ -303,41 +183,17 @@ namespace Ruyi.SDK.CommonType
         __sb.Append("Title: ");
         __sb.Append(Title);
       }
-      if (Description != null && __isset.description) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Description: ");
-        __sb.Append(Description);
-      }
       if (MainIcon != null && __isset.mainIcon) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("MainIcon: ");
         __sb.Append(MainIcon);
       }
-      if (Icon != null && __isset.icon) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Icon: ");
-        __sb.Append(Icon);
-      }
       if (__isset.NotificationType) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("NotificationType: ");
         __sb.Append(NotificationType);
-      }
-      if (__isset.HasInteractiveBar) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("HasInteractiveBar: ");
-        __sb.Append(HasInteractiveBar);
-      }
-      if (__isset.isLargeMainIcon) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("IsLargeMainIcon: ");
-        __sb.Append(IsLargeMainIcon);
       }
       __sb.Append(")");
       return __sb.ToString();

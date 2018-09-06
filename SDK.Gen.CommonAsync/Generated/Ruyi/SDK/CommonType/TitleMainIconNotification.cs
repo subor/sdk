@@ -25,15 +25,11 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
-  public partial class PopupNotification : TBase
+  public partial class TitleMainIconNotification : TBase
   {
     private string _title;
-    private string _description;
     private string _mainIcon;
-    private string _icon;
-    private NotificationType _NotificationType;
-    private bool _HasInteractiveBar;
-    private bool _isLargeMainIcon;
+    private TitleMainIconNotificationType _NotificationType;
 
     public string Title
     {
@@ -45,19 +41,6 @@ namespace Ruyi.SDK.CommonType
       {
         __isset.title = true;
         this._title = value;
-      }
-    }
-
-    public string Description
-    {
-      get
-      {
-        return _description;
-      }
-      set
-      {
-        __isset.description = true;
-        this._description = value;
       }
     }
 
@@ -74,24 +57,11 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public string Icon
-    {
-      get
-      {
-        return _icon;
-      }
-      set
-      {
-        __isset.icon = true;
-        this._icon = value;
-      }
-    }
-
     /// <summary>
     /// 
-    /// <seealso cref="NotificationType"/>
+    /// <seealso cref="TitleMainIconNotificationType"/>
     /// </summary>
-    public NotificationType NotificationType
+    public TitleMainIconNotificationType NotificationType
     {
       get
       {
@@ -104,46 +74,16 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public bool HasInteractiveBar
-    {
-      get
-      {
-        return _HasInteractiveBar;
-      }
-      set
-      {
-        __isset.HasInteractiveBar = true;
-        this._HasInteractiveBar = value;
-      }
-    }
-
-    public bool IsLargeMainIcon
-    {
-      get
-      {
-        return _isLargeMainIcon;
-      }
-      set
-      {
-        __isset.isLargeMainIcon = true;
-        this._isLargeMainIcon = value;
-      }
-    }
-
 
     public Isset __isset;
     public struct Isset
     {
       public bool title;
-      public bool description;
       public bool mainIcon;
-      public bool icon;
       public bool NotificationType;
-      public bool HasInteractiveBar;
-      public bool isLargeMainIcon;
     }
 
-    public PopupNotification()
+    public TitleMainIconNotification()
     {
     }
 
@@ -177,16 +117,6 @@ namespace Ruyi.SDK.CommonType
             case 2:
               if (field.Type == TType.String)
               {
-                Description = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 3:
-              if (field.Type == TType.String)
-              {
                 MainIcon = await iprot.ReadStringAsync(cancellationToken);
               }
               else
@@ -194,40 +124,10 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 4:
-              if (field.Type == TType.String)
-              {
-                Icon = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 5:
+            case 3:
               if (field.Type == TType.I32)
               {
-                NotificationType = (NotificationType)await iprot.ReadI32Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 6:
-              if (field.Type == TType.Bool)
-              {
-                HasInteractiveBar = await iprot.ReadBoolAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 7:
-              if (field.Type == TType.Bool)
-              {
-                IsLargeMainIcon = await iprot.ReadBoolAsync(cancellationToken);
+                NotificationType = (TitleMainIconNotificationType)await iprot.ReadI32Async(cancellationToken);
               }
               else
               {
@@ -255,7 +155,7 @@ namespace Ruyi.SDK.CommonType
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("PopupNotification");
+        var struc = new TStruct("TitleMainIconNotification");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
         if (Title != null && __isset.title)
@@ -267,58 +167,22 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteStringAsync(Title, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Description != null && __isset.description)
-        {
-          field.Name = "description";
-          field.Type = TType.String;
-          field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Description, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
         if (MainIcon != null && __isset.mainIcon)
         {
           field.Name = "mainIcon";
           field.Type = TType.String;
-          field.ID = 3;
+          field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteStringAsync(MainIcon, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (Icon != null && __isset.icon)
-        {
-          field.Name = "icon";
-          field.Type = TType.String;
-          field.ID = 4;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Icon, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (__isset.NotificationType)
         {
           field.Name = "NotificationType";
           field.Type = TType.I32;
-          field.ID = 5;
+          field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteI32Async((int)NotificationType, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (__isset.HasInteractiveBar)
-        {
-          field.Name = "HasInteractiveBar";
-          field.Type = TType.Bool;
-          field.ID = 6;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(HasInteractiveBar, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (__isset.isLargeMainIcon)
-        {
-          field.Name = "isLargeMainIcon";
-          field.Type = TType.Bool;
-          field.ID = 7;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(IsLargeMainIcon, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -332,7 +196,7 @@ namespace Ruyi.SDK.CommonType
 
     public override string ToString()
     {
-      var sb = new StringBuilder("PopupNotification(");
+      var sb = new StringBuilder("TitleMainIconNotification(");
       bool __first = true;
       if (Title != null && __isset.title)
       {
@@ -341,13 +205,6 @@ namespace Ruyi.SDK.CommonType
         sb.Append("Title: ");
         sb.Append(Title);
       }
-      if (Description != null && __isset.description)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("Description: ");
-        sb.Append(Description);
-      }
       if (MainIcon != null && __isset.mainIcon)
       {
         if(!__first) { sb.Append(", "); }
@@ -355,33 +212,12 @@ namespace Ruyi.SDK.CommonType
         sb.Append("MainIcon: ");
         sb.Append(MainIcon);
       }
-      if (Icon != null && __isset.icon)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("Icon: ");
-        sb.Append(Icon);
-      }
       if (__isset.NotificationType)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("NotificationType: ");
         sb.Append(NotificationType);
-      }
-      if (__isset.HasInteractiveBar)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("HasInteractiveBar: ");
-        sb.Append(HasInteractiveBar);
-      }
-      if (__isset.isLargeMainIcon)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("IsLargeMainIcon: ");
-        sb.Append(IsLargeMainIcon);
       }
       sb.Append(")");
       return sb.ToString();

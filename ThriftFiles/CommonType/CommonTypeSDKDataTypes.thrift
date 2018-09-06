@@ -13,11 +13,8 @@ enum LoginState {
 	Login = 1,
 }
 
-enum NotificationType {
-    Title = 0,
-    TitleAnd2Icons = 1,
-    TitleDetail = 2,
-    Voice = 3,
+enum TitleMainIconNotificationType {
+    FriendRequest = 0,
 }
 
 enum InputCategory {
@@ -184,14 +181,10 @@ struct AppData {
 	2: list<AppDataCollection> data,
 }
 
-struct PopupNotification {
+struct TitleMainIconNotification {
     1: string title,
-    2: string description,
-    3: string mainIcon,
-    4: string icon,
-    5: NotificationType NotificationType,
-    6: bool HasInteractiveBar,
-    7: bool isLargeMainIcon,
+    2: string mainIcon,
+    3: TitleMainIconNotificationType NotificationType,
 }
 
 struct EventNotification {
