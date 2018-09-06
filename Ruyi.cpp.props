@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <LinkageSuffix />
+    <RuyiConfig />
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="RuyiConfig">
+    <RuyiConfig>$(Configuration)</RuyiConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="RuyiConfig">
+    <RuyiConfig>$(Configuration)</RuyiConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug_mt'" Label="RuyiConfig">
+    <LinkageSuffix>_mt</LinkageSuffix>
+    <RuyiConfig>Debug</RuyiConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release_mt'" Label="RuyiConfig">
+    <LinkageSuffix>_mt</LinkageSuffix>
+    <RuyiConfig>Release</RuyiConfig>
+  </PropertyGroup>
+  <ItemDefinitionGroup />
+</Project>
