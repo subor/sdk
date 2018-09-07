@@ -442,7 +442,7 @@ namespace Ruyi
 
                 // not Layer0 & not Layer1
                 if(!entry.FullName.StartsWith("Layer0,", StringComparison.OrdinalIgnoreCase) 
-                    && !entry.FullName.StartsWith("Layer1,", StringComparison.OrdinalIgnoreCase))
+                    && !entry.FullName.StartsWith("zpLayer1,", StringComparison.OrdinalIgnoreCase))
                 {
                     NetMQConfig.Cleanup(false);
                     return;

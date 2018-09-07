@@ -25,7 +25,7 @@ Get __[Support](topics/support.md)__
 ## Tutorials
 
 * [Setup SDK](tutorials/setup.md)
-* [Launch Platform and Use Developer Tools](tutorials/layer0_devtools.md)
+* [Launch Platform and Use Developer Tools](tutorials/using_devtools.md)
 * [Run UE4 sample on local PC](tutorials/run_ue4_sample_pc.md)
 * [Run Unity sample on devkit](tutorials/run_unity_sample_console.md)
 * [Pack The App](tutorials/how_to_pack.md)
@@ -65,4 +65,3 @@ Get __[Support](topics/support.md)__
     * [Documentation](topics/docs.md)
     * [Release notes](topics/release_notes.md)
     * [MIT License](../../LICENSE.md)
-

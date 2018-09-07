@@ -1,6 +1,10 @@
 # BIOS
 
-Similar to other devices, Ruyi has BIOS firmware.
+Similar to other devices, the console has BIOS firmware.
+
+Recent versions of the devkit as well as the retail console are pre-installed with the latest BIOS/OS.  The latest BIOS is also available from [release downloads](https://github.com/subor/sdk/releases).  Older versions are available from the old dev portal and on request.
+
+This document will be removed in the future.
 
 ## Version
 
@@ -29,7 +33,9 @@ Check the top of the `DA220REL.txt` file:
 
 __Important__:
 
-![](/docs/img/warning.png) Because the BIOS must be paired with a compatible AMD driver, the BIOS version __must__ be paried with the correct version of [Ruyi OS](os.md).  This is summarized as follows:  
+
+
+![](/docs/img/warning.png) Because the BIOS must be paired with a compatible AMD driver, the BIOS version __must__ be paried with the correct version of [the OS](os.md).  This is summarized as follows:  
 
 | BIOS Version/Date | Ruyi OS Version | AMD Driver Stack Version/Date
 |-|-|-
@@ -55,14 +61,14 @@ Because the BIOS flashing process was changed, please observe the following rule
 
 Also see:
 
-- How to check the [Ruyi OS verison](os.md#Version)
+- How to check the [OS verison](os.md#version)
 - [OS Image download](http://dev.playruyi.com/uservices)
 
 ## Flashing the BIOS
 
 The BIOS can be flashed from Windows (the preferred method) or via EFI shell with thumb drive.
 
-![](/docs/img/warning.png) [BIOS](bios.md) updates should only be done from [Ruyi OS](os.md).  Starting with OS 0.6, make sure you are __not__ in [PC mode](pc_mode.md) before updating the BIOS.
+![](/docs/img/warning.png) [BIOS](bios.md) updates cannot be done in [PC mode](pc_mode.md).  Starting with OS 0.6, make sure you are __not__ in PC mode before updating the BIOS.
 
 __Flash under Windows__
 
@@ -70,9 +76,9 @@ Available BIOS v0.13 and later:
 
 1. In [Command Prompt with administrator rights](https://technet.microsoft.com/en-us/library/cc947813(v=ws.10).aspx) run: `manage-bde.exe -protectors -disable c:`
     - This temporarily disables Bitlocker.  __Failure to do this results in an unbootable OS__ due to lost encryption data in TPM chip.
-1. Download the [latest BIOS zip file](https://bitbucket.org/playruyi/support/src/master/files/bios/)
-1. Extract the zip file and locate \Winflash\ folder
-1. Run DA22XXXX.exe to flash BIOS
+1. Download the [latest BIOS zip file](https://github.com/subor/sdk/releases)
+1. Extract the zip file and locate `Winflash/` folder
+1. Run `DA22XXXX.exe` to flash BIOS
 
 Flashing will progress as follows:
 

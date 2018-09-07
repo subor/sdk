@@ -12,7 +12,7 @@ Application meta-data is comprised of:
 - A manifest describing the application
 - A resource folder containing assets
 
-The [Unity sample](https://bitbucket.org/playruyi/space_shooter) contains an example of application meta-data used by Ruyi platform.  Running `D:\dev\unity_demo>tree /f pack` displays:
+The [Unity sample](https://github.com/subor/sample_unity_space_shooter) contains an example of application meta-data used by Ruyi platform.  Running `D:\dev\unity_demo>tree /f pack` displays:
 ```
 D:\DEV\UNITY_DEMO\PACK
 │   RuyiManifest.json
@@ -39,46 +39,46 @@ The `space_shooter` folder and `space_shooter.exe` should all match the appID va
 
 App manifest is similar to other platforms and is typically named `RuyiManifest.json`.
 
-Example from the [SDK samples](https://bitbucket.org/playruyi/space_shooter/src/master/Pack/RuyiManifest.json):
+Example from the [Unity sample](https://github.com/subor/sample_unity_space_shooter/blob/master/Pack/RuyiManifest.json):
 ```json
 {
-	"appID": "com.playruyi.space_shooter",
-	"application":	{
-		"name":"@com.playruyi.space_shooter",
-		"label":"@antestapp",
-		"icon":"bluetooth.png",
-		"description":"an test app description",
-		"logo":"logo.png",
-		"activity":[
+	appID: "com.XXX.space_shooter",
+	application:	{
+		name:"@com.XXX.space_shooter",
+		label:"@antestapp",
+		icon:"bluetooth.png",
+		description:"an test app description",
+		logo:"logo.png",
+		activity:[
 			{
-				"name":"main",
-				"exePath":"space_shooter/space_shooter.exe",
-				"label":"main test activity",
-				"description":"@antestapp",
-				"icon":"logo.png"
+				name:"main",
+				exePath:"space_shooter/space_shooter.exe",
+				label:"main test activity",
+				description:"@antestapp",
+				icon:"logo.png"
 			}
 		]
 	},
-	"use_permissions":[
+	use_permissions:[
 		{
-			"name":"jade.permission.ACHIEVEMENT"
+			name:"jade.permission.ACHIEVEMENT"
 		}
 	],
-	"use_sdk":{
-		"minSdkVersion" : "1.0.0.0"
+	use_sdk:{
+		minSdkVersion : "1.0.0.0"
 	}
 }
 ```
 
 ## Overlay
 
-See [overlay compatibility](overlay.md#Compatibility)
+See [overlay compatibility](overlay.md#compatibility)
 
 ## Strings
 
 Localized strings are stored in `res/i18n.json`.
 
-Example from the [SDK Samples](https://bitbucket.org/playruyi/space_shooter/src/master/Pack/res/i18n.json):
+Example from the [Unity sample](https://github.com/subor/sample_unity_space_shooter/blob/master/Pack/res/i18n.json):
 ```json
 {
   "i18n": {
