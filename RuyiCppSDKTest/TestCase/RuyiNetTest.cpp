@@ -91,10 +91,12 @@ void RuyiNetTest::LeaderboardServiceTest()
 	int startIndex = 0;
 	int endIndex = 9;
 	int score = 120;
+	/*
 	std::string responseStr;
+	//empty string return !!!!
 	ruyiSDK->BCService->SocialLeaderboard_PostScoreToLeaderboard(responseStr, leaderboardId, score, "", playerIndex);
 	Logger::WriteMessage(("xxdadfdasfsad " + responseStr).c_str());
-	return;
+	return;*/
 
 	RuyiNetGetGlobalLeaderboardEntryCountResponse response1;
 	ruyiSDK->RuyiNet->GetLeaderboardService()->GetGlobalLeaderboardEntryCount(playerIndex, leaderboardId, response1);
@@ -111,7 +113,6 @@ void RuyiNetTest::LeaderboardServiceTest()
 		Logger::WriteMessage(("LeaderboardServiceTest GetGlobalLeaderboardPage   playerId:" + _entry->GetPlayerId() + " score:" + to_string(_entry->GetScore())).c_str());
 	});
 
-	//test: get social leaderboard 
 	bool isSuccess = false;
 	ruyiSDK->RuyiNet->GetLeaderboardService()->PostScoreToLeaderboard(isSuccess, playerIndex, score, leaderboardId);
 
