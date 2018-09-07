@@ -16,6 +16,11 @@ namespace Ruyi { namespace SDK { namespace Online {
 
 		RuyiNetLeaderboardConfig(RuyiNetListAllLeaderboardsResponse::Data::LeaderboardInfo& data)
 		{
+			GetData(data);
+		}
+
+		void GetData(RuyiNetListAllLeaderboardsResponse::Data::LeaderboardInfo& data)
+		{
 			LeaderboardId = data.leaderboardId;
 			LeaderboardType = ConvertStringToRuyiNetLeaderboardType(data.leaderboardType);
 			RotationType = ConvertStringToRuyiNetRotationType(data.rotationType);
@@ -34,6 +39,11 @@ namespace Ruyi { namespace SDK { namespace Online {
 		int GetMaxRetainedCount() { return MaxRetainedCount; }
 		int GetRetainedVersionsCount() { return RetainedVersionsCount; }
 		std::string GetData() { return Data; }
+
+		///<summary>
+		/// Rescord status of response
+		///</summary>
+		int Status;
 
 	private:
 		/// <summary>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string.h>
+#include <string>
 
 namespace Ruyi { namespace SDK { namespace Online {
 
@@ -9,8 +9,6 @@ namespace Ruyi { namespace SDK { namespace Online {
 	/// </summary>
 	enum RuyiNetLeaderboardType
 	{
-		NONE,
-
 		/// <summary>
 		/// The leaderboard will keep track of the highest value.
 		/// </summary>
@@ -31,28 +29,6 @@ namespace Ruyi { namespace SDK { namespace Online {
 		/// </summary>
 		LOW_VALUE,
 	};
-
-	RuyiNetLeaderboardType ConvertStringToRuyiNetLeaderboardType(std::string str)
-	{
-		RuyiNetLeaderboardType ret = RuyiNetLeaderboardType::NONE;
-
-		if (0 == str.compare("HIGH_VALUE"))
-		{
-			ret = RuyiNetLeaderboardType::HIGH_VALUE;
-		}else if (0 == str.compare("CUMULATIVE"))
-		{
-			ret = RuyiNetLeaderboardType::CUMULATIVE;
-		}else if (0 == str.compare("LAST_VALUE"))
-		{
-			ret = RuyiNetLeaderboardType::LAST_VALUE;
-		}else if (0 == str.compare("LOW_VALUE"))
-		{
-			ret = RuyiNetLeaderboardType::LOW_VALUE;
-		}else
-		{
-			ret = RuyiNetLeaderboardType::NONE;
-		}
-
-		return ret;
-	}
+	
+	RuyiNetLeaderboardType ConvertStringToRuyiNetLeaderboardType(std::string str);
 }}} 

@@ -14,6 +14,15 @@ namespace Ruyi { namespace SDK { namespace Online {
 		RuyiNetPlayerScore() {}
 		RuyiNetPlayerScore(RuyiNetGetPlayerScoreResponse::Data::Score& data)
 		{
+			GetData(data);
+		}
+		RuyiNetPlayerScore(RuyiNetGetPlayerScoresFromLeaderboardsResponse::Data::Score& data)
+		{
+			GetData(data);
+		}
+
+		void GetData(RuyiNetGetPlayerScoreResponse::Data::Score& data)
+		{
 			Score = data.score;
 			Data = data.data;
 			CreatedAt = data.createdAt;
@@ -21,7 +30,7 @@ namespace Ruyi { namespace SDK { namespace Online {
 			LeaderboardId = data.leaderboardId;
 			VersionId = data.versionId;
 		}
-		RuyiNetPlayerScore(RuyiNetGetPlayerScoresFromLeaderboardsResponse::Data::Score& data)
+		void GetData(RuyiNetGetPlayerScoresFromLeaderboardsResponse::Data::Score& data)
 		{
 			Score = data.score;
 			Data = data.data;
@@ -37,6 +46,11 @@ namespace Ruyi { namespace SDK { namespace Online {
 		long GetUpdatedAt() { return UpdatedAt; }
 		std::string GetLeaderboardId() { return LeaderboardId; }
 		int GetVersionId() { return VersionId; }
+
+		///<summary>
+		/// Rescord status of response
+		///</summary>
+		int Status;
 
 	private:
 		/// <summary>

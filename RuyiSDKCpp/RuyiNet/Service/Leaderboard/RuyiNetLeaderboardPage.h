@@ -92,7 +92,7 @@ namespace Ruyi { namespace SDK { namespace Online {
 		long GetServerTime() { return ServerTime; }
 
 		///<summary>
-		/// status of response
+		/// Rescord status of response
 		///</summary>
 		int Status;
 

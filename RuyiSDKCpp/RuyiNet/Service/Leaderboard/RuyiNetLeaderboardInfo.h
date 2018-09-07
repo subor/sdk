@@ -15,7 +15,7 @@ namespace Ruyi { namespace SDK { namespace Online {
 	public:
 		
 		RuyiNetLeaderboardInfo() {}
-		RuyiNetLeaderboardInfo(RuyiNetGetGlobalLeaderboardVersionsResponse::Data data) 
+		RuyiNetLeaderboardInfo(RuyiNetGetGlobalLeaderboardVersionsResponse::Data& data) 
 		{
 			LeaderboardId = data.leaderboardId;
 			LeaderboardType = ConvertStringToRuyiNetLeaderboardType(data.leaderboardType);
@@ -28,11 +28,29 @@ namespace Ruyi { namespace SDK { namespace Online {
 			});
 		}
 
+		void GetData(RuyiNetGetGlobalLeaderboardVersionsResponse::Data& data)
+		{
+			LeaderboardId = data.leaderboardId;
+			LeaderboardType = ConvertStringToRuyiNetLeaderboardType(data.leaderboardType);
+			RotationType = ConvertStringToRuyiNetRotationType(data.rotationType);
+			RetainedCount = data.retainedCount;
+
+			std::for_each(data.versions.begin(), data.versions.end(), [&](RuyiNetGetGlobalLeaderboardVersionsResponse::Data::VersionInfo& info)
+			{
+				Versions.push_back(new RuyiNetLeaderboardVersionInfo(info));
+			});
+		}
+
 		std::string GetLeaderboardId() { return LeaderboardId; }
 		RuyiNetLeaderboardType GetLeaderboardType() { return LeaderboardType; }
 		RuyiNetRotationType GetRotationType() { return RotationType; }
 		int GetRetainedCount() { return RetainedCount; }
 		std::vector<RuyiNetLeaderboardVersionInfo*>& GetVersions() { return Versions; }
+
+		///<summary>
+		/// Rescord status of response
+		///</summary>
+		int Status;
 
 	private:
 		/// <summary>

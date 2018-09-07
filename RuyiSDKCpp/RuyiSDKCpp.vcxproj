@@ -490,6 +490,8 @@
     <ClCompile Include="RuyiNet\Service\Friend\RuyiNetFriendService.cpp" />
     <ClCompile Include="RuyiNet\Service\Gamification\RuyiNetGamificationService.cpp" />
     <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardType.cpp" />
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetRotationType.cpp" />
     <ClCompile Include="RuyiNet\Service\Lobby\RuyiNetLobby.cpp" />
     <ClCompile Include="RuyiNet\Service\Lobby\RuyiNetLobbyService.cpp" />
     <ClCompile Include="RuyiNet\Service\Party\RuyiNetPartyService.cpp" />

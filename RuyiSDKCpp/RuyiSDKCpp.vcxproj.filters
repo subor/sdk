@@ -286,6 +286,12 @@
     <ClCompile Include="Generated\InputManager\InputManagerService.cpp">
       <Filter>Generated\InputManager</Filter>
     </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetRotationType.cpp">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardType.cpp">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_constants.h">

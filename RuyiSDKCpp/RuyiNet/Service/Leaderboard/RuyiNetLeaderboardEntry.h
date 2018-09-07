@@ -1,5 +1,7 @@
 #pragma once
 
+#include "RuyiNetLeaderboardService.h"
+
 #include "Response/RuyiNetGetGlobalLeaderboardPageResponse.h"
 #include "Response/RuyiNetGetGroupSocialLeaderboardResponse.h"
 #include "Response/RuyiNetGetSocialLeaderboardResponse.h"
