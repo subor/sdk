@@ -21,6 +21,7 @@ namespace Ruyi.SDK.Online
                 Data = data.summaryFriendData,
                 Email = data.email,
                 IsOnline = data.isOnline,
+                LastOnline = data.lastOnline
             };
         }
 
@@ -53,5 +54,10 @@ namespace Ruyi.SDK.Online
         /// Whether or not the player is online.
         /// </summary>
         public bool IsOnline { get; private set; }
+
+        /// <summary>
+        /// Timestamp in milliseconds of when the user was last seen online.
+        /// </summary>
+        public long LastOnline { get; private set; }
     }
 }

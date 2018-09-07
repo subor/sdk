@@ -38,5 +38,10 @@ namespace Ruyi.SDK.Online
         /// Whether or not the player is online.
         /// </summary>
         public bool isOnline;
+
+        /// <summary>
+        /// Timestamp in milliseconds of when the user was last seen online.
+        /// </summary>
+        public long lastOnline;
     }
 }
