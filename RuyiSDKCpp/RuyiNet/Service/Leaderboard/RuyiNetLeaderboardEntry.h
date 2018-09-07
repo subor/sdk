@@ -1,7 +1,5 @@
 #pragma once
 
-#include "RuyiNetLeaderboardService.h"
-
 #include "Response/RuyiNetGetGlobalLeaderboardPageResponse.h"
 #include "Response/RuyiNetGetGroupSocialLeaderboardResponse.h"
 #include "Response/RuyiNetGetSocialLeaderboardResponse.h"
@@ -13,54 +11,23 @@ namespace Ruyi { namespace SDK { namespace Online {
 	class RuyiNetLeaderboardEntry 
 	{
 	public:
-		RuyiNetLeaderboardEntry() {}
+		RuyiNetLeaderboardEntry();
 		
-		RuyiNetLeaderboardEntry(RuyiNetGetGlobalLeaderboardPageResponse::Data::LeaderboardEntry& entry)
-		{
-			PlayerId = entry.playerId;
-			Score = entry.score;
-			Data = entry.data;
-			CreatedAt = entry.createdAt;
-			UpdatedAt = entry.updatedAt;
-			Index = entry.index;
-			Rank = entry.rank;
-			Name = entry.name;
-			PictureUrl = entry.pictureUrl;
-		}
+		RuyiNetLeaderboardEntry(RuyiNetGetGlobalLeaderboardPageResponse::Data::LeaderboardEntry& entry);
 
-		RuyiNetLeaderboardEntry(RuyiNetGetGroupSocialLeaderboardResponse::Data::LeaderboardEntry& entry)
-		{
-			PlayerId = entry.playerId;
-			Score = entry.score;
-			Data = entry.data;
-			CreatedAt = entry.createdAt;
-			UpdatedAt = entry.updatedAt;
-			Index = entry.index;
-			Rank = entry.rank;
-			Name = entry.playerName;
-			PictureUrl = entry.pictureUrl;
-		}
+		RuyiNetLeaderboardEntry(RuyiNetGetGroupSocialLeaderboardResponse::Data::LeaderboardEntry& entry);
 
-		RuyiNetLeaderboardEntry(RuyiNetGetSocialLeaderboardResponse::Data::LeaderboardEntry& entry)
-		{
-			PlayerId = entry.playerId;
-			Score = entry.score;
-			Data = entry.otherData;
-			CreatedAt = entry.createdAt;
-			UpdatedAt = entry.updatedAt;
-			Name = entry.name;
-			PictureUrl = entry.pictureUrl;
-		}
+		RuyiNetLeaderboardEntry(RuyiNetGetSocialLeaderboardResponse::Data::LeaderboardEntry& entry);
 
-		std::string GetPlayerId() { return PlayerId; }
-		int GetScore() { return Score; }
-		std::string GetData() { return Data; }
-		long GetCreatedAt() { return CreatedAt; }
-		long GetUpdatedAt() { return UpdatedAt; }
-		int GetIndex() { return Index; }
-		int GetRank() { return Rank; }
-		std::string GetName() { return Name; }
-		std::string GetPictureUrl() { return PictureUrl; }
+		std::string GetPlayerId();
+		int GetScore();
+		std::string GetData();
+		long GetCreatedAt();
+		long GetUpdatedAt();
+		int GetIndex();
+		int GetRank();
+		std::string GetName();
+		std::string GetPictureUrl();
 
 	private:
 		/// <summary>

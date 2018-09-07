@@ -7,89 +7,33 @@
 
 namespace Ruyi { namespace SDK { namespace Online {
 
+	class RuyiNetLeaderboardEntry;
+
 	/// <summary>
 	/// Represents a single page retrieved from a leaderboard.
 	/// </summary>
 	class RuyiNetLeaderboardPage 
 	{
 	public:
-		RuyiNetLeaderboardPage(){}
+		RuyiNetLeaderboardPage();
 
-		RuyiNetLeaderboardPage(RuyiNetGetGlobalLeaderboardPageResponse::Data& data)
-		{			
-			std::for_each(data.leaderboard.begin(), data.leaderboard.end(), [&](RuyiNetGetGlobalLeaderboardPageResponse::Data::LeaderboardEntry& entry)
-			{
-				Entries.push_back(new RuyiNetLeaderboardEntry(entry));
-			});
+		RuyiNetLeaderboardPage(RuyiNetGetGlobalLeaderboardPageResponse::Data& data);
 
-			MoreAfter = data.moreAfter;
-			MoreBefore = data.moreBefore;
-			TimeBeforeReset = data.timeBeforeReset;
-			ServerTime = data.server_time;
-		}
+		RuyiNetLeaderboardPage(RuyiNetGetGroupSocialLeaderboardResponse::Data& data);
 
-		RuyiNetLeaderboardPage(RuyiNetGetGroupSocialLeaderboardResponse::Data& data)
-		{			
-			std::for_each(data.leaderboard.begin(), data.leaderboard.end(), [&](RuyiNetGetGroupSocialLeaderboardResponse::Data::LeaderboardEntry& entry)
-			{
-				Entries.push_back(new RuyiNetLeaderboardEntry(entry));
-			});
-
-			TimeBeforeReset = data.timeBeforeReset;
-			ServerTime = data.server_time;
-		}
-
-		RuyiNetLeaderboardPage(RuyiNetGetSocialLeaderboardResponse::Data& data)
-		{
-			std::for_each(data.social_leaderboard.begin(), data.social_leaderboard.end(), [&](RuyiNetGetSocialLeaderboardResponse::Data::LeaderboardEntry& entry)
-			{
-				Entries.push_back(new RuyiNetLeaderboardEntry(entry));
-			});
-
-			TimeBeforeReset = data.timeBeforeReset;
-			ServerTime = data.server_time;
-		}
+		RuyiNetLeaderboardPage(RuyiNetGetSocialLeaderboardResponse::Data& data);
 		
-		void GetData(RuyiNetGetGlobalLeaderboardPageResponse::Data& data)
-		{
-			std::for_each(data.leaderboard.begin(), data.leaderboard.end(), [&](RuyiNetGetGlobalLeaderboardPageResponse::Data::LeaderboardEntry& entry)
-			{
-				Entries.push_back(new RuyiNetLeaderboardEntry(entry));
-			});
+		void GetData(RuyiNetGetGlobalLeaderboardPageResponse::Data& data);
 
-			MoreAfter = data.moreAfter;
-			MoreBefore = data.moreBefore;
-			TimeBeforeReset = data.timeBeforeReset;
-			ServerTime = data.server_time;
-		}
+		void GetData(RuyiNetGetGroupSocialLeaderboardResponse::Data& data);
 
-		void GetData(RuyiNetGetGroupSocialLeaderboardResponse::Data& data)
-		{
-			std::for_each(data.leaderboard.begin(), data.leaderboard.end(), [&](RuyiNetGetGroupSocialLeaderboardResponse::Data::LeaderboardEntry& entry)
-			{
-				Entries.push_back(new RuyiNetLeaderboardEntry(entry));
-			});
+		void GetData(RuyiNetGetSocialLeaderboardResponse::Data& data);
 
-			TimeBeforeReset = data.timeBeforeReset;
-			ServerTime = data.server_time;
-		}
-
-		void GetData(RuyiNetGetSocialLeaderboardResponse::Data& data)
-		{
-			std::for_each(data.social_leaderboard.begin(), data.social_leaderboard.end(), [&](RuyiNetGetSocialLeaderboardResponse::Data::LeaderboardEntry& entry)
-			{
-				Entries.push_back(new RuyiNetLeaderboardEntry(entry));
-			});
-
-			TimeBeforeReset = data.timeBeforeReset;
-			ServerTime = data.server_time;
-		}
-
-		std::vector<RuyiNetLeaderboardEntry*>& GetEntries() { return Entries; }
-		bool GetMoreAfter() { return MoreAfter; }
-		bool GetMoreBefore() { return MoreBefore; }
-		int GetTimeBeforeReset() { return TimeBeforeReset; }
-		long GetServerTime() { return ServerTime; }
+		std::vector<RuyiNetLeaderboardEntry*>& GetEntries();
+		bool GetMoreAfter();
+		bool GetMoreBefore();
+		int GetTimeBeforeReset();
+		long GetServerTime();
 
 		///<summary>
 		/// Rescord status of response

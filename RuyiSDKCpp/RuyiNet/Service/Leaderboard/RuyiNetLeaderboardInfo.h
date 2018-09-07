@@ -14,38 +14,16 @@ namespace Ruyi { namespace SDK { namespace Online {
 	{
 	public:
 		
-		RuyiNetLeaderboardInfo() {}
-		RuyiNetLeaderboardInfo(RuyiNetGetGlobalLeaderboardVersionsResponse::Data& data) 
-		{
-			LeaderboardId = data.leaderboardId;
-			LeaderboardType = ConvertStringToRuyiNetLeaderboardType(data.leaderboardType);
-			RotationType = ConvertStringToRuyiNetRotationType(data.rotationType);
-			RetainedCount = data.retainedCount;
+		RuyiNetLeaderboardInfo();
+		RuyiNetLeaderboardInfo(RuyiNetGetGlobalLeaderboardVersionsResponse::Data& data);
 
-			std::for_each(data.versions.begin(), data.versions.end(), [&](RuyiNetGetGlobalLeaderboardVersionsResponse::Data::VersionInfo& info) 
-			{
-				Versions.push_back(new RuyiNetLeaderboardVersionInfo(info));
-			});
-		}
+		void GetData(RuyiNetGetGlobalLeaderboardVersionsResponse::Data& data);
 
-		void GetData(RuyiNetGetGlobalLeaderboardVersionsResponse::Data& data)
-		{
-			LeaderboardId = data.leaderboardId;
-			LeaderboardType = ConvertStringToRuyiNetLeaderboardType(data.leaderboardType);
-			RotationType = ConvertStringToRuyiNetRotationType(data.rotationType);
-			RetainedCount = data.retainedCount;
-
-			std::for_each(data.versions.begin(), data.versions.end(), [&](RuyiNetGetGlobalLeaderboardVersionsResponse::Data::VersionInfo& info)
-			{
-				Versions.push_back(new RuyiNetLeaderboardVersionInfo(info));
-			});
-		}
-
-		std::string GetLeaderboardId() { return LeaderboardId; }
-		RuyiNetLeaderboardType GetLeaderboardType() { return LeaderboardType; }
-		RuyiNetRotationType GetRotationType() { return RotationType; }
-		int GetRetainedCount() { return RetainedCount; }
-		std::vector<RuyiNetLeaderboardVersionInfo*>& GetVersions() { return Versions; }
+		std::string GetLeaderboardId();
+		RuyiNetLeaderboardType GetLeaderboardType();
+		RuyiNetRotationType GetRotationType();
+		int GetRetainedCount();
+		std::vector<RuyiNetLeaderboardVersionInfo*>& GetVersions();
 
 		///<summary>
 		/// Rescord status of response

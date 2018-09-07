@@ -11,41 +11,19 @@ namespace Ruyi { namespace SDK { namespace Online {
 	class RuyiNetPlayerScore 
 	{
 	public:
-		RuyiNetPlayerScore() {}
-		RuyiNetPlayerScore(RuyiNetGetPlayerScoreResponse::Data::Score& data)
-		{
-			GetData(data);
-		}
-		RuyiNetPlayerScore(RuyiNetGetPlayerScoresFromLeaderboardsResponse::Data::Score& data)
-		{
-			GetData(data);
-		}
+		RuyiNetPlayerScore();
+		RuyiNetPlayerScore(RuyiNetGetPlayerScoreResponse::Data::Score& data);
+		RuyiNetPlayerScore(RuyiNetGetPlayerScoresFromLeaderboardsResponse::Data::Score& data);
 
-		void GetData(RuyiNetGetPlayerScoreResponse::Data::Score& data)
-		{
-			Score = data.score;
-			Data = data.data;
-			CreatedAt = data.createdAt;
-			UpdatedAt = data.updatedAt;
-			LeaderboardId = data.leaderboardId;
-			VersionId = data.versionId;
-		}
-		void GetData(RuyiNetGetPlayerScoresFromLeaderboardsResponse::Data::Score& data)
-		{
-			Score = data.score;
-			Data = data.data;
-			CreatedAt = data.createdAt;
-			UpdatedAt = data.updatedAt;
-			LeaderboardId = data.leaderboardId;
-			VersionId = data.versionId;
-		}
+		void GetData(RuyiNetGetPlayerScoreResponse::Data::Score& data);
+		void GetData(RuyiNetGetPlayerScoresFromLeaderboardsResponse::Data::Score& data);
 
-		int GetScore() { return Score; }
-		std::string GetData() { return Data; }
-		long GetCreatedAt() { return CreatedAt; }
-		long GetUpdatedAt() { return UpdatedAt; }
-		std::string GetLeaderboardId() { return LeaderboardId; }
-		int GetVersionId() { return VersionId; }
+		int GetScore();
+		std::string GetData();
+		long GetCreatedAt();
+		long GetUpdatedAt();
+		std::string GetLeaderboardId();
+		int GetVersionId();
 
 		///<summary>
 		/// Rescord status of response

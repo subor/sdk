@@ -489,8 +489,14 @@
     <ClCompile Include="RuyiNet\Service\Cloud\RuyiNetCloudService.cpp" />
     <ClCompile Include="RuyiNet\Service\Friend\RuyiNetFriendService.cpp" />
     <ClCompile Include="RuyiNet\Service\Gamification\RuyiNetGamificationService.cpp" />
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardConfig.cpp" />
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardEntry.cpp" />
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardInfo.cpp" />
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardPage.cpp" />
     <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardService.cpp" />
     <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardType.cpp" />
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardVersionInfo.cpp" />
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetPlayerScore.cpp" />
     <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetRotationType.cpp" />
     <ClCompile Include="RuyiNet\Service\Lobby\RuyiNetLobby.cpp" />
     <ClCompile Include="RuyiNet\Service\Lobby\RuyiNetLobbyService.cpp" />

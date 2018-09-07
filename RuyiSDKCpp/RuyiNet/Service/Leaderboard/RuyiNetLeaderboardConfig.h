@@ -12,33 +12,20 @@ namespace Ruyi { namespace SDK { namespace Online {
 	class RuyiNetLeaderboardConfig
 	{
 	public:
-		RuyiNetLeaderboardConfig() {}
+		RuyiNetLeaderboardConfig();
 
-		RuyiNetLeaderboardConfig(RuyiNetListAllLeaderboardsResponse::Data::LeaderboardInfo& data)
-		{
-			GetData(data);
-		}
+		RuyiNetLeaderboardConfig(RuyiNetListAllLeaderboardsResponse::Data::LeaderboardInfo& data);
 
-		void GetData(RuyiNetListAllLeaderboardsResponse::Data::LeaderboardInfo& data)
-		{
-			LeaderboardId = data.leaderboardId;
-			LeaderboardType = ConvertStringToRuyiNetLeaderboardType(data.leaderboardType);
-			RotationType = ConvertStringToRuyiNetRotationType(data.rotationType);
-			ResetAt = data.resetAt;
-			CurrentVersionId = data.currentVersionId;
-			MaxRetainedCount = data.maxRetainedCount;
-			RetainedVersionsCount = data.retainedVersionsCount;
-			Data = data.data;
-		}
+		void GetData(RuyiNetListAllLeaderboardsResponse::Data::LeaderboardInfo& data);
 
-		std::string GetLeaderboardId() { return LeaderboardId; }
-		RuyiNetLeaderboardType GetLeaderboardType() { return LeaderboardType; }
-		long GetResetAt() { return ResetAt; }
-		RuyiNetRotationType GetRotationType() { return RotationType; }
-		int GetCurrentVersionId() { return CurrentVersionId; }
-		int GetMaxRetainedCount() { return MaxRetainedCount; }
-		int GetRetainedVersionsCount() { return RetainedVersionsCount; }
-		std::string GetData() { return Data; }
+		std::string GetLeaderboardId();
+		RuyiNetLeaderboardType GetLeaderboardType();
+		long GetResetAt();
+		RuyiNetRotationType GetRotationType();
+		int GetCurrentVersionId();
+		int GetMaxRetainedCount();
+		int GetRetainedVersionsCount();
+		std::string GetData();
 
 		///<summary>
 		/// Rescord status of response

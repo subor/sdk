@@ -10,17 +10,12 @@ namespace Ruyi { namespace SDK { namespace Online {
 	class RuyiNetLeaderboardVersionInfo 
 	{
 	public:
-		RuyiNetLeaderboardVersionInfo() {}
-		RuyiNetLeaderboardVersionInfo(RuyiNetGetGlobalLeaderboardVersionsResponse::Data::VersionInfo& data) 
-		{
-			VersionId = data.versionId;
-			StartingAt = data.startingAt;
-			EndingAt = data.endingAt;
-		}
+		RuyiNetLeaderboardVersionInfo();
+		RuyiNetLeaderboardVersionInfo(RuyiNetGetGlobalLeaderboardVersionsResponse::Data::VersionInfo& data);
 		
-		int GetVersionId() { return VersionId; }
-		long GetStartingAt() { return StartingAt; }
-		long GetEndingAt() { return EndingAt; }
+		int GetVersionId();
+		long GetStartingAt();
+		long GetEndingAt();
 
 	private:
 		/// <summary>
