@@ -10,5 +10,6 @@ namespace Ruyi.SDK.CommonType
   public enum TitleMainIconNotificationType
   {
     FriendRequest = 0,
+    FriendAccept = 1,
   }
 }

@@ -15,6 +15,7 @@ enum LoginState {
 
 enum TitleMainIconNotificationType {
     FriendRequest = 0,
+    FriendAccept = 1,
 }
 
 enum InputCategory {

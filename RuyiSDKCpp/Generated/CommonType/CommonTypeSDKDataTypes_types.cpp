@@ -34,12 +34,14 @@ std::ostream& operator<<(std::ostream& out, const LoginState::type& val) {
 }
 
 int _kTitleMainIconNotificationTypeValues[] = {
-  TitleMainIconNotificationType::FriendRequest
+  TitleMainIconNotificationType::FriendRequest,
+  TitleMainIconNotificationType::FriendAccept
 };
 const char* _kTitleMainIconNotificationTypeNames[] = {
-  "FriendRequest"
+  "FriendRequest",
+  "FriendAccept"
 };
-const std::map<int, const char*> _TitleMainIconNotificationType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(1, _kTitleMainIconNotificationTypeValues, _kTitleMainIconNotificationTypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+const std::map<int, const char*> _TitleMainIconNotificationType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(2, _kTitleMainIconNotificationTypeValues, _kTitleMainIconNotificationTypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
 
 std::ostream& operator<<(std::ostream& out, const TitleMainIconNotificationType::type& val) {
   std::map<int, const char*>::const_iterator it = _TitleMainIconNotificationType_VALUES_TO_NAMES.find(val);

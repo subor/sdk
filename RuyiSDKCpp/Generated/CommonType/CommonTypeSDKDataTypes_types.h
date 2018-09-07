@@ -33,7 +33,8 @@ std::ostream& operator<<(std::ostream& out, const LoginState::type& val);
 
 struct TitleMainIconNotificationType {
   enum type {
-    FriendRequest = 0
+    FriendRequest = 0,
+    FriendAccept = 1
   };
 };
 
