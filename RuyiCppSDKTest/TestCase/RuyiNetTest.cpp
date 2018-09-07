@@ -15,13 +15,12 @@
 
 #include "boost/container/detail/json.hpp"
 
-#define TEST_APP_ID "11499"
-#define TEST_APP_SECRET "Shooter"
+#define TEST_APP_ID "11784"
+#define TEST_APP_SECRET "564e4779-079d-468d-a10f-cb4677a63da0"
 #define STATUS_OK 200
 
 RuyiNetTest::RuyiNetTest(RuyiSDKContext::Endpoint endpoint, std::string remoteAddress) :BaseUnitTest(endpoint, remoteAddress)
 {
-
 	Logger::WriteMessage("RuyiNetClient Init !!!\n");
 }
 
@@ -291,28 +290,39 @@ void RuyiNetTest::UserFileServiceTest()
 
 void RuyiNetTest::GamificationServiceTest() 
 {
-	RuyiNetAchievement achievement;
+	RuyiNetAchievement achievement;	
 	std::string achievementId = ""; //not a clue about id value, update later
 	ruyiSDK->RuyiNet->GetGamificationService()->AwardAchievement(0, achievementId, achievement);
 
-	Assert::IsTrue(0 == achievement.GameId.compare(""));
-
-	std::vector<std::string> achievementIds;
+	std::vector<std::string> achievementIds = { "1" };
 	std::vector<RuyiNetAchievement*> achievements;
 	ruyiSDK->RuyiNet->GetGamificationService()->AwardAchievements(0, achievementIds, achievements);
-
-	Assert::IsTrue(achievements.size() > 0);
-
-	int includeMetaData = 0; //not a clue about this value;
+	
+	int includeMetaData = 0;
+	
 	achievements.clear();
 	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievedAchievements(0, includeMetaData, achievements);
 
-	Assert::IsTrue(achievements.size() > 0);
+	std::for_each(achievements.begin(), achievements.end(), [&](RuyiNetAchievement* pAchievement) 
+	{
+		Logger::WriteMessage(("ReadAchievedAchievements Id:" + pAchievement->AchievementId).c_str());
+	});
 
 	achievements.clear();
-	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievements(0, includeMetaData, achievements);
-	
-	Assert::IsTrue(achievements.size() > 0);
+	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievements(0, false, achievements);
+
+	std::for_each(achievements.begin(), achievements.end(), [&](RuyiNetAchievement* pAchievement)
+	{
+		Logger::WriteMessage(("ReadAchievements Id:" + pAchievement->AchievementId).c_str());
+	});
+
+	achievements.clear();
+	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievements(0, true, achievements);
+
+	std::for_each(achievements.begin(), achievements.end(), [&](RuyiNetAchievement* pAchievement)
+	{
+		Logger::WriteMessage(("ReadAchievements Id:" + pAchievement->AchievementId).c_str());
+	});
 }
 
 void RuyiNetTest::PatchServiceTest() 
