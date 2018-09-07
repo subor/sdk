@@ -21,18 +21,43 @@ namespace Ruyi.SDK.CommonType
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class PopupNotification : TBase
+  public partial class TitleMainIconNotification : TBase
   {
-    private NotificationType _NotificationType;
-    private string _MainIcon;
-    private string _Text;
-    private string _Description;
+    private string _title;
+    private string _mainIcon;
+    private TitleMainIconNotificationType _NotificationType;
+
+    public string Title
+    {
+      get
+      {
+        return _title;
+      }
+      set
+      {
+        __isset.title = true;
+        this._title = value;
+      }
+    }
+
+    public string MainIcon
+    {
+      get
+      {
+        return _mainIcon;
+      }
+      set
+      {
+        __isset.mainIcon = true;
+        this._mainIcon = value;
+      }
+    }
 
     /// <summary>
     /// 
-    /// <seealso cref="NotificationType"/>
+    /// <seealso cref="TitleMainIconNotificationType"/>
     /// </summary>
-    public NotificationType NotificationType
+    public TitleMainIconNotificationType NotificationType
     {
       get
       {
@@ -45,58 +70,18 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public string MainIcon
-    {
-      get
-      {
-        return _MainIcon;
-      }
-      set
-      {
-        __isset.MainIcon = true;
-        this._MainIcon = value;
-      }
-    }
-
-    public string Text
-    {
-      get
-      {
-        return _Text;
-      }
-      set
-      {
-        __isset.Text = true;
-        this._Text = value;
-      }
-    }
-
-    public string Description
-    {
-      get
-      {
-        return _Description;
-      }
-      set
-      {
-        __isset.Description = true;
-        this._Description = value;
-      }
-    }
-
 
     public Isset __isset;
     #if !SILVERLIGHT
     [Serializable]
     #endif
     public struct Isset {
+      public bool title;
+      public bool mainIcon;
       public bool NotificationType;
-      public bool MainIcon;
-      public bool Text;
-      public bool Description;
     }
 
-    public PopupNotification() {
+    public TitleMainIconNotification() {
     }
 
     public void Read (TProtocol iprot)
@@ -115,8 +100,8 @@ namespace Ruyi.SDK.CommonType
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32) {
-                NotificationType = (NotificationType)iprot.ReadI32();
+              if (field.Type == TType.String) {
+                Title = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -129,15 +114,8 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 3:
-              if (field.Type == TType.String) {
-                Text = iprot.ReadString();
-              } else { 
-                TProtocolUtil.Skip(iprot, field.Type);
-              }
-              break;
-            case 4:
-              if (field.Type == TType.String) {
-                Description = iprot.ReadString();
+              if (field.Type == TType.I32) {
+                NotificationType = (TitleMainIconNotificationType)iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -160,39 +138,31 @@ namespace Ruyi.SDK.CommonType
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("PopupNotification");
+        TStruct struc = new TStruct("TitleMainIconNotification");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (__isset.NotificationType) {
-          field.Name = "NotificationType";
-          field.Type = TType.I32;
+        if (Title != null && __isset.title) {
+          field.Name = "title";
+          field.Type = TType.String;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteI32((int)NotificationType);
+          oprot.WriteString(Title);
           oprot.WriteFieldEnd();
         }
-        if (MainIcon != null && __isset.MainIcon) {
-          field.Name = "MainIcon";
+        if (MainIcon != null && __isset.mainIcon) {
+          field.Name = "mainIcon";
           field.Type = TType.String;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
           oprot.WriteString(MainIcon);
           oprot.WriteFieldEnd();
         }
-        if (Text != null && __isset.Text) {
-          field.Name = "Text";
-          field.Type = TType.String;
+        if (__isset.NotificationType) {
+          field.Name = "NotificationType";
+          field.Type = TType.I32;
           field.ID = 3;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Text);
-          oprot.WriteFieldEnd();
-        }
-        if (Description != null && __isset.Description) {
-          field.Name = "Description";
-          field.Type = TType.String;
-          field.ID = 4;
-          oprot.WriteFieldBegin(field);
-          oprot.WriteString(Description);
+          oprot.WriteI32((int)NotificationType);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -205,31 +175,25 @@ namespace Ruyi.SDK.CommonType
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("PopupNotification(");
+      StringBuilder __sb = new StringBuilder("TitleMainIconNotification(");
       bool __first = true;
-      if (__isset.NotificationType) {
+      if (Title != null && __isset.title) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("NotificationType: ");
-        __sb.Append(NotificationType);
+        __sb.Append("Title: ");
+        __sb.Append(Title);
       }
-      if (MainIcon != null && __isset.MainIcon) {
+      if (MainIcon != null && __isset.mainIcon) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("MainIcon: ");
         __sb.Append(MainIcon);
       }
-      if (Text != null && __isset.Text) {
+      if (__isset.NotificationType) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Text: ");
-        __sb.Append(Text);
-      }
-      if (Description != null && __isset.Description) {
-        if(!__first) { __sb.Append(", "); }
-        __first = false;
-        __sb.Append("Description: ");
-        __sb.Append(Description);
+        __sb.Append("NotificationType: ");
+        __sb.Append(NotificationType);
       }
       __sb.Append(")");
       return __sb.ToString();

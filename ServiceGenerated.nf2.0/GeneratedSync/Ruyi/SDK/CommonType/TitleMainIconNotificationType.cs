@@ -7,11 +7,9 @@
 
 namespace Ruyi.SDK.CommonType
 {
-  public enum NotificationType
+  public enum TitleMainIconNotificationType
   {
-    Title = 0,
-    TitleAnd2Icons = 1,
-    TitleDetail = 2,
-    Voice = 3,
+    FriendRequest = 0,
+    FriendAccept = 1,
   }
 }
