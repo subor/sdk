@@ -8,7 +8,7 @@
     <RootNamespace>Ruyi.SDK</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Subor.SDK.NetStandard</PackageId>
-    <Version>0.9.0</Version>
+    <Version>0.9.1</Version>
     <Authors>Subor</Authors>
     <Company>Subor Advanced Technology Co., Ltd.</Company>
     <PackageTags>subor z+ zplus ruyi</PackageTags>
