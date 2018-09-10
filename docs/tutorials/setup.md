@@ -1,6 +1,6 @@
 # Setup
 
-These are instructions to setup and manage the SDK on a developer's workstation or the Z+.
+These are instructions to setup and manage the SDK on a developer's workstation or the console.
 
 If you received a devkit from us it should already come with the SDK pre-installed to `c:\ruyi`.  But, the following instructions can be used to update it.
 
@@ -10,7 +10,7 @@ If you received a devkit from us it should already come with the SDK pre-install
 
 ## SDK Download and Installation
 
-1. Download the most recent, stable [SDK and runtime](https://github.com/subor/sdk/releases)
+1. Download the most recent [SDK and runtime](https://github.com/subor/sdk/releases)
 1. Uncompress to local HDD as siblings
 1. If necessary, __unblock__ executable files:
     - __Right-click executable, select Properties__, enable the __Unblock__ checkbox  
@@ -28,10 +28,10 @@ End result should be directory structure similar to the following:
 |         
 +---Layer0
 |   |    
-|   \   Layer0.exe
+|   \   zpLayer0.exe
 |                               
 +---MainClient
-|   |   Client.exe
+|   |   zpMainClient.exe
 |   |
 |   \---WebResource
 |                   
@@ -70,22 +70,13 @@ Details regarding the SDK can be found [here](../topics/sdk.md).
 
 ## Login
 
-[Layer0](../topics/layer0.md) must be running on a host machine before you can access most of the Z+ platform.
+[Layer0](../topics/layer0.md) must be running on a host machine before you can access most of the platform features.
 
 __IMPORTANT__ A user _must be logged in via main client_ for most of the SDK to work.  The retail version of the console will require a user to be logged in to launch apps.
 
-1. Run `Layer0\Layer0.exe`  
-![](/docs/img/layer0.png)
-1. If installed to `c:\RUYI` the main client will start automatically.  Otherwise run `MainClient\WpfClient.exe` to launch it
-1. Register _guest_ user and login
-    - Select __Guest Login__  
-    ![](/docs/img/client_00.png)
-    - Ok (or press `Enter`)  
-    ![](/docs/img/client_01.png)
-    - Ok (or press `Enter`)  
-    ![](/docs/img/client_02.png)
-    - Ok (or press `Enter`)  
-    ![](/docs/img/client_03.png)
+1. [Run Layer0](../topics/layer0.md)
+1. If installed to `c:\RUYI` the main client will start automatically.  Otherwise run `MainClient\zpMainClient.exe` to launch it
+1. Register a user and login
 
 At this point you should be looking at placeholder UI for landing page of logged in user.
 

@@ -65,6 +65,21 @@ struct NetworkConnectionStatus {
     6: bool curInternetConnection,
 }
 
+struct NetworkSettings {
+    1: bool isWifi,
+    2: bool proxyUsed,
+    3: bool DHCPEnabled,
+    4: string NetworkName,
+    5: string AuthType,
+    6: string IPAddress,
+    7: string SubMask,
+    8: string GateWay,
+    9: string mainDNS,
+    10: string subDNS,
+    11: string proxyServer,
+    12: string proxyPort,
+}
+
 struct CategoryNode {
     1: string id,
     2: string categoryId,

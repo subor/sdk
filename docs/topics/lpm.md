@@ -7,9 +7,9 @@ Reduced hardware functionality/performance:
 - Single CPU core at 600 MHz (other 3 cores power-gated)
 - GPU and other IPs (including HW encoder/decoder) clock-gated
 - Display off
-- Memory bandwidth at 51.2 GB/s
+- Memory bandwidth reduced to 51.2 GB/s
 
-In this mode the [OS](os.md) and [Ruyi platform](layer0.md) are still running- albeit with reduced functionality and performance.
+In this mode the [OS](os.md) and [platform](layer0.md) are still running- albeit with reduced functionality and performance.
 
 This mode is intended for:
 
