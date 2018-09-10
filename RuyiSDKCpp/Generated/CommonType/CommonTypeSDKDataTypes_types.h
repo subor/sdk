@@ -31,19 +31,16 @@ extern const std::map<int, const char*> _LoginState_VALUES_TO_NAMES;
 
 std::ostream& operator<<(std::ostream& out, const LoginState::type& val);
 
-struct NotificationType {
+struct TitleMainIconNotificationType {
   enum type {
-    Battery = 0,
-    Interactive = 1,
-    Voice = 2,
-    GameInfo = 3,
-    ScreenshotInfo = 4
+    FriendRequest = 0,
+    FriendAccept = 1
   };
 };
 
-extern const std::map<int, const char*> _NotificationType_VALUES_TO_NAMES;
+extern const std::map<int, const char*> _TitleMainIconNotificationType_VALUES_TO_NAMES;
 
-std::ostream& operator<<(std::ostream& out, const NotificationType::type& val);
+std::ostream& operator<<(std::ostream& out, const TitleMainIconNotificationType::type& val);
 
 struct InputCategory {
   enum type {
@@ -140,6 +137,8 @@ class SettingItem;
 
 class SettingCategory;
 
+class ModuleBaseInfo;
+
 class ModuleSetting;
 
 class AppDataRecord;
@@ -148,7 +147,7 @@ class AppDataCollection;
 
 class AppData;
 
-class PopupNotification;
+class TitleMainIconNotification;
 
 class EventNotification;
 
@@ -854,10 +853,63 @@ void swap(SettingCategory &a, SettingCategory &b);
 
 std::ostream& operator<<(std::ostream& out, const SettingCategory& obj);
 
-typedef struct _ModuleSetting__isset {
-  _ModuleSetting__isset() : name(false), version(false), settings(false), categories(false) {}
+typedef struct _ModuleBaseInfo__isset {
+  _ModuleBaseInfo__isset() : name(false), version(false), configHash(false) {}
   bool name :1;
   bool version :1;
+  bool configHash :1;
+} _ModuleBaseInfo__isset;
+
+class ModuleBaseInfo : public virtual ::apache::thrift::TBase {
+ public:
+
+  ModuleBaseInfo(const ModuleBaseInfo&);
+  ModuleBaseInfo& operator=(const ModuleBaseInfo&);
+  ModuleBaseInfo() : name(), version(), configHash(0) {
+  }
+
+  virtual ~ModuleBaseInfo() throw();
+  std::string name;
+  std::string version;
+  int32_t configHash;
+
+  _ModuleBaseInfo__isset __isset;
+
+  void __set_name(const std::string& val);
+
+  void __set_version(const std::string& val);
+
+  void __set_configHash(const int32_t val);
+
+  bool operator == (const ModuleBaseInfo & rhs) const
+  {
+    if (!(name == rhs.name))
+      return false;
+    if (!(version == rhs.version))
+      return false;
+    if (!(configHash == rhs.configHash))
+      return false;
+    return true;
+  }
+  bool operator != (const ModuleBaseInfo &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ModuleBaseInfo & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(ModuleBaseInfo &a, ModuleBaseInfo &b);
+
+std::ostream& operator<<(std::ostream& out, const ModuleBaseInfo& obj);
+
+typedef struct _ModuleSetting__isset {
+  _ModuleSetting__isset() : baseInfo(false), settings(false), categories(false) {}
+  bool baseInfo :1;
   bool settings :1;
   bool categories :1;
 } _ModuleSetting__isset;
@@ -867,20 +919,17 @@ class ModuleSetting : public virtual ::apache::thrift::TBase {
 
   ModuleSetting(const ModuleSetting&);
   ModuleSetting& operator=(const ModuleSetting&);
-  ModuleSetting() : name(), version() {
+  ModuleSetting() {
   }
 
   virtual ~ModuleSetting() throw();
-  std::string name;
-  std::string version;
+  ModuleBaseInfo baseInfo;
   std::vector<SettingItem>  settings;
   std::vector<SettingCategory>  categories;
 
   _ModuleSetting__isset __isset;
 
-  void __set_name(const std::string& val);
-
-  void __set_version(const std::string& val);
+  void __set_baseInfo(const ModuleBaseInfo& val);
 
   void __set_settings(const std::vector<SettingItem> & val);
 
@@ -888,9 +937,7 @@ class ModuleSetting : public virtual ::apache::thrift::TBase {
 
   bool operator == (const ModuleSetting & rhs) const
   {
-    if (!(name == rhs.name))
-      return false;
-    if (!(version == rhs.version))
+    if (!(baseInfo == rhs.baseInfo))
       return false;
     if (!(settings == rhs.settings))
       return false;
@@ -1058,55 +1105,49 @@ void swap(AppData &a, AppData &b);
 
 std::ostream& operator<<(std::ostream& out, const AppData& obj);
 
-typedef struct _PopupNotification__isset {
-  _PopupNotification__isset() : NotificationType(false), MainIcon(false), Text(false), Description(false) {}
+typedef struct _TitleMainIconNotification__isset {
+  _TitleMainIconNotification__isset() : title(false), mainIcon(false), NotificationType(false) {}
+  bool title :1;
+  bool mainIcon :1;
   bool NotificationType :1;
-  bool MainIcon :1;
-  bool Text :1;
-  bool Description :1;
-} _PopupNotification__isset;
+} _TitleMainIconNotification__isset;
 
-class PopupNotification : public virtual ::apache::thrift::TBase {
+class TitleMainIconNotification : public virtual ::apache::thrift::TBase {
  public:
 
-  PopupNotification(const PopupNotification&);
-  PopupNotification& operator=(const PopupNotification&);
-  PopupNotification() : NotificationType((NotificationType::type)0), MainIcon(), Text(), Description() {
+  TitleMainIconNotification(const TitleMainIconNotification&);
+  TitleMainIconNotification& operator=(const TitleMainIconNotification&);
+  TitleMainIconNotification() : title(), mainIcon(), NotificationType((TitleMainIconNotificationType::type)0) {
   }
 
-  virtual ~PopupNotification() throw();
-  NotificationType::type NotificationType;
-  std::string MainIcon;
-  std::string Text;
-  std::string Description;
+  virtual ~TitleMainIconNotification() throw();
+  std::string title;
+  std::string mainIcon;
+  TitleMainIconNotificationType::type NotificationType;
 
-  _PopupNotification__isset __isset;
+  _TitleMainIconNotification__isset __isset;
 
-  void __set_NotificationType(const NotificationType::type val);
+  void __set_title(const std::string& val);
 
-  void __set_MainIcon(const std::string& val);
+  void __set_mainIcon(const std::string& val);
 
-  void __set_Text(const std::string& val);
+  void __set_NotificationType(const TitleMainIconNotificationType::type val);
 
-  void __set_Description(const std::string& val);
-
-  bool operator == (const PopupNotification & rhs) const
+  bool operator == (const TitleMainIconNotification & rhs) const
   {
+    if (!(title == rhs.title))
+      return false;
+    if (!(mainIcon == rhs.mainIcon))
+      return false;
     if (!(NotificationType == rhs.NotificationType))
-      return false;
-    if (!(MainIcon == rhs.MainIcon))
-      return false;
-    if (!(Text == rhs.Text))
-      return false;
-    if (!(Description == rhs.Description))
       return false;
     return true;
   }
-  bool operator != (const PopupNotification &rhs) const {
+  bool operator != (const TitleMainIconNotification &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const PopupNotification & ) const;
+  bool operator < (const TitleMainIconNotification & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -1114,9 +1155,9 @@ class PopupNotification : public virtual ::apache::thrift::TBase {
   virtual void printTo(std::ostream& out) const;
 };
 
-void swap(PopupNotification &a, PopupNotification &b);
+void swap(TitleMainIconNotification &a, TitleMainIconNotification &b);
 
-std::ostream& operator<<(std::ostream& out, const PopupNotification& obj);
+std::ostream& operator<<(std::ostream& out, const TitleMainIconNotification& obj);
 
 typedef struct _EventNotification__isset {
   _EventNotification__isset() : key(false), contents(true) {}

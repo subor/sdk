@@ -27,34 +27,20 @@ namespace Ruyi.SDK.CommonType
 
   public partial class ModuleSetting : TBase
   {
-    private string _name;
-    private string _version;
+    private ModuleBaseInfo _baseInfo;
     private List<SettingItem> _settings;
     private List<SettingCategory> _categories;
 
-    public string Name
+    public ModuleBaseInfo BaseInfo
     {
       get
       {
-        return _name;
+        return _baseInfo;
       }
       set
       {
-        __isset.name = true;
-        this._name = value;
-      }
-    }
-
-    public string Version
-    {
-      get
-      {
-        return _version;
-      }
-      set
-      {
-        __isset.version = true;
-        this._version = value;
+        __isset.baseInfo = true;
+        this._baseInfo = value;
       }
     }
 
@@ -88,8 +74,7 @@ namespace Ruyi.SDK.CommonType
     public Isset __isset;
     public struct Isset
     {
-      public bool name;
-      public bool version;
+      public bool baseInfo;
       public bool settings;
       public bool categories;
     }
@@ -116,9 +101,10 @@ namespace Ruyi.SDK.CommonType
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Struct)
               {
-                Name = await iprot.ReadStringAsync(cancellationToken);
+                BaseInfo = new ModuleBaseInfo();
+                await BaseInfo.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -126,16 +112,6 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 2:
-              if (field.Type == TType.String)
-              {
-                Version = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 3:
               if (field.Type == TType.List)
               {
                 {
@@ -156,7 +132,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 4:
+            case 3:
               if (field.Type == TType.List)
               {
                 {
@@ -201,29 +177,20 @@ namespace Ruyi.SDK.CommonType
         var struc = new TStruct("ModuleSetting");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Name != null && __isset.name)
+        if (BaseInfo != null && __isset.baseInfo)
         {
-          field.Name = "name";
-          field.Type = TType.String;
+          field.Name = "baseInfo";
+          field.Type = TType.Struct;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Name, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (Version != null && __isset.version)
-        {
-          field.Name = "version";
-          field.Type = TType.String;
-          field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Version, cancellationToken);
+          await BaseInfo.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (Settings != null && __isset.settings)
         {
           field.Name = "settings";
           field.Type = TType.List;
-          field.ID = 3;
+          field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, Settings.Count), cancellationToken);
@@ -239,7 +206,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "categories";
           field.Type = TType.List;
-          field.ID = 4;
+          field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, Categories.Count), cancellationToken);
@@ -264,19 +231,12 @@ namespace Ruyi.SDK.CommonType
     {
       var sb = new StringBuilder("ModuleSetting(");
       bool __first = true;
-      if (Name != null && __isset.name)
+      if (BaseInfo != null && __isset.baseInfo)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Name: ");
-        sb.Append(Name);
-      }
-      if (Version != null && __isset.version)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("Version: ");
-        sb.Append(Version);
+        sb.Append("BaseInfo: ");
+        sb.Append(BaseInfo== null ? "<null>" : BaseInfo.ToString());
       }
       if (Settings != null && __isset.settings)
       {

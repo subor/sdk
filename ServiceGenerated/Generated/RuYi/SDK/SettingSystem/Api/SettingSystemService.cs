@@ -80,7 +80,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="key">The item's ID</param>
       /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
       bool SettingItemNotify(string key, string contents);
-      bool SetNetworkSettings(bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS);
+      Ruyi.SDK.SettingSystem.Api.NetworkSettings GetNetworkAdapterSettings();
+      string GetLanNetworkName();
+      bool SetNetworkSettings(bool isWLan, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS);
       bool SetNetworkProxy(string ProxyServer, string ProxyPort);
       bool ConnectToWifi(string profileName, string key);
       Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings GetNetworkSettings();
@@ -157,7 +159,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="key">The item's ID</param>
       /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
       Task<bool> SettingItemNotifyAsync(string key, string contents);
-      Task<bool> SetNetworkSettingsAsync(bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS);
+      Task<Ruyi.SDK.SettingSystem.Api.NetworkSettings> GetNetworkAdapterSettingsAsync();
+      Task<string> GetLanNetworkNameAsync();
+      Task<bool> SetNetworkSettingsAsync(bool isWLan, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS);
       Task<bool> SetNetworkProxyAsync(string ProxyServer, string ProxyPort);
       Task<bool> ConnectToWifiAsync(string profileName, string key);
       Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings> GetNetworkSettingsAsync();
@@ -248,7 +252,11 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
       IAsyncResult Begin_SettingItemNotify(AsyncCallback callback, object state, string key, string contents);
       bool End_SettingItemNotify(IAsyncResult asyncResult);
-      IAsyncResult Begin_SetNetworkSettings(AsyncCallback callback, object state, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS);
+      IAsyncResult Begin_GetNetworkAdapterSettings(AsyncCallback callback, object state);
+      Ruyi.SDK.SettingSystem.Api.NetworkSettings End_GetNetworkAdapterSettings(IAsyncResult asyncResult);
+      IAsyncResult Begin_GetLanNetworkName(AsyncCallback callback, object state);
+      string End_GetLanNetworkName(IAsyncResult asyncResult);
+      IAsyncResult Begin_SetNetworkSettings(AsyncCallback callback, object state, bool isWLan, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS);
       bool End_SetNetworkSettings(IAsyncResult asyncResult);
       IAsyncResult Begin_SetNetworkProxy(AsyncCallback callback, object state, string ProxyServer, string ProxyPort);
       bool End_SetNetworkProxy(IAsyncResult asyncResult);
@@ -1206,9 +1214,117 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
 
       
-      public IAsyncResult Begin_SetNetworkSettings(AsyncCallback callback, object state, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS)
+      public IAsyncResult Begin_GetNetworkAdapterSettings(AsyncCallback callback, object state)
       {
-        return send_SetNetworkSettings(callback, state, EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
+        return send_GetNetworkAdapterSettings(callback, state);
+      }
+
+      public Ruyi.SDK.SettingSystem.Api.NetworkSettings End_GetNetworkAdapterSettings(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_GetNetworkAdapterSettings();
+      }
+
+      public async Task<Ruyi.SDK.SettingSystem.Api.NetworkSettings> GetNetworkAdapterSettingsAsync()
+      {
+        Ruyi.SDK.SettingSystem.Api.NetworkSettings retval;
+        retval = await Task.Run(() =>
+        {
+          return GetNetworkAdapterSettings();
+        });
+        return retval;
+      }
+
+      public Ruyi.SDK.SettingSystem.Api.NetworkSettings GetNetworkAdapterSettings()
+      {
+        var asyncResult = Begin_GetNetworkAdapterSettings(null, null);
+        return End_GetNetworkAdapterSettings(asyncResult);
+
+      }
+      public IAsyncResult send_GetNetworkAdapterSettings(AsyncCallback callback, object state)
+      {
+        oprot_.WriteMessageBegin(new TMessage("GetNetworkAdapterSettings", TMessageType.Call, seqid_));
+        GetNetworkAdapterSettings_args args = new GetNetworkAdapterSettings_args();
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public Ruyi.SDK.SettingSystem.Api.NetworkSettings recv_GetNetworkAdapterSettings()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        GetNetworkAdapterSettings_result result = new GetNetworkAdapterSettings_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetNetworkAdapterSettings failed: unknown result");
+      }
+
+      
+      public IAsyncResult Begin_GetLanNetworkName(AsyncCallback callback, object state)
+      {
+        return send_GetLanNetworkName(callback, state);
+      }
+
+      public string End_GetLanNetworkName(IAsyncResult asyncResult)
+      {
+        oprot_.Transport.EndFlush(asyncResult);
+        return recv_GetLanNetworkName();
+      }
+
+      public async Task<string> GetLanNetworkNameAsync()
+      {
+        string retval;
+        retval = await Task.Run(() =>
+        {
+          return GetLanNetworkName();
+        });
+        return retval;
+      }
+
+      public string GetLanNetworkName()
+      {
+        var asyncResult = Begin_GetLanNetworkName(null, null);
+        return End_GetLanNetworkName(asyncResult);
+
+      }
+      public IAsyncResult send_GetLanNetworkName(AsyncCallback callback, object state)
+      {
+        oprot_.WriteMessageBegin(new TMessage("GetLanNetworkName", TMessageType.Call, seqid_));
+        GetLanNetworkName_args args = new GetLanNetworkName_args();
+        args.Write(oprot_);
+        oprot_.WriteMessageEnd();
+        return oprot_.Transport.BeginFlush(callback, state);
+      }
+
+      public string recv_GetLanNetworkName()
+      {
+        TMessage msg = iprot_.ReadMessageBegin();
+        if (msg.Type == TMessageType.Exception) {
+          TApplicationException x = TApplicationException.Read(iprot_);
+          iprot_.ReadMessageEnd();
+          throw x;
+        }
+        GetLanNetworkName_result result = new GetLanNetworkName_result();
+        result.Read(iprot_);
+        iprot_.ReadMessageEnd();
+        if (result.__isset.success) {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetLanNetworkName failed: unknown result");
+      }
+
+      
+      public IAsyncResult Begin_SetNetworkSettings(AsyncCallback callback, object state, bool isWLan, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS)
+      {
+        return send_SetNetworkSettings(callback, state, isWLan, EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
       }
 
       public bool End_SetNetworkSettings(IAsyncResult asyncResult)
@@ -1217,26 +1333,27 @@ namespace Ruyi.SDK.SettingSystem.Api
         return recv_SetNetworkSettings();
       }
 
-      public async Task<bool> SetNetworkSettingsAsync(bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS)
+      public async Task<bool> SetNetworkSettingsAsync(bool isWLan, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS)
       {
         bool retval;
         retval = await Task.Run(() =>
         {
-          return SetNetworkSettings(EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
+          return SetNetworkSettings(isWLan, EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
         });
         return retval;
       }
 
-      public bool SetNetworkSettings(bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS)
+      public bool SetNetworkSettings(bool isWLan, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS)
       {
-        var asyncResult = Begin_SetNetworkSettings(null, null, EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
+        var asyncResult = Begin_SetNetworkSettings(null, null, isWLan, EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
         return End_SetNetworkSettings(asyncResult);
 
       }
-      public IAsyncResult send_SetNetworkSettings(AsyncCallback callback, object state, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS)
+      public IAsyncResult send_SetNetworkSettings(AsyncCallback callback, object state, bool isWLan, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS)
       {
         oprot_.WriteMessageBegin(new TMessage("SetNetworkSettings", TMessageType.Call, seqid_));
         SetNetworkSettings_args args = new SetNetworkSettings_args();
+        args.IsWLan = isWLan;
         args.EnableDHCP = EnableDHCP;
         args.IpAddress = IpAddress;
         args.SubMask = SubMask;
@@ -2034,6 +2151,8 @@ namespace Ruyi.SDK.SettingSystem.Api
         processMap_["GetUserAppData"] = GetUserAppData_ProcessAsync;
         processMap_["RemoveUserAppData"] = RemoveUserAppData_ProcessAsync;
         processMap_["SettingItemNotify"] = SettingItemNotify_ProcessAsync;
+        processMap_["GetNetworkAdapterSettings"] = GetNetworkAdapterSettings_ProcessAsync;
+        processMap_["GetLanNetworkName"] = GetLanNetworkName_ProcessAsync;
         processMap_["SetNetworkSettings"] = SetNetworkSettings_ProcessAsync;
         processMap_["SetNetworkProxy"] = SetNetworkProxy_ProcessAsync;
         processMap_["ConnectToWifi"] = ConnectToWifi_ProcessAsync;
@@ -2570,6 +2689,62 @@ namespace Ruyi.SDK.SettingSystem.Api
         oprot.Transport.Flush();
       }
 
+      public async Task GetNetworkAdapterSettings_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetNetworkAdapterSettings_args args = new GetNetworkAdapterSettings_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetNetworkAdapterSettings_result result = new GetNetworkAdapterSettings_result();
+        try
+        {
+          result.Success = await iface_.GetNetworkAdapterSettingsAsync();
+          oprot.WriteMessageBegin(new TMessage("GetNetworkAdapterSettings", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetNetworkAdapterSettings", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public async Task GetLanNetworkName_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetLanNetworkName_args args = new GetLanNetworkName_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetLanNetworkName_result result = new GetLanNetworkName_result();
+        try
+        {
+          result.Success = await iface_.GetLanNetworkNameAsync();
+          oprot.WriteMessageBegin(new TMessage("GetLanNetworkName", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetLanNetworkName", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
       public async Task SetNetworkSettings_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
       {
         SetNetworkSettings_args args = new SetNetworkSettings_args();
@@ -2578,7 +2753,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         SetNetworkSettings_result result = new SetNetworkSettings_result();
         try
         {
-          result.Success = await iface_.SetNetworkSettingsAsync(args.EnableDHCP, args.IpAddress, args.SubMask, args.Gateway, args.MainDNS, args.SubDNS);
+          result.Success = await iface_.SetNetworkSettingsAsync(args.IsWLan, args.EnableDHCP, args.IpAddress, args.SubMask, args.Gateway, args.MainDNS, args.SubDNS);
           oprot.WriteMessageBegin(new TMessage("SetNetworkSettings", TMessageType.Reply, seqid)); 
           result.Write(oprot);
         }
@@ -3066,6 +3241,8 @@ namespace Ruyi.SDK.SettingSystem.Api
         processMap_["GetUserAppData"] = GetUserAppData_Process;
         processMap_["RemoveUserAppData"] = RemoveUserAppData_Process;
         processMap_["SettingItemNotify"] = SettingItemNotify_Process;
+        processMap_["GetNetworkAdapterSettings"] = GetNetworkAdapterSettings_Process;
+        processMap_["GetLanNetworkName"] = GetLanNetworkName_Process;
         processMap_["SetNetworkSettings"] = SetNetworkSettings_Process;
         processMap_["SetNetworkProxy"] = SetNetworkProxy_Process;
         processMap_["ConnectToWifi"] = ConnectToWifi_Process;
@@ -3602,6 +3779,62 @@ namespace Ruyi.SDK.SettingSystem.Api
         oprot.Transport.Flush();
       }
 
+      public void GetNetworkAdapterSettings_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetNetworkAdapterSettings_args args = new GetNetworkAdapterSettings_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetNetworkAdapterSettings_result result = new GetNetworkAdapterSettings_result();
+        try
+        {
+          result.Success = iface_.GetNetworkAdapterSettings();
+          oprot.WriteMessageBegin(new TMessage("GetNetworkAdapterSettings", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetNetworkAdapterSettings", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+      public void GetLanNetworkName_Process(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetLanNetworkName_args args = new GetLanNetworkName_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetLanNetworkName_result result = new GetLanNetworkName_result();
+        try
+        {
+          result.Success = iface_.GetLanNetworkName();
+          oprot.WriteMessageBegin(new TMessage("GetLanNetworkName", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetLanNetworkName", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
       public void SetNetworkSettings_Process(int seqid, TProtocol iprot, TProtocol oprot)
       {
         SetNetworkSettings_args args = new SetNetworkSettings_args();
@@ -3610,7 +3843,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         SetNetworkSettings_result result = new SetNetworkSettings_result();
         try
         {
-          result.Success = iface_.SetNetworkSettings(args.EnableDHCP, args.IpAddress, args.SubMask, args.Gateway, args.MainDNS, args.SubDNS);
+          result.Success = iface_.SetNetworkSettings(args.IsWLan, args.EnableDHCP, args.IpAddress, args.SubMask, args.Gateway, args.MainDNS, args.SubDNS);
           oprot.WriteMessageBegin(new TMessage("SetNetworkSettings", TMessageType.Reply, seqid)); 
           result.Write(oprot);
         }
@@ -8289,14 +8522,375 @@ namespace Ruyi.SDK.SettingSystem.Api
     #if !SILVERLIGHT
     [Serializable]
     #endif
+    public partial class GetNetworkAdapterSettings_args : TBase
+    {
+
+      public GetNetworkAdapterSettings_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("GetNetworkAdapterSettings_args");
+          oprot.WriteStructBegin(struc);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetNetworkAdapterSettings_args(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetNetworkAdapterSettings_result : TBase
+    {
+      private Ruyi.SDK.SettingSystem.Api.NetworkSettings _success;
+
+      public Ruyi.SDK.SettingSystem.Api.NetworkSettings Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public GetNetworkAdapterSettings_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Struct) {
+                  Success = new Ruyi.SDK.SettingSystem.Api.NetworkSettings();
+                  Success.Read(iprot);
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("GetNetworkAdapterSettings_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.Struct;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              Success.Write(oprot);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetNetworkAdapterSettings_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success== null ? "<null>" : Success.ToString());
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetLanNetworkName_args : TBase
+    {
+
+      public GetLanNetworkName_args() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("GetLanNetworkName_args");
+          oprot.WriteStructBegin(struc);
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetLanNetworkName_args(");
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public partial class GetLanNetworkName_result : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      #if !SILVERLIGHT
+      [Serializable]
+      #endif
+      public struct Isset {
+        public bool success;
+      }
+
+      public GetLanNetworkName_result() {
+      }
+
+      public void Read (TProtocol iprot)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          iprot.ReadStructBegin();
+          while (true)
+          {
+            field = iprot.ReadFieldBegin();
+            if (field.Type == TType.Stop) { 
+              break;
+            }
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String) {
+                  Success = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              default: 
+                TProtocolUtil.Skip(iprot, field.Type);
+                break;
+            }
+            iprot.ReadFieldEnd();
+          }
+          iprot.ReadStructEnd();
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public void Write(TProtocol oprot) {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          TStruct struc = new TStruct("GetLanNetworkName_result");
+          oprot.WriteStructBegin(struc);
+          TField field = new TField();
+
+          if (this.__isset.success) {
+            if (Success != null) {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              oprot.WriteFieldBegin(field);
+              oprot.WriteString(Success);
+              oprot.WriteFieldEnd();
+            }
+          }
+          oprot.WriteFieldStop();
+          oprot.WriteStructEnd();
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString() {
+        StringBuilder __sb = new StringBuilder("GetLanNetworkName_result(");
+        bool __first = true;
+        if (Success != null && __isset.success) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Success: ");
+          __sb.Append(Success);
+        }
+        __sb.Append(")");
+        return __sb.ToString();
+      }
+
+    }
+
+
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
     public partial class SetNetworkSettings_args : TBase
     {
+      private bool _isWLan;
       private bool _EnableDHCP;
       private string _IpAddress;
       private string _SubMask;
       private string _Gateway;
       private string _MainDNS;
       private string _SubDNS;
+
+      public bool IsWLan
+      {
+        get
+        {
+          return _isWLan;
+        }
+        set
+        {
+          __isset.isWLan = true;
+          this._isWLan = value;
+        }
+      }
 
       public bool EnableDHCP
       {
@@ -8382,6 +8976,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       [Serializable]
       #endif
       public struct Isset {
+        public bool isWLan;
         public bool EnableDHCP;
         public bool IpAddress;
         public bool SubMask;
@@ -8410,40 +9005,47 @@ namespace Ruyi.SDK.SettingSystem.Api
             {
               case 1:
                 if (field.Type == TType.Bool) {
-                  EnableDHCP = iprot.ReadBool();
+                  IsWLan = iprot.ReadBool();
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 2:
-                if (field.Type == TType.String) {
-                  IpAddress = iprot.ReadString();
+                if (field.Type == TType.Bool) {
+                  EnableDHCP = iprot.ReadBool();
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 3:
                 if (field.Type == TType.String) {
-                  SubMask = iprot.ReadString();
+                  IpAddress = iprot.ReadString();
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 4:
                 if (field.Type == TType.String) {
-                  Gateway = iprot.ReadString();
+                  SubMask = iprot.ReadString();
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 5:
                 if (field.Type == TType.String) {
-                  MainDNS = iprot.ReadString();
+                  Gateway = iprot.ReadString();
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }
                 break;
               case 6:
+                if (field.Type == TType.String) {
+                  MainDNS = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 7:
                 if (field.Type == TType.String) {
                   SubDNS = iprot.ReadString();
                 } else { 
@@ -8471,10 +9073,18 @@ namespace Ruyi.SDK.SettingSystem.Api
           TStruct struc = new TStruct("SetNetworkSettings_args");
           oprot.WriteStructBegin(struc);
           TField field = new TField();
+          if (__isset.isWLan) {
+            field.Name = "isWLan";
+            field.Type = TType.Bool;
+            field.ID = 1;
+            oprot.WriteFieldBegin(field);
+            oprot.WriteBool(IsWLan);
+            oprot.WriteFieldEnd();
+          }
           if (__isset.EnableDHCP) {
             field.Name = "EnableDHCP";
             field.Type = TType.Bool;
-            field.ID = 1;
+            field.ID = 2;
             oprot.WriteFieldBegin(field);
             oprot.WriteBool(EnableDHCP);
             oprot.WriteFieldEnd();
@@ -8482,7 +9092,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           if (IpAddress != null && __isset.IpAddress) {
             field.Name = "IpAddress";
             field.Type = TType.String;
-            field.ID = 2;
+            field.ID = 3;
             oprot.WriteFieldBegin(field);
             oprot.WriteString(IpAddress);
             oprot.WriteFieldEnd();
@@ -8490,7 +9100,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           if (SubMask != null && __isset.SubMask) {
             field.Name = "SubMask";
             field.Type = TType.String;
-            field.ID = 3;
+            field.ID = 4;
             oprot.WriteFieldBegin(field);
             oprot.WriteString(SubMask);
             oprot.WriteFieldEnd();
@@ -8498,7 +9108,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           if (Gateway != null && __isset.Gateway) {
             field.Name = "Gateway";
             field.Type = TType.String;
-            field.ID = 4;
+            field.ID = 5;
             oprot.WriteFieldBegin(field);
             oprot.WriteString(Gateway);
             oprot.WriteFieldEnd();
@@ -8506,7 +9116,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           if (MainDNS != null && __isset.MainDNS) {
             field.Name = "MainDNS";
             field.Type = TType.String;
-            field.ID = 5;
+            field.ID = 6;
             oprot.WriteFieldBegin(field);
             oprot.WriteString(MainDNS);
             oprot.WriteFieldEnd();
@@ -8514,7 +9124,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           if (SubDNS != null && __isset.SubDNS) {
             field.Name = "SubDNS";
             field.Type = TType.String;
-            field.ID = 6;
+            field.ID = 7;
             oprot.WriteFieldBegin(field);
             oprot.WriteString(SubDNS);
             oprot.WriteFieldEnd();
@@ -8531,6 +9141,12 @@ namespace Ruyi.SDK.SettingSystem.Api
       public override string ToString() {
         StringBuilder __sb = new StringBuilder("SetNetworkSettings_args(");
         bool __first = true;
+        if (__isset.isWLan) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("IsWLan: ");
+          __sb.Append(IsWLan);
+        }
         if (__isset.EnableDHCP) {
           if(!__first) { __sb.Append(", "); }
           __first = false;

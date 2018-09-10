@@ -106,7 +106,9 @@ class SettingSystemServiceIf {
    * @param contents Optional. The arguments of the notification. In json string format
    */
   virtual bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents) = 0;
-  virtual bool SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS) = 0;
+  virtual void GetNetworkAdapterSettings( ::Ruyi::SDK::SettingSystem::Api::NetworkSettings& _return) = 0;
+  virtual void GetLanNetworkName(std::string& _return) = 0;
+  virtual bool SetNetworkSettings(const bool isWLan, const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS) = 0;
   virtual bool SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort) = 0;
   virtual bool ConnectToWifi(const std::string& profileName, const std::string& key) = 0;
   virtual void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) = 0;
@@ -199,7 +201,13 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
     bool _return = false;
     return _return;
   }
-  bool SetNetworkSettings(const bool /* EnableDHCP */, const std::string& /* IpAddress */, const std::string& /* SubMask */, const std::string& /* Gateway */, const std::string& /* MainDNS */, const std::string& /* SubDNS */) {
+  void GetNetworkAdapterSettings( ::Ruyi::SDK::SettingSystem::Api::NetworkSettings& /* _return */) {
+    return;
+  }
+  void GetLanNetworkName(std::string& /* _return */) {
+    return;
+  }
+  bool SetNetworkSettings(const bool /* isWLan */, const bool /* EnableDHCP */, const std::string& /* IpAddress */, const std::string& /* SubMask */, const std::string& /* Gateway */, const std::string& /* MainDNS */, const std::string& /* SubDNS */) {
     bool _return = false;
     return _return;
   }
@@ -1907,8 +1915,193 @@ class SettingSystemService_SettingItemNotify_presult {
 
 };
 
+
+class SettingSystemService_GetNetworkAdapterSettings_args {
+ public:
+
+  SettingSystemService_GetNetworkAdapterSettings_args(const SettingSystemService_GetNetworkAdapterSettings_args&);
+  SettingSystemService_GetNetworkAdapterSettings_args& operator=(const SettingSystemService_GetNetworkAdapterSettings_args&);
+  SettingSystemService_GetNetworkAdapterSettings_args() {
+  }
+
+  virtual ~SettingSystemService_GetNetworkAdapterSettings_args() throw();
+
+  bool operator == (const SettingSystemService_GetNetworkAdapterSettings_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const SettingSystemService_GetNetworkAdapterSettings_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_GetNetworkAdapterSettings_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_GetNetworkAdapterSettings_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_GetNetworkAdapterSettings_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_GetNetworkAdapterSettings_result__isset {
+  _SettingSystemService_GetNetworkAdapterSettings_result__isset() : success(false) {}
+  bool success :1;
+} _SettingSystemService_GetNetworkAdapterSettings_result__isset;
+
+class SettingSystemService_GetNetworkAdapterSettings_result {
+ public:
+
+  SettingSystemService_GetNetworkAdapterSettings_result(const SettingSystemService_GetNetworkAdapterSettings_result&);
+  SettingSystemService_GetNetworkAdapterSettings_result& operator=(const SettingSystemService_GetNetworkAdapterSettings_result&);
+  SettingSystemService_GetNetworkAdapterSettings_result() {
+  }
+
+  virtual ~SettingSystemService_GetNetworkAdapterSettings_result() throw();
+   ::Ruyi::SDK::SettingSystem::Api::NetworkSettings success;
+
+  _SettingSystemService_GetNetworkAdapterSettings_result__isset __isset;
+
+  void __set_success(const  ::Ruyi::SDK::SettingSystem::Api::NetworkSettings& val);
+
+  bool operator == (const SettingSystemService_GetNetworkAdapterSettings_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_GetNetworkAdapterSettings_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_GetNetworkAdapterSettings_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_GetNetworkAdapterSettings_presult__isset {
+  _SettingSystemService_GetNetworkAdapterSettings_presult__isset() : success(false) {}
+  bool success :1;
+} _SettingSystemService_GetNetworkAdapterSettings_presult__isset;
+
+class SettingSystemService_GetNetworkAdapterSettings_presult {
+ public:
+
+
+  virtual ~SettingSystemService_GetNetworkAdapterSettings_presult() throw();
+   ::Ruyi::SDK::SettingSystem::Api::NetworkSettings* success;
+
+  _SettingSystemService_GetNetworkAdapterSettings_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class SettingSystemService_GetLanNetworkName_args {
+ public:
+
+  SettingSystemService_GetLanNetworkName_args(const SettingSystemService_GetLanNetworkName_args&);
+  SettingSystemService_GetLanNetworkName_args& operator=(const SettingSystemService_GetLanNetworkName_args&);
+  SettingSystemService_GetLanNetworkName_args() {
+  }
+
+  virtual ~SettingSystemService_GetLanNetworkName_args() throw();
+
+  bool operator == (const SettingSystemService_GetLanNetworkName_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const SettingSystemService_GetLanNetworkName_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_GetLanNetworkName_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_GetLanNetworkName_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_GetLanNetworkName_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_GetLanNetworkName_result__isset {
+  _SettingSystemService_GetLanNetworkName_result__isset() : success(false) {}
+  bool success :1;
+} _SettingSystemService_GetLanNetworkName_result__isset;
+
+class SettingSystemService_GetLanNetworkName_result {
+ public:
+
+  SettingSystemService_GetLanNetworkName_result(const SettingSystemService_GetLanNetworkName_result&);
+  SettingSystemService_GetLanNetworkName_result& operator=(const SettingSystemService_GetLanNetworkName_result&);
+  SettingSystemService_GetLanNetworkName_result() : success() {
+  }
+
+  virtual ~SettingSystemService_GetLanNetworkName_result() throw();
+  std::string success;
+
+  _SettingSystemService_GetLanNetworkName_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const SettingSystemService_GetLanNetworkName_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_GetLanNetworkName_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_GetLanNetworkName_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_GetLanNetworkName_presult__isset {
+  _SettingSystemService_GetLanNetworkName_presult__isset() : success(false) {}
+  bool success :1;
+} _SettingSystemService_GetLanNetworkName_presult__isset;
+
+class SettingSystemService_GetLanNetworkName_presult {
+ public:
+
+
+  virtual ~SettingSystemService_GetLanNetworkName_presult() throw();
+  std::string* success;
+
+  _SettingSystemService_GetLanNetworkName_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 typedef struct _SettingSystemService_SetNetworkSettings_args__isset {
-  _SettingSystemService_SetNetworkSettings_args__isset() : EnableDHCP(false), IpAddress(false), SubMask(false), Gateway(false), MainDNS(false), SubDNS(false) {}
+  _SettingSystemService_SetNetworkSettings_args__isset() : isWLan(false), EnableDHCP(false), IpAddress(false), SubMask(false), Gateway(false), MainDNS(false), SubDNS(false) {}
+  bool isWLan :1;
   bool EnableDHCP :1;
   bool IpAddress :1;
   bool SubMask :1;
@@ -1922,10 +2115,11 @@ class SettingSystemService_SetNetworkSettings_args {
 
   SettingSystemService_SetNetworkSettings_args(const SettingSystemService_SetNetworkSettings_args&);
   SettingSystemService_SetNetworkSettings_args& operator=(const SettingSystemService_SetNetworkSettings_args&);
-  SettingSystemService_SetNetworkSettings_args() : EnableDHCP(0), IpAddress(), SubMask(), Gateway(), MainDNS(), SubDNS() {
+  SettingSystemService_SetNetworkSettings_args() : isWLan(0), EnableDHCP(0), IpAddress(), SubMask(), Gateway(), MainDNS(), SubDNS() {
   }
 
   virtual ~SettingSystemService_SetNetworkSettings_args() throw();
+  bool isWLan;
   bool EnableDHCP;
   std::string IpAddress;
   std::string SubMask;
@@ -1934,6 +2128,8 @@ class SettingSystemService_SetNetworkSettings_args {
   std::string SubDNS;
 
   _SettingSystemService_SetNetworkSettings_args__isset __isset;
+
+  void __set_isWLan(const bool val);
 
   void __set_EnableDHCP(const bool val);
 
@@ -1949,6 +2145,8 @@ class SettingSystemService_SetNetworkSettings_args {
 
   bool operator == (const SettingSystemService_SetNetworkSettings_args & rhs) const
   {
+    if (!(isWLan == rhs.isWLan))
+      return false;
     if (!(EnableDHCP == rhs.EnableDHCP))
       return false;
     if (!(IpAddress == rhs.IpAddress))
@@ -1980,6 +2178,7 @@ class SettingSystemService_SetNetworkSettings_pargs {
 
 
   virtual ~SettingSystemService_SetNetworkSettings_pargs() throw();
+  const bool* isWLan;
   const bool* EnableDHCP;
   const std::string* IpAddress;
   const std::string* SubMask;
@@ -3524,8 +3723,14 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
   void send_SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
   bool recv_SettingItemNotify();
-  bool SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS);
-  void send_SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS);
+  void GetNetworkAdapterSettings( ::Ruyi::SDK::SettingSystem::Api::NetworkSettings& _return);
+  void send_GetNetworkAdapterSettings();
+  void recv_GetNetworkAdapterSettings( ::Ruyi::SDK::SettingSystem::Api::NetworkSettings& _return);
+  void GetLanNetworkName(std::string& _return);
+  void send_GetLanNetworkName();
+  void recv_GetLanNetworkName(std::string& _return);
+  bool SetNetworkSettings(const bool isWLan, const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS);
+  void send_SetNetworkSettings(const bool isWLan, const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS);
   bool recv_SetNetworkSettings();
   bool SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort);
   void send_SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort);
@@ -3595,6 +3800,8 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
   void process_GetUserAppData(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_RemoveUserAppData(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SettingItemNotify(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_GetNetworkAdapterSettings(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_GetLanNetworkName(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SetNetworkSettings(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SetNetworkProxy(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_ConnectToWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -3626,6 +3833,8 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
     processMap_["GetUserAppData"] = &SettingSystemServiceProcessor::process_GetUserAppData;
     processMap_["RemoveUserAppData"] = &SettingSystemServiceProcessor::process_RemoveUserAppData;
     processMap_["SettingItemNotify"] = &SettingSystemServiceProcessor::process_SettingItemNotify;
+    processMap_["GetNetworkAdapterSettings"] = &SettingSystemServiceProcessor::process_GetNetworkAdapterSettings;
+    processMap_["GetLanNetworkName"] = &SettingSystemServiceProcessor::process_GetLanNetworkName;
     processMap_["SetNetworkSettings"] = &SettingSystemServiceProcessor::process_SetNetworkSettings;
     processMap_["SetNetworkProxy"] = &SettingSystemServiceProcessor::process_SetNetworkProxy;
     processMap_["ConnectToWifi"] = &SettingSystemServiceProcessor::process_ConnectToWifi;
@@ -3800,13 +4009,33 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return ifaces_[i]->SettingItemNotify(key, contents);
   }
 
-  bool SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS) {
+  void GetNetworkAdapterSettings( ::Ruyi::SDK::SettingSystem::Api::NetworkSettings& _return) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->SetNetworkSettings(EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
+      ifaces_[i]->GetNetworkAdapterSettings(_return);
     }
-    return ifaces_[i]->SetNetworkSettings(EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
+    ifaces_[i]->GetNetworkAdapterSettings(_return);
+    return;
+  }
+
+  void GetLanNetworkName(std::string& _return) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->GetLanNetworkName(_return);
+    }
+    ifaces_[i]->GetLanNetworkName(_return);
+    return;
+  }
+
+  bool SetNetworkSettings(const bool isWLan, const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->SetNetworkSettings(isWLan, EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
+    }
+    return ifaces_[i]->SetNetworkSettings(isWLan, EnableDHCP, IpAddress, SubMask, Gateway, MainDNS, SubDNS);
   }
 
   bool SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort) {
@@ -4002,8 +4231,14 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   bool SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
   int32_t send_SettingItemNotify(const std::string& key, const  ::Ruyi::SDK::SettingSystem::Api::JSON& contents);
   bool recv_SettingItemNotify(const int32_t seqid);
-  bool SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS);
-  int32_t send_SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS);
+  void GetNetworkAdapterSettings( ::Ruyi::SDK::SettingSystem::Api::NetworkSettings& _return);
+  int32_t send_GetNetworkAdapterSettings();
+  void recv_GetNetworkAdapterSettings( ::Ruyi::SDK::SettingSystem::Api::NetworkSettings& _return, const int32_t seqid);
+  void GetLanNetworkName(std::string& _return);
+  int32_t send_GetLanNetworkName();
+  void recv_GetLanNetworkName(std::string& _return, const int32_t seqid);
+  bool SetNetworkSettings(const bool isWLan, const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS);
+  int32_t send_SetNetworkSettings(const bool isWLan, const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS);
   bool recv_SetNetworkSettings(const int32_t seqid);
   bool SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort);
   int32_t send_SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort);

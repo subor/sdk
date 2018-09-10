@@ -13,12 +13,9 @@ enum LoginState {
 	Login = 1,
 }
 
-enum NotificationType {
-    Battery = 0,
-    Interactive = 1,
-    Voice = 2,
-    GameInfo = 3,
-    ScreenshotInfo = 4,
+enum TitleMainIconNotificationType {
+    FriendRequest = 0,
+    FriendAccept = 1,
 }
 
 enum InputCategory {
@@ -152,11 +149,16 @@ struct SettingCategory {
     11: string script,
 }
 
-struct ModuleSetting {
+struct ModuleBaseInfo {
     1: string name,
     2: string version,
-    3: list<SettingItem> settings,
-    4: list<SettingCategory> categories,
+    3: i32 configHash,
+}
+
+struct ModuleSetting {
+    1: ModuleBaseInfo baseInfo,
+    2: list<SettingItem> settings,
+    3: list<SettingCategory> categories,
 }
 
 struct AppDataRecord {
@@ -180,11 +182,10 @@ struct AppData {
 	2: list<AppDataCollection> data,
 }
 
-struct PopupNotification {
-    1: NotificationType NotificationType,
-    2: string MainIcon,
-    3: string Text,
-    4: string Description,
+struct TitleMainIconNotification {
+    1: string title,
+    2: string mainIcon,
+    3: TitleMainIconNotificationType NotificationType,
 }
 
 struct EventNotification {
