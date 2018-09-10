@@ -1,6 +1,6 @@
 # Developer Tools
 
-Similer to [layer0](layer0.md), the Z+ developer tools are designed as an executable with multiple feature plugins (found in the `Plugins/` folder).  The following executables exist:
+Similer to [layer0](layer0.md), the developer tools are designed as an executable with multiple feature plugins (found in the `Plugins/` folder).  The following executables exist:
 
 | Executable | Details | Image
 |-|-|-

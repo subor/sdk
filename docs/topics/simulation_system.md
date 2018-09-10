@@ -1,6 +1,9 @@
 # Simulation Systems
 
-A _simulation system_ is a standard PC similar to the Ruyi console.
+![](/docs/img/warning.png) NOTICE  
+Building a simulation system is no longer recommended and this will be removed in the future.  Use actual console hardware.
+
+A _simulation system_ is a standard PC with hardware similar to the console.
 
 Below follows suggestions and instructions for building a simluation system.
 

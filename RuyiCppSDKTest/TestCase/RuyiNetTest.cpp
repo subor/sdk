@@ -54,7 +54,7 @@ void RuyiNetTest::Login()
 	//ruyiSDK->RuyiNet->Login();
 	std::string ret;
 	ruyiSDK->BCService->Authentication_ClearSavedProfileID(0);
-	ruyiSDK->BCService->Authentication_AuthenticateEmailPassword(ret, "godenzzm2", "111", true, 0);
+	ruyiSDK->BCService->Authentication_AuthenticateEmailPassword(ret, "godenzzm", "111", true, 0);
 
 	Logger::WriteMessage(("RuyiNetTest::Login() ret:" + ret + "\n").c_str());
 
@@ -103,6 +103,8 @@ void RuyiNetTest::LeaderboardServiceTest()
 
 	Logger::WriteMessage(("LeaderboardServiceTest GetGlobalLeaderboardEntryCount entryCount:" + to_string(response1.data.entryCount)).c_str());
 
+	Assert::IsTrue(STATUS_OK == response1.status);
+
 	RuyiNetLeaderboardPage page;
 	ruyiSDK->RuyiNet->GetLeaderboardService()->GetGlobalLeaderboardPage(playerIndex, leaderboardId, sort, startIndex, endIndex, page);
 
@@ -112,6 +114,8 @@ void RuyiNetTest::LeaderboardServiceTest()
 	{
 		Logger::WriteMessage(("LeaderboardServiceTest GetGlobalLeaderboardPage   playerId:" + _entry->GetPlayerId() + " score:" + to_string(_entry->GetScore())).c_str());
 	});
+
+	Assert::IsTrue(STATUS_OK == page.Status);
 
 	bool isSuccess = false;
 	ruyiSDK->RuyiNet->GetLeaderboardService()->PostScoreToLeaderboard(isSuccess, playerIndex, score, leaderboardId);
@@ -283,29 +287,38 @@ void RuyiNetTest::UserFileServiceTest()
 
 void RuyiNetTest::GamificationServiceTest() 
 {
-	RuyiNetAchievement achievement;
-	std::string achievementId = ""; //not a clue about id value, update later
+	RuyiNetAchievement achievement;	
+	std::string achievementId = "1";
 	ruyiSDK->RuyiNet->GetGamificationService()->AwardAchievement(0, achievementId, achievement);
 
 	std::vector<std::string> achievementIds = { "1" };
 	std::vector<RuyiNetAchievement*> achievements;
 	ruyiSDK->RuyiNet->GetGamificationService()->AwardAchievements(0, achievementIds, achievements);
-
+	
 	int includeMetaData = 0;
+	
 	achievements.clear();
 	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievedAchievements(0, includeMetaData, achievements);
 
 	std::for_each(achievements.begin(), achievements.end(), [&](RuyiNetAchievement* pAchievement) 
 	{
-		//Logger::WriteMessage(("ReadAchievedAchievements Id:" + pAchievement->id).c_str());
+		Logger::WriteMessage(("ReadAchievedAchievements Id:" + pAchievement->AchievementId).c_str());
 	});
 
 	achievements.clear();
-	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievements(0, includeMetaData, achievements);
-	
+	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievements(0, false, achievements);
+
 	std::for_each(achievements.begin(), achievements.end(), [&](RuyiNetAchievement* pAchievement)
 	{
-		//Logger::WriteMessage(("ReadAchievements Id:" + pAchievement->id).c_str());
+		Logger::WriteMessage(("ReadAchievements Id:" + pAchievement->AchievementId).c_str());
+	});
+
+	achievements.clear();
+	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievements(0, true, achievements);
+
+	std::for_each(achievements.begin(), achievements.end(), [&](RuyiNetAchievement* pAchievement)
+	{
+		Logger::WriteMessage(("ReadAchievements Id:" + pAchievement->AchievementId).c_str());
 	});
 }
 

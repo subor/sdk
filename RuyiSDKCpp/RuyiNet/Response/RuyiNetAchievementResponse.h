@@ -73,14 +73,20 @@ namespace Ruyi { namespace SDK { namespace Online {
 				
 				void parseJson(nlohmann::json& j) 
 				{					
-					if (!j["achievementId"].is_null()) achievementId = j["achievementId"]; 					
+					if (!j["achievementId"].is_null()) 
+					{ 
+						achievementId = j["achievementId"]; 
+					} else if (!j["id"].is_null())
+					{
+						achievementId = j["id"];
+					} else {}
 					if (!j["status"].is_null()) status = j["status"];
 					if (!j["gameId"].is_null()) gameId = j["gameId"];
 					if (!j["title"].is_null()) title = j["title"];
 					if (!j["description"].is_null()) description = j["description"];
 					if (!j["invisibleUntilEarned"].is_null()) invisibleUntilEarned = j["invisibleUntilEarned"];
 					if (!j["imageUrl"].is_null()) imageUrl = j["imageUrl"];
-					if (!j["extraData"].is_null()) extraData = j["extraData"];
+					if (!j["extraData"].is_null()) extraData = j["extraData"].dump();
 					if (!j["xpAwarded"].is_null()) xpAwarded = j["xpAwarded"];
 					if (!j["coinAwarded"].is_null()) coinAwarded = j["coinAwarded"];
 					
@@ -95,8 +101,6 @@ namespace Ruyi { namespace SDK { namespace Online {
 				if (!j["achievements"].is_null()) 
 				{
 					nlohmann::json _achievements = j["achievements"];
-
-					if (!_achievements.is_object()) return;
 
 					if (_achievements.is_array()) 
 					{
