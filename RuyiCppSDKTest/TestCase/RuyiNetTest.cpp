@@ -305,6 +305,8 @@ void RuyiNetTest::GamificationServiceTest()
 		Logger::WriteMessage(("ReadAchievedAchievements Id:" + pAchievement->AchievementId).c_str());
 	});
 
+	Assert::IsTrue(achievements.size() > 0);
+
 	achievements.clear();
 	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievements(0, false, achievements);
 
@@ -313,6 +315,8 @@ void RuyiNetTest::GamificationServiceTest()
 		Logger::WriteMessage(("ReadAchievements Id:" + pAchievement->AchievementId).c_str());
 	});
 
+	Assert::IsTrue(achievements.size() > 0);
+
 	achievements.clear();
 	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievements(0, true, achievements);
 
@@ -320,6 +324,8 @@ void RuyiNetTest::GamificationServiceTest()
 	{
 		Logger::WriteMessage(("ReadAchievements Id:" + pAchievement->AchievementId).c_str());
 	});
+
+	Assert::IsTrue(achievements.size() > 0);
 }
 
 void RuyiNetTest::PatchServiceTest() 
