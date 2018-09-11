@@ -16,6 +16,8 @@ enum LoginState {
 enum TitleMainIconNotificationType {
     FriendRequest = 0,
     FriendAccept = 1,
+    BluetoothDeviceStatusChanged = 2,
+    NetworkStatusChanged = 3,
 }
 
 enum InputCategory {
