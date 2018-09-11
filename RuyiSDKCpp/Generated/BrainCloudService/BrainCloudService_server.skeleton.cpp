@@ -1329,6 +1329,16 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   }
 
   /**
+   * Returns user state of player's recently met.
+   * 
+   * @param clientIndex
+   */
+  void Friend_GetSummaryDataForRecentlyMetPlayers(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Friend_GetSummaryDataForRecentlyMetPlayers\n");
+  }
+
+  /**
    * Finds a list of users matching the search text by performing an exact
    * search of all user names.
    * 

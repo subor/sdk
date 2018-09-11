@@ -182,11 +182,38 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void GetSummaryDataForPlayerIds(int index, Action<RuyiNetFriendSummaryData[]> callback)
+        public void GetSummaryDataForFriends(int index, Action<RuyiNetFriendSummaryData[]> callback)
         {
             EnqueueTask(() =>
             {
                 return mClient.BCService.Friend_GetSummaryDataForFriends(index);
+            }, (RuyiNetGetSummaryDataMultipleResponse response) =>
+            {
+                if (callback != null)
+                {
+                    if (response.status == RuyiNetHttpStatus.OK)
+                    {
+                        var results = response.data.profiles.Cast<RuyiNetFriendSummaryData>().ToArray();
+                        callback(results);
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// Returns the summary data for a player's friends.
+        /// </summary>
+        /// <param name="index">The index of user</param>
+        /// <param name="callback">The function to call when the task completes.</param>
+        public void GetSummaryDataForRecentlyMetPlayers(int index, Action<RuyiNetFriendSummaryData[]> callback)
+        {
+            EnqueueTask(() =>
+            {
+                return mClient.BCService.Friend_GetSummaryDataForRecentlyMetPlayers(index);
             }, (RuyiNetGetSummaryDataMultipleResponse response) =>
             {
                 if (callback != null)

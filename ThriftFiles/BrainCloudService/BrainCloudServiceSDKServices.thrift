@@ -909,6 +909,9 @@ service BrainCloudService {
 	/** Returns user state of the player's friends. */
 	string Friend_GetSummaryDataForFriends(1: i32 clientIndex),
 
+	/** Returns user state of player's recently met. */
+	string Friend_GetSummaryDataForRecentlyMetPlayers(1: i32 clientIndex),
+
 	/** Finds a list of users matching the search text by performing an exact
             search of all user names. */
 	string Friend_FindUsersByExactName(
