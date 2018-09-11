@@ -2,6 +2,11 @@
 
 #include "RuyiNet/Response/RuyiNetResponse.h"
 #include "RuyiNet/Response/RuyiNetProfile.h"
+#include "RuyiNet/Service/Leaderboard/Response/RuyiNetGetGlobalLeaderboardEntryCountResponse.h"
+#include "RuyiNet/Service/Leaderboard/RuyiNetLeaderboardPage.h"
+#include "RuyiNet/Service/Leaderboard/RuyiNetLeaderboardEntry.h"
+#include "RuyiNet/Service/Leaderboard/RuyiNetLeaderboardType.h"
+#include "RuyiNet/Service/Leaderboard/RuyiNetRotationType.h"
 
 #include "RuyiNet/Service/Friend/RuyiNetFriendService.h"
 #include "RuyiNet/Service/Leaderboard/RuyiNetLeaderboardService.h"
@@ -15,13 +20,12 @@
 
 #include "boost/container/detail/json.hpp"
 
-#define TEST_APP_ID "11499"
-#define TEST_APP_SECRET "Shooter"
+#define TEST_APP_ID "11784"
+#define TEST_APP_SECRET "564e4779-079d-468d-a10f-cb4677a63da0"
 #define STATUS_OK 200
 
 RuyiNetTest::RuyiNetTest(RuyiSDKContext::Endpoint endpoint, std::string remoteAddress) :BaseUnitTest(endpoint, remoteAddress)
 {
-
 	Logger::WriteMessage("RuyiNetClient Init !!!\n");
 }
 
@@ -81,50 +85,42 @@ void RuyiNetTest::FriendServiceTest()
 
 void RuyiNetTest::LeaderboardServiceTest()
 {
-	//test: create leaderboard
-	RuyiNetResponse response1;
-	ruyiSDK->RuyiNet->GetLeaderboardService()->CreateLeaderboard(0, TEST_APP_ID, RuyiNetLeaderboardType::LOW_VALUE, RuyiNetRotationType::DAILY, response1);
+	int playerIndex = 0;
+	std::string leaderboardId = "1";
+	SortOrder::type sort = SortOrder::type::HIGH_TO_LOW;
+	int startIndex = 0;
+	int endIndex = 9;
+	int score = 120;
+	/*
+	std::string responseStr;
+	//empty string return !!!!
+	ruyiSDK->BCService->SocialLeaderboard_PostScoreToLeaderboard(responseStr, leaderboardId, score, "", playerIndex);
+	Logger::WriteMessage(("xxdadfdasfsad " + responseStr).c_str());
+	return;*/
+
+	RuyiNetGetGlobalLeaderboardEntryCountResponse response1;
+	ruyiSDK->RuyiNet->GetLeaderboardService()->GetGlobalLeaderboardEntryCount(playerIndex, leaderboardId, response1);
+
+	Logger::WriteMessage(("LeaderboardServiceTest GetGlobalLeaderboardEntryCount entryCount:" + to_string(response1.data.entryCount)).c_str());
 
 	Assert::IsTrue(STATUS_OK == response1.status);
 
-	//test: get global leaderboard page
-	RuyiNetLeaderboardResponse response2;
-	ruyiSDK->RuyiNet->GetLeaderboardService()->GetGlobalLeaderboardPage(0, TEST_APP_ID, SDK::BrainCloudApi::SortOrder::type::HIGH_TO_LOW, 0, 10, response2);
+	RuyiNetLeaderboardPage page;
+	ruyiSDK->RuyiNet->GetLeaderboardService()->GetGlobalLeaderboardPage(playerIndex, leaderboardId, sort, startIndex, endIndex, page);
 
-	std::for_each(response2.data.response.leaderboard.begin(), response2.data.response.leaderboard.end(), [&](RuyiNetLeaderboardResponse::Data::Response::LeaderboardData& data)
+	std::vector<RuyiNetLeaderboardEntry*>& entries = page.GetEntries();
+
+	std::for_each(entries.begin(), entries.end(), [&](RuyiNetLeaderboardEntry* _entry)
 	{
-		Logger::WriteMessage(("LeaderboardServiceTest GetGlobalLeaderboardPage rank:" + to_string(data.rank) + " playerId:" + data.playerId + " score:" + to_string(data.score)).c_str());
+		Logger::WriteMessage(("LeaderboardServiceTest GetGlobalLeaderboardPage   playerId:" + _entry->GetPlayerId() + " score:" + to_string(_entry->GetScore())).c_str());
 	});
 
-	Assert::IsTrue(STATUS_OK == response2.status);
+	Assert::IsTrue(STATUS_OK == page.Status);
 
-	//test: get global leaderboard view
-	RuyiNetLeaderboardResponse response3;
-	ruyiSDK->RuyiNet->GetLeaderboardService()->GetGlobalLeaderboardView(0, TEST_APP_ID, SDK::BrainCloudApi::SortOrder::type::HIGH_TO_LOW, 0, 10, response3);
+	bool isSuccess = false;
+	ruyiSDK->RuyiNet->GetLeaderboardService()->PostScoreToLeaderboard(isSuccess, playerIndex, score, leaderboardId);
 
-	std::for_each(response3.data.response.leaderboard.begin(), response3.data.response.leaderboard.end(), [&](RuyiNetLeaderboardResponse::Data::Response::LeaderboardData& data)
-	{
-		Logger::WriteMessage(("LeaderboardServiceTest GetLeaderboardService rank:" + to_string(data.rank) + " playerId:" + data.playerId + " score:" + to_string(data.score)).c_str());
-	});
-
-	Assert::IsTrue(STATUS_OK == response3.status);
-
-	//test: get social leaderboard 
-	RuyiNetSocialLeaderboardResponse response4;
-	ruyiSDK->RuyiNet->GetLeaderboardService()->GetSocialLeaderboard(0, TEST_APP_ID, "", response4);
-
-	std::for_each(response4.data.response.social_leaderboard.begin(), response4.data.response.social_leaderboard.end(), [&](RuyiNetSocialLeaderboardResponse::Data::Response::LeaderboardData& data)
-	{
-		Logger::WriteMessage(("LeaderboardServiceTest GetLeaderboardService playerId:" + data.playerId + " score:" + to_string(data.score)).c_str());
-	});
-
-	Assert::IsTrue(STATUS_OK == response4.status);
-
-	//test: post score to leaderboard
-	RuyiNetResponse response5;
-	ruyiSDK->RuyiNet->GetLeaderboardService()->PostScoreToLeaderboard(0, TEST_APP_ID, 100, response5);
-
-	Assert::IsTrue(STATUS_OK == response5.status);
+	Logger::WriteMessage(("LeaderboardServiceTest PostScoreToLeaderboard  isSuccess:" + to_string(isSuccess)).c_str());
 }
 
 void RuyiNetTest::CloudServiceTest()
@@ -291,27 +287,44 @@ void RuyiNetTest::UserFileServiceTest()
 
 void RuyiNetTest::GamificationServiceTest() 
 {
-	RuyiNetAchievement achievement;
-	std::string achievementId = ""; //not a clue about id value, update later
+	RuyiNetAchievement achievement;	
+	std::string achievementId = "1";
 	ruyiSDK->RuyiNet->GetGamificationService()->AwardAchievement(0, achievementId, achievement);
 
-	Assert::IsTrue(0 == achievement.GameId.compare(""));
-
-	std::vector<std::string> achievementIds;
+	std::vector<std::string> achievementIds = { "1" };
 	std::vector<RuyiNetAchievement*> achievements;
 	ruyiSDK->RuyiNet->GetGamificationService()->AwardAchievements(0, achievementIds, achievements);
-
-	Assert::IsTrue(achievements.size() > 0);
-
-	int includeMetaData = 0; //not a clue about this value;
+	
+	int includeMetaData = 0;
+	
 	achievements.clear();
 	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievedAchievements(0, includeMetaData, achievements);
 
+	std::for_each(achievements.begin(), achievements.end(), [&](RuyiNetAchievement* pAchievement) 
+	{
+		Logger::WriteMessage(("ReadAchievedAchievements Id:" + pAchievement->AchievementId).c_str());
+	});
+
 	Assert::IsTrue(achievements.size() > 0);
 
 	achievements.clear();
-	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievements(0, includeMetaData, achievements);
-	
+	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievements(0, false, achievements);
+
+	std::for_each(achievements.begin(), achievements.end(), [&](RuyiNetAchievement* pAchievement)
+	{
+		Logger::WriteMessage(("ReadAchievements Id:" + pAchievement->AchievementId).c_str());
+	});
+
+	Assert::IsTrue(achievements.size() > 0);
+
+	achievements.clear();
+	ruyiSDK->RuyiNet->GetGamificationService()->ReadAchievements(0, true, achievements);
+
+	std::for_each(achievements.begin(), achievements.end(), [&](RuyiNetAchievement* pAchievement)
+	{
+		Logger::WriteMessage(("ReadAchievements Id:" + pAchievement->AchievementId).c_str());
+	});
+
 	Assert::IsTrue(achievements.size() > 0);
 }
 

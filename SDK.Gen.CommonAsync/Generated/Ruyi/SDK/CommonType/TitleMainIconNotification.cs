@@ -25,18 +25,43 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
-  public partial class PopupNotification : TBase
+  public partial class TitleMainIconNotification : TBase
   {
-    private NotificationType _NotificationType;
-    private string _MainIcon;
-    private string _Text;
-    private string _Description;
+    private string _title;
+    private string _mainIcon;
+    private TitleMainIconNotificationType _NotificationType;
+
+    public string Title
+    {
+      get
+      {
+        return _title;
+      }
+      set
+      {
+        __isset.title = true;
+        this._title = value;
+      }
+    }
+
+    public string MainIcon
+    {
+      get
+      {
+        return _mainIcon;
+      }
+      set
+      {
+        __isset.mainIcon = true;
+        this._mainIcon = value;
+      }
+    }
 
     /// <summary>
     /// 
-    /// <seealso cref="NotificationType"/>
+    /// <seealso cref="TitleMainIconNotificationType"/>
     /// </summary>
-    public NotificationType NotificationType
+    public TitleMainIconNotificationType NotificationType
     {
       get
       {
@@ -49,56 +74,16 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public string MainIcon
-    {
-      get
-      {
-        return _MainIcon;
-      }
-      set
-      {
-        __isset.MainIcon = true;
-        this._MainIcon = value;
-      }
-    }
-
-    public string Text
-    {
-      get
-      {
-        return _Text;
-      }
-      set
-      {
-        __isset.Text = true;
-        this._Text = value;
-      }
-    }
-
-    public string Description
-    {
-      get
-      {
-        return _Description;
-      }
-      set
-      {
-        __isset.Description = true;
-        this._Description = value;
-      }
-    }
-
 
     public Isset __isset;
     public struct Isset
     {
+      public bool title;
+      public bool mainIcon;
       public bool NotificationType;
-      public bool MainIcon;
-      public bool Text;
-      public bool Description;
     }
 
-    public PopupNotification()
+    public TitleMainIconNotification()
     {
     }
 
@@ -120,9 +105,9 @@ namespace Ruyi.SDK.CommonType
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.I32)
+              if (field.Type == TType.String)
               {
-                NotificationType = (NotificationType)await iprot.ReadI32Async(cancellationToken);
+                Title = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -140,19 +125,9 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 3:
-              if (field.Type == TType.String)
+              if (field.Type == TType.I32)
               {
-                Text = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 4:
-              if (field.Type == TType.String)
-              {
-                Description = await iprot.ReadStringAsync(cancellationToken);
+                NotificationType = (TitleMainIconNotificationType)await iprot.ReadI32Async(cancellationToken);
               }
               else
               {
@@ -180,43 +155,34 @@ namespace Ruyi.SDK.CommonType
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("PopupNotification");
+        var struc = new TStruct("TitleMainIconNotification");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (__isset.NotificationType)
+        if (Title != null && __isset.title)
         {
-          field.Name = "NotificationType";
-          field.Type = TType.I32;
+          field.Name = "title";
+          field.Type = TType.String;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async((int)NotificationType, cancellationToken);
+          await oprot.WriteStringAsync(Title, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (MainIcon != null && __isset.MainIcon)
+        if (MainIcon != null && __isset.mainIcon)
         {
-          field.Name = "MainIcon";
+          field.Name = "mainIcon";
           field.Type = TType.String;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteStringAsync(MainIcon, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Text != null && __isset.Text)
+        if (__isset.NotificationType)
         {
-          field.Name = "Text";
-          field.Type = TType.String;
+          field.Name = "NotificationType";
+          field.Type = TType.I32;
           field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Text, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (Description != null && __isset.Description)
-        {
-          field.Name = "Description";
-          field.Type = TType.String;
-          field.ID = 4;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Description, cancellationToken);
+          await oprot.WriteI32Async((int)NotificationType, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -230,35 +196,28 @@ namespace Ruyi.SDK.CommonType
 
     public override string ToString()
     {
-      var sb = new StringBuilder("PopupNotification(");
+      var sb = new StringBuilder("TitleMainIconNotification(");
       bool __first = true;
-      if (__isset.NotificationType)
+      if (Title != null && __isset.title)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("NotificationType: ");
-        sb.Append(NotificationType);
+        sb.Append("Title: ");
+        sb.Append(Title);
       }
-      if (MainIcon != null && __isset.MainIcon)
+      if (MainIcon != null && __isset.mainIcon)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
         sb.Append("MainIcon: ");
         sb.Append(MainIcon);
       }
-      if (Text != null && __isset.Text)
+      if (__isset.NotificationType)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Text: ");
-        sb.Append(Text);
-      }
-      if (Description != null && __isset.Description)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("Description: ");
-        sb.Append(Description);
+        sb.Append("NotificationType: ");
+        sb.Append(NotificationType);
       }
       sb.Append(")");
       return sb.ToString();
