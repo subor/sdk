@@ -10,6 +10,12 @@ namespace Ruyi.Layer0
     /// <seealso cref="System.IDisposable" />
     public interface IPublishEndpoint : IDisposable
     {
+        /// <summary>
+        /// publish a message
+        /// </summary>
+        /// <typeparam name="T">the message type derived from TBase</typeparam>
+        /// <param name="msg">the message</param>
+        /// <returns></returns>
         Task<bool> Send<T>(T msg) where T : TBase;
     }
 
