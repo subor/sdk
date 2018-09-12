@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Threading.Tasks;
 
 namespace Ruyi.SDK.Online
 {
@@ -18,35 +19,28 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="clientIndex">The index of the client making the call.</param>
         /// <param name="gameId">The index of the client making the call.</param>
-        /// <param name="callback">Callback to call when the operation is complete.</param>
-        public void GetGameManifest(int clientIndex, string gameId, Action<RuyiNetGameManifest> callback)
+        public async Task<RuyiNetGameManifest> GetGameManifest(int clientIndex, string gameId)
         {
-            EnqueueTask(() =>
+            string resp = null;
+            try
             {
-                try
+                resp = await mClient.BCService.Patch_GetGameManifestAsync(gameId, clientIndex, token);
+            }
+            catch (Exception e)
+            {
+                // just log it for now, otherwise layer0 will crash, it happens when no response while switching high-low power mode
+                // throw;
+                Logging.Logger.Log(e.Message, Logging.LogLevel.Error);
+                var error = new RuyiNetResponse()
                 {
-                    var data = mClient.BCService.Patch_GetGameManifestAsync(gameId, clientIndex, token).Result;
-                    return data;
-                }
-                catch (Exception e)
-                {
-                    // just log it for now, otherwise layer0 will crash, it happens when no response while switching high-low power mode
-                    // throw;
-                    Logging.Logger.Log(e.Message, Logging.LogLevel.Error);
-                    var response = new RuyiNetResponse()
-                    {
-                        status = 999,
-                        message = e.ToString()
-                    };
+                    status = 999,
+                    message = e.ToString()
+                };
 
-                    return JsonConvert.SerializeObject(response);
-                }
-            }, (RuyiNetGetGameManifestResponse response) =>
-            {
-                callback(response);
-            });
+                resp = JsonConvert.SerializeObject(error);
+            }
+            var response = mClient.Process<RuyiNetGetGameManifestResponse>(resp);
+            return response;
         }
-
-        static System.Threading.CancellationToken token = System.Threading.CancellationToken.None;
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Ruyi.SDK.Online
+﻿using System.Threading.Tasks;
+
+namespace Ruyi.SDK.Online
 {
     /// <summary>
     /// Base class for all Net Services.
@@ -15,26 +17,14 @@
         }
 
         /// <summary>
-        /// Queue up a request to the online service.
-        /// </summary>
-        /// <typeparam name="Response">A serialisiable class we can receive the data in.</typeparam>
-        /// <param name="onExecute">The method to call when we execute the task.</param>
-        /// <param name="callback">The callback to call when the task completes</param>
-        protected void EnqueueTask<Response>(RuyiNetTask<Response>.ExecuteType onExecute, RuyiNetTask<Response>.CallbackType callback)
-        {
-            mClient.EnqueueTask(onExecute, callback);
-        }
-
-        /// <summary>
         /// Queue up a request to the online service that needs to be called on the RUYI platform level.
         /// </summary>
         /// <typeparam name="Response">A serialisiable class we can receive the data in.</typeparam>
         /// <param name="index">The index of user</param>
         /// <param name="onExecute">The method to call when we execute the task.</param>
-        /// <param name="callback">The callback to call when the task completes</param>
-        protected void EnqueuePlatformTask<Response>(int index, RuyiNetTask<Response>.ExecuteType onExecute, RuyiNetTask<Response>.CallbackType callback)
+        protected Task<Response> EnqueuePlatformTask<Response>(int index, RuyiNetTask<Response>.ExecuteType onExecute)
         {
-            mClient.EnqueuePlatformTask(index, onExecute, callback);
+            return mClient.EnqueuePlatformTask(index, onExecute);
         }
 
         /// <summary>
@@ -44,14 +34,10 @@
         /// <param name="index">The index of user</param>
         /// <param name="script">The name of the script to run.</param>
         /// <param name="payload">The JSON payload to send with the request</param>
-        /// <param name="callback">The callback to call when the task completes</param>
-        protected void RunPlatformScript<Response>(int index, string script, string payload, 
-            RuyiNetTask<Response>.CallbackType callback)
+        protected async Task<Response> RunPlatformScript<Response>(int index, string script, string payload)
         {
-            EnqueueTask(() =>
-            {
-                return mClient.BCService.Script_RunParentScriptAsync(script, payload, "RUYI", index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync(script, payload, "RUYI", index, token);
+            return mClient.Process<Response>(resp);
         }
 
         /// <summary>
@@ -59,6 +45,6 @@
         /// </summary>
         protected RuyiNetClient mClient;
 
-        static System.Threading.CancellationToken token = System.Threading.CancellationToken.None;
+        protected static System.Threading.CancellationToken token = System.Threading.CancellationToken.None;
     }
 }

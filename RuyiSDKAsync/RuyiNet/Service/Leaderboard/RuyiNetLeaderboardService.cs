@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Ruyi.SDK.BrainCloudApi;
 using System;
+using System.Threading.Tasks;
 
 namespace Ruyi.SDK.Online
 {
@@ -25,22 +26,18 @@ namespace Ruyi.SDK.Online
         /// <param name="id">The ID of the new leaderboard.</param>
         /// <param name="type">The type of leaderboard to create.</param>
         /// <param name="rotationType">How often the leaderboard will rotate scores.</param>
-        /// <param name="callback">The function to call when the data is retrieved.</param>
-        public void CreateLeaderboard(int index, string id, RuyiNetLeaderboardType type,
-            RuyiNetRotationType rotationType, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public async Task<RuyiNetResponse> CreateLeaderboard(int index, string id, RuyiNetLeaderboardType type, RuyiNetRotationType rotationType)
         {
-            EnqueueTask(() =>
+            var data = new RuyiNetCreateLeaderboardRequest()
             {
-                var data = new RuyiNetCreateLeaderboardRequest()
-                {
-                    leaderboardId = mClient.AppId + "_" + id,
-                    type = type.ToString(),
-                    rotationType = rotationType.ToString(),
-                    versionsToRetain = 1
-                };
+                leaderboardId = mClient.AppId + "_" + id,
+                type = type.ToString(),
+                rotationType = rotationType.ToString(),
+                versionsToRetain = 1
+            };
 
-                return mClient.BCService.Script_RunParentScriptAsync("CreateLeaderboard", JsonConvert.SerializeObject(data), "RUYI", index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("CreateLeaderboard", JsonConvert.SerializeObject(data), "RUYI", index, token);
+            return mClient.Process<RuyiNetResponse>(resp);
         }
 
         /// <summary>
@@ -51,22 +48,18 @@ namespace Ruyi.SDK.Online
         /// <param name="sort">How to sort the data.</param>
         /// <param name="startIndex">The first entry to retrieve.</param>
         /// <param name="endIndex">The last entry to retrieve.</param>
-        /// <param name="callback">The function to call when the data is retrieved.</param>
-        public void GetGLobalLeaderboardPage(int index, string id, SortOrder sort,
-            int startIndex, int endIndex, RuyiNetTask<RuyiNetLeaderboardResponse>.CallbackType callback)
+        public async Task<RuyiNetLeaderboardResponse> GetGLobalLeaderboardPage(int index, string id, SortOrder sort, int startIndex, int endIndex)
         {
-            EnqueueTask(() =>
+            var data = new RuyiNetGetGlobalLeaderboardPageRequest()
             {
-                var data = new RuyiNetGetGlobalLeaderboardPageRequest()
-                {
-                    leaderboardId = mClient.AppId + "_" + id,
-                    sort = sort.ToString(),
-                    startIndex = startIndex,
-                    endIndex = endIndex
-                };
+                leaderboardId = mClient.AppId + "_" + id,
+                sort = sort.ToString(),
+                startIndex = startIndex,
+                endIndex = endIndex
+            };
 
-                return mClient.BCService.Script_RunParentScriptAsync("GetGlobalLeaderboardPage", JsonConvert.SerializeObject(data), "RUYI", index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("GetGlobalLeaderboardPage", JsonConvert.SerializeObject(data), "RUYI", index, token);
+            return mClient.Process<RuyiNetLeaderboardResponse>(resp);
         }
 
         /// <summary>
@@ -77,22 +70,18 @@ namespace Ruyi.SDK.Online
         /// <param name="sort">How to sort the data.</param>
         /// <param name="beforeCount">How many entries before the current player to retrieve.</param>
         /// <param name="afterCount">How many entries after the current player to retrieve.</param>
-        /// <param name="callback">The function to call when the data is retrieved.</param>
-        public void GetGlobalLeaderboardView(int index, string id, SortOrder sort,
-            int beforeCount, int afterCount, RuyiNetTask<RuyiNetLeaderboardResponse>.CallbackType callback)
+        public async Task<RuyiNetLeaderboardResponse> GetGlobalLeaderboardView(int index, string id, SortOrder sort, int beforeCount, int afterCount)
         {
-            EnqueueTask(() =>
+            var data = new RuyiNetGetGlobalLeaderboardViewRequest()
             {
-                var data = new RuyiNetGetGlobalLeaderboardViewRequest()
-                {
-                    leaderboardId = mClient.AppId + "_" + id,
-                    sort = sort.ToString(),
-                    beforeCount = beforeCount,
-                    afterCount = afterCount
-                };
+                leaderboardId = mClient.AppId + "_" + id,
+                sort = sort.ToString(),
+                beforeCount = beforeCount,
+                afterCount = afterCount
+            };
 
-                return mClient.BCService.Script_RunParentScriptAsync("GetGlobalLeaderboardView", JsonConvert.SerializeObject(data), "RUYI", index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("GetGlobalLeaderboardView", JsonConvert.SerializeObject(data), "RUYI", index, token);
+            return mClient.Process<RuyiNetLeaderboardResponse>(resp);
         }
 
         /// <summary>
@@ -101,20 +90,16 @@ namespace Ruyi.SDK.Online
         /// <param name="index">The index of user</param>
         /// <param name="id">The ID of the leaderboard to retrieve.</param>
         /// <param name="replaceName">If true, the player's name is replaced by the string "You".</param>
-        /// <param name="callback">The function to call when the data is retrieved.</param>
-        public void GetSocialLeaderboard(int index, string id, bool replaceName,
-            RuyiNetTask<RuyiNetSocialLeaderboardResponse>.CallbackType callback)
+        public async Task<RuyiNetSocialLeaderboardResponse> GetSocialLeaderboard(int index, string id, bool replaceName)
         {
-            EnqueueTask(() =>
+            var data = new RuyiNetGetSocialLeaderboardRequest()
             {
-                var data = new RuyiNetGetSocialLeaderboardRequest()
-                {
-                    leaderboardId = mClient.AppId + "_" + id,
-                    replaceName = replaceName
-                };
+                leaderboardId = mClient.AppId + "_" + id,
+                replaceName = replaceName
+            };
 
-                return mClient.BCService.Script_RunParentScriptAsync("GetSocialLeaderboard", JsonConvert.SerializeObject(data), "RUYI", index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("GetSocialLeaderboard", JsonConvert.SerializeObject(data), "RUYI", index, token);
+            return mClient.Process<RuyiNetSocialLeaderboardResponse>(resp);
         }
 
         /// <summary>
@@ -123,20 +108,16 @@ namespace Ruyi.SDK.Online
         /// <param name="index">The index of user</param>
         /// <param name="id">The ID of the leaderboard to post to.</param>
         /// <param name="score">The score to post.</param>
-        /// <param name="callback">The function to call when the data is retrieved.</param>
-        public void PostScoreToLeaderboard(int index, string id, int score,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public async Task<RuyiNetResponse> PostScoreToLeaderboard(int index, string id, int score)
         {
-            EnqueueTask(() =>
+            var data = new RuyiNetPostScoreToLeaderboardRequest()
             {
-                var data = new RuyiNetPostScoreToLeaderboardRequest()
-                {
-                    leaderboardId = mClient.AppId + "_" + id,
-                    score = score
-                };
+                leaderboardId = mClient.AppId + "_" + id,
+                score = score
+            };
 
-                return mClient.BCService.Script_RunParentScriptAsync("PostScoreToLeaderboard", JsonConvert.SerializeObject(data), "RUYI", index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("PostScoreToLeaderboard", JsonConvert.SerializeObject(data), "RUYI", index, token);
+            return mClient.Process<RuyiNetResponse>(resp);
         }
 
         private class RuyiNetCreateLeaderboardRequest
@@ -174,8 +155,6 @@ namespace Ruyi.SDK.Online
             public string leaderboardId;
             public int score;
         }
-
-        static System.Threading.CancellationToken token = System.Threading.CancellationToken.None;
     }
     
     /// <summary>

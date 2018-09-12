@@ -67,8 +67,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp10.ErrorCode = ExternalErrorCode.Err_10;
       EXTERNALERRORLIST.Add(tmp10);
       ExternalErrorInfos tmp11 = new ExternalErrorInfos();
-      tmp11.ErrorCode = ExternalErrorCode.Err_11;
       tmp11.Description = "";
+      tmp11.ErrorCode = ExternalErrorCode.Err_11;
       EXTERNALERRORLIST.Add(tmp11);
       ExternalErrorInfos tmp12 = new ExternalErrorInfos();
       tmp12.ErrorCode = ExternalErrorCode.Err_12;
@@ -95,8 +95,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp17.ErrorCode = ExternalErrorCode.Err_17;
       EXTERNALERRORLIST.Add(tmp17);
       ExternalErrorInfos tmp18 = new ExternalErrorInfos();
-      tmp18.ErrorCode = ExternalErrorCode.Err_18;
       tmp18.Description = "trigger action failed when changing setting {0}!";
+      tmp18.ErrorCode = ExternalErrorCode.Err_18;
       EXTERNALERRORLIST.Add(tmp18);
     }
   }

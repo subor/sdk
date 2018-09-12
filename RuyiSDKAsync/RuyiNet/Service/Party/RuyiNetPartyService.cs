@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Threading.Tasks;
 
 namespace Ruyi.SDK.Online
 {
@@ -21,26 +22,20 @@ namespace Ruyi.SDK.Online
         /// Get the current party information for the player.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void GetPartyInfo(int index, RuyiNetTask<RuyiNetGetPartyInfoResponse>.CallbackType callback)
+        public async Task<RuyiNetGetPartyInfoResponse> GetPartyInfo(int index)
         {
-            EnqueueTask(() =>
-            {
-                return mClient.BCService.Script_RunParentScriptAsync("GetPartyInfo", "{}", "RUYI", index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("GetPartyInfo", "{}", "RUYI", index, token);
+            return mClient.Process<RuyiNetGetPartyInfoResponse>(resp);
         }
 
         /// <summary>
         /// Get information on the party members in the current party.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void GetPartyMembersInfo(int index, RuyiNetTask<RuyiNetGetProfilesResponse>.CallbackType callback)
+        public async Task<RuyiNetGetProfilesResponse> GetPartyMembersInfo(int index)
         {
-            EnqueueTask(() =>
-            {
-                return mClient.BCService.Script_RunParentScriptAsync("GetPartyMembers", "{}", "RUYI", index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("GetPartyMembers", "{}", "RUYI", index, token);
+            return mClient.Process<RuyiNetGetProfilesResponse>(resp);
         }
 
         /// <summary>
@@ -48,19 +43,15 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="profileId">The profile ID of the player to invite.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void SendPartyInvitation(int index, string profileId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public async Task<RuyiNetResponse> SendPartyInvitation(int index, string profileId)
         {
-            EnqueueTask(() =>
+            var payload = new RuyiNetProfileIdRequest()
             {
-                var payload = new RuyiNetProfileIdRequest()
-                {
-                    profileId = profileId
-                };
+                profileId = profileId
+            };
 
-                var response = mClient.BCService.Script_RunParentScriptAsync("SendPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index, token).Result;
-                return response;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("SendPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index, token);
+            return mClient.Process<RuyiNetResponse>(resp);
         }
 
         /// <summary>
@@ -68,18 +59,15 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="groupId">The group ID of the party to join.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void AcceptPartyInvitation(int index, string groupId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public async Task<RuyiNetResponse> AcceptPartyInvitation(int index, string groupId)
         {
-            EnqueueTask(() =>
+            var payload = new RuyiNetGroupIdRequest()
             {
-                var payload = new RuyiNetGroupIdRequest()
-                {
-                    groupId = groupId
-                };
+                groupId = groupId
+            };
 
-                return mClient.BCService.Script_RunParentScriptAsync("AcceptPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("AcceptPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index, token);
+            return mClient.Process<RuyiNetResponse>(resp);
         }
 
         /// <summary>
@@ -87,18 +75,15 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="groupId">The group ID of the party to reject.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void RejectPartyInvitation(int index, string groupId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public async Task<RuyiNetResponse> RejectPartyInvitation(int index, string groupId)
         {
-            EnqueueTask(() =>
+            var payload = new RuyiNetGroupIdRequest()
             {
-                var payload = new RuyiNetGroupIdRequest()
-                {
-                    groupId = groupId
-                };
+                groupId = groupId
+            };
 
-                return mClient.BCService.Script_RunParentScriptAsync("RejectPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("RejectPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index, token);
+            return mClient.Process<RuyiNetResponse>(resp);
         }
 
         /// <summary>
@@ -106,18 +91,15 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="groupId">The group ID of the party to join.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void JoinParty(int index, string groupId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public async Task<RuyiNetResponse> JoinParty(int index, string groupId)
         {
-            EnqueueTask(() =>
+            var payload = new RuyiNetGroupIdRequest()
             {
-                var payload = new RuyiNetGroupIdRequest()
-                {
-                    groupId = groupId
-                };
+                groupId = groupId
+            };
 
-                return mClient.BCService.Script_RunParentScriptAsync("JoinParty", JsonConvert.SerializeObject(payload), "RUYI", index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("JoinParty", JsonConvert.SerializeObject(payload), "RUYI", index, token);
+            return mClient.Process<RuyiNetResponse>(resp);
         }
 
         /// <summary>
@@ -125,18 +107,15 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="groupId">The group ID of the party to leave.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void LeaveParty(int index, string groupId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public async Task<RuyiNetResponse> LeaveParty(int index, string groupId)
         {
-            EnqueueTask(() =>
+            var payload = new RuyiNetGroupIdRequest()
             {
-                var payload = new RuyiNetGroupIdRequest()
-                {
-                    groupId = groupId
-                };
+                groupId = groupId
+            };
 
-                return mClient.BCService.Script_RunParentScriptAsync("LeaveParty", JsonConvert.SerializeObject(payload), "RUYI", index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.Script_RunParentScriptAsync("LeaveParty", JsonConvert.SerializeObject(payload), "RUYI", index, token);
+            return mClient.Process<RuyiNetResponse>(resp);
         }
 
         [Serializable]
@@ -144,8 +123,6 @@ namespace Ruyi.SDK.Online
         {
             public string groupId;
         }
-
-        static System.Threading.CancellationToken token = System.Threading.CancellationToken.None;
     }
 
     /// <summary>

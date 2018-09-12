@@ -3,6 +3,7 @@ using Ruyi.SDK.StorageLayer;
 using System;
 using System.IO;
 using System.Security;
+using System.Threading.Tasks;
 
 namespace Ruyi.SDK.Online
 {
@@ -34,10 +35,9 @@ namespace Ruyi.SDK.Online
         /// Manually backup the save data up to this point.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void BackupData(int index, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> BackupData(int index)
         {
-            BackupData(index, false, callback);
+            return BackupData(index, false);
         }
 
         /// <summary>
@@ -45,126 +45,82 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="callback">The function to call when the task completes.</param>
-        public void RestoreData(int index, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public async Task<RuyiNetResponse> RestoreData(int index, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
         {
-            EnqueueTask(() =>
+            try
             {
-                try
+                var path = GetPersistentDataPath(index);
+                path = Path.GetFullPath(path);
+
+                //  List files
+                var data = await mClient.BCService.File_ListUserFiles_SNSFOAsync(GetCloudLocation(index), true, index, token);
+                var response = JsonConvert.DeserializeObject<RuyiNetListUserFilesResponse>(data, new JsonSerializerSettings
                 {
-                    var path = GetPersistentDataPath(index);
-                    path = Path.GetFullPath(path);
+                    NullValueHandling = NullValueHandling.Ignore
+                });
 
-                    //  Backup persistent data path
-                    /*var backupPath = Path.Combine(path, BACKUP_LOCATION);
-                    if (Directory.Exists(backupPath))
-                    {
-                        var x = new DirectoryInfo(backupPath);
-                        x.Delete(true);
-                    }
-
-                    foreach (var i in Directory.GetDirectories(path, "*", SearchOption.AllDirectories))
-                    {
-                        var directoryName = Path.GetFileName(i);
-                        if (Array.IndexOf(IGNORE, directoryName) >= 0)
-                        {
-                            continue;
-                        }
-
-                        Directory.CreateDirectory(i.Replace(path, backupPath));
-                    }
-
-                    //Copy all the files & Replaces any files with the same name
-                    foreach (var i in Directory.GetFiles(path, "*.*", SearchOption.AllDirectories))
-                    {
-                        var fileName = Path.GetFileName(i);
-                        if (Array.IndexOf(IGNORE, fileName) >= 0)
-                        {
-                            continue;
-                        }
-
-                        File.Copy(i, i.Replace(path, backupPath), true);
-                        File.Delete(i);
-                    }*/
-
-                    //  List files
-                    var data = mClient.BCService.File_ListUserFiles_SNSFOAsync(GetCloudLocation(index), true, index, token).Result;
-                    var response = JsonConvert.DeserializeObject<RuyiNetListUserFilesResponse>(data, new JsonSerializerSettings
-                    {
-                        NullValueHandling = NullValueHandling.Ignore
-                    });
-
-                    if (response.status != RuyiNetHttpStatus.OK)
-                    {
-                        return data;
-                    }
-
-                    //  Download one by one to correct path
-                    //  TODO: Need to get the session ID and pass it in as a URL parameter.
-                    foreach (var i in response.data.fileList)
-                    {
-                        EnqueueTask(() =>
-                        {
-                            return mClient.BCService.File_DownloadFileAsync(i.cloudPath, i.cloudFilename, true, index, token).Result;
-                        }, callback);
-                    }
-
-                    //  Delete backup
-                    //var backupInfo = new DirectoryInfo(backupPath);
-                    //backupInfo.Delete(true);
-
-                    return JsonConvert.SerializeObject(new RuyiNetResponse() { status = RuyiNetHttpStatus.OK, message = "Restore Data Successful" });
+                if (response.status != RuyiNetHttpStatus.OK)
+                {
+                    return mClient.Process<RuyiNetResponse>(data);
                 }
-                catch (Exception e)
+
+                //  Download one by one to correct path
+                //  TODO: Need to get the session ID and pass it in as a URL parameter.
+                foreach (var i in response.data.fileList)
                 {
-                    if (e is ArgumentException ||
-                        e is NotSupportedException ||
-                        e is PathTooLongException ||
-                        e is DirectoryNotFoundException)
-                    {
-                        var response = new RuyiNetResponse()
-                        {
-                            status = 400,
-                            message = e.ToString()
-                        };
+                    var resp = await mClient.BCService.File_DownloadFileAsync(i.cloudPath, i.cloudFilename, true, index, token);
+                    var response2 = mClient.Process<RuyiNetResponse>(resp);
+                    await callback(response2);
+                }
 
-                        return JsonConvert.SerializeObject(response);
-                    }
-                    else if (e is SecurityException ||
-                             e is IOException ||
-                             e is UnauthorizedAccessException ||
-                             e is RuyiNetException)
-                    {
-                        var response = new RuyiNetResponse()
-                        {
-                            status = 500,
-                            message = e.ToString()
-                        };
+                //  Delete backup
+                //var backupInfo = new DirectoryInfo(backupPath);
+                //backupInfo.Delete(true);
 
-                        return JsonConvert.SerializeObject(response);
-                    }
-                    else
+                return new RuyiNetResponse() { status = RuyiNetHttpStatus.OK, message = "Restore Data Successful" };
+            }
+            catch (Exception e)
+            {
+                if (e is ArgumentException ||
+                    e is NotSupportedException ||
+                    e is PathTooLongException ||
+                    e is DirectoryNotFoundException)
+                {
+                    return new RuyiNetResponse()
                     {
+                        status = 400,
+                        message = e.ToString()
+                    };
+                }
+                else if (e is SecurityException ||
+                         e is IOException ||
+                         e is UnauthorizedAccessException ||
+                         e is RuyiNetException)
+                {
+                    return new RuyiNetResponse()
+                    {
+                        status = 500,
+                        message = e.ToString()
+                    };
+                }
+                else
+                {
 #if DEBUG
-                        var response = new RuyiNetResponse()
-                        {
-                            status = 999,
-                            message = e.ToString()
-                        };
-
-                        return JsonConvert.SerializeObject(response);
+                    return new RuyiNetResponse()
+                    {
+                        status = 999,
+                        message = e.ToString()
+                    };
 #else
                         throw;
 #endif
-                    }
                 }
-
-            }, callback);
-
+            }
         }
 
-        internal void BackupData(int index, bool cleanMode, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        internal Task<RuyiNetResponse> BackupData(int index, bool cleanMode)
         {
-            EnqueueTask(() =>
+            return Task.Run(() =>
             {
                 try
                 {
@@ -195,7 +151,7 @@ namespace Ruyi.SDK.Online
                         }
                     }
 
-                    return JsonConvert.SerializeObject(new RuyiNetResponse() { status = RuyiNetHttpStatus.OK });
+                    return new RuyiNetResponse() { status = RuyiNetHttpStatus.OK };
                 }
                 catch (Exception e)
                 {
@@ -210,7 +166,7 @@ namespace Ruyi.SDK.Online
                             message = e.ToString()
                         };
 
-                        return JsonConvert.SerializeObject(response);
+                        return response;
                     }
                     else if (e is SecurityException ||
                              e is IOException ||
@@ -223,7 +179,7 @@ namespace Ruyi.SDK.Online
                             message = e.ToString()
                         };
 
-                        return JsonConvert.SerializeObject(response);
+                        return response;
                     }
                     else
                     {
@@ -233,13 +189,12 @@ namespace Ruyi.SDK.Online
                             message = e.ToString()
                         };
 
-                        return JsonConvert.SerializeObject(response);
+                        return response;
 
                         //throw;
                     }
                 }
-
-            }, callback);
+            });
         }
 
         private void BackupPath(int index, string cloudPath, string path)
@@ -299,6 +254,5 @@ namespace Ruyi.SDK.Online
         }
 
         private StorageLayerService.Client mStorageLayerService;
-        static System.Threading.CancellationToken token = System.Threading.CancellationToken.None;
     }
 }

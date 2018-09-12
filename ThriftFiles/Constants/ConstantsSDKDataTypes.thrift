@@ -26,10 +26,6 @@ const string layer0_debugger_channel = "layer0_debugger_channel"
 
 const string trc_test_channel = "trc_test_channel"
 
-const string debugger_publisher_in_uri = "tcp://{addr}:8867"
-
-const string debugger_publisher_out_uri = "tcp://{addr}:8868"
-
 const string broker_playback_message = "mmi.developer.playback"
 
 

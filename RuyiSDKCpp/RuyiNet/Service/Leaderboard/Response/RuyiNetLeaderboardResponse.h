@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../RuyiNetClient.h"
+#include "../../../RuyiNetClient.h"
 
 namespace Ruyi { namespace SDK { namespace Online {
 	/// <summary>
