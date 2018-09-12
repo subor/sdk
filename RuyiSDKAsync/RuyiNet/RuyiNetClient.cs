@@ -4,6 +4,7 @@ using Ruyi.SDK.StorageLayer;
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using Thrift.Protocols;
 
 namespace Ruyi.SDK.Online
@@ -27,7 +28,7 @@ namespace Ruyi.SDK.Online
     /// </para>
     /// </remarks>
     /// <example>
-    /// <code source="layer0/sdktest/doctests.cs" region="RuyiNetClient"></code>
+    /// <code source="sdk/unittests/doctests.cs" region="RuyiNetClient"></code>
     /// </example>
     public class RuyiNetClient : IDisposable
     {
@@ -51,11 +52,11 @@ namespace Ruyi.SDK.Online
             AppId = appId;
             AppSecret = appSecret;
 
-            EnqueueTask(() =>
+            Task.Run(async () =>
             {
                 var hostString = Dns.GetHostName();
                 
-                IPHostEntry hostInfo = Dns.GetHostEntry(hostString);
+                IPHostEntry hostInfo = await Dns.GetHostEntryAsync(hostString);
                 foreach (IPAddress ip in hostInfo.AddressList)
                 {
                     if (ip.AddressFamily == AddressFamily.InterNetwork)
@@ -67,7 +68,7 @@ namespace Ruyi.SDK.Online
                 for (int i = 0; i < MAX_PLAYERS; ++i)
                 {
                     CurrentPlayers[i] = null;
-                    var jsonResponse = BCService.Identity_SwitchToSingletonChildProfileAsync(AppId, true, i, token).Result;
+                    var jsonResponse = await BCService.Identity_SwitchToSingletonChildProfileAsync(AppId, true, i, token);
                     var childProfile = JsonConvert.DeserializeObject<RuyiNetSwitchToChildProfileResponse>(jsonResponse);
                     if (childProfile.status != RuyiNetHttpStatus.OK)
                     {
@@ -80,7 +81,7 @@ namespace Ruyi.SDK.Online
                     NewUser = childProfile.data.newUser;
 
                     var payload = new RuyiNetProfileIdRequest() { profileId = profileId };
-                    jsonResponse = BCService.Script_RunParentScriptAsync("GetProfile", JsonConvert.SerializeObject(payload), "RUYI", i, token).Result;
+                    jsonResponse = await BCService.Script_RunParentScriptAsync("GetProfile", JsonConvert.SerializeObject(payload), "RUYI", i, token);
 
                     var profileData = JsonConvert.DeserializeObject<RuyiNetGetProfileResponse>(jsonResponse);
                     if (profileData.status != RuyiNetHttpStatus.OK ||
@@ -92,31 +93,11 @@ namespace Ruyi.SDK.Online
                     CurrentPlayers[i] = profileData.data.response;
                 }
 
-                var response = new RuyiNetResponse()
-                {
-                    status = RuyiNetHttpStatus.OK
-                };
-
-                return JsonConvert.SerializeObject(response);
-            }, (RuyiNetResponse response) =>
-            {
                 Initialised = true;
-
                 onInitialised?.Invoke();
             });
         }
-
-        /// <summary>
-        /// Update the tasks.
-        /// </summary>
-        /// <remarks>
-        /// Note that a <see cref="Ruyi.RuyiSDK"/> instance's <see cref="Ruyi.RuyiSDK.Update"/> method will update its <see cref="Ruyi.RuyiSDK.RuyiNetService"/> property.
-        /// </remarks>
-        public void Update()
-        {
-            mTaskQueue.Update();
-        }
-
+        
         /// <summary>
         /// Cleanup native resources before destruction.
         /// </summary>
@@ -239,7 +220,7 @@ namespace Ruyi.SDK.Online
         /// <summary>
         /// Returns TRUE while there are tasks in the queue.
         /// </summary>
-        public bool IsWorking { get { return mTaskQueue.Work > 0; } }
+        //public bool IsWorking { get { return mTaskQueue.Work > 0; } }
         
         /// <summary>
         /// Cleanup native resources before destruction.
@@ -272,7 +253,6 @@ namespace Ruyi.SDK.Online
 
             AppId = string.Empty;
             AppSecret = string.Empty;
-            mTaskQueue = new RuyiNetTaskQueue();
 
             CloudService = new RuyiNetCloudService(this, storageLayerService);
             FriendService = new RuyiNetFriendService(this);
@@ -293,15 +273,14 @@ namespace Ruyi.SDK.Online
             Initialised = false;
         }
 
-        /// <summary>
-        /// Queue up a request to the online service.
-        /// </summary>
-        /// <typeparam name="Response">A serialisiable class we can receive the data in.</typeparam>
-        /// <param name="onExecute">The method to call when we execute the task.</param>
-        /// <param name="callback">The callback to call when the task completes</param>
-        internal void EnqueueTask<Response>(RuyiNetTask<Response>.ExecuteType onExecute, RuyiNetTask<Response>.CallbackType callback)
+        readonly JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
         {
-            mTaskQueue.Enqueue(new RuyiNetTask<Response>(onExecute, callback));
+            NullValueHandling = NullValueHandling.Ignore
+        };
+
+        internal Response Process<Response>(string response)
+        {
+            return JsonConvert.DeserializeObject<Response>(response, jsonSerializerSettings);
         }
 
         /// <summary>
@@ -310,10 +289,13 @@ namespace Ruyi.SDK.Online
         /// <typeparam name="Response">A serialisiable class we can receive the data in.</typeparam>
         /// <param name="index">The index of user</param>
         /// <param name="onExecute">The method to call when we execute the task.</param>
-        /// <param name="callback">The callback to call when the task completes</param>
-        internal void EnqueuePlatformTask<Response>(int index, RuyiNetTask<Response>.ExecuteType onExecute, RuyiNetTask<Response>.CallbackType callback)
+        internal async Task<Response> EnqueuePlatformTask<Response>(int index, RuyiNetTask<Response>.ExecuteType onExecute)
         {
-            mTaskQueue.Enqueue(new RuyiNetPlatformTask<Response>(index, this, onExecute, callback));
+            await BCService.Identity_SwitchToParentProfileAsync("RUYI", index, token);
+            var response = await onExecute();
+            await BCService.Identity_SwitchToSingletonChildProfileAsync(AppId, false, index, token);
+            var data = JsonConvert.DeserializeObject<Response>(response, jsonSerializerSettings);
+            return data;
         }
 
         /// <summary>
@@ -348,7 +330,6 @@ namespace Ruyi.SDK.Online
         //  this is implemented properly.
         internal string AppSecret { get; private set; }
 
-        private RuyiNetTaskQueue mTaskQueue;
         static System.Threading.CancellationToken token = System.Threading.CancellationToken.None;
     }
 

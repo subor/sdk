@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace Ruyi.SDK.Online
 {
@@ -24,12 +25,11 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="filename">The image file to use as a profile picture.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void UpdateUserPicture(int index, string filename, RuyiNetTask<RuyiNetGetCDNResponse>.CallbackType callback)
+        public async Task UpdateUserPicture(int index, string filename, RuyiNetTask<RuyiNetGetCDNResponse>.CallbackType callback)
         {
-            EnqueuePlatformTask(index, () =>
+            var resp = await EnqueuePlatformTask<RuyiNetGetCDNResponse>(index, async () =>
             {
-                var response = mClient.BCService.File_UploadFileAsync(PROFILE_LOCATION, PROFILE_IMAGE_FILENAME, true, true, filename, index, token).Result;
+                var response = await mClient.BCService.File_UploadFileAsync(PROFILE_LOCATION, PROFILE_IMAGE_FILENAME, true, true, filename, index, token);
                 var uploadedFile = JsonConvert.DeserializeObject<RuyiNetUploadFileResponse>(response);
 
                 if (uploadedFile.status == RuyiNetHttpStatus.OK)
@@ -41,9 +41,9 @@ namespace Ruyi.SDK.Online
                         mClient.BCService.PlayerState_UpdateUserPictureUrlAsync(cdnUrl.data.appServerUrl, index, token).Wait();
                     }
                 }                
-
                 return response;
-            }, callback);
+            });
+            await callback(resp);
         }
 
         static System.Threading.CancellationToken token = System.Threading.CancellationToken.None;
