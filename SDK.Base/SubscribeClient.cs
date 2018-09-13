@@ -15,7 +15,7 @@ namespace Ruyi.Layer0
     /// </summary>
     /// <example>
     /// Getting gamepad/controler input:
-    /// <code source="layer0/sdktest/doctests.cs" region="Subscribe_Input"></code>
+    /// <code source="sdk/unittests/doctests.cs" region="Subscribe_Input"></code>
     /// </example>
     public class SubscribeClient : IDisposable
     {
