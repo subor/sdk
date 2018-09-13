@@ -137,6 +137,10 @@ bool RuyiSDK::Init()
 	auto ruyiNetClientProtocol = std::make_shared<TMultiplexedProtocol>(sharedHighProto, "SER_BCSERVICE");
 	RuyiNet = new Ruyi::SDK::Online::RuyiNetClient(ruyiNetClientProtocol);
 	
+	// init Overlay service
+	auto overlayProtocol = std::make_shared<TMultiplexedProtocol>(sharedLowProto, "SER_OVERLAYMANAGER_EXTERNAL");
+	OverlayService = new SDK::OverlayManagerExternal::ExternalOverlayManagerServiceClient(overlayProtocol);
+
 	// init brain cloud service
 	auto bcProtocal = std::make_shared<TMultiplexedProtocol>(sharedHighProto, "SER_BCSERVICE");
 	BCService = new SDK::BrainCloudApi::BrainCloudServiceClient(bcProtocal);

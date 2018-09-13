@@ -10,6 +10,7 @@
 #include "Generated/SDKValidator/ValidatorService.h"
 #include "Generated/LocalizationService/LocalizationService.h"
 #include "Generated/UserServiceExternal/UserServExternal.h"
+#include "Generated/OverlayManager/ExternalOverlayManagerService.h"
 
 #include "Generated/Constants/ConstantsSDKDataTypes_constants.h"
 #include "Generated/InputManager/InputManagerSDKDataTypes_types.h"
@@ -126,6 +127,11 @@ namespace Ruyi
 		/// to access the ruyi platform back end service interface
 		/// </summary>
 		Ruyi::SDK::Online::RuyiNetClient* RuyiNet;
+
+		/// <summary>
+		/// the overlay service
+		/// </summary>
+		SDK::OverlayManagerExternal::ExternalOverlayManagerServiceClient* OverlayService;
 
 		__declspec(deprecated("Use RuyiNet instead, BCService is deprecated and will be removed in future release"))
 		SDK::BrainCloudApi::BrainCloudServiceClient* BCService;
