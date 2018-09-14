@@ -31,15 +31,14 @@ Check the top of the `DA220REL.txt` file:
 *   BIOS Version:  DA220013.rom (V0.13)
 ```
 
-__Important__:
-
-
+__Important__:  
 
 ![](/docs/img/warning.png) Because the BIOS must be paired with a compatible AMD driver, the BIOS version __must__ be paried with the correct version of [the OS](os.md).  This is summarized as follows:  
 
 | BIOS Version/Date | Ruyi OS Version | AMD Driver Stack Version/Date
 |-|-|-
-| [1.01](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220101.zip) | 1.02 | 1.0.1.0 2018/5/31
+| [1.02](https://github.com/subor/sdk/releases/download/v0.9.0.2440/BIOS_DA220102.zip) | 1.05 | 1.0.4.0 2018/7/10
+| [1.01](https://github.com/subor/sdk/releases/download/v0.9.0.2440/BIOS_DA220101.zip) | 1.02 | 1.0.1.0 2018/5/31
 | [1.00](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220100.zip) | 1.02 | 1.0.1.0 2018/5/31
 | [0.20](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220020.zip) | 0.11 | 1.0.1.0 2018/5/2
 | [0.19](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220019.zip) | 0.10 | 1.0.1.0 2018/4/17
