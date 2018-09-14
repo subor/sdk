@@ -83,6 +83,13 @@ namespace RuyiCppSDKTest
 			pRuyiNetTest->RuyiNet_Initialize();
 			pRuyiNetTest->GamificationServiceTest();
 		}
+
+		TEST_METHOD(RUYINET_VideoService)
+		{
+			pRuyiNetTest->Login();
+			pRuyiNetTest->RuyiNet_Initialize();
+			pRuyiNetTest->VideoServiceTest();
+		}
 	};
 
 	RuyiNetTest* RuyiNetTester::pRuyiNetTest;
