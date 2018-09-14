@@ -2,6 +2,8 @@
 using log4net.Core;
 using log4net.Layout;
 using System;
+using System.IO;
+using System.Reflection;
 using System.Xml;
 
 [assembly: log4net.Config.Repository("Layer0")]
@@ -14,7 +16,7 @@ namespace Ruyi.Logging
 
         private LogLevel logLevel = LogLevel.Info;
 
-        private readonly ILog logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public Log4NetLogger()
         {
