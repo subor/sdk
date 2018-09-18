@@ -164,6 +164,10 @@ namespace Ruyi
         /// <summary>
         /// Create a new SDK instance with the given context.
         /// </summary>
+        /// <remarks>
+        /// this method use blocking calls like Wait(), WaitAll(), .Rsult() on async methods,
+        /// so invoke it on UI thread will cause dead-lock, please handle this by yourself
+        /// </remarks>
         /// <param name="cont">context used to create the sdk instance</param>
         /// <returns>the created instance, null if context is not valid</returns>
         public static RuyiSDK CreateInstance(RuyiSDKContext cont)
@@ -358,15 +362,7 @@ namespace Ruyi
 
             return true;
         }
-
-        /// <summary>
-        /// Basic update loop.
-        /// </summary>
-        public void Update()
-        {
-            RuyiNetService.Update();
-        }
-
+        
         /// <summary>
         /// Dispose the SDK instance, don't miss this after SDK usage.
         /// </summary>

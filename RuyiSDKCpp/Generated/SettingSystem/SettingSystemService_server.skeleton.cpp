@@ -151,7 +151,17 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("SettingItemNotify\n");
   }
 
-  bool SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS) {
+  void GetNetworkAdapterSettings( ::Ruyi::SDK::SettingSystem::Api::NetworkSettings& _return) {
+    // Your implementation goes here
+    printf("GetNetworkAdapterSettings\n");
+  }
+
+  void GetLanNetworkName(std::string& _return) {
+    // Your implementation goes here
+    printf("GetLanNetworkName\n");
+  }
+
+  bool SetNetworkSettings(const bool isWLan, const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS) {
     // Your implementation goes here
     printf("SetNetworkSettings\n");
   }

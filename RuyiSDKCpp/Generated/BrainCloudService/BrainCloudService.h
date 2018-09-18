@@ -1070,6 +1070,13 @@ class BrainCloudServiceIf {
   virtual void Friend_GetSummaryDataForFriends(std::string& _return, const int32_t clientIndex) = 0;
 
   /**
+   * Returns user state of player's recently met.
+   * 
+   * @param clientIndex
+   */
+  virtual void Friend_GetSummaryDataForRecentlyMetPlayers(std::string& _return, const int32_t clientIndex) = 0;
+
+  /**
    * Finds a list of users matching the search text by performing an exact
    * search of all user names.
    * 
@@ -3996,6 +4003,9 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
     return;
   }
   void Friend_GetSummaryDataForFriends(std::string& /* _return */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Friend_GetSummaryDataForRecentlyMetPlayers(std::string& /* _return */, const int32_t /* clientIndex */) {
     return;
   }
   void Friend_FindUsersByExactName(std::string& /* _return */, const std::string& /* searchText */, const int32_t /* maxResults */, const int32_t /* clientIndex */) {
@@ -14522,6 +14532,110 @@ class BrainCloudService_Friend_GetSummaryDataForFriends_presult {
   std::string* success;
 
   _BrainCloudService_Friend_GetSummaryDataForFriends_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args__isset {
+  _BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args__isset() : clientIndex(false) {}
+  bool clientIndex :1;
+} _BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args__isset;
+
+class BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args {
+ public:
+
+  BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args(const BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args&);
+  BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args& operator=(const BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args&);
+  BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args() : clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args() throw();
+  int32_t clientIndex;
+
+  _BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args__isset __isset;
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args & rhs) const
+  {
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_pargs() throw();
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result__isset {
+  _BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result__isset;
+
+class BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result {
+ public:
+
+  BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result(const BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result&);
+  BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result& operator=(const BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result&);
+  BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result() throw();
+  std::string success;
+
+  _BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_presult__isset {
+  _BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_presult__isset;
+
+class BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Friend_GetSummaryDataForRecentlyMetPlayers_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -46687,6 +46801,9 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Friend_GetSummaryDataForFriends(std::string& _return, const int32_t clientIndex);
   void send_Friend_GetSummaryDataForFriends(const int32_t clientIndex);
   void recv_Friend_GetSummaryDataForFriends(std::string& _return);
+  void Friend_GetSummaryDataForRecentlyMetPlayers(std::string& _return, const int32_t clientIndex);
+  void send_Friend_GetSummaryDataForRecentlyMetPlayers(const int32_t clientIndex);
+  void recv_Friend_GetSummaryDataForRecentlyMetPlayers(std::string& _return);
   void Friend_FindUsersByExactName(std::string& _return, const std::string& searchText, const int32_t maxResults, const int32_t clientIndex);
   void send_Friend_FindUsersByExactName(const std::string& searchText, const int32_t maxResults, const int32_t clientIndex);
   void recv_Friend_FindUsersByExactName(std::string& _return);
@@ -47599,6 +47716,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Friend_GetSummaryDataForProfileId(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Friend_GetSummaryDataForProfileIds(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Friend_GetSummaryDataForFriends(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Friend_GetSummaryDataForRecentlyMetPlayers(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Friend_FindUsersByExactName(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Friend_FindUsersBySubstrName(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Friend_ListFriends(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -47959,6 +48077,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Friend_GetSummaryDataForProfileId"] = &BrainCloudServiceProcessor::process_Friend_GetSummaryDataForProfileId;
     processMap_["Friend_GetSummaryDataForProfileIds"] = &BrainCloudServiceProcessor::process_Friend_GetSummaryDataForProfileIds;
     processMap_["Friend_GetSummaryDataForFriends"] = &BrainCloudServiceProcessor::process_Friend_GetSummaryDataForFriends;
+    processMap_["Friend_GetSummaryDataForRecentlyMetPlayers"] = &BrainCloudServiceProcessor::process_Friend_GetSummaryDataForRecentlyMetPlayers;
     processMap_["Friend_FindUsersByExactName"] = &BrainCloudServiceProcessor::process_Friend_FindUsersByExactName;
     processMap_["Friend_FindUsersBySubstrName"] = &BrainCloudServiceProcessor::process_Friend_FindUsersBySubstrName;
     processMap_["Friend_ListFriends"] = &BrainCloudServiceProcessor::process_Friend_ListFriends;
@@ -49096,6 +49215,16 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
       ifaces_[i]->Friend_GetSummaryDataForFriends(_return, clientIndex);
     }
     ifaces_[i]->Friend_GetSummaryDataForFriends(_return, clientIndex);
+    return;
+  }
+
+  void Friend_GetSummaryDataForRecentlyMetPlayers(std::string& _return, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Friend_GetSummaryDataForRecentlyMetPlayers(_return, clientIndex);
+    }
+    ifaces_[i]->Friend_GetSummaryDataForRecentlyMetPlayers(_return, clientIndex);
     return;
   }
 
@@ -52090,6 +52219,9 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Friend_GetSummaryDataForFriends(std::string& _return, const int32_t clientIndex);
   int32_t send_Friend_GetSummaryDataForFriends(const int32_t clientIndex);
   void recv_Friend_GetSummaryDataForFriends(std::string& _return, const int32_t seqid);
+  void Friend_GetSummaryDataForRecentlyMetPlayers(std::string& _return, const int32_t clientIndex);
+  int32_t send_Friend_GetSummaryDataForRecentlyMetPlayers(const int32_t clientIndex);
+  void recv_Friend_GetSummaryDataForRecentlyMetPlayers(std::string& _return, const int32_t seqid);
   void Friend_FindUsersByExactName(std::string& _return, const std::string& searchText, const int32_t maxResults, const int32_t clientIndex);
   int32_t send_Friend_FindUsersByExactName(const std::string& searchText, const int32_t maxResults, const int32_t clientIndex);
   void recv_Friend_FindUsersByExactName(std::string& _return, const int32_t seqid);

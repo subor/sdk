@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ruyi.SDK.Online
 {
@@ -19,10 +20,9 @@ namespace Ruyi.SDK.Online
         /// Starts a telemetry session on the online service using the current timestamp.
         /// </summary>
         /// <param name="clientIndex">Index of the client making the call.</param>
-        /// <param name="callback">The callback that will receive the session ID.</param>
-        public void StartTelemetrySession(int clientIndex, Action<RuyiNetTelemetrySession> callback)
+        public Task<RuyiNetTelemetrySession> StartTelemetrySession(int clientIndex)
         {
-            StartTelemetrySession(clientIndex, CurrentTimestamp, callback);
+            return StartTelemetrySession(clientIndex, CurrentTimestamp);
         }
 
         /// <summary>
@@ -30,38 +30,28 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="clientIndex">Index of the client making the call.</param>
         /// <param name="timestamp">The timestamp when the session started.</param>
-        /// <param name="callback">The callback that will receive the session ID.</param>
-        public void StartTelemetrySession(int clientIndex, int timestamp, Action<RuyiNetTelemetrySession> callback)
+        public async Task<RuyiNetTelemetrySession> StartTelemetrySession(int clientIndex, int timestamp)
         {
-
-            EnqueueTask(() =>
+            string resp = null;
+            try
             {
-                try
-                {
-                    var data = mClient.BCService.Telemetry_StartTelemetrySessionAsync(timestamp, clientIndex, token).Result;
-                    return data;
-                }
-                catch (Exception e)
-                {
+                resp = await mClient.BCService.Telemetry_StartTelemetrySessionAsync(timestamp, clientIndex, token);
+            }
+            catch (Exception e)
+            {
 #if DEBUG
-                    var response = new RuyiNetResponse()
-                    {
-                        status = 999,
-                        message = e.ToString()
-                    };
-
-                    return JsonConvert.SerializeObject(response);
+                var error = new RuyiNetResponse()
+                {
+                    status = 999,
+                    message = e.ToString()
+                };
+                resp = JsonConvert.SerializeObject(error);
 #else
                         throw;
 #endif
-                }
-            }, (RuyiNetTelemetrySessionResponse response) =>
-            {
-                if (callback != null)
-                {
-                    callback(new RuyiNetTelemetrySession(response.data.telemetrySessionId, response.data.timestamp));
-                }
-            });
+            }
+            var response = mClient.Process<RuyiNetTelemetrySessionResponse>(resp);
+            return new RuyiNetTelemetrySession(response.data.telemetrySessionId, response.data.timestamp);
         }
 
         /// <summary>
@@ -69,10 +59,9 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="clientIndex">The index of the client making the call.</param>
         /// <param name="sessionId">The ID of the session to close.</param>
-        /// <param name="callback">Callback to call when the operation is complete.</param>
-        public void EndTelemetrySession(int clientIndex, string sessionId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> EndTelemetrySession(int clientIndex, string sessionId)
         {
-            EndTelemetrySession(clientIndex, CurrentTimestamp, sessionId, callback);
+            return EndTelemetrySession(clientIndex, CurrentTimestamp, sessionId);
         }
 
         /// <summary>
@@ -81,31 +70,26 @@ namespace Ruyi.SDK.Online
         /// <param name="clientIndex">The index of the client making the call.</param>
         /// <param name="timestamp">The timestamp when the session ended.</param>
         /// <param name="sessionId">The ID of the session to close.</param>
-        /// <param name="callback">Callback to call when the operation is complete.</param>
-        public void EndTelemetrySession(int clientIndex, int timestamp, string sessionId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public async Task<RuyiNetResponse> EndTelemetrySession(int clientIndex, int timestamp, string sessionId)
         {
-            EnqueueTask(() =>
+            try
             {
-                try
-                {
-                    var data = mClient.BCService.Telemetry_EndTelemetrySessionAsync(sessionId, timestamp, clientIndex, token).Result;
-                    return data;
-                }
-                catch (Exception e)
-                {
+                var resp = await mClient.BCService.Telemetry_EndTelemetrySessionAsync(sessionId, timestamp, clientIndex, token);
+                return mClient.Process<RuyiNetResponse>(resp);
+            }
+            catch (Exception e)
+            {
 #if DEBUG
-                    var response = new RuyiNetResponse()
-                    {
-                        status = 999,
-                        message = e.ToString()
-                    };
-
-                    return JsonConvert.SerializeObject(response);
+                return new RuyiNetResponse()
+                {
+                    status = 999,
+                    message = e.ToString()
+                };
 #else
                         throw;
 #endif
-                }
-            }, callback);
+            }
+            
         }
 
         /// <summary>
@@ -114,11 +98,9 @@ namespace Ruyi.SDK.Online
         /// <param name="clientIndex">The index of the client making the call.</param>
         /// <param name="sessionId">The ID of the session to log the event with.</param>
         /// <param name="eventType">The type of event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void LogTelemetryEvent(int clientIndex, string sessionId, string eventType,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> LogTelemetryEvent(int clientIndex, string sessionId, string eventType)
         {
-            LogTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, "", null, callback);
+            return LogTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, string.Empty, null);
         }
 
         /// <summary>
@@ -128,77 +110,64 @@ namespace Ruyi.SDK.Online
         /// <param name="timestamp">The timestamp when the event occurred.</param>
         /// <param name="sessionId">The ID of the session to log the event with.</param>
         /// <param name="eventType">The type of event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void LogTelemetryEvent(int clientIndex, int timestamp,
+        public Task<RuyiNetResponse> LogTelemetryEvent(int clientIndex, int timestamp, string sessionId, string eventType)
+        {
+            return LogTelemetryEvent(clientIndex, timestamp, sessionId, eventType, "", null);
+        }
+
+        /// <summary>
+        /// Logs a telemetry event.
+        /// </summary>
+        /// <param name="clientIndex">The index of the client making the call.</param>
+        /// <param name="timestamp">The timestamp when the event occurred.</param>
+        /// <param name="sessionId">The ID of the session to log the event with.</param>
+        /// <param name="eventType">The type of event.</param>
+        /// <param name="participantId">The ID or the participant in the event.</param>
+        public Task<RuyiNetResponse> LogTelemetryEvent(int clientIndex, int timestamp, string sessionId, string eventType, string participantId)
+        {
+            return LogTelemetryEvent(clientIndex, timestamp, sessionId, eventType, participantId, null);
+        }
+
+        /// <summary>
+        /// Logs a telemetry event.
+        /// </summary>
+        /// <param name="clientIndex">The index of the client making the call.</param>
+        /// <param name="timestamp">The timestamp when the event occurred.</param>
+        /// <param name="sessionId">The ID of the session to log the event with.</param>
+        /// <param name="eventType">The type of event.</param>
+        /// <param name="customData">The custom data to attach to the event.</param>
+        public Task<RuyiNetResponse> LogTelemetryEvent(int clientIndex, int timestamp,
             string sessionId, string eventType,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+            Dictionary<string, string> customData)
         {
-            LogTelemetryEvent(clientIndex, timestamp, sessionId, eventType, "", null, callback);
+            return LogTelemetryEvent(clientIndex, timestamp, sessionId, eventType, "", customData);
         }
 
         /// <summary>
         /// Logs a telemetry event.
         /// </summary>
         /// <param name="clientIndex">The index of the client making the call.</param>
-        /// <param name="timestamp">The timestamp when the event occurred.</param>
         /// <param name="sessionId">The ID of the session to log the event with.</param>
         /// <param name="eventType">The type of event.</param>
         /// <param name="participantId">The ID or the participant in the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void LogTelemetryEvent(int clientIndex, int timestamp,
-            string sessionId, string eventType, string participantId,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> LogTelemetryEvent(int clientIndex, string sessionId, string eventType, string participantId)
         {
-            LogTelemetryEvent(clientIndex, timestamp, sessionId, eventType, participantId, null, callback);
+            return LogTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, participantId, null);
         }
 
         /// <summary>
         /// Logs a telemetry event.
         /// </summary>
         /// <param name="clientIndex">The index of the client making the call.</param>
-        /// <param name="timestamp">The timestamp when the event occurred.</param>
         /// <param name="sessionId">The ID of the session to log the event with.</param>
         /// <param name="eventType">The type of event.</param>
+        /// <param name="participantId">The ID or the participant in the event.</param>
         /// <param name="customData">The custom data to attach to the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void LogTelemetryEvent(int clientIndex, int timestamp,
-            string sessionId, string eventType,
-            Dictionary<string, string> customData,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
-        {
-            LogTelemetryEvent(clientIndex, timestamp, sessionId, eventType, "", customData, callback);
-        }
-
-        /// <summary>
-        /// Logs a telemetry event.
-        /// </summary>
-        /// <param name="clientIndex">The index of the client making the call.</param>
-        /// <param name="sessionId">The ID of the session to log the event with.</param>
-        /// <param name="eventType">The type of event.</param>
-        /// <param name="participantId">The ID or the participant in the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void LogTelemetryEvent(int clientIndex, string sessionId,
+        public Task<RuyiNetResponse> LogTelemetryEvent(int clientIndex, string sessionId,
             string eventType, string participantId,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+            Dictionary<string, string> customData)
         {
-            LogTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, participantId, null, callback);
-        }
-
-        /// <summary>
-        /// Logs a telemetry event.
-        /// </summary>
-        /// <param name="clientIndex">The index of the client making the call.</param>
-        /// <param name="sessionId">The ID of the session to log the event with.</param>
-        /// <param name="eventType">The type of event.</param>
-        /// <param name="participantId">The ID or the participant in the event.</param>
-        /// <param name="customData">The custom data to attach to the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void LogTelemetryEvent(int clientIndex, string sessionId,
-            string eventType, string participantId,
-            Dictionary<string, string> customData,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
-        {
-            LogTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, participantId, customData, callback);
+            return LogTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, participantId, customData);
         }
 
         /// <summary>
@@ -208,12 +177,9 @@ namespace Ruyi.SDK.Online
         /// <param name="sessionId">The ID of the session to log the event with.</param>
         /// <param name="eventType">The type of event.</param>
         /// <param name="customData">The custom data to attach to the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void LogTelemetryEvent(int clientIndex, string sessionId, string eventType,
-            Dictionary<string, string> customData,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> LogTelemetryEvent(int clientIndex, string sessionId, string eventType, Dictionary<string, string> customData)
         {
-            LogTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, "", customData, callback);
+            return LogTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, "", customData);
         }
 
         /// <summary>
@@ -225,36 +191,29 @@ namespace Ruyi.SDK.Online
         /// <param name="eventType">The type of event.</param>
         /// <param name="participantId">The ID or the participant in the event.</param>
         /// <param name="customData">The custom data to attach to the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void LogTelemetryEvent(int clientIndex, int timestamp,
+        public async Task<RuyiNetResponse> LogTelemetryEvent(int clientIndex, int timestamp,
             string sessionId, string eventType, string participantId,
-            Dictionary<string, string> customData,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+            Dictionary<string, string> customData)
         {
-            EnqueueTask(() =>
+            try
             {
-                try
-                {
-                    var data = mClient.BCService.Telemetry_LogTelemetryEventAsync(
-                        sessionId, timestamp, eventType, participantId,
-                        customData, clientIndex, token).Result;
-                    return data;
-                }
-                catch (Exception e)
-                {
+                var resp = await mClient.BCService.Telemetry_LogTelemetryEventAsync(
+                    sessionId, timestamp, eventType, participantId,
+                    customData, clientIndex, token);
+                return mClient.Process<RuyiNetResponse>(resp);
+            }
+            catch (Exception e)
+            {
 #if DEBUG
-                    var response = new RuyiNetResponse()
-                    {
-                        status = 999,
-                        message = e.ToString()
-                    };
-
-                    return JsonConvert.SerializeObject(response);
+                return new RuyiNetResponse()
+                {
+                    status = 999,
+                    message = e.ToString()
+                };
 #else
                         throw;
 #endif
-                }
-            }, callback);
+            }
         }
 
         /// <summary>
@@ -263,11 +222,9 @@ namespace Ruyi.SDK.Online
         /// <param name="clientIndex">The index of the client making the call.</param>
         /// <param name="sessionId">The ID of the session to Start the event with.</param>
         /// <param name="eventType">The type of event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void StartTelemetryEvent(int clientIndex, string sessionId, string eventType,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> StartTelemetryEvent(int clientIndex, string sessionId, string eventType)
         {
-            StartTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, "", null, callback);
+            return StartTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, "", null);
         }
 
         /// <summary>
@@ -277,77 +234,65 @@ namespace Ruyi.SDK.Online
         /// <param name="timestamp">The timestamp when the event occurred.</param>
         /// <param name="sessionId">The ID of the session to Start the event with.</param>
         /// <param name="eventType">The type of event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void StartTelemetryEvent(int clientIndex, int timestamp,
+        public Task<RuyiNetResponse> StartTelemetryEvent(int clientIndex, int timestamp, string sessionId, string eventType)
+        {
+            return StartTelemetryEvent(clientIndex, timestamp, sessionId, eventType, "", null);
+        }
+
+        /// <summary>
+        /// Starts a telemetry event.
+        /// </summary>
+        /// <param name="clientIndex">The index of the client making the call.</param>
+        /// <param name="timestamp">The timestamp when the event occurred.</param>
+        /// <param name="sessionId">The ID of the session to Start the event with.</param>
+        /// <param name="eventType">The type of event.</param>
+        /// <param name="participantId">The ID or the participant in the event.</param>
+        public Task<RuyiNetResponse> StartTelemetryEvent(int clientIndex, int timestamp,
+            string sessionId, string eventType, string participantId)
+        {
+            return StartTelemetryEvent(clientIndex, timestamp, sessionId, eventType, participantId, null);
+        }
+
+        /// <summary>
+        /// Starts a telemetry event.
+        /// </summary>
+        /// <param name="clientIndex">The index of the client making the call.</param>
+        /// <param name="timestamp">The timestamp when the event occurred.</param>
+        /// <param name="sessionId">The ID of the session to Start the event with.</param>
+        /// <param name="eventType">The type of event.</param>
+        /// <param name="customData">The custom data to attach to the event.</param>
+        public Task<RuyiNetResponse> StartTelemetryEvent(int clientIndex, int timestamp,
             string sessionId, string eventType,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+            Dictionary<string, string> customData)
         {
-            StartTelemetryEvent(clientIndex, timestamp, sessionId, eventType, "", null, callback);
+            return StartTelemetryEvent(clientIndex, timestamp, sessionId, eventType, "", customData);
         }
 
         /// <summary>
         /// Starts a telemetry event.
         /// </summary>
         /// <param name="clientIndex">The index of the client making the call.</param>
-        /// <param name="timestamp">The timestamp when the event occurred.</param>
         /// <param name="sessionId">The ID of the session to Start the event with.</param>
         /// <param name="eventType">The type of event.</param>
         /// <param name="participantId">The ID or the participant in the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void StartTelemetryEvent(int clientIndex, int timestamp,
-            string sessionId, string eventType, string participantId,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> StartTelemetryEvent(int clientIndex, string sessionId, string eventType, string participantId)
         {
-            StartTelemetryEvent(clientIndex, timestamp, sessionId, eventType, participantId, null, callback);
+            return StartTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, participantId, null);
         }
 
         /// <summary>
         /// Starts a telemetry event.
         /// </summary>
         /// <param name="clientIndex">The index of the client making the call.</param>
-        /// <param name="timestamp">The timestamp when the event occurred.</param>
         /// <param name="sessionId">The ID of the session to Start the event with.</param>
         /// <param name="eventType">The type of event.</param>
+        /// <param name="participantId">The ID or the participant in the event.</param>
         /// <param name="customData">The custom data to attach to the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void StartTelemetryEvent(int clientIndex, int timestamp,
-            string sessionId, string eventType,
-            Dictionary<string, string> customData,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
-        {
-            StartTelemetryEvent(clientIndex, timestamp, sessionId, eventType, "", customData, callback);
-        }
-
-        /// <summary>
-        /// Starts a telemetry event.
-        /// </summary>
-        /// <param name="clientIndex">The index of the client making the call.</param>
-        /// <param name="sessionId">The ID of the session to Start the event with.</param>
-        /// <param name="eventType">The type of event.</param>
-        /// <param name="participantId">The ID or the participant in the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void StartTelemetryEvent(int clientIndex, string sessionId,
+        public Task<RuyiNetResponse> StartTelemetryEvent(int clientIndex, string sessionId,
             string eventType, string participantId,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+            Dictionary<string, string> customData)
         {
-            StartTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, participantId, null, callback);
-        }
-
-        /// <summary>
-        /// Starts a telemetry event.
-        /// </summary>
-        /// <param name="clientIndex">The index of the client making the call.</param>
-        /// <param name="sessionId">The ID of the session to Start the event with.</param>
-        /// <param name="eventType">The type of event.</param>
-        /// <param name="participantId">The ID or the participant in the event.</param>
-        /// <param name="customData">The custom data to attach to the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void StartTelemetryEvent(int clientIndex, string sessionId,
-            string eventType, string participantId,
-            Dictionary<string, string> customData,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
-        {
-            StartTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, participantId, customData, callback);
+            return StartTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, participantId, customData);
         }
 
         /// <summary>
@@ -357,12 +302,9 @@ namespace Ruyi.SDK.Online
         /// <param name="sessionId">The ID of the session to Start the event with.</param>
         /// <param name="eventType">The type of event.</param>
         /// <param name="customData">The custom data to attach to the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void StartTelemetryEvent(int clientIndex, string sessionId, string eventType,
-            Dictionary<string, string> customData,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> StartTelemetryEvent(int clientIndex, string sessionId, string eventType, Dictionary<string, string> customData)
         {
-            StartTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, "", customData, callback);
+            return StartTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, "", customData);
         }
 
         /// <summary>
@@ -374,36 +316,30 @@ namespace Ruyi.SDK.Online
         /// <param name="eventType">The type of event.</param>
         /// <param name="participantId">The ID or the participant in the event.</param>
         /// <param name="customData">The custom data to attach to the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void StartTelemetryEvent(int clientIndex, int timestamp,
+        public async Task<RuyiNetResponse> StartTelemetryEvent(int clientIndex, int timestamp,
             string sessionId, string eventType, string participantId,
-            Dictionary<string, string> customData,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+            Dictionary<string, string> customData)
         {
-            EnqueueTask(() =>
+            try
             {
-                try
-                {
-                    var data = mClient.BCService.Telemetry_StartTelemetryEventAsync(
-                        sessionId, timestamp, eventType, participantId,
-                        customData, clientIndex, token).Result;
-                    return data;
-                }
-                catch (Exception e)
-                {
+                var resp = await mClient.BCService.Telemetry_StartTelemetryEventAsync(
+                    sessionId, timestamp, eventType, participantId,
+                    customData, clientIndex, token);
+                return mClient.Process<RuyiNetResponse>(resp);
+            }
+            catch (Exception e)
+            {
 #if DEBUG
-                    var response = new RuyiNetResponse()
-                    {
-                        status = 999,
-                        message = e.ToString()
-                    };
-
-                    return JsonConvert.SerializeObject(response);
+                return new RuyiNetResponse()
+                {
+                    status = 999,
+                    message = e.ToString()
+                };
 #else
                         throw;
 #endif
-                }
-            }, callback);
+            }
+            
         }
 
         /// <summary>
@@ -412,11 +348,9 @@ namespace Ruyi.SDK.Online
         /// <param name="clientIndex">The index of the client making the call.</param>
         /// <param name="sessionId">The ID of the session to End the event with.</param>
         /// <param name="eventType">The type of event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void EndTelemetryEvent(int clientIndex, string sessionId, string eventType,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> EndTelemetryEvent(int clientIndex, string sessionId, string eventType)
         {
-            EndTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, "", null, callback);
+            return EndTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, "", null);
         }
 
         /// <summary>
@@ -426,77 +360,64 @@ namespace Ruyi.SDK.Online
         /// <param name="timestamp">The timestamp when the event occurred.</param>
         /// <param name="sessionId">The ID of the session to End the event with.</param>
         /// <param name="eventType">The type of event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void EndTelemetryEvent(int clientIndex, int timestamp,
+        public Task<RuyiNetResponse> EndTelemetryEvent(int clientIndex, int timestamp, string sessionId, string eventType)
+        {
+            return EndTelemetryEvent(clientIndex, timestamp, sessionId, eventType, "", null);
+        }
+
+        /// <summary>
+        /// Ends a telemetry event.
+        /// </summary>
+        /// <param name="clientIndex">The index of the client making the call.</param>
+        /// <param name="timestamp">The timestamp when the event occurred.</param>
+        /// <param name="sessionId">The ID of the session to End the event with.</param>
+        /// <param name="eventType">The type of event.</param>
+        /// <param name="participantId">The ID or the participant in the event.</param>
+        public Task<RuyiNetResponse> EndTelemetryEvent(int clientIndex, int timestamp, string sessionId, string eventType, string participantId)
+        {
+            return EndTelemetryEvent(clientIndex, timestamp, sessionId, eventType, participantId, null);
+        }
+
+        /// <summary>
+        /// Ends a telemetry event.
+        /// </summary>
+        /// <param name="clientIndex">The index of the client making the call.</param>
+        /// <param name="timestamp">The timestamp when the event occurred.</param>
+        /// <param name="sessionId">The ID of the session to End the event with.</param>
+        /// <param name="eventType">The type of event.</param>
+        /// <param name="customData">The custom data to attach to the event.</param>
+        public Task<RuyiNetResponse> EndTelemetryEvent(int clientIndex, int timestamp,
             string sessionId, string eventType,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+            Dictionary<string, string> customData)
         {
-            EndTelemetryEvent(clientIndex, timestamp, sessionId, eventType, "", null, callback);
+            return EndTelemetryEvent(clientIndex, timestamp, sessionId, eventType, "", customData);
         }
 
         /// <summary>
         /// Ends a telemetry event.
         /// </summary>
         /// <param name="clientIndex">The index of the client making the call.</param>
-        /// <param name="timestamp">The timestamp when the event occurred.</param>
         /// <param name="sessionId">The ID of the session to End the event with.</param>
         /// <param name="eventType">The type of event.</param>
         /// <param name="participantId">The ID or the participant in the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void EndTelemetryEvent(int clientIndex, int timestamp,
-            string sessionId, string eventType, string participantId,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> EndTelemetryEvent(int clientIndex, string sessionId, string eventType, string participantId)
         {
-            EndTelemetryEvent(clientIndex, timestamp, sessionId, eventType, participantId, null, callback);
+            return EndTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, participantId, null);
         }
 
         /// <summary>
         /// Ends a telemetry event.
         /// </summary>
         /// <param name="clientIndex">The index of the client making the call.</param>
-        /// <param name="timestamp">The timestamp when the event occurred.</param>
         /// <param name="sessionId">The ID of the session to End the event with.</param>
         /// <param name="eventType">The type of event.</param>
+        /// <param name="participantId">The ID or the participant in the event.</param>
         /// <param name="customData">The custom data to attach to the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void EndTelemetryEvent(int clientIndex, int timestamp,
-            string sessionId, string eventType,
-            Dictionary<string, string> customData,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
-        {
-            EndTelemetryEvent(clientIndex, timestamp, sessionId, eventType, "", customData, callback);
-        }
-
-        /// <summary>
-        /// Ends a telemetry event.
-        /// </summary>
-        /// <param name="clientIndex">The index of the client making the call.</param>
-        /// <param name="sessionId">The ID of the session to End the event with.</param>
-        /// <param name="eventType">The type of event.</param>
-        /// <param name="participantId">The ID or the participant in the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void EndTelemetryEvent(int clientIndex, string sessionId,
+        public Task<RuyiNetResponse> EndTelemetryEvent(int clientIndex, string sessionId,
             string eventType, string participantId,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+            Dictionary<string, string> customData)
         {
-            EndTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, participantId, null, callback);
-        }
-
-        /// <summary>
-        /// Ends a telemetry event.
-        /// </summary>
-        /// <param name="clientIndex">The index of the client making the call.</param>
-        /// <param name="sessionId">The ID of the session to End the event with.</param>
-        /// <param name="eventType">The type of event.</param>
-        /// <param name="participantId">The ID or the participant in the event.</param>
-        /// <param name="customData">The custom data to attach to the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void EndTelemetryEvent(int clientIndex, string sessionId,
-            string eventType, string participantId,
-            Dictionary<string, string> customData,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
-        {
-            EndTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, participantId, customData, callback);
+            return EndTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, participantId, customData);
         }
 
         /// <summary>
@@ -506,12 +427,9 @@ namespace Ruyi.SDK.Online
         /// <param name="sessionId">The ID of the session to End the event with.</param>
         /// <param name="eventType">The type of event.</param>
         /// <param name="customData">The custom data to attach to the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void EndTelemetryEvent(int clientIndex, string sessionId, string eventType,
-            Dictionary<string, string> customData,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> EndTelemetryEvent(int clientIndex, string sessionId, string eventType, Dictionary<string, string> customData)
         {
-            EndTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, "", customData, callback);
+            return EndTelemetryEvent(clientIndex, CurrentTimestamp, sessionId, eventType, "", customData);
         }
 
         /// <summary>
@@ -523,36 +441,29 @@ namespace Ruyi.SDK.Online
         /// <param name="eventType">The type of event.</param>
         /// <param name="participantId">The ID or the participant in the event.</param>
         /// <param name="customData">The custom data to attach to the event.</param>
-        /// <param name="callback">The callback to call when the operation is complete.</param>
-        public void EndTelemetryEvent(int clientIndex, int timestamp,
+        public async Task<RuyiNetResponse> EndTelemetryEvent(int clientIndex, int timestamp,
             string sessionId, string eventType, string participantId,
-            Dictionary<string, string> customData,
-            RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+            Dictionary<string, string> customData)
         {
-            EnqueueTask(() =>
+            try
             {
-                try
-                {
-                    var data = mClient.BCService.Telemetry_EndTelemetryEventAsync(
-                        sessionId, timestamp, eventType, participantId,
-                        customData, clientIndex, token).Result;
-                    return data;
-                }
-                catch (Exception e)
-                {
+                var resp = await mClient.BCService.Telemetry_EndTelemetryEventAsync(
+                    sessionId, timestamp, eventType, participantId,
+                    customData, clientIndex, token);
+                return mClient.Process<RuyiNetResponse>(resp);
+            }
+            catch (Exception e)
+            {
 #if DEBUG
-                    var response = new RuyiNetResponse()
-                    {
-                        status = 999,
-                        message = e.ToString()
-                    };
-
-                    return JsonConvert.SerializeObject(response);
+                return new RuyiNetResponse()
+                {
+                    status = 999,
+                    message = e.ToString()
+                };
 #else
                         throw;
 #endif
-                }
-            }, callback);
+            }
         }
 
         private int CurrentTimestamp
@@ -562,7 +473,5 @@ namespace Ruyi.SDK.Online
                 return (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             }
         }
-
-        static System.Threading.CancellationToken token = System.Threading.CancellationToken.None;
     }
 }

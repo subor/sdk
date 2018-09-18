@@ -5,10 +5,12 @@
 #include "BaseUnitTest.h"
 #include "RuyiNet/RuyiNetClient.h"
 
+
 using namespace Ruyi;
 using namespace Ruyi::SDK;
 using namespace std;
 using namespace Ruyi::SDK::Online;
+using namespace Ruyi::SDK::BrainCloudApi;
 
 class RuyiNetTest : public BaseUnitTest
 {
@@ -27,6 +29,7 @@ public:
 	void UserFileServiceTest();
 	void GamificationServiceTest();
 	void PatchServiceTest();
+	void VideoServiceTest();
 
 private:
 

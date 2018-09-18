@@ -28,8 +28,6 @@ namespace Ruyi.SDK.Constants
     public const string system_setting_version = "1.0.0.1";
     public const string layer0_debugger_channel = "layer0_debugger_channel";
     public const string trc_test_channel = "trc_test_channel";
-    public const string debugger_publisher_in_uri = "tcp://{addr}:8867";
-    public const string debugger_publisher_out_uri = "tcp://{addr}:8868";
     public const string broker_playback_message = "mmi.developer.playback";
   }
 }

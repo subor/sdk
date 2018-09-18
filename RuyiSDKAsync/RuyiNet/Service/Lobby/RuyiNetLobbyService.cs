@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace Ruyi.SDK.Online
@@ -17,10 +18,9 @@ namespace Ruyi.SDK.Online
         /// <param name="index">The index of user</param>
         /// <param name="maxSlots">The maximum number of players that can join this lobby.</param>
         /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void CreateLobby(int index, int maxSlots, RuyiNetLobbyType lobbyType, Action<RuyiNetLobby> callback)
+        public Task<RuyiNetLobby> CreateLobby(int index, int maxSlots, RuyiNetLobbyType lobbyType)
         {
-            CreateLobby(index, maxSlots, lobbyType, "{}", callback);
+            return CreateLobby(index, maxSlots, lobbyType, "{}");
         }
 
         /// <summary>
@@ -30,9 +30,7 @@ namespace Ruyi.SDK.Online
         /// <param name="maxSlots">The maximum number of players that can join this lobby.</param>
         /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
         /// <param name="customAttributes">JSON string of custom attributes to attach to this lobby.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void CreateLobby(int index, int maxSlots, RuyiNetLobbyType lobbyType,
-            string customAttributes, Action<RuyiNetLobby> callback)
+        public async Task<RuyiNetLobby> CreateLobby(int index, int maxSlots, RuyiNetLobbyType lobbyType, string customAttributes)
         {
             var payload = new RuyiNetLobbyCreateRequest()
             {
@@ -42,13 +40,10 @@ namespace Ruyi.SDK.Online
                 customAttributes = customAttributes
             };
 
-            RunPlatformScript(index, "Lobby_Create", JsonConvert.SerializeObject(payload),
-                (RuyiNetLobbyResponse response) =>
-                {
-                    mCurrentLobby = response;
-                    callback(mCurrentLobby);
-                    PollLobbyStatus();
-                });
+            var response = await RunPlatformScript<RuyiNetLobbyResponse>(index, "Lobby_Create", JsonConvert.SerializeObject(payload));
+            mCurrentLobby = response;
+            PollLobbyStatus();
+            return mCurrentLobby;
         }
 
         /// <summary>
@@ -56,13 +51,12 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="lobbyId">The ID of the lobby to close.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void CloseLobby(int index, string lobbyId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> CloseLobby(int index, string lobbyId)
         {
             mCurrentLobby = null;
 
             var payload = new RuyiNetLobbyCloseRequest() { lobbyId = lobbyId };
-            RunPlatformScript(index, "Lobby_Close", JsonConvert.SerializeObject(payload), callback);
+            return RunPlatformScript<RuyiNetResponse>(index, "Lobby_Close", JsonConvert.SerializeObject(payload));
         }
 
         /// <summary>
@@ -71,11 +65,9 @@ namespace Ruyi.SDK.Online
         /// <param name="index">The index of user</param>
         /// <param name="numResults">The maximum number of lobbies to return.</param>
         /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType,
-            Action<RuyiNetLobby[]> callback)
+        public Task<RuyiNetLobby[]> FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType)
         {
-            FindLobbies(index, numResults, lobbyType, 0, callback);
+            return FindLobbies(index, numResults, lobbyType, 0);
         }
 
         /// <summary>
@@ -85,11 +77,9 @@ namespace Ruyi.SDK.Online
         /// <param name="numResults">The maximum number of lobbies to return.</param>
         /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
         /// <param name="freeSlots">The number of free slots needed.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType,
-            int freeSlots, Action<RuyiNetLobby[]> callback)
+        public Task<RuyiNetLobby[]> FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType, int freeSlots)
         {
-            FindLobbies(index, numResults, lobbyType, freeSlots, "{}", callback);
+            return FindLobbies(index, numResults, lobbyType, freeSlots, "{}");
         }
 
         /// <summary>
@@ -100,9 +90,7 @@ namespace Ruyi.SDK.Online
         /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
         /// <param name="freeSlots">The number of free slots needed.</param>
         /// <param name="searchCriteria">JSON string representing parameters to search for.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType,
-            int freeSlots, string searchCriteria, Action<RuyiNetLobby[]> callback)
+        public async Task<RuyiNetLobby[]> FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType, int freeSlots, string searchCriteria)
         {
             var payload = new RuyiNetLobbyFindRequest()
             {
@@ -113,18 +101,15 @@ namespace Ruyi.SDK.Online
                 searchCriteria = searchCriteria
             };
 
-            RunPlatformScript(index, "Lobby_Find", JsonConvert.SerializeObject(payload),
-                (RuyiNetLobbyFindResponse response) =>
-                {
-                    var results = response.data.response.results;
-                    var lobbies = new RuyiNetLobby[results.count];
-                    for (int i = 0; i < results.count; ++i)
-                    {
-                        lobbies[i] = new RuyiNetLobby(results.items[i]);
-                    }
+            var response = await RunPlatformScript<RuyiNetLobbyFindResponse>(index, "Lobby_Find", JsonConvert.SerializeObject(payload));
+            var results = response.data.response.results;
+            var lobbies = new RuyiNetLobby[results.count];
+            for (int i = 0; i < results.count; ++i)
+            {
+                lobbies[i] = new RuyiNetLobby(results.items[i]);
+            }
 
-                    callback(lobbies);
-                });
+            return lobbies;
         }
 
         /// <summary>
@@ -132,17 +117,13 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="lobbyId">The ID of the lobby to join.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void JoinLobby(int index, string lobbyId, Action<RuyiNetLobby> callback)
+        public async Task<RuyiNetLobby> JoinLobby(int index, string lobbyId)
         {
             var payload = new RuyiNetLobbyJoinRequest() { lobbyId = lobbyId };
-            RunPlatformScript(index, "Lobby_Join", JsonConvert.SerializeObject(payload),
-                (RuyiNetLobbyResponse response) =>
-                {
-                    mCurrentLobby = response;
-                    callback(mCurrentLobby);
-                    PollLobbyStatus();
-                });
+            var response = await RunPlatformScript<RuyiNetLobbyResponse>(index, "Lobby_Join", JsonConvert.SerializeObject(payload));
+            mCurrentLobby = response;
+            PollLobbyStatus();
+            return mCurrentLobby;
         }
 
         /// <summary>
@@ -150,13 +131,11 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="lobbyId">The ID of the lobby to leave.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void LeaveLobby(int index, string lobbyId, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> LeaveLobby(int index, string lobbyId)
         {
             mCurrentLobby = null;
-
-            var payload = new RuyiNetLobbyLeaveRequest() { lobbyId = lobbyId };
-            RunPlatformScript(index, "Lobby_Leave", JsonConvert.SerializeObject(payload), callback);
+            var payload = new RuyiNetLobbyLeaveRequest() { lobbyId = lobbyId }; 
+            return RunPlatformScript<RuyiNetResponse>(index, "Lobby_Leave", JsonConvert.SerializeObject(payload));
         }
 
         /// <summary>
@@ -165,11 +144,10 @@ namespace Ruyi.SDK.Online
         /// <param name="index">The index of user</param>
         /// <param name="lobbyId">The ID of the lobby to start the game for.</param>
         /// <param name="connectionString">A connection string used to connect to the host.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void StartGame(int index, string lobbyId, string connectionString, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> StartGame(int index, string lobbyId, string connectionString)
         {
             var payload = new RuyiNetLobbyStartGameRequest() { lobbyId = lobbyId, connectionString = connectionString };
-            RunPlatformScript(index, "Lobby_StartGame", JsonConvert.SerializeObject(payload), callback);
+            return RunPlatformScript<RuyiNetResponse>(index, "Lobby_StartGame", JsonConvert.SerializeObject(payload));
         }
 
         /// <summary>
@@ -219,78 +197,75 @@ namespace Ruyi.SDK.Online
         /// </summary>
         public event LobbyClosedEventHandler OnLobbyClosed;
 
-        internal void Update(Object source, ElapsedEventArgs e)
+        internal async void Update(Object source, ElapsedEventArgs e)
         {
-            if (mCurrentLobby != null)
+            if (mCurrentLobby == null)
+                return;
+
+            var payload = new RuyiNetLobbyJoinRequest() { lobbyId = mCurrentLobby.LobbyId };
+            var response = await RunPlatformScript<RuyiNetLobbyResponse>(mClient.ActivePlayerIndex, "Lobby_Update", JsonConvert.SerializeObject(payload));
+            RuyiNetLobby updatedLobby = response;
+            if (updatedLobby != null)
             {
-                var payload = new RuyiNetLobbyJoinRequest() { lobbyId = mCurrentLobby.LobbyId };
-                RunPlatformScript(mClient.ActivePlayerIndex, "Lobby_Update", JsonConvert.SerializeObject(payload),
-                    (RuyiNetLobbyResponse response) =>
+                if (mCurrentLobby != null)
+                {
+                    IEnumerable<string> newPlayers = null;
+                    IEnumerable<string> oldPlayers = null;
+
+                    bool lobbyClosed = mCurrentLobby.State != "CLOSED" &&
+                                       updatedLobby.State == "CLOSED";
+                    bool lobbyStarted = mCurrentLobby.State != "STARTED" &&
+                                        updatedLobby.State == "STARTED";
+
+                    if (!updatedLobby.MemberProfileIds.SequenceEqual(mCurrentLobby.MemberProfileIds))
                     {
-                        RuyiNetLobby updatedLobby = response;
-                        if (updatedLobby != null)
+                        newPlayers = updatedLobby.MemberProfileIds.Except(mCurrentLobby.MemberProfileIds);
+                        oldPlayers = mCurrentLobby.MemberProfileIds.Except(updatedLobby.MemberProfileIds);
+                    }
+
+                    mCurrentLobby = updatedLobby;
+
+                    if (newPlayers != null)
+                    {
+                        foreach (var i in newPlayers)
                         {
-                            if (mCurrentLobby != null)
-                            {
-                                IEnumerable<string> newPlayers = null;
-                                IEnumerable<string> oldPlayers = null;
-
-                                bool lobbyClosed = mCurrentLobby.State != "CLOSED" &&
-                                                   updatedLobby.State == "CLOSED";
-                                bool lobbyStarted = mCurrentLobby.State != "STARTED" &&
-                                                    updatedLobby.State == "STARTED";
-
-                                if (!updatedLobby.MemberProfileIds.SequenceEqual(mCurrentLobby.MemberProfileIds))
-                                {
-                                    newPlayers = updatedLobby.MemberProfileIds.Except(mCurrentLobby.MemberProfileIds);
-                                    oldPlayers = mCurrentLobby.MemberProfileIds.Except(updatedLobby.MemberProfileIds);
-                                }
-
-                                mCurrentLobby = updatedLobby;
-
-                                if (newPlayers != null)
-                                {
-                                    foreach (var i in newPlayers)
-                                    {
-                                        Console.Write("New Player: " + i);
-                                        OnPlayerJoinLobby(i);
-                                    }
-                                }
-
-                                if (oldPlayers != null)
-                                {
-                                    foreach (var i in oldPlayers)
-                                    {
-                                        Console.Write("Old Player: " + i);
-                                        OnPlayerLeaveLobby(i);
-                                    }
-                                }
-
-                                if (lobbyClosed)
-                                {
-                                    for (var i = 0; i < mClient.CurrentPlayers.Length; ++i)
-                                    {
-                                        if (mClient.CurrentPlayers[i] != null)
-                                        {
-                                            LeaveLobby(i, mCurrentLobby.LobbyId, null);
-                                        }
-                                    }
-
-                                    OnLobbyClosed();
-                                }
-                                else if (lobbyStarted)
-                                {
-                                    OnLobbyStartGame();
-                                }
-                            }
-                            else
-                            {
-                                mCurrentLobby = updatedLobby;
-                            }
-
-                            PollLobbyStatus();
+                            Console.Write("New Player: " + i);
+                            OnPlayerJoinLobby(i);
                         }
-                    });
+                    }
+
+                    if (oldPlayers != null)
+                    {
+                        foreach (var i in oldPlayers)
+                        {
+                            Console.Write("Old Player: " + i);
+                            OnPlayerLeaveLobby(i);
+                        }
+                    }
+
+                    if (lobbyClosed)
+                    {
+                        for (var i = 0; i < mClient.CurrentPlayers.Length; ++i)
+                        {
+                            if (mClient.CurrentPlayers[i] != null)
+                            {
+                                await LeaveLobby(i, mCurrentLobby.LobbyId);
+                            }
+                        }
+
+                        OnLobbyClosed();
+                    }
+                    else if (lobbyStarted)
+                    {
+                        OnLobbyStartGame();
+                    }
+                }
+                else
+                {
+                    mCurrentLobby = updatedLobby;
+                }
+
+                PollLobbyStatus();
             }
         }
 

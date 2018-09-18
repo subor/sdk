@@ -86,6 +86,9 @@
     <Filter Include="Generated\OverlayManager">
       <UniqueIdentifier>{54197cb3-8eab-4c53-b514-7116c6621bca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\RuyiNet\Service\Leaderboard\Response">
+      <UniqueIdentifier>{0594f5d5-d63f-4ece-a2e9-2bd68c8cc38b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Generated\InputManager\InputManagerSDKDataTypes_constants.cpp">
@@ -283,6 +286,30 @@
     <ClCompile Include="Generated\InputManager\InputManagerService.cpp">
       <Filter>Generated\InputManager</Filter>
     </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetRotationType.cpp">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardType.cpp">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardConfig.cpp">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardEntry.cpp">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardInfo.cpp">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardPage.cpp">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardVersionInfo.cpp">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClCompile>
+    <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetPlayerScore.cpp">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_constants.h">
@@ -430,16 +457,10 @@
     <ClInclude Include="RuyiNet\Response\RuyiNetGetProfileResponse.h">
       <Filter>Sources\RuyiNet\Response</Filter>
     </ClInclude>
-    <ClInclude Include="RuyiNet\Response\RuyiNetLeaderboardResponse.h">
-      <Filter>Sources\RuyiNet\Response</Filter>
-    </ClInclude>
     <ClInclude Include="RuyiNet\Response\RuyiNetListUserFilesResponse.h">
       <Filter>Sources\RuyiNet\Response</Filter>
     </ClInclude>
     <ClInclude Include="RuyiNet\Response\RuyiNetProfile.h">
-      <Filter>Sources\RuyiNet\Response</Filter>
-    </ClInclude>
-    <ClInclude Include="RuyiNet\Response\RuyiNetSocialLeaderboardResponse.h">
       <Filter>Sources\RuyiNet\Response</Filter>
     </ClInclude>
     <ClInclude Include="RuyiNet\Response\RuyiNetSummaryFriendData.h">
@@ -558,6 +579,54 @@
     </ClInclude>
     <ClInclude Include="Generated\InputManager\InputManagerService.h">
       <Filter>Generated\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\Response\RuyiNetGetGlobalLeaderboardEntryCountResponse.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\Response\RuyiNetLeaderboardResponse.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\Response\RuyiNetSocialLeaderboardResponse.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\Response\RuyiNetGetGlobalLeaderboardPageResponse.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardPage.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardEntry.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\Response\RuyiNetGetGlobalLeaderboardVersionsResponse.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\Response\RuyiNetGetGroupSocialLeaderboardResponse.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\Response\RuyiNetGetPlayerScoreResponse.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\Response\RuyiNetGetPlayerScoresFromLeaderboardsResponse.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\Response\RuyiNetGetSocialLeaderboardResponse.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\Response\RuyiNetListAllLeaderboardsResponse.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard\Response</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardConfig.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardInfo.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetLeaderboardVersionInfo.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClInclude>
+    <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetPlayerScore.h">
+      <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

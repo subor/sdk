@@ -2,19 +2,19 @@
 
 [SDK binaries](https://github.com/subor/sdk/releases) should be sufficent for the majority of development scenarios (also check the [Unity](unity.md) and [UE4](ue4.md) docs).
 
-This document discusses building the SDK yourself.  This may be necessary in the following situations:  
+This document discusses building the SDK yourself.  This may be necessary in the following situations:
 
-* You use a [supported programming/scripting language](https://thrift.apache.org/docs/Languages) whose API we don't provide
-* You need libraries built with a particular toolchain or certain compiler/linker flags
+* You use a [supported programming language](https://thrift.apache.org/docs/Languages) whose API we don't provide
+* You need libraries built with a particular toolchain or compiler/linker flags
 
-As discussed [here](layer0.md), the client SDK uses [Apache Thrift](https://thrift.apache.org/).  The Thrift interface definitions, C++/C# Visual Studio projects, and sourcecode for the Ruyi SDK are available from the [SDK source repository](https://github.com/subor/sdk/).
+As discussed [here](layer0.md), the client SDK uses [Apache Thrift](https://thrift.apache.org/).  The Thrift interface definitions, C++/C# Visual Studio projects, and sourcecode for the Ruyi SDK are available from the [SDK source repository](https://github.com/subor/sdk/tree/master/ThriftFiles).
 
 ## C++
 
 __Prerequisites__
 
 * See [C++ prerequsites](cplusplus.md#prerequisites)
-* External libs [provided by us](https://bitbucket.org/playruyi/sdk_source/downloads/externals.zip), or built on your own:
+* External C++ libraries [provided by us](https://github.com/subor/sdk/releases), or built on your own:
     * [thrift](https://thrift.apache.org/) version 0.11 [Download](https://thrift.apache.org/download)
         * [boost](http://www.boost.org/) version 1.64.0 (used by thrift) [Download](https://sourceforge.net/projects/boost/files/boost-binaries/1.64.0/)
         * [openssl](https://www.openssl.org/) version 1.1.1-dev (used by thrift)
@@ -61,7 +61,7 @@ __Instructions__
 1. Open `sdk/SDK.sln`
     * __Release__ is for libraries compiled with `/MD`
     * __Release_mt__ is for libraries compiled with `/MT`
-1. [Build the SDK](#Building)
+1. [Build the SDK](#building)
 
 ## C Sharp/C# #
 
@@ -75,7 +75,7 @@ __Instructions__
 1. Open `sdk/SDK.sln`
     * `.Net Framework 3.5` contains projects suitable for Unity 3D
     * `.Net Standard` contains projects targetting .Net Standard 2.0 ([details](https://docs.microsoft.com/en-us/dotnet/standard/net-standard))
-1. [Build the SDK](#Building)
+1. [Build the SDK](#building)
 
 ## Building
 
@@ -94,7 +94,7 @@ The runtime, [layer0](layer0.md), checks the version of the SDK used by client a
 
 ## Thrift
 
-The SDK source also includes the underlying [Thrift interface definitions](https://bitbucket.org/playruyi/sdk_source/src/development/ThriftFiles/).  This means the Ruyi SDK can be generated for a [large number of different langauges](https://thrift.apache.org/docs/Languages).
+The SDK source also includes the underlying [Thrift interface definitions](https://github.com/subor/sdk/tree/master/ThriftFiles).  This means the Ruyi SDK can be generated for a [large number of different langauges](https://thrift.apache.org/docs/Languages).
 
 Run `thrift.exe --help` for a full list of supported languages (generators) and options.
 

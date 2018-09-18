@@ -1,10 +1,10 @@
 # Gamesdb.xml Format
 
-If a [simple entry](overlay.md#Compatibility) isn't working for your application, you might need to create a more advanced entry.  It might be necessary in the following cases:
+If a [simple entry](overlay.md#compatibility) isn't working for your application, you might need to create a more advanced entry.  It might be necessary in the following cases:
 
 * Your exe is a commonly used or very generic name
 * Your application is composed of multiple executables
-* You need to enable/disable [runtime features](#Runtime-element)
+* You need to enable/disable [runtime features](#runtime-element)
 
 This section describes the full grammar of the gamesdb.xml file.  If you still can't get it working, [get help](support.md).
 
@@ -43,7 +43,7 @@ If the rules specified by a `<variant>` matches for a running executable, it wil
 
 ## Conditions Element
 
-`<conditions>` contains one or more `<cond>` elements.  These are simple environment checks that are combined in [`<detection>`](#Detection-element).
+`<conditions>` contains one or more `<cond>` elements.  These are simple environment checks that are combined in [`<detection>`](#detection-element).
 
 Format is: `<cond name="CONDITION_NAME" type="TYPE" TYPE_ATTR="ADDITIONAL_ARG" />`
 
@@ -75,7 +75,7 @@ The following rules are supported:
 
 | Rule | Description | Example
 |-|-|-
-| `if` | Check if `<cond>` specified in [`<conditions>`](#Conditions-element) is true | `<if name="CONDITION_NAME" />`
+| `if` | Check if `<cond>` specified in [`<conditions>`](#conditions-element) is true | `<if name="CONDITION_NAME" />`
 
 Additional attributes:  
 
@@ -89,7 +89,9 @@ Additional attributes:
 
 When the overlay attaches to an application, `<runtime>` configures some aspect of the hooking or rendering.
 
-All are similar to `<ELEMENT ATTR="VALUE" />`:
+All are similar to `<ELEMENT ATTR="VALUE" />`.
+
+Within `<features></features>`:
 
 | ELEMENT | ATTR | VALUE | Description | Default
 |-|-|-|-|-
@@ -103,3 +105,11 @@ All are similar to `<ELEMENT ATTR="VALUE" />`:
 | forcecursor | type | software/hardware | Force overlay to use hardware/software cursor | `""`; Auto
 | renderer-hooking | method | normal/intrusive/factory | Deprecated | normal
 | party-network | | | Deprecated
+
+Within `<ruyifeatures></ruyifeatures>`:
+
+| ELEMENT | ATTR | VALUE | Description | Default
+|-|-|-|-|-
+| ruyi_xinput | enabled | true/false | Hook XInput API | false
+| ruyi_dinput | enabled | true/false | Hook DirectInput API | false
+| ruyi_sdkinput | enabled | true/false | | false

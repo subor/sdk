@@ -30,5 +30,5 @@ ArgumentException: The Assembly System.Web is referenced by log4net ('Assets/plu
 
 ## Links
 
-- [Unity sample](https://bitbucket.org/playruyi/space_shooter)
+- [Unity sample](https://github.com/subor/example_unity_space_shooter)
 - [Unity tutorial](../tutorials/run_unity_sample_console.md)

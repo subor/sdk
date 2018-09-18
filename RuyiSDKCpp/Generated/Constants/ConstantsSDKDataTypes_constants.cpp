@@ -33,10 +33,6 @@ ConstantsSDKDataTypesConstants::ConstantsSDKDataTypesConstants() {
 
   trc_test_channel = "trc_test_channel";
 
-  debugger_publisher_in_uri = "tcp://{addr}:8867";
-
-  debugger_publisher_out_uri = "tcp://{addr}:8868";
-
   broker_playback_message = "mmi.developer.playback";
 
 }

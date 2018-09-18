@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ruyi.SDK.Online
 {
@@ -8,8 +9,6 @@ namespace Ruyi.SDK.Online
     /// </summary>
     public class RuyiNetGamificationService : RuyiNetService
     {
-        static System.Threading.CancellationToken token = System.Threading.CancellationToken.None;
-
         internal RuyiNetGamificationService(RuyiNetClient client)
             : base(client)
         {
@@ -20,30 +19,20 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of the user.</param>
         /// <param name="achievementId">The ID of the achievement to unlock.</param>
-        /// <param name="callback">Called when the achievement is unlocked.</param>
-        public void AwardAchievement(int index, string achievementId, Action<RuyiNetAchievement> callback)
+        public async Task<RuyiNetAchievement> AwardAchievement(int index, string achievementId)
         {
-            EnqueueTask(() =>
+            List<string> achievementIds = new List<string>() { achievementId };
+            var resp = await mClient.BCService.Gamification_AwardAchievementsAsync(achievementIds, index, token);
+            var response = mClient.Process<RuyiNetAchievementResponse>(resp);
+            if (response.status == RuyiNetHttpStatus.OK)
             {
-                List<string> achievementIds = new List<string>() { achievementId };
-                return mClient.BCService.Gamification_AwardAchievementsAsync(achievementIds, index, token).Result;
-            }, (RuyiNetAchievementResponse response) =>
-            {
-                if (callback != null)
+                var achievements = response.data.achievements;
+                if (achievements.Length == 0)
                 {
-                    if (response.status == RuyiNetHttpStatus.OK)
-                    {
-                        var achievements = response.data.achievements;
-                        if (achievements.Length == 0)
-                        {
-                            callback(new RuyiNetAchievement(achievements[0]));
-                            return;
-                        }
-                    }
-
-                    callback(null);
+                    return new RuyiNetAchievement(achievements[0]);
                 }
-            });
+            }
+            return null;
         }
 
         /// <summary>
@@ -51,33 +40,23 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of the user.</param>
         /// <param name="achievementIds">The ID of the achievement to unlock.</param>
-        /// <param name="callback">Called when the achievement is unlocked.</param>
-        public void AwardAchievements(int index, List<string> achievementIds, Action<List<RuyiNetAchievement>> callback)
+        public async Task<List<RuyiNetAchievement>> AwardAchievements(int index, List<string> achievementIds)
         {
-            EnqueueTask(() =>
+            var resp = await mClient.BCService.Gamification_AwardAchievementsAsync(achievementIds, index, token);
+            var response = mClient.Process<RuyiNetAchievementResponse>(resp);
+            if (response.status == RuyiNetHttpStatus.OK)
             {
-                return mClient.BCService.Gamification_AwardAchievementsAsync(achievementIds, index, token).Result;
-            }, (RuyiNetAchievementResponse response) =>
-            {
-                if (callback != null)
+                List<RuyiNetAchievement> achievements = new List<RuyiNetAchievement>();
+                var achievementData = response.data.achievements;
+
+                foreach (var i in achievementData)
                 {
-                    if (response.status == RuyiNetHttpStatus.OK)
-                    {
-                        List<RuyiNetAchievement> achievements = new List<RuyiNetAchievement>();
-                        var achievementData = response.data.achievements;
-
-                        foreach (var i in achievementData)
-                        {
-                            achievements.Add(new RuyiNetAchievement(i));
-                        }
-
-                        callback(achievements);
-                        return;
-                    }
-
-                    callback(null);
+                    achievements.Add(new RuyiNetAchievement(i));
                 }
-            });
+
+                return achievements;
+            }
+            return null;
         }
 
         /// <summary>
@@ -85,33 +64,23 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of the user.</param>
         /// <param name="includeMetaData">Whether or not to include metadata (otherwise just returns achievement IDs).</param>
-        /// <param name="callback">Called when the achievement is unlocked.</param>
-        public void ReadAchievedAchievements(int index, bool includeMetaData, Action<List<RuyiNetAchievement>> callback)
+        public async Task<List<RuyiNetAchievement>> ReadAchievedAchievements(int index, bool includeMetaData)
         {
-            EnqueueTask(() =>
+            var resp = await mClient.BCService.Gamification_ReadAchievedAchievementsAsync(includeMetaData, index, token);
+            var response = mClient.Process<RuyiNetAchievementResponse>(resp);
+            if (response.status == RuyiNetHttpStatus.OK)
             {
-                return mClient.BCService.Gamification_ReadAchievedAchievementsAsync(includeMetaData, index, token).Result;
-            }, (RuyiNetAchievementResponse response) =>
-            {
-                if (callback != null)
+                List<RuyiNetAchievement> achievements = new List<RuyiNetAchievement>();
+                var achievementData = response.data.achievements;
+
+                foreach (var i in achievementData)
                 {
-                    if (response.status == RuyiNetHttpStatus.OK)
-                    {
-                        List<RuyiNetAchievement> achievements = new List<RuyiNetAchievement>();
-                        var achievementData = response.data.achievements;
-
-                        foreach (var i in achievementData)
-                        {
-                            achievements.Add(new RuyiNetAchievement(i));
-                        }
-
-                        callback(achievements);
-                        return;
-                    }
-
-                    callback(null);
+                    achievements.Add(new RuyiNetAchievement(i));
                 }
-            });
+
+                return achievements;
+            }
+            return null;
         }
 
         /// <summary>
@@ -119,33 +88,23 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of the user.</param>
         /// <param name="includeMetaData">Whether or not to include metadata (otherwise just returns achievement IDs).</param>
-        /// <param name="callback">Called when the achievement is unlocked.</param>
-        public void ReadAchievements(int index, bool includeMetaData, Action<List<RuyiNetAchievement>> callback)
+        public async Task<List<RuyiNetAchievement>> ReadAchievements(int index, bool includeMetaData)
         {
-            EnqueueTask(() =>
+            var resp = await mClient.BCService.Gamification_ReadAchievementsAsync(includeMetaData, index, token);
+            var response = mClient.Process<RuyiNetAchievementResponse>(resp);
+            if (response.status == RuyiNetHttpStatus.OK)
             {
-                return mClient.BCService.Gamification_ReadAchievementsAsync(includeMetaData, index, token).Result;
-            }, (RuyiNetAchievementResponse response) =>
-            {
-                if (callback != null)
+                List<RuyiNetAchievement> achievements = new List<RuyiNetAchievement>();
+                var achievementData = response.data.achievements;
+
+                foreach (var i in achievementData)
                 {
-                    if (response.status == RuyiNetHttpStatus.OK)
-                    {
-                        List<RuyiNetAchievement> achievements = new List<RuyiNetAchievement>();
-                        var achievementData = response.data.achievements;
-
-                        foreach (var i in achievementData)
-                        {
-                            achievements.Add(new RuyiNetAchievement(i));
-                        }
-
-                        callback(achievements);
-                        return;
-                    }
-
-                    callback(null);
+                    achievements.Add(new RuyiNetAchievement(i));
                 }
-            });
+
+                return achievements;
+            }
+            return null;
         }
     }
 }

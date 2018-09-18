@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Threading.Tasks;
 
 namespace Ruyi.SDK.Online
 {
@@ -28,18 +29,16 @@ namespace Ruyi.SDK.Online
         /// <param name="index">The index of user</param>
         /// <param name="cloudFilename">The desired cloud fileName of the file.</param>
         /// <param name="localPath">The path and fileName of the local file.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void UploadVideo(int index, string cloudFilename, string localPath,
-            RuyiNetTask<RuyiNetUploadFileResponse>.CallbackType callback)
+        public Task<RuyiNetUploadFileResponse> UploadVideo(int index, string cloudFilename, string localPath)
         {
-            EnqueuePlatformTask(index, () =>
+            return EnqueuePlatformTask<RuyiNetUploadFileResponse>(index, async () =>
             {
-                var response = mClient.BCService.File_UploadFileAsync(VIDEO_LOCATION, cloudFilename, true, false, localPath, index, token).Result;
+                var response = await mClient.BCService.File_UploadFileAsync(VIDEO_LOCATION, cloudFilename, true, false, localPath, index, token);
                 var uploadedFile = JsonConvert.DeserializeObject<RuyiNetUploadFileResponse>(response);
 
                 if (uploadedFile.status == RuyiNetHttpStatus.OK)
                 {
-                    var cdnResponse = mClient.BCService.File_GetCDNUrlAsync(VIDEO_LOCATION, cloudFilename, index, token).Result;
+                    var cdnResponse = await mClient.BCService.File_GetCDNUrlAsync(VIDEO_LOCATION, cloudFilename, index, token);
                     var cdnUrl = JsonConvert.DeserializeObject<RuyiNetGetCDNResponse>(cdnResponse);
                     if (cdnUrl.status == RuyiNetHttpStatus.OK)
                     {
@@ -54,12 +53,12 @@ namespace Ruyi.SDK.Online
                             other = 1
                         });
 
-                        mClient.BCService.Entity_CreateEntityAsync(VIDEO_LOCATION, videoEntity, acl, index, token).Wait();
+                        await mClient.BCService.Entity_CreateEntityAsync(VIDEO_LOCATION, videoEntity, acl, index, token);
                     }
                 }
 
                 return response;
-            }, callback);
+            });
         }
 
         /// <summary>
@@ -67,26 +66,22 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="cloudFilename">The desired cloud fileName of the file.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void DownloadVideo(int index, string cloudFilename, RuyiNetTask<RuyiNetResponse>.CallbackType callback)
+        public Task<RuyiNetResponse> DownloadVideo(int index, string cloudFilename)
         {
-            EnqueuePlatformTask(index, () =>
+            return EnqueuePlatformTask<RuyiNetResponse>(index, async () =>
             {
-                return mClient.BCService.File_DownloadFileAsync(VIDEO_LOCATION, cloudFilename, true, index, token).Result;
-            }, callback);
+                return await mClient.BCService.File_DownloadFileAsync(VIDEO_LOCATION, cloudFilename, true, index, token);
+            });
         }
 
         /// <summary>
         /// List all the current user's videos.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void ListVideos(int index, RuyiNetTask<RuyiNetListUserFilesResponse>.CallbackType callback)
+        public async Task<RuyiNetListUserFilesResponse> ListVideos(int index)
         {
-            EnqueueTask(() =>
-            {
-                return mClient.BCService.File_ListUserFiles_SNSFOAsync(VIDEO_LOCATION, false, index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.File_ListUserFiles_SNSFOAsync(VIDEO_LOCATION, false, index, token);
+            return mClient.Process<RuyiNetListUserFilesResponse>(resp);
         }
 
         /// <summary>
@@ -94,14 +89,10 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="cloudFilename">The desired cloud fileName of the file.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void DeleteVideo(int index, string cloudFilename,
-            RuyiNetTask<RuyiNetUploadFileResponse>.CallbackType callback)
+        public async Task<RuyiNetUploadFileResponse> DeleteVideo(int index, string cloudFilename)
         {
-            EnqueueTask(() =>
-            {
-                return mClient.BCService.File_DeleteUserFileAsync(VIDEO_LOCATION, cloudFilename, index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.File_DeleteUserFileAsync(VIDEO_LOCATION, cloudFilename, index, token);
+            return mClient.Process<RuyiNetUploadFileResponse>(resp);
         }
 
         /// <summary>
@@ -109,33 +100,25 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="cloudFilename">The desired cloud fileName of the file.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void GetVideoUrl(int index, string cloudFilename,
-            RuyiNetTask<RuyiNetGetCDNResponse>.CallbackType callback)
+        public async Task<RuyiNetGetCDNResponse> GetVideoUrl(int index, string cloudFilename)
         {
-            EnqueueTask(() =>
-            {
-                return mClient.BCService.File_GetCDNUrlAsync(VIDEO_LOCATION, cloudFilename, index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.File_GetCDNUrlAsync(VIDEO_LOCATION, cloudFilename, index, token);
+            return mClient.Process<RuyiNetGetCDNResponse>(resp);
         }
         /// <summary>
         /// Returns a list of friends videos.
         /// </summary>
         /// <param name="index">The index of the user</param>
         /// <param name="profileId">The profile of the ID to fetch the videos for.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void GetFriendsVideos(int index, string profileId,
-            RuyiNetTask<RuyiNetGetFriendsVideosResponse>.CallbackType callback)
+        public async Task<RuyiNetGetFriendsVideosResponse> GetFriendsVideos(int index, string profileId)
         {
-            EnqueueTask(() =>
+            var query = JsonConvert.SerializeObject(new VideoQuery()
             {
-                var query = JsonConvert.SerializeObject(new VideoQuery()
-                {
-                    entityType = VIDEO_LOCATION
-                });
-                
-                return mClient.BCService.Entity_GetSharedEntitiesListForProfileIdAsync(profileId, query, "{}", 100, index, token).Result;
-            }, callback);
+                entityType = VIDEO_LOCATION
+            });
+
+            var resp = await mClient.BCService.Entity_GetSharedEntitiesListForProfileIdAsync(profileId, query, "{}", 100, index, token);
+            return mClient.Process<RuyiNetGetFriendsVideosResponse>(resp);
         }
 
         [Serializable]
@@ -143,8 +126,6 @@ namespace Ruyi.SDK.Online
         {
             public string entityType;
         }
-
-        static System.Threading.CancellationToken token = System.Threading.CancellationToken.None;
     }
 
     /// <summary>
