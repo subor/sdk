@@ -176,6 +176,11 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("ConnectToWifi\n");
   }
 
+  bool ConnectToAppointedWifi(const std::string& profileName, const std::string& Auth, const std::string& Ciper, const std::string& KeyType, const std::string& key) {
+    // Your implementation goes here
+    printf("ConnectToAppointedWifi\n");
+  }
+
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) {
     // Your implementation goes here
     printf("GetNetworkSettings\n");

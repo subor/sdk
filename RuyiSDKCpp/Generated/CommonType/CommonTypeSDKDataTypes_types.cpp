@@ -171,7 +171,9 @@ int _keUITypeValues[] = {
   eUIType::CheckList,
   eUIType::OptionList,
   eUIType::DateTime,
-  eUIType::TextInput
+  eUIType::InputTextWithLabel,
+  eUIType::Button,
+  eUIType::InputText
 };
 const char* _keUITypeNames[] = {
   "None",
@@ -181,9 +183,11 @@ const char* _keUITypeNames[] = {
   "CheckList",
   "OptionList",
   "DateTime",
-  "TextInput"
+  "InputTextWithLabel",
+  "Button",
+  "InputText"
 };
-const std::map<int, const char*> _eUIType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(8, _keUITypeValues, _keUITypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+const std::map<int, const char*> _eUIType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(10, _keUITypeValues, _keUITypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
 
 std::ostream& operator<<(std::ostream& out, const eUIType::type& val) {
   std::map<int, const char*>::const_iterator it = _eUIType_VALUES_TO_NAMES.find(val);

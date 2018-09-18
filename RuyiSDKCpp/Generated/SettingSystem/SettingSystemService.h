@@ -111,6 +111,7 @@ class SettingSystemServiceIf {
   virtual bool SetNetworkSettings(const bool isWLan, const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS) = 0;
   virtual bool SetNetworkProxy(const std::string& ProxyServer, const std::string& ProxyPort) = 0;
   virtual bool ConnectToWifi(const std::string& profileName, const std::string& key) = 0;
+  virtual bool ConnectToAppointedWifi(const std::string& profileName, const std::string& Auth, const std::string& Ciper, const std::string& KeyType, const std::string& key) = 0;
   virtual void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) = 0;
   virtual void GetNetworkStatus( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkStatus& _return) = 0;
   virtual void RuyiTestNetwork( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkTestResult& _return) = 0;
@@ -216,6 +217,10 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
     return _return;
   }
   bool ConnectToWifi(const std::string& /* profileName */, const std::string& /* key */) {
+    bool _return = false;
+    return _return;
+  }
+  bool ConnectToAppointedWifi(const std::string& /* profileName */, const std::string& /* Auth */, const std::string& /* Ciper */, const std::string& /* KeyType */, const std::string& /* key */) {
     bool _return = false;
     return _return;
   }
@@ -2475,6 +2480,146 @@ class SettingSystemService_ConnectToWifi_presult {
 
 };
 
+typedef struct _SettingSystemService_ConnectToAppointedWifi_args__isset {
+  _SettingSystemService_ConnectToAppointedWifi_args__isset() : profileName(false), Auth(false), Ciper(false), KeyType(false), key(false) {}
+  bool profileName :1;
+  bool Auth :1;
+  bool Ciper :1;
+  bool KeyType :1;
+  bool key :1;
+} _SettingSystemService_ConnectToAppointedWifi_args__isset;
+
+class SettingSystemService_ConnectToAppointedWifi_args {
+ public:
+
+  SettingSystemService_ConnectToAppointedWifi_args(const SettingSystemService_ConnectToAppointedWifi_args&);
+  SettingSystemService_ConnectToAppointedWifi_args& operator=(const SettingSystemService_ConnectToAppointedWifi_args&);
+  SettingSystemService_ConnectToAppointedWifi_args() : profileName(), Auth(), Ciper(), KeyType(), key() {
+  }
+
+  virtual ~SettingSystemService_ConnectToAppointedWifi_args() throw();
+  std::string profileName;
+  std::string Auth;
+  std::string Ciper;
+  std::string KeyType;
+  std::string key;
+
+  _SettingSystemService_ConnectToAppointedWifi_args__isset __isset;
+
+  void __set_profileName(const std::string& val);
+
+  void __set_Auth(const std::string& val);
+
+  void __set_Ciper(const std::string& val);
+
+  void __set_KeyType(const std::string& val);
+
+  void __set_key(const std::string& val);
+
+  bool operator == (const SettingSystemService_ConnectToAppointedWifi_args & rhs) const
+  {
+    if (!(profileName == rhs.profileName))
+      return false;
+    if (!(Auth == rhs.Auth))
+      return false;
+    if (!(Ciper == rhs.Ciper))
+      return false;
+    if (!(KeyType == rhs.KeyType))
+      return false;
+    if (!(key == rhs.key))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_ConnectToAppointedWifi_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_ConnectToAppointedWifi_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class SettingSystemService_ConnectToAppointedWifi_pargs {
+ public:
+
+
+  virtual ~SettingSystemService_ConnectToAppointedWifi_pargs() throw();
+  const std::string* profileName;
+  const std::string* Auth;
+  const std::string* Ciper;
+  const std::string* KeyType;
+  const std::string* key;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_ConnectToAppointedWifi_result__isset {
+  _SettingSystemService_ConnectToAppointedWifi_result__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_ConnectToAppointedWifi_result__isset;
+
+class SettingSystemService_ConnectToAppointedWifi_result {
+ public:
+
+  SettingSystemService_ConnectToAppointedWifi_result(const SettingSystemService_ConnectToAppointedWifi_result&);
+  SettingSystemService_ConnectToAppointedWifi_result& operator=(const SettingSystemService_ConnectToAppointedWifi_result&);
+  SettingSystemService_ConnectToAppointedWifi_result() : success(0) {
+  }
+
+  virtual ~SettingSystemService_ConnectToAppointedWifi_result() throw();
+  bool success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_ConnectToAppointedWifi_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  void __set_error1(const  ::Ruyi::SDK::CommonType::ErrorException& val);
+
+  bool operator == (const SettingSystemService_ConnectToAppointedWifi_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    if (!(error1 == rhs.error1))
+      return false;
+    return true;
+  }
+  bool operator != (const SettingSystemService_ConnectToAppointedWifi_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const SettingSystemService_ConnectToAppointedWifi_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _SettingSystemService_ConnectToAppointedWifi_presult__isset {
+  _SettingSystemService_ConnectToAppointedWifi_presult__isset() : success(false), error1(false) {}
+  bool success :1;
+  bool error1 :1;
+} _SettingSystemService_ConnectToAppointedWifi_presult__isset;
+
+class SettingSystemService_ConnectToAppointedWifi_presult {
+ public:
+
+
+  virtual ~SettingSystemService_ConnectToAppointedWifi_presult() throw();
+  bool* success;
+   ::Ruyi::SDK::CommonType::ErrorException error1;
+
+  _SettingSystemService_ConnectToAppointedWifi_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 
 class SettingSystemService_GetNetworkSettings_args {
  public:
@@ -3738,6 +3883,9 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   bool ConnectToWifi(const std::string& profileName, const std::string& key);
   void send_ConnectToWifi(const std::string& profileName, const std::string& key);
   bool recv_ConnectToWifi();
+  bool ConnectToAppointedWifi(const std::string& profileName, const std::string& Auth, const std::string& Ciper, const std::string& KeyType, const std::string& key);
+  void send_ConnectToAppointedWifi(const std::string& profileName, const std::string& Auth, const std::string& Ciper, const std::string& KeyType, const std::string& key);
+  bool recv_ConnectToAppointedWifi();
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return);
   void send_GetNetworkSettings();
   void recv_GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return);
@@ -3805,6 +3953,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
   void process_SetNetworkSettings(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SetNetworkProxy(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_ConnectToWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_ConnectToAppointedWifi(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetNetworkSettings(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetNetworkStatus(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_RuyiTestNetwork(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -3838,6 +3987,7 @@ class SettingSystemServiceProcessor : public ::apache::thrift::TDispatchProcesso
     processMap_["SetNetworkSettings"] = &SettingSystemServiceProcessor::process_SetNetworkSettings;
     processMap_["SetNetworkProxy"] = &SettingSystemServiceProcessor::process_SetNetworkProxy;
     processMap_["ConnectToWifi"] = &SettingSystemServiceProcessor::process_ConnectToWifi;
+    processMap_["ConnectToAppointedWifi"] = &SettingSystemServiceProcessor::process_ConnectToAppointedWifi;
     processMap_["GetNetworkSettings"] = &SettingSystemServiceProcessor::process_GetNetworkSettings;
     processMap_["GetNetworkStatus"] = &SettingSystemServiceProcessor::process_GetNetworkStatus;
     processMap_["RuyiTestNetwork"] = &SettingSystemServiceProcessor::process_RuyiTestNetwork;
@@ -4056,6 +4206,15 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return ifaces_[i]->ConnectToWifi(profileName, key);
   }
 
+  bool ConnectToAppointedWifi(const std::string& profileName, const std::string& Auth, const std::string& Ciper, const std::string& KeyType, const std::string& key) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->ConnectToAppointedWifi(profileName, Auth, Ciper, KeyType, key);
+    }
+    return ifaces_[i]->ConnectToAppointedWifi(profileName, Auth, Ciper, KeyType, key);
+  }
+
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -4246,6 +4405,9 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   bool ConnectToWifi(const std::string& profileName, const std::string& key);
   int32_t send_ConnectToWifi(const std::string& profileName, const std::string& key);
   bool recv_ConnectToWifi(const int32_t seqid);
+  bool ConnectToAppointedWifi(const std::string& profileName, const std::string& Auth, const std::string& Ciper, const std::string& KeyType, const std::string& key);
+  int32_t send_ConnectToAppointedWifi(const std::string& profileName, const std::string& Auth, const std::string& Ciper, const std::string& KeyType, const std::string& key);
+  bool recv_ConnectToAppointedWifi(const int32_t seqid);
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return);
   int32_t send_GetNetworkSettings();
   void recv_GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return, const int32_t seqid);
