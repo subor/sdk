@@ -29,6 +29,7 @@ public:
 	void UserFileServiceTest();
 	void GamificationServiceTest();
 	void PatchServiceTest();
+	void VideoServiceTest();
 
 private:
 

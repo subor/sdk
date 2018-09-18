@@ -26,8 +26,6 @@ class ConstantsSDKDataTypesConstants {
   std::string system_setting_version;
   std::string layer0_debugger_channel;
   std::string trc_test_channel;
-  std::string debugger_publisher_in_uri;
-  std::string debugger_publisher_out_uri;
   std::string broker_playback_message;
 };
 

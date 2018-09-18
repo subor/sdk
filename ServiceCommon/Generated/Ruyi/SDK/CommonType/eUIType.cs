@@ -16,6 +16,8 @@ namespace Ruyi.SDK.CommonType
     CheckList = 4,
     OptionList = 5,
     DateTime = 6,
-    TextInput = 7,
+    InputTextWithLabel = 7,
+    Button = 8,
+    InputText = 9,
   }
 }

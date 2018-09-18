@@ -2,6 +2,7 @@
 
 #include "RuyiNet/Response/RuyiNetResponse.h"
 #include "RuyiNet/Response/RuyiNetProfile.h"
+#include "RuyiNet/Response/RuyiNetUploadFileResponse.h"
 #include "RuyiNet/Service/Leaderboard/Response/RuyiNetGetGlobalLeaderboardEntryCountResponse.h"
 #include "RuyiNet/Service/Leaderboard/RuyiNetLeaderboardPage.h"
 #include "RuyiNet/Service/Leaderboard/RuyiNetLeaderboardEntry.h"
@@ -17,6 +18,7 @@
 #include "RuyiNet/Service/UserFile/RuyiNetUserFileService.h"
 #include "RuyiNet/Service/Gamification/RuyiNetGamificationService.h"
 #include "RuyiNet/Service/Patch/RuyiNetPatchService.h"
+#include "RuyiNet/Service/Video/RuyiNetVideoService.h"
 
 #include "boost/container/detail/json.hpp"
 
@@ -335,4 +337,75 @@ void RuyiNetTest::PatchServiceTest()
 	ruyiSDK->RuyiNet->GetPatchService()->GetGameManifest(0, gameId, gameManifest);
 
 	Assert::IsTrue(STATUS_OK == gameManifest.Status);
+}
+
+void RuyiNetTest::VideoServiceTest() 
+{
+	StorageLayer::GetLocalPathResult ResultPath;
+
+	ruyiSDK->Storage->GetLocalPath(ResultPath, "/<HDD0>/n.txt");
+	size_t idx = ResultPath.path.find("LocalRoot");
+	std::string layer0Path = ResultPath.path.substr(0, idx);
+		
+	std::string localPath = layer0Path + "Layer0\\files\\test.mp3";
+
+	Logger::WriteMessage(("localPath " + localPath).c_str());
+
+	std::string videoLocation = "video";
+	std::string responseStr;
+	std::string cloudFilename = "test1.mp3";
+	
+	RuyiNetUploadFileResponse uploadFileResponse;
+	ruyiSDK->RuyiNet->GetVideoService()->UploadVideo(0, cloudFilename, localPath, uploadFileResponse);
+
+	Assert::IsTrue(STATUS_OK == uploadFileResponse.status);
+
+	RuyiNetResponse netResponse;
+	ruyiSDK->RuyiNet->GetVideoService()->DownloadVideo(0, cloudFilename, netResponse);
+
+	Assert::IsTrue(STATUS_OK == netResponse.status);
+	
+	/*
+	ruyiSDK->BCService->File_UploadFile(responseStr, videoLocation, cloudFilename, true, true, localPath, 0);
+
+	Logger::WriteMessage(("VideoServiceTest File_UploadFile " + responseStr).c_str());
+
+	RuyiNetUploadFileResponse response;
+	nlohmann::json responseJson1 = nlohmann::json::parse(responseStr);
+	response.parseJson(responseJson1);
+	if (STATUS_OK == response.status) 
+	{
+		ruyiSDK->BCService->File_GetCDNUrl(responseStr, videoLocation, cloudFilename, 0);
+		Logger::WriteMessage(("VideoServiceTest File_GetCDNUrl " + responseStr).c_str());
+
+		nlohmann::json responseJson2 = nlohmann::json::parse(responseStr);
+		RuyiNetGetCDNResponse cdnResponse;
+		cdnResponse.parseJson(responseJson2);
+		if (STATUS_OK == cdnResponse.status) 
+		{
+			nlohmann::json videoEntityJson;
+			videoEntityJson["appServerUrl"] = cdnResponse.data.appServerUrl;
+			videoEntityJson["cloudFilename"] = cloudFilename;
+
+			nlohmann::json aclJson;
+			aclJson["other"] = 1;
+
+			std::string videoEntityStr = videoEntityJson.dump();
+			std::string aclStr = aclJson.dump();
+
+			ruyiSDK->BCService->Entity_CreateEntity(responseStr, videoLocation, videoEntityStr, aclStr, 0);
+			Logger::WriteMessage(("VideoServiceTest Entity_CreateEntity " + responseStr).c_str());
+
+			//nlohmann::json responseJson3 = nlohmann::json::parse(responseStr);
+			//RuyiNetUploadFileResponse response2;
+			//response2.parseJson(responseJson3);
+		}
+	}
+
+	ruyiSDK->BCService->File_DownloadFile(responseStr, videoLocation, cloudFilename, true, 0);
+	Logger::WriteMessage(("VideoServiceTest File_DownloadFile " + responseStr).c_str());
+	nlohmann::json responseJson3 = nlohmann::json::parse(responseStr);
+	RuyiNetUploadFileResponse response3;
+	response3.parseJson(responseJson3);
+	*/
 }
