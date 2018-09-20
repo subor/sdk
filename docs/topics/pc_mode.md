@@ -30,4 +30,4 @@ Starting 0.8.1, in main client or [Z+ Assist](ruyi_assist.md) (only in [PC mode]
 
 ## Development
 
-One reason for PC mode is to make development easier.  You can install Visual Studio (note that [VS2017 is __not__ supported on LTSB](https://docs.microsoft.com/en-us/visualstudio/productinfo/vs2017-system-requirements-vs)) and build/debug just like it was a regular PC.  CPU/GPU/disk capabilities and performance, memory configuration and bandwidth, OS environment, and so on will be almost identical.
+One reason for PC mode is to make development easier.  You can install Visual Studio and build/debug just like it was a regular PC.  CPU/GPU/disk capabilities and performance, memory configuration and bandwidth, OS environment, and so on will be almost identical.
