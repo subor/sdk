@@ -43,6 +43,7 @@ namespace Ruyi.Layer0
 
         SETTINGSYSTEM_EXTERNAL,
         SETTINGSYSTEM_INTERNAL,
+        SETTINGSYSTEM_LAYER1,
         USER_SERVICE_INTERNAL,
         USER_SERVICE_EXTERNAL,
         BCSERVICE,
@@ -150,6 +151,7 @@ namespace Ruyi.Layer0
                 case ServiceIDs.LAUNCHER:
                 case ServiceIDs.UPDATESERVICE:
                 case ServiceIDs.POWERMANAGER:
+                case ServiceIDs.SETTINGSYSTEM_LAYER1:
                     return true;
             }
             return false;
