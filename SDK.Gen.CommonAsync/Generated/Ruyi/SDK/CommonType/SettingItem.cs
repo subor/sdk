@@ -41,6 +41,7 @@ namespace Ruyi.SDK.CommonType
     private bool _readOnly;
     private bool _isValid;
     private bool _isActive;
+    private bool _hasNew;
     private string _validation;
     private List<activeDependency> _activeDependencies;
     private string _ActionName;
@@ -238,6 +239,19 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    public bool HasNew
+    {
+      get
+      {
+        return _hasNew;
+      }
+      set
+      {
+        __isset.hasNew = true;
+        this._hasNew = value;
+      }
+    }
+
     public string Validation
     {
       get
@@ -334,6 +348,7 @@ namespace Ruyi.SDK.CommonType
       public bool @readOnly;
       public bool isValid;
       public bool isActive;
+      public bool hasNew;
       public bool validation;
       public bool activeDependencies;
       public bool ActionName;
@@ -505,6 +520,16 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 15:
+              if (field.Type == TType.Bool)
+              {
+                HasNew = await iprot.ReadBoolAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 16:
               if (field.Type == TType.String)
               {
                 Validation = await iprot.ReadStringAsync(cancellationToken);
@@ -514,7 +539,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 16:
+            case 17:
               if (field.Type == TType.List)
               {
                 {
@@ -535,7 +560,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 17:
+            case 18:
               if (field.Type == TType.String)
               {
                 ActionName = await iprot.ReadStringAsync(cancellationToken);
@@ -545,7 +570,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 18:
+            case 19:
               if (field.Type == TType.String)
               {
                 ActionObject = await iprot.ReadStringAsync(cancellationToken);
@@ -555,7 +580,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 19:
+            case 20:
               if (field.Type == TType.String)
               {
                 ActionOnSetValue = await iprot.ReadStringAsync(cancellationToken);
@@ -565,7 +590,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 20:
+            case 21:
               if (field.Type == TType.String)
               {
                 ActionOnGetValue = await iprot.ReadStringAsync(cancellationToken);
@@ -725,11 +750,20 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteBoolAsync(IsActive, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
+        if (__isset.hasNew)
+        {
+          field.Name = "hasNew";
+          field.Type = TType.Bool;
+          field.ID = 15;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteBoolAsync(HasNew, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
         if (Validation != null && __isset.validation)
         {
           field.Name = "validation";
           field.Type = TType.String;
-          field.ID = 15;
+          field.ID = 16;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteStringAsync(Validation, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -738,7 +772,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "activeDependencies";
           field.Type = TType.List;
-          field.ID = 16;
+          field.ID = 17;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, ActiveDependencies.Count), cancellationToken);
@@ -754,7 +788,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "ActionName";
           field.Type = TType.String;
-          field.ID = 17;
+          field.ID = 18;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteStringAsync(ActionName, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -763,7 +797,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "ActionObject";
           field.Type = TType.String;
-          field.ID = 18;
+          field.ID = 19;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteStringAsync(ActionObject, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -772,7 +806,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "ActionOnSetValue";
           field.Type = TType.String;
-          field.ID = 19;
+          field.ID = 20;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteStringAsync(ActionOnSetValue, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -781,7 +815,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "ActionOnGetValue";
           field.Type = TType.String;
-          field.ID = 20;
+          field.ID = 21;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteStringAsync(ActionOnGetValue, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -896,6 +930,13 @@ namespace Ruyi.SDK.CommonType
         __first = false;
         sb.Append("IsActive: ");
         sb.Append(IsActive);
+      }
+      if (__isset.hasNew)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("HasNew: ");
+        sb.Append(HasNew);
       }
       if (Validation != null && __isset.validation)
       {
