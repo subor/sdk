@@ -116,6 +116,7 @@ public class RuyiNet : MonoBehaviour
     public RuyiNetTelemetryService TelemetryService { get { return mSDK.RuyiNetService.TelemetryService; } }
     public RuyiNetUserFileService UserFileService { get { return mSDK.RuyiNetService.UserFileService; } }
     public RuyiNetVideoService VideoService { get { return mSDK.RuyiNetService.VideoService; } }
+    public RuyiNetGamificationService GamificationService { get { return mSDK.RuyiNetService.GamificationService; } }
 
     public SubscribeClient Subscribe { get { return mSDK.Subscriber; } }
 
