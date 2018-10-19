@@ -29,5 +29,12 @@ namespace Ruyi.SDK.Constants
     public const string layer0_debugger_channel = "layer0_debugger_channel";
     public const string trc_test_channel = "trc_test_channel";
     public const string broker_playback_message = "mmi.developer.playback";
+    public const string HDD0_DRIVER_TAG = "/<hdd0>/";
+    public const string MEMCACHE_DRIVER_TAG = "/<memcache>/";
+    public const string HTTP_HDD_CACHE_DRIVER_TAG = "/<httphddcache>/";
+    public const string HTTP_MEM_CACHE_DRIVER_TAG = "/<httpmemcache>/";
+    public const string RESOURCES_DRIVER_TAG = "/<resources>/";
+    public const string MEDIA_DRIVER_TAG = "/<media>/";
+    public const string DOWNLOAD_DRIVER_TAG = "/<download>/";
   }
 }

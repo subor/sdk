@@ -27,6 +27,13 @@ class ConstantsSDKDataTypesConstants {
   std::string layer0_debugger_channel;
   std::string trc_test_channel;
   std::string broker_playback_message;
+  std::string HDD0_DRIVER_TAG;
+  std::string MEMCACHE_DRIVER_TAG;
+  std::string HTTP_HDD_CACHE_DRIVER_TAG;
+  std::string HTTP_MEM_CACHE_DRIVER_TAG;
+  std::string RESOURCES_DRIVER_TAG;
+  std::string MEDIA_DRIVER_TAG;
+  std::string DOWNLOAD_DRIVER_TAG;
 };
 
 extern const ConstantsSDKDataTypesConstants g_ConstantsSDKDataTypes_constants;
