@@ -36,5 +36,6 @@ namespace Ruyi.SDK.Constants
     public const string RESOURCES_DRIVER_TAG = "/<resources>/";
     public const string MEDIA_DRIVER_TAG = "/<media>/";
     public const string DOWNLOAD_DRIVER_TAG = "/<download>/";
+    public const string DATA_DRIVER_TAG = "/<data>/";
   }
 }

@@ -49,6 +49,8 @@ ConstantsSDKDataTypesConstants::ConstantsSDKDataTypesConstants() {
 
   DOWNLOAD_DRIVER_TAG = "/<download>/";
 
+  DATA_DRIVER_TAG = "/<data>/";
+
 }
 
 }}} // namespace

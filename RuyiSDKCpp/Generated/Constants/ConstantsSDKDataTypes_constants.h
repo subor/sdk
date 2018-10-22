@@ -34,6 +34,7 @@ class ConstantsSDKDataTypesConstants {
   std::string RESOURCES_DRIVER_TAG;
   std::string MEDIA_DRIVER_TAG;
   std::string DOWNLOAD_DRIVER_TAG;
+  std::string DATA_DRIVER_TAG;
 };
 
 extern const ConstantsSDKDataTypesConstants g_ConstantsSDKDataTypes_constants;
