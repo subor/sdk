@@ -39,8 +39,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp3.Description = "json string convert failed: {0}";
       EXTERNALERRORLIST.Add(tmp3);
       ExternalErrorInfos tmp4 = new ExternalErrorInfos();
-      tmp4.ErrorCode = ExternalErrorCode.Err_4;
       tmp4.Description = "lambda expression error: {0}";
+      tmp4.ErrorCode = ExternalErrorCode.Err_4;
       EXTERNALERRORLIST.Add(tmp4);
       ExternalErrorInfos tmp5 = new ExternalErrorInfos();
       tmp5.ErrorCode = ExternalErrorCode.Err_5;
@@ -63,8 +63,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp9.Description = "user is not found by id {0}";
       EXTERNALERRORLIST.Add(tmp9);
       ExternalErrorInfos tmp10 = new ExternalErrorInfos();
-      tmp10.ErrorCode = ExternalErrorCode.Err_10;
       tmp10.Description = "";
+      tmp10.ErrorCode = ExternalErrorCode.Err_10;
       EXTERNALERRORLIST.Add(tmp10);
       ExternalErrorInfos tmp11 = new ExternalErrorInfos();
       tmp11.Description = "";
@@ -79,12 +79,12 @@ namespace Ruyi.SDK.ExternalErrors
       tmp13.ErrorCode = ExternalErrorCode.Err_13;
       EXTERNALERRORLIST.Add(tmp13);
       ExternalErrorInfos tmp14 = new ExternalErrorInfos();
-      tmp14.ErrorCode = ExternalErrorCode.Err_14;
       tmp14.Description = "";
+      tmp14.ErrorCode = ExternalErrorCode.Err_14;
       EXTERNALERRORLIST.Add(tmp14);
       ExternalErrorInfos tmp15 = new ExternalErrorInfos();
-      tmp15.Description = "";
       tmp15.ErrorCode = ExternalErrorCode.Err_15;
+      tmp15.Description = "";
       EXTERNALERRORLIST.Add(tmp15);
       ExternalErrorInfos tmp16 = new ExternalErrorInfos();
       tmp16.ErrorCode = ExternalErrorCode.Err_16;
