@@ -2,7 +2,7 @@
 namespace Ruyi.Layer0
 {
     /// <summary>
-    /// 
+    /// interface of SDK Factory
     /// </summary>
     public interface ISDKFactory
     {
