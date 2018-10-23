@@ -1339,6 +1339,10 @@ void SettingItem::__set_isActive(const bool val) {
   this->isActive = val;
 }
 
+void SettingItem::__set_hasNew(const bool val) {
+  this->hasNew = val;
+}
+
 void SettingItem::__set_validation(const std::string& val) {
   this->validation = val;
 __isset.validation = true;
@@ -1513,6 +1517,14 @@ uint32_t SettingItem::read(::apache::thrift::protocol::TProtocol* iprot) {
         }
         break;
       case 15:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->hasNew);
+          this->__isset.hasNew = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 16:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->validation);
           this->__isset.validation = true;
@@ -1520,7 +1532,7 @@ uint32_t SettingItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 16:
+      case 17:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->activeDependencies.clear();
@@ -1540,7 +1552,7 @@ uint32_t SettingItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 17:
+      case 18:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->ActionName);
           this->__isset.ActionName = true;
@@ -1548,7 +1560,7 @@ uint32_t SettingItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 18:
+      case 19:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->ActionObject);
           this->__isset.ActionObject = true;
@@ -1556,7 +1568,7 @@ uint32_t SettingItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 19:
+      case 20:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->ActionOnSetValue);
           this->__isset.ActionOnSetValue = true;
@@ -1564,7 +1576,7 @@ uint32_t SettingItem::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 20:
+      case 21:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->ActionOnGetValue);
           this->__isset.ActionOnGetValue = true;
@@ -1653,13 +1665,17 @@ uint32_t SettingItem::write(::apache::thrift::protocol::TProtocol* oprot) const 
   xfer += oprot->writeBool(this->isActive);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("hasNew", ::apache::thrift::protocol::T_BOOL, 15);
+  xfer += oprot->writeBool(this->hasNew);
+  xfer += oprot->writeFieldEnd();
+
   if (this->__isset.validation) {
-    xfer += oprot->writeFieldBegin("validation", ::apache::thrift::protocol::T_STRING, 15);
+    xfer += oprot->writeFieldBegin("validation", ::apache::thrift::protocol::T_STRING, 16);
     xfer += oprot->writeString(this->validation);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.activeDependencies) {
-    xfer += oprot->writeFieldBegin("activeDependencies", ::apache::thrift::protocol::T_LIST, 16);
+    xfer += oprot->writeFieldBegin("activeDependencies", ::apache::thrift::protocol::T_LIST, 17);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->activeDependencies.size()));
       std::vector<activeDependency> ::const_iterator _iter48;
@@ -1672,22 +1688,22 @@ uint32_t SettingItem::write(::apache::thrift::protocol::TProtocol* oprot) const 
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.ActionName) {
-    xfer += oprot->writeFieldBegin("ActionName", ::apache::thrift::protocol::T_STRING, 17);
+    xfer += oprot->writeFieldBegin("ActionName", ::apache::thrift::protocol::T_STRING, 18);
     xfer += oprot->writeString(this->ActionName);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.ActionObject) {
-    xfer += oprot->writeFieldBegin("ActionObject", ::apache::thrift::protocol::T_STRING, 18);
+    xfer += oprot->writeFieldBegin("ActionObject", ::apache::thrift::protocol::T_STRING, 19);
     xfer += oprot->writeString(this->ActionObject);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.ActionOnSetValue) {
-    xfer += oprot->writeFieldBegin("ActionOnSetValue", ::apache::thrift::protocol::T_STRING, 19);
+    xfer += oprot->writeFieldBegin("ActionOnSetValue", ::apache::thrift::protocol::T_STRING, 20);
     xfer += oprot->writeString(this->ActionOnSetValue);
     xfer += oprot->writeFieldEnd();
   }
   if (this->__isset.ActionOnGetValue) {
-    xfer += oprot->writeFieldBegin("ActionOnGetValue", ::apache::thrift::protocol::T_STRING, 20);
+    xfer += oprot->writeFieldBegin("ActionOnGetValue", ::apache::thrift::protocol::T_STRING, 21);
     xfer += oprot->writeString(this->ActionOnGetValue);
     xfer += oprot->writeFieldEnd();
   }
@@ -1712,6 +1728,7 @@ void swap(SettingItem &a, SettingItem &b) {
   swap(a.readOnly, b.readOnly);
   swap(a.isValid, b.isValid);
   swap(a.isActive, b.isActive);
+  swap(a.hasNew, b.hasNew);
   swap(a.validation, b.validation);
   swap(a.activeDependencies, b.activeDependencies);
   swap(a.ActionName, b.ActionName);
@@ -1736,6 +1753,7 @@ SettingItem::SettingItem(const SettingItem& other49) {
   readOnly = other49.readOnly;
   isValid = other49.isValid;
   isActive = other49.isActive;
+  hasNew = other49.hasNew;
   validation = other49.validation;
   activeDependencies = other49.activeDependencies;
   ActionName = other49.ActionName;
@@ -1759,6 +1777,7 @@ SettingItem& SettingItem::operator=(const SettingItem& other50) {
   readOnly = other50.readOnly;
   isValid = other50.isValid;
   isActive = other50.isActive;
+  hasNew = other50.hasNew;
   validation = other50.validation;
   activeDependencies = other50.activeDependencies;
   ActionName = other50.ActionName;
@@ -1785,6 +1804,7 @@ void SettingItem::printTo(std::ostream& out) const {
   out << ", " << "readOnly="; (__isset.readOnly ? (out << to_string(readOnly)) : (out << "<null>"));
   out << ", " << "isValid=" << to_string(isValid);
   out << ", " << "isActive=" << to_string(isActive);
+  out << ", " << "hasNew=" << to_string(hasNew);
   out << ", " << "validation="; (__isset.validation ? (out << to_string(validation)) : (out << "<null>"));
   out << ", " << "activeDependencies="; (__isset.activeDependencies ? (out << to_string(activeDependencies)) : (out << "<null>"));
   out << ", " << "ActionName="; (__isset.ActionName ? (out << to_string(ActionName)) : (out << "<null>"));

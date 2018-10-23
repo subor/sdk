@@ -568,7 +568,7 @@ void swap(SettingValue &a, SettingValue &b);
 std::ostream& operator<<(std::ostream& out, const SettingValue& obj);
 
 typedef struct _SettingItem__isset {
-  _SettingItem__isset() : id(false), display(false), dataType(false), dataValue(false), dataList(false), platform(false), summary(false), description(false), UIType(false), devModeOnly(false), internalOnly(false), readOnly(false), isValid(false), isActive(false), validation(false), activeDependencies(false), ActionName(false), ActionObject(false), ActionOnSetValue(false), ActionOnGetValue(false) {}
+  _SettingItem__isset() : id(false), display(false), dataType(false), dataValue(false), dataList(false), platform(false), summary(false), description(false), UIType(false), devModeOnly(false), internalOnly(false), readOnly(false), isValid(false), isActive(false), hasNew(false), validation(false), activeDependencies(false), ActionName(false), ActionObject(false), ActionOnSetValue(false), ActionOnGetValue(false) {}
   bool id :1;
   bool display :1;
   bool dataType :1;
@@ -583,6 +583,7 @@ typedef struct _SettingItem__isset {
   bool readOnly :1;
   bool isValid :1;
   bool isActive :1;
+  bool hasNew :1;
   bool validation :1;
   bool activeDependencies :1;
   bool ActionName :1;
@@ -596,7 +597,7 @@ class SettingItem : public virtual ::apache::thrift::TBase {
 
   SettingItem(const SettingItem&);
   SettingItem& operator=(const SettingItem&);
-  SettingItem() : id(), display(), dataType(), dataValue(), platform((ePlatform::type)0), summary(), description(), UIType((eUIType::type)0), devModeOnly(0), internalOnly(0), readOnly(0), isValid(0), isActive(0), validation(), ActionName(), ActionObject(), ActionOnSetValue(), ActionOnGetValue() {
+  SettingItem() : id(), display(), dataType(), dataValue(), platform((ePlatform::type)0), summary(), description(), UIType((eUIType::type)0), devModeOnly(0), internalOnly(0), readOnly(0), isValid(0), isActive(0), hasNew(0), validation(), ActionName(), ActionObject(), ActionOnSetValue(), ActionOnGetValue() {
   }
 
   virtual ~SettingItem() throw();
@@ -614,6 +615,7 @@ class SettingItem : public virtual ::apache::thrift::TBase {
   bool readOnly;
   bool isValid;
   bool isActive;
+  bool hasNew;
   std::string validation;
   std::vector<activeDependency>  activeDependencies;
   std::string ActionName;
@@ -650,6 +652,8 @@ class SettingItem : public virtual ::apache::thrift::TBase {
   void __set_isValid(const bool val);
 
   void __set_isActive(const bool val);
+
+  void __set_hasNew(const bool val);
 
   void __set_validation(const std::string& val);
 
@@ -708,6 +712,8 @@ class SettingItem : public virtual ::apache::thrift::TBase {
     if (!(isValid == rhs.isValid))
       return false;
     if (!(isActive == rhs.isActive))
+      return false;
+    if (!(hasNew == rhs.hasNew))
       return false;
     if (__isset.validation != rhs.__isset.validation)
       return false;
