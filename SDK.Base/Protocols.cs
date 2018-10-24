@@ -6,7 +6,10 @@ using Thrift.Transport;
 
 namespace Ruyi.Layer0
 {
-    // only use it on thrift client side, lock when write start and unlock when read end.
+    /// <summary>
+    /// Wrapper class of TBinaryProtocol
+    /// only use it on thrift client side, lock when write start and unlock when read end. 
+    /// </summary>
     public class TBinaryProtocolTS : TBinaryProtocol
     {
         private const int ConnectRetryTimesMax = 5;
@@ -16,16 +19,28 @@ namespace Ruyi.Layer0
         private int connectRetryTimes = ConnectRetryTimesMax;
         private bool needReconnect = false;
 
+        /// <summary>
+        /// contructor of TBinaryProtocolTS
+        /// </summary>
+        /// <param name="trans">TTransport instance used between C/S</param>
         public TBinaryProtocolTS(TTransport trans) : base(trans)
         {
         }
 
+        /// <summary>
+        /// log message
+        /// </summary>
+        /// <param name="message">string message info</param>
+        /// <param name="level">level of log</param>
         void Log(string message, LogLevel level)
         {
             Logger.Log(message, category: MessageCategory.Framework, level: level);
         }
 
-        // begin to write the message, see if we need to create a new transport
+        /// <summary>
+        /// begin to write the message, see if we need to create a new transport
+        /// </summary>
+        /// <param name="message">message</param>
         public override void WriteMessageBegin(TMessage message)
         {
             Monitor.Enter(locker);
@@ -82,7 +97,9 @@ namespace Ruyi.Layer0
             }
         }
 
-        // read message end, release the transport
+        /// <summary>
+        /// read message end, release the transport
+        /// </summary>
         public override void ReadMessageEnd()
         {
             base.ReadMessageEnd();
