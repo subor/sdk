@@ -288,6 +288,8 @@ service BrainCloudService {
 		3: i32 clientIndex
 	),
 
+	string Authentication_CheckUsernameExists(1: string gameId, 2: string playerName, 3: i32 clientIndex),
+
 	/** Update method needs to be called regularly in order
             to process incoming and outgoing messages. */
 	void Client_Update(1: i32 clientIndex),

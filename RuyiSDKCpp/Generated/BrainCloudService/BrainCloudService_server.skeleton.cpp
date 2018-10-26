@@ -387,6 +387,11 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Authentication_RequestSmsCode\n");
   }
 
+  void Authentication_CheckUsernameExists(std::string& _return, const std::string& gameId, const std::string& playerName, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Authentication_CheckUsernameExists\n");
+  }
+
   /**
    * Update method needs to be called regularly in order
    * to process incoming and outgoing messages.
