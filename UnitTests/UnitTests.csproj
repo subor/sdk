@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{00FDDB01-E298-4BD2-A262-8DF64F1749FF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UnitTests</RootNamespace>
+    <AssemblyName>UnitTests</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DocTests.cs" />
+    <Compile Include="Elo\DuellingEloTest.cs" />
+    <Compile Include="Elo\EloAssert.cs" />
+    <Compile Include="Elo\FideEloCalculatorTest.cs" />
+    <Compile Include="Elo\GaussianEloCalculatorTest.cs" />
+    <Compile Include="Numerics\GaussianDistributionTests.cs" />
+    <Compile Include="Numerics\MatrixTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuyiNet\RuyiNetTest.cs" />
+    <Compile Include="Trueskill\DrawMarginTest.cs" />
+    <Compile Include="Trueskill\FactorGraphTrueSkillCalculatorTests.cs" />
+    <Compile Include="Trueskill\TrueSkillCalculatorTests.cs" />
+    <Compile Include="Trueskill\TwoPlayerTrueSkillCalculatorTest.cs" />
+    <Compile Include="Trueskill\TwoTeamTrueSkillCalculatorTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk">
+      <Version>15.5.0</Version>
+    </PackageReference>
+    <PackageReference Include="NUnit">
+      <Version>3.9.0</Version>
+    </PackageReference>
+    <PackageReference Include="NUnit3TestAdapter">
+      <Version>3.9.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\externals\thrift.csharp\Thrift.ns2.0.csproj">
+      <Project>{60daa42f-e1c4-46ee-a000-277cc90d2ce6}</Project>
+      <Name>Thrift.ns2.0</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RuyiSDK\RuyiSDK.csproj">
+      <Project>{6636a711-7919-419c-90c1-c633aa63a8b8}</Project>
+      <Name>RuyiSDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SDK.Base\SDK.Base.csproj">
+      <Project>{322c0476-05e8-4b1c-915b-c3c2eac1ebda}</Project>
+      <Name>SDK.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceCommon\ServiceCommon.csproj">
+      <Project>{f33ca40f-a049-4254-b7ba-e0a9c7524ebf}</Project>
+      <Name>ServiceCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceGenerated\ServiceGenerated.csproj">
+      <Project>{542ac8d4-8058-4e1d-9ed2-bc0b4ca04956}</Project>
+      <Name>ServiceGenerated</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
