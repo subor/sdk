@@ -190,6 +190,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>OPENSSL_USE_DEPRECATED;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <OutputFile>$(ProjectDir)bin\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
@@ -218,6 +219,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>OPENSSL_USE_DEPRECATED;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <OutputFile>$(ProjectDir)bin\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
@@ -349,6 +351,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
