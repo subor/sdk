@@ -322,6 +322,7 @@ class BrainCloudServiceIf {
    * @param clientIndex
    */
   virtual void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex) = 0;
+  virtual void Authentication_CheckUsernameExists(std::string& _return, const std::string& gameId, const std::string& playerName, const int32_t clientIndex) = 0;
 
   /**
    * Update method needs to be called regularly in order
@@ -3800,6 +3801,9 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
     return;
   }
   void Authentication_RequestSmsCode(std::string& /* _return */, const std::string& /* phoneNumber */, const bool /* forceCreate */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Authentication_CheckUsernameExists(std::string& /* _return */, const std::string& /* gameId */, const std::string& /* playerName */, const int32_t /* clientIndex */) {
     return;
   }
   void Client_Update(const int32_t /* clientIndex */) {
@@ -7424,6 +7428,124 @@ class BrainCloudService_Authentication_RequestSmsCode_presult {
   std::string* success;
 
   _BrainCloudService_Authentication_RequestSmsCode_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Authentication_CheckUsernameExists_args__isset {
+  _BrainCloudService_Authentication_CheckUsernameExists_args__isset() : gameId(false), playerName(false), clientIndex(false) {}
+  bool gameId :1;
+  bool playerName :1;
+  bool clientIndex :1;
+} _BrainCloudService_Authentication_CheckUsernameExists_args__isset;
+
+class BrainCloudService_Authentication_CheckUsernameExists_args {
+ public:
+
+  BrainCloudService_Authentication_CheckUsernameExists_args(const BrainCloudService_Authentication_CheckUsernameExists_args&);
+  BrainCloudService_Authentication_CheckUsernameExists_args& operator=(const BrainCloudService_Authentication_CheckUsernameExists_args&);
+  BrainCloudService_Authentication_CheckUsernameExists_args() : gameId(), playerName(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Authentication_CheckUsernameExists_args() throw();
+  std::string gameId;
+  std::string playerName;
+  int32_t clientIndex;
+
+  _BrainCloudService_Authentication_CheckUsernameExists_args__isset __isset;
+
+  void __set_gameId(const std::string& val);
+
+  void __set_playerName(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Authentication_CheckUsernameExists_args & rhs) const
+  {
+    if (!(gameId == rhs.gameId))
+      return false;
+    if (!(playerName == rhs.playerName))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Authentication_CheckUsernameExists_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Authentication_CheckUsernameExists_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Authentication_CheckUsernameExists_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Authentication_CheckUsernameExists_pargs() throw();
+  const std::string* gameId;
+  const std::string* playerName;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Authentication_CheckUsernameExists_result__isset {
+  _BrainCloudService_Authentication_CheckUsernameExists_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Authentication_CheckUsernameExists_result__isset;
+
+class BrainCloudService_Authentication_CheckUsernameExists_result {
+ public:
+
+  BrainCloudService_Authentication_CheckUsernameExists_result(const BrainCloudService_Authentication_CheckUsernameExists_result&);
+  BrainCloudService_Authentication_CheckUsernameExists_result& operator=(const BrainCloudService_Authentication_CheckUsernameExists_result&);
+  BrainCloudService_Authentication_CheckUsernameExists_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Authentication_CheckUsernameExists_result() throw();
+  std::string success;
+
+  _BrainCloudService_Authentication_CheckUsernameExists_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Authentication_CheckUsernameExists_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Authentication_CheckUsernameExists_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Authentication_CheckUsernameExists_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Authentication_CheckUsernameExists_presult__isset {
+  _BrainCloudService_Authentication_CheckUsernameExists_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Authentication_CheckUsernameExists_presult__isset;
+
+class BrainCloudService_Authentication_CheckUsernameExists_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Authentication_CheckUsernameExists_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Authentication_CheckUsernameExists_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -46606,6 +46728,9 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex);
   void send_Authentication_RequestSmsCode(const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex);
   void recv_Authentication_RequestSmsCode(std::string& _return);
+  void Authentication_CheckUsernameExists(std::string& _return, const std::string& gameId, const std::string& playerName, const int32_t clientIndex);
+  void send_Authentication_CheckUsernameExists(const std::string& gameId, const std::string& playerName, const int32_t clientIndex);
+  void recv_Authentication_CheckUsernameExists(std::string& _return);
   void Client_Update(const int32_t clientIndex);
   void send_Client_Update(const int32_t clientIndex);
   void recv_Client_Update();
@@ -47651,6 +47776,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Authentication_AuthenticateWechat(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Authentication_ResetEmailPassword(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Authentication_RequestSmsCode(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Authentication_CheckUsernameExists(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Client_Update(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Client_EnableLogging(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Client_ResetCommunication(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -48012,6 +48138,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Authentication_AuthenticateWechat"] = &BrainCloudServiceProcessor::process_Authentication_AuthenticateWechat;
     processMap_["Authentication_ResetEmailPassword"] = &BrainCloudServiceProcessor::process_Authentication_ResetEmailPassword;
     processMap_["Authentication_RequestSmsCode"] = &BrainCloudServiceProcessor::process_Authentication_RequestSmsCode;
+    processMap_["Authentication_CheckUsernameExists"] = &BrainCloudServiceProcessor::process_Authentication_CheckUsernameExists;
     processMap_["Client_Update"] = &BrainCloudServiceProcessor::process_Client_Update;
     processMap_["Client_EnableLogging"] = &BrainCloudServiceProcessor::process_Client_EnableLogging;
     processMap_["Client_ResetCommunication"] = &BrainCloudServiceProcessor::process_Client_ResetCommunication;
@@ -48591,6 +48718,16 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
       ifaces_[i]->Authentication_RequestSmsCode(_return, phoneNumber, forceCreate, clientIndex);
     }
     ifaces_[i]->Authentication_RequestSmsCode(_return, phoneNumber, forceCreate, clientIndex);
+    return;
+  }
+
+  void Authentication_CheckUsernameExists(std::string& _return, const std::string& gameId, const std::string& playerName, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Authentication_CheckUsernameExists(_return, gameId, playerName, clientIndex);
+    }
+    ifaces_[i]->Authentication_CheckUsernameExists(_return, gameId, playerName, clientIndex);
     return;
   }
 
@@ -52024,6 +52161,9 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex);
   int32_t send_Authentication_RequestSmsCode(const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex);
   void recv_Authentication_RequestSmsCode(std::string& _return, const int32_t seqid);
+  void Authentication_CheckUsernameExists(std::string& _return, const std::string& gameId, const std::string& playerName, const int32_t clientIndex);
+  int32_t send_Authentication_CheckUsernameExists(const std::string& gameId, const std::string& playerName, const int32_t clientIndex);
+  void recv_Authentication_CheckUsernameExists(std::string& _return, const int32_t seqid);
   void Client_Update(const int32_t clientIndex);
   int32_t send_Client_Update(const int32_t clientIndex);
   void recv_Client_Update(const int32_t seqid);
