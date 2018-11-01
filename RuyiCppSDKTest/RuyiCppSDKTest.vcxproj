@@ -191,6 +191,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|Win32'">
     <ClCompile>
@@ -206,6 +209,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -241,7 +247,7 @@
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\output\Debug\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -262,6 +268,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_mt|Win32'">
     <ClCompile>
@@ -281,6 +290,9 @@
       <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -324,7 +336,7 @@
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\output\Release\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
