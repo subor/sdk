@@ -453,6 +453,10 @@
     <ClCompile Include="Generated\Constants\ConstantsSDKDataTypes_types.cpp" />
     <ClCompile Include="Generated\Constants\ConstantsSDKServices_constants.cpp" />
     <ClCompile Include="Generated\Constants\ConstantsSDKServices_types.cpp" />
+    <ClCompile Include="Generated\GamesDB\GamesDBSDKDataTypes_constants.cpp" />
+    <ClCompile Include="Generated\GamesDB\GamesDBSDKDataTypes_types.cpp" />
+    <ClCompile Include="Generated\GamesDB\GamesDBSDKServices_constants.cpp" />
+    <ClCompile Include="Generated\GamesDB\GamesDBSDKServices_types.cpp" />
     <ClCompile Include="Generated\InputManager\InputManagerSDKDataTypes_constants.cpp" />
     <ClCompile Include="Generated\InputManager\InputManagerSDKDataTypes_types.cpp" />
     <ClCompile Include="Generated\InputManager\InputManagerSDKServices_constants.cpp" />
@@ -528,6 +532,10 @@
     <ClInclude Include="Generated\Constants\ConstantsSDKDataTypes_types.h" />
     <ClInclude Include="Generated\Constants\ConstantsSDKServices_constants.h" />
     <ClInclude Include="Generated\Constants\ConstantsSDKServices_types.h" />
+    <ClInclude Include="Generated\GamesDB\GamesDBSDKDataTypes_constants.h" />
+    <ClInclude Include="Generated\GamesDB\GamesDBSDKDataTypes_types.h" />
+    <ClInclude Include="Generated\GamesDB\GamesDBSDKServices_constants.h" />
+    <ClInclude Include="Generated\GamesDB\GamesDBSDKServices_types.h" />
     <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_constants.h" />
     <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_types.h" />
     <ClInclude Include="Generated\InputManager\InputManagerSDKServices_constants.h" />

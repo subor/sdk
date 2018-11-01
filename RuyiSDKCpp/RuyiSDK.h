@@ -4,6 +4,8 @@
 #include "thrift/protocol/TBinaryProtocol.h"
 #include "thrift/protocol/TMultiplexedProtocol.h"
 
+#include "Generated/GamesDB/GamesDBSDKDataTypes_constants.h"
+
 #include "Generated/StorageLayer/StorageLayerService.h"
 #include "Generated/BrainCloudService/BrainCloudService.h"
 #include "Generated/SettingSystem/SettingSystemService.h"

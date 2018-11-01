@@ -20,6 +20,64 @@
 
 namespace Ruyi { namespace SDK { namespace CommonType {
 
+struct OverlayGameType {
+  enum type {
+    Standalone = 0,
+    Web = 1
+  };
+};
+
+extern const std::map<int, const char*> _OverlayGameType_VALUES_TO_NAMES;
+
+std::ostream& operator<<(std::ostream& out, const OverlayGameType::type& val);
+
+struct OverlayForceBindAdapter {
+  enum type {
+    All = 0,
+    Evolve = 1
+  };
+};
+
+extern const std::map<int, const char*> _OverlayForceBindAdapter_VALUES_TO_NAMES;
+
+std::ostream& operator<<(std::ostream& out, const OverlayForceBindAdapter::type& val);
+
+struct OverlayRenderer {
+  enum type {
+    Unspecified = 0,
+    Direct3D = 1,
+    OpenGL = 2
+  };
+};
+
+extern const std::map<int, const char*> _OverlayRenderer_VALUES_TO_NAMES;
+
+std::ostream& operator<<(std::ostream& out, const OverlayRenderer::type& val);
+
+struct OverlayRendererHooking {
+  enum type {
+    Normal = 0,
+    Factory = 1,
+    Intrusive = 2
+  };
+};
+
+extern const std::map<int, const char*> _OverlayRendererHooking_VALUES_TO_NAMES;
+
+std::ostream& operator<<(std::ostream& out, const OverlayRendererHooking::type& val);
+
+struct OverlayCursor {
+  enum type {
+    Auto = 0,
+    Hardware = 1,
+    Software = 2
+  };
+};
+
+extern const std::map<int, const char*> _OverlayCursor_VALUES_TO_NAMES;
+
+std::ostream& operator<<(std::ostream& out, const OverlayCursor::type& val);
+
 struct CondType {
   enum type {
     ExePresent = 0,
@@ -34,6 +92,10 @@ extern const std::map<int, const char*> _CondType_VALUES_TO_NAMES;
 
 std::ostream& operator<<(std::ostream& out, const CondType::type& val);
 
+class Features;
+
+class RuyiFeatures;
+
 class Runtime;
 
 class GameDB;
@@ -44,6 +106,161 @@ class Variant;
 
 class If;
 
+typedef struct _Features__isset {
+  _Features__isset() : overlay(true), forcebind(true), forcebind_adapter(false), forcetopmost(true), opengl_vbo_rendering(true), opengl_state_hooking(true), game_window_subclassing(true), forcerenderer(false), renderer_hooking(false), forcecursor(false) {}
+  bool overlay :1;
+  bool forcebind :1;
+  bool forcebind_adapter :1;
+  bool forcetopmost :1;
+  bool opengl_vbo_rendering :1;
+  bool opengl_state_hooking :1;
+  bool game_window_subclassing :1;
+  bool forcerenderer :1;
+  bool renderer_hooking :1;
+  bool forcecursor :1;
+} _Features__isset;
+
+class Features : public virtual ::apache::thrift::TBase {
+ public:
+
+  Features(const Features&);
+  Features& operator=(const Features&);
+  Features() : overlay(true), forcebind(false), forcebind_adapter((OverlayForceBindAdapter::type)0), forcetopmost(false), opengl_vbo_rendering(true), opengl_state_hooking(true), game_window_subclassing(true), forcerenderer((OverlayRenderer::type)0), renderer_hooking((OverlayRendererHooking::type)0), forcecursor((OverlayCursor::type)0) {
+  }
+
+  virtual ~Features() throw();
+  bool overlay;
+  bool forcebind;
+  OverlayForceBindAdapter::type forcebind_adapter;
+  bool forcetopmost;
+  bool opengl_vbo_rendering;
+  bool opengl_state_hooking;
+  bool game_window_subclassing;
+  OverlayRenderer::type forcerenderer;
+  OverlayRendererHooking::type renderer_hooking;
+  OverlayCursor::type forcecursor;
+
+  _Features__isset __isset;
+
+  void __set_overlay(const bool val);
+
+  void __set_forcebind(const bool val);
+
+  void __set_forcebind_adapter(const OverlayForceBindAdapter::type val);
+
+  void __set_forcetopmost(const bool val);
+
+  void __set_opengl_vbo_rendering(const bool val);
+
+  void __set_opengl_state_hooking(const bool val);
+
+  void __set_game_window_subclassing(const bool val);
+
+  void __set_forcerenderer(const OverlayRenderer::type val);
+
+  void __set_renderer_hooking(const OverlayRendererHooking::type val);
+
+  void __set_forcecursor(const OverlayCursor::type val);
+
+  bool operator == (const Features & rhs) const
+  {
+    if (!(overlay == rhs.overlay))
+      return false;
+    if (!(forcebind == rhs.forcebind))
+      return false;
+    if (!(forcebind_adapter == rhs.forcebind_adapter))
+      return false;
+    if (!(forcetopmost == rhs.forcetopmost))
+      return false;
+    if (!(opengl_vbo_rendering == rhs.opengl_vbo_rendering))
+      return false;
+    if (!(opengl_state_hooking == rhs.opengl_state_hooking))
+      return false;
+    if (!(game_window_subclassing == rhs.game_window_subclassing))
+      return false;
+    if (!(forcerenderer == rhs.forcerenderer))
+      return false;
+    if (!(renderer_hooking == rhs.renderer_hooking))
+      return false;
+    if (!(forcecursor == rhs.forcecursor))
+      return false;
+    return true;
+  }
+  bool operator != (const Features &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const Features & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(Features &a, Features &b);
+
+std::ostream& operator<<(std::ostream& out, const Features& obj);
+
+typedef struct _RuyiFeatures__isset {
+  _RuyiFeatures__isset() : ruyi_xinput(true), ruyi_dinput(true), ruyi_sdkinput(true) {}
+  bool ruyi_xinput :1;
+  bool ruyi_dinput :1;
+  bool ruyi_sdkinput :1;
+} _RuyiFeatures__isset;
+
+class RuyiFeatures : public virtual ::apache::thrift::TBase {
+ public:
+
+  RuyiFeatures(const RuyiFeatures&);
+  RuyiFeatures& operator=(const RuyiFeatures&);
+  RuyiFeatures() : ruyi_xinput(false), ruyi_dinput(false), ruyi_sdkinput(false) {
+  }
+
+  virtual ~RuyiFeatures() throw();
+  bool ruyi_xinput;
+  bool ruyi_dinput;
+  bool ruyi_sdkinput;
+
+  _RuyiFeatures__isset __isset;
+
+  void __set_ruyi_xinput(const bool val);
+
+  void __set_ruyi_dinput(const bool val);
+
+  void __set_ruyi_sdkinput(const bool val);
+
+  bool operator == (const RuyiFeatures & rhs) const
+  {
+    if (!(ruyi_xinput == rhs.ruyi_xinput))
+      return false;
+    if (!(ruyi_dinput == rhs.ruyi_dinput))
+      return false;
+    if (!(ruyi_sdkinput == rhs.ruyi_sdkinput))
+      return false;
+    return true;
+  }
+  bool operator != (const RuyiFeatures &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const RuyiFeatures & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(RuyiFeatures &a, RuyiFeatures &b);
+
+std::ostream& operator<<(std::ostream& out, const RuyiFeatures& obj);
+
+typedef struct _Runtime__isset {
+  _Runtime__isset() : features(false), ruyifeatures(false) {}
+  bool features :1;
+  bool ruyifeatures :1;
+} _Runtime__isset;
 
 class Runtime : public virtual ::apache::thrift::TBase {
  public:
@@ -54,9 +271,21 @@ class Runtime : public virtual ::apache::thrift::TBase {
   }
 
   virtual ~Runtime() throw();
+  Features features;
+  RuyiFeatures ruyifeatures;
 
-  bool operator == (const Runtime & /* rhs */) const
+  _Runtime__isset __isset;
+
+  void __set_features(const Features& val);
+
+  void __set_ruyifeatures(const RuyiFeatures& val);
+
+  bool operator == (const Runtime & rhs) const
   {
+    if (!(features == rhs.features))
+      return false;
+    if (!(ruyifeatures == rhs.ruyifeatures))
+      return false;
     return true;
   }
   bool operator != (const Runtime &rhs) const {
@@ -76,7 +305,8 @@ void swap(Runtime &a, Runtime &b);
 std::ostream& operator<<(std::ostream& out, const Runtime& obj);
 
 typedef struct _GameDB__isset {
-  _GameDB__isset() : id(false), name(false), conditions(false), detection(false), runtime(false) {}
+  _GameDB__isset() : type(false), id(false), name(false), conditions(false), detection(false), runtime(false) {}
+  bool type :1;
   bool id :1;
   bool name :1;
   bool conditions :1;
@@ -89,10 +319,11 @@ class GameDB : public virtual ::apache::thrift::TBase {
 
   GameDB(const GameDB&);
   GameDB& operator=(const GameDB&);
-  GameDB() : id(0), name() {
+  GameDB() : type((OverlayGameType::type)0), id(0), name() {
   }
 
   virtual ~GameDB() throw();
+  OverlayGameType::type type;
   int32_t id;
   std::string name;
   std::vector<Cond>  conditions;
@@ -100,6 +331,8 @@ class GameDB : public virtual ::apache::thrift::TBase {
   Runtime runtime;
 
   _GameDB__isset __isset;
+
+  void __set_type(const OverlayGameType::type val);
 
   void __set_id(const int32_t val);
 
@@ -113,6 +346,8 @@ class GameDB : public virtual ::apache::thrift::TBase {
 
   bool operator == (const GameDB & rhs) const
   {
+    if (!(type == rhs.type))
+      return false;
     if (!(id == rhs.id))
       return false;
     if (!(name == rhs.name))
@@ -208,13 +443,13 @@ class Variant : public virtual ::apache::thrift::TBase {
 
   Variant(const Variant&);
   Variant& operator=(const Variant&);
-  Variant() : name(), id(), order() {
+  Variant() : name(), id(), order(0) {
   }
 
   virtual ~Variant() throw();
   std::string name;
   std::string id;
-  std::string order;
+  int32_t order;
   std::vector<If>  rules;
 
   _Variant__isset __isset;
@@ -223,7 +458,7 @@ class Variant : public virtual ::apache::thrift::TBase {
 
   void __set_id(const std::string& val);
 
-  void __set_order(const std::string& val);
+  void __set_order(const int32_t val);
 
   void __set_rules(const std::vector<If> & val);
 
