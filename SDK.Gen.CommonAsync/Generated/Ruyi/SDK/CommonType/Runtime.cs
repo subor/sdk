@@ -27,6 +27,42 @@ namespace Ruyi.SDK.CommonType
 
   public partial class Runtime : TBase
   {
+    private Features _features;
+    private RuyiFeatures _ruyifeatures;
+
+    public Features Features
+    {
+      get
+      {
+        return _features;
+      }
+      set
+      {
+        __isset.features = true;
+        this._features = value;
+      }
+    }
+
+    public RuyiFeatures Ruyifeatures
+    {
+      get
+      {
+        return _ruyifeatures;
+      }
+      set
+      {
+        __isset.ruyifeatures = true;
+        this._ruyifeatures = value;
+      }
+    }
+
+
+    public Isset __isset;
+    public struct Isset
+    {
+      public bool features;
+      public bool ruyifeatures;
+    }
 
     public Runtime()
     {
@@ -49,6 +85,28 @@ namespace Ruyi.SDK.CommonType
 
           switch (field.ID)
           {
+            case 1:
+              if (field.Type == TType.Struct)
+              {
+                Features = new Features();
+                await Features.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 2:
+              if (field.Type == TType.Struct)
+              {
+                Ruyifeatures = new RuyiFeatures();
+                await Ruyifeatures.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
             default: 
               await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
@@ -72,6 +130,25 @@ namespace Ruyi.SDK.CommonType
       {
         var struc = new TStruct("Runtime");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
+        var field = new TField();
+        if (Features != null && __isset.features)
+        {
+          field.Name = "features";
+          field.Type = TType.Struct;
+          field.ID = 1;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Features.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (Ruyifeatures != null && __isset.ruyifeatures)
+        {
+          field.Name = "ruyifeatures";
+          field.Type = TType.Struct;
+          field.ID = 2;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await Ruyifeatures.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
         await oprot.WriteFieldStopAsync(cancellationToken);
         await oprot.WriteStructEndAsync(cancellationToken);
       }
@@ -84,6 +161,21 @@ namespace Ruyi.SDK.CommonType
     public override string ToString()
     {
       var sb = new StringBuilder("Runtime(");
+      bool __first = true;
+      if (Features != null && __isset.features)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Features: ");
+        sb.Append(Features== null ? "<null>" : Features.ToString());
+      }
+      if (Ruyifeatures != null && __isset.ruyifeatures)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Ruyifeatures: ");
+        sb.Append(Ruyifeatures== null ? "<null>" : Ruyifeatures.ToString());
+      }
       sb.Append(")");
       return sb.ToString();
     }

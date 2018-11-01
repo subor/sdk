@@ -89,6 +89,9 @@
     <Filter Include="Sources\RuyiNet\Service\Leaderboard\Response">
       <UniqueIdentifier>{0594f5d5-d63f-4ece-a2e9-2bd68c8cc38b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Generated\GamesDB">
+      <UniqueIdentifier>{11154203-77ea-4f44-b3dd-47610603332f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Generated\InputManager\InputManagerSDKDataTypes_constants.cpp">
@@ -309,6 +312,18 @@
     </ClCompile>
     <ClCompile Include="RuyiNet\Service\Leaderboard\RuyiNetPlayerScore.cpp">
       <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\GamesDB\GamesDBSDKDataTypes_constants.cpp">
+      <Filter>Generated\GamesDB</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\GamesDB\GamesDBSDKDataTypes_types.cpp">
+      <Filter>Generated\GamesDB</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\GamesDB\GamesDBSDKServices_constants.cpp">
+      <Filter>Generated\GamesDB</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\GamesDB\GamesDBSDKServices_types.cpp">
+      <Filter>Generated\GamesDB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -627,6 +642,18 @@
     </ClInclude>
     <ClInclude Include="RuyiNet\Service\Leaderboard\RuyiNetPlayerScore.h">
       <Filter>Sources\RuyiNet\Service\Leaderboard</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\GamesDB\GamesDBSDKDataTypes_constants.h">
+      <Filter>Generated\GamesDB</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\GamesDB\GamesDBSDKDataTypes_types.h">
+      <Filter>Generated\GamesDB</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\GamesDB\GamesDBSDKServices_constants.h">
+      <Filter>Generated\GamesDB</Filter>
+    </ClInclude>
+    <ClInclude Include="Generated\GamesDB\GamesDBSDKServices_types.h">
+      <Filter>Generated\GamesDB</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

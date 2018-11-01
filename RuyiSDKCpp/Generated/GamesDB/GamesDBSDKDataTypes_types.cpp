@@ -13,6 +13,112 @@
 
 namespace Ruyi { namespace SDK { namespace CommonType {
 
+int _kOverlayGameTypeValues[] = {
+  OverlayGameType::Standalone,
+  OverlayGameType::Web
+};
+const char* _kOverlayGameTypeNames[] = {
+  "Standalone",
+  "Web"
+};
+const std::map<int, const char*> _OverlayGameType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(2, _kOverlayGameTypeValues, _kOverlayGameTypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
+std::ostream& operator<<(std::ostream& out, const OverlayGameType::type& val) {
+  std::map<int, const char*>::const_iterator it = _OverlayGameType_VALUES_TO_NAMES.find(val);
+  if (it != _OverlayGameType_VALUES_TO_NAMES.end()) {
+    out << it->second;
+  } else {
+    out << static_cast<int>(val);
+  }
+  return out;
+}
+
+int _kOverlayForceBindAdapterValues[] = {
+  OverlayForceBindAdapter::All,
+  OverlayForceBindAdapter::Evolve
+};
+const char* _kOverlayForceBindAdapterNames[] = {
+  "All",
+  "Evolve"
+};
+const std::map<int, const char*> _OverlayForceBindAdapter_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(2, _kOverlayForceBindAdapterValues, _kOverlayForceBindAdapterNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
+std::ostream& operator<<(std::ostream& out, const OverlayForceBindAdapter::type& val) {
+  std::map<int, const char*>::const_iterator it = _OverlayForceBindAdapter_VALUES_TO_NAMES.find(val);
+  if (it != _OverlayForceBindAdapter_VALUES_TO_NAMES.end()) {
+    out << it->second;
+  } else {
+    out << static_cast<int>(val);
+  }
+  return out;
+}
+
+int _kOverlayRendererValues[] = {
+  OverlayRenderer::Unspecified,
+  OverlayRenderer::Direct3D,
+  OverlayRenderer::OpenGL
+};
+const char* _kOverlayRendererNames[] = {
+  "Unspecified",
+  "Direct3D",
+  "OpenGL"
+};
+const std::map<int, const char*> _OverlayRenderer_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(3, _kOverlayRendererValues, _kOverlayRendererNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
+std::ostream& operator<<(std::ostream& out, const OverlayRenderer::type& val) {
+  std::map<int, const char*>::const_iterator it = _OverlayRenderer_VALUES_TO_NAMES.find(val);
+  if (it != _OverlayRenderer_VALUES_TO_NAMES.end()) {
+    out << it->second;
+  } else {
+    out << static_cast<int>(val);
+  }
+  return out;
+}
+
+int _kOverlayRendererHookingValues[] = {
+  OverlayRendererHooking::Normal,
+  OverlayRendererHooking::Factory,
+  OverlayRendererHooking::Intrusive
+};
+const char* _kOverlayRendererHookingNames[] = {
+  "Normal",
+  "Factory",
+  "Intrusive"
+};
+const std::map<int, const char*> _OverlayRendererHooking_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(3, _kOverlayRendererHookingValues, _kOverlayRendererHookingNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
+std::ostream& operator<<(std::ostream& out, const OverlayRendererHooking::type& val) {
+  std::map<int, const char*>::const_iterator it = _OverlayRendererHooking_VALUES_TO_NAMES.find(val);
+  if (it != _OverlayRendererHooking_VALUES_TO_NAMES.end()) {
+    out << it->second;
+  } else {
+    out << static_cast<int>(val);
+  }
+  return out;
+}
+
+int _kOverlayCursorValues[] = {
+  OverlayCursor::Auto,
+  OverlayCursor::Hardware,
+  OverlayCursor::Software
+};
+const char* _kOverlayCursorNames[] = {
+  "Auto",
+  "Hardware",
+  "Software"
+};
+const std::map<int, const char*> _OverlayCursor_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(3, _kOverlayCursorValues, _kOverlayCursorNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
+std::ostream& operator<<(std::ostream& out, const OverlayCursor::type& val) {
+  std::map<int, const char*>::const_iterator it = _OverlayCursor_VALUES_TO_NAMES.find(val);
+  if (it != _OverlayCursor_VALUES_TO_NAMES.end()) {
+    out << it->second;
+  } else {
+    out << static_cast<int>(val);
+  }
+  return out;
+}
+
 int _kCondTypeValues[] = {
   CondType::ExePresent,
   CondType::FilePresent,
@@ -40,9 +146,429 @@ std::ostream& operator<<(std::ostream& out, const CondType::type& val) {
 }
 
 
+Features::~Features() throw() {
+}
+
+
+void Features::__set_overlay(const bool val) {
+  this->overlay = val;
+}
+
+void Features::__set_forcebind(const bool val) {
+  this->forcebind = val;
+}
+
+void Features::__set_forcebind_adapter(const OverlayForceBindAdapter::type val) {
+  this->forcebind_adapter = val;
+}
+
+void Features::__set_forcetopmost(const bool val) {
+  this->forcetopmost = val;
+}
+
+void Features::__set_opengl_vbo_rendering(const bool val) {
+  this->opengl_vbo_rendering = val;
+}
+
+void Features::__set_opengl_state_hooking(const bool val) {
+  this->opengl_state_hooking = val;
+}
+
+void Features::__set_game_window_subclassing(const bool val) {
+  this->game_window_subclassing = val;
+}
+
+void Features::__set_forcerenderer(const OverlayRenderer::type val) {
+  this->forcerenderer = val;
+}
+
+void Features::__set_renderer_hooking(const OverlayRendererHooking::type val) {
+  this->renderer_hooking = val;
+}
+
+void Features::__set_forcecursor(const OverlayCursor::type val) {
+  this->forcecursor = val;
+}
+std::ostream& operator<<(std::ostream& out, const Features& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+uint32_t Features::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->overlay);
+          this->__isset.overlay = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->forcebind);
+          this->__isset.forcebind = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          int32_t ecast0;
+          xfer += iprot->readI32(ecast0);
+          this->forcebind_adapter = (OverlayForceBindAdapter::type)ecast0;
+          this->__isset.forcebind_adapter = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->forcetopmost);
+          this->__isset.forcetopmost = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->opengl_vbo_rendering);
+          this->__isset.opengl_vbo_rendering = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 6:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->opengl_state_hooking);
+          this->__isset.opengl_state_hooking = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 7:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->game_window_subclassing);
+          this->__isset.game_window_subclassing = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 8:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          int32_t ecast1;
+          xfer += iprot->readI32(ecast1);
+          this->forcerenderer = (OverlayRenderer::type)ecast1;
+          this->__isset.forcerenderer = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 9:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          int32_t ecast2;
+          xfer += iprot->readI32(ecast2);
+          this->renderer_hooking = (OverlayRendererHooking::type)ecast2;
+          this->__isset.renderer_hooking = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 10:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          int32_t ecast3;
+          xfer += iprot->readI32(ecast3);
+          this->forcecursor = (OverlayCursor::type)ecast3;
+          this->__isset.forcecursor = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t Features::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("Features");
+
+  xfer += oprot->writeFieldBegin("overlay", ::apache::thrift::protocol::T_BOOL, 1);
+  xfer += oprot->writeBool(this->overlay);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("forcebind", ::apache::thrift::protocol::T_BOOL, 2);
+  xfer += oprot->writeBool(this->forcebind);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("forcebind_adapter", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32((int32_t)this->forcebind_adapter);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("forcetopmost", ::apache::thrift::protocol::T_BOOL, 4);
+  xfer += oprot->writeBool(this->forcetopmost);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("opengl_vbo_rendering", ::apache::thrift::protocol::T_BOOL, 5);
+  xfer += oprot->writeBool(this->opengl_vbo_rendering);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("opengl_state_hooking", ::apache::thrift::protocol::T_BOOL, 6);
+  xfer += oprot->writeBool(this->opengl_state_hooking);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("game_window_subclassing", ::apache::thrift::protocol::T_BOOL, 7);
+  xfer += oprot->writeBool(this->game_window_subclassing);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("forcerenderer", ::apache::thrift::protocol::T_I32, 8);
+  xfer += oprot->writeI32((int32_t)this->forcerenderer);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("renderer_hooking", ::apache::thrift::protocol::T_I32, 9);
+  xfer += oprot->writeI32((int32_t)this->renderer_hooking);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("forcecursor", ::apache::thrift::protocol::T_I32, 10);
+  xfer += oprot->writeI32((int32_t)this->forcecursor);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(Features &a, Features &b) {
+  using ::std::swap;
+  swap(a.overlay, b.overlay);
+  swap(a.forcebind, b.forcebind);
+  swap(a.forcebind_adapter, b.forcebind_adapter);
+  swap(a.forcetopmost, b.forcetopmost);
+  swap(a.opengl_vbo_rendering, b.opengl_vbo_rendering);
+  swap(a.opengl_state_hooking, b.opengl_state_hooking);
+  swap(a.game_window_subclassing, b.game_window_subclassing);
+  swap(a.forcerenderer, b.forcerenderer);
+  swap(a.renderer_hooking, b.renderer_hooking);
+  swap(a.forcecursor, b.forcecursor);
+  swap(a.__isset, b.__isset);
+}
+
+Features::Features(const Features& other4) {
+  overlay = other4.overlay;
+  forcebind = other4.forcebind;
+  forcebind_adapter = other4.forcebind_adapter;
+  forcetopmost = other4.forcetopmost;
+  opengl_vbo_rendering = other4.opengl_vbo_rendering;
+  opengl_state_hooking = other4.opengl_state_hooking;
+  game_window_subclassing = other4.game_window_subclassing;
+  forcerenderer = other4.forcerenderer;
+  renderer_hooking = other4.renderer_hooking;
+  forcecursor = other4.forcecursor;
+  __isset = other4.__isset;
+}
+Features& Features::operator=(const Features& other5) {
+  overlay = other5.overlay;
+  forcebind = other5.forcebind;
+  forcebind_adapter = other5.forcebind_adapter;
+  forcetopmost = other5.forcetopmost;
+  opengl_vbo_rendering = other5.opengl_vbo_rendering;
+  opengl_state_hooking = other5.opengl_state_hooking;
+  game_window_subclassing = other5.game_window_subclassing;
+  forcerenderer = other5.forcerenderer;
+  renderer_hooking = other5.renderer_hooking;
+  forcecursor = other5.forcecursor;
+  __isset = other5.__isset;
+  return *this;
+}
+void Features::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "Features(";
+  out << "overlay=" << to_string(overlay);
+  out << ", " << "forcebind=" << to_string(forcebind);
+  out << ", " << "forcebind_adapter=" << to_string(forcebind_adapter);
+  out << ", " << "forcetopmost=" << to_string(forcetopmost);
+  out << ", " << "opengl_vbo_rendering=" << to_string(opengl_vbo_rendering);
+  out << ", " << "opengl_state_hooking=" << to_string(opengl_state_hooking);
+  out << ", " << "game_window_subclassing=" << to_string(game_window_subclassing);
+  out << ", " << "forcerenderer=" << to_string(forcerenderer);
+  out << ", " << "renderer_hooking=" << to_string(renderer_hooking);
+  out << ", " << "forcecursor=" << to_string(forcecursor);
+  out << ")";
+}
+
+
+RuyiFeatures::~RuyiFeatures() throw() {
+}
+
+
+void RuyiFeatures::__set_ruyi_xinput(const bool val) {
+  this->ruyi_xinput = val;
+}
+
+void RuyiFeatures::__set_ruyi_dinput(const bool val) {
+  this->ruyi_dinput = val;
+}
+
+void RuyiFeatures::__set_ruyi_sdkinput(const bool val) {
+  this->ruyi_sdkinput = val;
+}
+std::ostream& operator<<(std::ostream& out, const RuyiFeatures& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+uint32_t RuyiFeatures::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->ruyi_xinput);
+          this->__isset.ruyi_xinput = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->ruyi_dinput);
+          this->__isset.ruyi_dinput = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->ruyi_sdkinput);
+          this->__isset.ruyi_sdkinput = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t RuyiFeatures::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("RuyiFeatures");
+
+  xfer += oprot->writeFieldBegin("ruyi_xinput", ::apache::thrift::protocol::T_BOOL, 1);
+  xfer += oprot->writeBool(this->ruyi_xinput);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("ruyi_dinput", ::apache::thrift::protocol::T_BOOL, 2);
+  xfer += oprot->writeBool(this->ruyi_dinput);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("ruyi_sdkinput", ::apache::thrift::protocol::T_BOOL, 3);
+  xfer += oprot->writeBool(this->ruyi_sdkinput);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(RuyiFeatures &a, RuyiFeatures &b) {
+  using ::std::swap;
+  swap(a.ruyi_xinput, b.ruyi_xinput);
+  swap(a.ruyi_dinput, b.ruyi_dinput);
+  swap(a.ruyi_sdkinput, b.ruyi_sdkinput);
+  swap(a.__isset, b.__isset);
+}
+
+RuyiFeatures::RuyiFeatures(const RuyiFeatures& other6) {
+  ruyi_xinput = other6.ruyi_xinput;
+  ruyi_dinput = other6.ruyi_dinput;
+  ruyi_sdkinput = other6.ruyi_sdkinput;
+  __isset = other6.__isset;
+}
+RuyiFeatures& RuyiFeatures::operator=(const RuyiFeatures& other7) {
+  ruyi_xinput = other7.ruyi_xinput;
+  ruyi_dinput = other7.ruyi_dinput;
+  ruyi_sdkinput = other7.ruyi_sdkinput;
+  __isset = other7.__isset;
+  return *this;
+}
+void RuyiFeatures::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "RuyiFeatures(";
+  out << "ruyi_xinput=" << to_string(ruyi_xinput);
+  out << ", " << "ruyi_dinput=" << to_string(ruyi_dinput);
+  out << ", " << "ruyi_sdkinput=" << to_string(ruyi_sdkinput);
+  out << ")";
+}
+
+
 Runtime::~Runtime() throw() {
 }
 
+
+void Runtime::__set_features(const Features& val) {
+  this->features = val;
+}
+
+void Runtime::__set_ruyifeatures(const RuyiFeatures& val) {
+  this->ruyifeatures = val;
+}
 std::ostream& operator<<(std::ostream& out, const Runtime& obj)
 {
   obj.printTo(out);
@@ -69,7 +595,28 @@ uint32_t Runtime::read(::apache::thrift::protocol::TProtocol* iprot) {
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->features.read(iprot);
+          this->__isset.features = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->ruyifeatures.read(iprot);
+          this->__isset.ruyifeatures = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
@@ -83,6 +630,14 @@ uint32_t Runtime::write(::apache::thrift::protocol::TProtocol* oprot) const {
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("Runtime");
 
+  xfer += oprot->writeFieldBegin("features", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->features.write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("ruyifeatures", ::apache::thrift::protocol::T_STRUCT, 2);
+  xfer += this->ruyifeatures.write(oprot);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -90,20 +645,27 @@ uint32_t Runtime::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
 void swap(Runtime &a, Runtime &b) {
   using ::std::swap;
-  (void) a;
-  (void) b;
+  swap(a.features, b.features);
+  swap(a.ruyifeatures, b.ruyifeatures);
+  swap(a.__isset, b.__isset);
 }
 
-Runtime::Runtime(const Runtime& other0) {
-  (void) other0;
+Runtime::Runtime(const Runtime& other8) {
+  features = other8.features;
+  ruyifeatures = other8.ruyifeatures;
+  __isset = other8.__isset;
 }
-Runtime& Runtime::operator=(const Runtime& other1) {
-  (void) other1;
+Runtime& Runtime::operator=(const Runtime& other9) {
+  features = other9.features;
+  ruyifeatures = other9.ruyifeatures;
+  __isset = other9.__isset;
   return *this;
 }
 void Runtime::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
   out << "Runtime(";
+  out << "features=" << to_string(features);
+  out << ", " << "ruyifeatures=" << to_string(ruyifeatures);
   out << ")";
 }
 
@@ -111,6 +673,10 @@ void Runtime::printTo(std::ostream& out) const {
 GameDB::~GameDB() throw() {
 }
 
+
+void GameDB::__set_type(const OverlayGameType::type val) {
+  this->type = val;
+}
 
 void GameDB::__set_id(const int32_t val) {
   this->id = val;
@@ -161,13 +727,23 @@ uint32_t GameDB::read(::apache::thrift::protocol::TProtocol* iprot) {
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_I32) {
+          int32_t ecast10;
+          xfer += iprot->readI32(ecast10);
+          this->type = (OverlayGameType::type)ecast10;
+          this->__isset.type = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->id);
           this->__isset.id = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 2:
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->name);
           this->__isset.name = true;
@@ -175,18 +751,18 @@ uint32_t GameDB::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 3:
+      case 4:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->conditions.clear();
-            uint32_t _size2;
-            ::apache::thrift::protocol::TType _etype5;
-            xfer += iprot->readListBegin(_etype5, _size2);
-            this->conditions.resize(_size2);
-            uint32_t _i6;
-            for (_i6 = 0; _i6 < _size2; ++_i6)
+            uint32_t _size11;
+            ::apache::thrift::protocol::TType _etype14;
+            xfer += iprot->readListBegin(_etype14, _size11);
+            this->conditions.resize(_size11);
+            uint32_t _i15;
+            for (_i15 = 0; _i15 < _size11; ++_i15)
             {
-              xfer += this->conditions[_i6].read(iprot);
+              xfer += this->conditions[_i15].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -195,18 +771,18 @@ uint32_t GameDB::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 4:
+      case 5:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->detection.clear();
-            uint32_t _size7;
-            ::apache::thrift::protocol::TType _etype10;
-            xfer += iprot->readListBegin(_etype10, _size7);
-            this->detection.resize(_size7);
-            uint32_t _i11;
-            for (_i11 = 0; _i11 < _size7; ++_i11)
+            uint32_t _size16;
+            ::apache::thrift::protocol::TType _etype19;
+            xfer += iprot->readListBegin(_etype19, _size16);
+            this->detection.resize(_size16);
+            uint32_t _i20;
+            for (_i20 = 0; _i20 < _size16; ++_i20)
             {
-              xfer += this->detection[_i11].read(iprot);
+              xfer += this->detection[_i20].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -215,7 +791,7 @@ uint32_t GameDB::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 5:
+      case 6:
         if (ftype == ::apache::thrift::protocol::T_STRUCT) {
           xfer += this->runtime.read(iprot);
           this->__isset.runtime = true;
@@ -240,39 +816,43 @@ uint32_t GameDB::write(::apache::thrift::protocol::TProtocol* oprot) const {
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("GameDB");
 
-  xfer += oprot->writeFieldBegin("id", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeFieldBegin("type", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32((int32_t)this->type);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("id", ::apache::thrift::protocol::T_I32, 2);
   xfer += oprot->writeI32(this->id);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 3);
   xfer += oprot->writeString(this->name);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("conditions", ::apache::thrift::protocol::T_LIST, 3);
+  xfer += oprot->writeFieldBegin("conditions", ::apache::thrift::protocol::T_LIST, 4);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->conditions.size()));
-    std::vector<Cond> ::const_iterator _iter12;
-    for (_iter12 = this->conditions.begin(); _iter12 != this->conditions.end(); ++_iter12)
+    std::vector<Cond> ::const_iterator _iter21;
+    for (_iter21 = this->conditions.begin(); _iter21 != this->conditions.end(); ++_iter21)
     {
-      xfer += (*_iter12).write(oprot);
+      xfer += (*_iter21).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("detection", ::apache::thrift::protocol::T_LIST, 4);
+  xfer += oprot->writeFieldBegin("detection", ::apache::thrift::protocol::T_LIST, 5);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->detection.size()));
-    std::vector<Variant> ::const_iterator _iter13;
-    for (_iter13 = this->detection.begin(); _iter13 != this->detection.end(); ++_iter13)
+    std::vector<Variant> ::const_iterator _iter22;
+    for (_iter22 = this->detection.begin(); _iter22 != this->detection.end(); ++_iter22)
     {
-      xfer += (*_iter13).write(oprot);
+      xfer += (*_iter22).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("runtime", ::apache::thrift::protocol::T_STRUCT, 5);
+  xfer += oprot->writeFieldBegin("runtime", ::apache::thrift::protocol::T_STRUCT, 6);
   xfer += this->runtime.write(oprot);
   xfer += oprot->writeFieldEnd();
 
@@ -283,6 +863,7 @@ uint32_t GameDB::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
 void swap(GameDB &a, GameDB &b) {
   using ::std::swap;
+  swap(a.type, b.type);
   swap(a.id, b.id);
   swap(a.name, b.name);
   swap(a.conditions, b.conditions);
@@ -291,27 +872,30 @@ void swap(GameDB &a, GameDB &b) {
   swap(a.__isset, b.__isset);
 }
 
-GameDB::GameDB(const GameDB& other14) {
-  id = other14.id;
-  name = other14.name;
-  conditions = other14.conditions;
-  detection = other14.detection;
-  runtime = other14.runtime;
-  __isset = other14.__isset;
+GameDB::GameDB(const GameDB& other23) {
+  type = other23.type;
+  id = other23.id;
+  name = other23.name;
+  conditions = other23.conditions;
+  detection = other23.detection;
+  runtime = other23.runtime;
+  __isset = other23.__isset;
 }
-GameDB& GameDB::operator=(const GameDB& other15) {
-  id = other15.id;
-  name = other15.name;
-  conditions = other15.conditions;
-  detection = other15.detection;
-  runtime = other15.runtime;
-  __isset = other15.__isset;
+GameDB& GameDB::operator=(const GameDB& other24) {
+  type = other24.type;
+  id = other24.id;
+  name = other24.name;
+  conditions = other24.conditions;
+  detection = other24.detection;
+  runtime = other24.runtime;
+  __isset = other24.__isset;
   return *this;
 }
 void GameDB::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
   out << "GameDB(";
-  out << "id=" << to_string(id);
+  out << "type=" << to_string(type);
+  out << ", " << "id=" << to_string(id);
   out << ", " << "name=" << to_string(name);
   out << ", " << "conditions=" << to_string(conditions);
   out << ", " << "detection=" << to_string(detection);
@@ -373,9 +957,9 @@ uint32_t Cond::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          int32_t ecast16;
-          xfer += iprot->readI32(ecast16);
-          this->type = (CondType::type)ecast16;
+          int32_t ecast25;
+          xfer += iprot->readI32(ecast25);
+          this->type = (CondType::type)ecast25;
           this->__isset.type = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -431,17 +1015,17 @@ void swap(Cond &a, Cond &b) {
   swap(a.__isset, b.__isset);
 }
 
-Cond::Cond(const Cond& other17) {
-  name = other17.name;
-  type = other17.type;
-  additionalArg = other17.additionalArg;
-  __isset = other17.__isset;
+Cond::Cond(const Cond& other26) {
+  name = other26.name;
+  type = other26.type;
+  additionalArg = other26.additionalArg;
+  __isset = other26.__isset;
 }
-Cond& Cond::operator=(const Cond& other18) {
-  name = other18.name;
-  type = other18.type;
-  additionalArg = other18.additionalArg;
-  __isset = other18.__isset;
+Cond& Cond::operator=(const Cond& other27) {
+  name = other27.name;
+  type = other27.type;
+  additionalArg = other27.additionalArg;
+  __isset = other27.__isset;
   return *this;
 }
 void Cond::printTo(std::ostream& out) const {
@@ -466,7 +1050,7 @@ void Variant::__set_id(const std::string& val) {
   this->id = val;
 }
 
-void Variant::__set_order(const std::string& val) {
+void Variant::__set_order(const int32_t val) {
   this->order = val;
 }
 
@@ -518,8 +1102,8 @@ uint32_t Variant::read(::apache::thrift::protocol::TProtocol* iprot) {
         }
         break;
       case 3:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->order);
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->order);
           this->__isset.order = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -529,14 +1113,14 @@ uint32_t Variant::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->rules.clear();
-            uint32_t _size19;
-            ::apache::thrift::protocol::TType _etype22;
-            xfer += iprot->readListBegin(_etype22, _size19);
-            this->rules.resize(_size19);
-            uint32_t _i23;
-            for (_i23 = 0; _i23 < _size19; ++_i23)
+            uint32_t _size28;
+            ::apache::thrift::protocol::TType _etype31;
+            xfer += iprot->readListBegin(_etype31, _size28);
+            this->rules.resize(_size28);
+            uint32_t _i32;
+            for (_i32 = 0; _i32 < _size28; ++_i32)
             {
-              xfer += this->rules[_i23].read(iprot);
+              xfer += this->rules[_i32].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -570,17 +1154,17 @@ uint32_t Variant::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += oprot->writeString(this->id);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("order", ::apache::thrift::protocol::T_STRING, 3);
-  xfer += oprot->writeString(this->order);
+  xfer += oprot->writeFieldBegin("order", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->order);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("rules", ::apache::thrift::protocol::T_LIST, 4);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->rules.size()));
-    std::vector<If> ::const_iterator _iter24;
-    for (_iter24 = this->rules.begin(); _iter24 != this->rules.end(); ++_iter24)
+    std::vector<If> ::const_iterator _iter33;
+    for (_iter33 = this->rules.begin(); _iter33 != this->rules.end(); ++_iter33)
     {
-      xfer += (*_iter24).write(oprot);
+      xfer += (*_iter33).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -600,19 +1184,19 @@ void swap(Variant &a, Variant &b) {
   swap(a.__isset, b.__isset);
 }
 
-Variant::Variant(const Variant& other25) {
-  name = other25.name;
-  id = other25.id;
-  order = other25.order;
-  rules = other25.rules;
-  __isset = other25.__isset;
+Variant::Variant(const Variant& other34) {
+  name = other34.name;
+  id = other34.id;
+  order = other34.order;
+  rules = other34.rules;
+  __isset = other34.__isset;
 }
-Variant& Variant::operator=(const Variant& other26) {
-  name = other26.name;
-  id = other26.id;
-  order = other26.order;
-  rules = other26.rules;
-  __isset = other26.__isset;
+Variant& Variant::operator=(const Variant& other35) {
+  name = other35.name;
+  id = other35.id;
+  order = other35.order;
+  rules = other35.rules;
+  __isset = other35.__isset;
   return *this;
 }
 void Variant::printTo(std::ostream& out) const {
@@ -701,13 +1285,13 @@ void swap(If &a, If &b) {
   swap(a.__isset, b.__isset);
 }
 
-If::If(const If& other27) {
-  cond = other27.cond;
-  __isset = other27.__isset;
+If::If(const If& other36) {
+  cond = other36.cond;
+  __isset = other36.__isset;
 }
-If& If::operator=(const If& other28) {
-  cond = other28.cond;
-  __isset = other28.__isset;
+If& If::operator=(const If& other37) {
+  cond = other37.cond;
+  __isset = other37.__isset;
   return *this;
 }
 void If::printTo(std::ostream& out) const {
