@@ -208,7 +208,7 @@
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|Win32'">
@@ -237,7 +237,7 @@
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -275,7 +275,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|x64'">
@@ -314,7 +314,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -334,7 +334,7 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -360,7 +360,7 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -397,7 +397,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -433,7 +433,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
