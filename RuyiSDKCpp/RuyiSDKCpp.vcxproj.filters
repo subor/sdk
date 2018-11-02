@@ -154,9 +154,6 @@
     <ClCompile Include="PubSub\SubscribeClient.cpp">
       <Filter>PubSub</Filter>
     </ClCompile>
-    <ClCompile Include="Generated\MessageCreator.cpp">
-      <Filter>Generated</Filter>
-    </ClCompile>
     <ClCompile Include="Generated\Constants\ConstantsSDKDataTypes_constants.cpp">
       <Filter>Generated\Constants</Filter>
     </ClCompile>
@@ -324,6 +321,12 @@
     </ClCompile>
     <ClCompile Include="Generated\GamesDB\GamesDBSDKServices_types.cpp">
       <Filter>Generated\GamesDB</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageCreator.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Generated\MessageCreatorRuyiSDKCpp.cpp">
+      <Filter>Generated</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

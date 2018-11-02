@@ -2,13 +2,21 @@
 
 /// DON'T MODIFY THIS FILE UNLESS YOU'RE FULLY UNDERSTANDING WHAT YOU ARE DOING!!!
 
-#include "../PubSub/MessageCreator.h" 
+#include "PubSub/MessageCreator.h" 
+
+#include "Generated/SDKValidator/SDKValidatorSDKDataTypes_types.h"
+#include "Generated/InputManager/InputManagerSDKDataTypes_types.h"
+#include "Generated/StorageLayer/StorageLayerSDKDataTypes_types.h"
+#include "Generated/SettingSystem/SettingSystemSDKDataTypes_types.h"
+#include "Generated/BrainCloudService/BrainCloudServiceSDKDataTypes_types.h"
+#include "Generated/Constants/ConstantsSDKDataTypes_types.h"
+#include "Generated/LocalizationService/LocalizationServiceSDKDataTypes_types.h"
+#include "Generated/UserServiceExternal/UserServiceExternalSDKDataTypes_types.h"
+#include "Generated/OverlayManager/OverlayManagerSDKDataTypes_types.h"
 
 using namespace Ruyi;
 
-std::map<string, MessageCreatorFunc> MessageCreator::ccs;
-
-void MessageCreator::Initialize()
+void MessageCreatorRuyiSDKCpp()
 {
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.RuyiGamePadInput", Ruyi::SDK::InputManager::RuyiGamePadInput);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.InputManager.RuyiKeyboardInput", Ruyi::SDK::InputManager::RuyiKeyboardInput);
