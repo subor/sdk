@@ -22,7 +22,7 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.OverlayManagerExternal
+namespace Ruyi.SDK.Overlay
 {
 
   public partial class NotifyTakeScreenShot : TBase
