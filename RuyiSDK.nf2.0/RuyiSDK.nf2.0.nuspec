@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Subor.SDK.Net35</id>
+    <version>0.9.0</version>
+    <title>$title$</title>
+    <authors>Subor</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/subor/sdk/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/subor/sdk</projectUrl>
+    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Subor SDK targetting .NET Framework 3.5 (for Unity3D)</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags>subor z+ zplus ruyi</tags>
+  </metadata>
+</package>
