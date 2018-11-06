@@ -3,9 +3,9 @@
 1. 创建Manifest配置文件,注意必须命名为RuyiManifest.json。文件内容格式如下所示：
 ```
      {
-        appID: "app_id",
-        application:    {
-                name:"@app_id",
+        appID: "app_id",                                                        A  
+        application:    {                                                  
+                name:"@app_id",                                                 B
                 label:"@antestapp",
                 icon:"bluetooth.png",
                 description:"an test app description",
@@ -13,6 +13,7 @@
                 activity:[
                         {
                                 name:"main",
+                                exePath:"space_shooter/space_shooter.exe",      C
                                 label:"main test activity",
                                 description:"@antestapp",
                                 icon:"logo.png"
@@ -28,7 +29,9 @@
                 minSdkVersion : "1.0.0.0"
         }
     }
-```
+```  A行  appID: "app_id" 中的app_id为如意发放的appid(例如10112等)
+     B行  name:"@app_id" 中的@app_id为在ret/i18n.json文件中定义的本地化字符串
+     C行  exePath:"space_shooter/space_shooter.exe" 为自己定义的打包文件夹及exe文件路径 
 2. 创建一个和RuyiManifest.json同级目录的文件夹“res”。
 3. 在“res”文件夹下创建“ld”和“hd”文件夹，里面的图片名称和RuyiManifest.json文件中对应值保持一致.
 4. 在“res”文件夹下新建i18n.json，用来支持多语言，内容如下格式：
