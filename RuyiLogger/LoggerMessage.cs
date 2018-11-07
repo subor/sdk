@@ -107,6 +107,12 @@ namespace Ruyi.Logging
 
     public class LoggerMessageEx : LoggerMessage
     {
+        public LoggerMessageEx()
+        {
+            // Exceptions should default to being errors
+            Level = LogLevel.Error;
+        }
+
         /// <summary>
         /// Original exception
         /// </summary>

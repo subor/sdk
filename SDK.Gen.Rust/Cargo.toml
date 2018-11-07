@@ -1,0 +1,9 @@
+[package]
+name = "ruyi-rs"
+version = "0.1.0"
+authors = ["Jake W <jake@playruyi.com>"]
+
+[dependencies]
+thrift = "0.0.4"
+ordered-float = "1.0"
+try_from = "0.2"
