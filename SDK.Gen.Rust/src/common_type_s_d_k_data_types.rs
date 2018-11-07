@@ -1097,10 +1097,10 @@ pub struct SettingItem {
   pub data_type: Option<String>,
   pub data_value: Option<String>,
   pub data_list: Option<DataListItem>,
-  pub platform: Option<ePlatform>,
+  pub platform: Option<EPlatform>,
   pub summary: Option<String>,
   pub description: Option<String>,
-  pub u_i_type: Option<eUIType>,
+  pub u_i_type: Option<EUIType>,
   pub dev_mode_only: Option<bool>,
   pub internal_only: Option<bool>,
   pub read_only: Option<bool>,
@@ -1116,7 +1116,7 @@ pub struct SettingItem {
 }
 
 impl SettingItem {
-  pub fn new<F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21>(id: F1, display: F2, data_type: F3, data_value: F4, data_list: F5, platform: F6, summary: F7, description: F8, u_i_type: F9, dev_mode_only: F10, internal_only: F11, read_only: F12, is_valid: F13, is_active: F14, has_new: F15, validation: F16, active_dependencies: F17, action_name: F18, action_object: F19, action_on_set_value: F20, action_on_get_value: F21) -> SettingItem where F1: Into<Option<String>>, F2: Into<Option<String>>, F3: Into<Option<String>>, F4: Into<Option<String>>, F5: Into<Option<DataListItem>>, F6: Into<Option<ePlatform>>, F7: Into<Option<String>>, F8: Into<Option<String>>, F9: Into<Option<eUIType>>, F10: Into<Option<bool>>, F11: Into<Option<bool>>, F12: Into<Option<bool>>, F13: Into<Option<bool>>, F14: Into<Option<bool>>, F15: Into<Option<bool>>, F16: Into<Option<String>>, F17: Into<Option<Vec<ActiveDependency>>>, F18: Into<Option<String>>, F19: Into<Option<String>>, F20: Into<Option<String>>, F21: Into<Option<String>> {
+  pub fn new<F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12, F13, F14, F15, F16, F17, F18, F19, F20, F21>(id: F1, display: F2, data_type: F3, data_value: F4, data_list: F5, platform: F6, summary: F7, description: F8, u_i_type: F9, dev_mode_only: F10, internal_only: F11, read_only: F12, is_valid: F13, is_active: F14, has_new: F15, validation: F16, active_dependencies: F17, action_name: F18, action_object: F19, action_on_set_value: F20, action_on_get_value: F21) -> SettingItem where F1: Into<Option<String>>, F2: Into<Option<String>>, F3: Into<Option<String>>, F4: Into<Option<String>>, F5: Into<Option<DataListItem>>, F6: Into<Option<EPlatform>>, F7: Into<Option<String>>, F8: Into<Option<String>>, F9: Into<Option<EUIType>>, F10: Into<Option<bool>>, F11: Into<Option<bool>>, F12: Into<Option<bool>>, F13: Into<Option<bool>>, F14: Into<Option<bool>>, F15: Into<Option<bool>>, F16: Into<Option<String>>, F17: Into<Option<Vec<ActiveDependency>>>, F18: Into<Option<String>>, F19: Into<Option<String>>, F20: Into<Option<String>>, F21: Into<Option<String>> {
     SettingItem {
       id: id.into(),
       display: display.into(),
@@ -1148,10 +1148,10 @@ impl SettingItem {
     let mut f_3: Option<String> = Some("".to_owned());
     let mut f_4: Option<String> = Some("".to_owned());
     let mut f_5: Option<DataListItem> = None;
-    let mut f_6: Option<ePlatform> = None;
+    let mut f_6: Option<EPlatform> = None;
     let mut f_7: Option<String> = None;
     let mut f_8: Option<String> = None;
-    let mut f_9: Option<eUIType> = None;
+    let mut f_9: Option<EUIType> = None;
     let mut f_10: Option<bool> = None;
     let mut f_11: Option<bool> = None;
     let mut f_12: Option<bool> = None;
@@ -1192,7 +1192,7 @@ impl SettingItem {
           f_5 = Some(val);
         },
         6 => {
-          let val = ePlatform::read_from_in_protocol(i_prot)?;
+          let val = EPlatform::read_from_in_protocol(i_prot)?;
           f_6 = Some(val);
         },
         7 => {
@@ -1204,7 +1204,7 @@ impl SettingItem {
           f_8 = Some(val);
         },
         9 => {
-          let val = eUIType::read_from_in_protocol(i_prot)?;
+          let val = EUIType::read_from_in_protocol(i_prot)?;
           f_9 = Some(val);
         },
         10 => {

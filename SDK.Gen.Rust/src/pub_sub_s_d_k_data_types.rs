@@ -334,7 +334,7 @@ impl Default for PubHeader {
   }
 }
 
-pub const LAYER0_SERVICE_CHANNEL: String = "layer0/service".to_owned();
+pub const LAYER0_SERVICE_CHANNEL: &str = "layer0/service";
 
-pub const SERVICE_INPUT_CHANNEL: String = "service/input".to_owned();
+pub const SERVICE_INPUT_CHANNEL: &str = "service/input";
 

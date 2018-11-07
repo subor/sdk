@@ -34,23 +34,23 @@ pub const LOW_LATENCY_SOCKET_PORT: i32 = 11290;
 
 pub const HIGH_LATENCY_SOCKET_PORT: i32 = 11390;
 
-pub const LAYER0_BROKER_ADDRESS: String = "tcp://{addr}:5555".to_owned();
+pub const LAYER0_BROKER_ADDRESS: &str = "tcp://{addr}:5555";
 
-pub const LAYER0_PUBLISHER_IN_URI: String = "tcp://{addr}:5567".to_owned();
+pub const LAYER0_PUBLISHER_IN_URI: &str = "tcp://{addr}:5567";
 
-pub const LAYER0_PUBLISHER_OUT_URI: String = "tcp://{addr}:5568".to_owned();
+pub const LAYER0_PUBLISHER_OUT_URI: &str = "tcp://{addr}:5568";
 
-pub const SETTING_CONFIG_FOLDER: String = "resources/configs/".to_owned();
+pub const SETTING_CONFIG_FOLDER: &str = "resources/configs/";
 
-pub const SETTING_SYSTEM_CONFIG: String = "resources/configs/systemsetting".to_owned();
+pub const SETTING_SYSTEM_CONFIG: &str = "resources/configs/systemsetting";
 
-pub const SETTING_SYSTEM_USER_CONFIG: String = "resources/configs/usersetting".to_owned();
+pub const SETTING_SYSTEM_USER_CONFIG: &str = "resources/configs/usersetting";
 
-pub const SYSTEM_SETTING_VERSION: String = "1.0.0.1".to_owned();
+pub const SYSTEM_SETTING_VERSION: &str = "1.0.0.1";
 
-pub const LAYER0_DEBUGGER_CHANNEL: String = "layer0_debugger_channel".to_owned();
+pub const LAYER0_DEBUGGER_CHANNEL: &str = "layer0_debugger_channel";
 
-pub const TRC_TEST_CHANNEL: String = "trc_test_channel".to_owned();
+pub const TRC_TEST_CHANNEL: &str = "trc_test_channel";
 
-pub const BROKER_PLAYBACK_MESSAGE: String = "mmi.developer.playback".to_owned();
+pub const BROKER_PLAYBACK_MESSAGE: &str = "mmi.developer.playback";
 
