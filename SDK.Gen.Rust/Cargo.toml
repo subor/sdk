@@ -1,7 +1,12 @@
 [package]
-name = "ruyi-rs"
+name = "subor-rs"
 version = "0.1.0"
 authors = ["Jake W <jake@playruyi.com>"]
+repository = "https://github.com/subor/sdk"
+homepage = "http://www.playzplus.com/"
+description = "Subor Z+/Ruyi SDK"
+license = "MIT"
+keywords = ["subor", "zplus", "ruyi"]
 
 [dependencies]
 thrift = "0.0.4"
