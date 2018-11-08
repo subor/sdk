@@ -2949,6 +2949,298 @@ void TitleMainIconNotification::printTo(std::ostream& out) const {
 }
 
 
+AppBaseInfo::~AppBaseInfo() throw() {
+}
+
+
+void AppBaseInfo::__set_appId(const std::string& val) {
+  this->appId = val;
+}
+
+void AppBaseInfo::__set_name(const std::string& val) {
+  this->name = val;
+}
+
+void AppBaseInfo::__set_icon(const std::string& val) {
+  this->icon = val;
+}
+
+void AppBaseInfo::__set_description(const std::string& val) {
+  this->description = val;
+}
+
+void AppBaseInfo::__set_properties(const std::vector<std::string> & val) {
+  this->properties = val;
+}
+
+void AppBaseInfo::__set_platform(const std::vector<std::string> & val) {
+  this->platform = val;
+}
+
+void AppBaseInfo::__set_size(const int32_t val) {
+  this->size = val;
+}
+
+void AppBaseInfo::__set_languages(const std::vector<std::string> & val) {
+  this->languages = val;
+}
+std::ostream& operator<<(std::ostream& out, const AppBaseInfo& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+uint32_t AppBaseInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->appId);
+          this->__isset.appId = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->name);
+          this->__isset.name = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->icon);
+          this->__isset.icon = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->description);
+          this->__isset.description = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->properties.clear();
+            uint32_t _size98;
+            ::apache::thrift::protocol::TType _etype101;
+            xfer += iprot->readListBegin(_etype101, _size98);
+            this->properties.resize(_size98);
+            uint32_t _i102;
+            for (_i102 = 0; _i102 < _size98; ++_i102)
+            {
+              xfer += iprot->readString(this->properties[_i102]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.properties = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 6:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->platform.clear();
+            uint32_t _size103;
+            ::apache::thrift::protocol::TType _etype106;
+            xfer += iprot->readListBegin(_etype106, _size103);
+            this->platform.resize(_size103);
+            uint32_t _i107;
+            for (_i107 = 0; _i107 < _size103; ++_i107)
+            {
+              xfer += iprot->readString(this->platform[_i107]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.platform = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 7:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->size);
+          this->__isset.size = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 8:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->languages.clear();
+            uint32_t _size108;
+            ::apache::thrift::protocol::TType _etype111;
+            xfer += iprot->readListBegin(_etype111, _size108);
+            this->languages.resize(_size108);
+            uint32_t _i112;
+            for (_i112 = 0; _i112 < _size108; ++_i112)
+            {
+              xfer += iprot->readString(this->languages[_i112]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.languages = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t AppBaseInfo::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("AppBaseInfo");
+
+  xfer += oprot->writeFieldBegin("appId", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->appId);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->name);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("icon", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString(this->icon);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("description", ::apache::thrift::protocol::T_STRING, 4);
+  xfer += oprot->writeString(this->description);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("properties", ::apache::thrift::protocol::T_LIST, 5);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->properties.size()));
+    std::vector<std::string> ::const_iterator _iter113;
+    for (_iter113 = this->properties.begin(); _iter113 != this->properties.end(); ++_iter113)
+    {
+      xfer += oprot->writeString((*_iter113));
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("platform", ::apache::thrift::protocol::T_LIST, 6);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->platform.size()));
+    std::vector<std::string> ::const_iterator _iter114;
+    for (_iter114 = this->platform.begin(); _iter114 != this->platform.end(); ++_iter114)
+    {
+      xfer += oprot->writeString((*_iter114));
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("size", ::apache::thrift::protocol::T_I32, 7);
+  xfer += oprot->writeI32(this->size);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("languages", ::apache::thrift::protocol::T_LIST, 8);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->languages.size()));
+    std::vector<std::string> ::const_iterator _iter115;
+    for (_iter115 = this->languages.begin(); _iter115 != this->languages.end(); ++_iter115)
+    {
+      xfer += oprot->writeString((*_iter115));
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(AppBaseInfo &a, AppBaseInfo &b) {
+  using ::std::swap;
+  swap(a.appId, b.appId);
+  swap(a.name, b.name);
+  swap(a.icon, b.icon);
+  swap(a.description, b.description);
+  swap(a.properties, b.properties);
+  swap(a.platform, b.platform);
+  swap(a.size, b.size);
+  swap(a.languages, b.languages);
+  swap(a.__isset, b.__isset);
+}
+
+AppBaseInfo::AppBaseInfo(const AppBaseInfo& other116) {
+  appId = other116.appId;
+  name = other116.name;
+  icon = other116.icon;
+  description = other116.description;
+  properties = other116.properties;
+  platform = other116.platform;
+  size = other116.size;
+  languages = other116.languages;
+  __isset = other116.__isset;
+}
+AppBaseInfo& AppBaseInfo::operator=(const AppBaseInfo& other117) {
+  appId = other117.appId;
+  name = other117.name;
+  icon = other117.icon;
+  description = other117.description;
+  properties = other117.properties;
+  platform = other117.platform;
+  size = other117.size;
+  languages = other117.languages;
+  __isset = other117.__isset;
+  return *this;
+}
+void AppBaseInfo::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "AppBaseInfo(";
+  out << "appId=" << to_string(appId);
+  out << ", " << "name=" << to_string(name);
+  out << ", " << "icon=" << to_string(icon);
+  out << ", " << "description=" << to_string(description);
+  out << ", " << "properties=" << to_string(properties);
+  out << ", " << "platform=" << to_string(platform);
+  out << ", " << "size=" << to_string(size);
+  out << ", " << "languages=" << to_string(languages);
+  out << ")";
+}
+
+
 EventNotification::~EventNotification() throw() {
 }
 
@@ -3041,15 +3333,15 @@ void swap(EventNotification &a, EventNotification &b) {
   swap(a.__isset, b.__isset);
 }
 
-EventNotification::EventNotification(const EventNotification& other98) {
-  key = other98.key;
-  contents = other98.contents;
-  __isset = other98.__isset;
+EventNotification::EventNotification(const EventNotification& other118) {
+  key = other118.key;
+  contents = other118.contents;
+  __isset = other118.__isset;
 }
-EventNotification& EventNotification::operator=(const EventNotification& other99) {
-  key = other99.key;
-  contents = other99.contents;
-  __isset = other99.__isset;
+EventNotification& EventNotification::operator=(const EventNotification& other119) {
+  key = other119.key;
+  contents = other119.contents;
+  __isset = other119.__isset;
   return *this;
 }
 void EventNotification::printTo(std::ostream& out) const {
