@@ -29,8 +29,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp1.ErrorCode = ExternalErrorCode.Err_1;
       EXTERNALERRORLIST.Add(tmp1);
       ExternalErrorInfos tmp2 = new ExternalErrorInfos();
-      tmp2.ErrorCode = ExternalErrorCode.Err_2;
       tmp2.Description = "[type error] trying to assign a {0} to setting item {1}, whose data type is {2}";
+      tmp2.ErrorCode = ExternalErrorCode.Err_2;
       EXTERNALERRORLIST.Add(tmp2);
       ExternalErrorInfos tmp3 = new ExternalErrorInfos();
       tmp3.Description = "json string convert failed: {0}";
@@ -61,8 +61,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp9.ErrorCode = ExternalErrorCode.Err_9;
       EXTERNALERRORLIST.Add(tmp9);
       ExternalErrorInfos tmp10 = new ExternalErrorInfos();
-      tmp10.ErrorCode = ExternalErrorCode.Err_10;
       tmp10.Description = "";
+      tmp10.ErrorCode = ExternalErrorCode.Err_10;
       EXTERNALERRORLIST.Add(tmp10);
       ExternalErrorInfos tmp11 = new ExternalErrorInfos();
       tmp11.ErrorCode = ExternalErrorCode.Err_11;
@@ -81,8 +81,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp14.Description = "";
       EXTERNALERRORLIST.Add(tmp14);
       ExternalErrorInfos tmp15 = new ExternalErrorInfos();
-      tmp15.ErrorCode = ExternalErrorCode.Err_15;
       tmp15.Description = "";
+      tmp15.ErrorCode = ExternalErrorCode.Err_15;
       EXTERNALERRORLIST.Add(tmp15);
       ExternalErrorInfos tmp16 = new ExternalErrorInfos();
       tmp16.ErrorCode = ExternalErrorCode.Err_16;
