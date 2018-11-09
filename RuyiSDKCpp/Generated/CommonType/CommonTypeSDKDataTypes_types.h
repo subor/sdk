@@ -153,6 +153,8 @@ class AppData;
 
 class TitleMainIconNotification;
 
+class AppBaseInfo;
+
 class EventNotification;
 
 typedef struct _ErrorException__isset {
@@ -1168,6 +1170,90 @@ class TitleMainIconNotification : public virtual ::apache::thrift::TBase {
 void swap(TitleMainIconNotification &a, TitleMainIconNotification &b);
 
 std::ostream& operator<<(std::ostream& out, const TitleMainIconNotification& obj);
+
+typedef struct _AppBaseInfo__isset {
+  _AppBaseInfo__isset() : appId(false), name(false), icon(false), description(false), properties(false), platform(false), size(false), languages(false) {}
+  bool appId :1;
+  bool name :1;
+  bool icon :1;
+  bool description :1;
+  bool properties :1;
+  bool platform :1;
+  bool size :1;
+  bool languages :1;
+} _AppBaseInfo__isset;
+
+class AppBaseInfo : public virtual ::apache::thrift::TBase {
+ public:
+
+  AppBaseInfo(const AppBaseInfo&);
+  AppBaseInfo& operator=(const AppBaseInfo&);
+  AppBaseInfo() : appId(), name(), icon(), description(), size(0) {
+  }
+
+  virtual ~AppBaseInfo() throw();
+  std::string appId;
+  std::string name;
+  std::string icon;
+  std::string description;
+  std::vector<std::string>  properties;
+  std::vector<std::string>  platform;
+  int32_t size;
+  std::vector<std::string>  languages;
+
+  _AppBaseInfo__isset __isset;
+
+  void __set_appId(const std::string& val);
+
+  void __set_name(const std::string& val);
+
+  void __set_icon(const std::string& val);
+
+  void __set_description(const std::string& val);
+
+  void __set_properties(const std::vector<std::string> & val);
+
+  void __set_platform(const std::vector<std::string> & val);
+
+  void __set_size(const int32_t val);
+
+  void __set_languages(const std::vector<std::string> & val);
+
+  bool operator == (const AppBaseInfo & rhs) const
+  {
+    if (!(appId == rhs.appId))
+      return false;
+    if (!(name == rhs.name))
+      return false;
+    if (!(icon == rhs.icon))
+      return false;
+    if (!(description == rhs.description))
+      return false;
+    if (!(properties == rhs.properties))
+      return false;
+    if (!(platform == rhs.platform))
+      return false;
+    if (!(size == rhs.size))
+      return false;
+    if (!(languages == rhs.languages))
+      return false;
+    return true;
+  }
+  bool operator != (const AppBaseInfo &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const AppBaseInfo & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(AppBaseInfo &a, AppBaseInfo &b);
+
+std::ostream& operator<<(std::ostream& out, const AppBaseInfo& obj);
 
 typedef struct _EventNotification__isset {
   _EventNotification__isset() : key(false), contents(true) {}
