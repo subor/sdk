@@ -1679,6 +1679,10 @@ void InputActionTriggered::__set_timestamp(const int64_t val) {
 void InputActionTriggered::__set_trigger(const  ::Ruyi::SDK::CommonType::ActionTrigger& val) {
   this->trigger = val;
 }
+
+void InputActionTriggered::__set_byAutoTrigger(const bool val) {
+  this->byAutoTrigger = val;
+}
 std::ostream& operator<<(std::ostream& out, const InputActionTriggered& obj)
 {
   obj.printTo(out);
@@ -1747,6 +1751,14 @@ uint32_t InputActionTriggered::read(::apache::thrift::protocol::TProtocol* iprot
           xfer += iprot->skip(ftype);
         }
         break;
+      case 6:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->byAutoTrigger);
+          this->__isset.byAutoTrigger = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -1784,6 +1796,10 @@ uint32_t InputActionTriggered::write(::apache::thrift::protocol::TProtocol* opro
   xfer += this->trigger.write(oprot);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("byAutoTrigger", ::apache::thrift::protocol::T_BOOL, 6);
+  xfer += oprot->writeBool(this->byAutoTrigger);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -1796,6 +1812,7 @@ void swap(InputActionTriggered &a, InputActionTriggered &b) {
   swap(a.name, b.name);
   swap(a.timestamp, b.timestamp);
   swap(a.trigger, b.trigger);
+  swap(a.byAutoTrigger, b.byAutoTrigger);
   swap(a.__isset, b.__isset);
 }
 
@@ -1805,6 +1822,7 @@ InputActionTriggered::InputActionTriggered(const InputActionTriggered& other11) 
   name = other11.name;
   timestamp = other11.timestamp;
   trigger = other11.trigger;
+  byAutoTrigger = other11.byAutoTrigger;
   __isset = other11.__isset;
 }
 InputActionTriggered& InputActionTriggered::operator=(const InputActionTriggered& other12) {
@@ -1813,6 +1831,7 @@ InputActionTriggered& InputActionTriggered::operator=(const InputActionTriggered
   name = other12.name;
   timestamp = other12.timestamp;
   trigger = other12.trigger;
+  byAutoTrigger = other12.byAutoTrigger;
   __isset = other12.__isset;
   return *this;
 }
@@ -1824,6 +1843,7 @@ void InputActionTriggered::printTo(std::ostream& out) const {
   out << ", " << "name=" << to_string(name);
   out << ", " << "timestamp=" << to_string(timestamp);
   out << ", " << "trigger=" << to_string(trigger);
+  out << ", " << "byAutoTrigger=" << to_string(byAutoTrigger);
   out << ")";
 }
 

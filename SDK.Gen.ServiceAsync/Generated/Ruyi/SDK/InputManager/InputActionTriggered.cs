@@ -35,6 +35,7 @@ namespace Ruyi.SDK.InputManager
     private string _name;
     private long _timestamp;
     private Ruyi.SDK.CommonType.ActionTrigger _trigger;
+    private bool _byAutoTrigger;
 
     /// <summary>
     /// The device id
@@ -116,6 +117,22 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// Whether or not the action is triggered by auto trigger
+    /// </summary>
+    public bool ByAutoTrigger
+    {
+      get
+      {
+        return _byAutoTrigger;
+      }
+      set
+      {
+        __isset.byAutoTrigger = true;
+        this._byAutoTrigger = value;
+      }
+    }
+
 
     public Isset __isset;
     public struct Isset
@@ -125,6 +142,7 @@ namespace Ruyi.SDK.InputManager
       public bool name;
       public bool timestamp;
       public bool trigger;
+      public bool byAutoTrigger;
     }
 
     public InputActionTriggered()
@@ -193,6 +211,16 @@ namespace Ruyi.SDK.InputManager
               {
                 Trigger = new Ruyi.SDK.CommonType.ActionTrigger();
                 await Trigger.ReadAsync(iprot, cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 6:
+              if (field.Type == TType.Bool)
+              {
+                ByAutoTrigger = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -268,6 +296,15 @@ namespace Ruyi.SDK.InputManager
           await Trigger.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
+        if (__isset.byAutoTrigger)
+        {
+          field.Name = "byAutoTrigger";
+          field.Type = TType.Bool;
+          field.ID = 6;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteBoolAsync(ByAutoTrigger, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
         await oprot.WriteFieldStopAsync(cancellationToken);
         await oprot.WriteStructEndAsync(cancellationToken);
       }
@@ -315,6 +352,13 @@ namespace Ruyi.SDK.InputManager
         __first = false;
         sb.Append("Trigger: ");
         sb.Append(Trigger== null ? "<null>" : Trigger.ToString());
+      }
+      if (__isset.byAutoTrigger)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("ByAutoTrigger: ");
+        sb.Append(ByAutoTrigger);
       }
       sb.Append(")");
       return sb.ToString();
