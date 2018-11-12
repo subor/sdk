@@ -145,14 +145,14 @@
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Generated\CommonType;$(ProjectDir)..\..\externals\ZeroMQ\include;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
     <TargetName>RuyiSDK$(LinkageSuffix)</TargetName>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|Win32'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Generated\CommonType;$(ProjectDir)..\..\externals\ZeroMQ\include;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
     <TargetName>RuyiSDK$(LinkageSuffix)</TargetName>
@@ -162,11 +162,13 @@
     <OutDir>$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
     <TargetName>RuyiSDK$(LinkageSuffix)</TargetName>
+    <IncludePath>$(ProjectDir)Generated\CommonType;$(ProjectDir)..\..\externals\ZeroMQ\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_mt|Win32'">
     <OutDir>$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\</OutDir>
     <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
     <TargetName>RuyiSDK$(LinkageSuffix)</TargetName>
+    <IncludePath>$(ProjectDir)Generated\CommonType;$(ProjectDir)..\..\externals\ZeroMQ\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\</OutDir>
@@ -186,8 +188,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX=1;OPENSSL_USE_DEPRECATED</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;OPENSSL_USE_DEPRECATED;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <OutputFile>$(ProjectDir)bin\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
@@ -200,12 +203,12 @@
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|Win32'">
@@ -214,8 +217,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX=1;OPENSSL_USE_DEPRECATED</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_NO_LIB;OPENSSL_USE_DEPRECATED;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <OutputFile>$(ProjectDir)bin\$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
@@ -228,12 +232,12 @@
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
     </ProjectReference>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -242,7 +246,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX=1;OPENSSL_USE_DEPRECATED;_UNICODE;UNICODE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;OPENSSL_USE_DEPRECATED;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <PrecompiledHeaderOutputFile />
@@ -263,7 +267,7 @@
     </ProjectReference>
     <Lib>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)\lib\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
     </Lib>
     <PreBuildEvent>
@@ -271,7 +275,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|x64'">
@@ -280,7 +284,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX=1;OPENSSL_USE_DEPRECATED;_UNICODE;UNICODE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_NO_LIB;OPENSSL_USE_DEPRECATED;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <PrecompiledHeaderOutputFile>
@@ -302,7 +306,7 @@
     </ProjectReference>
     <Lib>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)\lib\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
     </Lib>
     <PreBuildEvent>
@@ -310,7 +314,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -321,7 +325,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;NDEBUG;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -330,10 +334,10 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
     </Lib>
@@ -346,7 +350,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_NO_LIB;NDEBUG;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -355,10 +360,10 @@
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
     </Lib>
@@ -372,7 +377,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>NOMINMAX=1;NDEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;NDEBUG;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -382,7 +387,7 @@
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib%;libcrypto.lib;libssl.lib;(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)\lib\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
@@ -392,7 +397,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -407,7 +412,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>NOMINMAX=1;NDEBUG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_NO_LIB;NDEBUG;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -418,7 +423,7 @@
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib%;libcrypto.lib;libssl.lib;(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration)\;$(ProjectDir)..\..\externals\thrift.cpp\$(Platform)\$(Configuration);$(ProjectDir)..\..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\boost_1_64_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>version.lib;libthrift.lib;libzmq.lib;urlmon.lib;Iphlpapi.lib</AdditionalDependencies>
       <OutputFile>$(OutDir)\lib\$(TargetName)$(Linkage_Ext)$(TargetExt)</OutputFile>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
@@ -428,7 +433,7 @@
       </Command>
     </PreBuildEvent>
     <PostBuildEvent>
-      <Command>postBuild.bat $(ProjectDir) $(OutDir)</Command>
+      <Command>postBuild.bat $(ProjectDir) $(OutDir) $(Platform)</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>

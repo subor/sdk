@@ -22,56 +22,30 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.InputManager
+namespace Ruyi.SDK.CommonType
 {
 
-  /// <summary>
-  /// Action triggered by digital input device ( buttons on gamepad or key on key board )
-  /// </summary>
-  public partial class InputActionTriggered : TBase
+  public partial class GameDB : TBase
   {
-    private string _deviceId;
-    private string _userId;
+    private int _id;
     private string _name;
-    private long _timestamp;
-    private Ruyi.SDK.CommonType.ActionTrigger _trigger;
-    private bool _byAutoTrigger;
+    private List<Cond> _conditions;
+    private List<Variant> _detection;
+    private Runtime _runtime;
 
-    /// <summary>
-    /// The device id
-    /// </summary>
-    public string DeviceId
+    public int Id
     {
       get
       {
-        return _deviceId;
+        return _id;
       }
       set
       {
-        __isset.deviceId = true;
-        this._deviceId = value;
+        __isset.id = true;
+        this._id = value;
       }
     }
 
-    /// <summary>
-    /// The id of user whome is bound to the device
-    /// </summary>
-    public string UserId
-    {
-      get
-      {
-        return _userId;
-      }
-      set
-      {
-        __isset.userId = true;
-        this._userId = value;
-      }
-    }
-
-    /// <summary>
-    /// The name of the action
-    /// </summary>
     public string Name
     {
       get
@@ -85,51 +59,42 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
-    /// <summary>
-    /// The time the action is triggered
-    /// </summary>
-    public long Timestamp
+    public List<Cond> Conditions
     {
       get
       {
-        return _timestamp;
+        return _conditions;
       }
       set
       {
-        __isset.timestamp = true;
-        this._timestamp = value;
+        __isset.conditions = true;
+        this._conditions = value;
       }
     }
 
-    /// <summary>
-    /// The device's state when trggering the action
-    /// </summary>
-    public Ruyi.SDK.CommonType.ActionTrigger Trigger
+    public List<Variant> Detection
     {
       get
       {
-        return _trigger;
+        return _detection;
       }
       set
       {
-        __isset.trigger = true;
-        this._trigger = value;
+        __isset.detection = true;
+        this._detection = value;
       }
     }
 
-    /// <summary>
-    /// Whether or not the action is triggered by auto trigger
-    /// </summary>
-    public bool ByAutoTrigger
+    public Runtime Runtime
     {
       get
       {
-        return _byAutoTrigger;
+        return _runtime;
       }
       set
       {
-        __isset.byAutoTrigger = true;
-        this._byAutoTrigger = value;
+        __isset.runtime = true;
+        this._runtime = value;
       }
     }
 
@@ -137,15 +102,14 @@ namespace Ruyi.SDK.InputManager
     public Isset __isset;
     public struct Isset
     {
-      public bool deviceId;
-      public bool userId;
+      public bool id;
       public bool name;
-      public bool timestamp;
-      public bool trigger;
-      public bool byAutoTrigger;
+      public bool conditions;
+      public bool detection;
+      public bool runtime;
     }
 
-    public InputActionTriggered()
+    public GameDB()
     {
     }
 
@@ -167,9 +131,9 @@ namespace Ruyi.SDK.InputManager
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
+              if (field.Type == TType.I32)
               {
-                DeviceId = await iprot.ReadStringAsync(cancellationToken);
+                Id = await iprot.ReadI32Async(cancellationToken);
               }
               else
               {
@@ -179,16 +143,6 @@ namespace Ruyi.SDK.InputManager
             case 2:
               if (field.Type == TType.String)
               {
-                UserId = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 3:
-              if (field.Type == TType.String)
-              {
                 Name = await iprot.ReadStringAsync(cancellationToken);
               }
               else
@@ -196,10 +150,42 @@ namespace Ruyi.SDK.InputManager
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 4:
-              if (field.Type == TType.I64)
+            case 3:
+              if (field.Type == TType.List)
               {
-                Timestamp = await iprot.ReadI64Async(cancellationToken);
+                {
+                  Conditions = new List<Cond>();
+                  TList _list0 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i1 = 0; _i1 < _list0.Count; ++_i1)
+                  {
+                    Cond _elem2;
+                    _elem2 = new Cond();
+                    await _elem2.ReadAsync(iprot, cancellationToken);
+                    Conditions.Add(_elem2);
+                  }
+                  await iprot.ReadListEndAsync(cancellationToken);
+                }
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 4:
+              if (field.Type == TType.List)
+              {
+                {
+                  Detection = new List<Variant>();
+                  TList _list3 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i4 = 0; _i4 < _list3.Count; ++_i4)
+                  {
+                    Variant _elem5;
+                    _elem5 = new Variant();
+                    await _elem5.ReadAsync(iprot, cancellationToken);
+                    Detection.Add(_elem5);
+                  }
+                  await iprot.ReadListEndAsync(cancellationToken);
+                }
               }
               else
               {
@@ -209,18 +195,8 @@ namespace Ruyi.SDK.InputManager
             case 5:
               if (field.Type == TType.Struct)
               {
-                Trigger = new Ruyi.SDK.CommonType.ActionTrigger();
-                await Trigger.ReadAsync(iprot, cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 6:
-              if (field.Type == TType.Bool)
-              {
-                ByAutoTrigger = await iprot.ReadBoolAsync(cancellationToken);
+                Runtime = new Runtime();
+                await Runtime.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -248,61 +224,66 @@ namespace Ruyi.SDK.InputManager
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("InputActionTriggered");
+        var struc = new TStruct("GameDB");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (DeviceId != null && __isset.deviceId)
+        if (__isset.id)
         {
-          field.Name = "deviceId";
-          field.Type = TType.String;
+          field.Name = "id";
+          field.Type = TType.I32;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(DeviceId, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (UserId != null && __isset.userId)
-        {
-          field.Name = "userId";
-          field.Type = TType.String;
-          field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(UserId, cancellationToken);
+          await oprot.WriteI32Async(Id, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (Name != null && __isset.name)
         {
           field.Name = "name";
           field.Type = TType.String;
-          field.ID = 3;
+          field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteStringAsync(Name, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.timestamp)
+        if (Conditions != null && __isset.conditions)
         {
-          field.Name = "timestamp";
-          field.Type = TType.I64;
-          field.ID = 4;
+          field.Name = "conditions";
+          field.Type = TType.List;
+          field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI64Async(Timestamp, cancellationToken);
+          {
+            await oprot.WriteListBeginAsync(new TList(TType.Struct, Conditions.Count), cancellationToken);
+            foreach (Cond _iter6 in Conditions)
+            {
+              await _iter6.WriteAsync(oprot, cancellationToken);
+            }
+            await oprot.WriteListEndAsync(cancellationToken);
+          }
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Trigger != null && __isset.trigger)
+        if (Detection != null && __isset.detection)
         {
-          field.Name = "trigger";
+          field.Name = "detection";
+          field.Type = TType.List;
+          field.ID = 4;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          {
+            await oprot.WriteListBeginAsync(new TList(TType.Struct, Detection.Count), cancellationToken);
+            foreach (Variant _iter7 in Detection)
+            {
+              await _iter7.WriteAsync(oprot, cancellationToken);
+            }
+            await oprot.WriteListEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (Runtime != null && __isset.runtime)
+        {
+          field.Name = "runtime";
           field.Type = TType.Struct;
           field.ID = 5;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Trigger.WriteAsync(oprot, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (__isset.byAutoTrigger)
-        {
-          field.Name = "byAutoTrigger";
-          field.Type = TType.Bool;
-          field.ID = 6;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBoolAsync(ByAutoTrigger, cancellationToken);
+          await Runtime.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -316,21 +297,14 @@ namespace Ruyi.SDK.InputManager
 
     public override string ToString()
     {
-      var sb = new StringBuilder("InputActionTriggered(");
+      var sb = new StringBuilder("GameDB(");
       bool __first = true;
-      if (DeviceId != null && __isset.deviceId)
+      if (__isset.id)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("DeviceId: ");
-        sb.Append(DeviceId);
-      }
-      if (UserId != null && __isset.userId)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("UserId: ");
-        sb.Append(UserId);
+        sb.Append("Id: ");
+        sb.Append(Id);
       }
       if (Name != null && __isset.name)
       {
@@ -339,26 +313,26 @@ namespace Ruyi.SDK.InputManager
         sb.Append("Name: ");
         sb.Append(Name);
       }
-      if (__isset.timestamp)
+      if (Conditions != null && __isset.conditions)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Timestamp: ");
-        sb.Append(Timestamp);
+        sb.Append("Conditions: ");
+        sb.Append(Conditions);
       }
-      if (Trigger != null && __isset.trigger)
+      if (Detection != null && __isset.detection)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Trigger: ");
-        sb.Append(Trigger== null ? "<null>" : Trigger.ToString());
+        sb.Append("Detection: ");
+        sb.Append(Detection);
       }
-      if (__isset.byAutoTrigger)
+      if (Runtime != null && __isset.runtime)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("ByAutoTrigger: ");
-        sb.Append(ByAutoTrigger);
+        sb.Append("Runtime: ");
+        sb.Append(Runtime== null ? "<null>" : Runtime.ToString());
       }
       sb.Append(")");
       return sb.ToString();
