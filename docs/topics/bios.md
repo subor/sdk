@@ -31,32 +31,30 @@ Check the top of the `DA220REL.txt` file:
 *   BIOS Version:  DA220013.rom (V0.13)
 ```
 
-__Important__:
-
-
+__Important__:  
 
 ![](/docs/img/warning.png) Because the BIOS must be paired with a compatible AMD driver, the BIOS version __must__ be paried with the correct version of [the OS](os.md).  This is summarized as follows:  
 
-| BIOS Version/Date | Ruyi OS Version | AMD Driver Stack Version/Date
+| BIOS Version | Ruyi OS Version | AMD Driver Stack Version/Date
 |-|-|-
-| [1.01](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220101.zip) | 1.02 | 1.0.1.0 2018/5/31
-| [1.00](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220100.zip) | 1.02 | 1.0.1.0 2018/5/31
-| [0.20](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220020.zip) | 0.11 | 1.0.1.0 2018/5/2
-| [0.19](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220019.zip) | 0.10 | 1.0.1.0 2018/4/17
-| [0.15](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220015.zip) | 0.6 | 0.0.9.0 2018/3/12
-| [0.13](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220013.zip) | 0.6 | 0.0.9.0 2018/2/2
-| [0.11](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220011.zip) | 0.5 | 0.0.7.4 2018/1/5     
-| [0.10](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220010.zip) 2018/1/15 | 0.4 | 0.0.7.4 2018/1/5
-| [0.09](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220009.zip) 2018/1/8 | 0.3 | 0.0.7.2 2017/12/15
-| 0.08 2018/1/2 | 0.3 | 0.0.7.2 2017/12/15
+| [1.02](https://github.com/subor/sdk/releases/download/v0.9.0.2440/BIOS_DA220102.zip) | 1.04/1.05 | 1.0.4.0 2018/7/10
+| [1.01](https://github.com/subor/sdk/releases/download/v0.9.0.2440/BIOS_DA220101.zip) | 1.02 | 1.0.1.0 2018/5/31
+| [1.00](https://github.com/subor/sdk/releases/download/legacy/DA220100.zip) | 1.02 | 1.0.1.0 2018/5/31
+| 0.20 | 0.11 | 1.0.1.0 2018/5/2
+| 0.19 | 0.10 | 1.0.1.0 2018/4/17
+| [0.15](https://github.com/subor/sdk/releases/download/legacy/DA220015.zip) | 0.6 | 0.0.9.0 2018/3/12
+| 0.13 | 0.6 | 0.0.9.0 2018/2/2
+| 0.11 | 0.5 | 0.0.7.4 2018/1/5     
+| 0.10 | 0.4 | 0.0.7.4 2018/1/5
+| 0.09 | 0.3 | 0.0.7.2 2017/12/15
+| 0.08 | 0.3 | 0.0.7.2 2017/12/15
 
 Because the BIOS flashing process was changed, please observe the following rules:  
 
 | Installed BIOS | BIOS to Flash | Rule
 |-|-|-
-0.15-0.20 | 1.01(or later) | EFI flash: 1. Disable Secure boot (F2->Secure Boot Option->Erase all Secure Boot Settings); and then update to [1.00](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220100.zip); At last, update to more recent BIOS/OS. Winflash: First update to [1.00](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220100.zip); and then update to more recent BIOS/OS.     
-| 0.09-0.13 | 1.01 (or later) | EFI flash: First update to BIOS [0.15](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220015.zip), and then update to [1.00](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220100.zip); at last, update to more recent BIOS/OS. Winflash: First update to [1.00](https://bitbucket.org/playruyi/support/raw/master/files/bios/DA220100.zip) (Machine will freeze for a few minutes, please wait.);  and then update to more recent BIOS/OS.
-
+0.15-0.20 | 1.01(or later) | __Winflash__: First update to __1.00__; and then update to more recent BIOS/OS.<br/>  __EFI flash__: 1. Disable Secure boot (F2->Secure Boot Option->Erase all Secure Boot Settings); and then update to __1.00__; At last, update to more recent BIOS/OS.
+| 0.09-0.13 | 1.01 (or later) | __EFI flash__: First update to BIOS __0.15__, and then update to __1.00__; at last, update to more recent BIOS/OS.<br/>  __Winflash__: First update to __1.00__ (Machine will freeze for a few minutes, please wait.);  and then update to more recent BIOS/OS.
 
 
 Also see:

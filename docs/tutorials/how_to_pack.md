@@ -3,9 +3,9 @@
 1. Create the Manifest file, It must be named RuyiManifest.json, an typical content should looks like:
 ```
      {
-        appID: "app_id",
+        appID: "app_id",                                                        A
         application:    {
-                name:"@app_id",
+                name:"@app_id",                                                 B
                 label:"@antestapp",
                 icon:"bluetooth.png",
                 description:"an test app description",
@@ -13,6 +13,7 @@
                 activity:[
                         {
                                 name:"main",
+                                exePath:"space_shooter/space_shooter.exe",      C
                                 label:"main test activity",
                                 description:"@antestapp",
                                 icon:"logo.png"
@@ -28,7 +29,9 @@
                 minSdkVersion : "1.0.0.0"
         }
     }
-```
+```  A  appID: "app_id" app_idd is the appid Ruyi give the developers(ep.10112)
+     B  name:"@app_id" @app_id is the localization key in ret/i18n.json
+     C  exePath:"space_shooter/space_shooter.exe" is the file path of exe file  
 2. Create an sibling folder named "res" with your manifest file
 3. create "ld" and "hd" folder in "res", put your images used in the manifest file into them according to the "high" or "low" dimension.
 4. create the i18n.json file in "res", which should contain texts in all language you're gonna support. it should looks like this:
@@ -47,7 +50,8 @@
         }
     }
 ```
-5. create a folder with the name of your app_id in "com.ruyi.jade.app_id" next to the manifest file, and put your app into it. the exe name must be "app_id".exe
+5. put your game files in the same folder with "res" folder and RuyiManifest.json, remember the exe file path of your game should
+   match "C" part in 1.
 6. create a zip file named "app_id" and contain all the content above directly in the root
 
 
