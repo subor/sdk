@@ -183,14 +183,17 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(SolutionDir)\RuyiSDKCpp\;$(SolutionDir)..\externals\boost_1_64_0;$(SolutionDir)..\externals\thrift.cpp\src;$(SolutionDir)..\externals\jsoncpp\include\json;$(SolutionDir)..\externals\jsoncpp\src\lib_json;$(SolutionDir)\RuyiSDKCpp\Generated\CommonType;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)..\output\$(RuyiConfig)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|Win32'">
     <ClCompile>
@@ -203,9 +206,12 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)..\output\$(RuyiConfig)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -213,16 +219,16 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(SolutionDir)\RuyiSDKCpp\;$(SolutionDir)..\externals\boost_1_64_0;$(SolutionDir)..\externals\thrift.cpp\src;$(SolutionDir)..\externals\jsoncpp\include\json;$(SolutionDir)..\externals\jsoncpp\src\lib_json;$(SolutionDir)\RuyiSDKCpp\Generated\CommonType;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\lib;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\lib;$(SolutionDir)..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\output\$(RuyiConfig)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug_mt|x64'">
@@ -237,11 +243,11 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\lib;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\lib;$(SolutionDir)..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\output\Debug\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\output\$(RuyiConfig)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -252,16 +258,19 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(SolutionDir)\RuyiSDKCpp\;$(SolutionDir)..\externals\boost_1_64_0;$(SolutionDir)..\externals\thrift.cpp\src;$(SolutionDir)..\externals\jsoncpp\include\json;$(SolutionDir)..\externals\jsoncpp\src\lib_json;$(SolutionDir)\RuyiSDKCpp\Generated\CommonType;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)..\output\$(RuyiConfig)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_mt|Win32'">
     <ClCompile>
@@ -278,9 +287,12 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\;$(SolutionDir)..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)..\output\$(RuyiConfig)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -290,18 +302,18 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(SolutionDir)\RuyiSDKCpp\;$(SolutionDir)..\externals\boost_1_64_0;$(SolutionDir)..\externals\thrift.cpp\src;$(SolutionDir)..\externals\jsoncpp\include\json;$(SolutionDir)..\externals\jsoncpp\src\lib_json;$(SolutionDir)\RuyiSDKCpp\Generated\CommonType;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\lib;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\lib;$(SolutionDir)..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\output\$(Configuration)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\output\$(RuyiConfig)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release_mt|x64'">
@@ -320,11 +332,11 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\lib;$(SolutionDir)..\externals\ZeroMQ\lib;$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\externals\boost_1_64_0\lib\$(Platform);$(SolutionDir)\..\output\$(RuyiConfig)\RuyiSDKCpp\lib;$(SolutionDir)..\externals\ZeroMQ\lib\$(Platform);$(ProjectDir)..\..\externals\jsoncpp\$(Platform)\$(Configuration);$(SolutionDir)..\externals\OpenSSL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>RuyiSDK$(LinkageSuffix).lib;jsoncpp.lib;libzmq.lib;libcrypto.lib;libssl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(SolutionDir)..\output\Release\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
+      <Command>copy $(SolutionDir)..\output\$(RuyiConfig)\RuyiSDKCpp\lib\zmq\libzmq.dll $(IntDir) /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
