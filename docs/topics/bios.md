@@ -37,7 +37,7 @@ __Important__:
 
 | BIOS Version | Ruyi OS Version | AMD Driver Stack Version/Date
 |-|-|-
-| [1.03](https://github.com/subor/sdk/releases/download/untagged-1a8d85352a3ce70ff130/DA220103.zip) | 1.07 | 1.0.5.0 2018/9/14
+| [1.03](https://github.com/subor/sdk/releases/download/0.9.2.3270/DA220103.zip) | 1.07 | 1.0.5.0 2018/9/14
 | [1.02](https://github.com/subor/sdk/releases/download/v0.9.0.2440/BIOS_DA220102.zip) | 1.04/1.05 | 1.0.4.0 2018/7/10
 | [1.01](https://github.com/subor/sdk/releases/download/v0.9.0.2440/BIOS_DA220101.zip) | 1.02 | 1.0.1.0 2018/5/31
 | [1.00](https://github.com/subor/sdk/releases/download/legacy/DA220100.zip) | 1.02 | 1.0.1.0 2018/5/31
