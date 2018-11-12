@@ -33,66 +33,37 @@ use thrift::server::TProcessor;
 use overlay_manager_s_d_k_data_types;
 
 //
-// OverlayExternalService service client
+// ExternalOverlayManagerService service client
 //
 
-pub trait TOverlayExternalServiceSyncClient {
-  fn show_in_game_overlay(&mut self, arguments: overlay_manager_s_d_k_data_types::OverlayState) -> thrift::Result<()>;
+pub trait TExternalOverlayManagerServiceSyncClient {
   fn take_screen_shot(&mut self) -> thrift::Result<bool>;
-  fn video_capture(&mut self, arguments: overlay_manager_s_d_k_data_types::VideoCaptureState) -> thrift::Result<()>;
 }
 
-pub trait TOverlayExternalServiceSyncClientMarker {}
+pub trait TExternalOverlayManagerServiceSyncClientMarker {}
 
-pub struct OverlayExternalServiceSyncClient<IP, OP> where IP: TInputProtocol, OP: TOutputProtocol {
+pub struct ExternalOverlayManagerServiceSyncClient<IP, OP> where IP: TInputProtocol, OP: TOutputProtocol {
   _i_prot: IP,
   _o_prot: OP,
   _sequence_number: i32,
 }
 
-impl <IP, OP> OverlayExternalServiceSyncClient<IP, OP> where IP: TInputProtocol, OP: TOutputProtocol {
-  pub fn new(input_protocol: IP, output_protocol: OP) -> OverlayExternalServiceSyncClient<IP, OP> {
-    OverlayExternalServiceSyncClient { _i_prot: input_protocol, _o_prot: output_protocol, _sequence_number: 0 }
+impl <IP, OP> ExternalOverlayManagerServiceSyncClient<IP, OP> where IP: TInputProtocol, OP: TOutputProtocol {
+  pub fn new(input_protocol: IP, output_protocol: OP) -> ExternalOverlayManagerServiceSyncClient<IP, OP> {
+    ExternalOverlayManagerServiceSyncClient { _i_prot: input_protocol, _o_prot: output_protocol, _sequence_number: 0 }
   }
 }
 
-impl <IP, OP> TThriftClient for OverlayExternalServiceSyncClient<IP, OP> where IP: TInputProtocol, OP: TOutputProtocol {
+impl <IP, OP> TThriftClient for ExternalOverlayManagerServiceSyncClient<IP, OP> where IP: TInputProtocol, OP: TOutputProtocol {
   fn i_prot_mut(&mut self) -> &mut TInputProtocol { &mut self._i_prot }
   fn o_prot_mut(&mut self) -> &mut TOutputProtocol { &mut self._o_prot }
   fn sequence_number(&self) -> i32 { self._sequence_number }
   fn increment_sequence_number(&mut self) -> i32 { self._sequence_number += 1; self._sequence_number }
 }
 
-impl <IP, OP> TOverlayExternalServiceSyncClientMarker for OverlayExternalServiceSyncClient<IP, OP> where IP: TInputProtocol, OP: TOutputProtocol {}
+impl <IP, OP> TExternalOverlayManagerServiceSyncClientMarker for ExternalOverlayManagerServiceSyncClient<IP, OP> where IP: TInputProtocol, OP: TOutputProtocol {}
 
-impl <C: TThriftClient + TOverlayExternalServiceSyncClientMarker> TOverlayExternalServiceSyncClient for C {
-  fn show_in_game_overlay(&mut self, arguments: overlay_manager_s_d_k_data_types::OverlayState) -> thrift::Result<()> {
-    (
-      {
-        self.increment_sequence_number();
-        let message_ident = TMessageIdentifier::new("ShowInGameOverlay", TMessageType::Call, self.sequence_number());
-        let call_args = ShowInGameOverlayArgs { arguments: arguments };
-        self.o_prot_mut().write_message_begin(&message_ident)?;
-        call_args.write_to_out_protocol(self.o_prot_mut())?;
-        self.o_prot_mut().write_message_end()?;
-        self.o_prot_mut().flush()
-      }
-    )?;
-    {
-      let message_ident = self.i_prot_mut().read_message_begin()?;
-      verify_expected_sequence_number(self.sequence_number(), message_ident.sequence_number)?;
-      verify_expected_service_call("ShowInGameOverlay", &message_ident.name)?;
-      if message_ident.message_type == TMessageType::Exception {
-        let remote_error = thrift::Error::read_application_error_from_in_protocol(self.i_prot_mut())?;
-        self.i_prot_mut().read_message_end()?;
-        return Err(thrift::Error::Application(remote_error))
-      }
-      verify_expected_message_type(TMessageType::Reply, message_ident.message_type)?;
-      let result = ShowInGameOverlayResult::read_from_in_protocol(self.i_prot_mut())?;
-      self.i_prot_mut().read_message_end()?;
-      result.ok_or()
-    }
-  }
+impl <C: TThriftClient + TExternalOverlayManagerServiceSyncClientMarker> TExternalOverlayManagerServiceSyncClient for C {
   fn take_screen_shot(&mut self) -> thrift::Result<bool> {
     (
       {
@@ -120,107 +91,35 @@ impl <C: TThriftClient + TOverlayExternalServiceSyncClientMarker> TOverlayExtern
       result.ok_or()
     }
   }
-  fn video_capture(&mut self, arguments: overlay_manager_s_d_k_data_types::VideoCaptureState) -> thrift::Result<()> {
-    (
-      {
-        self.increment_sequence_number();
-        let message_ident = TMessageIdentifier::new("VideoCapture", TMessageType::Call, self.sequence_number());
-        let call_args = VideoCaptureArgs { arguments: arguments };
-        self.o_prot_mut().write_message_begin(&message_ident)?;
-        call_args.write_to_out_protocol(self.o_prot_mut())?;
-        self.o_prot_mut().write_message_end()?;
-        self.o_prot_mut().flush()
-      }
-    )?;
-    {
-      let message_ident = self.i_prot_mut().read_message_begin()?;
-      verify_expected_sequence_number(self.sequence_number(), message_ident.sequence_number)?;
-      verify_expected_service_call("VideoCapture", &message_ident.name)?;
-      if message_ident.message_type == TMessageType::Exception {
-        let remote_error = thrift::Error::read_application_error_from_in_protocol(self.i_prot_mut())?;
-        self.i_prot_mut().read_message_end()?;
-        return Err(thrift::Error::Application(remote_error))
-      }
-      verify_expected_message_type(TMessageType::Reply, message_ident.message_type)?;
-      let result = VideoCaptureResult::read_from_in_protocol(self.i_prot_mut())?;
-      self.i_prot_mut().read_message_end()?;
-      result.ok_or()
-    }
-  }
 }
 
 //
-// OverlayExternalService service processor
+// ExternalOverlayManagerService service processor
 //
 
-pub trait OverlayExternalServiceSyncHandler {
-  fn handle_show_in_game_overlay(&self, arguments: overlay_manager_s_d_k_data_types::OverlayState) -> thrift::Result<()>;
+pub trait ExternalOverlayManagerServiceSyncHandler {
   fn handle_take_screen_shot(&self) -> thrift::Result<bool>;
-  fn handle_video_capture(&self, arguments: overlay_manager_s_d_k_data_types::VideoCaptureState) -> thrift::Result<()>;
 }
 
-pub struct OverlayExternalServiceSyncProcessor<H: OverlayExternalServiceSyncHandler> {
+pub struct ExternalOverlayManagerServiceSyncProcessor<H: ExternalOverlayManagerServiceSyncHandler> {
   handler: H,
 }
 
-impl <H: OverlayExternalServiceSyncHandler> OverlayExternalServiceSyncProcessor<H> {
-  pub fn new(handler: H) -> OverlayExternalServiceSyncProcessor<H> {
-    OverlayExternalServiceSyncProcessor {
+impl <H: ExternalOverlayManagerServiceSyncHandler> ExternalOverlayManagerServiceSyncProcessor<H> {
+  pub fn new(handler: H) -> ExternalOverlayManagerServiceSyncProcessor<H> {
+    ExternalOverlayManagerServiceSyncProcessor {
       handler: handler,
     }
   }
-  fn process_show_in_game_overlay(&self, incoming_sequence_number: i32, i_prot: &mut TInputProtocol, o_prot: &mut TOutputProtocol) -> thrift::Result<()> {
-    TOverlayExternalServiceProcessFunctions::process_show_in_game_overlay(&self.handler, incoming_sequence_number, i_prot, o_prot)
-  }
   fn process_take_screen_shot(&self, incoming_sequence_number: i32, i_prot: &mut TInputProtocol, o_prot: &mut TOutputProtocol) -> thrift::Result<()> {
-    TOverlayExternalServiceProcessFunctions::process_take_screen_shot(&self.handler, incoming_sequence_number, i_prot, o_prot)
-  }
-  fn process_video_capture(&self, incoming_sequence_number: i32, i_prot: &mut TInputProtocol, o_prot: &mut TOutputProtocol) -> thrift::Result<()> {
-    TOverlayExternalServiceProcessFunctions::process_video_capture(&self.handler, incoming_sequence_number, i_prot, o_prot)
+    TExternalOverlayManagerServiceProcessFunctions::process_take_screen_shot(&self.handler, incoming_sequence_number, i_prot, o_prot)
   }
 }
 
-pub struct TOverlayExternalServiceProcessFunctions;
+pub struct TExternalOverlayManagerServiceProcessFunctions;
 
-impl TOverlayExternalServiceProcessFunctions {
-  pub fn process_show_in_game_overlay<H: OverlayExternalServiceSyncHandler>(handler: &H, incoming_sequence_number: i32, i_prot: &mut TInputProtocol, o_prot: &mut TOutputProtocol) -> thrift::Result<()> {
-    let args = ShowInGameOverlayArgs::read_from_in_protocol(i_prot)?;
-    match handler.handle_show_in_game_overlay(args.arguments) {
-      Ok(_) => {
-        let message_ident = TMessageIdentifier::new("ShowInGameOverlay", TMessageType::Reply, incoming_sequence_number);
-        o_prot.write_message_begin(&message_ident)?;
-        let ret = ShowInGameOverlayResult {  };
-        ret.write_to_out_protocol(o_prot)?;
-        o_prot.write_message_end()?;
-        o_prot.flush()
-      },
-      Err(e) => {
-        match e {
-          thrift::Error::Application(app_err) => {
-            let message_ident = TMessageIdentifier::new("ShowInGameOverlay", TMessageType::Exception, incoming_sequence_number);
-            o_prot.write_message_begin(&message_ident)?;
-            thrift::Error::write_application_error_to_out_protocol(&app_err, o_prot)?;
-            o_prot.write_message_end()?;
-            o_prot.flush()
-          },
-          _ => {
-            let ret_err = {
-              ApplicationError::new(
-                ApplicationErrorKind::Unknown,
-                e.description()
-              )
-            };
-            let message_ident = TMessageIdentifier::new("ShowInGameOverlay", TMessageType::Exception, incoming_sequence_number);
-            o_prot.write_message_begin(&message_ident)?;
-            thrift::Error::write_application_error_to_out_protocol(&ret_err, o_prot)?;
-            o_prot.write_message_end()?;
-            o_prot.flush()
-          },
-        }
-      },
-    }
-  }
-  pub fn process_take_screen_shot<H: OverlayExternalServiceSyncHandler>(handler: &H, incoming_sequence_number: i32, i_prot: &mut TInputProtocol, o_prot: &mut TOutputProtocol) -> thrift::Result<()> {
+impl TExternalOverlayManagerServiceProcessFunctions {
+  pub fn process_take_screen_shot<H: ExternalOverlayManagerServiceSyncHandler>(handler: &H, incoming_sequence_number: i32, i_prot: &mut TInputProtocol, o_prot: &mut TOutputProtocol) -> thrift::Result<()> {
     let _ = TakeScreenShotArgs::read_from_in_protocol(i_prot)?;
     match handler.handle_take_screen_shot() {
       Ok(handler_return) => {
@@ -257,57 +156,14 @@ impl TOverlayExternalServiceProcessFunctions {
       },
     }
   }
-  pub fn process_video_capture<H: OverlayExternalServiceSyncHandler>(handler: &H, incoming_sequence_number: i32, i_prot: &mut TInputProtocol, o_prot: &mut TOutputProtocol) -> thrift::Result<()> {
-    let args = VideoCaptureArgs::read_from_in_protocol(i_prot)?;
-    match handler.handle_video_capture(args.arguments) {
-      Ok(_) => {
-        let message_ident = TMessageIdentifier::new("VideoCapture", TMessageType::Reply, incoming_sequence_number);
-        o_prot.write_message_begin(&message_ident)?;
-        let ret = VideoCaptureResult {  };
-        ret.write_to_out_protocol(o_prot)?;
-        o_prot.write_message_end()?;
-        o_prot.flush()
-      },
-      Err(e) => {
-        match e {
-          thrift::Error::Application(app_err) => {
-            let message_ident = TMessageIdentifier::new("VideoCapture", TMessageType::Exception, incoming_sequence_number);
-            o_prot.write_message_begin(&message_ident)?;
-            thrift::Error::write_application_error_to_out_protocol(&app_err, o_prot)?;
-            o_prot.write_message_end()?;
-            o_prot.flush()
-          },
-          _ => {
-            let ret_err = {
-              ApplicationError::new(
-                ApplicationErrorKind::Unknown,
-                e.description()
-              )
-            };
-            let message_ident = TMessageIdentifier::new("VideoCapture", TMessageType::Exception, incoming_sequence_number);
-            o_prot.write_message_begin(&message_ident)?;
-            thrift::Error::write_application_error_to_out_protocol(&ret_err, o_prot)?;
-            o_prot.write_message_end()?;
-            o_prot.flush()
-          },
-        }
-      },
-    }
-  }
 }
 
-impl <H: OverlayExternalServiceSyncHandler> TProcessor for OverlayExternalServiceSyncProcessor<H> {
+impl <H: ExternalOverlayManagerServiceSyncHandler> TProcessor for ExternalOverlayManagerServiceSyncProcessor<H> {
   fn process(&self, i_prot: &mut TInputProtocol, o_prot: &mut TOutputProtocol) -> thrift::Result<()> {
     let message_ident = i_prot.read_message_begin()?;
     let res = match &*message_ident.name {
-      "ShowInGameOverlay" => {
-        self.process_show_in_game_overlay(message_ident.sequence_number, i_prot, o_prot)
-      },
       "TakeScreenShot" => {
         self.process_take_screen_shot(message_ident.sequence_number, i_prot, o_prot)
-      },
-      "VideoCapture" => {
-        self.process_video_capture(message_ident.sequence_number, i_prot, o_prot)
       },
       method => {
         Err(
@@ -321,93 +177,6 @@ impl <H: OverlayExternalServiceSyncHandler> TProcessor for OverlayExternalServic
       },
     };
     thrift::server::handle_process_result(&message_ident, res, o_prot)
-  }
-}
-
-//
-// ShowInGameOverlayArgs
-//
-
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-struct ShowInGameOverlayArgs {
-  arguments: overlay_manager_s_d_k_data_types::OverlayState,
-}
-
-impl ShowInGameOverlayArgs {
-  fn read_from_in_protocol(i_prot: &mut TInputProtocol) -> thrift::Result<ShowInGameOverlayArgs> {
-    i_prot.read_struct_begin()?;
-    let mut f_1: Option<overlay_manager_s_d_k_data_types::OverlayState> = None;
-    loop {
-      let field_ident = i_prot.read_field_begin()?;
-      if field_ident.field_type == TType::Stop {
-        break;
-      }
-      let field_id = field_id(&field_ident)?;
-      match field_id {
-        1 => {
-          let val = overlay_manager_s_d_k_data_types::OverlayState::read_from_in_protocol(i_prot)?;
-          f_1 = Some(val);
-        },
-        _ => {
-          i_prot.skip(field_ident.field_type)?;
-        },
-      };
-      i_prot.read_field_end()?;
-    }
-    i_prot.read_struct_end()?;
-    verify_required_field_exists("ShowInGameOverlayArgs.arguments", &f_1)?;
-    let ret = ShowInGameOverlayArgs {
-      arguments: f_1.expect("auto-generated code should have checked for presence of required fields"),
-    };
-    Ok(ret)
-  }
-  fn write_to_out_protocol(&self, o_prot: &mut TOutputProtocol) -> thrift::Result<()> {
-    let struct_ident = TStructIdentifier::new("ShowInGameOverlay_args");
-    o_prot.write_struct_begin(&struct_ident)?;
-    o_prot.write_field_begin(&TFieldIdentifier::new("arguments", TType::Struct, 1))?;
-    self.arguments.write_to_out_protocol(o_prot)?;
-    o_prot.write_field_end()?;
-    o_prot.write_field_stop()?;
-    o_prot.write_struct_end()
-  }
-}
-
-//
-// ShowInGameOverlayResult
-//
-
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-struct ShowInGameOverlayResult {
-}
-
-impl ShowInGameOverlayResult {
-  fn read_from_in_protocol(i_prot: &mut TInputProtocol) -> thrift::Result<ShowInGameOverlayResult> {
-    i_prot.read_struct_begin()?;
-    loop {
-      let field_ident = i_prot.read_field_begin()?;
-      if field_ident.field_type == TType::Stop {
-        break;
-      }
-      let field_id = field_id(&field_ident)?;
-      match field_id {
-        _ => {
-          i_prot.skip(field_ident.field_type)?;
-        },
-      };
-      i_prot.read_field_end()?;
-    }
-    i_prot.read_struct_end()?;
-    let ret = ShowInGameOverlayResult {};
-    Ok(ret)
-  }
-  fn write_to_out_protocol(&self, o_prot: &mut TOutputProtocol) -> thrift::Result<()> {
-    let struct_ident = TStructIdentifier::new("ShowInGameOverlayResult");
-    o_prot.write_struct_begin(&struct_ident)?;
-    o_prot.write_field_stop()?;
-    o_prot.write_struct_end()
-  }
-  fn ok_or(self) -> thrift::Result<()> {
-    Ok(())
   }
 }
 
@@ -510,93 +279,6 @@ impl TakeScreenShotResult {
         )
       )
     }
-  }
-}
-
-//
-// VideoCaptureArgs
-//
-
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-struct VideoCaptureArgs {
-  arguments: overlay_manager_s_d_k_data_types::VideoCaptureState,
-}
-
-impl VideoCaptureArgs {
-  fn read_from_in_protocol(i_prot: &mut TInputProtocol) -> thrift::Result<VideoCaptureArgs> {
-    i_prot.read_struct_begin()?;
-    let mut f_1: Option<overlay_manager_s_d_k_data_types::VideoCaptureState> = None;
-    loop {
-      let field_ident = i_prot.read_field_begin()?;
-      if field_ident.field_type == TType::Stop {
-        break;
-      }
-      let field_id = field_id(&field_ident)?;
-      match field_id {
-        1 => {
-          let val = overlay_manager_s_d_k_data_types::VideoCaptureState::read_from_in_protocol(i_prot)?;
-          f_1 = Some(val);
-        },
-        _ => {
-          i_prot.skip(field_ident.field_type)?;
-        },
-      };
-      i_prot.read_field_end()?;
-    }
-    i_prot.read_struct_end()?;
-    verify_required_field_exists("VideoCaptureArgs.arguments", &f_1)?;
-    let ret = VideoCaptureArgs {
-      arguments: f_1.expect("auto-generated code should have checked for presence of required fields"),
-    };
-    Ok(ret)
-  }
-  fn write_to_out_protocol(&self, o_prot: &mut TOutputProtocol) -> thrift::Result<()> {
-    let struct_ident = TStructIdentifier::new("VideoCapture_args");
-    o_prot.write_struct_begin(&struct_ident)?;
-    o_prot.write_field_begin(&TFieldIdentifier::new("arguments", TType::Struct, 1))?;
-    self.arguments.write_to_out_protocol(o_prot)?;
-    o_prot.write_field_end()?;
-    o_prot.write_field_stop()?;
-    o_prot.write_struct_end()
-  }
-}
-
-//
-// VideoCaptureResult
-//
-
-#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
-struct VideoCaptureResult {
-}
-
-impl VideoCaptureResult {
-  fn read_from_in_protocol(i_prot: &mut TInputProtocol) -> thrift::Result<VideoCaptureResult> {
-    i_prot.read_struct_begin()?;
-    loop {
-      let field_ident = i_prot.read_field_begin()?;
-      if field_ident.field_type == TType::Stop {
-        break;
-      }
-      let field_id = field_id(&field_ident)?;
-      match field_id {
-        _ => {
-          i_prot.skip(field_ident.field_type)?;
-        },
-      };
-      i_prot.read_field_end()?;
-    }
-    i_prot.read_struct_end()?;
-    let ret = VideoCaptureResult {};
-    Ok(ret)
-  }
-  fn write_to_out_protocol(&self, o_prot: &mut TOutputProtocol) -> thrift::Result<()> {
-    let struct_ident = TStructIdentifier::new("VideoCaptureResult");
-    o_prot.write_struct_begin(&struct_ident)?;
-    o_prot.write_field_stop()?;
-    o_prot.write_struct_end()
-  }
-  fn ok_or(self) -> thrift::Result<()> {
-    Ok(())
   }
 }
 

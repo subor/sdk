@@ -2338,6 +2338,220 @@ impl Default for TitleMainIconNotification {
 }
 
 //
+// AppBaseInfo
+//
+
+#[derive(Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd)]
+pub struct AppBaseInfo {
+  pub app_id: Option<String>,
+  pub name: Option<String>,
+  pub icon: Option<String>,
+  pub description: Option<String>,
+  pub properties: Option<Vec<String>>,
+  pub platform: Option<Vec<String>>,
+  pub size: Option<i32>,
+  pub languages: Option<Vec<String>>,
+}
+
+impl AppBaseInfo {
+  pub fn new<F1, F2, F3, F4, F5, F6, F7, F8>(app_id: F1, name: F2, icon: F3, description: F4, properties: F5, platform: F6, size: F7, languages: F8) -> AppBaseInfo where F1: Into<Option<String>>, F2: Into<Option<String>>, F3: Into<Option<String>>, F4: Into<Option<String>>, F5: Into<Option<Vec<String>>>, F6: Into<Option<Vec<String>>>, F7: Into<Option<i32>>, F8: Into<Option<Vec<String>>> {
+    AppBaseInfo {
+      app_id: app_id.into(),
+      name: name.into(),
+      icon: icon.into(),
+      description: description.into(),
+      properties: properties.into(),
+      platform: platform.into(),
+      size: size.into(),
+      languages: languages.into(),
+    }
+  }
+  pub fn read_from_in_protocol(i_prot: &mut TInputProtocol) -> thrift::Result<AppBaseInfo> {
+    i_prot.read_struct_begin()?;
+    let mut f_1: Option<String> = Some("".to_owned());
+    let mut f_2: Option<String> = Some("".to_owned());
+    let mut f_3: Option<String> = Some("".to_owned());
+    let mut f_4: Option<String> = Some("".to_owned());
+    let mut f_5: Option<Vec<String>> = Some(Vec::new());
+    let mut f_6: Option<Vec<String>> = Some(Vec::new());
+    let mut f_7: Option<i32> = Some(0);
+    let mut f_8: Option<Vec<String>> = Some(Vec::new());
+    loop {
+      let field_ident = i_prot.read_field_begin()?;
+      if field_ident.field_type == TType::Stop {
+        break;
+      }
+      let field_id = field_id(&field_ident)?;
+      match field_id {
+        1 => {
+          let val = i_prot.read_string()?;
+          f_1 = Some(val);
+        },
+        2 => {
+          let val = i_prot.read_string()?;
+          f_2 = Some(val);
+        },
+        3 => {
+          let val = i_prot.read_string()?;
+          f_3 = Some(val);
+        },
+        4 => {
+          let val = i_prot.read_string()?;
+          f_4 = Some(val);
+        },
+        5 => {
+          let list_ident = i_prot.read_list_begin()?;
+          let mut val: Vec<String> = Vec::with_capacity(list_ident.size as usize);
+          for _ in 0..list_ident.size {
+            let list_elem_11 = i_prot.read_string()?;
+            val.push(list_elem_11);
+          }
+          i_prot.read_list_end()?;
+          f_5 = Some(val);
+        },
+        6 => {
+          let list_ident = i_prot.read_list_begin()?;
+          let mut val: Vec<String> = Vec::with_capacity(list_ident.size as usize);
+          for _ in 0..list_ident.size {
+            let list_elem_12 = i_prot.read_string()?;
+            val.push(list_elem_12);
+          }
+          i_prot.read_list_end()?;
+          f_6 = Some(val);
+        },
+        7 => {
+          let val = i_prot.read_i32()?;
+          f_7 = Some(val);
+        },
+        8 => {
+          let list_ident = i_prot.read_list_begin()?;
+          let mut val: Vec<String> = Vec::with_capacity(list_ident.size as usize);
+          for _ in 0..list_ident.size {
+            let list_elem_13 = i_prot.read_string()?;
+            val.push(list_elem_13);
+          }
+          i_prot.read_list_end()?;
+          f_8 = Some(val);
+        },
+        _ => {
+          i_prot.skip(field_ident.field_type)?;
+        },
+      };
+      i_prot.read_field_end()?;
+    }
+    i_prot.read_struct_end()?;
+    let ret = AppBaseInfo {
+      app_id: f_1,
+      name: f_2,
+      icon: f_3,
+      description: f_4,
+      properties: f_5,
+      platform: f_6,
+      size: f_7,
+      languages: f_8,
+    };
+    Ok(ret)
+  }
+  pub fn write_to_out_protocol(&self, o_prot: &mut TOutputProtocol) -> thrift::Result<()> {
+    let struct_ident = TStructIdentifier::new("AppBaseInfo");
+    o_prot.write_struct_begin(&struct_ident)?;
+    if let Some(ref fld_var) = self.app_id {
+      o_prot.write_field_begin(&TFieldIdentifier::new("appId", TType::String, 1))?;
+      o_prot.write_string(fld_var)?;
+      o_prot.write_field_end()?;
+      ()
+    } else {
+      ()
+    }
+    if let Some(ref fld_var) = self.name {
+      o_prot.write_field_begin(&TFieldIdentifier::new("name", TType::String, 2))?;
+      o_prot.write_string(fld_var)?;
+      o_prot.write_field_end()?;
+      ()
+    } else {
+      ()
+    }
+    if let Some(ref fld_var) = self.icon {
+      o_prot.write_field_begin(&TFieldIdentifier::new("icon", TType::String, 3))?;
+      o_prot.write_string(fld_var)?;
+      o_prot.write_field_end()?;
+      ()
+    } else {
+      ()
+    }
+    if let Some(ref fld_var) = self.description {
+      o_prot.write_field_begin(&TFieldIdentifier::new("description", TType::String, 4))?;
+      o_prot.write_string(fld_var)?;
+      o_prot.write_field_end()?;
+      ()
+    } else {
+      ()
+    }
+    if let Some(ref fld_var) = self.properties {
+      o_prot.write_field_begin(&TFieldIdentifier::new("properties", TType::List, 5))?;
+      o_prot.write_list_begin(&TListIdentifier::new(TType::String, fld_var.len() as i32))?;
+      for e in fld_var {
+        o_prot.write_string(e)?;
+        o_prot.write_list_end()?;
+      }
+      o_prot.write_field_end()?;
+      ()
+    } else {
+      ()
+    }
+    if let Some(ref fld_var) = self.platform {
+      o_prot.write_field_begin(&TFieldIdentifier::new("platform", TType::List, 6))?;
+      o_prot.write_list_begin(&TListIdentifier::new(TType::String, fld_var.len() as i32))?;
+      for e in fld_var {
+        o_prot.write_string(e)?;
+        o_prot.write_list_end()?;
+      }
+      o_prot.write_field_end()?;
+      ()
+    } else {
+      ()
+    }
+    if let Some(fld_var) = self.size {
+      o_prot.write_field_begin(&TFieldIdentifier::new("size", TType::I32, 7))?;
+      o_prot.write_i32(fld_var)?;
+      o_prot.write_field_end()?;
+      ()
+    } else {
+      ()
+    }
+    if let Some(ref fld_var) = self.languages {
+      o_prot.write_field_begin(&TFieldIdentifier::new("languages", TType::List, 8))?;
+      o_prot.write_list_begin(&TListIdentifier::new(TType::String, fld_var.len() as i32))?;
+      for e in fld_var {
+        o_prot.write_string(e)?;
+        o_prot.write_list_end()?;
+      }
+      o_prot.write_field_end()?;
+      ()
+    } else {
+      ()
+    }
+    o_prot.write_field_stop()?;
+    o_prot.write_struct_end()
+  }
+}
+
+impl Default for AppBaseInfo {
+  fn default() -> Self {
+    AppBaseInfo{
+      app_id: Some("".to_owned()),
+      name: Some("".to_owned()),
+      icon: Some("".to_owned()),
+      description: Some("".to_owned()),
+      properties: Some(Vec::new()),
+      platform: Some(Vec::new()),
+      size: Some(0),
+      languages: Some(Vec::new()),
+    }
+  }
+}
+
+//
 // EventNotification
 //
 
