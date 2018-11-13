@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": ".",
+		}
+	],
+	"settings": {
+		// Remove source code folders
+		"files.exclude":{
+			"Ruyi*/**": true,
+			"SDK.*/**": true,
+			"Service*/**": true,
+		},
+	}
+}
