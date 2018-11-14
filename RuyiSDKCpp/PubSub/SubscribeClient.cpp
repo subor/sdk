@@ -141,6 +141,7 @@ void SubscribeClient::Receive()
 		protocol::TBinaryProtocol bp(mb);
 
 		TBase* submsg = MessageCreator::CreateMessage(msgType);
+		assert(submsg != nullptr);
 		if (submsg != NULL)
 		{
 			submsg->read(&bp);

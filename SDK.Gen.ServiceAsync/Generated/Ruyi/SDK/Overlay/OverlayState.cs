@@ -22,37 +22,37 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.CommonType
+namespace Ruyi.SDK.Overlay
 {
 
-  public partial class Runtime : TBase
+  public partial class OverlayState : TBase
   {
-    private Features _features;
-    private RuyiFeatures _ruyifeatures;
+    private bool _isVisible;
+    private string _arguments;
 
-    public Features Features
+    public bool IsVisible
     {
       get
       {
-        return _features;
+        return _isVisible;
       }
       set
       {
-        __isset.features = true;
-        this._features = value;
+        __isset.isVisible = true;
+        this._isVisible = value;
       }
     }
 
-    public RuyiFeatures Ruyifeatures
+    public string Arguments
     {
       get
       {
-        return _ruyifeatures;
+        return _arguments;
       }
       set
       {
-        __isset.ruyifeatures = true;
-        this._ruyifeatures = value;
+        __isset.arguments = true;
+        this._arguments = value;
       }
     }
 
@@ -60,11 +60,11 @@ namespace Ruyi.SDK.CommonType
     public Isset __isset;
     public struct Isset
     {
-      public bool features;
-      public bool ruyifeatures;
+      public bool isVisible;
+      public bool arguments;
     }
 
-    public Runtime()
+    public OverlayState()
     {
     }
 
@@ -86,10 +86,9 @@ namespace Ruyi.SDK.CommonType
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.Struct)
+              if (field.Type == TType.Bool)
               {
-                Features = new Features();
-                await Features.ReadAsync(iprot, cancellationToken);
+                IsVisible = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -97,10 +96,9 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 2:
-              if (field.Type == TType.Struct)
+              if (field.Type == TType.String)
               {
-                Ruyifeatures = new RuyiFeatures();
-                await Ruyifeatures.ReadAsync(iprot, cancellationToken);
+                Arguments = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -128,25 +126,25 @@ namespace Ruyi.SDK.CommonType
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("Runtime");
+        var struc = new TStruct("OverlayState");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Features != null && __isset.features)
+        if (__isset.isVisible)
         {
-          field.Name = "features";
-          field.Type = TType.Struct;
+          field.Name = "isVisible";
+          field.Type = TType.Bool;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Features.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteBoolAsync(IsVisible, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Ruyifeatures != null && __isset.ruyifeatures)
+        if (Arguments != null && __isset.arguments)
         {
-          field.Name = "ruyifeatures";
-          field.Type = TType.Struct;
+          field.Name = "arguments";
+          field.Type = TType.String;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Ruyifeatures.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteStringAsync(Arguments, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -160,21 +158,21 @@ namespace Ruyi.SDK.CommonType
 
     public override string ToString()
     {
-      var sb = new StringBuilder("Runtime(");
+      var sb = new StringBuilder("OverlayState(");
       bool __first = true;
-      if (Features != null && __isset.features)
+      if (__isset.isVisible)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Features: ");
-        sb.Append(Features== null ? "<null>" : Features.ToString());
+        sb.Append("IsVisible: ");
+        sb.Append(IsVisible);
       }
-      if (Ruyifeatures != null && __isset.ruyifeatures)
+      if (Arguments != null && __isset.arguments)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Ruyifeatures: ");
-        sb.Append(Ruyifeatures== null ? "<null>" : Ruyifeatures.ToString());
+        sb.Append("Arguments: ");
+        sb.Append(Arguments);
       }
       sb.Append(")");
       return sb.ToString();
