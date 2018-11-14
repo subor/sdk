@@ -19,7 +19,7 @@ OR
     1. start client
     1. Go to settings - system - system information
     3. check versions
-    ![](/docs/img/versions.png)
+    ![](/docs/img/version.png)
 
 __Checking BIOS version of Install Media__
 
