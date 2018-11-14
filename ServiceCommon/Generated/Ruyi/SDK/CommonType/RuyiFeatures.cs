@@ -22,34 +22,48 @@ namespace Ruyi.SDK.CommonType
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class Runtime : TBase
+  public partial class RuyiFeatures : TBase
   {
-    private Features _features;
-    private RuyiFeatures _ruyifeatures;
+    private bool _ruyi_xinput;
+    private bool _ruyi_dinput;
+    private bool _ruyi_sdkinput;
 
-    public Features Features
+    public bool Ruyi_xinput
     {
       get
       {
-        return _features;
+        return _ruyi_xinput;
       }
       set
       {
-        __isset.features = true;
-        this._features = value;
+        __isset.ruyi_xinput = true;
+        this._ruyi_xinput = value;
       }
     }
 
-    public RuyiFeatures Ruyifeatures
+    public bool Ruyi_dinput
     {
       get
       {
-        return _ruyifeatures;
+        return _ruyi_dinput;
       }
       set
       {
-        __isset.ruyifeatures = true;
-        this._ruyifeatures = value;
+        __isset.ruyi_dinput = true;
+        this._ruyi_dinput = value;
+      }
+    }
+
+    public bool Ruyi_sdkinput
+    {
+      get
+      {
+        return _ruyi_sdkinput;
+      }
+      set
+      {
+        __isset.ruyi_sdkinput = true;
+        this._ruyi_sdkinput = value;
       }
     }
 
@@ -59,11 +73,18 @@ namespace Ruyi.SDK.CommonType
     [Serializable]
     #endif
     public struct Isset {
-      public bool features;
-      public bool ruyifeatures;
+      public bool ruyi_xinput;
+      public bool ruyi_dinput;
+      public bool ruyi_sdkinput;
     }
 
-    public Runtime() {
+    public RuyiFeatures() {
+      this._ruyi_xinput = false;
+      this.__isset.ruyi_xinput = true;
+      this._ruyi_dinput = false;
+      this.__isset.ruyi_dinput = true;
+      this._ruyi_sdkinput = false;
+      this.__isset.ruyi_sdkinput = true;
     }
 
     public void Read (TProtocol iprot)
@@ -82,17 +103,22 @@ namespace Ruyi.SDK.CommonType
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.Struct) {
-                Features = new Features();
-                Features.Read(iprot);
+              if (field.Type == TType.Bool) {
+                Ruyi_xinput = iprot.ReadBool();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
-              if (field.Type == TType.Struct) {
-                Ruyifeatures = new RuyiFeatures();
-                Ruyifeatures.Read(iprot);
+              if (field.Type == TType.Bool) {
+                Ruyi_dinput = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
+              if (field.Type == TType.Bool) {
+                Ruyi_sdkinput = iprot.ReadBool();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -115,23 +141,31 @@ namespace Ruyi.SDK.CommonType
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("Runtime");
+        TStruct struc = new TStruct("RuyiFeatures");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (Features != null && __isset.features) {
-          field.Name = "features";
-          field.Type = TType.Struct;
+        if (__isset.ruyi_xinput) {
+          field.Name = "ruyi_xinput";
+          field.Type = TType.Bool;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          Features.Write(oprot);
+          oprot.WriteBool(Ruyi_xinput);
           oprot.WriteFieldEnd();
         }
-        if (Ruyifeatures != null && __isset.ruyifeatures) {
-          field.Name = "ruyifeatures";
-          field.Type = TType.Struct;
+        if (__isset.ruyi_dinput) {
+          field.Name = "ruyi_dinput";
+          field.Type = TType.Bool;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
-          Ruyifeatures.Write(oprot);
+          oprot.WriteBool(Ruyi_dinput);
+          oprot.WriteFieldEnd();
+        }
+        if (__isset.ruyi_sdkinput) {
+          field.Name = "ruyi_sdkinput";
+          field.Type = TType.Bool;
+          field.ID = 3;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(Ruyi_sdkinput);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -144,19 +178,25 @@ namespace Ruyi.SDK.CommonType
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("Runtime(");
+      StringBuilder __sb = new StringBuilder("RuyiFeatures(");
       bool __first = true;
-      if (Features != null && __isset.features) {
+      if (__isset.ruyi_xinput) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Features: ");
-        __sb.Append(Features== null ? "<null>" : Features.ToString());
+        __sb.Append("Ruyi_xinput: ");
+        __sb.Append(Ruyi_xinput);
       }
-      if (Ruyifeatures != null && __isset.ruyifeatures) {
+      if (__isset.ruyi_dinput) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Ruyifeatures: ");
-        __sb.Append(Ruyifeatures== null ? "<null>" : Ruyifeatures.ToString());
+        __sb.Append("Ruyi_dinput: ");
+        __sb.Append(Ruyi_dinput);
+      }
+      if (__isset.ruyi_sdkinput) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Ruyi_sdkinput: ");
+        __sb.Append(Ruyi_sdkinput);
       }
       __sb.Append(")");
       return __sb.ToString();

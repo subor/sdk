@@ -24,11 +24,29 @@ namespace Ruyi.SDK.CommonType
   #endif
   public partial class GameDB : TBase
   {
+    private OverlayGameType _type;
     private int _id;
     private string _name;
     private List<Cond> _conditions;
     private List<Variant> _detection;
     private Runtime _runtime;
+
+    /// <summary>
+    /// 
+    /// <seealso cref="OverlayGameType"/>
+    /// </summary>
+    public OverlayGameType Type
+    {
+      get
+      {
+        return _type;
+      }
+      set
+      {
+        __isset.type = true;
+        this._type = value;
+      }
+    }
 
     public int Id
     {
@@ -101,6 +119,7 @@ namespace Ruyi.SDK.CommonType
     [Serializable]
     #endif
     public struct Isset {
+      public bool type;
       public bool id;
       public bool name;
       public bool conditions;
@@ -128,19 +147,26 @@ namespace Ruyi.SDK.CommonType
           {
             case 1:
               if (field.Type == TType.I32) {
-                Id = iprot.ReadI32();
+                Type = (OverlayGameType)iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 2:
+              if (field.Type == TType.I32) {
+                Id = iprot.ReadI32();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 3:
               if (field.Type == TType.String) {
                 Name = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 3:
+            case 4:
               if (field.Type == TType.List) {
                 {
                   Conditions = new List<Cond>();
@@ -158,7 +184,7 @@ namespace Ruyi.SDK.CommonType
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 4:
+            case 5:
               if (field.Type == TType.List) {
                 {
                   Detection = new List<Variant>();
@@ -176,7 +202,7 @@ namespace Ruyi.SDK.CommonType
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 5:
+            case 6:
               if (field.Type == TType.Struct) {
                 Runtime = new Runtime();
                 Runtime.Read(iprot);
@@ -205,10 +231,18 @@ namespace Ruyi.SDK.CommonType
         TStruct struc = new TStruct("GameDB");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
+        if (__isset.type) {
+          field.Name = "type";
+          field.Type = TType.I32;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteI32((int)Type);
+          oprot.WriteFieldEnd();
+        }
         if (__isset.id) {
           field.Name = "id";
           field.Type = TType.I32;
-          field.ID = 1;
+          field.ID = 2;
           oprot.WriteFieldBegin(field);
           oprot.WriteI32(Id);
           oprot.WriteFieldEnd();
@@ -216,7 +250,7 @@ namespace Ruyi.SDK.CommonType
         if (Name != null && __isset.name) {
           field.Name = "name";
           field.Type = TType.String;
-          field.ID = 2;
+          field.ID = 3;
           oprot.WriteFieldBegin(field);
           oprot.WriteString(Name);
           oprot.WriteFieldEnd();
@@ -224,7 +258,7 @@ namespace Ruyi.SDK.CommonType
         if (Conditions != null && __isset.conditions) {
           field.Name = "conditions";
           field.Type = TType.List;
-          field.ID = 3;
+          field.ID = 4;
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, Conditions.Count));
@@ -239,7 +273,7 @@ namespace Ruyi.SDK.CommonType
         if (Detection != null && __isset.detection) {
           field.Name = "detection";
           field.Type = TType.List;
-          field.ID = 4;
+          field.ID = 5;
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, Detection.Count));
@@ -254,7 +288,7 @@ namespace Ruyi.SDK.CommonType
         if (Runtime != null && __isset.runtime) {
           field.Name = "runtime";
           field.Type = TType.Struct;
-          field.ID = 5;
+          field.ID = 6;
           oprot.WriteFieldBegin(field);
           Runtime.Write(oprot);
           oprot.WriteFieldEnd();
@@ -271,6 +305,12 @@ namespace Ruyi.SDK.CommonType
     public override string ToString() {
       StringBuilder __sb = new StringBuilder("GameDB(");
       bool __first = true;
+      if (__isset.type) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Type: ");
+        __sb.Append(Type);
+      }
       if (__isset.id) {
         if(!__first) { __sb.Append(", "); }
         __first = false;

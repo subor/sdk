@@ -26,7 +26,7 @@ namespace Ruyi.SDK.CommonType
   {
     private string _name;
     private string _id;
-    private string _order;
+    private int _order;
     private List<@If> _rules;
 
     public string Name
@@ -55,7 +55,7 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public string Order
+    public int Order
     {
       get
       {
@@ -126,8 +126,8 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 3:
-              if (field.Type == TType.String) {
-                Order = iprot.ReadString();
+              if (field.Type == TType.I32) {
+                Order = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -187,12 +187,12 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteString(Id);
           oprot.WriteFieldEnd();
         }
-        if (Order != null && __isset.order) {
+        if (__isset.order) {
           field.Name = "order";
-          field.Type = TType.String;
+          field.Type = TType.I32;
           field.ID = 3;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Order);
+          oprot.WriteI32(Order);
           oprot.WriteFieldEnd();
         }
         if (Rules != null && __isset.rules) {
@@ -234,7 +234,7 @@ namespace Ruyi.SDK.CommonType
         __sb.Append("Id: ");
         __sb.Append(Id);
       }
-      if (Order != null && __isset.order) {
+      if (__isset.order) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("Order: ");
