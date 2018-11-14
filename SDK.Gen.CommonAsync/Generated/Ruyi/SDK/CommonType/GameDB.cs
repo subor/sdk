@@ -27,11 +27,29 @@ namespace Ruyi.SDK.CommonType
 
   public partial class GameDB : TBase
   {
+    private OverlayGameType _type;
     private int _id;
     private string _name;
     private List<Cond> _conditions;
     private List<Variant> _detection;
     private Runtime _runtime;
+
+    /// <summary>
+    /// 
+    /// <seealso cref="OverlayGameType"/>
+    /// </summary>
+    public OverlayGameType Type
+    {
+      get
+      {
+        return _type;
+      }
+      set
+      {
+        __isset.type = true;
+        this._type = value;
+      }
+    }
 
     public int Id
     {
@@ -102,6 +120,7 @@ namespace Ruyi.SDK.CommonType
     public Isset __isset;
     public struct Isset
     {
+      public bool type;
       public bool id;
       public bool name;
       public bool conditions;
@@ -133,7 +152,7 @@ namespace Ruyi.SDK.CommonType
             case 1:
               if (field.Type == TType.I32)
               {
-                Id = await iprot.ReadI32Async(cancellationToken);
+                Type = (OverlayGameType)await iprot.ReadI32Async(cancellationToken);
               }
               else
               {
@@ -141,6 +160,16 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 2:
+              if (field.Type == TType.I32)
+              {
+                Id = await iprot.ReadI32Async(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 3:
               if (field.Type == TType.String)
               {
                 Name = await iprot.ReadStringAsync(cancellationToken);
@@ -150,7 +179,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 3:
+            case 4:
               if (field.Type == TType.List)
               {
                 {
@@ -171,7 +200,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 4:
+            case 5:
               if (field.Type == TType.List)
               {
                 {
@@ -192,7 +221,7 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 5:
+            case 6:
               if (field.Type == TType.Struct)
               {
                 Runtime = new Runtime();
@@ -227,11 +256,20 @@ namespace Ruyi.SDK.CommonType
         var struc = new TStruct("GameDB");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
+        if (__isset.type)
+        {
+          field.Name = "type";
+          field.Type = TType.I32;
+          field.ID = 1;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteI32Async((int)Type, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
         if (__isset.id)
         {
           field.Name = "id";
           field.Type = TType.I32;
-          field.ID = 1;
+          field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteI32Async(Id, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -240,7 +278,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "name";
           field.Type = TType.String;
-          field.ID = 2;
+          field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteStringAsync(Name, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -249,7 +287,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "conditions";
           field.Type = TType.List;
-          field.ID = 3;
+          field.ID = 4;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, Conditions.Count), cancellationToken);
@@ -265,7 +303,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "detection";
           field.Type = TType.List;
-          field.ID = 4;
+          field.ID = 5;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, Detection.Count), cancellationToken);
@@ -281,7 +319,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "runtime";
           field.Type = TType.Struct;
-          field.ID = 5;
+          field.ID = 6;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await Runtime.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -299,6 +337,13 @@ namespace Ruyi.SDK.CommonType
     {
       var sb = new StringBuilder("GameDB(");
       bool __first = true;
+      if (__isset.type)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Type: ");
+        sb.Append(Type);
+      }
       if (__isset.id)
       {
         if(!__first) { sb.Append(", "); }

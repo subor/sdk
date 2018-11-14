@@ -25,62 +25,48 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
-  public partial class Variant : TBase
+  public partial class RuyiFeatures : TBase
   {
-    private string _name;
-    private string _id;
-    private int _order;
-    private List<@If> _rules;
+    private bool _ruyi_xinput;
+    private bool _ruyi_dinput;
+    private bool _ruyi_sdkinput;
 
-    public string Name
+    public bool Ruyi_xinput
     {
       get
       {
-        return _name;
+        return _ruyi_xinput;
       }
       set
       {
-        __isset.name = true;
-        this._name = value;
+        __isset.ruyi_xinput = true;
+        this._ruyi_xinput = value;
       }
     }
 
-    public string Id
+    public bool Ruyi_dinput
     {
       get
       {
-        return _id;
+        return _ruyi_dinput;
       }
       set
       {
-        __isset.id = true;
-        this._id = value;
+        __isset.ruyi_dinput = true;
+        this._ruyi_dinput = value;
       }
     }
 
-    public int Order
+    public bool Ruyi_sdkinput
     {
       get
       {
-        return _order;
+        return _ruyi_sdkinput;
       }
       set
       {
-        __isset.order = true;
-        this._order = value;
-      }
-    }
-
-    public List<@If> Rules
-    {
-      get
-      {
-        return _rules;
-      }
-      set
-      {
-        __isset.rules = true;
-        this._rules = value;
+        __isset.ruyi_sdkinput = true;
+        this._ruyi_sdkinput = value;
       }
     }
 
@@ -88,14 +74,19 @@ namespace Ruyi.SDK.CommonType
     public Isset __isset;
     public struct Isset
     {
-      public bool name;
-      public bool id;
-      public bool order;
-      public bool rules;
+      public bool ruyi_xinput;
+      public bool ruyi_dinput;
+      public bool ruyi_sdkinput;
     }
 
-    public Variant()
+    public RuyiFeatures()
     {
+      this._ruyi_xinput = false;
+      this.__isset.ruyi_xinput = true;
+      this._ruyi_dinput = false;
+      this.__isset.ruyi_dinput = true;
+      this._ruyi_sdkinput = false;
+      this.__isset.ruyi_sdkinput = true;
     }
 
     public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
@@ -116,9 +107,9 @@ namespace Ruyi.SDK.CommonType
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Bool)
               {
-                Name = await iprot.ReadStringAsync(cancellationToken);
+                Ruyi_xinput = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -126,9 +117,9 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 2:
-              if (field.Type == TType.String)
+              if (field.Type == TType.Bool)
               {
-                Id = await iprot.ReadStringAsync(cancellationToken);
+                Ruyi_dinput = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -136,30 +127,9 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 3:
-              if (field.Type == TType.I32)
+              if (field.Type == TType.Bool)
               {
-                Order = await iprot.ReadI32Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 4:
-              if (field.Type == TType.List)
-              {
-                {
-                  Rules = new List<@If>();
-                  TList _list8 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i9 = 0; _i9 < _list8.Count; ++_i9)
-                  {
-                    @If _elem10;
-                    _elem10 = new @If();
-                    await _elem10.ReadAsync(iprot, cancellationToken);
-                    Rules.Add(_elem10);
-                  }
-                  await iprot.ReadListEndAsync(cancellationToken);
-                }
+                Ruyi_sdkinput = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -187,50 +157,34 @@ namespace Ruyi.SDK.CommonType
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("Variant");
+        var struc = new TStruct("RuyiFeatures");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Name != null && __isset.name)
+        if (__isset.ruyi_xinput)
         {
-          field.Name = "name";
-          field.Type = TType.String;
+          field.Name = "ruyi_xinput";
+          field.Type = TType.Bool;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Name, cancellationToken);
+          await oprot.WriteBoolAsync(Ruyi_xinput, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Id != null && __isset.id)
+        if (__isset.ruyi_dinput)
         {
-          field.Name = "id";
-          field.Type = TType.String;
+          field.Name = "ruyi_dinput";
+          field.Type = TType.Bool;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Id, cancellationToken);
+          await oprot.WriteBoolAsync(Ruyi_dinput, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (__isset.order)
+        if (__isset.ruyi_sdkinput)
         {
-          field.Name = "order";
-          field.Type = TType.I32;
+          field.Name = "ruyi_sdkinput";
+          field.Type = TType.Bool;
           field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async(Order, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (Rules != null && __isset.rules)
-        {
-          field.Name = "rules";
-          field.Type = TType.List;
-          field.ID = 4;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          {
-            await oprot.WriteListBeginAsync(new TList(TType.Struct, Rules.Count), cancellationToken);
-            foreach (@If _iter11 in Rules)
-            {
-              await _iter11.WriteAsync(oprot, cancellationToken);
-            }
-            await oprot.WriteListEndAsync(cancellationToken);
-          }
+          await oprot.WriteBoolAsync(Ruyi_sdkinput, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -244,35 +198,28 @@ namespace Ruyi.SDK.CommonType
 
     public override string ToString()
     {
-      var sb = new StringBuilder("Variant(");
+      var sb = new StringBuilder("RuyiFeatures(");
       bool __first = true;
-      if (Name != null && __isset.name)
+      if (__isset.ruyi_xinput)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Name: ");
-        sb.Append(Name);
+        sb.Append("Ruyi_xinput: ");
+        sb.Append(Ruyi_xinput);
       }
-      if (Id != null && __isset.id)
+      if (__isset.ruyi_dinput)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Id: ");
-        sb.Append(Id);
+        sb.Append("Ruyi_dinput: ");
+        sb.Append(Ruyi_dinput);
       }
-      if (__isset.order)
+      if (__isset.ruyi_sdkinput)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Order: ");
-        sb.Append(Order);
-      }
-      if (Rules != null && __isset.rules)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("Rules: ");
-        sb.Append(Rules);
+        sb.Append("Ruyi_sdkinput: ");
+        sb.Append(Ruyi_sdkinput);
       }
       sb.Append(")");
       return sb.ToString();

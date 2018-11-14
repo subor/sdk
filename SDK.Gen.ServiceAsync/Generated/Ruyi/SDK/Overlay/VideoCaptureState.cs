@@ -22,37 +22,23 @@ using Thrift.Transports.Client;
 using Thrift.Transports.Server;
 
 
-namespace Ruyi.SDK.CommonType
+namespace Ruyi.SDK.Overlay
 {
 
-  public partial class Runtime : TBase
+  public partial class VideoCaptureState : TBase
   {
-    private Features _features;
-    private RuyiFeatures _ruyifeatures;
+    private bool _isRecording;
 
-    public Features Features
+    public bool IsRecording
     {
       get
       {
-        return _features;
+        return _isRecording;
       }
       set
       {
-        __isset.features = true;
-        this._features = value;
-      }
-    }
-
-    public RuyiFeatures Ruyifeatures
-    {
-      get
-      {
-        return _ruyifeatures;
-      }
-      set
-      {
-        __isset.ruyifeatures = true;
-        this._ruyifeatures = value;
+        __isset.isRecording = true;
+        this._isRecording = value;
       }
     }
 
@@ -60,11 +46,10 @@ namespace Ruyi.SDK.CommonType
     public Isset __isset;
     public struct Isset
     {
-      public bool features;
-      public bool ruyifeatures;
+      public bool isRecording;
     }
 
-    public Runtime()
+    public VideoCaptureState()
     {
     }
 
@@ -86,21 +71,9 @@ namespace Ruyi.SDK.CommonType
           switch (field.ID)
           {
             case 1:
-              if (field.Type == TType.Struct)
+              if (field.Type == TType.Bool)
               {
-                Features = new Features();
-                await Features.ReadAsync(iprot, cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.Struct)
-              {
-                Ruyifeatures = new RuyiFeatures();
-                await Ruyifeatures.ReadAsync(iprot, cancellationToken);
+                IsRecording = await iprot.ReadBoolAsync(cancellationToken);
               }
               else
               {
@@ -128,25 +101,16 @@ namespace Ruyi.SDK.CommonType
       oprot.IncrementRecursionDepth();
       try
       {
-        var struc = new TStruct("Runtime");
+        var struc = new TStruct("VideoCaptureState");
         await oprot.WriteStructBeginAsync(struc, cancellationToken);
         var field = new TField();
-        if (Features != null && __isset.features)
+        if (__isset.isRecording)
         {
-          field.Name = "features";
-          field.Type = TType.Struct;
+          field.Name = "isRecording";
+          field.Type = TType.Bool;
           field.ID = 1;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Features.WriteAsync(oprot, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
-        }
-        if (Ruyifeatures != null && __isset.ruyifeatures)
-        {
-          field.Name = "ruyifeatures";
-          field.Type = TType.Struct;
-          field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Ruyifeatures.WriteAsync(oprot, cancellationToken);
+          await oprot.WriteBoolAsync(IsRecording, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -160,21 +124,14 @@ namespace Ruyi.SDK.CommonType
 
     public override string ToString()
     {
-      var sb = new StringBuilder("Runtime(");
+      var sb = new StringBuilder("VideoCaptureState(");
       bool __first = true;
-      if (Features != null && __isset.features)
+      if (__isset.isRecording)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Features: ");
-        sb.Append(Features== null ? "<null>" : Features.ToString());
-      }
-      if (Ruyifeatures != null && __isset.ruyifeatures)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("Ruyifeatures: ");
-        sb.Append(Ruyifeatures== null ? "<null>" : Ruyifeatures.ToString());
+        sb.Append("IsRecording: ");
+        sb.Append(IsRecording);
       }
       sb.Append(")");
       return sb.ToString();

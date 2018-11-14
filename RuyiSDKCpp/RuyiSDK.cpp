@@ -21,6 +21,8 @@ using namespace Ruyi::SDK::SettingSystem;
 using namespace Ruyi::SDK::SettingSystem::Api;
 using namespace Ruyi::SDK::BrainCloudApi;
 
+void MessageCreatorRuyiSDKCpp();
+
 bool RuyiSDKContext::IsValid()
 {
 	if (endpoint == RuyiSDKContext::Endpoint::Notset)
@@ -113,7 +115,7 @@ bool RuyiSDK::Init()
 		return false;
 
 	// init pub-sub
-	MessageCreator::Initialize();
+	MessageCreatorRuyiSDKCpp();
 	auto pubout = SetAddress(g_ConstantsSDKDataTypes_constants.layer0_publisher_out_uri);
 	Subscriber = SubscribeClient::CreateInstance(pubout);
 

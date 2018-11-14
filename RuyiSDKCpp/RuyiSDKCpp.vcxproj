@@ -187,7 +187,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;OPENSSL_USE_DEPRECATED;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -216,7 +216,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>BOOST_ALL_NO_LIB;OPENSSL_USE_DEPRECATED;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -245,7 +245,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;OPENSSL_USE_DEPRECATED;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
@@ -283,7 +283,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>BOOST_ALL_NO_LIB;OPENSSL_USE_DEPRECATED;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
@@ -324,7 +324,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;NDEBUG;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -349,7 +349,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>BOOST_ALL_NO_LIB;NDEBUG;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -375,7 +375,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;NDEBUG;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -410,7 +410,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\externals\OpenSSL\;$(ProjectDir)..\..\externals\boost_1_64_0;$(ProjectDir)..\..\externals\thrift.cpp\src;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>BOOST_ALL_NO_LIB;NDEBUG;NOMINMAX=1;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -453,6 +453,10 @@
     <ClCompile Include="Generated\Constants\ConstantsSDKDataTypes_types.cpp" />
     <ClCompile Include="Generated\Constants\ConstantsSDKServices_constants.cpp" />
     <ClCompile Include="Generated\Constants\ConstantsSDKServices_types.cpp" />
+    <ClCompile Include="Generated\GamesDB\GamesDBSDKDataTypes_constants.cpp" />
+    <ClCompile Include="Generated\GamesDB\GamesDBSDKDataTypes_types.cpp" />
+    <ClCompile Include="Generated\GamesDB\GamesDBSDKServices_constants.cpp" />
+    <ClCompile Include="Generated\GamesDB\GamesDBSDKServices_types.cpp" />
     <ClCompile Include="Generated\InputManager\InputManagerSDKDataTypes_constants.cpp" />
     <ClCompile Include="Generated\InputManager\InputManagerSDKDataTypes_types.cpp" />
     <ClCompile Include="Generated\InputManager\InputManagerSDKServices_constants.cpp" />
@@ -463,7 +467,7 @@
     <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKDataTypes_types.cpp" />
     <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKServices_constants.cpp" />
     <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKServices_types.cpp" />
-    <ClCompile Include="Generated\MessageCreator.cpp" />
+    <ClCompile Include="Generated\MessageCreatorRuyiSDKCpp.cpp" />
     <ClCompile Include="Generated\OverlayManager\ExternalOverlayManagerService.cpp" />
     <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_constants.cpp" />
     <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_types.cpp" />
@@ -489,6 +493,7 @@
     <ClCompile Include="Generated\UserServiceExternal\UserServiceExternalSDKDataTypes_types.cpp" />
     <ClCompile Include="Generated\UserServiceExternal\UserServiceExternalSDKServices_constants.cpp" />
     <ClCompile Include="Generated\UserServiceExternal\UserServiceExternalSDKServices_types.cpp" />
+    <ClCompile Include="MessageCreator.cpp" />
     <ClCompile Include="PubSub\SubscribeClient.cpp" />
     <ClCompile Include="RuyiNet\RuyiNetClient.cpp" />
     <ClCompile Include="RuyiNet\Service\Cloud\RuyiNetCloudService.cpp" />
@@ -528,6 +533,10 @@
     <ClInclude Include="Generated\Constants\ConstantsSDKDataTypes_types.h" />
     <ClInclude Include="Generated\Constants\ConstantsSDKServices_constants.h" />
     <ClInclude Include="Generated\Constants\ConstantsSDKServices_types.h" />
+    <ClInclude Include="Generated\GamesDB\GamesDBSDKDataTypes_constants.h" />
+    <ClInclude Include="Generated\GamesDB\GamesDBSDKDataTypes_types.h" />
+    <ClInclude Include="Generated\GamesDB\GamesDBSDKServices_constants.h" />
+    <ClInclude Include="Generated\GamesDB\GamesDBSDKServices_types.h" />
     <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_constants.h" />
     <ClInclude Include="Generated\InputManager\InputManagerSDKDataTypes_types.h" />
     <ClInclude Include="Generated\InputManager\InputManagerSDKServices_constants.h" />
