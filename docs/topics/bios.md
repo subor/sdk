@@ -9,17 +9,17 @@ This document will be removed in the future.
 ## Version
 
 __Checking BIOS version of Running Machine__
-
-- When machine starts
-    1. Press `F2` to enter BIOS setup
-    1. Enter __Setup Utility -> Main -> BIOS Version__
-
-OR
-
 - In Windows
     1. Run `msinfo32.exe`
     1. Inspect __System Summary -> BIOS Version/Date__ value  
     ![](/docs/img/msinfo32_bios.png)
+
+OR
+- In ruyi client
+    1. start client
+    1. Go to settings - system - system information
+    3. check versions
+    ![](/docs/img/versions.png)
 
 __Checking BIOS version of Install Media__
 
@@ -50,11 +50,13 @@ __Important__:
 | 0.09 | 0.3 | 0.0.7.2 2017/12/15
 | 0.08 | 0.3 | 0.0.7.2 2017/12/15
 
-Because the BIOS flashing process was changed, please observe the following rules:  
+Because the BIOS flashing process was changed, please follow the steps below for how-to:
+
+Skipping steps may cause your system to be unbootable and require to be send back to factory for service
 
 | Installed BIOS | BIOS to Flash | Rule
 |-|-|-
-0.15-0.20 | 1.01(or later) | __Winflash__: First update to __1.00__; and then update to more recent BIOS/OS.<br/>  __EFI flash__: 1. Disable Secure boot (F2->Secure Boot Option->Erase all Secure Boot Settings); and then update to __1.00__; At last, update to more recent BIOS/OS.
+0.15-0.20 | 1.01(or later) | __Winflash__: First update to __1.00__; and then update to the latest BIOS/OS.<br/>  __EFI flash__: 1. Disable Secure boot (F2->Secure Boot Option->Erase all Secure Boot Settings); and then update to __1.00__; At last, update to more recent BIOS/OS.
 | 0.09-0.13 | 1.01 (or later) | __EFI flash__: First update to BIOS __0.15__, and then update to __1.00__; at last, update to more recent BIOS/OS.<br/>  __Winflash__: First update to __1.00__ (Machine will freeze for a few minutes, please wait.);  and then update to more recent BIOS/OS.
 
 
