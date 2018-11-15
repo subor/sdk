@@ -63,8 +63,6 @@ Here we detail adding the precompiled SDK binary to the [UE4 demo](https://githu
 You can also use a binary built from the [SDK source](https://github.com/subor/sdk).
 
 1. [Build SDK Binary](build_sdk_source.md)
-    - In particular, you will need to build all dependencies targetting __v140__
-    - For example, boost can be built with `b2 toolset=msvc-14.0 address-model=64 --build-type=complete stage`
 
 1. From `RuyiSDKCpp\bin\Release`, copy the __include__ and __lib__ folders to your main module (e.g. `Source/PlatformerGame/RuyiSDK/`).
 
@@ -94,9 +92,11 @@ If it stills use v140 toolset:
 
 To target v140, you'll need to rebuild our SDK and all it's dependencies.
 
-1. Right-click one of the __Cpp__ projects, select __Properties__
-1. For __Platform Toolset__ select `Visual Studio 2015 (v140)`:  
-![](/docs/img/cpp_properties_toolset.png)
+1. [Build SDK Binary](build_sdk_source.md), making sure all binaries target __v140__:
+    - Boost can be built with `b2 toolset=msvc-14.0 address-model=64 --build-type=complete stage`
+    - For libraries with Visual Studio projects, right-click a project and select __Properties__, for __Platform Toolset__ select `Visual Studio 2015 (v140)`:  
+    ![](/docs/img/cpp_properties_toolset.png)
+
 1. Follow remainder of instructions from ["Building SDK Binary"](#building-sdk-binary)
 
 ## Known Issues
