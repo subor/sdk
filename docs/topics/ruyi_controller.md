@@ -1,8 +1,8 @@
 ﻿# Ruyi Controller API Insturction
 
   This document is about how to use Ruyi Controller through SDK API。Download the latest Layer0（[dev portal](https://dev.playruyi.com/)），launch it before running your game。
-(Since RuyiSDK is still in development, the code here may be a little different from the download SDK). You can refer the sample code from here [C#](https://bitbucket.org/playruyi/space_shooter/src),
-[C++](https://bitbucket.org/playruyi/unreal_demo/src/master)
+(Since RuyiSDK is still in development, the code here may be a little different from the download SDK). You can refer the sample code from here [C#](https://github.com/subor/sample_unity_space_shooter),
+[C++](https://github.com/subor/sample_ue4_platformer)
 
 ## Code Instruction（C#）
 
