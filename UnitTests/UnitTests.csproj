@@ -35,6 +35,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DocTests.cs" />
     <Compile Include="Elo\DuellingEloTest.cs" />
     <Compile Include="Elo\EloAssert.cs" />
     <Compile Include="Elo\FideEloCalculatorTest.cs" />
@@ -67,9 +68,21 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\externals\thrift.csharp\Thrift.ns2.0.csproj">
+      <Project>{60daa42f-e1c4-46ee-a000-277cc90d2ce6}</Project>
+      <Name>Thrift.ns2.0</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RuyiSDK\RuyiSDK.csproj">
       <Project>{6636a711-7919-419c-90c1-c633aa63a8b8}</Project>
       <Name>RuyiSDK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SDK.Base\SDK.Base.csproj">
+      <Project>{322c0476-05e8-4b1c-915b-c3c2eac1ebda}</Project>
+      <Name>SDK.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceCommon\ServiceCommon.csproj">
+      <Project>{f33ca40f-a049-4254-b7ba-e0a9c7524ebf}</Project>
+      <Name>ServiceCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\ServiceGenerated\ServiceGenerated.csproj">
       <Project>{542ac8d4-8058-4e1d-9ed2-bc0b4ca04956}</Project>

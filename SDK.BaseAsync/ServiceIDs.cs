@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace Ruyi.Layer0
 {
+    /// <summary>
+    /// Service Id enum class
+    /// </summary>
     public
 #endif
 
@@ -43,6 +46,7 @@ namespace Ruyi.Layer0
 
         SETTINGSYSTEM_EXTERNAL,
         SETTINGSYSTEM_INTERNAL,
+        SETTINGSYSTEM_LAYER1,
         USER_SERVICE_INTERNAL,
         USER_SERVICE_EXTERNAL,
         BCSERVICE,
@@ -67,27 +71,51 @@ namespace Ruyi.Layer0
     }
 
 #if !__cplusplus            // C#, some helper functions
+    /// <summary>
+    /// service Helper class
+    /// </summary>
     public static class ServiceHelper
     {
         static Dictionary<ServiceIDs, string> shortNames = new Dictionary<ServiceIDs, string>();
         static object locker = new object();
 
-        // Notice: we treat worker and service as the same mostly in layer0 because currently one service only got one worker.
+        /// <summary>
+        /// work ID of the service
+        /// Notice: we treat worker and service as the same mostly in layer0 because currently one service only got one worker.
+        /// </summary>
+        /// <param name="swi">the service ID</param>
+        /// <returns></returns>
         public static string WorkerID(this ServiceIDs swi)
         {
             return "WRK_" + swi.ShortString();
         }
 
+        /// <summary>
+        /// forwarder ID of the service
+        /// </summary>
+        /// <param name="swi">the service ID</param>
+        /// <returns></returns>
         public static string ForwarderID(this ServiceIDs swi)
         {
             return "FWD_" + swi.ShortString();
         }
 
         #region string <-> serviceID convertion
+        /// <summary>
+        /// string convertion of service ID
+        /// </summary>
+        /// <param name="swi">the service ID</param>
+        /// <returns>the string of the service ID</returns>
         public static string ServiceID(this ServiceIDs swi)
         {
             return "SER_" + swi.ToString();
         }
+
+        /// <summary>
+        /// service ID from string
+        /// </summary>
+        /// <param name="ser">the string of service ID</param>
+        /// <returns>the service ID from string</returns>
         public static ServiceIDs FromServiceIDStr(string ser)
         {
             try
@@ -102,11 +130,19 @@ namespace Ruyi.Layer0
         }
         #endregion
 
+        /// <summary>
+        /// the service publish to topic
+        /// </summary>
+        /// <param name="swi">the service ID</param>
         public static string PubChannelID(this ServiceIDs swi)
         {
             return "service/" + swi.ShortString().ToLower();
         }
 
+        /// <summary>
+        /// short string of the service 
+        /// </summary>
+        /// <param name="swi">the service ID</param>
         public static string ShortString(this ServiceIDs swi)
         {
             lock (locker)
@@ -125,6 +161,10 @@ namespace Ruyi.Layer0
 
         }
 
+        /// <summary>
+        /// if the service exist 
+        /// </summary>
+        /// <param name="swi">the service ID</param>
         public static bool ExistForwarder(this ServiceIDs swi)
         {
             switch (swi)
@@ -141,6 +181,10 @@ namespace Ruyi.Layer0
             }
         }
 
+        /// <summary>
+        /// if the service belongto layer1
+        /// </summary>
+        /// <param name="sid">the service ID</param>
         public static bool IsLayer1Service(this ServiceIDs sid)
         {
             switch (sid)
@@ -150,11 +194,16 @@ namespace Ruyi.Layer0
                 case ServiceIDs.LAUNCHER:
                 case ServiceIDs.UPDATESERVICE:
                 case ServiceIDs.POWERMANAGER:
+                case ServiceIDs.SETTINGSYSTEM_LAYER1:
                     return true;
             }
             return false;
         }
 
+        /// <summary>
+        /// if the service is a splitter service
+        /// </summary>
+        /// <param name="sid">the service ID</param>
         public static bool IsSplitter(this ServiceIDs sid)
         {
             if (sid == ServiceIDs.LOW_POWER_START || sid == ServiceIDs.LOW_POWER_END
@@ -165,6 +214,10 @@ namespace Ruyi.Layer0
             return false;
         }
 
+        /// <summary>
+        /// if the service exist
+        /// </summary>
+        /// <param name="swi">the service ID</param>
         public static bool ExistWorker(this ServiceIDs swi)
         {
             switch (swi)
@@ -178,8 +231,20 @@ namespace Ruyi.Layer0
         }
     }
 
+    /// <summary>
+    /// Address helper class
+    /// </summary>
     public static class AddressHelper
     {
+        /// <summary>
+        /// set address of SDk context instance
+        /// </summary>
+        /// <param name="config">the config string</param>
+        /// <param name="addr">the address to fill in config</param>
+        /// <example>
+        /// var pubout = ConstantsSDKDataTypesConstants.layer0_publisher_out_uri.SetAddress(context.RemoteAddress);
+        /// Subscriber = SubscribeClient.CreateInstance(pubout);
+        /// </example>
         public static string SetAddress(this string config, string addr)
         {
             return config.Replace("{addr}", addr);

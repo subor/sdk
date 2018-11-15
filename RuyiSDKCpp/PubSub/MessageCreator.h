@@ -2,15 +2,6 @@
 
 #include "thrift/TBase.h"
 
-#include "../Generated/InputManager/InputManagerSDKDataTypes_types.h"
-#include "../Generated/StorageLayer/StorageLayerSDKDataTypes_types.h"
-#include "../Generated/SettingSystem/SettingSystemSDKDataTypes_types.h"
-#include "../Generated/BrainCloudService/BrainCloudServiceSDKDataTypes_types.h"
-#include "../Generated/LocalizationService/LocalizationServiceSDKDataTypes_types.h"
-#include "../Generated/UserServiceExternal/UserServiceExternalSDKDataTypes_types.h"
-#include "../Generated/OverlayManager/OverlayManagerSDKDataTypes_types.h"
-#include "../RuyiSDK.h"
-
 using namespace std;
 using namespace apache::thrift;
 
@@ -20,8 +11,7 @@ typedef TBase* (*MessageCreatorFunc)();
 
 #define REGIST_CREATION_FUNCTION(msgName, msgType) \
 	{\
-		MessageCreatorFunc p = &CreateMessagePtr<msgType>; \
-		ccs.insert(std::make_pair(msgName, p));\
+		MessageCreator::Register<msgType>(msgName);\
 	}
 
 template<class T>
@@ -35,8 +25,6 @@ namespace Ruyi
 {
 	class MessageCreator
 	{
-		friend class RuyiSDK;
-
 	public:
 		static TBase* CreateMessage(string mt)
 		{
@@ -46,6 +34,13 @@ namespace Ruyi
 
 			MessageCreatorFunc mcf = itr->second;
 			return mcf();
+		}
+
+		template<class T>
+		static void Register(string name)
+		{
+			MessageCreatorFunc p = &CreateMessagePtr<T>;
+			ccs.insert(std::make_pair(name, p));
 		}
 
 	private:

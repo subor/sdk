@@ -151,7 +151,17 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("SettingItemNotify\n");
   }
 
-  bool SetNetworkSettings(const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS) {
+  void GetNetworkAdapterSettings( ::Ruyi::SDK::SettingSystem::Api::NetworkSettings& _return) {
+    // Your implementation goes here
+    printf("GetNetworkAdapterSettings\n");
+  }
+
+  void GetLanNetworkName(std::string& _return) {
+    // Your implementation goes here
+    printf("GetLanNetworkName\n");
+  }
+
+  bool SetNetworkSettings(const bool isWLan, const bool EnableDHCP, const std::string& IpAddress, const std::string& SubMask, const std::string& Gateway, const std::string& MainDNS, const std::string& SubDNS) {
     // Your implementation goes here
     printf("SetNetworkSettings\n");
   }
@@ -164,6 +174,11 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
   bool ConnectToWifi(const std::string& profileName, const std::string& key) {
     // Your implementation goes here
     printf("ConnectToWifi\n");
+  }
+
+  bool ConnectToAppointedWifi(const std::string& profileName, const std::string& Auth, const std::string& Ciper, const std::string& KeyType, const std::string& key) {
+    // Your implementation goes here
+    printf("ConnectToAppointedWifi\n");
   }
 
   void GetNetworkSettings( ::Ruyi::SDK::SettingSystem::Api::RuyiNetworkSettings& _return) {

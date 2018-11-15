@@ -9,7 +9,7 @@ using Ruyi.SDK.Speech;
 using Ruyi.SDK.StorageLayer;
 using Ruyi.SDK.UserServiceExternal;
 using Ruyi.SDK.InputManager;
-using Ruyi.SDK.OverlayManagerExternal;
+using Ruyi.SDK.Overlay;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -132,7 +132,7 @@ namespace Ruyi
         /// <summary>
         /// the overlay service
         /// </summary>
-        public ExternalOverlayManagerService.Client OverlayService { get; private set; }
+        public OverlayExternalService.Client OverlayService { get; private set; }
 
         /// <summary>
         /// Media player services
@@ -164,6 +164,10 @@ namespace Ruyi
         /// <summary>
         /// Create a new SDK instance with the given context.
         /// </summary>
+        /// <remarks>
+        /// this method use blocking calls like Wait(), WaitAll(), .Rsult() on async methods,
+        /// so invoke it on UI thread will cause dead-lock, please handle this by yourself
+        /// </remarks>
         /// <param name="cont">context used to create the sdk instance</param>
         /// <returns>the created instance, null if context is not valid</returns>
         public static RuyiSDK CreateInstance(RuyiSDKContext cont)
@@ -305,7 +309,7 @@ namespace Ruyi
             if (IsFeatureEnabled(SDKFeatures.Overlay))
             {
                 var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.OVERLAYMANAGER_EXTERNAL.ServiceID());
-                OverlayService = new ExternalOverlayManagerService.Client(proto);
+                OverlayService = new OverlayExternalService.Client(proto);
             }
             return true;
         }
@@ -358,15 +362,7 @@ namespace Ruyi
 
             return true;
         }
-
-        /// <summary>
-        /// Basic update loop.
-        /// </summary>
-        public void Update()
-        {
-            RuyiNetService.Update();
-        }
-
+        
         /// <summary>
         /// Dispose the SDK instance, don't miss this after SDK usage.
         /// </summary>

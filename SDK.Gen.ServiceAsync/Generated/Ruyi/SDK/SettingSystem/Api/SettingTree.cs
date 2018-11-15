@@ -116,15 +116,15 @@ namespace Ruyi.SDK.SettingSystem.Api
               {
                 {
                   SettingCategories = new Dictionary<string, Ruyi.SDK.CommonType.SettingCategory>();
-                  TMap _map12 = await iprot.ReadMapBeginAsync(cancellationToken);
-                  for(int _i13 = 0; _i13 < _map12.Count; ++_i13)
+                  TMap _map8 = await iprot.ReadMapBeginAsync(cancellationToken);
+                  for(int _i9 = 0; _i9 < _map8.Count; ++_i9)
                   {
-                    string _key14;
-                    Ruyi.SDK.CommonType.SettingCategory _val15;
-                    _key14 = await iprot.ReadStringAsync(cancellationToken);
-                    _val15 = new Ruyi.SDK.CommonType.SettingCategory();
-                    await _val15.ReadAsync(iprot, cancellationToken);
-                    SettingCategories[_key14] = _val15;
+                    string _key10;
+                    Ruyi.SDK.CommonType.SettingCategory _val11;
+                    _key10 = await iprot.ReadStringAsync(cancellationToken);
+                    _val11 = new Ruyi.SDK.CommonType.SettingCategory();
+                    await _val11.ReadAsync(iprot, cancellationToken);
+                    SettingCategories[_key10] = _val11;
                   }
                   await iprot.ReadMapEndAsync(cancellationToken);
                 }
@@ -139,15 +139,15 @@ namespace Ruyi.SDK.SettingSystem.Api
               {
                 {
                   SettingItems = new Dictionary<string, Ruyi.SDK.CommonType.SettingItem>();
-                  TMap _map16 = await iprot.ReadMapBeginAsync(cancellationToken);
-                  for(int _i17 = 0; _i17 < _map16.Count; ++_i17)
+                  TMap _map12 = await iprot.ReadMapBeginAsync(cancellationToken);
+                  for(int _i13 = 0; _i13 < _map12.Count; ++_i13)
                   {
-                    string _key18;
-                    Ruyi.SDK.CommonType.SettingItem _val19;
-                    _key18 = await iprot.ReadStringAsync(cancellationToken);
-                    _val19 = new Ruyi.SDK.CommonType.SettingItem();
-                    await _val19.ReadAsync(iprot, cancellationToken);
-                    SettingItems[_key18] = _val19;
+                    string _key14;
+                    Ruyi.SDK.CommonType.SettingItem _val15;
+                    _key14 = await iprot.ReadStringAsync(cancellationToken);
+                    _val15 = new Ruyi.SDK.CommonType.SettingItem();
+                    await _val15.ReadAsync(iprot, cancellationToken);
+                    SettingItems[_key14] = _val15;
                   }
                   await iprot.ReadMapEndAsync(cancellationToken);
                 }
@@ -198,10 +198,10 @@ namespace Ruyi.SDK.SettingSystem.Api
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.Struct, SettingCategories.Count), cancellationToken);
-            foreach (string _iter20 in SettingCategories.Keys)
+            foreach (string _iter16 in SettingCategories.Keys)
             {
-              await oprot.WriteStringAsync(_iter20, cancellationToken);
-              await SettingCategories[_iter20].WriteAsync(oprot, cancellationToken);
+              await oprot.WriteStringAsync(_iter16, cancellationToken);
+              await SettingCategories[_iter16].WriteAsync(oprot, cancellationToken);
             }
             await oprot.WriteMapEndAsync(cancellationToken);
           }
@@ -215,10 +215,10 @@ namespace Ruyi.SDK.SettingSystem.Api
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.Struct, SettingItems.Count), cancellationToken);
-            foreach (string _iter21 in SettingItems.Keys)
+            foreach (string _iter17 in SettingItems.Keys)
             {
-              await oprot.WriteStringAsync(_iter21, cancellationToken);
-              await SettingItems[_iter21].WriteAsync(oprot, cancellationToken);
+              await oprot.WriteStringAsync(_iter17, cancellationToken);
+              await SettingItems[_iter17].WriteAsync(oprot, cancellationToken);
             }
             await oprot.WriteMapEndAsync(cancellationToken);
           }

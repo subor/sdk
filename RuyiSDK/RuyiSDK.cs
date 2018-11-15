@@ -34,7 +34,7 @@ namespace Ruyi
     /// <see cref="RuyiSDK.Update"/> must be called periodically (e.g. each frame) for all service clients to function correctly.
     /// </remarks>
     /// <example>
-    /// <code source="layer0/sdktest/doctests.cs" region="RuyiSDK"></code>
+    /// <code source="sdk/unittests/doctests.cs" region="RuyiSDK"></code>
     /// </example>
     public class RuyiSDK : IDisposable
     {
@@ -442,7 +442,7 @@ namespace Ruyi
 
                 // not Layer0 & not Layer1
                 if(!entry.FullName.StartsWith("Layer0,", StringComparison.OrdinalIgnoreCase) 
-                    && !entry.FullName.StartsWith("Layer1,", StringComparison.OrdinalIgnoreCase))
+                    && !entry.FullName.StartsWith("zpLayer1,", StringComparison.OrdinalIgnoreCase))
                 {
                     NetMQConfig.Cleanup(false);
                     return;

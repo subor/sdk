@@ -13,12 +13,11 @@ enum LoginState {
 	Login = 1,
 }
 
-enum NotificationType {
-    Battery = 0,
-    Interactive = 1,
-    Voice = 2,
-    GameInfo = 3,
-    ScreenshotInfo = 4,
+enum TitleMainIconNotificationType {
+    FriendRequest = 0,
+    FriendAccept = 1,
+    BluetoothDeviceStatusChanged = 2,
+    NetworkStatusChanged = 3,
 }
 
 enum InputCategory {
@@ -67,7 +66,9 @@ enum eUIType {
     CheckList = 4,
     OptionList = 5,
     DateTime = 6,
-    TextInput = 7,
+    InputTextWithLabel = 7,
+    Button = 8,
+    InputText = 9,
 }
 
 
@@ -130,12 +131,13 @@ struct SettingItem {
     12: optional bool readOnly,
     13: bool isValid,
     14: bool isActive,
-    15: optional string validation,
-    16: optional list<activeDependency> activeDependencies,
-    17: optional string ActionName,
-    18: optional string ActionObject,
-    19: optional string ActionOnSetValue,
-    20: optional string ActionOnGetValue,
+    15: bool hasNew,
+    16: optional string validation,
+    17: optional list<activeDependency> activeDependencies,
+    18: optional string ActionName,
+    19: optional string ActionObject,
+    20: optional string ActionOnSetValue,
+    21: optional string ActionOnGetValue,
 }
 
 struct SettingCategory {
@@ -152,11 +154,16 @@ struct SettingCategory {
     11: string script,
 }
 
-struct ModuleSetting {
+struct ModuleBaseInfo {
     1: string name,
     2: string version,
-    3: list<SettingItem> settings,
-    4: list<SettingCategory> categories,
+    3: i32 configHash,
+}
+
+struct ModuleSetting {
+    1: ModuleBaseInfo baseInfo,
+    2: list<SettingItem> settings,
+    3: list<SettingCategory> categories,
 }
 
 struct AppDataRecord {
@@ -180,11 +187,21 @@ struct AppData {
 	2: list<AppDataCollection> data,
 }
 
-struct PopupNotification {
-    1: NotificationType NotificationType,
-    2: string MainIcon,
-    3: string Text,
-    4: string Description,
+struct TitleMainIconNotification {
+    1: string title,
+    2: string mainIcon,
+    3: TitleMainIconNotificationType NotificationType,
+}
+
+struct AppBaseInfo {
+    1: string appId,
+    2: string name,
+    3: string icon,
+    4: string description,
+    5: list<string> properties,
+    6: list<string> platform,
+    7: i32 size,
+    8: list<string> languages,
 }
 
 struct EventNotification {

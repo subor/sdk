@@ -102,11 +102,17 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="contents">Optional. The arguments of the notification. In json string format</param>
       Task<bool> SettingItemNotifyAsync(string key, string contents, CancellationToken cancellationToken);
 
-      Task<bool> SetNetworkSettingsAsync(bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS, CancellationToken cancellationToken);
+      Task<Ruyi.SDK.SettingSystem.Api.NetworkSettings> GetNetworkAdapterSettingsAsync(CancellationToken cancellationToken);
+
+      Task<string> GetLanNetworkNameAsync(CancellationToken cancellationToken);
+
+      Task<bool> SetNetworkSettingsAsync(bool isWLan, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS, CancellationToken cancellationToken);
 
       Task<bool> SetNetworkProxyAsync(string ProxyServer, string ProxyPort, CancellationToken cancellationToken);
 
       Task<bool> ConnectToWifiAsync(string profileName, string key, CancellationToken cancellationToken);
+
+      Task<bool> ConnectToAppointedWifiAsync(string profileName, string Auth, string Ciper, string KeyType, string key, CancellationToken cancellationToken);
 
       Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings> GetNetworkSettingsAsync(CancellationToken cancellationToken);
 
@@ -616,11 +622,68 @@ namespace Ruyi.SDK.SettingSystem.Api
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "SettingItemNotify failed: unknown result");
       }
 
-      public async Task<bool> SetNetworkSettingsAsync(bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS, CancellationToken cancellationToken)
+      public async Task<Ruyi.SDK.SettingSystem.Api.NetworkSettings> GetNetworkAdapterSettingsAsync(CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetNetworkAdapterSettings", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new GetNetworkAdapterSettingsArgs();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new GetNetworkAdapterSettingsResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetNetworkAdapterSettings failed: unknown result");
+      }
+
+      public async Task<string> GetLanNetworkNameAsync(CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetLanNetworkName", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new GetLanNetworkNameArgs();
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new GetLanNetworkNameResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
+          return result.Success;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetLanNetworkName failed: unknown result");
+      }
+
+      public async Task<bool> SetNetworkSettingsAsync(bool isWLan, bool EnableDHCP, string IpAddress, string SubMask, string Gateway, string MainDNS, string SubDNS, CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("SetNetworkSettings", TMessageType.Call, SeqId), cancellationToken);
         
         var args = new SetNetworkSettingsArgs();
+        args.IsWLan = isWLan;
         args.EnableDHCP = EnableDHCP;
         args.IpAddress = IpAddress;
         args.SubMask = SubMask;
@@ -712,6 +775,43 @@ namespace Ruyi.SDK.SettingSystem.Api
           throw result.Error1;
         }
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "ConnectToWifi failed: unknown result");
+      }
+
+      public async Task<bool> ConnectToAppointedWifiAsync(string profileName, string Auth, string Ciper, string KeyType, string key, CancellationToken cancellationToken)
+      {
+        await OutputProtocol.WriteMessageBeginAsync(new TMessage("ConnectToAppointedWifi", TMessageType.Call, SeqId), cancellationToken);
+        
+        var args = new ConnectToAppointedWifiArgs();
+        args.ProfileName = profileName;
+        args.Auth = Auth;
+        args.Ciper = Ciper;
+        args.KeyType = KeyType;
+        args.Key = key;
+        
+        await args.WriteAsync(OutputProtocol, cancellationToken);
+        await OutputProtocol.WriteMessageEndAsync(cancellationToken);
+        await OutputProtocol.Transport.FlushAsync(cancellationToken);
+        
+        var msg = await InputProtocol.ReadMessageBeginAsync(cancellationToken);
+        if (msg.Type == TMessageType.Exception)
+        {
+          var x = await TApplicationException.ReadAsync(InputProtocol, cancellationToken);
+          await InputProtocol.ReadMessageEndAsync(cancellationToken);
+          throw x;
+        }
+
+        var result = new ConnectToAppointedWifiResult();
+        await result.ReadAsync(InputProtocol, cancellationToken);
+        await InputProtocol.ReadMessageEndAsync(cancellationToken);
+        if (result.__isset.success)
+        {
+          return result.Success;
+        }
+        if (result.__isset.error1)
+        {
+          throw result.Error1;
+        }
+        throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "ConnectToAppointedWifi failed: unknown result");
       }
 
       public async Task<Ruyi.SDK.SettingSystem.Api.RuyiNetworkSettings> GetNetworkSettingsAsync(CancellationToken cancellationToken)
@@ -1099,9 +1199,12 @@ namespace Ruyi.SDK.SettingSystem.Api
         processMap_["GetUserAppData"] = GetUserAppData_ProcessAsync;
         processMap_["RemoveUserAppData"] = RemoveUserAppData_ProcessAsync;
         processMap_["SettingItemNotify"] = SettingItemNotify_ProcessAsync;
+        processMap_["GetNetworkAdapterSettings"] = GetNetworkAdapterSettings_ProcessAsync;
+        processMap_["GetLanNetworkName"] = GetLanNetworkName_ProcessAsync;
         processMap_["SetNetworkSettings"] = SetNetworkSettings_ProcessAsync;
         processMap_["SetNetworkProxy"] = SetNetworkProxy_ProcessAsync;
         processMap_["ConnectToWifi"] = ConnectToWifi_ProcessAsync;
+        processMap_["ConnectToAppointedWifi"] = ConnectToAppointedWifi_ProcessAsync;
         processMap_["GetNetworkSettings"] = GetNetworkSettings_ProcessAsync;
         processMap_["GetNetworkStatus"] = GetNetworkStatus_ProcessAsync;
         processMap_["RuyiTestNetwork"] = RuyiTestNetwork_ProcessAsync;
@@ -1645,6 +1748,62 @@ namespace Ruyi.SDK.SettingSystem.Api
         await oprot.Transport.FlushAsync(cancellationToken);
       }
 
+      public async Task GetNetworkAdapterSettings_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new GetNetworkAdapterSettingsArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new GetNetworkAdapterSettingsResult();
+        try
+        {
+          result.Success = await _iAsync.GetNetworkAdapterSettingsAsync(cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("GetNetworkAdapterSettings", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("GetNetworkAdapterSettings", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task GetLanNetworkName_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new GetLanNetworkNameArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new GetLanNetworkNameResult();
+        try
+        {
+          result.Success = await _iAsync.GetLanNetworkNameAsync(cancellationToken);
+          await oprot.WriteMessageBeginAsync(new TMessage("GetLanNetworkName", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("GetLanNetworkName", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
       public async Task SetNetworkSettings_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
       {
         var args = new SetNetworkSettingsArgs();
@@ -1653,7 +1812,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         var result = new SetNetworkSettingsResult();
         try
         {
-          result.Success = await _iAsync.SetNetworkSettingsAsync(args.EnableDHCP, args.IpAddress, args.SubMask, args.Gateway, args.MainDNS, args.SubDNS, cancellationToken);
+          result.Success = await _iAsync.SetNetworkSettingsAsync(args.IsWLan, args.EnableDHCP, args.IpAddress, args.SubMask, args.Gateway, args.MainDNS, args.SubDNS, cancellationToken);
           await oprot.WriteMessageBeginAsync(new TMessage("SetNetworkSettings", TMessageType.Reply, seqid), cancellationToken); 
           await result.WriteAsync(oprot, cancellationToken);
         }
@@ -1730,6 +1889,41 @@ namespace Ruyi.SDK.SettingSystem.Api
           Console.Error.WriteLine(ex.ToString());
           var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
           await oprot.WriteMessageBeginAsync(new TMessage("ConnectToWifi", TMessageType.Exception, seqid), cancellationToken);
+          await x.WriteAsync(oprot, cancellationToken);
+        }
+        await oprot.WriteMessageEndAsync(cancellationToken);
+        await oprot.Transport.FlushAsync(cancellationToken);
+      }
+
+      public async Task ConnectToAppointedWifi_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot, CancellationToken cancellationToken)
+      {
+        var args = new ConnectToAppointedWifiArgs();
+        await args.ReadAsync(iprot, cancellationToken);
+        await iprot.ReadMessageEndAsync(cancellationToken);
+        var result = new ConnectToAppointedWifiResult();
+        try
+        {
+          try
+          {
+            result.Success = await _iAsync.ConnectToAppointedWifiAsync(args.ProfileName, args.Auth, args.Ciper, args.KeyType, args.Key, cancellationToken);
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          await oprot.WriteMessageBeginAsync(new TMessage("ConnectToAppointedWifi", TMessageType.Reply, seqid), cancellationToken); 
+          await result.WriteAsync(oprot, cancellationToken);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          var x = new TApplicationException(TApplicationException.ExceptionType.InternalError," Internal error.");
+          await oprot.WriteMessageBeginAsync(new TMessage("ConnectToAppointedWifi", TMessageType.Exception, seqid), cancellationToken);
           await x.WriteAsync(oprot, cancellationToken);
         }
         await oprot.WriteMessageEndAsync(cancellationToken);
@@ -6668,14 +6862,395 @@ namespace Ruyi.SDK.SettingSystem.Api
     }
 
 
+    public partial class GetNetworkAdapterSettingsArgs : TBase
+    {
+
+      public GetNetworkAdapterSettingsArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("GetNetworkAdapterSettings_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetNetworkAdapterSettings_args(");
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class GetNetworkAdapterSettingsResult : TBase
+    {
+      private Ruyi.SDK.SettingSystem.Api.NetworkSettings _success;
+
+      public Ruyi.SDK.SettingSystem.Api.NetworkSettings Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool success;
+      }
+
+      public GetNetworkAdapterSettingsResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Struct)
+                {
+                  Success = new Ruyi.SDK.SettingSystem.Api.NetworkSettings();
+                  await Success.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("GetNetworkAdapterSettings_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+
+          if(this.__isset.success)
+          {
+            if (Success != null)
+            {
+              field.Name = "Success";
+              field.Type = TType.Struct;
+              field.ID = 0;
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Success.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
+            }
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetNetworkAdapterSettings_result(");
+        bool __first = true;
+        if (Success != null && __isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Success: ");
+          sb.Append(Success== null ? "<null>" : Success.ToString());
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class GetLanNetworkNameArgs : TBase
+    {
+
+      public GetLanNetworkNameArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("GetLanNetworkName_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetLanNetworkName_args(");
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class GetLanNetworkNameResult : TBase
+    {
+      private string _success;
+
+      public string Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool success;
+      }
+
+      public GetLanNetworkNameResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.String)
+                {
+                  Success = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("GetLanNetworkName_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+
+          if(this.__isset.success)
+          {
+            if (Success != null)
+            {
+              field.Name = "Success";
+              field.Type = TType.String;
+              field.ID = 0;
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await oprot.WriteStringAsync(Success, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
+            }
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("GetLanNetworkName_result(");
+        bool __first = true;
+        if (Success != null && __isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Success: ");
+          sb.Append(Success);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
     public partial class SetNetworkSettingsArgs : TBase
     {
+      private bool _isWLan;
       private bool _EnableDHCP;
       private string _IpAddress;
       private string _SubMask;
       private string _Gateway;
       private string _MainDNS;
       private string _SubDNS;
+
+      public bool IsWLan
+      {
+        get
+        {
+          return _isWLan;
+        }
+        set
+        {
+          __isset.isWLan = true;
+          this._isWLan = value;
+        }
+      }
 
       public bool EnableDHCP
       {
@@ -6759,6 +7334,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       public Isset __isset;
       public struct Isset
       {
+        public bool isWLan;
         public bool EnableDHCP;
         public bool IpAddress;
         public bool SubMask;
@@ -6791,7 +7367,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 1:
                 if (field.Type == TType.Bool)
                 {
-                  EnableDHCP = await iprot.ReadBoolAsync(cancellationToken);
+                  IsWLan = await iprot.ReadBoolAsync(cancellationToken);
                 }
                 else
                 {
@@ -6799,9 +7375,9 @@ namespace Ruyi.SDK.SettingSystem.Api
                 }
                 break;
               case 2:
-                if (field.Type == TType.String)
+                if (field.Type == TType.Bool)
                 {
-                  IpAddress = await iprot.ReadStringAsync(cancellationToken);
+                  EnableDHCP = await iprot.ReadBoolAsync(cancellationToken);
                 }
                 else
                 {
@@ -6811,7 +7387,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 3:
                 if (field.Type == TType.String)
                 {
-                  SubMask = await iprot.ReadStringAsync(cancellationToken);
+                  IpAddress = await iprot.ReadStringAsync(cancellationToken);
                 }
                 else
                 {
@@ -6821,7 +7397,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 4:
                 if (field.Type == TType.String)
                 {
-                  Gateway = await iprot.ReadStringAsync(cancellationToken);
+                  SubMask = await iprot.ReadStringAsync(cancellationToken);
                 }
                 else
                 {
@@ -6831,7 +7407,7 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 5:
                 if (field.Type == TType.String)
                 {
-                  MainDNS = await iprot.ReadStringAsync(cancellationToken);
+                  Gateway = await iprot.ReadStringAsync(cancellationToken);
                 }
                 else
                 {
@@ -6839,6 +7415,16 @@ namespace Ruyi.SDK.SettingSystem.Api
                 }
                 break;
               case 6:
+                if (field.Type == TType.String)
+                {
+                  MainDNS = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 7:
                 if (field.Type == TType.String)
                 {
                   SubDNS = await iprot.ReadStringAsync(cancellationToken);
@@ -6872,11 +7458,20 @@ namespace Ruyi.SDK.SettingSystem.Api
           var struc = new TStruct("SetNetworkSettings_args");
           await oprot.WriteStructBeginAsync(struc, cancellationToken);
           var field = new TField();
+          if (__isset.isWLan)
+          {
+            field.Name = "isWLan";
+            field.Type = TType.Bool;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(IsWLan, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
           if (__isset.EnableDHCP)
           {
             field.Name = "EnableDHCP";
             field.Type = TType.Bool;
-            field.ID = 1;
+            field.ID = 2;
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
             await oprot.WriteBoolAsync(EnableDHCP, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
@@ -6885,7 +7480,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             field.Name = "IpAddress";
             field.Type = TType.String;
-            field.ID = 2;
+            field.ID = 3;
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
             await oprot.WriteStringAsync(IpAddress, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
@@ -6894,7 +7489,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             field.Name = "SubMask";
             field.Type = TType.String;
-            field.ID = 3;
+            field.ID = 4;
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
             await oprot.WriteStringAsync(SubMask, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
@@ -6903,7 +7498,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             field.Name = "Gateway";
             field.Type = TType.String;
-            field.ID = 4;
+            field.ID = 5;
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
             await oprot.WriteStringAsync(Gateway, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
@@ -6912,7 +7507,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             field.Name = "MainDNS";
             field.Type = TType.String;
-            field.ID = 5;
+            field.ID = 6;
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
             await oprot.WriteStringAsync(MainDNS, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
@@ -6921,7 +7516,7 @@ namespace Ruyi.SDK.SettingSystem.Api
           {
             field.Name = "SubDNS";
             field.Type = TType.String;
-            field.ID = 6;
+            field.ID = 7;
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
             await oprot.WriteStringAsync(SubDNS, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
@@ -6939,6 +7534,13 @@ namespace Ruyi.SDK.SettingSystem.Api
       {
         var sb = new StringBuilder("SetNetworkSettings_args(");
         bool __first = true;
+        if (__isset.isWLan)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("IsWLan: ");
+          sb.Append(IsWLan);
+        }
         if (__isset.EnableDHCP)
         {
           if(!__first) { sb.Append(", "); }
@@ -7666,6 +8268,444 @@ namespace Ruyi.SDK.SettingSystem.Api
       public override string ToString()
       {
         var sb = new StringBuilder("ConnectToWifi_result(");
+        bool __first = true;
+        if (__isset.success)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Success: ");
+          sb.Append(Success);
+        }
+        if (Error1 != null && __isset.error1)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Error1: ");
+          sb.Append(Error1== null ? "<null>" : Error1.ToString());
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class ConnectToAppointedWifiArgs : TBase
+    {
+      private string _profileName;
+      private string _Auth;
+      private string _Ciper;
+      private string _KeyType;
+      private string _key;
+
+      public string ProfileName
+      {
+        get
+        {
+          return _profileName;
+        }
+        set
+        {
+          __isset.profileName = true;
+          this._profileName = value;
+        }
+      }
+
+      public string Auth
+      {
+        get
+        {
+          return _Auth;
+        }
+        set
+        {
+          __isset.Auth = true;
+          this._Auth = value;
+        }
+      }
+
+      public string Ciper
+      {
+        get
+        {
+          return _Ciper;
+        }
+        set
+        {
+          __isset.Ciper = true;
+          this._Ciper = value;
+        }
+      }
+
+      public string KeyType
+      {
+        get
+        {
+          return _KeyType;
+        }
+        set
+        {
+          __isset.KeyType = true;
+          this._KeyType = value;
+        }
+      }
+
+      public string Key
+      {
+        get
+        {
+          return _key;
+        }
+        set
+        {
+          __isset.key = true;
+          this._key = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool profileName;
+        public bool Auth;
+        public bool Ciper;
+        public bool KeyType;
+        public bool key;
+      }
+
+      public ConnectToAppointedWifiArgs()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 1:
+                if (field.Type == TType.String)
+                {
+                  ProfileName = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 2:
+                if (field.Type == TType.String)
+                {
+                  Auth = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 3:
+                if (field.Type == TType.String)
+                {
+                  Ciper = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.String)
+                {
+                  KeyType = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 5:
+                if (field.Type == TType.String)
+                {
+                  Key = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("ConnectToAppointedWifi_args");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+          if (ProfileName != null && __isset.profileName)
+          {
+            field.Name = "profileName";
+            field.Type = TType.String;
+            field.ID = 1;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(ProfileName, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (Auth != null && __isset.Auth)
+          {
+            field.Name = "Auth";
+            field.Type = TType.String;
+            field.ID = 2;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Auth, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (Ciper != null && __isset.Ciper)
+          {
+            field.Name = "Ciper";
+            field.Type = TType.String;
+            field.ID = 3;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Ciper, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (KeyType != null && __isset.KeyType)
+          {
+            field.Name = "KeyType";
+            field.Type = TType.String;
+            field.ID = 4;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(KeyType, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          if (Key != null && __isset.key)
+          {
+            field.Name = "key";
+            field.Type = TType.String;
+            field.ID = 5;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteStringAsync(Key, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("ConnectToAppointedWifi_args(");
+        bool __first = true;
+        if (ProfileName != null && __isset.profileName)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("ProfileName: ");
+          sb.Append(ProfileName);
+        }
+        if (Auth != null && __isset.Auth)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Auth: ");
+          sb.Append(Auth);
+        }
+        if (Ciper != null && __isset.Ciper)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Ciper: ");
+          sb.Append(Ciper);
+        }
+        if (KeyType != null && __isset.KeyType)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("KeyType: ");
+          sb.Append(KeyType);
+        }
+        if (Key != null && __isset.key)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Key: ");
+          sb.Append(Key);
+        }
+        sb.Append(")");
+        return sb.ToString();
+      }
+    }
+
+
+    public partial class ConnectToAppointedWifiResult : TBase
+    {
+      private bool _success;
+      private Ruyi.SDK.CommonType.ErrorException _error1;
+
+      public bool Success
+      {
+        get
+        {
+          return _success;
+        }
+        set
+        {
+          __isset.success = true;
+          this._success = value;
+        }
+      }
+
+      public Ruyi.SDK.CommonType.ErrorException Error1
+      {
+        get
+        {
+          return _error1;
+        }
+        set
+        {
+          __isset.error1 = true;
+          this._error1 = value;
+        }
+      }
+
+
+      public Isset __isset;
+      public struct Isset
+      {
+        public bool success;
+        public bool error1;
+      }
+
+      public ConnectToAppointedWifiResult()
+      {
+      }
+
+      public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+      {
+        iprot.IncrementRecursionDepth();
+        try
+        {
+          TField field;
+          await iprot.ReadStructBeginAsync(cancellationToken);
+          while (true)
+          {
+            field = await iprot.ReadFieldBeginAsync(cancellationToken);
+            if (field.Type == TType.Stop)
+            {
+              break;
+            }
+
+            switch (field.ID)
+            {
+              case 0:
+                if (field.Type == TType.Bool)
+                {
+                  Success = await iprot.ReadBoolAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 1:
+                if (field.Type == TType.Struct)
+                {
+                  Error1 = new Ruyi.SDK.CommonType.ErrorException();
+                  await Error1.ReadAsync(iprot, cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              default: 
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                break;
+            }
+
+            await iprot.ReadFieldEndAsync(cancellationToken);
+          }
+
+          await iprot.ReadStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          iprot.DecrementRecursionDepth();
+        }
+      }
+
+      public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+      {
+        oprot.IncrementRecursionDepth();
+        try
+        {
+          var struc = new TStruct("ConnectToAppointedWifi_result");
+          await oprot.WriteStructBeginAsync(struc, cancellationToken);
+          var field = new TField();
+
+          if(this.__isset.success)
+          {
+            field.Name = "Success";
+            field.Type = TType.Bool;
+            field.ID = 0;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            await oprot.WriteBoolAsync(Success, cancellationToken);
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
+          else if(this.__isset.error1)
+          {
+            if (Error1 != null)
+            {
+              field.Name = "Error1";
+              field.Type = TType.Struct;
+              field.ID = 1;
+              await oprot.WriteFieldBeginAsync(field, cancellationToken);
+              await Error1.WriteAsync(oprot, cancellationToken);
+              await oprot.WriteFieldEndAsync(cancellationToken);
+            }
+          }
+          await oprot.WriteFieldStopAsync(cancellationToken);
+          await oprot.WriteStructEndAsync(cancellationToken);
+        }
+        finally
+        {
+          oprot.DecrementRecursionDepth();
+        }
+      }
+
+      public override string ToString()
+      {
+        var sb = new StringBuilder("ConnectToAppointedWifi_result(");
         bool __first = true;
         if (__isset.success)
         {

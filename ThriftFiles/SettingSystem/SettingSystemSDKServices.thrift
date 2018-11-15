@@ -93,11 +93,17 @@ According to the format of json string your write, searching can be separated to
 		2: SettingSystemSDKDataTypes.JSON contents
 	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
-	bool SetNetworkSettings(1: bool EnableDHCP, 2: string IpAddress, 3: string SubMask, 4: string Gateway, 5: string MainDNS, 6: string SubDNS),
+	SettingSystemSDKDataTypes.NetworkSettings GetNetworkAdapterSettings(),
+
+	string GetLanNetworkName(),
+
+	bool SetNetworkSettings(1: bool isWLan, 2: bool EnableDHCP, 3: string IpAddress, 4: string SubMask, 5: string Gateway, 6: string MainDNS, 7: string SubDNS),
 
 	bool SetNetworkProxy(1: string ProxyServer, 2: string ProxyPort),
 
 	bool ConnectToWifi(1: string profileName, 2: string key) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+
+	bool ConnectToAppointedWifi(1: string profileName, 2: string Auth, 3: string Ciper, 4: string KeyType, 5: string key) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	SettingSystemSDKDataTypes.RuyiNetworkSettings GetNetworkSettings() throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 

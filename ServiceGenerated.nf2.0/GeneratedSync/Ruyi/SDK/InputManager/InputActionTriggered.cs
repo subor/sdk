@@ -31,6 +31,7 @@ namespace Ruyi.SDK.InputManager
     private string _name;
     private long _timestamp;
     private Ruyi.SDK.CommonType.ActionTrigger _trigger;
+    private bool _byAutoTrigger;
 
     /// <summary>
     /// The device id
@@ -112,6 +113,22 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// Whether or not the action is triggered by auto trigger
+    /// </summary>
+    public bool ByAutoTrigger
+    {
+      get
+      {
+        return _byAutoTrigger;
+      }
+      set
+      {
+        __isset.byAutoTrigger = true;
+        this._byAutoTrigger = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -123,6 +140,7 @@ namespace Ruyi.SDK.InputManager
       public bool name;
       public bool timestamp;
       public bool trigger;
+      public bool byAutoTrigger;
     }
 
     public InputActionTriggered() {
@@ -175,6 +193,13 @@ namespace Ruyi.SDK.InputManager
               if (field.Type == TType.Struct) {
                 Trigger = new Ruyi.SDK.CommonType.ActionTrigger();
                 Trigger.Read(iprot);
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 6:
+              if (field.Type == TType.Bool) {
+                ByAutoTrigger = iprot.ReadBool();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -240,6 +265,14 @@ namespace Ruyi.SDK.InputManager
           Trigger.Write(oprot);
           oprot.WriteFieldEnd();
         }
+        if (__isset.byAutoTrigger) {
+          field.Name = "byAutoTrigger";
+          field.Type = TType.Bool;
+          field.ID = 6;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(ByAutoTrigger);
+          oprot.WriteFieldEnd();
+        }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
@@ -281,6 +314,12 @@ namespace Ruyi.SDK.InputManager
         __first = false;
         __sb.Append("Trigger: ");
         __sb.Append(Trigger== null ? "<null>" : Trigger.ToString());
+      }
+      if (__isset.byAutoTrigger) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("ByAutoTrigger: ");
+        __sb.Append(ByAutoTrigger);
       }
       __sb.Append(")");
       return __sb.ToString();

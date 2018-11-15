@@ -9,10 +9,9 @@ namespace Ruyi.SDK.CommonType
 {
   public enum NotificationType
   {
-    Battery = 0,
-    Interactive = 1,
-    Voice = 2,
-    GameInfo = 3,
-    ScreenshotInfo = 4,
+    Title = 0,
+    TitleAnd2Icons = 1,
+    TitleDetail = 2,
+    Voice = 3,
   }
 }

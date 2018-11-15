@@ -100,13 +100,13 @@ namespace Ruyi.SDK.SettingSystem.Api
               {
                 {
                   SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
-                  TList _list8 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i9 = 0; _i9 < _list8.Count; ++_i9)
+                  TList _list4 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i5 = 0; _i5 < _list4.Count; ++_i5)
                   {
-                    Ruyi.SDK.CommonType.SettingItem _elem10;
-                    _elem10 = new Ruyi.SDK.CommonType.SettingItem();
-                    await _elem10.ReadAsync(iprot, cancellationToken);
-                    SettingItems.Add(_elem10);
+                    Ruyi.SDK.CommonType.SettingItem _elem6;
+                    _elem6 = new Ruyi.SDK.CommonType.SettingItem();
+                    await _elem6.ReadAsync(iprot, cancellationToken);
+                    SettingItems.Add(_elem6);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -157,9 +157,9 @@ namespace Ruyi.SDK.SettingSystem.Api
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, SettingItems.Count), cancellationToken);
-            foreach (Ruyi.SDK.CommonType.SettingItem _iter11 in SettingItems)
+            foreach (Ruyi.SDK.CommonType.SettingItem _iter7 in SettingItems)
             {
-              await _iter11.WriteAsync(oprot, cancellationToken);
+              await _iter7.WriteAsync(oprot, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }

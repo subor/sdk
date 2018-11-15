@@ -84,13 +84,13 @@ namespace Ruyi.SDK.SettingSystem.Api
               if (field.Type == TType.List) {
                 {
                   SettingCategories = new List<Ruyi.SDK.CommonType.SettingCategory>();
-                  TList _list22 = iprot.ReadListBegin();
-                  for( int _i23 = 0; _i23 < _list22.Count; ++_i23)
+                  TList _list18 = iprot.ReadListBegin();
+                  for( int _i19 = 0; _i19 < _list18.Count; ++_i19)
                   {
-                    Ruyi.SDK.CommonType.SettingCategory _elem24;
-                    _elem24 = new Ruyi.SDK.CommonType.SettingCategory();
-                    _elem24.Read(iprot);
-                    SettingCategories.Add(_elem24);
+                    Ruyi.SDK.CommonType.SettingCategory _elem20;
+                    _elem20 = new Ruyi.SDK.CommonType.SettingCategory();
+                    _elem20.Read(iprot);
+                    SettingCategories.Add(_elem20);
                   }
                   iprot.ReadListEnd();
                 }
@@ -102,13 +102,13 @@ namespace Ruyi.SDK.SettingSystem.Api
               if (field.Type == TType.List) {
                 {
                   SettingItems = new List<Ruyi.SDK.CommonType.SettingItem>();
-                  TList _list25 = iprot.ReadListBegin();
-                  for( int _i26 = 0; _i26 < _list25.Count; ++_i26)
+                  TList _list21 = iprot.ReadListBegin();
+                  for( int _i22 = 0; _i22 < _list21.Count; ++_i22)
                   {
-                    Ruyi.SDK.CommonType.SettingItem _elem27;
-                    _elem27 = new Ruyi.SDK.CommonType.SettingItem();
-                    _elem27.Read(iprot);
-                    SettingItems.Add(_elem27);
+                    Ruyi.SDK.CommonType.SettingItem _elem23;
+                    _elem23 = new Ruyi.SDK.CommonType.SettingItem();
+                    _elem23.Read(iprot);
+                    SettingItems.Add(_elem23);
                   }
                   iprot.ReadListEnd();
                 }
@@ -144,9 +144,9 @@ namespace Ruyi.SDK.SettingSystem.Api
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, SettingCategories.Count));
-            foreach (Ruyi.SDK.CommonType.SettingCategory _iter28 in SettingCategories)
+            foreach (Ruyi.SDK.CommonType.SettingCategory _iter24 in SettingCategories)
             {
-              _iter28.Write(oprot);
+              _iter24.Write(oprot);
             }
             oprot.WriteListEnd();
           }
@@ -159,9 +159,9 @@ namespace Ruyi.SDK.SettingSystem.Api
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, SettingItems.Count));
-            foreach (Ruyi.SDK.CommonType.SettingItem _iter29 in SettingItems)
+            foreach (Ruyi.SDK.CommonType.SettingItem _iter25 in SettingItems)
             {
-              _iter29.Write(oprot);
+              _iter25.Write(oprot);
             }
             oprot.WriteListEnd();
           }

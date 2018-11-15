@@ -21,6 +21,8 @@ using namespace Ruyi::SDK::SettingSystem;
 using namespace Ruyi::SDK::SettingSystem::Api;
 using namespace Ruyi::SDK::BrainCloudApi;
 
+void MessageCreatorRuyiSDKCpp();
+
 bool RuyiSDKContext::IsValid()
 {
 	if (endpoint == RuyiSDKContext::Endpoint::Notset)
@@ -113,7 +115,7 @@ bool RuyiSDK::Init()
 		return false;
 
 	// init pub-sub
-	MessageCreator::Initialize();
+	MessageCreatorRuyiSDKCpp();
 	auto pubout = SetAddress(g_ConstantsSDKDataTypes_constants.layer0_publisher_out_uri);
 	Subscriber = SubscribeClient::CreateInstance(pubout);
 
@@ -137,6 +139,10 @@ bool RuyiSDK::Init()
 	auto ruyiNetClientProtocol = std::make_shared<TMultiplexedProtocol>(sharedHighProto, "SER_BCSERVICE");
 	RuyiNet = new Ruyi::SDK::Online::RuyiNetClient(ruyiNetClientProtocol);
 	
+	// init Overlay service
+	auto overlayProtocol = std::make_shared<TMultiplexedProtocol>(sharedLowProto, "SER_OVERLAYMANAGER_EXTERNAL");
+	OverlayService = new SDK::OverlayManagerExternal::ExternalOverlayManagerServiceClient(overlayProtocol);
+
 	// init brain cloud service
 	auto bcProtocal = std::make_shared<TMultiplexedProtocol>(sharedHighProto, "SER_BCSERVICE");
 	BCService = new SDK::BrainCloudApi::BrainCloudServiceClient(bcProtocal);

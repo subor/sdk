@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Ruyi.SDK.Online
 {
@@ -25,15 +27,13 @@ namespace Ruyi.SDK.Online
         /// <param name="shareable">True if the file is shareable.</param>
         /// <param name="replaceIfExists">Whether to replace file if it exists.</param>
         /// <param name="localPath">The path and fileName of the local file.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void UploadFile(int index, string cloudPath, string cloudFilename,
-            bool shareable, bool replaceIfExists, string localPath,
-            RuyiNetTask<RuyiNetUploadFileResponse>.CallbackType callback)
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public async Task<RuyiNetUploadFileResponse> UploadFile(int index, string cloudPath, string cloudFilename,
+            bool shareable, bool replaceIfExists, string localPath, CancellationToken? cancellationToken = null)
         {
-            EnqueueTask(() =>
-            {
-                return mClient.BCService.File_UploadFileAsync(cloudPath, cloudFilename, shareable, replaceIfExists, localPath, index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.File_UploadFileAsync(cloudPath, cloudFilename, shareable, replaceIfExists, localPath, index, cancellationToken ?? token);
+            return mClient.Process<RuyiNetUploadFileResponse>(resp);
         }
 
         /// <summary>
@@ -41,9 +41,9 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="uploadId">The ID of the upload.</param>
-        public void CancelUpload(int index, string uploadId)
+        public Task CancelUpload(int index, string uploadId)
         {
-            mClient.BCService.File_CancelUploadAsync(uploadId, index, token).Wait();
+            return mClient.BCService.File_CancelUploadAsync(uploadId, index, token);
         }
 
         /// <summary>
@@ -52,9 +52,9 @@ namespace Ruyi.SDK.Online
         /// <param name="index">The index of user</param>
         /// <param name="uploadId">The ID of the upload.</param>
         /// <returns></returns>
-        public long GetUploadBytesTransferred(int index, string uploadId)
+        public Task<long> GetUploadBytesTransferred(int index, string uploadId)
         {
-            return mClient.BCService.File_GetUploadBytesTransferredAsync(uploadId, index, token).Result;
+            return mClient.BCService.File_GetUploadBytesTransferredAsync(uploadId, index, token);
         }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="index">The index of user</param>
         /// <param name="uploadId">The ID of the upload.</param>
-        public double GetUploadProgress(int index, string uploadId)
+        public Task<double> GetUploadProgress(int index, string uploadId)
         {
-            return mClient.BCService.File_GetUploadProgressAsync(uploadId, index, token).Result;
+            return mClient.BCService.File_GetUploadProgressAsync(uploadId, index, token);
         }
 
         /// <summary>
@@ -73,22 +73,19 @@ namespace Ruyi.SDK.Online
         /// <param name="index">The index of user</param>
         /// <param name="uploadId">The ID of the upload.</param>
         /// <returns></returns>
-        public long GetUploadTotalBytesToTransfer(int index, string uploadId)
+        public Task<long> GetUploadTotalBytesToTransfer(int index, string uploadId)
         {
-            return mClient.BCService.File_GetUploadTotalBytesToTransferAsync(uploadId, index, token).Result;
+            return mClient.BCService.File_GetUploadTotalBytesToTransferAsync(uploadId, index, token);
         }
 
         /// <summary>
         /// List all user files.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void ListUserFiles(int index, RuyiNetTask<RuyiNetListUserFilesResponse>.CallbackType callback)
+        public async Task<RuyiNetListUserFilesResponse> ListUserFiles(int index)
         {
-            EnqueueTask(() =>
-            {
-                return mClient.BCService.File_ListUserFiles_SFOAsync(index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.File_ListUserFiles_SFOAsync(index, token);
+            return mClient.Process<RuyiNetListUserFilesResponse>(resp);
         }
 
         /// <summary>
@@ -97,14 +94,10 @@ namespace Ruyi.SDK.Online
         /// <param name="index">The index of user</param>
         /// <param name="cloudPath">File path.</param>
         /// <param name="recursive">Whether to recurse into sub-directories</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void ListUserFiles(int index, string cloudPath, bool recursive,
-            RuyiNetTask<RuyiNetListUserFilesResponse>.CallbackType callback)
+        public async Task<RuyiNetListUserFilesResponse> ListUserFiles(int index, string cloudPath, bool recursive)
         {
-            EnqueueTask(() =>
-            {
-                return mClient.BCService.File_ListUserFiles_SNSFOAsync(cloudPath, recursive, index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.File_ListUserFiles_SNSFOAsync(cloudPath, recursive, index, token);
+            return mClient.Process<RuyiNetListUserFilesResponse>(resp);
         }
 
         /// <summary>
@@ -113,14 +106,10 @@ namespace Ruyi.SDK.Online
         /// <param name="index">The index of user</param>
         /// <param name="cloudPath">The desired cloud path of the file.</param>
         /// <param name="cloudFilename">The desired cloud fileName of the file.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void DeleteUserFile(int index, string cloudPath, string cloudFilename,
-            RuyiNetTask<RuyiNetUploadFileResponse>.CallbackType callback)
+        public async Task<RuyiNetUploadFileResponse> DeleteUserFile(int index, string cloudPath, string cloudFilename)
         {
-            EnqueueTask(() =>
-            {
-                return mClient.BCService.File_DeleteUserFileAsync(cloudPath, cloudFilename, index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.File_DeleteUserFileAsync(cloudPath, cloudFilename, index, token);
+            return mClient.Process<RuyiNetUploadFileResponse>(resp);
         }
 
         /// <summary>
@@ -129,14 +118,10 @@ namespace Ruyi.SDK.Online
         /// <param name="index">The index of user</param>
         /// <param name="cloudPath">The desired cloud path of the file.</param>
         /// <param name="recursive">Whether to recurse into sub-directories</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void DeleteUserFiles(int index, string cloudPath, bool recursive,
-            RuyiNetTask<RuyiNetListUserFilesResponse>.CallbackType callback)
+        public async Task<RuyiNetListUserFilesResponse> DeleteUserFiles(int index, string cloudPath, bool recursive)
         {
-            EnqueueTask(() =>
-            {
-                return mClient.BCService.File_DeleteUserFilesAsync(cloudPath, recursive, index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.File_DeleteUserFilesAsync(cloudPath, recursive, index, token);
+            return mClient.Process<RuyiNetListUserFilesResponse>(resp);
         }
 
         /// <summary>
@@ -145,17 +130,11 @@ namespace Ruyi.SDK.Online
         /// <param name="index">The index of user</param>
         /// <param name="cloudPath">The desired cloud path of the file.</param>
         /// <param name="cloudFilename">The desired cloud fileName of the file.</param>
-        /// <param name="callback">The function to call when the task completes.</param>
-        public void GetCDNUrl(int index, string cloudPath, string cloudFilename,
-            RuyiNetTask<RuyiNetGetCDNResponse>.CallbackType callback)
+        public async Task<RuyiNetGetCDNResponse> GetCDNUrl(int index, string cloudPath, string cloudFilename)
         {
-            EnqueueTask(() =>
-            {
-                return mClient.BCService.File_GetCDNUrlAsync(cloudPath, cloudFilename, index, token).Result;
-            }, callback);
+            var resp = await mClient.BCService.File_GetCDNUrlAsync(cloudPath, cloudFilename, index, token);
+            return mClient.Process<RuyiNetGetCDNResponse>(resp);
         }
-
-        static System.Threading.CancellationToken token = System.Threading.CancellationToken.None;
     }
 
     /// <summary>

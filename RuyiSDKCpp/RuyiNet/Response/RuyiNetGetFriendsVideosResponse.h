@@ -108,8 +108,6 @@ namespace Ruyi { namespace SDK { namespace Online {
 				{
 					nlohmann::json entitiesJson = dataJson["entities"];
 					
-					if (!entitiesJson.is_object()) return;
-
 					if (entitiesJson.is_array())
 					{
 						for (auto entities : entitiesJson)

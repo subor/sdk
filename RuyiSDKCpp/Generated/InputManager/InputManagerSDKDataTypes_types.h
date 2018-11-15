@@ -727,12 +727,13 @@ void swap(RuyiJoystickInput &a, RuyiJoystickInput &b);
 std::ostream& operator<<(std::ostream& out, const RuyiJoystickInput& obj);
 
 typedef struct _InputActionTriggered__isset {
-  _InputActionTriggered__isset() : deviceId(false), userId(false), name(false), timestamp(false), trigger(false) {}
+  _InputActionTriggered__isset() : deviceId(false), userId(false), name(false), timestamp(false), trigger(false), byAutoTrigger(false) {}
   bool deviceId :1;
   bool userId :1;
   bool name :1;
   bool timestamp :1;
   bool trigger :1;
+  bool byAutoTrigger :1;
 } _InputActionTriggered__isset;
 
 class InputActionTriggered : public virtual ::apache::thrift::TBase {
@@ -740,7 +741,7 @@ class InputActionTriggered : public virtual ::apache::thrift::TBase {
 
   InputActionTriggered(const InputActionTriggered&);
   InputActionTriggered& operator=(const InputActionTriggered&);
-  InputActionTriggered() : deviceId(), userId(), name(), timestamp(0) {
+  InputActionTriggered() : deviceId(), userId(), name(), timestamp(0), byAutoTrigger(0) {
   }
 
   virtual ~InputActionTriggered() throw();
@@ -749,6 +750,7 @@ class InputActionTriggered : public virtual ::apache::thrift::TBase {
   std::string name;
   int64_t timestamp;
    ::Ruyi::SDK::CommonType::ActionTrigger trigger;
+  bool byAutoTrigger;
 
   _InputActionTriggered__isset __isset;
 
@@ -762,6 +764,8 @@ class InputActionTriggered : public virtual ::apache::thrift::TBase {
 
   void __set_trigger(const  ::Ruyi::SDK::CommonType::ActionTrigger& val);
 
+  void __set_byAutoTrigger(const bool val);
+
   bool operator == (const InputActionTriggered & rhs) const
   {
     if (!(deviceId == rhs.deviceId))
@@ -773,6 +777,8 @@ class InputActionTriggered : public virtual ::apache::thrift::TBase {
     if (!(timestamp == rhs.timestamp))
       return false;
     if (!(trigger == rhs.trigger))
+      return false;
+    if (!(byAutoTrigger == rhs.byAutoTrigger))
       return false;
     return true;
   }

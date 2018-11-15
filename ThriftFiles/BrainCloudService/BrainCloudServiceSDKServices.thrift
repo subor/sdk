@@ -288,53 +288,7 @@ service BrainCloudService {
 		3: i32 clientIndex
 	),
 
-	/** Returns the sessionId or empty string if no session present. */
-	string Client_GetSessionId(1: i32 clientIndex),
-
-	/** Returns true if the user is currently authenticated.
-            If a session time out or session invalidation is returned from executing a
-            sever API call, this flag will reset back to false. */
-	bool Client_IsAuthenticated(1: i32 clientIndex),
-
-	/** Returns true if brainCloud has been initialized. */
-	bool Client_IsInitialized(1: i32 clientIndex),
-
-	/** Method initializes the BrainCloudClient. */
-	void Client_Initialize_SSS(
-		/** The secret key for your app */
-		1: string secretKey, 
-		2: string appId, 
-		
-		/** The app version */
-		3: string appVersion, 
-		4: i32 clientIndex
-	),
-
-	/** Method initializes the BrainCloudClient. */
-	void Client_Initialize_SSSS(
-		/** The URL to the brainCloud server */
-		1: string serverURL, 
-		
-		/** The secret key for your app */
-		2: string secretKey, 
-		
-		/** The app id */
-		3: string appId, 
-		
-		/** The app version */
-		4: string appVersion, 
-		5: i32 clientIndex
-	),
-
-	/** Initialize the identity aspects of brainCloud. */
-	void Client_InitializeIdentity(
-		/** The profile id */
-		1: string profileId, 
-		
-		/** The anonymous id */
-		2: string anonymousId, 
-		3: i32 clientIndex
-	),
+	string Authentication_CheckUsernameExists(1: string gameId, 2: string playerName, 3: i32 clientIndex),
 
 	/** Update method needs to be called regularly in order
             to process incoming and outgoing messages. */
@@ -482,6 +436,54 @@ service BrainCloudService {
 		/** ISO 639-1 two-letter language code */
 		1: string languageCode, 
 		2: i32 clientIndex
+	),
+
+	/** Returns the sessionId or empty string if no session present. */
+	string Client_GetSessionId(1: i32 clientIndex),
+
+	/** Returns true if the user is currently authenticated.
+            If a session time out or session invalidation is returned from executing a
+            sever API call, this flag will reset back to false. */
+	bool Client_IsAuthenticated(1: i32 clientIndex),
+
+	/** Returns true if brainCloud has been initialized. */
+	bool Client_IsInitialized(1: i32 clientIndex),
+
+	/** Method initializes the BrainCloudClient. */
+	void Client_Initialize_SSS(
+		/** The secret key for your app */
+		1: string secretKey, 
+		2: string appId, 
+		
+		/** The app version */
+		3: string appVersion, 
+		4: i32 clientIndex
+	),
+
+	/** Method initializes the BrainCloudClient. */
+	void Client_Initialize_SSSS(
+		/** The URL to the brainCloud server */
+		1: string serverURL, 
+		
+		/** The secret key for your app */
+		2: string secretKey, 
+		
+		/** The app id */
+		3: string appId, 
+		
+		/** The app version */
+		4: string appVersion, 
+		5: i32 clientIndex
+	),
+
+	/** Initialize the identity aspects of brainCloud. */
+	void Client_InitializeIdentity(
+		/** The profile id */
+		1: string profileId, 
+		
+		/** The anonymous id */
+		2: string anonymousId, 
+		3: i32 clientIndex
 	),
 
 	/** Creates custom data stream page event */
@@ -908,6 +910,9 @@ service BrainCloudService {
 
 	/** Returns user state of the player's friends. */
 	string Friend_GetSummaryDataForFriends(1: i32 clientIndex),
+
+	/** Returns user state of player's recently met. */
+	string Friend_GetSummaryDataForRecentlyMetPlayers(1: i32 clientIndex),
 
 	/** Finds a list of users matching the search text by performing an exact
             search of all user names. */

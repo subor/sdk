@@ -56,26 +56,28 @@ struct RuyiNetworkTestResult {
     3: RuyiNetworkTestItem internetconnection,
 }
 
-struct RuyiNetworkSpeed {
-    1: RuyiNetworkTestItem downloadspeed,
-    2: RuyiNetworkTestItem uploadspeed,
+struct NetworkConnectionStatus {
+    1: bool preLanAdapter,
+    2: bool curLanAdapter,
+    3: bool preWlanAdapter,
+    4: bool curWlanAdapter,
+    5: bool preInternetConnection,
+    6: bool curInternetConnection,
 }
 
-struct BluetoothDevice {
-    1: string DeviceName,
-    2: string DeviceAddress,
-    3: i32 DeviceClass,
-    4: bool Connected,
-    5: bool Authenticated,
-}
-
-struct BluetoothDeviceList {
-    1: list<BluetoothDevice> DeviceList,
-}
-
-struct BluetoothDevicePinRequest {
-    1: string DeviceName,
-    2: string Pin,
+struct NetworkSettings {
+    1: bool isWifi,
+    2: bool proxyUsed,
+    3: bool DHCPEnabled,
+    4: string NetworkName,
+    5: string AuthType,
+    6: string IPAddress,
+    7: string SubMask,
+    8: string GateWay,
+    9: string mainDNS,
+    10: string subDNS,
+    11: string proxyServer,
+    12: string proxyPort,
 }
 
 struct CategoryNode {

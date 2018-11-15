@@ -77,8 +77,6 @@ namespace Ruyi { namespace SDK { namespace Online {
 				{ 
 					nlohmann::json patchInfoJson = j["patchInfo"]; 
 
-					if (!patchInfoJson.is_object()) return;
-
 					if (patchInfoJson.is_array()) 
 					{
 						for (auto _patchInfo : patchInfoJson)

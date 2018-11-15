@@ -37,6 +37,7 @@ namespace Ruyi.SDK.CommonType
     private bool _readOnly;
     private bool _isValid;
     private bool _isActive;
+    private bool _hasNew;
     private string _validation;
     private List<activeDependency> _activeDependencies;
     private string _ActionName;
@@ -234,6 +235,19 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    public bool HasNew
+    {
+      get
+      {
+        return _hasNew;
+      }
+      set
+      {
+        __isset.hasNew = true;
+        this._hasNew = value;
+      }
+    }
+
     public string Validation
     {
       get
@@ -332,6 +346,7 @@ namespace Ruyi.SDK.CommonType
       public bool @readOnly;
       public bool isValid;
       public bool isActive;
+      public bool hasNew;
       public bool validation;
       public bool activeDependencies;
       public bool ActionName;
@@ -458,13 +473,20 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 15:
+              if (field.Type == TType.Bool) {
+                HasNew = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 16:
               if (field.Type == TType.String) {
                 Validation = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 16:
+            case 17:
               if (field.Type == TType.List) {
                 {
                   ActiveDependencies = new List<activeDependency>();
@@ -482,28 +504,28 @@ namespace Ruyi.SDK.CommonType
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 17:
+            case 18:
               if (field.Type == TType.String) {
                 ActionName = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 18:
+            case 19:
               if (field.Type == TType.String) {
                 ActionObject = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 19:
+            case 20:
               if (field.Type == TType.String) {
                 ActionOnSetValue = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 20:
+            case 21:
               if (field.Type == TType.String) {
                 ActionOnGetValue = iprot.ReadString();
               } else { 
@@ -643,10 +665,18 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteBool(IsActive);
           oprot.WriteFieldEnd();
         }
+        if (__isset.hasNew) {
+          field.Name = "hasNew";
+          field.Type = TType.Bool;
+          field.ID = 15;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(HasNew);
+          oprot.WriteFieldEnd();
+        }
         if (Validation != null && __isset.validation) {
           field.Name = "validation";
           field.Type = TType.String;
-          field.ID = 15;
+          field.ID = 16;
           oprot.WriteFieldBegin(field);
           oprot.WriteString(Validation);
           oprot.WriteFieldEnd();
@@ -654,7 +684,7 @@ namespace Ruyi.SDK.CommonType
         if (ActiveDependencies != null && __isset.activeDependencies) {
           field.Name = "activeDependencies";
           field.Type = TType.List;
-          field.ID = 16;
+          field.ID = 17;
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, ActiveDependencies.Count));
@@ -669,7 +699,7 @@ namespace Ruyi.SDK.CommonType
         if (ActionName != null && __isset.ActionName) {
           field.Name = "ActionName";
           field.Type = TType.String;
-          field.ID = 17;
+          field.ID = 18;
           oprot.WriteFieldBegin(field);
           oprot.WriteString(ActionName);
           oprot.WriteFieldEnd();
@@ -677,7 +707,7 @@ namespace Ruyi.SDK.CommonType
         if (ActionObject != null && __isset.ActionObject) {
           field.Name = "ActionObject";
           field.Type = TType.String;
-          field.ID = 18;
+          field.ID = 19;
           oprot.WriteFieldBegin(field);
           oprot.WriteString(ActionObject);
           oprot.WriteFieldEnd();
@@ -685,7 +715,7 @@ namespace Ruyi.SDK.CommonType
         if (ActionOnSetValue != null && __isset.ActionOnSetValue) {
           field.Name = "ActionOnSetValue";
           field.Type = TType.String;
-          field.ID = 19;
+          field.ID = 20;
           oprot.WriteFieldBegin(field);
           oprot.WriteString(ActionOnSetValue);
           oprot.WriteFieldEnd();
@@ -693,7 +723,7 @@ namespace Ruyi.SDK.CommonType
         if (ActionOnGetValue != null && __isset.ActionOnGetValue) {
           field.Name = "ActionOnGetValue";
           field.Type = TType.String;
-          field.ID = 20;
+          field.ID = 21;
           oprot.WriteFieldBegin(field);
           oprot.WriteString(ActionOnGetValue);
           oprot.WriteFieldEnd();
@@ -793,6 +823,12 @@ namespace Ruyi.SDK.CommonType
         __first = false;
         __sb.Append("IsActive: ");
         __sb.Append(IsActive);
+      }
+      if (__isset.hasNew) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("HasNew: ");
+        __sb.Append(HasNew);
       }
       if (Validation != null && __isset.validation) {
         if(!__first) { __sb.Append(", "); }
