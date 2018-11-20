@@ -14,10 +14,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="1.2.2" />
+    <PackageReference Include="Subor.Thrift" Version="0.11.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\externals\thrift.netcore\Thrift.csproj" />
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj" />
     <ProjectReference Include="..\SDK.Gen.ServiceAsync\SDK.Gen.ServiceAsync.csproj" />
   </ItemGroup>
