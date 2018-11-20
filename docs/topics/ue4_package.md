@@ -28,9 +28,9 @@ Consult the latest [UE4 packaging documentation](https://docs.unrealengine.com/l
     ![](/docs/img/ue4_launch_profile.png)
     - The cooking/packaging process will take around __5__ minutes and the build will be placed in package output path (default is `<Project>/Saved/StagedBuilds/<Platform>/`)
 1. Copy Ruyi SDK runtime libraries (i.e. `lib/zmq/libzmq.dll` and `lib/boost/*.dll`) to `Binaries/Win64/` folder (e.g. `<Project>/Saved/StagedBuilds/WindowsNoEditor/PlatformerGame/Binaries/Win64/`)
-1. Ensure [layer0](layer0) is running and double-click the `.exe` to test the game build
-1. Create ["res" folder and `RuyiManifest.json` file](app_metadata.md) in platform output folder (i.e. `Saved/StagedBuilds/WindowsNoEditor/`)
-    - See [UE4 sample](https://github.com/subor/sample_ue4_platformer/tree/master/Pack) for an example
+1. Ensure [layer0](layer0) is running and double-click the output `.exe` (e.g. `PlatformerGame.exe`) to test the game build
+1. Create [`res/` folder and `RuyiManifest.json` file](app_metadata.md) in platform output folder (i.e. `Saved/StagedBuilds/WindowsNoEditor/`)
+    - See [UE4 sample](https://github.com/subor/sample_ue4_platformer/tree/master/Pack) for an example of these files
     - Final directory structure should be similar to:  
 
             |   
@@ -47,7 +47,6 @@ Consult the latest [UE4 packaging documentation](https://docs.unrealengine.com/l
             |   |           libzmq.dll
             |   |           PlatformerGame.exe
             |   |           PlatformerGame.pdb
-            |   |           
             |   \---...
             |               
             \---res
