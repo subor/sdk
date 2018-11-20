@@ -1,12 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../SDKCommon.targets" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Subor.SDK.Gen.ServiceAsync</PackageId>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Subor.Thrift" Version="0.11.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SDK.Gen.CommonAsync\SDK.Gen.CommonAsync.csproj" />

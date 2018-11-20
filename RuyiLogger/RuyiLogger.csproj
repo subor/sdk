@@ -1,10 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" TreatAsLocalProperty="RunCodeAnalysis">
+  <Import Project="../SDKCommon.targets" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release</Configurations>
+    <PackageId>Subor.SDK.Logging</PackageId>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.8" />
