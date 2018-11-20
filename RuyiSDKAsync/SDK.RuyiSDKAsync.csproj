@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\commons\MDPCommon\MDPCommon.csproj" />
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj" />
     <ProjectReference Include="..\SDK.BaseAsync\SDK.BaseAsync.csproj" />
     <ProjectReference Include="..\SDK.Gen.ServiceAsync\SDK.Gen.ServiceAsync.csproj" />

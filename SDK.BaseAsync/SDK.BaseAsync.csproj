@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="1.2.2" />
+    <PackageReference Include="NetMQ" Version="4.0.0.1" />
   </ItemGroup>
 
   <ItemGroup>
