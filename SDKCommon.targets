@@ -13,6 +13,6 @@
     <PackageOutputPath>$(MSBuildThisFileDirectory)../output</PackageOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Subor.Thrift" Version="0.11.0" />
+    <PackageReference Include="Subor.Thrift.NETCore" Version="0.11.0.3" />
   </ItemGroup>
 </Project>
