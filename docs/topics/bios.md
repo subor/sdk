@@ -9,17 +9,18 @@ This document will be removed in the future.
 ## Version
 
 __Checking BIOS version of Running Machine__
+
+- In Ruyi client
+    1. Go to __Settings > System > System Information__
+    1. Check versions
+    ![](/docs/img/version.png)
+
+OR
+
 - In Windows
     1. Run `msinfo32.exe`
     1. Inspect __System Summary -> BIOS Version/Date__ value  
     ![](/docs/img/msinfo32_bios.png)
-
-OR
-- In ruyi client
-    1. start client
-    1. Go to settings - system - system information
-    3. check versions
-    ![](/docs/img/version.png)
 
 __Checking BIOS version of Install Media__
 

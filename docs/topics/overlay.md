@@ -3,13 +3,12 @@
 The overlay is based off technology licensed from [Evolve](www.evolvehq.com) and provides the following functionality:  
 
 * "Overlay" UI displayed on top of apps (including pop-up notifications for achievements, etc.)
-* Recording video (see [DVR](dvr.md))
 * Taking screenshots
 * [Input](#input) from devices (as an alternative to implementing input portion of SDK)
 
 ![](/docs/img/warning.png) The following are not (yet) supported:  
 
-* DirectX 12 (__Coming soon__)
+* __Coming Soon__ Recording video (see [DVR](dvr.md))
 * Vulkan (coming less soon)
 * HDR10 (not coming soon; see [hardware](hardware.md))
 
@@ -18,6 +17,7 @@ It is implemented via [dll injection](https://en.wikipedia.org/wiki/DLL_injectio
 It already supports over 5000 games.  Your game can be made compatible with any of the following methods:
 - Creating a [manifest entry](#manifest)
 - Editing [Gamesdb.xml](#gamesdb.xml)
+- __Coming Soon__ Automatic compatibility via `RuyiManifest.json`
 
 ## API
 
@@ -27,33 +27,46 @@ However, there are some functions related to the overlay in the SDK.  For exampl
 
 ## Manifest
 
-A compatibility string may be placed in the [application manifest](app_metadata.md):
+A compatibility entry may be placed in the [application manifest](app_metadata.md):
 
 ```json
-meta_data:[
-    {
-    name:"gamedb_string",
-    value:"
-    
-        <game>
-            <id>6002</id>
-            <name>UE4Game</name>
-            <conditions>
-                <cond name='is-UE4Game.exe-present' type='exe-present' exe='UE4Game.exe'/>
-            </conditions>
-            <detection>
-                <variant order='1' name='default'>
-                    <if cond='is-UE4Game.exe-present'/>
-                </variant>
-            </detection>
-        </game>
-
-    "
+{
+    ...
+    "gamedb":{
+        "id": 6003,
+        "name": "PlatformerGame",
+        "conditions":[
+            {"name": "is-PlatformerGame.exe-present", "type": "ExePresent", "additionalArg": "PlatformerGame.exe"}
+        ],
+        "detection": [
+            {"name": "PlatformerGame", "order": "1", "rules": [
+                {"cond": "is-PlatformerGame.exe-present"}
+            ]}
+        ],
+        "runtime": {
+            "features":{},
+            "ruyifeatures":{}
+        }
     }
-]
+}
 ```
 
-Here the value in gamedb_string is a `<game></game>` block copied from [gamesdb.xml](#gamesdb.xml).  Pay attention to use `' '` instead of `" "`, in order to correctly embed JSON in XML.
+The JSON is similar to that of the [gamesdb.xml format](gamesdb_format.md).  For examples, see:  
+
+- [Unity sample](https://github.com/subor/sample_unity_space_shooter/blob/master/Pack/RuyiManifest.json)
+- [UE4 sample](https://github.com/subor/sample_ue4_platformer/blob/master/Pack/RuyiManifest.json)
+
+Use [devtool](devtool) to check the overlay works with your app:
+
+1. __App Root Folder__ should be directory containing your `RuyiManifest.json`
+1. Ensure both layer0 and overlay are running
+1. Click __Update GamesDB__
+1. When you launch your app the overlay should attach
+    - If it doesn't, shut down your app, check the contents of `RuyiManifest.json`, and repeat the above steps
+    - If it still doesn't, see [debugging](#debugging)
+
+![](/docs/img/devtool_update_gamesdb.png)
+
 
 ## Gamesdb.xml
 
@@ -80,7 +93,7 @@ Compatible apps may be listed in `RuyiOverlay/Resources/DeployRes/gamesdb.xml`.
     ```
 
 1. Save `gamesdb.xml`
-1. Restart layer0
+1. Restart the overlay
 
 __In most cases__, a simple entry like above will suffice.  For more advanced uses, consult [gamesdb.xml format](gamesdb_format.md).
 
@@ -93,6 +106,8 @@ Instead of integrating the input portion of the SDK, you may be able to leverage
 - APIs: [XInput or DirectInput](https://docs.microsoft.com/en-us/windows/desktop/xinput/xinput-and-directinput)
 
 This currently does __NOT__ work if your app uses:
+- __Coming Soon__ DirectInput and ANSI (don't define `UNICODE`/`_UNICODE`)
+- __Coming Soon__ [New Unity input system](https://github.com/Unity-Technologies/InputSystem)
 - [HID API](https://docs.microsoft.com/en-us/windows-hardware/drivers/hid/introduction-to-hid-concepts) (support will be added in the future)
 - [Unity Input](https://docs.unity3d.com/ScriptReference/Input.html) (which uses HID)
 

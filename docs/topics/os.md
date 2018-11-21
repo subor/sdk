@@ -14,7 +14,7 @@ Some key changes we make relative to a normal Windows 10 environment:
 
 * Drives (including `c:\`) encrypted with Bitlocker
 * Numerous key combinations disabled (`Ctrl-Alt-Del`, `Alt-tab`, etc.)
-* _UPCOMING_ Windows desktop shell replaced with Ruyi client UI
+* Windows desktop shell replaced with Ruyi client UI
 * _UPCOMING_ Device Guard Code Integrity enabled (now called Application Control)
 
 A standard Windows Desktop environment is available via [PC mode](pc_mode.md).
@@ -23,13 +23,14 @@ A standard Windows Desktop environment is available via [PC mode](pc_mode.md).
 
 __Checking Ruyi OS Version of Running Machine__
 
-If version __0.7__ or later, check registry value of `HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Subor\MachineInfo`
+- In Ruyi client open __Settings > System > System Information__:  
+    ![](/docs/img/version.png)
+- If version __0.7__ or later, check registry value of `HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Subor\MachineInfo`
+- For versions before __0.7__, check the top of `c:\windows\ad.log`:
 
-For versions before __0.7__, check the top of `c:\windows\ad.log`:
-```
-Initial all Process on 02-05-2018 20:03:26
-RUYI OS v0.5_20180205B
-```
+        Initial all Process on 02-05-2018 20:03:26
+        RUYI OS v0.5_20180205B
+
 
 __Checking Ruyi OS Version of Install Media__
 
