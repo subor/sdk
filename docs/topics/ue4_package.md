@@ -2,24 +2,59 @@
 
 Consult the latest [UE4 packaging documentation](https://docs.unrealengine.com/latest/INT/Engine/Basics/Projects/Packaging/index.html).
 
-1. Build project in VS with "Shipping" and "Development" config
-1. Launch "ProjectLauncher" on menu icon bar. 
-1. Create a new Launch Profile
-1. Config the custom launch profile
-    1. Project part: Set the "Project" to your Unreal project file
-    1. Build part: hook nothing
-    1. Cook part: "Cooked Platforms:" hook "WindowsNoEditor"
-               "Cooked Cultures": hook "en-US"
-               "Cooked Maps": hook nothing
-               "Release/DLC/Patching Settings": hook and fill nothing
-               "Advanced Settings": hook "Compress content", "Save packages without versions", "Store all content in a single file(UnrealPak)"
-                                    choose "Shipping" in "Cooker build configuration"
-    1. Package part: "How would you like to package the build?" choose "Package & store locally"
-                  the path you can just use default one, which the built files will be store in "ProjectFolder/Saved/StagedBuilds"
-                  hook "Is this build for distribution to the public"
-    1. Archive part: hook nothing
-    1. Deploy part: chose "Do not deploy"
-1. Go back to Custom Launch Profile interface and click the launch profile icon of the profile, wait for several minutes.
-if everything goes well, you can find all built files in "ProjectFolder/Saved/StageBuild/WindowsNoEditor"
-1. Copy all those files and runtime libraries (e.g. `lib/zmq/libzmq.dll` and `lib/boost/*.dll` from our SDK) to the Project folder (i.e. `PlatformerGame/`)
-1. Create ["res" folder and `RuyiManifest.json` file](app_metadata.md) and use [devtool AppRunner](devtool.md) to pack and run the application
+1. Open project in Visual Studio and build __Shipping__ configuration
+1. From menu icon bar expand __Launch__ options and select __Project Launcher__  
+    ![](/docs/img/ue4_launch_project_launcher.png)
+1. Create a new Launch Profile  
+    ![](/docs/img/ue4_add_custom_launch_profile.png)
+1. Config the custom launch profile:  
+    - __Project__: Select your UE4 `.uproject` file
+    - __Build__: Leave unchanged
+    - __Cook__: First select __By the book__
+        - Cooked Platforms: select __WindowsNoEditor__
+        - Cooked Cultures: select __en-US__
+        - Cooked Maps: select __Show all__ then Select: __All__
+        - Release/DLC/Patching Settings: Leave unchanged
+        - Advanced Settings:
+            - Enable: __Compress content__, __Save packages without versions__, and __Store all content in a single file (UnrealPak)__
+            - For "Cooker build configuration" choose __Shipping__
+    - __Package__:
+        - Choose __Package & store locally__
+        - Default output path is `<Project>/Saved/StagedBuilds`
+        - Enable __Is this build for distribution to the public__
+    - __Archive__: Leave unchanged
+    - __Deploy__: Choose __Do not deploy__
+1. Click __Back__ button to return to __Project Launcher__ and click the launch profile icon of the profile:  
+    ![](/docs/img/ue4_launch_profile.png)
+    - The cooking/packaging process will take around __5__ minutes and the build will be placed in package output path (default is `<Project>/Saved/StagedBuilds/<Platform>/`)
+1. Copy Ruyi SDK runtime libraries (i.e. `lib/zmq/libzmq.dll` and `lib/boost/*.dll`) to `Binaries/Win64/` folder (e.g. `<Project>/Saved/StagedBuilds/WindowsNoEditor/PlatformerGame/Binaries/Win64/`)
+1. Ensure [layer0](layer0) is running and double-click the output `.exe` (e.g. `PlatformerGame.exe`) to test the game build
+1. Create [`res/` folder and `RuyiManifest.json` file](app_metadata.md) in platform output folder (i.e. `Saved/StagedBuilds/WindowsNoEditor/`)
+    - See [UE4 sample](https://github.com/subor/sample_ue4_platformer/tree/master/Pack) for an example of these files
+    - Final directory structure should be similar to:  
+
+            |   
+            |   PlatformerGame.exe
+            |   RuyiManifest.json
+            |   
+            +---Engine
+            |                   
+            +---PlatformerGame
+            |   +---Binaries
+            |   |   \---Win64
+            |   |           boost_chrono-vc141-mt-1_64.dll
+            |   |           ...
+            |   |           libzmq.dll
+            |   |           PlatformerGame.exe
+            |   |           PlatformerGame.pdb
+            |   \---...
+            |               
+            \---res
+                |   i18n.json
+                |   
+                +---hd
+                |       
+                \---ld
+
+1. Use [devtool AppRunner](devtool.md) to pack, install, and run the application:  
+    ![](/docs/img/devtool_ue4_runner.png)

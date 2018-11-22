@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
@@ -22,11 +23,13 @@ namespace Ruyi.SDK.UserServiceExternal
       Ruyi.SDK.UserServiceExternal.UserInfo_Public GetPlayingUserInfo(string userId);
     }
 
-    public interface Iface : ISync {
-      #if SILVERLIGHT
+    public interface IAsync {
+      Task<Ruyi.SDK.UserServiceExternal.UserInfo_Public> GetPlayingUserInfoAsync(string userId);
+    }
+
+    public interface Iface : ISync, IAsync {
       IAsyncResult Begin_GetPlayingUserInfo(AsyncCallback callback, object state, string userId);
       Ruyi.SDK.UserServiceExternal.UserInfo_Public End_GetPlayingUserInfo(IAsyncResult asyncResult);
-      #endif
     }
 
     public class Client : IDisposable, Iface {
@@ -86,7 +89,6 @@ namespace Ruyi.SDK.UserServiceExternal
 
 
       
-      #if SILVERLIGHT
       public IAsyncResult Begin_GetPlayingUserInfo(AsyncCallback callback, object state, string userId)
       {
         return send_GetPlayingUserInfo(callback, state, userId);
@@ -98,36 +100,30 @@ namespace Ruyi.SDK.UserServiceExternal
         return recv_GetPlayingUserInfo();
       }
 
-      #endif
+      public async Task<Ruyi.SDK.UserServiceExternal.UserInfo_Public> GetPlayingUserInfoAsync(string userId)
+      {
+        Ruyi.SDK.UserServiceExternal.UserInfo_Public retval;
+        retval = await Task.Run(() =>
+        {
+          return GetPlayingUserInfo(userId);
+        });
+        return retval;
+      }
 
       public Ruyi.SDK.UserServiceExternal.UserInfo_Public GetPlayingUserInfo(string userId)
       {
-        #if !SILVERLIGHT
-        send_GetPlayingUserInfo(userId);
-        return recv_GetPlayingUserInfo();
-
-        #else
         var asyncResult = Begin_GetPlayingUserInfo(null, null, userId);
         return End_GetPlayingUserInfo(asyncResult);
 
-        #endif
       }
-      #if SILVERLIGHT
       public IAsyncResult send_GetPlayingUserInfo(AsyncCallback callback, object state, string userId)
-      #else
-      public void send_GetPlayingUserInfo(string userId)
-      #endif
       {
         oprot_.WriteMessageBegin(new TMessage("GetPlayingUserInfo", TMessageType.Call, seqid_));
         GetPlayingUserInfo_args args = new GetPlayingUserInfo_args();
         args.UserId = userId;
         args.Write(oprot_);
         oprot_.WriteMessageEnd();
-        #if SILVERLIGHT
         return oprot_.Transport.BeginFlush(callback, state);
-        #else
-        oprot_.Transport.Flush();
-        #endif
       }
 
       public Ruyi.SDK.UserServiceExternal.UserInfo_Public recv_GetPlayingUserInfo()
@@ -151,6 +147,80 @@ namespace Ruyi.SDK.UserServiceExternal
       }
 
     }
+    public class AsyncProcessor : TAsyncProcessor {
+      public AsyncProcessor(IAsync iface)
+      {
+        iface_ = iface;
+        processMap_["GetPlayingUserInfo"] = GetPlayingUserInfo_ProcessAsync;
+      }
+
+      protected delegate Task ProcessFunction(int seqid, TProtocol iprot, TProtocol oprot);
+      private IAsync iface_;
+      protected Dictionary<string, ProcessFunction> processMap_ = new Dictionary<string, ProcessFunction>();
+
+      public async Task<bool> ProcessAsync(TProtocol iprot, TProtocol oprot)
+      {
+        try
+        {
+          TMessage msg = iprot.ReadMessageBegin();
+          ProcessFunction fn;
+          processMap_.TryGetValue(msg.Name, out fn);
+          if (fn == null) {
+            TProtocolUtil.Skip(iprot, TType.Struct);
+            iprot.ReadMessageEnd();
+            TApplicationException x = new TApplicationException (TApplicationException.ExceptionType.UnknownMethod, "Invalid method name: '" + msg.Name + "'");
+            oprot.WriteMessageBegin(new TMessage(msg.Name, TMessageType.Exception, msg.SeqID));
+            x.Write(oprot);
+            oprot.WriteMessageEnd();
+            oprot.Transport.Flush();
+            return true;
+          }
+          await fn(msg.SeqID, iprot, oprot);
+        }
+        catch (IOException)
+        {
+          return false;
+        }
+        return true;
+      }
+
+      public async Task GetPlayingUserInfo_ProcessAsync(int seqid, TProtocol iprot, TProtocol oprot)
+      {
+        GetPlayingUserInfo_args args = new GetPlayingUserInfo_args();
+        args.Read(iprot);
+        iprot.ReadMessageEnd();
+        GetPlayingUserInfo_result result = new GetPlayingUserInfo_result();
+        try
+        {
+          try
+          {
+            result.Success = await iface_.GetPlayingUserInfoAsync(args.UserId);
+          }
+          catch (Ruyi.SDK.CommonType.ErrorException error1)
+          {
+            result.Error1 = error1;
+          }
+          oprot.WriteMessageBegin(new TMessage("GetPlayingUserInfo", TMessageType.Reply, seqid)); 
+          result.Write(oprot);
+        }
+        catch (TTransportException)
+        {
+          throw;
+        }
+        catch (Exception ex)
+        {
+          Console.Error.WriteLine("Error occurred in processor:");
+          Console.Error.WriteLine(ex.ToString());
+          TApplicationException x = new TApplicationException        (TApplicationException.ExceptionType.InternalError," Internal error.");
+          oprot.WriteMessageBegin(new TMessage("GetPlayingUserInfo", TMessageType.Exception, seqid));
+          x.Write(oprot);
+        }
+        oprot.WriteMessageEnd();
+        oprot.Transport.Flush();
+      }
+
+    }
+
     public class Processor : TProcessor {
       public Processor(ISync iface)
       {
