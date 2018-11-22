@@ -7,10 +7,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\SDK.RuyiSDKAsync.xml</DocumentationFile>
+    <OutputPath>..\..\output\Debug\RuyiSDK\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\SDK.RuyiSDKAsync.xml</DocumentationFile>
+    <OutputPath>..\..\output\Release\RuyiSDK\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
