@@ -19,12 +19,12 @@ namespace Ruyi.SDK.UserServiceExternal
 {
   public partial class UserServExternal {
     public interface ISync {
-      Ruyi.SDK.UserServiceExternal.UserInfo_Public GetPlayingUserInfo(string appId, string userId);
+      Ruyi.SDK.UserServiceExternal.UserInfo_Public GetPlayingUserInfo(string userId);
     }
 
     public interface Iface : ISync {
       #if SILVERLIGHT
-      IAsyncResult Begin_GetPlayingUserInfo(AsyncCallback callback, object state, string appId, string userId);
+      IAsyncResult Begin_GetPlayingUserInfo(AsyncCallback callback, object state, string userId);
       Ruyi.SDK.UserServiceExternal.UserInfo_Public End_GetPlayingUserInfo(IAsyncResult asyncResult);
       #endif
     }
@@ -87,9 +87,9 @@ namespace Ruyi.SDK.UserServiceExternal
 
       
       #if SILVERLIGHT
-      public IAsyncResult Begin_GetPlayingUserInfo(AsyncCallback callback, object state, string appId, string userId)
+      public IAsyncResult Begin_GetPlayingUserInfo(AsyncCallback callback, object state, string userId)
       {
-        return send_GetPlayingUserInfo(callback, state, appId, userId);
+        return send_GetPlayingUserInfo(callback, state, userId);
       }
 
       public Ruyi.SDK.UserServiceExternal.UserInfo_Public End_GetPlayingUserInfo(IAsyncResult asyncResult)
@@ -100,27 +100,26 @@ namespace Ruyi.SDK.UserServiceExternal
 
       #endif
 
-      public Ruyi.SDK.UserServiceExternal.UserInfo_Public GetPlayingUserInfo(string appId, string userId)
+      public Ruyi.SDK.UserServiceExternal.UserInfo_Public GetPlayingUserInfo(string userId)
       {
         #if !SILVERLIGHT
-        send_GetPlayingUserInfo(appId, userId);
+        send_GetPlayingUserInfo(userId);
         return recv_GetPlayingUserInfo();
 
         #else
-        var asyncResult = Begin_GetPlayingUserInfo(null, null, appId, userId);
+        var asyncResult = Begin_GetPlayingUserInfo(null, null, userId);
         return End_GetPlayingUserInfo(asyncResult);
 
         #endif
       }
       #if SILVERLIGHT
-      public IAsyncResult send_GetPlayingUserInfo(AsyncCallback callback, object state, string appId, string userId)
+      public IAsyncResult send_GetPlayingUserInfo(AsyncCallback callback, object state, string userId)
       #else
-      public void send_GetPlayingUserInfo(string appId, string userId)
+      public void send_GetPlayingUserInfo(string userId)
       #endif
       {
         oprot_.WriteMessageBegin(new TMessage("GetPlayingUserInfo", TMessageType.Call, seqid_));
         GetPlayingUserInfo_args args = new GetPlayingUserInfo_args();
-        args.AppId = appId;
         args.UserId = userId;
         args.Write(oprot_);
         oprot_.WriteMessageEnd();
@@ -199,7 +198,7 @@ namespace Ruyi.SDK.UserServiceExternal
         {
           try
           {
-            result.Success = iface_.GetPlayingUserInfo(args.AppId, args.UserId);
+            result.Success = iface_.GetPlayingUserInfo(args.UserId);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
@@ -232,21 +231,7 @@ namespace Ruyi.SDK.UserServiceExternal
     #endif
     public partial class GetPlayingUserInfo_args : TBase
     {
-      private string _appId;
       private string _userId;
-
-      public string AppId
-      {
-        get
-        {
-          return _appId;
-        }
-        set
-        {
-          __isset.appId = true;
-          this._appId = value;
-        }
-      }
 
       public string UserId
       {
@@ -267,7 +252,6 @@ namespace Ruyi.SDK.UserServiceExternal
       [Serializable]
       #endif
       public struct Isset {
-        public bool appId;
         public bool userId;
       }
 
@@ -290,13 +274,6 @@ namespace Ruyi.SDK.UserServiceExternal
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String) {
-                  AppId = iprot.ReadString();
-                } else { 
-                  TProtocolUtil.Skip(iprot, field.Type);
-                }
-                break;
-              case 2:
                 if (field.Type == TType.String) {
                   UserId = iprot.ReadString();
                 } else { 
@@ -324,18 +301,10 @@ namespace Ruyi.SDK.UserServiceExternal
           TStruct struc = new TStruct("GetPlayingUserInfo_args");
           oprot.WriteStructBegin(struc);
           TField field = new TField();
-          if (AppId != null && __isset.appId) {
-            field.Name = "appId";
-            field.Type = TType.String;
-            field.ID = 1;
-            oprot.WriteFieldBegin(field);
-            oprot.WriteString(AppId);
-            oprot.WriteFieldEnd();
-          }
           if (UserId != null && __isset.userId) {
             field.Name = "userId";
             field.Type = TType.String;
-            field.ID = 2;
+            field.ID = 1;
             oprot.WriteFieldBegin(field);
             oprot.WriteString(UserId);
             oprot.WriteFieldEnd();
@@ -352,12 +321,6 @@ namespace Ruyi.SDK.UserServiceExternal
       public override string ToString() {
         StringBuilder __sb = new StringBuilder("GetPlayingUserInfo_args(");
         bool __first = true;
-        if (AppId != null && __isset.appId) {
-          if(!__first) { __sb.Append(", "); }
-          __first = false;
-          __sb.Append("AppId: ");
-          __sb.Append(AppId);
-        }
         if (UserId != null && __isset.userId) {
           if(!__first) { __sb.Append(", "); }
           __first = false;

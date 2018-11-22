@@ -7,7 +7,7 @@ Also see [packaging instructions](ue4_package.md).
 ## Prerequisites
 
 - See [prerequisites for C++ SDK](cplusplus.md#prerequisites)
-- Unreal Engine 18 (4.18), Compiled version
+- Unreal Engine 4 (4.18+ tested, 4.20+ recommended since VS 2017 is default), Compiled version
 
 ## Using SDK Binary
 
@@ -74,7 +74,7 @@ UE4 supports [several version of Visual Studio](https://docs.unrealengine.com/en
 
 ### Generating VS 2017 Projects
 
-Starting with 4.15, you can generate your VS project files on command line with `-2017` param:
+When VS 2017/v141 is not the default, you can generate VS project files on command line with `-2017` param:
 
     UnrealBuildTool.exe -projectfiles -project="C:/XXX.uproject" -game -engine -progress -2017
 
