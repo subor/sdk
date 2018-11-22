@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Ruyi.SDK.BrainCloudApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,258 +16,346 @@ namespace Ruyi.SDK.Online
         /// <summary>
         /// Creates a lobby that other players can find and join.
         /// </summary>
-        /// <param name="index">The index of user</param>
+        /// <param name="clientIndex">The index of user</param>
         /// <param name="maxSlots">The maximum number of players that can join this lobby.</param>
         /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
-        public Task<RuyiNetLobby> CreateLobby(int index, int maxSlots, RuyiNetLobbyType lobbyType)
+        public Task<RuyiNetLobbyResponse> CreateLobby(int clientIndex, int maxSlots, RuyiNetLobbyType lobbyType)
         {
-            return CreateLobby(index, maxSlots, lobbyType, "{}");
+            return CreateLobby(clientIndex, maxSlots, lobbyType, true, "{}");
         }
 
         /// <summary>
         /// Creates a lobby that other players can find and join.
         /// </summary>
-        /// <param name="index">The index of user</param>
+        /// <param name="clientIndex">The index of user</param>
         /// <param name="maxSlots">The maximum number of players that can join this lobby.</param>
         /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
-        /// <param name="customAttributes">JSON string of custom attributes to attach to this lobby.</param>
-        public async Task<RuyiNetLobby> CreateLobby(int index, int maxSlots, RuyiNetLobbyType lobbyType, string customAttributes)
+        /// <param name="jsonAttributes">JSON string of custom attributes to attach to this lobby.</param>
+        public Task<RuyiNetLobbyResponse> CreateLobby(int clientIndex, int maxSlots, RuyiNetLobbyType lobbyType, string jsonAttributes)
         {
-            var payload = new RuyiNetLobbyCreateRequest()
-            {
-                appId = mClient.AppId,
-                maxSlots = maxSlots,
-                ranked = (lobbyType == RuyiNetLobbyType.RANKED),
-                customAttributes = customAttributes
-            };
-
-            var response = await RunPlatformScript<RuyiNetLobbyResponse>(index, "Lobby_Create", JsonConvert.SerializeObject(payload));
-            mCurrentLobby = response;
-            PollLobbyStatus();
-            return mCurrentLobby;
+            return CreateLobby(clientIndex, maxSlots, lobbyType, true, jsonAttributes);
         }
 
         /// <summary>
-        /// Closes a lobby and kicks all players.
+        /// Creates a lobby that other players can find and join.
         /// </summary>
-        /// <param name="index">The index of user</param>
+        /// <param name="clientIndex">The index of user</param>
+        /// <param name="maxSlots">The maximum number of players that can join this lobby.</param>
+        /// <param name="isOpen">Whether or not the lobby is open by default.</param>
+        /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
+        public Task<RuyiNetLobbyResponse> CreateLobby(int clientIndex, int maxSlots, RuyiNetLobbyType lobbyType, bool isOpen)
+        {
+            return CreateLobby(clientIndex, maxSlots, lobbyType, isOpen, "{}");
+        }
+
+        /// <summary>
+        /// Creates a lobby that other players can find and join.
+        /// </summary>
+        /// <param name="clientIndex">The index of user</param>
+        /// <param name="maxSlots">The maximum number of players that can join this lobby.</param>
+        /// <param name="isOpen">Whether or not the lobby is open by default.</param>
+        /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
+        /// <param name="jsonAttributes">JSON string of custom attributes to attach to this lobby.</param>
+        public async Task<RuyiNetLobbyResponse> CreateLobby(int clientIndex, int maxSlots, RuyiNetLobbyType lobbyType, bool isOpen, string jsonAttributes)
+        {
+            var resp = await mClient.BCService.Lobby_CreateLobbyAsync((BrainCloudApi.LobbyType)lobbyType, maxSlots, isOpen, jsonAttributes, clientIndex, token);
+            return mClient.Process<RuyiNetLobbyResponse>(resp);
+        }
+
+        /// <summary>
+        /// Destroys a lobby.
+        /// </summary>
+        /// <param name="clientIndex">The index of user</param>
         /// <param name="lobbyId">The ID of the lobby to close.</param>
-        public Task<RuyiNetResponse> CloseLobby(int index, string lobbyId)
+        /// <param name="callback">The function to call when the task completes.</param>
+        public async Task<RuyiNetLobbyResponse> DestroyLobby(int clientIndex, string lobbyId, Action<RuyiNetLobby> callback)
         {
-            mCurrentLobby = null;
+            var resp = await mClient.BCService.Lobby_DestroyLobbyAsync(lobbyId, clientIndex, token);
+            return mClient.Process<RuyiNetLobbyResponse>(resp);
+        }
 
-            var payload = new RuyiNetLobbyCloseRequest() { lobbyId = lobbyId };
-            return RunPlatformScript<RuyiNetResponse>(index, "Lobby_Close", JsonConvert.SerializeObject(payload));
+        /// <summary>
+        /// Opens a lobby so players can join.
+        /// </summary>
+        /// <param name="clientIndex">The index of user</param>
+        /// <param name="lobbyId">The ID of the lobby to close.</param>
+        public async Task<RuyiNetLobbyResponse> OpenLobby(int clientIndex, string lobbyId)
+        {
+            var resp = await mClient.BCService.Lobby_OpenLobbyAsync(lobbyId, clientIndex, token);
+            return mClient.Process<RuyiNetLobbyResponse>(resp);
+        }
+
+        /// <summary>
+        /// Closes a lobby so players cant join anymore.
+        /// </summary>
+        /// <param name="clientIndex">The index of user</param>
+        /// <param name="lobbyId">The ID of the lobby to close.</param>
+        public async Task<RuyiNetResponse> CloseLobby(int clientIndex, string lobbyId)
+        {
+            var resp = await mClient.BCService.Lobby_CloseLobbyAsync(lobbyId, clientIndex, token);
+            return mClient.Process<RuyiNetResponse>(resp);
         }
 
         /// <summary>
         /// Searches for lobbies created by other players.
         /// </summary>
-        /// <param name="index">The index of user</param>
+        /// <param name="clientIndex">The index of user</param>
         /// <param name="numResults">The maximum number of lobbies to return.</param>
         /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
-        public Task<RuyiNetLobby[]> FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType)
+        public Task<RuyiNetLobbyFindResponse> FindLobbies(int clientIndex, int numResults, RuyiNetLobbyType lobbyType,
+            Action<RuyiNetLobby[]> callback)
         {
-            return FindLobbies(index, numResults, lobbyType, 0);
+            return FindLobbies(clientIndex, numResults, lobbyType, 0);
         }
 
         /// <summary>
         /// Searches for lobbies created by other players.
         /// </summary>
-        /// <param name="index">The index of user</param>
+        /// <param name="clientIndex">The index of user</param>
         /// <param name="numResults">The maximum number of lobbies to return.</param>
         /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
         /// <param name="freeSlots">The number of free slots needed.</param>
-        public Task<RuyiNetLobby[]> FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType, int freeSlots)
+        public Task<RuyiNetLobbyFindResponse> FindLobbies(int clientIndex, int numResults, RuyiNetLobbyType lobbyType, int freeSlots)
         {
-            return FindLobbies(index, numResults, lobbyType, freeSlots, "{}");
+            return FindLobbies(clientIndex, numResults, lobbyType, freeSlots, "{}");
         }
 
         /// <summary>
         /// Searches for lobbies created by other players.
         /// </summary>
-        /// <param name="index">The index of user</param>
+        /// <param name="clientIndex">The index of user</param>
         /// <param name="numResults">The maximum number of lobbies to return.</param>
         /// <param name="lobbyType">Whether or not this lobby is for a RANKED MATCH or a PLAYER MATCH.</param>
         /// <param name="freeSlots">The number of free slots needed.</param>
-        /// <param name="searchCriteria">JSON string representing parameters to search for.</param>
-        public async Task<RuyiNetLobby[]> FindLobbies(int index, int numResults, RuyiNetLobbyType lobbyType, int freeSlots, string searchCriteria)
+        /// <param name="jsonAttributes">JSON string representing parameters to search for.</param>
+        /// <param name="callback">The function to call when the task completes.</param>
+        public async Task<RuyiNetLobbyFindResponse> FindLobbies(int clientIndex, int numResults, RuyiNetLobbyType lobbyType, int freeSlots, string jsonAttributes)
         {
-            var payload = new RuyiNetLobbyFindRequest()
-            {
-                appId = mClient.AppId,
-                numResults = numResults,
-                freeSlots = freeSlots,
-                ranked = (lobbyType == RuyiNetLobbyType.RANKED),
-                searchCriteria = searchCriteria
-            };
+            var resp = await mClient.BCService.Lobby_FindLobbiesAsync(freeSlots, numResults, jsonAttributes, clientIndex, token);
+            return mClient.Process<RuyiNetLobbyFindResponse>(resp);
+        }
 
-            var response = await RunPlatformScript<RuyiNetLobbyFindResponse>(index, "Lobby_Find", JsonConvert.SerializeObject(payload));
-            var results = response.data.response.results;
-            var lobbies = new RuyiNetLobby[results.count];
-            for (int i = 0; i < results.count; ++i)
-            {
-                lobbies[i] = new RuyiNetLobby(results.items[i]);
-            }
+        /// <summary>
+        /// Searches for lobbies with the player's friends.
+        /// </summary>
+        /// <param name="clientIndex">The index of user</param>
+        public async Task<RuyiNetLobbyFindResponse> FindFriendsLobbies(int clientIndex)
+        {
+            var resp = await mClient.BCService.Lobby_FindFriendsLobbiesAsync(clientIndex, token);
+            return mClient.Process<RuyiNetLobbyFindResponse>(resp);
+        }
 
-            return lobbies;
+        /// <summary>
+        /// Searches for lobbies the current player is a member of.
+        /// </summary>
+        /// <param name="clientIndex">The index of user</param>
+        public async Task<RuyiNetLobbyFindResponse> GetMyLobbies(int clientIndex)
+        {
+            var resp = await mClient.BCService.Lobby_GetMyLobbiesAsync(clientIndex, token);
+            return mClient.Process<RuyiNetLobbyFindResponse>(resp);
         }
 
         /// <summary>
         /// Joins a lobby created by another player.
         /// </summary>
-        /// <param name="index">The index of user</param>
+        /// <param name="clientIndex">The index of user</param>
         /// <param name="lobbyId">The ID of the lobby to join.</param>
-        public async Task<RuyiNetLobby> JoinLobby(int index, string lobbyId)
+        public async Task<RuyiNetLobbyFindResponse> JoinLobby(int clientIndex, string lobbyId)
         {
-            var payload = new RuyiNetLobbyJoinRequest() { lobbyId = lobbyId };
-            var response = await RunPlatformScript<RuyiNetLobbyResponse>(index, "Lobby_Join", JsonConvert.SerializeObject(payload));
-            mCurrentLobby = response;
-            PollLobbyStatus();
-            return mCurrentLobby;
+            var resp = await mClient.BCService.Lobby_JoinLobbyAsync(lobbyId, clientIndex, token);
+            return mClient.Process<RuyiNetLobbyFindResponse>(resp);
         }
 
         /// <summary>
         /// Leaves a lobby.
         /// </summary>
-        /// <param name="index">The index of user</param>
+        /// <param name="clientIndex">The index of user</param>
         /// <param name="lobbyId">The ID of the lobby to leave.</param>
-        public Task<RuyiNetResponse> LeaveLobby(int index, string lobbyId)
+        public async Task<RuyiNetResponse> LeaveLobby(int clientIndex, string lobbyId)
         {
-            mCurrentLobby = null;
-            var payload = new RuyiNetLobbyLeaveRequest() { lobbyId = lobbyId }; 
-            return RunPlatformScript<RuyiNetResponse>(index, "Lobby_Leave", JsonConvert.SerializeObject(payload));
+            var resp = await mClient.BCService.Lobby_LeaveLobbyAsync(lobbyId, clientIndex, token);
+            return mClient.Process<RuyiNetResponse>(resp);
         }
 
         /// <summary>
         /// Starts a lobby game
         /// </summary>
-        /// <param name="index">The index of user</param>
+        /// <param name="clientIndex">The index of user</param>
         /// <param name="lobbyId">The ID of the lobby to start the game for.</param>
         /// <param name="connectionString">A connection string used to connect to the host.</param>
-        public Task<RuyiNetResponse> StartGame(int index, string lobbyId, string connectionString)
+        public async Task<RuyiNetLobbyResponse> StartGame(int clientIndex, string lobbyId, string connectionString)
         {
-            var payload = new RuyiNetLobbyStartGameRequest() { lobbyId = lobbyId, connectionString = connectionString };
-            return RunPlatformScript<RuyiNetResponse>(index, "Lobby_StartGame", JsonConvert.SerializeObject(payload));
+            var resp = await mClient.BCService.Lobby_StartGameAsync(lobbyId, connectionString, clientIndex, token);
+            return mClient.Process<RuyiNetLobbyResponse>(resp);
         }
 
         /// <summary>
-        /// Event handler for when a new player joins the lobby.
+        /// Prototype for a Lobby Created Callback.
         /// </summary>
-        /// <param name="profileId">The profile ID of the player joining.</param>
-        public delegate void PlayerJoinEventHandler(string profileId);
+        /// <param name="clientIndex">The index of the client that is in the lobby.</param>
+        /// <param name="lobbyId">The ID of the lobby.</param>
+        /// <param name="lobby">The lobby just created.</param>
+        public delegate void LobbyCreatedEvent(int clientIndex, string lobbyId, RuyiNetLobby lobby);
 
         /// <summary>
-        /// Event handler for when a player leaves the lobby.
+        /// Prototype for a Lobby destroyed callback.
         /// </summary>
-        /// <param name="profileId">The profile ID of the player leaving.</param>
-        public delegate void PlayerLeaveEventHandler(string profileId);
+        /// <param name="clientIndex">The index of the client that is in the lobby.</param>
+        /// <param name="lobbyId">The ID of the lobby.</param>
+        public delegate void LobbyDestroyedEvent(int clientIndex, string lobbyId);
 
         /// <summary>
-        /// Event handler for when a lobby should start a game.
+        /// Prototype for a Lobby Opened callback.
         /// </summary>
-        public delegate void StartGameEventHandler();
+        /// <param name="clientIndex">The index of the client that is in the lobby.</param>
+        /// <param name="lobbyId">The ID of the lobby.</param>
+        public delegate void LobbyOpenedEvent(int clientIndex, string lobbyId);
 
         /// <summary>
-        /// Event handler for when the lobby is closed.
+        /// Prototype for a Lobby Closed callback.
         /// </summary>
-        public delegate void LobbyClosedEventHandler();
+        /// <param name="clientIndex">The index of the client that is in the lobby.</param>
+        /// <param name="lobbyId">The ID of the lobby.</param>
+        public delegate void LobbyClosedEvent(int clientIndex, string lobbyId);
 
         /// <summary>
-        /// Returns the current lobby information.
+        /// Prototype for a Lobby Game Started callback.
         /// </summary>
-        public RuyiNetLobby CurrentLobby { get { return mCurrentLobby; } }
+        /// <param name="clientIndex">The index of the client that is in the lobby.</param>
+        /// <param name="lobbyId">The ID of the lobby.</param>
+        /// <param name="connectionString">The string used to connect to the game.</param>
+        public delegate void LobbyGameStartedEvent(int clientIndex, string lobbyId, string connectionString);
 
         /// <summary>
-        /// Event handler for when a new player joins the lobby.
+        /// Prototype for a Lobby Player Joined callback.
         /// </summary>
-        public event PlayerJoinEventHandler OnPlayerJoinLobby;
+        /// <param name="clientIndex">The index of the client that is in the lobby.</param>
+        /// <param name="lobbyId">The ID of the lobby.</param>
+        /// <param name="playerId">The ID of the player.</param>
+        public delegate void LobbyPlayerJoinedEvent(int clientIndex, string lobbyId, string playerId);
 
         /// <summary>
-        /// Event handler for when a player leaves the lobby.
+        /// Prototype for a Lobby Player Left callback.
         /// </summary>
-        public event PlayerLeaveEventHandler OnPlayerLeaveLobby;
+        /// <param name="clientIndex">The index of the client that is in the lobby.</param>
+        /// <param name="lobbyId">The ID of the lobby.</param>
+        /// <param name="playerId">The ID of the player.</param>
+        public delegate void LobbyPlayerLeftEvent(int clientIndex, string lobbyId, string playerId);
 
         /// <summary>
-        /// Event handler for when a lobby should start a game.
+        /// Called when a lobby is created.
         /// </summary>
-        public event StartGameEventHandler OnLobbyStartGame;
+        public event LobbyCreatedEvent OnLobbyCreated;
 
         /// <summary>
-        /// Event handler for when the lobby is closed.
+        /// Called when a lobby is destroyed.
         /// </summary>
-        public event LobbyClosedEventHandler OnLobbyClosed;
+        public event LobbyDestroyedEvent OnLobbyDestroyed;
 
-        internal async void Update(Object source, ElapsedEventArgs e)
+        /// <summary>
+        /// Called when a lobby is opened.
+        /// </summary>
+        public event LobbyOpenedEvent OnLobbyOpened;
+
+        /// <summary>
+        /// Called when a lobby is closed.
+        /// </summary>
+        public event LobbyClosedEvent OnLobbyClosed;
+
+        /// <summary>
+        /// Called when a lobby game is started.
+        /// </summary>
+        public event LobbyGameStartedEvent OnLobbyGameStarted;
+
+        /// <summary>
+        /// Called when a player joins a lobby.
+        /// </summary>
+        public event LobbyPlayerJoinedEvent OnLobbyPlayerJoined;
+
+        /// <summary>
+        /// Called when a player leaves a lobby.
+        /// </summary>
+        public event LobbyPlayerLeftEvent OnLobbyPlayerLeft;
+
+
+        internal async Task Update(Object source, ElapsedEventArgs e)
         {
-            if (mCurrentLobby == null)
-                return;
-
-            var payload = new RuyiNetLobbyJoinRequest() { lobbyId = mCurrentLobby.LobbyId };
-            var response = await RunPlatformScript<RuyiNetLobbyResponse>(mClient.ActivePlayerIndex, "Lobby_Update", JsonConvert.SerializeObject(payload));
-            RuyiNetLobby updatedLobby = response;
-            if (updatedLobby != null)
+            var updatedLobbies = new Dictionary<string, RuyiNetLobby>();
+            for (var clientIndex = 0; clientIndex < mClient.CurrentPlayers.Length; ++clientIndex)
             {
-                if (mCurrentLobby != null)
+                if (mClient.CurrentPlayers[clientIndex] != null)
                 {
-                    IEnumerable<string> newPlayers = null;
-                    IEnumerable<string> oldPlayers = null;
-
-                    bool lobbyClosed = mCurrentLobby.State != "CLOSED" &&
-                                       updatedLobby.State == "CLOSED";
-                    bool lobbyStarted = mCurrentLobby.State != "STARTED" &&
-                                        updatedLobby.State == "STARTED";
-
-                    if (!updatedLobby.MemberProfileIds.SequenceEqual(mCurrentLobby.MemberProfileIds))
+                    var response = await GetMyLobbies(clientIndex);
+                    var lobbies = response.GetLobbies();
+                    if (lobbies != null)
                     {
-                        newPlayers = updatedLobby.MemberProfileIds.Except(mCurrentLobby.MemberProfileIds);
-                        oldPlayers = mCurrentLobby.MemberProfileIds.Except(updatedLobby.MemberProfileIds);
-                    }
-
-                    mCurrentLobby = updatedLobby;
-
-                    if (newPlayers != null)
-                    {
-                        foreach (var i in newPlayers)
+                        foreach (var updatedLobby in lobbies)
                         {
-                            Console.Write("New Player: " + i);
-                            OnPlayerJoinLobby(i);
-                        }
-                    }
-
-                    if (oldPlayers != null)
-                    {
-                        foreach (var i in oldPlayers)
-                        {
-                            Console.Write("Old Player: " + i);
-                            OnPlayerLeaveLobby(i);
-                        }
-                    }
-
-                    if (lobbyClosed)
-                    {
-                        for (var i = 0; i < mClient.CurrentPlayers.Length; ++i)
-                        {
-                            if (mClient.CurrentPlayers[i] != null)
+                            var lobbyId = updatedLobby.LobbyId;
+                            if (mLobbies.ContainsKey(lobbyId))
                             {
-                                await LeaveLobby(i, mCurrentLobby.LobbyId);
+                                var currentLobby = mLobbies[lobbyId];
+                                if (!currentLobby.IsOpen &&
+                                    updatedLobby.IsOpen)
+                                {
+                                    OnLobbyOpened(clientIndex, lobbyId);
+                                }
+
+                                if (currentLobby.IsOpen &&
+                                    !updatedLobby.IsOpen)
+                                {
+                                    OnLobbyClosed(clientIndex, lobbyId);
+                                }
+
+                                if (currentLobby.LobbyState == RuyiNetLobbyState.CREATED &&
+                                    updatedLobby.LobbyState == RuyiNetLobbyState.STARTED)
+                                {
+                                    OnLobbyGameStarted(clientIndex, lobbyId, updatedLobby.ConnectionString);
+                                }
+
+                                foreach (var playerId in currentLobby.MemberPlayerIds)
+                                {
+                                    if (!updatedLobby.MemberPlayerIds.Contains(playerId))
+                                    {
+                                        OnLobbyPlayerLeft(clientIndex, lobbyId, playerId);
+                                    }
+                                }
+
+                                foreach (var playerId in updatedLobby.MemberPlayerIds)
+                                {
+                                    if (!currentLobby.MemberPlayerIds.Contains(playerId))
+                                    {
+                                        OnLobbyPlayerJoined(clientIndex, lobbyId, playerId);
+                                    }
+                                }
                             }
+                            else
+                            {
+                                OnLobbyCreated(clientIndex, updatedLobby.LobbyId, updatedLobby);
+                            }
+
+                            updatedLobbies[updatedLobby.LobbyId] = updatedLobby;
                         }
-
-                        OnLobbyClosed();
-                    }
-                    else if (lobbyStarted)
-                    {
-                        OnLobbyStartGame();
                     }
                 }
-                else
-                {
-                    mCurrentLobby = updatedLobby;
-                }
-
-                PollLobbyStatus();
             }
+
+            foreach (var lobbyId in mLobbies.Keys)
+            {
+                if (!updatedLobbies.ContainsKey(lobbyId))
+                {
+                    var currentLobby = mLobbies[lobbyId];
+                    for (var clientIndex = 0; clientIndex < mClient.CurrentPlayers.Length; ++clientIndex)
+                    {
+                        if (currentLobby.MemberPlayerIds.Contains(mClient.CurrentPlayers[clientIndex].profileId))
+                        {
+                            OnLobbyDestroyed(clientIndex, lobbyId);
+                        }
+                    }
+                }
+            }
+
+            mLobbies = updatedLobbies;
         }
 
         /// <summary>
@@ -276,19 +365,9 @@ namespace Ruyi.SDK.Online
         internal RuyiNetLobbyService(RuyiNetClient client)
             : base(client)
         {
-            mCurrentLobby = null;
+            mLobbies = new Dictionary<string, RuyiNetLobby>();
         }
-
-        private void PollLobbyStatus()
-        {
-            mTimer = new Timer(POLL_FREQUENCY);
-            mTimer.Elapsed += Update;
-            mTimer.AutoReset = false;
-            mTimer.Enabled = true;
-        }
-
-        private const double POLL_FREQUENCY = 5000;
-        private Timer mTimer;
-        private RuyiNetLobby mCurrentLobby;
+        
+        private Dictionary<string, RuyiNetLobby> mLobbies;
     }
 }
