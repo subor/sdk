@@ -299,15 +299,7 @@ namespace Ruyi.SDK.Online
             {
                 if (callback != null)
                 {
-                    if (response.status == RuyiNetHttpStatus.OK)
-                    {
-                        var results = response.data.friends.Cast<RuyiNetFriendSummaryData>().ToArray();
-                        callback(results);
-                    }
-                    else
-                    {
-                        callback(null);
-                    }
+                    callback(response.GetFriendSummaryData());
                 }
             });
         }

@@ -207,7 +207,7 @@ namespace Ruyi
                 }
                 else
                 {
-                    var host = OS.Util.GetIPAddress(context.RemoteAddress);
+                    var host = Util.Helpers.GetIPAddress(context.RemoteAddress);
                     // init and open high/low latency transport, create protocols
                     var lowLatencyPort = context.LowLatencyPort == 0 ? ConstantsSDKDataTypesConstants.low_latency_socket_port : context.LowLatencyPort;
                     lowLatencyTransport = new TSocketTransportTS(host, lowLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.LowLatencyTimeout : context.Timeout);

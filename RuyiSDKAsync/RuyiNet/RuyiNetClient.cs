@@ -39,63 +39,56 @@ namespace Ruyi.SDK.Online
         /// </summary>
         /// <param name="appId">The App ID of the game to initialise for.</param>
         /// <param name="appSecret">The App secret of the game. NOTE: This is a password and should be treated as such.</param>
-        /// <param name="onInitialised">The function to call whe initialisation completes.</param>
-        public void Initialise(string appId, string appSecret, Action onInitialised)
+        public async Task Initialise(string appId, string appSecret)
         {
             if (Initialised)
             {
-                onInitialised?.Invoke();
-
                 return;
             }
 
             AppId = appId;
             AppSecret = appSecret;
 
-            Task.Run(async () =>
+            var hostString = Dns.GetHostName();
+
+            IPHostEntry hostInfo = await Dns.GetHostEntryAsync(hostString);
+            foreach (IPAddress ip in hostInfo.AddressList)
             {
-                var hostString = Dns.GetHostName();
-                
-                IPHostEntry hostInfo = await Dns.GetHostEntryAsync(hostString);
-                foreach (IPAddress ip in hostInfo.AddressList)
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    if (ip.AddressFamily == AddressFamily.InterNetwork)
-                    {
-                        RemoteIpAddress = ip.ToString();
-                    }
+                    RemoteIpAddress = ip.ToString();
+                }
+            }
+
+            for (int i = 0; i < MAX_PLAYERS; ++i)
+            {
+                CurrentPlayers[i] = null;
+                var jsonResponse = await BCService.Identity_SwitchToSingletonChildProfileAsync(AppId, true, i, token);
+                var childProfile = JsonConvert.DeserializeObject<RuyiNetSwitchToChildProfileResponse>(jsonResponse);
+                if (childProfile.status != RuyiNetHttpStatus.OK)
+                {
+                    continue;
                 }
 
-                for (int i = 0; i < MAX_PLAYERS; ++i)
+                var profileId = childProfile.data.parentProfileId;
+                var profileName = childProfile.data.playerName;
+
+                NewUser = childProfile.data.newUser;
+
+                var payload = new RuyiNetProfileIdRequest() { profileId = profileId };
+                jsonResponse = await BCService.Script_RunParentScriptAsync("GetProfile", JsonConvert.SerializeObject(payload), "RUYI", i, token);
+
+                var profileData = JsonConvert.DeserializeObject<RuyiNetGetProfileResponse>(jsonResponse);
+                if (profileData.status != RuyiNetHttpStatus.OK ||
+                    profileData.data.success == false)
                 {
-                    CurrentPlayers[i] = null;
-                    var jsonResponse = await BCService.Identity_SwitchToSingletonChildProfileAsync(AppId, true, i, token);
-                    var childProfile = JsonConvert.DeserializeObject<RuyiNetSwitchToChildProfileResponse>(jsonResponse);
-                    if (childProfile.status != RuyiNetHttpStatus.OK)
-                    {
-                        continue;
-                    }
-
-                    var profileId = childProfile.data.parentProfileId;
-                    var profileName = childProfile.data.playerName;
-
-                    NewUser = childProfile.data.newUser;
-
-                    var payload = new RuyiNetProfileIdRequest() { profileId = profileId };
-                    jsonResponse = await BCService.Script_RunParentScriptAsync("GetProfile", JsonConvert.SerializeObject(payload), "RUYI", i, token);
-
-                    var profileData = JsonConvert.DeserializeObject<RuyiNetGetProfileResponse>(jsonResponse);
-                    if (profileData.status != RuyiNetHttpStatus.OK ||
-                        profileData.data.success == false)
-                    {
-                        continue;
-                    }
-
-                    CurrentPlayers[i] = profileData.data.response;
+                    continue;
                 }
 
-                Initialised = true;
-                onInitialised?.Invoke();
-            });
+                CurrentPlayers[i] = profileData.data.response;
+            }
+
+            Initialised = true;
         }
         
         /// <summary>

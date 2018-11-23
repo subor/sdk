@@ -56,7 +56,7 @@ __Instructions__
             +...
 
 1. Build external libs
-    * If asked to retarget projects, for __Windows SDK version__ pick 10.0.15063.0 and __Platform Toolset__ "Upgrade to v141"
+    * If asked to retarget projects, for __Windows SDK version__ pick `10.0.15063.0` and __Platform Toolset__ `Upgrade to v141` (or whatever is appropriate for your codebase)
     * Select __Release__ and __x64__ when possible
 1. Open `sdk/SDK.sln`
     * __Release__ is for libraries compiled with `/MD`

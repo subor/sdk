@@ -21,7 +21,7 @@ namespace Ruyi { namespace SDK { namespace UserServiceExternal {
 class UserServExternalIf {
  public:
   virtual ~UserServExternalIf() {}
-  virtual void GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& appId, const std::string& userId) = 0;
+  virtual void GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& userId) = 0;
 };
 
 class UserServExternalIfFactory {
@@ -51,14 +51,13 @@ class UserServExternalIfSingletonFactory : virtual public UserServExternalIfFact
 class UserServExternalNull : virtual public UserServExternalIf {
  public:
   virtual ~UserServExternalNull() {}
-  void GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& /* _return */, const std::string& /* appId */, const std::string& /* userId */) {
+  void GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& /* _return */, const std::string& /* userId */) {
     return;
   }
 };
 
 typedef struct _UserServExternal_GetPlayingUserInfo_args__isset {
-  _UserServExternal_GetPlayingUserInfo_args__isset() : appId(false), userId(false) {}
-  bool appId :1;
+  _UserServExternal_GetPlayingUserInfo_args__isset() : userId(false) {}
   bool userId :1;
 } _UserServExternal_GetPlayingUserInfo_args__isset;
 
@@ -67,23 +66,18 @@ class UserServExternal_GetPlayingUserInfo_args {
 
   UserServExternal_GetPlayingUserInfo_args(const UserServExternal_GetPlayingUserInfo_args&);
   UserServExternal_GetPlayingUserInfo_args& operator=(const UserServExternal_GetPlayingUserInfo_args&);
-  UserServExternal_GetPlayingUserInfo_args() : appId(), userId() {
+  UserServExternal_GetPlayingUserInfo_args() : userId() {
   }
 
   virtual ~UserServExternal_GetPlayingUserInfo_args() throw();
-  std::string appId;
   std::string userId;
 
   _UserServExternal_GetPlayingUserInfo_args__isset __isset;
-
-  void __set_appId(const std::string& val);
 
   void __set_userId(const std::string& val);
 
   bool operator == (const UserServExternal_GetPlayingUserInfo_args & rhs) const
   {
-    if (!(appId == rhs.appId))
-      return false;
     if (!(userId == rhs.userId))
       return false;
     return true;
@@ -105,7 +99,6 @@ class UserServExternal_GetPlayingUserInfo_pargs {
 
 
   virtual ~UserServExternal_GetPlayingUserInfo_pargs() throw();
-  const std::string* appId;
   const std::string* userId;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -200,8 +193,8 @@ class UserServExternalClient : virtual public UserServExternalIf {
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& appId, const std::string& userId);
-  void send_GetPlayingUserInfo(const std::string& appId, const std::string& userId);
+  void GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& userId);
+  void send_GetPlayingUserInfo(const std::string& userId);
   void recv_GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return);
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
@@ -251,13 +244,13 @@ class UserServExternalMultiface : virtual public UserServExternalIf {
     ifaces_.push_back(iface);
   }
  public:
-  void GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& appId, const std::string& userId) {
+  void GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& userId) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->GetPlayingUserInfo(_return, appId, userId);
+      ifaces_[i]->GetPlayingUserInfo(_return, userId);
     }
-    ifaces_[i]->GetPlayingUserInfo(_return, appId, userId);
+    ifaces_[i]->GetPlayingUserInfo(_return, userId);
     return;
   }
 
@@ -291,8 +284,8 @@ class UserServExternalConcurrentClient : virtual public UserServExternalIf {
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& appId, const std::string& userId);
-  int32_t send_GetPlayingUserInfo(const std::string& appId, const std::string& userId);
+  void GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& userId);
+  int32_t send_GetPlayingUserInfo(const std::string& userId);
   void recv_GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const int32_t seqid);
  protected:
   apache::thrift::stdcxx::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;

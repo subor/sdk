@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{00FDDB01-E298-4BD2-A262-8DF64F1749FF}</ProjectGuid>
+    <ProjectGuid>{3729A82A-A1DB-4327-BA23-5C1C24D5C75E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UnitTests</RootNamespace>
-    <AssemblyName>UnitTests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>DocTests</RootNamespace>
+    <AssemblyName>DocTests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,27 +33,16 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Elo\DuellingEloTest.cs" />
-    <Compile Include="Elo\EloAssert.cs" />
-    <Compile Include="Elo\FideEloCalculatorTest.cs" />
-    <Compile Include="Elo\GaussianEloCalculatorTest.cs" />
-    <Compile Include="Numerics\GaussianDistributionTests.cs" />
-    <Compile Include="Numerics\MatrixTests.cs" />
+    <Compile Include="DocTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RuyiNet\RuyiNetTest.cs" />
-    <Compile Include="Trueskill\DrawMarginTest.cs" />
-    <Compile Include="Trueskill\FactorGraphTrueSkillCalculatorTests.cs" />
-    <Compile Include="Trueskill\TrueSkillCalculatorTests.cs" />
-    <Compile Include="Trueskill\TwoPlayerTrueSkillCalculatorTest.cs" />
-    <Compile Include="Trueskill\TwoTeamTrueSkillCalculatorTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk">
-      <Version>15.5.0</Version>
-    </PackageReference>
     <PackageReference Include="NUnit">
       <Version>3.9.0</Version>
     </PackageReference>
@@ -61,19 +51,21 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RuyiSDKAsync\SDK.RuyiSDKAsync.csproj">
-      <Project>{e48fb0b2-b2d7-492c-a612-6b8a67a6da81}</Project>
-      <Name>SDK.RuyiSDKAsync</Name>
+    <ProjectReference Include="..\..\externals\thrift.csharp\Thrift.csproj">
+      <Project>{499eb63c-d74c-47e8-ae48-a2fc94538e9d}</Project>
+      <Name>Thrift</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SDK.Gen.ServiceAsync\SDK.Gen.ServiceAsync.csproj">
-      <Project>{9f76e2d7-fecc-45a4-9d8e-425fa9e3d9a6}</Project>
-      <Name>SDK.Gen.ServiceAsync</Name>
+    <ProjectReference Include="..\RuyiSDK.nf2.0\RuyiSDK.nf2.0.csproj">
+      <Project>{690773dd-f715-4956-9471-357b1f81d933}</Project>
+      <Name>RuyiSDK.nf2.0</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SDK.Base.nf2.0\SDK.Base.nf2.0.csproj">
+      <Project>{643518c4-b9c5-48ce-890c-fb2a52f0eda1}</Project>
+      <Name>SDK.Base.nf2.0</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceGenerated.nf2.0\ServiceGenerated.nf2.0.csproj">
+      <Project>{28cf6630-abbd-43f5-8f2d-a74449e86cd1}</Project>
+      <Name>ServiceGenerated.nf2.0</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
