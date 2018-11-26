@@ -16,7 +16,7 @@ using System.Linq;
 using System.Reflection;
 using Thrift.Protocol;
 using Thrift.Transport;
-using Ruyi.SDK.OverlayManagerExternal;
+using Ruyi.SDK.Overlay;
 
 namespace Ruyi
 {
@@ -34,7 +34,7 @@ namespace Ruyi
     /// <see cref="RuyiSDK.Update"/> must be called periodically (e.g. each frame) for all service clients to function correctly.
     /// </remarks>
     /// <example>
-    /// <code source="sdk/unittests/doctests.cs" region="RuyiSDK"></code>
+    /// <code source="sdk/doctests/doctests.cs" region="RuyiSDK"></code>
     /// </example>
     public class RuyiSDK : IDisposable
     {
@@ -173,7 +173,7 @@ namespace Ruyi
         /// <summary>
         /// the overlay service
         /// </summary>
-        public ExternalOverlayManagerService.Client OverlayService { get; private set; }
+        public OverlayExternalService.Client OverlayService { get; private set; }
 
         /// <summary>
         /// Multimedia-related services
@@ -318,7 +318,7 @@ namespace Ruyi
             if (IsFeatureEnabled(SDKFeatures.Overlay))
             {
                 var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.OVERLAYMANAGER_EXTERNAL.ServiceID());
-                OverlayService = new ExternalOverlayManagerService.Client(proto);
+                OverlayService = new OverlayExternalService.Client(proto);
             }
 
             return true;
