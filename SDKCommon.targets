@@ -1,0 +1,18 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!--Version>0.9.2</Version-->
+    <Authors>Subor</Authors>
+    <PackageTags>subor z+ zplus ruyi</PackageTags>
+    <Company>Subor Advanced Technology Co., Ltd.</Company>
+    <Product>Subor.SDK</Product>
+    <Description>Subor SDK</Description>
+    <PackageLicenseUrl>https://github.com/subor/sdk/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/subor/sdk/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/subor/sdk</RepositoryUrl>
+    <!--AssemblyVersion>0.9.2.0</AssemblyVersion-->
+    <PackageOutputPath>$(MSBuildThisFileDirectory)../output</PackageOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Subor.Thrift.NETCore" Version="0.11.0.3" />
+  </ItemGroup>
+</Project>

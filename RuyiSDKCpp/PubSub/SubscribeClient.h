@@ -49,7 +49,7 @@ public:
 	template<typename Object>
 	void AddHandler(const Object* object, R(Object::*method)(Args...) const)
 	{
-		_calls.push_back([object, method](Args... args) {(*object.*method)(args..); });
+		_calls.push_back([object, method](Args... args) {(*object.*method)(args...); });
 	}
 
 	void listen(Args... args)

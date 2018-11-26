@@ -9,7 +9,7 @@ using Ruyi.SDK.Speech;
 using Ruyi.SDK.StorageLayer;
 using Ruyi.SDK.UserServiceExternal;
 using Ruyi.SDK.InputManager;
-using Ruyi.SDK.OverlayManagerExternal;
+using Ruyi.SDK.Overlay;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -132,7 +132,7 @@ namespace Ruyi
         /// <summary>
         /// the overlay service
         /// </summary>
-        public ExternalOverlayManagerService.Client OverlayService { get; private set; }
+        public OverlayExternalService.Client OverlayService { get; private set; }
 
         /// <summary>
         /// Media player services
@@ -207,7 +207,7 @@ namespace Ruyi
                 }
                 else
                 {
-                    var host = OS.Util.GetIPAddress(context.RemoteAddress);
+                    var host = Util.Helpers.GetIPAddress(context.RemoteAddress);
                     // init and open high/low latency transport, create protocols
                     var lowLatencyPort = context.LowLatencyPort == 0 ? ConstantsSDKDataTypesConstants.low_latency_socket_port : context.LowLatencyPort;
                     lowLatencyTransport = new TSocketTransportTS(host, lowLatencyPort, context.Timeout <= 0 ? SDKUtility.Instance.LowLatencyTimeout : context.Timeout);
@@ -309,7 +309,7 @@ namespace Ruyi
             if (IsFeatureEnabled(SDKFeatures.Overlay))
             {
                 var proto = new TMultiplexedProtocol(LowLatencyProtocol, ServiceIDs.OVERLAYMANAGER_EXTERNAL.ServiceID());
-                OverlayService = new ExternalOverlayManagerService.Client(proto);
+                OverlayService = new OverlayExternalService.Client(proto);
             }
             return true;
         }

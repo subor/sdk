@@ -1,7 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../SDKCommon.targets" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Subor.SDK.BaseAsync</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -14,10 +15,10 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="1.2.2" />
+    <PackageReference Include="NetMQ" Version="4.0.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\externals\thrift.netcore\Thrift.csproj" />
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj" />
     <ProjectReference Include="..\SDK.Gen.ServiceAsync\SDK.Gen.ServiceAsync.csproj" />
   </ItemGroup>

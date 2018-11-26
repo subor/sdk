@@ -2,12 +2,14 @@ echo on
 
 set ProjectDir=%1
 set OutDir=%2
+set Platform=%3
 
 if "%OutDir%" == "" goto bad_args
-if "%ProjectDir%" == goto bad_args
+if "%ProjectDir%" == "" goto bad_args
+if "%Platform%" == "" goto bad_args
 goto ok
 :bad_args
-echo Expect 2 arguments: $(ProjectDir) $(OutDir)
+echo Expect 3 arguments: $(ProjectDir) $(OutDir) $(Platform)
 exit /B 1
 :ok
 
@@ -18,7 +20,7 @@ xcopy %ProjectDir%\Generated %OutDir%\include\Generated /Y /I /E /R  /F /D /EXCL
 xcopy %ProjectDir%\..\..\externals\thrift.cpp\src\thrift\*.h %OutDir%\include\thrift /Y /I /E /R /F /D
 xcopy %ProjectDir%\..\..\externals\thrift.cpp\src\thrift\*.tcc %OutDir%\include\thrift /Y /I /E /R /F /D
 
-xcopy %ProjectDir%\..\..\externals\ZeroMQ\lib %OutDir%\lib\zmq /Y /I /E /R /F /D
+xcopy %ProjectDir%\..\..\externals\ZeroMQ\lib\%Platform% %OutDir%\lib\zmq /Y /I /E /R /F /D
 
 copy %ProjectDir%\RuyiString.h %OutDir%\include\RuyiString.h /y
 xcopy %ProjectDir%\RuyiNet %OutDir%\include\RuyiNet /Y /I /E /R /F /D  /EXCLUDE:excludes.txt
