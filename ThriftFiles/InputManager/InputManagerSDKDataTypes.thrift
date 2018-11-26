@@ -396,6 +396,8 @@ struct InputActionTriggered {
 	4: i64 timestamp,
     /** The device's state when trggering the action */
 	5: CommonTypeSDKDataTypes.ActionTrigger trigger,
+    /** Whether or not the action is triggered by auto trigger */
+	6: bool byAutoTrigger,
 }
 
 /** Action triggered by analog input device ( the thumbs or triggers on gamepad ) */

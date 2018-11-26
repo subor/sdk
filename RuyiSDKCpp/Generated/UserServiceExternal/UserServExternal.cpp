@@ -36,14 +36,6 @@ uint32_t UserServExternal_GetPlayingUserInfo_args::read(::apache::thrift::protoc
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->appId);
-          this->__isset.appId = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->userId);
           this->__isset.userId = true;
         } else {
@@ -67,11 +59,7 @@ uint32_t UserServExternal_GetPlayingUserInfo_args::write(::apache::thrift::proto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("UserServExternal_GetPlayingUserInfo_args");
 
-  xfer += oprot->writeFieldBegin("appId", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->appId);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("userId", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("userId", ::apache::thrift::protocol::T_STRING, 1);
   xfer += oprot->writeString(this->userId);
   xfer += oprot->writeFieldEnd();
 
@@ -90,11 +78,7 @@ uint32_t UserServExternal_GetPlayingUserInfo_pargs::write(::apache::thrift::prot
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("UserServExternal_GetPlayingUserInfo_pargs");
 
-  xfer += oprot->writeFieldBegin("appId", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->appId)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("userId", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("userId", ::apache::thrift::protocol::T_STRING, 1);
   xfer += oprot->writeString((*(this->userId)));
   xfer += oprot->writeFieldEnd();
 
@@ -231,19 +215,18 @@ uint32_t UserServExternal_GetPlayingUserInfo_presult::read(::apache::thrift::pro
   return xfer;
 }
 
-void UserServExternalClient::GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& appId, const std::string& userId)
+void UserServExternalClient::GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& userId)
 {
-  send_GetPlayingUserInfo(appId, userId);
+  send_GetPlayingUserInfo(userId);
   recv_GetPlayingUserInfo(_return);
 }
 
-void UserServExternalClient::send_GetPlayingUserInfo(const std::string& appId, const std::string& userId)
+void UserServExternalClient::send_GetPlayingUserInfo(const std::string& userId)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("GetPlayingUserInfo", ::apache::thrift::protocol::T_CALL, cseqid);
 
   UserServExternal_GetPlayingUserInfo_pargs args;
-  args.appId = &appId;
   args.userId = &userId;
   args.write(oprot_);
 
@@ -335,7 +318,7 @@ void UserServExternalProcessor::process_GetPlayingUserInfo(int32_t seqid, ::apac
 
   UserServExternal_GetPlayingUserInfo_result result;
   try {
-    iface_->GetPlayingUserInfo(result.success, args.appId, args.userId);
+    iface_->GetPlayingUserInfo(result.success, args.userId);
     result.__isset.success = true;
   } catch ( ::Ruyi::SDK::CommonType::ErrorException &error1) {
     result.error1 = error1;
@@ -376,20 +359,19 @@ void UserServExternalProcessor::process_GetPlayingUserInfo(int32_t seqid, ::apac
   return processor;
 }
 
-void UserServExternalConcurrentClient::GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& appId, const std::string& userId)
+void UserServExternalConcurrentClient::GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& userId)
 {
-  int32_t seqid = send_GetPlayingUserInfo(appId, userId);
+  int32_t seqid = send_GetPlayingUserInfo(userId);
   recv_GetPlayingUserInfo(_return, seqid);
 }
 
-int32_t UserServExternalConcurrentClient::send_GetPlayingUserInfo(const std::string& appId, const std::string& userId)
+int32_t UserServExternalConcurrentClient::send_GetPlayingUserInfo(const std::string& userId)
 {
   int32_t cseqid = this->sync_.generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
   oprot_->writeMessageBegin("GetPlayingUserInfo", ::apache::thrift::protocol::T_CALL, cseqid);
 
   UserServExternal_GetPlayingUserInfo_pargs args;
-  args.appId = &appId;
   args.userId = &userId;
   args.write(oprot_);
 

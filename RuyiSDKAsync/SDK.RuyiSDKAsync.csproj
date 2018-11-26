@@ -1,15 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../SDKCommon.targets" />
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Subor.RuyiSDK</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\SDK.RuyiSDKAsync.xml</DocumentationFile>
+    <OutputPath>..\..\output\Debug\RuyiSDK\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\SDK.RuyiSDKAsync.xml</DocumentationFile>
+    <OutputPath>..\..\output\Release\RuyiSDK\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,9 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\commons\Common\Common.csproj" />
-    <ProjectReference Include="..\..\commons\MDPCommon\MDPCommon.csproj" />
-    <ProjectReference Include="..\..\externals\thrift.netcore\Thrift.csproj" />
     <ProjectReference Include="..\RuyiLogger\RuyiLogger.csproj" />
     <ProjectReference Include="..\SDK.BaseAsync\SDK.BaseAsync.csproj" />
     <ProjectReference Include="..\SDK.Gen.ServiceAsync\SDK.Gen.ServiceAsync.csproj" />

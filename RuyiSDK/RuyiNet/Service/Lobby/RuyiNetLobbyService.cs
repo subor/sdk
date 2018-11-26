@@ -476,7 +476,7 @@ namespace Ruyi.SDK.Online
                                     if (currentLobby.IsOpen &&
                                         !updatedLobby.IsOpen)
                                     {
-                                        OnLobbyClosed(clientIndex, lobbyId);
+                                        OnLobbyClosed(clientIndex, lobbyId); 
                                     }
 
                                     if (currentLobby.LobbyState == RuyiNetLobbyState.CREATED &&
@@ -576,13 +576,7 @@ namespace Ruyi.SDK.Online
         {
             if (callback != null)
             {
-                var results = response.data.lobbies;
-                var lobbies = new RuyiNetLobby[results.Length];
-                for (int i = 0; i < results.Length; ++i)
-                {
-                    lobbies[i] = new RuyiNetLobby(results[i]);
-                }
-
+                var lobbies = response.GetLobbies();
                 callback(lobbies);
             }
         }

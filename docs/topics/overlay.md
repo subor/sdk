@@ -107,7 +107,7 @@ This currently does __NOT__ work if your app uses:
 
 ## Debugging
 
-Some registry values in `HKLM/Software/Subor/Ruyi` can be set (or created):
+Some registry values in `HKEY_LOCAL_MACHINE\SOFTWARE\Subor\Ruyi` can be set (or created):
 
 | Name | Type | Description
 |-|-|-

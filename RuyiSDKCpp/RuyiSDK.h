@@ -1,8 +1,18 @@
 #pragma once
 
+// UE4 4.18.3 fails to compile with VS2017/v141:
+// boost/detail/container_fwd.hpp(143): error C4643: Forward declaring 'bitset' in namespace std is not permitted by the C++ Standard
+// boost/detail/container_fwd.hpp(120): error C4643: Forward declaring 'basic_string' in namespace std is not permitted by the C++ Standard
+// ...
+// Solution/Hack:
+// https://stackoverflow.com/questions/51863797/new-vs-c-update-is-making-boost-forward-declared-code-un-compilable-what-can
+#pragma warning( disable : 4643 )
+
 #include "thrift/transport/TSocket.h"
 #include "thrift/protocol/TBinaryProtocol.h"
 #include "thrift/protocol/TMultiplexedProtocol.h"
+
+#include "Generated/GamesDB/GamesDBSDKDataTypes_constants.h"
 
 #include "Generated/StorageLayer/StorageLayerService.h"
 #include "Generated/BrainCloudService/BrainCloudService.h"

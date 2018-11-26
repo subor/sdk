@@ -28,7 +28,7 @@ namespace Ruyi.SDK.UserServiceExternal
   {
     public interface IAsync
     {
-      Task<Ruyi.SDK.UserServiceExternal.UserInfo_Public> GetPlayingUserInfoAsync(string appId, string userId, CancellationToken cancellationToken);
+      Task<Ruyi.SDK.UserServiceExternal.UserInfo_Public> GetPlayingUserInfoAsync(string userId, CancellationToken cancellationToken);
 
     }
 
@@ -41,12 +41,11 @@ namespace Ruyi.SDK.UserServiceExternal
 
       public Client(TProtocol inputProtocol, TProtocol outputProtocol) : base(inputProtocol, outputProtocol)      {
       }
-      public async Task<Ruyi.SDK.UserServiceExternal.UserInfo_Public> GetPlayingUserInfoAsync(string appId, string userId, CancellationToken cancellationToken)
+      public async Task<Ruyi.SDK.UserServiceExternal.UserInfo_Public> GetPlayingUserInfoAsync(string userId, CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetPlayingUserInfo", TMessageType.Call, SeqId), cancellationToken);
         
         var args = new GetPlayingUserInfoArgs();
-        args.AppId = appId;
         args.UserId = userId;
         
         await args.WriteAsync(OutputProtocol, cancellationToken);
@@ -139,7 +138,7 @@ namespace Ruyi.SDK.UserServiceExternal
         {
           try
           {
-            result.Success = await _iAsync.GetPlayingUserInfoAsync(args.AppId, args.UserId, cancellationToken);
+            result.Success = await _iAsync.GetPlayingUserInfoAsync(args.UserId, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
@@ -169,21 +168,7 @@ namespace Ruyi.SDK.UserServiceExternal
 
     public partial class GetPlayingUserInfoArgs : TBase
     {
-      private string _appId;
       private string _userId;
-
-      public string AppId
-      {
-        get
-        {
-          return _appId;
-        }
-        set
-        {
-          __isset.appId = true;
-          this._appId = value;
-        }
-      }
 
       public string UserId
       {
@@ -202,7 +187,6 @@ namespace Ruyi.SDK.UserServiceExternal
       public Isset __isset;
       public struct Isset
       {
-        public bool appId;
         public bool userId;
       }
 
@@ -228,16 +212,6 @@ namespace Ruyi.SDK.UserServiceExternal
             switch (field.ID)
             {
               case 1:
-                if (field.Type == TType.String)
-                {
-                  AppId = await iprot.ReadStringAsync(cancellationToken);
-                }
-                else
-                {
-                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-                }
-                break;
-              case 2:
                 if (field.Type == TType.String)
                 {
                   UserId = await iprot.ReadStringAsync(cancellationToken);
@@ -271,20 +245,11 @@ namespace Ruyi.SDK.UserServiceExternal
           var struc = new TStruct("GetPlayingUserInfo_args");
           await oprot.WriteStructBeginAsync(struc, cancellationToken);
           var field = new TField();
-          if (AppId != null && __isset.appId)
-          {
-            field.Name = "appId";
-            field.Type = TType.String;
-            field.ID = 1;
-            await oprot.WriteFieldBeginAsync(field, cancellationToken);
-            await oprot.WriteStringAsync(AppId, cancellationToken);
-            await oprot.WriteFieldEndAsync(cancellationToken);
-          }
           if (UserId != null && __isset.userId)
           {
             field.Name = "userId";
             field.Type = TType.String;
-            field.ID = 2;
+            field.ID = 1;
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
             await oprot.WriteStringAsync(UserId, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
@@ -302,13 +267,6 @@ namespace Ruyi.SDK.UserServiceExternal
       {
         var sb = new StringBuilder("GetPlayingUserInfo_args(");
         bool __first = true;
-        if (AppId != null && __isset.appId)
-        {
-          if(!__first) { sb.Append(", "); }
-          __first = false;
-          sb.Append("AppId: ");
-          sb.Append(AppId);
-        }
         if (UserId != null && __isset.userId)
         {
           if(!__first) { sb.Append(", "); }

@@ -193,6 +193,17 @@ struct TitleMainIconNotification {
     3: TitleMainIconNotificationType NotificationType,
 }
 
+struct AppBaseInfo {
+    1: string appId,
+    2: string name,
+    3: string icon,
+    4: string description,
+    5: list<string> properties,
+    6: list<string> platform,
+    7: i32 size,
+    8: list<string> languages,
+}
+
 struct EventNotification {
     1: string key,
     2: JSON contents = "{}",
