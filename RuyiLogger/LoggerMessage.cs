@@ -105,14 +105,12 @@ namespace Ruyi.Logging
         }
     }
 
+    /// <summary>
+    /// "Extended" logging message with additional information
+    /// </summary>
+    /// <seealso cref="Ruyi.Logging.LoggerMessage" />
     public class LoggerMessageEx : LoggerMessage
     {
-        public LoggerMessageEx()
-        {
-            // Exceptions should default to being errors
-            Level = LogLevel.Error;
-        }
-
         /// <summary>
         /// Original exception
         /// </summary>
