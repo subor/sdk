@@ -10,7 +10,6 @@
 			"Ruyi*/**": true,
 			"SDK.*/**": true,
 			"Service*/**": true,
-			"ThriftFiles/**": true,
 			"UnitTests/**": true,
 			"x64/**": true,
 		},
