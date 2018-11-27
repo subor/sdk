@@ -3680,20 +3680,11 @@ class BrainCloudServiceIf {
    * 
    * @param productId The ID of the product to add to the cart (usually a Game ID).
    * 
-   * @param clientIndex
-   */
-  virtual void Shopping_AddToCart_SSFO(std::string& _return, const std::string& productId, const int32_t clientIndex) = 0;
-
-  /**
-   * Add a product to the player's shopping cart.
-   * 
-   * @param productId The ID of the product to add to the cart (usually a Game ID).
-   * 
    * @param quantity The amount of this product to add.
    * 
    * @param clientIndex
    */
-  virtual void Shopping_AddToCart_SISFO(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) = 0;
+  virtual void Shopping_AddToCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) = 0;
 
   /**
    * Empty the player's shopping cart.
@@ -3705,18 +3696,19 @@ class BrainCloudServiceIf {
   /**
    * Retrieve the player's current shopping cart.
    * 
+   * @param includeDetails
    * @param clientIndex
    */
-  virtual void Shopping_GetCart(std::string& _return, const int32_t clientIndex) = 0;
+  virtual void Shopping_GetCart(std::string& _return, const bool includeDetails, const int32_t clientIndex) = 0;
 
   /**
    * Remove an item from the player's shopping cart.
    * 
-   * @param itemId The ID of the item to remove.
-   * 
+   * @param productId
+   * @param quantity
    * @param clientIndex
    */
-  virtual void Shopping_RemoveFromCart(std::string& _return, const std::string& itemId, const int32_t clientIndex) = 0;
+  virtual void Shopping_RemoveFromCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareScreenshot(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareAchievement(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
@@ -4763,19 +4755,16 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
   void Patch_GetGameManifest(std::string& /* _return */, const std::string& /* gameId */, const int32_t /* clientIndex */) {
     return;
   }
-  void Shopping_AddToCart_SSFO(std::string& /* _return */, const std::string& /* productId */, const int32_t /* clientIndex */) {
-    return;
-  }
-  void Shopping_AddToCart_SISFO(std::string& /* _return */, const std::string& /* productId */, const int32_t /* quantity */, const int32_t /* clientIndex */) {
+  void Shopping_AddToCart(std::string& /* _return */, const std::string& /* productId */, const int32_t /* quantity */, const int32_t /* clientIndex */) {
     return;
   }
   void Shopping_EmptyCart(std::string& /* _return */, const int32_t /* clientIndex */) {
     return;
   }
-  void Shopping_GetCart(std::string& /* _return */, const int32_t /* clientIndex */) {
+  void Shopping_GetCart(std::string& /* _return */, const bool /* includeDetails */, const int32_t /* clientIndex */) {
     return;
   }
-  void Shopping_RemoveFromCart(std::string& /* _return */, const std::string& /* itemId */, const int32_t /* clientIndex */) {
+  void Shopping_RemoveFromCart(std::string& /* _return */, const std::string& /* productId */, const int32_t /* quantity */, const int32_t /* clientIndex */) {
     return;
   }
   void SocialFeed_ShareVideo(std::string& /* _return */, const int32_t /* timestamp */, const std::string& /* resource */, const std::vector<std::string> & /* tagged */, const std::vector<std::string> & /* show */, const std::vector<std::string> & /* block */, const int32_t /* clientIndex */) {
@@ -42487,138 +42476,27 @@ class BrainCloudService_Patch_GetGameManifest_presult {
 
 };
 
-typedef struct _BrainCloudService_Shopping_AddToCart_SSFO_args__isset {
-  _BrainCloudService_Shopping_AddToCart_SSFO_args__isset() : productId(false), clientIndex(false) {}
-  bool productId :1;
-  bool clientIndex :1;
-} _BrainCloudService_Shopping_AddToCart_SSFO_args__isset;
-
-class BrainCloudService_Shopping_AddToCart_SSFO_args {
- public:
-
-  BrainCloudService_Shopping_AddToCart_SSFO_args(const BrainCloudService_Shopping_AddToCart_SSFO_args&);
-  BrainCloudService_Shopping_AddToCart_SSFO_args& operator=(const BrainCloudService_Shopping_AddToCart_SSFO_args&);
-  BrainCloudService_Shopping_AddToCart_SSFO_args() : productId(), clientIndex(0) {
-  }
-
-  virtual ~BrainCloudService_Shopping_AddToCart_SSFO_args() throw();
-  std::string productId;
-  int32_t clientIndex;
-
-  _BrainCloudService_Shopping_AddToCart_SSFO_args__isset __isset;
-
-  void __set_productId(const std::string& val);
-
-  void __set_clientIndex(const int32_t val);
-
-  bool operator == (const BrainCloudService_Shopping_AddToCart_SSFO_args & rhs) const
-  {
-    if (!(productId == rhs.productId))
-      return false;
-    if (!(clientIndex == rhs.clientIndex))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Shopping_AddToCart_SSFO_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Shopping_AddToCart_SSFO_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class BrainCloudService_Shopping_AddToCart_SSFO_pargs {
- public:
-
-
-  virtual ~BrainCloudService_Shopping_AddToCart_SSFO_pargs() throw();
-  const std::string* productId;
-  const int32_t* clientIndex;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _BrainCloudService_Shopping_AddToCart_SSFO_result__isset {
-  _BrainCloudService_Shopping_AddToCart_SSFO_result__isset() : success(false) {}
-  bool success :1;
-} _BrainCloudService_Shopping_AddToCart_SSFO_result__isset;
-
-class BrainCloudService_Shopping_AddToCart_SSFO_result {
- public:
-
-  BrainCloudService_Shopping_AddToCart_SSFO_result(const BrainCloudService_Shopping_AddToCart_SSFO_result&);
-  BrainCloudService_Shopping_AddToCart_SSFO_result& operator=(const BrainCloudService_Shopping_AddToCart_SSFO_result&);
-  BrainCloudService_Shopping_AddToCart_SSFO_result() : success() {
-  }
-
-  virtual ~BrainCloudService_Shopping_AddToCart_SSFO_result() throw();
-  std::string success;
-
-  _BrainCloudService_Shopping_AddToCart_SSFO_result__isset __isset;
-
-  void __set_success(const std::string& val);
-
-  bool operator == (const BrainCloudService_Shopping_AddToCart_SSFO_result & rhs) const
-  {
-    if (!(success == rhs.success))
-      return false;
-    return true;
-  }
-  bool operator != (const BrainCloudService_Shopping_AddToCart_SSFO_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const BrainCloudService_Shopping_AddToCart_SSFO_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _BrainCloudService_Shopping_AddToCart_SSFO_presult__isset {
-  _BrainCloudService_Shopping_AddToCart_SSFO_presult__isset() : success(false) {}
-  bool success :1;
-} _BrainCloudService_Shopping_AddToCart_SSFO_presult__isset;
-
-class BrainCloudService_Shopping_AddToCart_SSFO_presult {
- public:
-
-
-  virtual ~BrainCloudService_Shopping_AddToCart_SSFO_presult() throw();
-  std::string* success;
-
-  _BrainCloudService_Shopping_AddToCart_SSFO_presult__isset __isset;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
-typedef struct _BrainCloudService_Shopping_AddToCart_SISFO_args__isset {
-  _BrainCloudService_Shopping_AddToCart_SISFO_args__isset() : productId(false), quantity(false), clientIndex(false) {}
+typedef struct _BrainCloudService_Shopping_AddToCart_args__isset {
+  _BrainCloudService_Shopping_AddToCart_args__isset() : productId(false), quantity(false), clientIndex(false) {}
   bool productId :1;
   bool quantity :1;
   bool clientIndex :1;
-} _BrainCloudService_Shopping_AddToCart_SISFO_args__isset;
+} _BrainCloudService_Shopping_AddToCart_args__isset;
 
-class BrainCloudService_Shopping_AddToCart_SISFO_args {
+class BrainCloudService_Shopping_AddToCart_args {
  public:
 
-  BrainCloudService_Shopping_AddToCart_SISFO_args(const BrainCloudService_Shopping_AddToCart_SISFO_args&);
-  BrainCloudService_Shopping_AddToCart_SISFO_args& operator=(const BrainCloudService_Shopping_AddToCart_SISFO_args&);
-  BrainCloudService_Shopping_AddToCart_SISFO_args() : productId(), quantity(0), clientIndex(0) {
+  BrainCloudService_Shopping_AddToCart_args(const BrainCloudService_Shopping_AddToCart_args&);
+  BrainCloudService_Shopping_AddToCart_args& operator=(const BrainCloudService_Shopping_AddToCart_args&);
+  BrainCloudService_Shopping_AddToCart_args() : productId(), quantity(0), clientIndex(0) {
   }
 
-  virtual ~BrainCloudService_Shopping_AddToCart_SISFO_args() throw();
+  virtual ~BrainCloudService_Shopping_AddToCart_args() throw();
   std::string productId;
   int32_t quantity;
   int32_t clientIndex;
 
-  _BrainCloudService_Shopping_AddToCart_SISFO_args__isset __isset;
+  _BrainCloudService_Shopping_AddToCart_args__isset __isset;
 
   void __set_productId(const std::string& val);
 
@@ -42626,7 +42504,7 @@ class BrainCloudService_Shopping_AddToCart_SISFO_args {
 
   void __set_clientIndex(const int32_t val);
 
-  bool operator == (const BrainCloudService_Shopping_AddToCart_SISFO_args & rhs) const
+  bool operator == (const BrainCloudService_Shopping_AddToCart_args & rhs) const
   {
     if (!(productId == rhs.productId))
       return false;
@@ -42636,11 +42514,11 @@ class BrainCloudService_Shopping_AddToCart_SISFO_args {
       return false;
     return true;
   }
-  bool operator != (const BrainCloudService_Shopping_AddToCart_SISFO_args &rhs) const {
+  bool operator != (const BrainCloudService_Shopping_AddToCart_args &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const BrainCloudService_Shopping_AddToCart_SISFO_args & ) const;
+  bool operator < (const BrainCloudService_Shopping_AddToCart_args & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -42648,11 +42526,11 @@ class BrainCloudService_Shopping_AddToCart_SISFO_args {
 };
 
 
-class BrainCloudService_Shopping_AddToCart_SISFO_pargs {
+class BrainCloudService_Shopping_AddToCart_pargs {
  public:
 
 
-  virtual ~BrainCloudService_Shopping_AddToCart_SISFO_pargs() throw();
+  virtual ~BrainCloudService_Shopping_AddToCart_pargs() throw();
   const std::string* productId;
   const int32_t* quantity;
   const int32_t* clientIndex;
@@ -42661,56 +42539,56 @@ class BrainCloudService_Shopping_AddToCart_SISFO_pargs {
 
 };
 
-typedef struct _BrainCloudService_Shopping_AddToCart_SISFO_result__isset {
-  _BrainCloudService_Shopping_AddToCart_SISFO_result__isset() : success(false) {}
+typedef struct _BrainCloudService_Shopping_AddToCart_result__isset {
+  _BrainCloudService_Shopping_AddToCart_result__isset() : success(false) {}
   bool success :1;
-} _BrainCloudService_Shopping_AddToCart_SISFO_result__isset;
+} _BrainCloudService_Shopping_AddToCart_result__isset;
 
-class BrainCloudService_Shopping_AddToCart_SISFO_result {
+class BrainCloudService_Shopping_AddToCart_result {
  public:
 
-  BrainCloudService_Shopping_AddToCart_SISFO_result(const BrainCloudService_Shopping_AddToCart_SISFO_result&);
-  BrainCloudService_Shopping_AddToCart_SISFO_result& operator=(const BrainCloudService_Shopping_AddToCart_SISFO_result&);
-  BrainCloudService_Shopping_AddToCart_SISFO_result() : success() {
+  BrainCloudService_Shopping_AddToCart_result(const BrainCloudService_Shopping_AddToCart_result&);
+  BrainCloudService_Shopping_AddToCart_result& operator=(const BrainCloudService_Shopping_AddToCart_result&);
+  BrainCloudService_Shopping_AddToCart_result() : success() {
   }
 
-  virtual ~BrainCloudService_Shopping_AddToCart_SISFO_result() throw();
+  virtual ~BrainCloudService_Shopping_AddToCart_result() throw();
   std::string success;
 
-  _BrainCloudService_Shopping_AddToCart_SISFO_result__isset __isset;
+  _BrainCloudService_Shopping_AddToCart_result__isset __isset;
 
   void __set_success(const std::string& val);
 
-  bool operator == (const BrainCloudService_Shopping_AddToCart_SISFO_result & rhs) const
+  bool operator == (const BrainCloudService_Shopping_AddToCart_result & rhs) const
   {
     if (!(success == rhs.success))
       return false;
     return true;
   }
-  bool operator != (const BrainCloudService_Shopping_AddToCart_SISFO_result &rhs) const {
+  bool operator != (const BrainCloudService_Shopping_AddToCart_result &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const BrainCloudService_Shopping_AddToCart_SISFO_result & ) const;
+  bool operator < (const BrainCloudService_Shopping_AddToCart_result & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
-typedef struct _BrainCloudService_Shopping_AddToCart_SISFO_presult__isset {
-  _BrainCloudService_Shopping_AddToCart_SISFO_presult__isset() : success(false) {}
+typedef struct _BrainCloudService_Shopping_AddToCart_presult__isset {
+  _BrainCloudService_Shopping_AddToCart_presult__isset() : success(false) {}
   bool success :1;
-} _BrainCloudService_Shopping_AddToCart_SISFO_presult__isset;
+} _BrainCloudService_Shopping_AddToCart_presult__isset;
 
-class BrainCloudService_Shopping_AddToCart_SISFO_presult {
+class BrainCloudService_Shopping_AddToCart_presult {
  public:
 
 
-  virtual ~BrainCloudService_Shopping_AddToCart_SISFO_presult() throw();
+  virtual ~BrainCloudService_Shopping_AddToCart_presult() throw();
   std::string* success;
 
-  _BrainCloudService_Shopping_AddToCart_SISFO_presult__isset __isset;
+  _BrainCloudService_Shopping_AddToCart_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -42821,7 +42699,8 @@ class BrainCloudService_Shopping_EmptyCart_presult {
 };
 
 typedef struct _BrainCloudService_Shopping_GetCart_args__isset {
-  _BrainCloudService_Shopping_GetCart_args__isset() : clientIndex(false) {}
+  _BrainCloudService_Shopping_GetCart_args__isset() : includeDetails(false), clientIndex(false) {}
+  bool includeDetails :1;
   bool clientIndex :1;
 } _BrainCloudService_Shopping_GetCart_args__isset;
 
@@ -42830,18 +42709,23 @@ class BrainCloudService_Shopping_GetCart_args {
 
   BrainCloudService_Shopping_GetCart_args(const BrainCloudService_Shopping_GetCart_args&);
   BrainCloudService_Shopping_GetCart_args& operator=(const BrainCloudService_Shopping_GetCart_args&);
-  BrainCloudService_Shopping_GetCart_args() : clientIndex(0) {
+  BrainCloudService_Shopping_GetCart_args() : includeDetails(0), clientIndex(0) {
   }
 
   virtual ~BrainCloudService_Shopping_GetCart_args() throw();
+  bool includeDetails;
   int32_t clientIndex;
 
   _BrainCloudService_Shopping_GetCart_args__isset __isset;
+
+  void __set_includeDetails(const bool val);
 
   void __set_clientIndex(const int32_t val);
 
   bool operator == (const BrainCloudService_Shopping_GetCart_args & rhs) const
   {
+    if (!(includeDetails == rhs.includeDetails))
+      return false;
     if (!(clientIndex == rhs.clientIndex))
       return false;
     return true;
@@ -42863,6 +42747,7 @@ class BrainCloudService_Shopping_GetCart_pargs {
 
 
   virtual ~BrainCloudService_Shopping_GetCart_pargs() throw();
+  const bool* includeDetails;
   const int32_t* clientIndex;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -42925,8 +42810,9 @@ class BrainCloudService_Shopping_GetCart_presult {
 };
 
 typedef struct _BrainCloudService_Shopping_RemoveFromCart_args__isset {
-  _BrainCloudService_Shopping_RemoveFromCart_args__isset() : itemId(false), clientIndex(false) {}
-  bool itemId :1;
+  _BrainCloudService_Shopping_RemoveFromCart_args__isset() : productId(false), quantity(false), clientIndex(false) {}
+  bool productId :1;
+  bool quantity :1;
   bool clientIndex :1;
 } _BrainCloudService_Shopping_RemoveFromCart_args__isset;
 
@@ -42935,22 +42821,27 @@ class BrainCloudService_Shopping_RemoveFromCart_args {
 
   BrainCloudService_Shopping_RemoveFromCart_args(const BrainCloudService_Shopping_RemoveFromCart_args&);
   BrainCloudService_Shopping_RemoveFromCart_args& operator=(const BrainCloudService_Shopping_RemoveFromCart_args&);
-  BrainCloudService_Shopping_RemoveFromCart_args() : itemId(), clientIndex(0) {
+  BrainCloudService_Shopping_RemoveFromCart_args() : productId(), quantity(0), clientIndex(0) {
   }
 
   virtual ~BrainCloudService_Shopping_RemoveFromCart_args() throw();
-  std::string itemId;
+  std::string productId;
+  int32_t quantity;
   int32_t clientIndex;
 
   _BrainCloudService_Shopping_RemoveFromCart_args__isset __isset;
 
-  void __set_itemId(const std::string& val);
+  void __set_productId(const std::string& val);
+
+  void __set_quantity(const int32_t val);
 
   void __set_clientIndex(const int32_t val);
 
   bool operator == (const BrainCloudService_Shopping_RemoveFromCart_args & rhs) const
   {
-    if (!(itemId == rhs.itemId))
+    if (!(productId == rhs.productId))
+      return false;
+    if (!(quantity == rhs.quantity))
       return false;
     if (!(clientIndex == rhs.clientIndex))
       return false;
@@ -42973,7 +42864,8 @@ class BrainCloudService_Shopping_RemoveFromCart_pargs {
 
 
   virtual ~BrainCloudService_Shopping_RemoveFromCart_pargs() throw();
-  const std::string* itemId;
+  const std::string* productId;
+  const int32_t* quantity;
   const int32_t* clientIndex;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -48243,20 +48135,17 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex);
   void send_Patch_GetGameManifest(const std::string& gameId, const int32_t clientIndex);
   void recv_Patch_GetGameManifest(std::string& _return);
-  void Shopping_AddToCart_SSFO(std::string& _return, const std::string& productId, const int32_t clientIndex);
-  void send_Shopping_AddToCart_SSFO(const std::string& productId, const int32_t clientIndex);
-  void recv_Shopping_AddToCart_SSFO(std::string& _return);
-  void Shopping_AddToCart_SISFO(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex);
-  void send_Shopping_AddToCart_SISFO(const std::string& productId, const int32_t quantity, const int32_t clientIndex);
-  void recv_Shopping_AddToCart_SISFO(std::string& _return);
+  void Shopping_AddToCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex);
+  void send_Shopping_AddToCart(const std::string& productId, const int32_t quantity, const int32_t clientIndex);
+  void recv_Shopping_AddToCart(std::string& _return);
   void Shopping_EmptyCart(std::string& _return, const int32_t clientIndex);
   void send_Shopping_EmptyCart(const int32_t clientIndex);
   void recv_Shopping_EmptyCart(std::string& _return);
-  void Shopping_GetCart(std::string& _return, const int32_t clientIndex);
-  void send_Shopping_GetCart(const int32_t clientIndex);
+  void Shopping_GetCart(std::string& _return, const bool includeDetails, const int32_t clientIndex);
+  void send_Shopping_GetCart(const bool includeDetails, const int32_t clientIndex);
   void recv_Shopping_GetCart(std::string& _return);
-  void Shopping_RemoveFromCart(std::string& _return, const std::string& itemId, const int32_t clientIndex);
-  void send_Shopping_RemoveFromCart(const std::string& itemId, const int32_t clientIndex);
+  void Shopping_RemoveFromCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex);
+  void send_Shopping_RemoveFromCart(const std::string& productId, const int32_t quantity, const int32_t clientIndex);
   void recv_Shopping_RemoveFromCart(std::string& _return);
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex);
   void send_SocialFeed_ShareVideo(const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex);
@@ -48700,8 +48589,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Party_GetFriendsParties(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Party_GetMyParty(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Patch_GetGameManifest(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_Shopping_AddToCart_SSFO(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_Shopping_AddToCart_SISFO(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Shopping_AddToCart(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Shopping_EmptyCart(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Shopping_GetCart(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Shopping_RemoveFromCart(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -49067,8 +48955,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Party_GetFriendsParties"] = &BrainCloudServiceProcessor::process_Party_GetFriendsParties;
     processMap_["Party_GetMyParty"] = &BrainCloudServiceProcessor::process_Party_GetMyParty;
     processMap_["Patch_GetGameManifest"] = &BrainCloudServiceProcessor::process_Patch_GetGameManifest;
-    processMap_["Shopping_AddToCart_SSFO"] = &BrainCloudServiceProcessor::process_Shopping_AddToCart_SSFO;
-    processMap_["Shopping_AddToCart_SISFO"] = &BrainCloudServiceProcessor::process_Shopping_AddToCart_SISFO;
+    processMap_["Shopping_AddToCart"] = &BrainCloudServiceProcessor::process_Shopping_AddToCart;
     processMap_["Shopping_EmptyCart"] = &BrainCloudServiceProcessor::process_Shopping_EmptyCart;
     processMap_["Shopping_GetCart"] = &BrainCloudServiceProcessor::process_Shopping_GetCart;
     processMap_["Shopping_RemoveFromCart"] = &BrainCloudServiceProcessor::process_Shopping_RemoveFromCart;
@@ -52356,23 +52243,13 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
     return;
   }
 
-  void Shopping_AddToCart_SSFO(std::string& _return, const std::string& productId, const int32_t clientIndex) {
+  void Shopping_AddToCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Shopping_AddToCart_SSFO(_return, productId, clientIndex);
+      ifaces_[i]->Shopping_AddToCart(_return, productId, quantity, clientIndex);
     }
-    ifaces_[i]->Shopping_AddToCart_SSFO(_return, productId, clientIndex);
-    return;
-  }
-
-  void Shopping_AddToCart_SISFO(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Shopping_AddToCart_SISFO(_return, productId, quantity, clientIndex);
-    }
-    ifaces_[i]->Shopping_AddToCart_SISFO(_return, productId, quantity, clientIndex);
+    ifaces_[i]->Shopping_AddToCart(_return, productId, quantity, clientIndex);
     return;
   }
 
@@ -52386,23 +52263,23 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
     return;
   }
 
-  void Shopping_GetCart(std::string& _return, const int32_t clientIndex) {
+  void Shopping_GetCart(std::string& _return, const bool includeDetails, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Shopping_GetCart(_return, clientIndex);
+      ifaces_[i]->Shopping_GetCart(_return, includeDetails, clientIndex);
     }
-    ifaces_[i]->Shopping_GetCart(_return, clientIndex);
+    ifaces_[i]->Shopping_GetCart(_return, includeDetails, clientIndex);
     return;
   }
 
-  void Shopping_RemoveFromCart(std::string& _return, const std::string& itemId, const int32_t clientIndex) {
+  void Shopping_RemoveFromCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Shopping_RemoveFromCart(_return, itemId, clientIndex);
+      ifaces_[i]->Shopping_RemoveFromCart(_return, productId, quantity, clientIndex);
     }
-    ifaces_[i]->Shopping_RemoveFromCart(_return, itemId, clientIndex);
+    ifaces_[i]->Shopping_RemoveFromCart(_return, productId, quantity, clientIndex);
     return;
   }
 
@@ -53751,20 +53628,17 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex);
   int32_t send_Patch_GetGameManifest(const std::string& gameId, const int32_t clientIndex);
   void recv_Patch_GetGameManifest(std::string& _return, const int32_t seqid);
-  void Shopping_AddToCart_SSFO(std::string& _return, const std::string& productId, const int32_t clientIndex);
-  int32_t send_Shopping_AddToCart_SSFO(const std::string& productId, const int32_t clientIndex);
-  void recv_Shopping_AddToCart_SSFO(std::string& _return, const int32_t seqid);
-  void Shopping_AddToCart_SISFO(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex);
-  int32_t send_Shopping_AddToCart_SISFO(const std::string& productId, const int32_t quantity, const int32_t clientIndex);
-  void recv_Shopping_AddToCart_SISFO(std::string& _return, const int32_t seqid);
+  void Shopping_AddToCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex);
+  int32_t send_Shopping_AddToCart(const std::string& productId, const int32_t quantity, const int32_t clientIndex);
+  void recv_Shopping_AddToCart(std::string& _return, const int32_t seqid);
   void Shopping_EmptyCart(std::string& _return, const int32_t clientIndex);
   int32_t send_Shopping_EmptyCart(const int32_t clientIndex);
   void recv_Shopping_EmptyCart(std::string& _return, const int32_t seqid);
-  void Shopping_GetCart(std::string& _return, const int32_t clientIndex);
-  int32_t send_Shopping_GetCart(const int32_t clientIndex);
+  void Shopping_GetCart(std::string& _return, const bool includeDetails, const int32_t clientIndex);
+  int32_t send_Shopping_GetCart(const bool includeDetails, const int32_t clientIndex);
   void recv_Shopping_GetCart(std::string& _return, const int32_t seqid);
-  void Shopping_RemoveFromCart(std::string& _return, const std::string& itemId, const int32_t clientIndex);
-  int32_t send_Shopping_RemoveFromCart(const std::string& itemId, const int32_t clientIndex);
+  void Shopping_RemoveFromCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex);
+  int32_t send_Shopping_RemoveFromCart(const std::string& productId, const int32_t quantity, const int32_t clientIndex);
   void recv_Shopping_RemoveFromCart(std::string& _return, const int32_t seqid);
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex);
   int32_t send_SocialFeed_ShareVideo(const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex);

@@ -3210,14 +3210,7 @@ service BrainCloudService {
 	string Patch_GetGameManifest(1: string gameId, 2: i32 clientIndex),
 
 	/** Add a product to the player's shopping cart. */
-	string Shopping_AddToCart_SSFO(
-		/** The ID of the product to add to the cart (usually a Game ID). */
-		1: string productId, 
-		2: i32 clientIndex
-	),
-
-	/** Add a product to the player's shopping cart. */
-	string Shopping_AddToCart_SISFO(
+	string Shopping_AddToCart(
 		/** The ID of the product to add to the cart (usually a Game ID). */
 		1: string productId, 
 		
@@ -3230,14 +3223,10 @@ service BrainCloudService {
 	string Shopping_EmptyCart(1: i32 clientIndex),
 
 	/** Retrieve the player's current shopping cart. */
-	string Shopping_GetCart(1: i32 clientIndex),
+	string Shopping_GetCart(1: bool includeDetails, 2: i32 clientIndex),
 
 	/** Remove an item from the player's shopping cart. */
-	string Shopping_RemoveFromCart(
-		/** The ID of the item to remove. */
-		1: string itemId, 
-		2: i32 clientIndex
-	),
+	string Shopping_RemoveFromCart(1: string productId, 2: i32 quantity, 3: i32 clientIndex),
 
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 

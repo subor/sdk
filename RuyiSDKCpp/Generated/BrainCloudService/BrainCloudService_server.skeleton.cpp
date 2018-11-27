@@ -4670,25 +4670,13 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param productId The ID of the product to add to the cart (usually a Game ID).
    * 
-   * @param clientIndex
-   */
-  void Shopping_AddToCart_SSFO(std::string& _return, const std::string& productId, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Shopping_AddToCart_SSFO\n");
-  }
-
-  /**
-   * Add a product to the player's shopping cart.
-   * 
-   * @param productId The ID of the product to add to the cart (usually a Game ID).
-   * 
    * @param quantity The amount of this product to add.
    * 
    * @param clientIndex
    */
-  void Shopping_AddToCart_SISFO(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) {
+  void Shopping_AddToCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) {
     // Your implementation goes here
-    printf("Shopping_AddToCart_SISFO\n");
+    printf("Shopping_AddToCart\n");
   }
 
   /**
@@ -4704,9 +4692,10 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Retrieve the player's current shopping cart.
    * 
+   * @param includeDetails
    * @param clientIndex
    */
-  void Shopping_GetCart(std::string& _return, const int32_t clientIndex) {
+  void Shopping_GetCart(std::string& _return, const bool includeDetails, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Shopping_GetCart\n");
   }
@@ -4714,11 +4703,11 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Remove an item from the player's shopping cart.
    * 
-   * @param itemId The ID of the item to remove.
-   * 
+   * @param productId
+   * @param quantity
    * @param clientIndex
    */
-  void Shopping_RemoveFromCart(std::string& _return, const std::string& itemId, const int32_t clientIndex) {
+  void Shopping_RemoveFromCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Shopping_RemoveFromCart\n");
   }
