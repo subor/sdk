@@ -13,6 +13,68 @@
 
 namespace Ruyi { namespace SDK { namespace CommonType {
 
+int _kPowerOperationsValues[] = {
+  PowerOperations::None,
+  PowerOperations::RestartDevice,
+  PowerOperations::ShutdownDevice,
+  PowerOperations::ShutdownLayer0,
+  PowerOperations::RestartLayer0,
+  PowerOperations::SwitchToLowPower,
+  PowerOperations::SwitchToHighPower,
+  PowerOperations::SleepDevice,
+  PowerOperations::ShutdownLayer1,
+  PowerOperations::Cancel,
+  PowerOperations::Ping,
+  PowerOperations::FakeUserLogout
+};
+const char* _kPowerOperationsNames[] = {
+  "None",
+  "RestartDevice",
+  "ShutdownDevice",
+  "ShutdownLayer0",
+  "RestartLayer0",
+  "SwitchToLowPower",
+  "SwitchToHighPower",
+  "SleepDevice",
+  "ShutdownLayer1",
+  "Cancel",
+  "Ping",
+  "FakeUserLogout"
+};
+const std::map<int, const char*> _PowerOperations_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(12, _kPowerOperationsValues, _kPowerOperationsNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
+std::ostream& operator<<(std::ostream& out, const PowerOperations::type& val) {
+  std::map<int, const char*>::const_iterator it = _PowerOperations_VALUES_TO_NAMES.find(val);
+  if (it != _PowerOperations_VALUES_TO_NAMES.end()) {
+    out << it->second;
+  } else {
+    out << static_cast<int>(val);
+  }
+  return out;
+}
+
+int _kUserTypeValues[] = {
+  UserType::Guest,
+  UserType::RuyiUser,
+  UserType::Developer
+};
+const char* _kUserTypeNames[] = {
+  "Guest",
+  "RuyiUser",
+  "Developer"
+};
+const std::map<int, const char*> _UserType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(3, _kUserTypeValues, _kUserTypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+
+std::ostream& operator<<(std::ostream& out, const UserType::type& val) {
+  std::map<int, const char*>::const_iterator it = _UserType_VALUES_TO_NAMES.find(val);
+  if (it != _UserType_VALUES_TO_NAMES.end()) {
+    out << it->second;
+  } else {
+    out << static_cast<int>(val);
+  }
+  return out;
+}
+
 int _kLoginStateValues[] = {
   LoginState::Logout,
   LoginState::Login

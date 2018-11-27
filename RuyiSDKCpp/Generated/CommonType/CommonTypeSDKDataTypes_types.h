@@ -20,6 +20,39 @@
 
 namespace Ruyi { namespace SDK { namespace CommonType {
 
+struct PowerOperations {
+  enum type {
+    None = 0,
+    RestartDevice = 2,
+    ShutdownDevice = 3,
+    ShutdownLayer0 = 4,
+    RestartLayer0 = 5,
+    SwitchToLowPower = 8,
+    SwitchToHighPower = 9,
+    SleepDevice = 10,
+    ShutdownLayer1 = 12,
+    Cancel = 15,
+    Ping = 16,
+    FakeUserLogout = 17
+  };
+};
+
+extern const std::map<int, const char*> _PowerOperations_VALUES_TO_NAMES;
+
+std::ostream& operator<<(std::ostream& out, const PowerOperations::type& val);
+
+struct UserType {
+  enum type {
+    Guest = 0,
+    RuyiUser = 1,
+    Developer = 2
+  };
+};
+
+extern const std::map<int, const char*> _UserType_VALUES_TO_NAMES;
+
+std::ostream& operator<<(std::ostream& out, const UserType::type& val);
+
 struct LoginState {
   enum type {
     Logout = 0,
