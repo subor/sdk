@@ -46,5 +46,7 @@ void MessageCreatorRuyiSDKCpp()
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.UserServiceExternal.InputActionEvent", Ruyi::SDK::UserServiceExternal::InputActionEvent);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.UserServiceExternal.UserEvent", Ruyi::SDK::UserServiceExternal::UserEvent);
 	REGIST_CREATION_FUNCTION("Ruyi.SDK.UserServiceExternal.UserInfo_Public", Ruyi::SDK::UserServiceExternal::UserInfo_Public);
-	REGIST_CREATION_FUNCTION("Ruyi.SDK.OverlayManagerExternal.NotifyTakeScreenShot", Ruyi::SDK::OverlayManagerExternal::NotifyTakeScreenShot);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.Overlay.OverlayState", Ruyi::SDK::Overlay::OverlayState);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.Overlay.NotifyTakeScreenShot", Ruyi::SDK::Overlay::NotifyTakeScreenShot);
+	REGIST_CREATION_FUNCTION("Ruyi.SDK.Overlay.VideoCaptureState", Ruyi::SDK::Overlay::VideoCaptureState);
 }
