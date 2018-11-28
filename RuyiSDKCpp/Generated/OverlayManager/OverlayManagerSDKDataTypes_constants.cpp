@@ -6,7 +6,7 @@
  */
 #include "OverlayManagerSDKDataTypes_constants.h"
 
-namespace Ruyi { namespace SDK { namespace OverlayManagerExternal {
+namespace Ruyi { namespace SDK { namespace Overlay {
 
 const OverlayManagerSDKDataTypesConstants g_OverlayManagerSDKDataTypes_constants;
 
