@@ -221,12 +221,13 @@ struct TitleMainIconNotification {
 struct AppBaseInfo {
     1: string appId,
     2: string name,
-    3: string icon,
-    4: string description,
-    5: list<string> properties,
-    6: list<string> platform,
-    7: i32 size,
-    8: list<string> languages,
+    3: string icon_hd,
+    4: string icon_ld,
+    5: string description,
+    6: list<string> properties,
+    7: list<string> platform,
+    8: i32 size,
+    9: list<string> languages,
 }
 
 struct EventNotification {

@@ -3023,8 +3023,12 @@ void AppBaseInfo::__set_name(const std::string& val) {
   this->name = val;
 }
 
-void AppBaseInfo::__set_icon(const std::string& val) {
-  this->icon = val;
+void AppBaseInfo::__set_icon_hd(const std::string& val) {
+  this->icon_hd = val;
+}
+
+void AppBaseInfo::__set_icon_ld(const std::string& val) {
+  this->icon_ld = val;
 }
 
 void AppBaseInfo::__set_description(const std::string& val) {
@@ -3092,13 +3096,21 @@ uint32_t AppBaseInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 3:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->icon);
-          this->__isset.icon = true;
+          xfer += iprot->readString(this->icon_hd);
+          this->__isset.icon_hd = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 4:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->icon_ld);
+          this->__isset.icon_ld = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->description);
           this->__isset.description = true;
@@ -3106,7 +3118,7 @@ uint32_t AppBaseInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 5:
+      case 6:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->properties.clear();
@@ -3126,7 +3138,7 @@ uint32_t AppBaseInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 6:
+      case 7:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->platform.clear();
@@ -3146,7 +3158,7 @@ uint32_t AppBaseInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 7:
+      case 8:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->size);
           this->__isset.size = true;
@@ -3154,7 +3166,7 @@ uint32_t AppBaseInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 8:
+      case 9:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->languages.clear();
@@ -3199,15 +3211,19 @@ uint32_t AppBaseInfo::write(::apache::thrift::protocol::TProtocol* oprot) const 
   xfer += oprot->writeString(this->name);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("icon", ::apache::thrift::protocol::T_STRING, 3);
-  xfer += oprot->writeString(this->icon);
+  xfer += oprot->writeFieldBegin("icon_hd", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString(this->icon_hd);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("description", ::apache::thrift::protocol::T_STRING, 4);
+  xfer += oprot->writeFieldBegin("icon_ld", ::apache::thrift::protocol::T_STRING, 4);
+  xfer += oprot->writeString(this->icon_ld);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("description", ::apache::thrift::protocol::T_STRING, 5);
   xfer += oprot->writeString(this->description);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("properties", ::apache::thrift::protocol::T_LIST, 5);
+  xfer += oprot->writeFieldBegin("properties", ::apache::thrift::protocol::T_LIST, 6);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->properties.size()));
     std::vector<std::string> ::const_iterator _iter113;
@@ -3219,7 +3235,7 @@ uint32_t AppBaseInfo::write(::apache::thrift::protocol::TProtocol* oprot) const 
   }
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("platform", ::apache::thrift::protocol::T_LIST, 6);
+  xfer += oprot->writeFieldBegin("platform", ::apache::thrift::protocol::T_LIST, 7);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->platform.size()));
     std::vector<std::string> ::const_iterator _iter114;
@@ -3231,11 +3247,11 @@ uint32_t AppBaseInfo::write(::apache::thrift::protocol::TProtocol* oprot) const 
   }
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("size", ::apache::thrift::protocol::T_I32, 7);
+  xfer += oprot->writeFieldBegin("size", ::apache::thrift::protocol::T_I32, 8);
   xfer += oprot->writeI32(this->size);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("languages", ::apache::thrift::protocol::T_LIST, 8);
+  xfer += oprot->writeFieldBegin("languages", ::apache::thrift::protocol::T_LIST, 9);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->languages.size()));
     std::vector<std::string> ::const_iterator _iter115;
@@ -3256,7 +3272,8 @@ void swap(AppBaseInfo &a, AppBaseInfo &b) {
   using ::std::swap;
   swap(a.appId, b.appId);
   swap(a.name, b.name);
-  swap(a.icon, b.icon);
+  swap(a.icon_hd, b.icon_hd);
+  swap(a.icon_ld, b.icon_ld);
   swap(a.description, b.description);
   swap(a.properties, b.properties);
   swap(a.platform, b.platform);
@@ -3268,7 +3285,8 @@ void swap(AppBaseInfo &a, AppBaseInfo &b) {
 AppBaseInfo::AppBaseInfo(const AppBaseInfo& other116) {
   appId = other116.appId;
   name = other116.name;
-  icon = other116.icon;
+  icon_hd = other116.icon_hd;
+  icon_ld = other116.icon_ld;
   description = other116.description;
   properties = other116.properties;
   platform = other116.platform;
@@ -3279,7 +3297,8 @@ AppBaseInfo::AppBaseInfo(const AppBaseInfo& other116) {
 AppBaseInfo& AppBaseInfo::operator=(const AppBaseInfo& other117) {
   appId = other117.appId;
   name = other117.name;
-  icon = other117.icon;
+  icon_hd = other117.icon_hd;
+  icon_ld = other117.icon_ld;
   description = other117.description;
   properties = other117.properties;
   platform = other117.platform;
@@ -3293,7 +3312,8 @@ void AppBaseInfo::printTo(std::ostream& out) const {
   out << "AppBaseInfo(";
   out << "appId=" << to_string(appId);
   out << ", " << "name=" << to_string(name);
-  out << ", " << "icon=" << to_string(icon);
+  out << ", " << "icon_hd=" << to_string(icon_hd);
+  out << ", " << "icon_ld=" << to_string(icon_ld);
   out << ", " << "description=" << to_string(description);
   out << ", " << "properties=" << to_string(properties);
   out << ", " << "platform=" << to_string(platform);

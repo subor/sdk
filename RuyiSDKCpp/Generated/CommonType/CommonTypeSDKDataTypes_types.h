@@ -1205,10 +1205,11 @@ void swap(TitleMainIconNotification &a, TitleMainIconNotification &b);
 std::ostream& operator<<(std::ostream& out, const TitleMainIconNotification& obj);
 
 typedef struct _AppBaseInfo__isset {
-  _AppBaseInfo__isset() : appId(false), name(false), icon(false), description(false), properties(false), platform(false), size(false), languages(false) {}
+  _AppBaseInfo__isset() : appId(false), name(false), icon_hd(false), icon_ld(false), description(false), properties(false), platform(false), size(false), languages(false) {}
   bool appId :1;
   bool name :1;
-  bool icon :1;
+  bool icon_hd :1;
+  bool icon_ld :1;
   bool description :1;
   bool properties :1;
   bool platform :1;
@@ -1221,13 +1222,14 @@ class AppBaseInfo : public virtual ::apache::thrift::TBase {
 
   AppBaseInfo(const AppBaseInfo&);
   AppBaseInfo& operator=(const AppBaseInfo&);
-  AppBaseInfo() : appId(), name(), icon(), description(), size(0) {
+  AppBaseInfo() : appId(), name(), icon_hd(), icon_ld(), description(), size(0) {
   }
 
   virtual ~AppBaseInfo() throw();
   std::string appId;
   std::string name;
-  std::string icon;
+  std::string icon_hd;
+  std::string icon_ld;
   std::string description;
   std::vector<std::string>  properties;
   std::vector<std::string>  platform;
@@ -1240,7 +1242,9 @@ class AppBaseInfo : public virtual ::apache::thrift::TBase {
 
   void __set_name(const std::string& val);
 
-  void __set_icon(const std::string& val);
+  void __set_icon_hd(const std::string& val);
+
+  void __set_icon_ld(const std::string& val);
 
   void __set_description(const std::string& val);
 
@@ -1258,7 +1262,9 @@ class AppBaseInfo : public virtual ::apache::thrift::TBase {
       return false;
     if (!(name == rhs.name))
       return false;
-    if (!(icon == rhs.icon))
+    if (!(icon_hd == rhs.icon_hd))
+      return false;
+    if (!(icon_ld == rhs.icon_ld))
       return false;
     if (!(description == rhs.description))
       return false;
