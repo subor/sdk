@@ -6,7 +6,7 @@
  */
 #include "OverlayManagerSDKServices_constants.h"
 
-namespace Ruyi { namespace SDK { namespace OverlayManagerExternal {
+namespace Ruyi { namespace SDK { namespace Overlay {
 
 const OverlayManagerSDKServicesConstants g_OverlayManagerSDKServices_constants;
 

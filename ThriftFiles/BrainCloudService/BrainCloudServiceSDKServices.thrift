@@ -290,6 +290,54 @@ service BrainCloudService {
 
 	string Authentication_CheckUsernameExists(1: string gameId, 2: string playerName, 3: i32 clientIndex),
 
+	/** Returns the sessionId or empty string if no session present. */
+	string Client_GetSessionId(1: i32 clientIndex),
+
+	/** Returns true if the user is currently authenticated.
+            If a session time out or session invalidation is returned from executing a
+            sever API call, this flag will reset back to false. */
+	bool Client_IsAuthenticated(1: i32 clientIndex),
+
+	/** Returns true if brainCloud has been initialized. */
+	bool Client_IsInitialized(1: i32 clientIndex),
+
+	/** Method initializes the BrainCloudClient. */
+	void Client_Initialize_SSS(
+		/** The secret key for your app */
+		1: string secretKey, 
+		2: string appId, 
+		
+		/** The app version */
+		3: string appVersion, 
+		4: i32 clientIndex
+	),
+
+	/** Method initializes the BrainCloudClient. */
+	void Client_Initialize_SSSS(
+		/** The URL to the brainCloud server */
+		1: string serverURL, 
+		
+		/** The secret key for your app */
+		2: string secretKey, 
+		
+		/** The app id */
+		3: string appId, 
+		
+		/** The app version */
+		4: string appVersion, 
+		5: i32 clientIndex
+	),
+
+	/** Initialize the identity aspects of brainCloud. */
+	void Client_InitializeIdentity(
+		/** The profile id */
+		1: string profileId, 
+		
+		/** The anonymous id */
+		2: string anonymousId, 
+		3: i32 clientIndex
+	),
+
 	/** Update method needs to be called regularly in order
             to process incoming and outgoing messages. */
 	void Client_Update(1: i32 clientIndex),
@@ -436,54 +484,6 @@ service BrainCloudService {
 		/** ISO 639-1 two-letter language code */
 		1: string languageCode, 
 		2: i32 clientIndex
-	),
-
-	/** Returns the sessionId or empty string if no session present. */
-	string Client_GetSessionId(1: i32 clientIndex),
-
-	/** Returns true if the user is currently authenticated.
-            If a session time out or session invalidation is returned from executing a
-            sever API call, this flag will reset back to false. */
-	bool Client_IsAuthenticated(1: i32 clientIndex),
-
-	/** Returns true if brainCloud has been initialized. */
-	bool Client_IsInitialized(1: i32 clientIndex),
-
-	/** Method initializes the BrainCloudClient. */
-	void Client_Initialize_SSS(
-		/** The secret key for your app */
-		1: string secretKey, 
-		2: string appId, 
-		
-		/** The app version */
-		3: string appVersion, 
-		4: i32 clientIndex
-	),
-
-	/** Method initializes the BrainCloudClient. */
-	void Client_Initialize_SSSS(
-		/** The URL to the brainCloud server */
-		1: string serverURL, 
-		
-		/** The secret key for your app */
-		2: string secretKey, 
-		
-		/** The app id */
-		3: string appId, 
-		
-		/** The app version */
-		4: string appVersion, 
-		5: i32 clientIndex
-	),
-
-	/** Initialize the identity aspects of brainCloud. */
-	void Client_InitializeIdentity(
-		/** The profile id */
-		1: string profileId, 
-		
-		/** The anonymous id */
-		2: string anonymousId, 
-		3: i32 clientIndex
 	),
 
 	/** Creates custom data stream page event */
@@ -3208,6 +3208,25 @@ service BrainCloudService {
 	string Party_GetMyParty(1: i32 clientIndex),
 
 	string Patch_GetGameManifest(1: string gameId, 2: i32 clientIndex),
+
+	/** Add a product to the player's shopping cart. */
+	string Shopping_AddToCart(
+		/** The ID of the product to add to the cart (usually a Game ID). */
+		1: string productId, 
+		
+		/** The amount of this product to add. */
+		2: i32 quantity, 
+		3: i32 clientIndex
+	),
+
+	/** Empty the player's shopping cart. */
+	string Shopping_EmptyCart(1: i32 clientIndex),
+
+	/** Retrieve the player's current shopping cart. */
+	string Shopping_GetCart(1: bool includeDetails, 2: i32 clientIndex),
+
+	/** Remove an item from the player's shopping cart. */
+	string Shopping_RemoveFromCart(1: string productId, 2: i32 quantity, 3: i32 clientIndex),
 
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 

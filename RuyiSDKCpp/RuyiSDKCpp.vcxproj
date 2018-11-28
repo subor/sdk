@@ -476,7 +476,7 @@
     <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKServices_constants.cpp" />
     <ClCompile Include="Generated\LocalizationService\LocalizationServiceSDKServices_types.cpp" />
     <ClCompile Include="Generated\MessageCreatorRuyiSDKCpp.cpp" />
-    <ClCompile Include="Generated\OverlayManager\ExternalOverlayManagerService.cpp" />
+    <ClCompile Include="Generated\OverlayManager\OverlayExternalService.cpp" />
     <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_constants.cpp" />
     <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKDataTypes_types.cpp" />
     <ClCompile Include="Generated\OverlayManager\OverlayManagerSDKServices_constants.cpp" />

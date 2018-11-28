@@ -393,6 +393,85 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   }
 
   /**
+   * Returns the sessionId or empty string if no session present.
+   * 
+   * @param clientIndex
+   */
+  void Client_GetSessionId(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_GetSessionId\n");
+  }
+
+  /**
+   * Returns true if the user is currently authenticated.
+   * If a session time out or session invalidation is returned from executing a
+   * sever API call, this flag will reset back to false.
+   * 
+   * @param clientIndex
+   */
+  bool Client_IsAuthenticated(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_IsAuthenticated\n");
+  }
+
+  /**
+   * Returns true if brainCloud has been initialized.
+   * 
+   * @param clientIndex
+   */
+  bool Client_IsInitialized(const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_IsInitialized\n");
+  }
+
+  /**
+   * Method initializes the BrainCloudClient.
+   * 
+   * @param secretKey The secret key for your app
+   * 
+   * @param appId
+   * @param appVersion The app version
+   * 
+   * @param clientIndex
+   */
+  void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_Initialize_SSS\n");
+  }
+
+  /**
+   * Method initializes the BrainCloudClient.
+   * 
+   * @param serverURL The URL to the brainCloud server
+   * 
+   * @param secretKey The secret key for your app
+   * 
+   * @param appId The app id
+   * 
+   * @param appVersion The app version
+   * 
+   * @param clientIndex
+   */
+  void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_Initialize_SSSS\n");
+  }
+
+  /**
+   * Initialize the identity aspects of brainCloud.
+   * 
+   * @param profileId The profile id
+   * 
+   * @param anonymousId The anonymous id
+   * 
+   * @param clientIndex
+   */
+  void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Client_InitializeIdentity\n");
+  }
+
+  /**
    * Update method needs to be called regularly in order
    * to process incoming and outgoing messages.
    * 
@@ -652,85 +731,6 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Client_OverrideLanguageCode(const std::string& languageCode, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Client_OverrideLanguageCode\n");
-  }
-
-  /**
-   * Returns the sessionId or empty string if no session present.
-   * 
-   * @param clientIndex
-   */
-  void Client_GetSessionId(std::string& _return, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_GetSessionId\n");
-  }
-
-  /**
-   * Returns true if the user is currently authenticated.
-   * If a session time out or session invalidation is returned from executing a
-   * sever API call, this flag will reset back to false.
-   * 
-   * @param clientIndex
-   */
-  bool Client_IsAuthenticated(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_IsAuthenticated\n");
-  }
-
-  /**
-   * Returns true if brainCloud has been initialized.
-   * 
-   * @param clientIndex
-   */
-  bool Client_IsInitialized(const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_IsInitialized\n");
-  }
-
-  /**
-   * Method initializes the BrainCloudClient.
-   * 
-   * @param secretKey The secret key for your app
-   * 
-   * @param appId
-   * @param appVersion The app version
-   * 
-   * @param clientIndex
-   */
-  void Client_Initialize_SSS(const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_Initialize_SSS\n");
-  }
-
-  /**
-   * Method initializes the BrainCloudClient.
-   * 
-   * @param serverURL The URL to the brainCloud server
-   * 
-   * @param secretKey The secret key for your app
-   * 
-   * @param appId The app id
-   * 
-   * @param appVersion The app version
-   * 
-   * @param clientIndex
-   */
-  void Client_Initialize_SSSS(const std::string& serverURL, const std::string& secretKey, const std::string& appId, const std::string& appVersion, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_Initialize_SSSS\n");
-  }
-
-  /**
-   * Initialize the identity aspects of brainCloud.
-   * 
-   * @param profileId The profile id
-   * 
-   * @param anonymousId The anonymous id
-   * 
-   * @param clientIndex
-   */
-  void Client_InitializeIdentity(const std::string& profileId, const std::string& anonymousId, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Client_InitializeIdentity\n");
   }
 
   /**
@@ -4663,6 +4663,53 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Patch_GetGameManifest(std::string& _return, const std::string& gameId, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Patch_GetGameManifest\n");
+  }
+
+  /**
+   * Add a product to the player's shopping cart.
+   * 
+   * @param productId The ID of the product to add to the cart (usually a Game ID).
+   * 
+   * @param quantity The amount of this product to add.
+   * 
+   * @param clientIndex
+   */
+  void Shopping_AddToCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_AddToCart\n");
+  }
+
+  /**
+   * Empty the player's shopping cart.
+   * 
+   * @param clientIndex
+   */
+  void Shopping_EmptyCart(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_EmptyCart\n");
+  }
+
+  /**
+   * Retrieve the player's current shopping cart.
+   * 
+   * @param includeDetails
+   * @param clientIndex
+   */
+  void Shopping_GetCart(std::string& _return, const bool includeDetails, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetCart\n");
+  }
+
+  /**
+   * Remove an item from the player's shopping cart.
+   * 
+   * @param productId
+   * @param quantity
+   * @param clientIndex
+   */
+  void Shopping_RemoveFromCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_RemoveFromCart\n");
   }
 
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {

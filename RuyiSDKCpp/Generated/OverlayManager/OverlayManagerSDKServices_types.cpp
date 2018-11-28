@@ -11,6 +11,6 @@
 
 #include <thrift/TToString.h>
 
-namespace Ruyi { namespace SDK { namespace OverlayManagerExternal {
+namespace Ruyi { namespace SDK { namespace Overlay {
 
 }}} // namespace
