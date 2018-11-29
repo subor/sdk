@@ -3226,7 +3226,40 @@ service BrainCloudService {
 	string Shopping_GetCart(1: bool includeDetails, 2: i32 clientIndex),
 
 	/** Remove an item from the player's shopping cart. */
-	string Shopping_RemoveFromCart(1: string productId, 2: i32 quantity, 3: i32 clientIndex),
+	string Shopping_RemoveFromCart(
+		/** The ID of the product to remove. */
+		1: string productId, 
+		2: i32 quantity, 
+		3: i32 clientIndex
+	),
+
+	/** Add an item to the player's wishlist. */
+	string Shopping_AddToWishlist(
+		/** The ID of the product to add. */
+		1: string productId, 
+		2: i32 clientIndex
+	),
+
+	/** Remove all items from the player's wishlist. */
+	string Shopping_EmptyWishlist(1: i32 clientIndex),
+
+	/** Returns the current player's wishlist. */
+	string Shopping_GetMyWishlist(1: bool includeDetails, 2: i32 clientIndex),
+
+	/** Returns the specified player's wishlist. */
+	string Shopping_GetWishlist(
+		/** The ID of the player to get the wishlist for. */
+		1: string playerId, 
+		2: bool includeDetails, 
+		3: i32 clientIndex
+	),
+
+	/** Remove an item from the player's wishlist. */
+	string Shopping_RemoveFromWishlist(
+		/** The ID of the product to remove. */
+		1: string productId, 
+		2: i32 clientIndex
+	),
 
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 

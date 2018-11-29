@@ -4703,13 +4703,72 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   /**
    * Remove an item from the player's shopping cart.
    * 
-   * @param productId
+   * @param productId The ID of the product to remove.
+   * 
    * @param quantity
    * @param clientIndex
    */
   void Shopping_RemoveFromCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Shopping_RemoveFromCart\n");
+  }
+
+  /**
+   * Add an item to the player's wishlist.
+   * 
+   * @param productId The ID of the product to add.
+   * 
+   * @param clientIndex
+   */
+  void Shopping_AddToWishlist(std::string& _return, const std::string& productId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_AddToWishlist\n");
+  }
+
+  /**
+   * Remove all items from the player's wishlist.
+   * 
+   * @param clientIndex
+   */
+  void Shopping_EmptyWishlist(std::string& _return, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_EmptyWishlist\n");
+  }
+
+  /**
+   * Returns the current player's wishlist.
+   * 
+   * @param includeDetails
+   * @param clientIndex
+   */
+  void Shopping_GetMyWishlist(std::string& _return, const bool includeDetails, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetMyWishlist\n");
+  }
+
+  /**
+   * Returns the specified player's wishlist.
+   * 
+   * @param playerId The ID of the player to get the wishlist for.
+   * 
+   * @param includeDetails
+   * @param clientIndex
+   */
+  void Shopping_GetWishlist(std::string& _return, const std::string& playerId, const bool includeDetails, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetWishlist\n");
+  }
+
+  /**
+   * Remove an item from the player's wishlist.
+   * 
+   * @param productId The ID of the product to remove.
+   * 
+   * @param clientIndex
+   */
+  void Shopping_RemoveFromWishlist(std::string& _return, const std::string& productId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_RemoveFromWishlist\n");
   }
 
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {
