@@ -20,7 +20,7 @@ class UserServExternalHandler : virtual public UserServExternalIf {
     // Your initialization goes here
   }
 
-  void GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& appId, const std::string& userId) {
+  void GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& userId) {
     // Your implementation goes here
     printf("GetPlayingUserInfo\n");
   }

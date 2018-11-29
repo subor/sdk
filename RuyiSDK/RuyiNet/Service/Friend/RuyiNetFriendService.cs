@@ -10,7 +10,7 @@ namespace Ruyi.SDK.Online
     /// A service for handling players' friend lists.
     /// </summary>
     /// <example>
-    /// <code source="sdk/unittests/doctests.cs" region="RuyiNet_Friends"></code>
+    /// <code source="sdk/doctests/doctests.cs" region="RuyiNet_Friends"></code>
     /// </example>
     public class RuyiNetFriendService : RuyiNetService
     {
@@ -299,15 +299,7 @@ namespace Ruyi.SDK.Online
             {
                 if (callback != null)
                 {
-                    if (response.status == RuyiNetHttpStatus.OK)
-                    {
-                        var results = response.data.friends.Cast<RuyiNetFriendSummaryData>().ToArray();
-                        callback(results);
-                    }
-                    else
-                    {
-                        callback(null);
-                    }
+                    callback(response.GetFriendSummaryData());
                 }
             });
         }

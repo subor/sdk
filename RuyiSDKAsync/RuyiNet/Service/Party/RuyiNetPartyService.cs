@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ruyi.SDK.Online
@@ -21,210 +22,98 @@ namespace Ruyi.SDK.Online
         /// <summary>
         /// Get the current party information for the player.
         /// </summary>
-        /// <param name="index">The index of user</param>
-        public async Task<RuyiNetGetPartyInfoResponse> GetPartyInfo(int index)
+        /// <param name="index">The index of user.</param>
+        /// <param name="partyId">The ID of the party.</param>
+        public async Task<RuyiNetPartyResponse> GetPartyInfo(int index, string partyId)
         {
-            var resp = await mClient.BCService.Script_RunParentScriptAsync("GetPartyInfo", "{}", "RUYI", index, token);
-            return mClient.Process<RuyiNetGetPartyInfoResponse>(resp);
-        }
-
-        /// <summary>
-        /// Get information on the party members in the current party.
-        /// </summary>
-        /// <param name="index">The index of user</param>
-        public async Task<RuyiNetGetProfilesResponse> GetPartyMembersInfo(int index)
-        {
-            var resp = await mClient.BCService.Script_RunParentScriptAsync("GetPartyMembers", "{}", "RUYI", index, token);
-            return mClient.Process<RuyiNetGetProfilesResponse>(resp);
+            var resp = await mClient.BCService.Party_GetPartyInfoAsync(partyId, index, token);
+            return mClient.Process<RuyiNetPartyResponse>(resp);
         }
 
         /// <summary>
         /// Invite someone to join a party.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="profileId">The profile ID of the player to invite.</param>
-        public async Task<RuyiNetResponse> SendPartyInvitation(int index, string profileId)
+        /// <param name="playerId">The ID of the player to invite.</param>
+        public async Task<RuyiNetPartyResponse> SendPartyInvitation(int index, string playerId)
         {
-            var payload = new RuyiNetProfileIdRequest()
-            {
-                profileId = profileId
-            };
-
-            var resp = await mClient.BCService.Script_RunParentScriptAsync("SendPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index, token);
-            return mClient.Process<RuyiNetResponse>(resp);
+            var resp = await mClient.BCService.Party_SendPartyInvitationAsync(playerId, index, token);
+            return mClient.Process<RuyiNetPartyResponse>(resp);
         }
 
         /// <summary>
         /// Accept a party invitation.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="groupId">The group ID of the party to join.</param>
-        public async Task<RuyiNetResponse> AcceptPartyInvitation(int index, string groupId)
+        /// <param name="partyId">The ID of the party to join.</param>
+        public async Task<RuyiNetPartyResponse> AcceptPartyInvitation(int index, string partyId)
         {
-            var payload = new RuyiNetGroupIdRequest()
-            {
-                groupId = groupId
-            };
-
-            var resp = await mClient.BCService.Script_RunParentScriptAsync("AcceptPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index, token);
-            return mClient.Process<RuyiNetResponse>(resp);
+            var resp = await mClient.BCService.Party_AcceptPartyInvitationAsync(partyId, index, token);
+            return mClient.Process<RuyiNetPartyResponse>(resp);
         }
 
         /// <summary>
         /// Reject a party invitation.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="groupId">The group ID of the party to reject.</param>
-        public async Task<RuyiNetResponse> RejectPartyInvitation(int index, string groupId)
+        /// <param name="partyId">The ID of the party to reject.</param>
+        public async Task<RuyiNetPartyResponse> RejectPartyInvitation(int index, string partyId)
         {
-            var payload = new RuyiNetGroupIdRequest()
-            {
-                groupId = groupId
-            };
-
-            var resp = await mClient.BCService.Script_RunParentScriptAsync("RejectPartyInvitation", JsonConvert.SerializeObject(payload), "RUYI", index, token);
-            return mClient.Process<RuyiNetResponse>(resp);
+            var resp = await mClient.BCService.Party_RejectPartyInvitationAsync(partyId, index, token);
+            return mClient.Process<RuyiNetPartyResponse>(resp);
         }
 
         /// <summary>
         /// Join a friend's party.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="groupId">The group ID of the party to join.</param>
-        public async Task<RuyiNetResponse> JoinParty(int index, string groupId)
+        /// <param name="partyId">The ID of the party to join.</param>
+        public async Task<RuyiNetPartyResponse> JoinParty(int index, string partyId)
         {
-            var payload = new RuyiNetGroupIdRequest()
-            {
-                groupId = groupId
-            };
-
-            var resp = await mClient.BCService.Script_RunParentScriptAsync("JoinParty", JsonConvert.SerializeObject(payload), "RUYI", index, token);
-            return mClient.Process<RuyiNetResponse>(resp);
+            var resp = await mClient.BCService.Party_JoinPartyAsync(partyId, index, token);
+            return mClient.Process<RuyiNetPartyResponse>(resp);
         }
 
         /// <summary>
         /// Leave a party.
         /// </summary>
         /// <param name="index">The index of user</param>
-        /// <param name="groupId">The group ID of the party to leave.</param>
-        public async Task<RuyiNetResponse> LeaveParty(int index, string groupId)
+        /// <param name="partyId">The ID of the party to leave.</param>
+        public async Task<RuyiNetPartyResponse> LeaveParty(int index, string partyId)
         {
-            var payload = new RuyiNetGroupIdRequest()
-            {
-                groupId = groupId
-            };
-
-            var resp = await mClient.BCService.Script_RunParentScriptAsync("LeaveParty", JsonConvert.SerializeObject(payload), "RUYI", index, token);
-            return mClient.Process<RuyiNetResponse>(resp);
-        }
-
-        [Serializable]
-        private class RuyiNetGroupIdRequest
-        {
-            public string groupId;
-        }
-    }
-
-    /// <summary>
-    /// The response when getting party information.
-    /// </summary>
-    [Serializable]
-    public class RuyiNetGetPartyInfoResponse
-    {
-        /// <summary>
-        /// The response data.
-        /// </summary>
-        [Serializable]
-        public class Data
-        {
-            /// <summary>
-            /// The response.
-            /// </summary>
-            [Serializable]
-            public class Response
-            {
-                /// <summary>
-                /// Information on a group.
-                /// </summary>
-                [Serializable]
-                public class Group
-                {
-                    /// <summary>
-                    /// The type of this group (should be "PARTY")
-                    /// </summary>
-                    public string groupType;
-
-                    /// <summary>
-                    /// The ID of the group.
-                    /// </summary>
-                    public string groupId;
-
-                    /// <summary>
-                    /// Whether or not the group is open.
-                    /// </summary>
-                    public bool isOpenGroup;
-
-                    /// <summary>
-                    /// Number of players requesting membership.
-                    /// </summary>
-                    public int requestingPendingMemberCount;
-
-                    /// <summary>
-                    /// Number of players invited to the group.
-                    /// </summary>
-                    public int invitedPendingMemberCount;
-
-                    /// <summary>
-                    /// The profile ID of the owner
-                    /// </summary>
-                    public string ownerId;
-
-                    /// <summary>
-                    /// The name of the group (should be the owner's username)
-                    /// </summary>
-                    public string name;
-
-                    /// <summary>
-                    /// Number of people in the group.
-                    /// </summary>
-                    public int memberCount;
-                }
-
-                /// <summary>
-                /// Groups the player has requested membership of.
-                /// </summary>
-                public Group[] requested;
-
-                /// <summary>
-                /// Groups the player has been invited to.
-                /// </summary>
-                public Group[] invited;
-
-                /// <summary>
-                /// Groups the player is a member of.
-                /// </summary>
-                public Group[] groups;
-            }
-
-            /// <summary>
-            /// The response.
-            /// </summary>
-            public Response response;
-
-            /// <summary>
-            /// Whether or not the server-side script ran successfully.
-            /// </summary>
-            public bool success;
+            var resp = await mClient.BCService.Party_LeavePartyAsync(partyId, index, token);
+            return mClient.Process<RuyiNetPartyResponse>(resp);
         }
 
         /// <summary>
-        /// The response data.
+        /// Get friends' parties.
         /// </summary>
-        public Data data;
+        /// <param name="index">The index of user</param>
+        /// <param name="maxResults">The maximum, number of results to return .</param>
+        public async Task<RuyiNetPartyListResponse> GetFriendsParties(int index, int maxResults)
+        {
+            var resp = await mClient.BCService.Party_GetFriendsPartiesAsync(maxResults, index, token);
+            return mClient.Process<RuyiNetPartyListResponse>(resp);
+        }
 
         /// <summary>
-        /// The status of the response.
+        /// List Party Invitations
         /// </summary>
-        public int status;
+        /// <param name="index">The index of user</param>
+        public async Task<RuyiNetPartyInvitationResponse> ListPartyInvitations(int index)
+        {
+            var resp = await mClient.BCService.Party_ListPartyInvitationsAsync(index, token);
+            return mClient.Process<RuyiNetPartyInvitationResponse>(resp);
+        }
+
+        /// <summary>
+        /// Returns the party the current player is a member of, if any.
+        /// </summary>
+        /// <param name="index">The index of user</param>
+        public async Task<RuyiNetPartyResponse> GetMyParty(int index)
+        {
+            var resp = await mClient.BCService.Party_GetMyPartyAsync(index, token);
+            return mClient.Process<RuyiNetPartyResponse>(resp);
+        }
     }
 }

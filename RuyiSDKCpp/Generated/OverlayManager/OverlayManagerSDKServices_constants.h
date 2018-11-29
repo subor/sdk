@@ -9,7 +9,7 @@
 
 #include "OverlayManagerSDKServices_types.h"
 
-namespace Ruyi { namespace SDK { namespace OverlayManagerExternal {
+namespace Ruyi { namespace SDK { namespace Overlay {
 
 class OverlayManagerSDKServicesConstants {
  public:

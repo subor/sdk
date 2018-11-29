@@ -6,6 +6,31 @@ namespace rs Ruyi.SDK.CommonType
 
 typedef string JSON
 
+enum PowerOperations {
+    None = 0,
+    /** Restart the device's OS */
+	RestartDevice = 2,
+    ShutdownDevice = 3,
+    ShutdownLayer0 = 4,
+    /** Restart layer0 */
+	RestartLayer0 = 5,
+    /** Switch to low-power mode */
+	SwitchToLowPower = 8,
+    /** Switch to high-power mode */
+	SwitchToHighPower = 9,
+    SleepDevice = 10,
+    ShutdownLayer1 = 12,
+    Cancel = 15,
+    Ping = 16,
+    FakeUserLogout = 17,
+}
+
+enum UserType {
+    Guest = 0,
+    RuyiUser = 1,
+    Developer = 2,
+}
+
 enum LoginState {
     /** Logout state */
 	Logout = 0,
@@ -196,12 +221,13 @@ struct TitleMainIconNotification {
 struct AppBaseInfo {
     1: string appId,
     2: string name,
-    3: string icon,
-    4: string description,
-    5: list<string> properties,
-    6: list<string> platform,
-    7: i32 size,
-    8: list<string> languages,
+    3: string icon_hd,
+    4: string icon_ld,
+    5: string description,
+    6: list<string> properties,
+    7: list<string> platform,
+    8: i32 size,
+    9: list<string> languages,
 }
 
 struct EventNotification {

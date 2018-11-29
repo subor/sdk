@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Ruyi.SDK.BrainCloudApi;
 using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace Ruyi.SDK.Online.Tests
@@ -38,7 +39,7 @@ namespace Ruyi.SDK.Online.Tests
         }
 
         [Test]
-        public void RuyiNetTest_Initialise()
+        public async Task RuyiNetTest_Initialise()
         {
             //  Check RuyiNet is available.
             Assert.IsTrue(IsRuyiNetAvailable);
@@ -52,145 +53,99 @@ namespace Ruyi.SDK.Online.Tests
             Assert.NotNull(mSDK.RuyiNetService.ProfileService);
             Assert.NotNull(mSDK.RuyiNetService.TelemetryService);
 
-            mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET, null);
-
-            while (mSDK.RuyiNetService.IsWorking) { mSDK.Update(); }
+            await mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET);
         }
 
         [Test]
-        public void RuyiNetTest_CloudBackupData()
+        public async Task RuyiNetTest_CloudBackupData()
         {
-            mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET, () =>
-            {
-                mSDK.RuyiNetService.CloudService.BackupData(0, (RuyiNetResponse response) => { CheckResponseStatus(response.status); });
-            });
-
-            while (mSDK.RuyiNetService.IsWorking) { mSDK.Update(); }
+            await mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET);
+            var response = await mSDK.RuyiNetService.CloudService.BackupData(0);
+            CheckResponseStatus(response.status);
         }
 
         [Test]
-        public void RuyiNetTest_CloudRestoreData()
+        public async Task RuyiNetTest_CloudRestoreData()
         {
-            mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET, () =>
-            {
-                mSDK.RuyiNetService.CloudService.RestoreData(0, (RuyiNetResponse response) => { CheckResponseStatus(response.status); });
-            });
-
-            while (mSDK.RuyiNetService.IsWorking) { mSDK.Update(); }
+            await mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET);
+            await mSDK.RuyiNetService.CloudService.RestoreData(0, async (RuyiNetResponse response) => { CheckResponseStatus(response.status); });
         }
 
         [Test]
-        public void RuyiNetTest_Friend()
+        public async Task RuyiNetTest_Friend()
         {
-            mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET, () =>
-            {
-                mSDK.RuyiNetService.FriendService.AddFriend(0, PLAYER_IDS[0],
-                    (RuyiNetResponse response) =>
-                {
-                    CheckResponseStatus(response.status);
+            await mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET);
+            var response = await mSDK.RuyiNetService.FriendService.AddFriend(0, PLAYER_IDS[0]);
+            CheckResponseStatus(response.status);
 
-                    mSDK.RuyiNetService.FriendService.ListFriends(0,
-                        (RuyiNetFriendSummaryData[] friends) =>
-                    {
-                        Assert.GreaterOrEqual(friends.Length, 1);
+            var friendsResponse = await mSDK.RuyiNetService.FriendService.ListFriends(0);
+            var friends = friendsResponse.GetFriendSummaryData();
+            Assert.GreaterOrEqual(friends.Length, 1);
 
-                        var i = Array.FindIndex(friends, (x) => (x.PlayerId == PLAYER_IDS[0]));
+            var i = Array.FindIndex(friends, (x) => (x.PlayerId == PLAYER_IDS[0]));
 
-                        Assert.GreaterOrEqual(i, 0);
+            Assert.GreaterOrEqual(i, 0);
 
-                        mSDK.RuyiNetService.FriendService.RemoveFriend(0, PLAYER_IDS[0],
-                            (RuyiNetResponse removeFriendResponse) =>
-                        {
-                            CheckResponseStatus(removeFriendResponse.status);
+            var removeFriendResponse = await mSDK.RuyiNetService.FriendService.RemoveFriend(0, PLAYER_IDS[0]);
+            CheckResponseStatus(removeFriendResponse.status);
 
-                            mSDK.RuyiNetService.FriendService.ListFriends(0,
-                                (RuyiNetFriendSummaryData[] friends2) =>
-                            {
-                                i = Array.FindIndex(friends2, (x) => (x.PlayerId == PLAYER_IDS[0]));
-
-                                Assert.IsTrue(i < 0);
-                            });
-                        });
-                    });
-                });
-            });
-
-            while (mSDK.RuyiNetService.IsWorking) { mSDK.Update(); }
+            friendsResponse = await mSDK.RuyiNetService.FriendService.ListFriends(0);
+            var friends2 = friendsResponse.GetFriendSummaryData();
+            i = Array.FindIndex(friends2, (x) => (x.PlayerId == PLAYER_IDS[0]));
+            Assert.IsTrue(i < 0);
         }
 
         [Test]
-        public void RuyiNetTest_GetProfile()
+        public async Task RuyiNetTest_GetProfile()
         {
-            mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET, () =>
+            await mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET);
+
+            var getProfileResponse = await mSDK.RuyiNetService.FriendService.GetProfile(0, PLAYER_IDS[0]);
+            CheckResponseStatus(getProfileResponse.status);
+            Assert.IsTrue(getProfileResponse.data.success);
+            Assert.IsTrue(getProfileResponse.data.response.profileId == PLAYER_IDS[0]);
+
+            var getProfilesResponse = await mSDK.RuyiNetService.FriendService.GetProfiles(0, PLAYER_IDS);
+            CheckResponseStatus(getProfileResponse.status);
+            Assert.IsTrue(getProfileResponse.data.success);
+
+            var profileList = getProfilesResponse.data.response;
+
+            foreach (var playerId in PLAYER_IDS)
             {
-                mSDK.RuyiNetService.FriendService.GetProfile(0, PLAYER_IDS[0],
-                    (RuyiNetGetProfileResponse getProfileResponse) =>
-                {
-                    CheckResponseStatus(getProfileResponse.status);
-                    Assert.IsTrue(getProfileResponse.data.success);
-                    Assert.IsTrue(getProfileResponse.data.response.profileId == PLAYER_IDS[0]);
-
-                    mSDK.RuyiNetService.FriendService.GetProfiles(0, PLAYER_IDS,
-                        (RuyiNetGetProfilesResponse getProfilesResponse) =>
-                    {
-                        CheckResponseStatus(getProfileResponse.status);
-                        Assert.IsTrue(getProfileResponse.data.success);
-
-                        var profileList = getProfilesResponse.data.response;
-
-                        foreach (var playerId in PLAYER_IDS)
-                        {
-                            var i = Array.FindIndex(profileList, (x) => (x.profileId == playerId));
-                            Assert.GreaterOrEqual(i, 0);
-                        }
-                    });
-                });
-            });
-
-            while (mSDK.RuyiNetService.IsWorking) { mSDK.Update(); }
+                var i = Array.FindIndex(profileList, (x) => (x.profileId == playerId));
+                Assert.GreaterOrEqual(i, 0);
+            }
         }
 
         [Test]
-        public void RuyiNetTest_Leaderboard()
+        public async Task RuyiNetTest_Leaderboard()
         {
-            mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET, () =>
-            {
-                var leaderboardService = mSDK.RuyiNetService.LeaderboardService;
-                leaderboardService.PostScoreToLeaderboard(0, 100, TEST_LEADERBOARD_ID,
-                    (bool result) =>
-                {
-                    Assert.IsTrue(result);
+            await mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET);
+            var leaderboardService = mSDK.RuyiNetService.LeaderboardService;
+            var result = await leaderboardService.PostScoreToLeaderboard(0, TEST_LEADERBOARD_ID, 100);
+            Assert.IsTrue(result.status == 200);
 
-                    leaderboardService.GetGlobalLeaderboardPage(0, TEST_LEADERBOARD_ID, SortOrder.HIGH_TO_LOW, 0, 10,
-                        (RuyiNetLeaderboardPage page) =>
-                    {
-                        Assert.IsNotNull(page);                        
+            var response = await leaderboardService.GetGLobalLeaderboardPage(0, TEST_LEADERBOARD_ID, SortOrder.HIGH_TO_LOW, 0, 10);
+            var page = response.data.response.leaderboard;
+            Assert.IsNotNull(page);
 
-                        Assert.Greater(page.Entries.Count, 0);
-                        Assert.LessOrEqual(page.Entries.Count, 10);
+            Assert.Greater(page.Length, 0);
+            Assert.LessOrEqual(page.Length, 10);
 
-                        leaderboardService.GetGlobalLeaderboardView(0, TEST_LEADERBOARD_ID, SortOrder.HIGH_TO_LOW, 5, 5,
-                            (RuyiNetLeaderboardPage view) =>
-                        {
-                            Assert.IsNotNull(view);
+            var globalResponse = await leaderboardService.GetGlobalLeaderboardView(0, TEST_LEADERBOARD_ID, SortOrder.HIGH_TO_LOW, 5, 5);
+            var view = globalResponse.data.response.leaderboard;
+            Assert.IsNotNull(view);
 
-                            Assert.Greater(view.Entries.Count, 0);
-                            Assert.LessOrEqual(view.Entries.Count, 10);
+            Assert.Greater(view.Length, 0);
+            Assert.LessOrEqual(view.Length, 10);
 
-                            leaderboardService.GetSocialLeaderboard(0, TEST_LEADERBOARD_ID, true,
-                                (RuyiNetLeaderboardPage socialLeaderboard) =>
-                            {
-                                Assert.IsNotNull(socialLeaderboard);
+            var socialResponse = await leaderboardService.GetSocialLeaderboard(0, TEST_LEADERBOARD_ID, true);
+            var socialLeaderboard = socialResponse.data.response.social_leaderboard;
+            Assert.IsNotNull(socialLeaderboard);
 
-                                Assert.Greater(socialLeaderboard.Entries.Count, 0);
-                                Assert.LessOrEqual(socialLeaderboard.Entries.Count, 10);
-                            });
-                        });
-                    });
-                });
-            });
-
-            while (mSDK.RuyiNetService.IsWorking) { mSDK.Update(); }
+            Assert.Greater(socialLeaderboard.Length, 0);
+            Assert.LessOrEqual(socialLeaderboard.Length, 10);
         }
 
         [Test]
@@ -226,55 +181,34 @@ namespace Ruyi.SDK.Online.Tests
         }
 
         [Test]
-        public void RuyiNetTest_Party()
+        public async Task RuyiNetTest_Party()
         {
-            mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET, () =>
-            {
-                var partyService = mSDK.RuyiNetService.PartyService;
-                partyService.SendPartyInvitation(0, PLAYER_IDS[0],
-                    (RuyiNetParty party) =>
-                {
-                    partyService.GetPartyInfo(0, party.PartyId, (RuyiNetParty partyInfo) =>
-                    {
-                        partyService.LeaveParty(0, partyInfo.PartyId, (RuyiNetParty oldParty) =>
-                        {
-
-                        });
-                    });
-                });
-            });
-
-            while (mSDK.RuyiNetService.IsWorking) { mSDK.Update(); }
+            await mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET);
+            var partyService = mSDK.RuyiNetService.PartyService;
+            var response = await partyService.SendPartyInvitation(0, PLAYER_IDS[0]);
+            var party = response.data.party;
+            var info = await partyService.GetPartyInfo(0, party.partyId);
+            await partyService.LeaveParty(0, info.data.party.partyId);
         }
 
         [Test]
-        public void RuyNetTest_Telemetry()
+        public async Task RuyNetTest_Telemetry()
         {
-            mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET, () =>
+            await mSDK.RuyiNetService.Initialise(TEST_APP_ID, TEST_APP_SECRET);
+            var telemetryService = mSDK.RuyiNetService.TelemetryService;
+            var session = await telemetryService.StartTelemetrySession(0);
+            Assert.IsNotNull(session);
+
+            var customData = new Dictionary<string, string>
             {
-                var telemetryService = mSDK.RuyiNetService.TelemetryService;
-                telemetryService.StartTelemetrySession(0, (RuyiNetTelemetrySession session) =>
-                {
-                    Assert.IsNotNull(session);
+                ["position"] = "[10, 10]"
+            };
 
-                    var customData = new Dictionary<string, string>
-                    {
-                        ["position"] = "[10, 10]"
-                    };
+            var logEventResponse = await telemetryService.LogTelemetryEvent(0, session.Id, "ATTACK", customData);
+            CheckResponseStatus(logEventResponse.status);
 
-                    telemetryService.LogTelemetryEvent(0, session.Id, "ATTACK", customData, (RuyiNetResponse logEventResponse) =>
-                    {
-                        CheckResponseStatus(logEventResponse.status);
-
-                        telemetryService.EndTelemetrySession(0, session.Id, (RuyiNetResponse endSessionResponse) =>
-                        {
-                            CheckResponseStatus(endSessionResponse.status);
-                        });
-                    });
-                });
-            });
-
-            while (mSDK.RuyiNetService.IsWorking) { mSDK.Update(); }
+            var endSessionResponse = await telemetryService.EndTelemetrySession(0, session.Id);
+            CheckResponseStatus(endSessionResponse.status);
         }
 
         private bool IsRuyiNetAvailable
