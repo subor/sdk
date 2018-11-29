@@ -16,26 +16,40 @@ using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.PublisherSubscriber
+namespace Ruyi.SDK.Overlay
 {
 
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class PubHeader : TBase
+  public partial class OverlayState : TBase
   {
-    private string _PayloadType;
+    private bool _isVisible;
+    private string _arguments;
 
-    public string PayloadType
+    public bool IsVisible
     {
       get
       {
-        return _PayloadType;
+        return _isVisible;
       }
       set
       {
-        __isset.PayloadType = true;
-        this._PayloadType = value;
+        __isset.isVisible = true;
+        this._isVisible = value;
+      }
+    }
+
+    public string Arguments
+    {
+      get
+      {
+        return _arguments;
+      }
+      set
+      {
+        __isset.arguments = true;
+        this._arguments = value;
       }
     }
 
@@ -45,10 +59,11 @@ namespace Ruyi.SDK.PublisherSubscriber
     [Serializable]
     #endif
     public struct Isset {
-      public bool PayloadType;
+      public bool isVisible;
+      public bool arguments;
     }
 
-    public PubHeader() {
+    public OverlayState() {
     }
 
     public void Read (TProtocol iprot)
@@ -67,8 +82,15 @@ namespace Ruyi.SDK.PublisherSubscriber
           switch (field.ID)
           {
             case 1:
+              if (field.Type == TType.Bool) {
+                IsVisible = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 2:
               if (field.Type == TType.String) {
-                PayloadType = iprot.ReadString();
+                Arguments = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -91,15 +113,23 @@ namespace Ruyi.SDK.PublisherSubscriber
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("PubHeader");
+        TStruct struc = new TStruct("OverlayState");
         oprot.WriteStructBegin(struc);
         TField field = new TField();
-        if (PayloadType != null && __isset.PayloadType) {
-          field.Name = "PayloadType";
-          field.Type = TType.String;
+        if (__isset.isVisible) {
+          field.Name = "isVisible";
+          field.Type = TType.Bool;
           field.ID = 1;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(PayloadType);
+          oprot.WriteBool(IsVisible);
+          oprot.WriteFieldEnd();
+        }
+        if (Arguments != null && __isset.arguments) {
+          field.Name = "arguments";
+          field.Type = TType.String;
+          field.ID = 2;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Arguments);
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -112,13 +142,19 @@ namespace Ruyi.SDK.PublisherSubscriber
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("PubHeader(");
+      StringBuilder __sb = new StringBuilder("OverlayState(");
       bool __first = true;
-      if (PayloadType != null && __isset.PayloadType) {
+      if (__isset.isVisible) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("PayloadType: ");
-        __sb.Append(PayloadType);
+        __sb.Append("IsVisible: ");
+        __sb.Append(IsVisible);
+      }
+      if (Arguments != null && __isset.arguments) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Arguments: ");
+        __sb.Append(Arguments);
       }
       __sb.Append(")");
       return __sb.ToString();

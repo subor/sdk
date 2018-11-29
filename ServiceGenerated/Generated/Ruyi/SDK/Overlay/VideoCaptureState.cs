@@ -9,22 +9,46 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Threading.Tasks;
 using Thrift;
 using Thrift.Collections;
 using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.OverlayManagerExternal
+namespace Ruyi.SDK.Overlay
 {
 
   #if !SILVERLIGHT
   [Serializable]
   #endif
-  public partial class NotifyTakeScreenShot : TBase
+  public partial class VideoCaptureState : TBase
   {
+    private bool _isRecording;
 
-    public NotifyTakeScreenShot() {
+    public bool IsRecording
+    {
+      get
+      {
+        return _isRecording;
+      }
+      set
+      {
+        __isset.isRecording = true;
+        this._isRecording = value;
+      }
+    }
+
+
+    public Isset __isset;
+    #if !SILVERLIGHT
+    [Serializable]
+    #endif
+    public struct Isset {
+      public bool isRecording;
+    }
+
+    public VideoCaptureState() {
     }
 
     public void Read (TProtocol iprot)
@@ -42,6 +66,13 @@ namespace Ruyi.SDK.OverlayManagerExternal
           }
           switch (field.ID)
           {
+            case 1:
+              if (field.Type == TType.Bool) {
+                IsRecording = iprot.ReadBool();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
             default: 
               TProtocolUtil.Skip(iprot, field.Type);
               break;
@@ -60,8 +91,17 @@ namespace Ruyi.SDK.OverlayManagerExternal
       oprot.IncrementRecursionDepth();
       try
       {
-        TStruct struc = new TStruct("NotifyTakeScreenShot");
+        TStruct struc = new TStruct("VideoCaptureState");
         oprot.WriteStructBegin(struc);
+        TField field = new TField();
+        if (__isset.isRecording) {
+          field.Name = "isRecording";
+          field.Type = TType.Bool;
+          field.ID = 1;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteBool(IsRecording);
+          oprot.WriteFieldEnd();
+        }
         oprot.WriteFieldStop();
         oprot.WriteStructEnd();
       }
@@ -72,7 +112,14 @@ namespace Ruyi.SDK.OverlayManagerExternal
     }
 
     public override string ToString() {
-      StringBuilder __sb = new StringBuilder("NotifyTakeScreenShot(");
+      StringBuilder __sb = new StringBuilder("VideoCaptureState(");
+      bool __first = true;
+      if (__isset.isRecording) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("IsRecording: ");
+        __sb.Append(IsRecording);
+      }
       __sb.Append(")");
       return __sb.ToString();
     }

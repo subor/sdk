@@ -16,7 +16,7 @@ using System.Runtime.Serialization;
 using Thrift.Protocol;
 using Thrift.Transport;
 
-namespace Ruyi.SDK.OverlayManagerExternal
+namespace Ruyi.SDK.Overlay
 {
 
   #if !SILVERLIGHT
