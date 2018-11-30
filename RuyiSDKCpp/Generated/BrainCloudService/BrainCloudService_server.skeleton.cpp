@@ -4771,6 +4771,27 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Shopping_RemoveFromWishlist\n");
   }
 
+  /**
+   * Get a list of user reviews for a product.
+   * 
+   * @param productId The ID of the product to get reviews for.
+   * 
+   * @param page The 1-indexed page of the review list to fetch.
+   * 
+   * @param pageSize The size of each page.
+   * 
+   * @param clientIndex
+   */
+  void Shopping_GetUserReviews(std::string& _return, const std::string& productId, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetUserReviews\n");
+  }
+
+  void Shopping_SubmitUserReview(std::string& _return, const std::string& productId, const std::string& reviewText, const int32_t rating, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_SubmitUserReview\n");
+  }
+
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {
     // Your implementation goes here
     printf("SocialFeed_ShareVideo\n");

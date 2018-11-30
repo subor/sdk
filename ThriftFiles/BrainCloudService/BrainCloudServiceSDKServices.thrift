@@ -3261,6 +3261,21 @@ service BrainCloudService {
 		2: i32 clientIndex
 	),
 
+	/** Get a list of user reviews for a product. */
+	string Shopping_GetUserReviews(
+		/** The ID of the product to get reviews for. */
+		1: string productId, 
+		
+		/** The 1-indexed page of the review list to fetch. */
+		2: i32 page, 
+		
+		/** The size of each page. */
+		3: i32 pageSize, 
+		4: i32 clientIndex
+	),
+
+	string Shopping_SubmitUserReview(1: string productId, 2: string reviewText, 3: i32 rating, 4: i32 clientIndex),
+
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 
 	string SocialFeed_ShareScreenshot(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
