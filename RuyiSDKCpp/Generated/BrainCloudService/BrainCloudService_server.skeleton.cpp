@@ -4787,9 +4787,48 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Shopping_GetUserReviews\n");
   }
 
+  /**
+   * Submit a user review of a product.
+   * 
+   * @param productId The ID of the product being reviewed.
+   * 
+   * @param reviewText The text of the review.
+   * 
+   * @param rating The rating given to the product.
+   * 
+   * @param clientIndex
+   */
   void Shopping_SubmitUserReview(std::string& _return, const std::string& productId, const std::string& reviewText, const int32_t rating, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Shopping_SubmitUserReview\n");
+  }
+
+  /**
+   * Return a list of recently created products.
+   * 
+   * @param page The 1-indexed page of the review list to fetch.
+   * 
+   * @param pageSize The size of each page.
+   * 
+   * @param clientIndex
+   */
+  void Shopping_GetRecentlyCreatedProducts(std::string& _return, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetRecentlyCreatedProducts\n");
+  }
+
+  /**
+   * Return a list of recently updated products.
+   * 
+   * @param page The 1-indexed page of the review list to fetch.
+   * 
+   * @param pageSize The size of each page.
+   * 
+   * @param clientIndex
+   */
+  void Shopping_GetRecentlyUpdatedProducts(std::string& _return, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetRecentlyUpdatedProducts\n");
   }
 
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {

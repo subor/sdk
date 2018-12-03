@@ -3274,7 +3274,38 @@ service BrainCloudService {
 		4: i32 clientIndex
 	),
 
-	string Shopping_SubmitUserReview(1: string productId, 2: string reviewText, 3: i32 rating, 4: i32 clientIndex),
+	/** Submit a user review of a product. */
+	string Shopping_SubmitUserReview(
+		/** The ID of the product being reviewed. */
+		1: string productId, 
+		
+		/** The text of the review. */
+		2: string reviewText, 
+		
+		/** The rating given to the product. */
+		3: i32 rating, 
+		4: i32 clientIndex
+	),
+
+	/** Return a list of recently created products. */
+	string Shopping_GetRecentlyCreatedProducts(
+		/** The 1-indexed page of the review list to fetch. */
+		1: i32 page, 
+		
+		/** The size of each page. */
+		2: i32 pageSize, 
+		3: i32 clientIndex
+	),
+
+	/** Return a list of recently updated products. */
+	string Shopping_GetRecentlyUpdatedProducts(
+		/** The 1-indexed page of the review list to fetch. */
+		1: i32 page, 
+		
+		/** The size of each page. */
+		2: i32 pageSize, 
+		3: i32 clientIndex
+	),
 
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
 
