@@ -3255,11 +3255,14 @@ service BrainCloudService {
 	),
 
 	/** Remove an item from the player's wishlist. */
-	string Shopping_RemoveFromWishlist(
+	string Shopping_RemoveFromWishlist_SSFO(
 		/** The ID of the product to remove. */
 		1: string productId, 
 		2: i32 clientIndex
 	),
+
+	/** Remove multiple items from the player's wishlist. */
+	string Shopping_RemoveFromWishlist_ISFO(1: list<string> productIds, 2: i32 clientIndex),
 
 	/** Get a list of user reviews for a product. */
 	string Shopping_GetUserReviews(

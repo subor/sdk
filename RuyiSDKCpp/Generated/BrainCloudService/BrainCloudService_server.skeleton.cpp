@@ -4766,9 +4766,20 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param clientIndex
    */
-  void Shopping_RemoveFromWishlist(std::string& _return, const std::string& productId, const int32_t clientIndex) {
+  void Shopping_RemoveFromWishlist_SSFO(std::string& _return, const std::string& productId, const int32_t clientIndex) {
     // Your implementation goes here
-    printf("Shopping_RemoveFromWishlist\n");
+    printf("Shopping_RemoveFromWishlist_SSFO\n");
+  }
+
+  /**
+   * Remove multiple items from the player's wishlist.
+   * 
+   * @param productIds
+   * @param clientIndex
+   */
+  void Shopping_RemoveFromWishlist_ISFO(std::string& _return, const std::vector<std::string> & productIds, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_RemoveFromWishlist_ISFO\n");
   }
 
   /**
