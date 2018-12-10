@@ -163,6 +163,7 @@ struct SettingItem {
     19: optional string ActionObject,
     20: optional string ActionOnSetValue,
     21: optional string ActionOnGetValue,
+    22: optional list<string> Tags,
 }
 
 struct SettingCategory {
@@ -177,6 +178,7 @@ struct SettingCategory {
     9: bool enable,
     10: bool showInUI,
     11: string script,
+    12: optional list<string> Tags,
 }
 
 struct ModuleBaseInfo {

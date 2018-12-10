@@ -224,12 +224,12 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.List) {
                 {
                   Properties = new List<string>();
-                  TList _list41 = iprot.ReadListBegin();
-                  for( int _i42 = 0; _i42 < _list41.Count; ++_i42)
+                  TList _list49 = iprot.ReadListBegin();
+                  for( int _i50 = 0; _i50 < _list49.Count; ++_i50)
                   {
-                    string _elem43;
-                    _elem43 = iprot.ReadString();
-                    Properties.Add(_elem43);
+                    string _elem51;
+                    _elem51 = iprot.ReadString();
+                    Properties.Add(_elem51);
                   }
                   iprot.ReadListEnd();
                 }
@@ -241,12 +241,12 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.List) {
                 {
                   Platform = new List<string>();
-                  TList _list44 = iprot.ReadListBegin();
-                  for( int _i45 = 0; _i45 < _list44.Count; ++_i45)
+                  TList _list52 = iprot.ReadListBegin();
+                  for( int _i53 = 0; _i53 < _list52.Count; ++_i53)
                   {
-                    string _elem46;
-                    _elem46 = iprot.ReadString();
-                    Platform.Add(_elem46);
+                    string _elem54;
+                    _elem54 = iprot.ReadString();
+                    Platform.Add(_elem54);
                   }
                   iprot.ReadListEnd();
                 }
@@ -265,12 +265,12 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.List) {
                 {
                   Languages = new List<string>();
-                  TList _list47 = iprot.ReadListBegin();
-                  for( int _i48 = 0; _i48 < _list47.Count; ++_i48)
+                  TList _list55 = iprot.ReadListBegin();
+                  for( int _i56 = 0; _i56 < _list55.Count; ++_i56)
                   {
-                    string _elem49;
-                    _elem49 = iprot.ReadString();
-                    Languages.Add(_elem49);
+                    string _elem57;
+                    _elem57 = iprot.ReadString();
+                    Languages.Add(_elem57);
                   }
                   iprot.ReadListEnd();
                 }
@@ -346,9 +346,9 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.String, Properties.Count));
-            foreach (string _iter50 in Properties)
+            foreach (string _iter58 in Properties)
             {
-              oprot.WriteString(_iter50);
+              oprot.WriteString(_iter58);
             }
             oprot.WriteListEnd();
           }
@@ -361,9 +361,9 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.String, Platform.Count));
-            foreach (string _iter51 in Platform)
+            foreach (string _iter59 in Platform)
             {
-              oprot.WriteString(_iter51);
+              oprot.WriteString(_iter59);
             }
             oprot.WriteListEnd();
           }
@@ -384,9 +384,9 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.String, Languages.Count));
-            foreach (string _iter52 in Languages)
+            foreach (string _iter60 in Languages)
             {
-              oprot.WriteString(_iter52);
+              oprot.WriteString(_iter60);
             }
             oprot.WriteListEnd();
           }

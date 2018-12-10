@@ -59,7 +59,8 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="parent">The parent node</param>
       /// <param name="nodeType">Specifies whether the child nodes containing setting item or setting category, or both</param>
       /// <param name="param">The parameter passed to the function which will be called while getting the item value</param>
-      Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, CancellationToken cancellationToken);
+      /// <param name="tags">Tags used to filter the setting items. Only items with specified tags will be added in the result</param>
+      Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, List<string> tags, CancellationToken cancellationToken);
 
       /// <summary>
       /// Set the specified setting's "dataValue" with the new value
@@ -279,7 +280,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         throw new TApplicationException(TApplicationException.ExceptionType.MissingResult, "GetCategoryNode failed: unknown result");
       }
 
-      public async Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, CancellationToken cancellationToken)
+      public async Task<Ruyi.SDK.SettingSystem.Api.NodeList> GetChildNodeAsync(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, List<string> tags, CancellationToken cancellationToken)
       {
         await OutputProtocol.WriteMessageBeginAsync(new TMessage("GetChildNode", TMessageType.Call, SeqId), cancellationToken);
         
@@ -287,6 +288,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         args.Parent = parent;
         args.NodeType = nodeType;
         args.Param = param;
+        args.Tags = tags;
         
         await args.WriteAsync(OutputProtocol, cancellationToken);
         await OutputProtocol.WriteMessageEndAsync(cancellationToken);
@@ -1408,7 +1410,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           try
           {
-            result.Success = await _iAsync.GetChildNodeAsync(args.Parent, args.NodeType, args.Param, cancellationToken);
+            result.Success = await _iAsync.GetChildNodeAsync(args.Parent, args.NodeType, args.Param, args.Tags, cancellationToken);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
@@ -3476,6 +3478,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       private string _parent;
       private Ruyi.SDK.SettingSystem.Api.NodeType _nodeType;
       private string _param;
+      private List<string> _tags;
 
       /// <summary>
       /// The parent node
@@ -3527,6 +3530,22 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// Tags used to filter the setting items. Only items with specified tags will be added in the result
+      /// </summary>
+      public List<string> Tags
+      {
+        get
+        {
+          return _tags;
+        }
+        set
+        {
+          __isset.tags = true;
+          this._tags = value;
+        }
+      }
+
 
       public Isset __isset;
       public struct Isset
@@ -3534,6 +3553,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         public bool parent;
         public bool nodeType;
         public bool param;
+        public bool tags;
       }
 
       public GetChildNodeArgs()
@@ -3581,6 +3601,26 @@ namespace Ruyi.SDK.SettingSystem.Api
                 if (field.Type == TType.String)
                 {
                   Param = await iprot.ReadStringAsync(cancellationToken);
+                }
+                else
+                {
+                  await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.List)
+                {
+                  {
+                    Tags = new List<string>();
+                    TList _list9 = await iprot.ReadListBeginAsync(cancellationToken);
+                    for(int _i10 = 0; _i10 < _list9.Count; ++_i10)
+                    {
+                      string _elem11;
+                      _elem11 = await iprot.ReadStringAsync(cancellationToken);
+                      Tags.Add(_elem11);
+                    }
+                    await iprot.ReadListEndAsync(cancellationToken);
+                  }
                 }
                 else
                 {
@@ -3638,6 +3678,22 @@ namespace Ruyi.SDK.SettingSystem.Api
             await oprot.WriteStringAsync(Param, cancellationToken);
             await oprot.WriteFieldEndAsync(cancellationToken);
           }
+          if (Tags != null && __isset.tags)
+          {
+            field.Name = "tags";
+            field.Type = TType.List;
+            field.ID = 4;
+            await oprot.WriteFieldBeginAsync(field, cancellationToken);
+            {
+              await oprot.WriteListBeginAsync(new TList(TType.String, Tags.Count), cancellationToken);
+              foreach (string _iter12 in Tags)
+              {
+                await oprot.WriteStringAsync(_iter12, cancellationToken);
+              }
+              await oprot.WriteListEndAsync(cancellationToken);
+            }
+            await oprot.WriteFieldEndAsync(cancellationToken);
+          }
           await oprot.WriteFieldStopAsync(cancellationToken);
           await oprot.WriteStructEndAsync(cancellationToken);
         }
@@ -3671,6 +3727,13 @@ namespace Ruyi.SDK.SettingSystem.Api
           __first = false;
           sb.Append("Param: ");
           sb.Append(Param);
+        }
+        if (Tags != null && __isset.tags)
+        {
+          if(!__first) { sb.Append(", "); }
+          __first = false;
+          sb.Append("Tags: ");
+          sb.Append(Tags);
         }
         sb.Append(")");
         return sb.ToString();
@@ -4216,14 +4279,14 @@ namespace Ruyi.SDK.SettingSystem.Api
                 {
                   {
                     KeyValues = new Dictionary<string, string>();
-                    TMap _map9 = await iprot.ReadMapBeginAsync(cancellationToken);
-                    for(int _i10 = 0; _i10 < _map9.Count; ++_i10)
+                    TMap _map13 = await iprot.ReadMapBeginAsync(cancellationToken);
+                    for(int _i14 = 0; _i14 < _map13.Count; ++_i14)
                     {
-                      string _key11;
-                      string _val12;
-                      _key11 = await iprot.ReadStringAsync(cancellationToken);
-                      _val12 = await iprot.ReadStringAsync(cancellationToken);
-                      KeyValues[_key11] = _val12;
+                      string _key15;
+                      string _val16;
+                      _key15 = await iprot.ReadStringAsync(cancellationToken);
+                      _val16 = await iprot.ReadStringAsync(cancellationToken);
+                      KeyValues[_key15] = _val16;
                     }
                     await iprot.ReadMapEndAsync(cancellationToken);
                   }
@@ -4265,10 +4328,10 @@ namespace Ruyi.SDK.SettingSystem.Api
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
             {
               await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.String, KeyValues.Count), cancellationToken);
-              foreach (string _iter13 in KeyValues.Keys)
+              foreach (string _iter17 in KeyValues.Keys)
               {
-                await oprot.WriteStringAsync(_iter13, cancellationToken);
-                await oprot.WriteStringAsync(KeyValues[_iter13], cancellationToken);
+                await oprot.WriteStringAsync(_iter17, cancellationToken);
+                await oprot.WriteStringAsync(KeyValues[_iter17], cancellationToken);
               }
               await oprot.WriteMapEndAsync(cancellationToken);
             }
@@ -5514,15 +5577,15 @@ namespace Ruyi.SDK.SettingSystem.Api
                 {
                   {
                     SettingItems = new Dictionary<string, Ruyi.SDK.CommonType.SettingValue>();
-                    TMap _map14 = await iprot.ReadMapBeginAsync(cancellationToken);
-                    for(int _i15 = 0; _i15 < _map14.Count; ++_i15)
+                    TMap _map18 = await iprot.ReadMapBeginAsync(cancellationToken);
+                    for(int _i19 = 0; _i19 < _map18.Count; ++_i19)
                     {
-                      string _key16;
-                      Ruyi.SDK.CommonType.SettingValue _val17;
-                      _key16 = await iprot.ReadStringAsync(cancellationToken);
-                      _val17 = new Ruyi.SDK.CommonType.SettingValue();
-                      await _val17.ReadAsync(iprot, cancellationToken);
-                      SettingItems[_key16] = _val17;
+                      string _key20;
+                      Ruyi.SDK.CommonType.SettingValue _val21;
+                      _key20 = await iprot.ReadStringAsync(cancellationToken);
+                      _val21 = new Ruyi.SDK.CommonType.SettingValue();
+                      await _val21.ReadAsync(iprot, cancellationToken);
+                      SettingItems[_key20] = _val21;
                     }
                     await iprot.ReadMapEndAsync(cancellationToken);
                   }
@@ -5582,10 +5645,10 @@ namespace Ruyi.SDK.SettingSystem.Api
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
             {
               await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.Struct, SettingItems.Count), cancellationToken);
-              foreach (string _iter18 in SettingItems.Keys)
+              foreach (string _iter22 in SettingItems.Keys)
               {
-                await oprot.WriteStringAsync(_iter18, cancellationToken);
-                await SettingItems[_iter18].WriteAsync(oprot, cancellationToken);
+                await oprot.WriteStringAsync(_iter22, cancellationToken);
+                await SettingItems[_iter22].WriteAsync(oprot, cancellationToken);
               }
               await oprot.WriteMapEndAsync(cancellationToken);
             }
@@ -5891,12 +5954,12 @@ namespace Ruyi.SDK.SettingSystem.Api
                 {
                   {
                     SettingKeys = new List<string>();
-                    TList _list19 = await iprot.ReadListBeginAsync(cancellationToken);
-                    for(int _i20 = 0; _i20 < _list19.Count; ++_i20)
+                    TList _list23 = await iprot.ReadListBeginAsync(cancellationToken);
+                    for(int _i24 = 0; _i24 < _list23.Count; ++_i24)
                     {
-                      string _elem21;
-                      _elem21 = await iprot.ReadStringAsync(cancellationToken);
-                      SettingKeys.Add(_elem21);
+                      string _elem25;
+                      _elem25 = await iprot.ReadStringAsync(cancellationToken);
+                      SettingKeys.Add(_elem25);
                     }
                     await iprot.ReadListEndAsync(cancellationToken);
                   }
@@ -5956,9 +6019,9 @@ namespace Ruyi.SDK.SettingSystem.Api
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
             {
               await oprot.WriteListBeginAsync(new TList(TType.String, SettingKeys.Count), cancellationToken);
-              foreach (string _iter22 in SettingKeys)
+              foreach (string _iter26 in SettingKeys)
               {
-                await oprot.WriteStringAsync(_iter22, cancellationToken);
+                await oprot.WriteStringAsync(_iter26, cancellationToken);
               }
               await oprot.WriteListEndAsync(cancellationToken);
             }
@@ -6268,12 +6331,12 @@ namespace Ruyi.SDK.SettingSystem.Api
                 {
                   {
                     SettingKeys = new List<string>();
-                    TList _list23 = await iprot.ReadListBeginAsync(cancellationToken);
-                    for(int _i24 = 0; _i24 < _list23.Count; ++_i24)
+                    TList _list27 = await iprot.ReadListBeginAsync(cancellationToken);
+                    for(int _i28 = 0; _i28 < _list27.Count; ++_i28)
                     {
-                      string _elem25;
-                      _elem25 = await iprot.ReadStringAsync(cancellationToken);
-                      SettingKeys.Add(_elem25);
+                      string _elem29;
+                      _elem29 = await iprot.ReadStringAsync(cancellationToken);
+                      SettingKeys.Add(_elem29);
                     }
                     await iprot.ReadListEndAsync(cancellationToken);
                   }
@@ -6333,9 +6396,9 @@ namespace Ruyi.SDK.SettingSystem.Api
             await oprot.WriteFieldBeginAsync(field, cancellationToken);
             {
               await oprot.WriteListBeginAsync(new TList(TType.String, SettingKeys.Count), cancellationToken);
-              foreach (string _iter26 in SettingKeys)
+              foreach (string _iter30 in SettingKeys)
               {
-                await oprot.WriteStringAsync(_iter26, cancellationToken);
+                await oprot.WriteStringAsync(_iter30, cancellationToken);
               }
               await oprot.WriteListEndAsync(cancellationToken);
             }
@@ -10092,13 +10155,13 @@ namespace Ruyi.SDK.SettingSystem.Api
                 {
                   {
                     Success = new List<Ruyi.SDK.SettingSystem.Api.WifiEntity>();
-                    TList _list27 = await iprot.ReadListBeginAsync(cancellationToken);
-                    for(int _i28 = 0; _i28 < _list27.Count; ++_i28)
+                    TList _list31 = await iprot.ReadListBeginAsync(cancellationToken);
+                    for(int _i32 = 0; _i32 < _list31.Count; ++_i32)
                     {
-                      Ruyi.SDK.SettingSystem.Api.WifiEntity _elem29;
-                      _elem29 = new Ruyi.SDK.SettingSystem.Api.WifiEntity();
-                      await _elem29.ReadAsync(iprot, cancellationToken);
-                      Success.Add(_elem29);
+                      Ruyi.SDK.SettingSystem.Api.WifiEntity _elem33;
+                      _elem33 = new Ruyi.SDK.SettingSystem.Api.WifiEntity();
+                      await _elem33.ReadAsync(iprot, cancellationToken);
+                      Success.Add(_elem33);
                     }
                     await iprot.ReadListEndAsync(cancellationToken);
                   }
@@ -10154,9 +10217,9 @@ namespace Ruyi.SDK.SettingSystem.Api
               await oprot.WriteFieldBeginAsync(field, cancellationToken);
               {
                 await oprot.WriteListBeginAsync(new TList(TType.Struct, Success.Count), cancellationToken);
-                foreach (Ruyi.SDK.SettingSystem.Api.WifiEntity _iter30 in Success)
+                foreach (Ruyi.SDK.SettingSystem.Api.WifiEntity _iter34 in Success)
                 {
-                  await _iter30.WriteAsync(oprot, cancellationToken);
+                  await _iter34.WriteAsync(oprot, cancellationToken);
                 }
                 await oprot.WriteListEndAsync(cancellationToken);
               }

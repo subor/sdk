@@ -34,6 +34,7 @@ namespace Ruyi.SDK.CommonType
     private bool _enable;
     private bool _showInUI;
     private string _script;
+    private List<string> _Tags;
 
     public string Id
     {
@@ -178,6 +179,19 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    public List<string> Tags
+    {
+      get
+      {
+        return _Tags;
+      }
+      set
+      {
+        __isset.Tags = true;
+        this._Tags = value;
+      }
+    }
+
 
     public Isset __isset;
     #if !SILVERLIGHT
@@ -195,6 +209,7 @@ namespace Ruyi.SDK.CommonType
       public bool enable;
       public bool showInUI;
       public bool script;
+      public bool Tags;
     }
 
     public SettingCategory() {
@@ -268,14 +283,14 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.Map) {
                 {
                   Items = new Dictionary<string, int>();
-                  TMap _map20 = iprot.ReadMapBegin();
-                  for( int _i21 = 0; _i21 < _map20.Count; ++_i21)
+                  TMap _map24 = iprot.ReadMapBegin();
+                  for( int _i25 = 0; _i25 < _map24.Count; ++_i25)
                   {
-                    string _key22;
-                    int _val23;
-                    _key22 = iprot.ReadString();
-                    _val23 = iprot.ReadI32();
-                    Items[_key22] = _val23;
+                    string _key26;
+                    int _val27;
+                    _key26 = iprot.ReadString();
+                    _val27 = iprot.ReadI32();
+                    Items[_key26] = _val27;
                   }
                   iprot.ReadMapEnd();
                 }
@@ -300,6 +315,23 @@ namespace Ruyi.SDK.CommonType
             case 11:
               if (field.Type == TType.String) {
                 Script = iprot.ReadString();
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 12:
+              if (field.Type == TType.List) {
+                {
+                  Tags = new List<string>();
+                  TList _list28 = iprot.ReadListBegin();
+                  for( int _i29 = 0; _i29 < _list28.Count; ++_i29)
+                  {
+                    string _elem30;
+                    _elem30 = iprot.ReadString();
+                    Tags.Add(_elem30);
+                  }
+                  iprot.ReadListEnd();
+                }
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -388,10 +420,10 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteMapBegin(new TMap(TType.String, TType.I32, Items.Count));
-            foreach (string _iter24 in Items.Keys)
+            foreach (string _iter31 in Items.Keys)
             {
-              oprot.WriteString(_iter24);
-              oprot.WriteI32(Items[_iter24]);
+              oprot.WriteString(_iter31);
+              oprot.WriteI32(Items[_iter31]);
             }
             oprot.WriteMapEnd();
           }
@@ -419,6 +451,21 @@ namespace Ruyi.SDK.CommonType
           field.ID = 11;
           oprot.WriteFieldBegin(field);
           oprot.WriteString(Script);
+          oprot.WriteFieldEnd();
+        }
+        if (Tags != null && __isset.Tags) {
+          field.Name = "Tags";
+          field.Type = TType.List;
+          field.ID = 12;
+          oprot.WriteFieldBegin(field);
+          {
+            oprot.WriteListBegin(new TList(TType.String, Tags.Count));
+            foreach (string _iter32 in Tags)
+            {
+              oprot.WriteString(_iter32);
+            }
+            oprot.WriteListEnd();
+          }
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -498,6 +545,12 @@ namespace Ruyi.SDK.CommonType
         __first = false;
         __sb.Append("Script: ");
         __sb.Append(Script);
+      }
+      if (Tags != null && __isset.Tags) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Tags: ");
+        __sb.Append(Tags);
       }
       __sb.Append(")");
       return __sb.ToString();

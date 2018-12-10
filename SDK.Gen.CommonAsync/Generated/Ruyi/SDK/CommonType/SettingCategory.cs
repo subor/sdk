@@ -38,6 +38,7 @@ namespace Ruyi.SDK.CommonType
     private bool _enable;
     private bool _showInUI;
     private string _script;
+    private List<string> _Tags;
 
     public string Id
     {
@@ -182,6 +183,19 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    public List<string> Tags
+    {
+      get
+      {
+        return _Tags;
+      }
+      set
+      {
+        __isset.Tags = true;
+        this._Tags = value;
+      }
+    }
+
 
     public Isset __isset;
     public struct Isset
@@ -197,6 +211,7 @@ namespace Ruyi.SDK.CommonType
       public bool enable;
       public bool showInUI;
       public bool script;
+      public bool Tags;
     }
 
     public SettingCategory()
@@ -295,14 +310,14 @@ namespace Ruyi.SDK.CommonType
               {
                 {
                   Items = new Dictionary<string, int>();
-                  TMap _map20 = await iprot.ReadMapBeginAsync(cancellationToken);
-                  for(int _i21 = 0; _i21 < _map20.Count; ++_i21)
+                  TMap _map24 = await iprot.ReadMapBeginAsync(cancellationToken);
+                  for(int _i25 = 0; _i25 < _map24.Count; ++_i25)
                   {
-                    string _key22;
-                    int _val23;
-                    _key22 = await iprot.ReadStringAsync(cancellationToken);
-                    _val23 = await iprot.ReadI32Async(cancellationToken);
-                    Items[_key22] = _val23;
+                    string _key26;
+                    int _val27;
+                    _key26 = await iprot.ReadStringAsync(cancellationToken);
+                    _val27 = await iprot.ReadI32Async(cancellationToken);
+                    Items[_key26] = _val27;
                   }
                   await iprot.ReadMapEndAsync(cancellationToken);
                 }
@@ -336,6 +351,26 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.String)
               {
                 Script = await iprot.ReadStringAsync(cancellationToken);
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 12:
+              if (field.Type == TType.List)
+              {
+                {
+                  Tags = new List<string>();
+                  TList _list28 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i29 = 0; _i29 < _list28.Count; ++_i29)
+                  {
+                    string _elem30;
+                    _elem30 = await iprot.ReadStringAsync(cancellationToken);
+                    Tags.Add(_elem30);
+                  }
+                  await iprot.ReadListEndAsync(cancellationToken);
+                }
               }
               else
               {
@@ -437,10 +472,10 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.I32, Items.Count), cancellationToken);
-            foreach (string _iter24 in Items.Keys)
+            foreach (string _iter31 in Items.Keys)
             {
-              await oprot.WriteStringAsync(_iter24, cancellationToken);
-              await oprot.WriteI32Async(Items[_iter24], cancellationToken);
+              await oprot.WriteStringAsync(_iter31, cancellationToken);
+              await oprot.WriteI32Async(Items[_iter31], cancellationToken);
             }
             await oprot.WriteMapEndAsync(cancellationToken);
           }
@@ -471,6 +506,22 @@ namespace Ruyi.SDK.CommonType
           field.ID = 11;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteStringAsync(Script, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (Tags != null && __isset.Tags)
+        {
+          field.Name = "Tags";
+          field.Type = TType.List;
+          field.ID = 12;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          {
+            await oprot.WriteListBeginAsync(new TList(TType.String, Tags.Count), cancellationToken);
+            foreach (string _iter32 in Tags)
+            {
+              await oprot.WriteStringAsync(_iter32, cancellationToken);
+            }
+            await oprot.WriteListEndAsync(cancellationToken);
+          }
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -562,6 +613,13 @@ namespace Ruyi.SDK.CommonType
         __first = false;
         sb.Append("Script: ");
         sb.Append(Script);
+      }
+      if (Tags != null && __isset.Tags)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Tags: ");
+        sb.Append(Tags);
       }
       sb.Append(")");
       return sb.ToString();

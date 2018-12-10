@@ -48,6 +48,7 @@ namespace Ruyi.SDK.CommonType
     private string _ActionObject;
     private string _ActionOnSetValue;
     private string _ActionOnGetValue;
+    private List<string> _Tags;
 
     public string Id
     {
@@ -330,6 +331,19 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    public List<string> Tags
+    {
+      get
+      {
+        return _Tags;
+      }
+      set
+      {
+        __isset.Tags = true;
+        this._Tags = value;
+      }
+    }
+
 
     public Isset __isset;
     public struct Isset
@@ -355,6 +369,7 @@ namespace Ruyi.SDK.CommonType
       public bool ActionObject;
       public bool ActionOnSetValue;
       public bool ActionOnGetValue;
+      public bool Tags;
     }
 
     public SettingItem()
@@ -600,6 +615,26 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
+            case 22:
+              if (field.Type == TType.List)
+              {
+                {
+                  Tags = new List<string>();
+                  TList _list19 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i20 = 0; _i20 < _list19.Count; ++_i20)
+                  {
+                    string _elem21;
+                    _elem21 = await iprot.ReadStringAsync(cancellationToken);
+                    Tags.Add(_elem21);
+                  }
+                  await iprot.ReadListEndAsync(cancellationToken);
+                }
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
             default: 
               await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               break;
@@ -776,9 +811,9 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, ActiveDependencies.Count), cancellationToken);
-            foreach (activeDependency _iter19 in ActiveDependencies)
+            foreach (activeDependency _iter22 in ActiveDependencies)
             {
-              await _iter19.WriteAsync(oprot, cancellationToken);
+              await _iter22.WriteAsync(oprot, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }
@@ -818,6 +853,22 @@ namespace Ruyi.SDK.CommonType
           field.ID = 21;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteStringAsync(ActionOnGetValue, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (Tags != null && __isset.Tags)
+        {
+          field.Name = "Tags";
+          field.Type = TType.List;
+          field.ID = 22;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          {
+            await oprot.WriteListBeginAsync(new TList(TType.String, Tags.Count), cancellationToken);
+            foreach (string _iter23 in Tags)
+            {
+              await oprot.WriteStringAsync(_iter23, cancellationToken);
+            }
+            await oprot.WriteListEndAsync(cancellationToken);
+          }
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -979,6 +1030,13 @@ namespace Ruyi.SDK.CommonType
         __first = false;
         sb.Append("ActionOnGetValue: ");
         sb.Append(ActionOnGetValue);
+      }
+      if (Tags != null && __isset.Tags)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Tags: ");
+        sb.Append(Tags);
       }
       sb.Append(")");
       return sb.ToString();

@@ -69,8 +69,10 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
    * @param nodeType Specifies whether the child nodes containing setting item or setting category, or both
    * 
    * @param param The parameter passed to the function which will be called while getting the item value
+   * 
+   * @param tags Tags used to filter the setting items. Only items with specified tags will be added in the result
    */
-  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param) {
+  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param, const std::vector<std::string> & tags) {
     // Your implementation goes here
     printf("GetChildNode\n");
   }

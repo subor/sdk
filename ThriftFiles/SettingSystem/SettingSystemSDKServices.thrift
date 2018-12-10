@@ -43,7 +43,10 @@ According to the format of json string your write, searching can be separated to
 		2: SettingSystemSDKDataTypes.NodeType nodeType, 
 		
 		/** The parameter passed to the function which will be called while getting the item value */
-		3: string param
+		3: string param, 
+		
+		/** Tags used to filter the setting items. Only items with specified tags will be added in the result */
+		4: list<string> tags
 	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	/** Set the specified setting's "dataValue" with the new value */
