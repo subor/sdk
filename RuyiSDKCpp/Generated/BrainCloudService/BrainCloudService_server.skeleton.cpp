@@ -4766,9 +4766,20 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param clientIndex
    */
-  void Shopping_RemoveFromWishlist(std::string& _return, const std::string& productId, const int32_t clientIndex) {
+  void Shopping_RemoveFromWishlist_SSFO(std::string& _return, const std::string& productId, const int32_t clientIndex) {
     // Your implementation goes here
-    printf("Shopping_RemoveFromWishlist\n");
+    printf("Shopping_RemoveFromWishlist_SSFO\n");
+  }
+
+  /**
+   * Remove multiple items from the player's wishlist.
+   * 
+   * @param productIds
+   * @param clientIndex
+   */
+  void Shopping_RemoveFromWishlist_ISFO(std::string& _return, const std::vector<std::string> & productIds, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_RemoveFromWishlist_ISFO\n");
   }
 
   /**
@@ -4829,6 +4840,32 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Shopping_GetRecentlyUpdatedProducts(std::string& _return, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Shopping_GetRecentlyUpdatedProducts\n");
+  }
+
+  /**
+   * Return a list of featured products.
+   * 
+   * @param includeDetails If true will also return full descriptions of games in the list.
+   * 
+   * @param clientIndex
+   */
+  void Shopping_GetFeaturedProducts(std::string& _return, const bool includeDetails, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetFeaturedProducts\n");
+  }
+
+  /**
+   * Return a list of the mostpopular products.
+   * 
+   * @param page The 1-indexed page of the review list to fetch.
+   * 
+   * @param pageSize The size of each page.
+   * 
+   * @param clientIndex
+   */
+  void Shopping_GetPopularProducts(std::string& _return, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetPopularProducts\n");
   }
 
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {
