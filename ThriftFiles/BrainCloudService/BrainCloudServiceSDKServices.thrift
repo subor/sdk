@@ -3317,8 +3317,18 @@ service BrainCloudService {
 		2: i32 clientIndex
 	),
 
-	/** Return a list of the mostpopular products. */
+	/** Return a list of the mos tpopular products. */
 	string Shopping_GetPopularProducts(
+		/** The 1-indexed page of the review list to fetch. */
+		1: i32 page, 
+		
+		/** The size of each page. */
+		2: i32 pageSize, 
+		3: i32 clientIndex
+	),
+
+	/** Return a list of special offers. */
+	string Shopping_GetSpecialOffers(
 		/** The 1-indexed page of the review list to fetch. */
 		1: i32 page, 
 		

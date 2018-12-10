@@ -4855,7 +4855,7 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   }
 
   /**
-   * Return a list of the mostpopular products.
+   * Return a list of the mos tpopular products.
    * 
    * @param page The 1-indexed page of the review list to fetch.
    * 
@@ -4866,6 +4866,20 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Shopping_GetPopularProducts(std::string& _return, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Shopping_GetPopularProducts\n");
+  }
+
+  /**
+   * Return a list of special offers.
+   * 
+   * @param page The 1-indexed page of the review list to fetch.
+   * 
+   * @param pageSize The size of each page.
+   * 
+   * @param clientIndex
+   */
+  void Shopping_GetSpecialOffers(std::string& _return, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetSpecialOffers\n");
   }
 
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {
