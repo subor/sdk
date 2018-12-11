@@ -29,8 +29,8 @@ namespace Ruyi.SDK.ExternalErrors
       tmp1.Description = "setting {0} is not found!";
       EXTERNALERRORLIST.Add(tmp1);
       ExternalErrorInfos tmp2 = new ExternalErrorInfos();
-      tmp2.Description = "[type error] trying to assign a {0} to setting item {1}, whose data type is {2}";
       tmp2.ErrorCode = ExternalErrorCode.Err_2;
+      tmp2.Description = "[type error] trying to assign a {0} to setting item {1}, whose data type is {2}";
       EXTERNALERRORLIST.Add(tmp2);
       ExternalErrorInfos tmp3 = new ExternalErrorInfos();
       tmp3.ErrorCode = ExternalErrorCode.Err_3;
@@ -57,16 +57,16 @@ namespace Ruyi.SDK.ExternalErrors
       tmp8.ErrorCode = ExternalErrorCode.Err_8;
       EXTERNALERRORLIST.Add(tmp8);
       ExternalErrorInfos tmp9 = new ExternalErrorInfos();
-      tmp9.ErrorCode = ExternalErrorCode.Err_9;
       tmp9.Description = "user is not found by id {0}";
+      tmp9.ErrorCode = ExternalErrorCode.Err_9;
       EXTERNALERRORLIST.Add(tmp9);
       ExternalErrorInfos tmp10 = new ExternalErrorInfos();
       tmp10.Description = "";
       tmp10.ErrorCode = ExternalErrorCode.Err_10;
       EXTERNALERRORLIST.Add(tmp10);
       ExternalErrorInfos tmp11 = new ExternalErrorInfos();
-      tmp11.Description = "";
       tmp11.ErrorCode = ExternalErrorCode.Err_11;
+      tmp11.Description = "";
       EXTERNALERRORLIST.Add(tmp11);
       ExternalErrorInfos tmp12 = new ExternalErrorInfos();
       tmp12.ErrorCode = ExternalErrorCode.Err_12;

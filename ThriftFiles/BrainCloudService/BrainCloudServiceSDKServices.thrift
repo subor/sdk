@@ -3255,11 +3255,14 @@ service BrainCloudService {
 	),
 
 	/** Remove an item from the player's wishlist. */
-	string Shopping_RemoveFromWishlist(
+	string Shopping_RemoveFromWishlist_SSFO(
 		/** The ID of the product to remove. */
 		1: string productId, 
 		2: i32 clientIndex
 	),
+
+	/** Remove multiple items from the player's wishlist. */
+	string Shopping_RemoveFromWishlist_ISFO(1: list<string> productIds, 2: i32 clientIndex),
 
 	/** Get a list of user reviews for a product. */
 	string Shopping_GetUserReviews(
@@ -3312,6 +3315,26 @@ service BrainCloudService {
 		/** If true will also return full descriptions of games in the list. */
 		1: bool includeDetails, 
 		2: i32 clientIndex
+	),
+
+	/** Return a list of the mos tpopular products. */
+	string Shopping_GetPopularProducts(
+		/** The 1-indexed page of the review list to fetch. */
+		1: i32 page, 
+		
+		/** The size of each page. */
+		2: i32 pageSize, 
+		3: i32 clientIndex
+	),
+
+	/** Return a list of special offers. */
+	string Shopping_GetSpecialOffers(
+		/** The 1-indexed page of the review list to fetch. */
+		1: i32 page, 
+		
+		/** The size of each page. */
+		2: i32 pageSize, 
+		3: i32 clientIndex
 	),
 
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 6: i32 clientIndex),
