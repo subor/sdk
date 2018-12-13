@@ -25,10 +25,16 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.MediaService
 {
 
+  /// <summary>
+  /// @PauseMsg_desc
+  /// </summary>
   public partial class PauseMsg : TBase
   {
     private string _url;
 
+    /// <summary>
+    /// @PauseMsg_url_desc
+    /// </summary>
     public string Url
     {
       get

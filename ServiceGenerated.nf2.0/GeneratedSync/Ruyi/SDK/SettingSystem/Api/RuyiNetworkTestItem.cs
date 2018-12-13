@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// @RuyiNetworkTestItem_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -26,6 +29,9 @@ namespace Ruyi.SDK.SettingSystem.Api
     private RuyiNetworkSettingNameValue _item;
     private bool _result;
 
+    /// <summary>
+    /// @RuyiNetworkTestItem_item_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue Item
     {
       get
@@ -39,6 +45,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkTestItem_result_desc
+    /// </summary>
     public bool Result
     {
       get

@@ -25,13 +25,16 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @AppDataCollection_desc
+  /// </summary>
   public partial class AppDataCollection : TBase
   {
     private string _category;
     private List<AppDataRecord> _records;
 
     /// <summary>
-    /// The category of the records
+    /// @AppDataCollection_category_desc
     /// </summary>
     public string Category
     {
@@ -47,7 +50,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
-    /// The records of the collection. See AppDataRecord
+    /// @AppDataCollection_records_desc
     /// </summary>
     public List<AppDataRecord> Records
     {

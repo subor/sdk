@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// @NetworkConnectionStatus_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -30,6 +33,9 @@ namespace Ruyi.SDK.SettingSystem.Api
     private bool _preInternetConnection;
     private bool _curInternetConnection;
 
+    /// <summary>
+    /// @NetworkConnectionStatus_preLanAdapter_desc
+    /// </summary>
     public bool PreLanAdapter
     {
       get
@@ -43,6 +49,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkConnectionStatus_curLanAdapter_desc
+    /// </summary>
     public bool CurLanAdapter
     {
       get
@@ -56,6 +65,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkConnectionStatus_preWlanAdapter_desc
+    /// </summary>
     public bool PreWlanAdapter
     {
       get
@@ -69,6 +81,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkConnectionStatus_curWlanAdapter_desc
+    /// </summary>
     public bool CurWlanAdapter
     {
       get
@@ -82,6 +97,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkConnectionStatus_preInternetConnection_desc
+    /// </summary>
     public bool PreInternetConnection
     {
       get
@@ -95,6 +113,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkConnectionStatus_curInternetConnection_desc
+    /// </summary>
     public bool CurInternetConnection
     {
       get

@@ -25,12 +25,18 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @TitleMainIconNotification_desc
+  /// </summary>
   public partial class TitleMainIconNotification : TBase
   {
     private string _title;
     private string _mainIcon;
     private TitleMainIconNotificationType _NotificationType;
 
+    /// <summary>
+    /// @TitleMainIconNotification_Title
+    /// </summary>
     public string Title
     {
       get
@@ -44,6 +50,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @TitleMainIconNotification_MainIcon
+    /// </summary>
     public string MainIcon
     {
       get
@@ -58,6 +67,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
+    /// @enum.NotificationType_Desc
     /// 
     /// <seealso cref="TitleMainIconNotificationType"/>
     /// </summary>

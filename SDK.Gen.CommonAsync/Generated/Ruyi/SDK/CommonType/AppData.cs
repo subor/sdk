@@ -25,13 +25,16 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @AppData_desc
+  /// </summary>
   public partial class AppData : TBase
   {
     private string _appId;
     private List<AppDataCollection> _data;
 
     /// <summary>
-    /// The App ID
+    /// @AppData_appId_desc
     /// </summary>
     public string AppId
     {
@@ -47,7 +50,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
-    /// The user data of the App. See AppDataCollection
+    /// @AppData_data_desc
     /// </summary>
     public List<AppDataCollection> Data
     {

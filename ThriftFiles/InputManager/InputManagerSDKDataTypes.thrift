@@ -8,6 +8,7 @@ namespace rs Ruyi.SDK.InputManager
 
 typedef double _float
 
+/** @Key_desc */
 enum Key {
     Unknown = 0,
     Escape = 1,
@@ -156,6 +157,7 @@ enum Key {
     MediaSelect = 237,
 }
 
+/** @MouseOffset_desc */
 enum MouseOffset {
     X = 0,
     Y = 4,
@@ -170,6 +172,7 @@ enum MouseOffset {
     Buttons7 = 19,
 }
 
+/** @JoystickOffset_desc */
 enum JoystickOffset {
     X = 0,
     Y = 4,
@@ -338,50 +341,85 @@ enum JoystickOffset {
 }
 
 
+/** @RuyiGamePadInput_desc */
 struct RuyiGamePadInput {
-    1: string DeviceId,
-    2: string UserId,
+    /** @RuyiGamePadInput_DeviceId_desc */
+	1: string DeviceId,
+    /** @RuyiGamePadInput_UserId_desc */
+	2: string UserId,
     /** Combination of RuyiGamePadButtonFlags */
 	3: i32 ButtonFlags,
-    4: i8 LeftTrigger,
-    5: i8 RightTrigger,
-    6: i16 LeftThumbX,
-    7: i16 LeftThumbY,
-    8: i16 RightThumbX,
-    9: i16 RightThumbY,
+    /** @RuyiGamePadInput_LeftTrigger_desc */
+	4: i8 LeftTrigger,
+    /** @RuyiGamePadInput_RightTrigger_desc */
+	5: i8 RightTrigger,
+    /** @RuyiGamePadInput_LeftThumbX_desc */
+	6: i16 LeftThumbX,
+    /** @RuyiGamePadInput_LeftThumbY_desc */
+	7: i16 LeftThumbY,
+    /** @RuyiGamePadInput_RightThumbX_desc */
+	8: i16 RightThumbX,
+    /** @RuyiGamePadInput_RightThumbY_desc */
+	9: i16 RightThumbY,
 }
 
+/** @RuyiKeyboardInput_desc */
 struct RuyiKeyboardInput {
-    1: string DeviceId,
-    2: string UserId,
-    3: i32 RawOffset,
-    4: i32 Value,
-    5: i32 Timestamp,
-    6: i32 Sequence,
-    7: Key Key,
-    8: bool IsPressed,
-    9: bool IsReleased,
+    /** @RuyiKeyboardInput_DeviceId_desc */
+	1: string DeviceId,
+    /** @RuyiKeyboardInput_UserId_desc */
+	2: string UserId,
+    /** @RuyiKeyboardInput_RawOffset_desc */
+	3: i32 RawOffset,
+    /** @RuyiKeyboardInput_Value_desc */
+	4: i32 Value,
+    /** @RuyiKeyboardInput_Timestamp_desc */
+	5: i32 Timestamp,
+    /** @RuyiKeyboardInput_Sequence_desc */
+	6: i32 Sequence,
+    /** @RuyiKeyboardInput_Key_desc */
+	7: Key Key,
+    /** @RuyiKeyboardInput_IsPressed_desc */
+	8: bool IsPressed,
+    /** @RuyiKeyboardInput_IsReleased_desc */
+	9: bool IsReleased,
 }
 
 struct RuyiMouseInput {
-    1: string DeviceId,
-    2: string UserId,
-    3: i32 RawOffset,
-    4: i32 Value,
-    5: i32 Timestamp,
-    6: i32 Sequence,
-    7: MouseOffset Offset,
-    8: bool IsButton,
+    /** @RuyiMouseInput_DeviceId_desc */
+	1: string DeviceId,
+    /** @RuyiMouseInput_UserId_desc */
+	2: string UserId,
+    /** @RuyiMouseInput_RawOffset_desc */
+	3: i32 RawOffset,
+    /** @RuyiMouseInput_Value_desc */
+	4: i32 Value,
+    /** @RuyiMouseInput_Timestamp_desc */
+	5: i32 Timestamp,
+    /** @RuyiMouseInput_Sequence_desc */
+	6: i32 Sequence,
+    /** @RuyiMouseInput_Offset_desc */
+	7: MouseOffset Offset,
+    /** @RuyiMouseInput_IsButton_desc */
+	8: bool IsButton,
 }
 
+/** @RuyiJoystickInput_desc */
 struct RuyiJoystickInput {
-    1: string DeviceId,
-    2: string UserId,
-    3: i32 RawOffset,
-    4: i32 Value,
-    5: i32 Timestamp,
-    6: i32 Sequence,
-    7: JoystickOffset Offset,
+    /** @RuyiJoystickInput_DeviceId_desc */
+	1: string DeviceId,
+    /** @RuyiJoystickInput_UserId_desc */
+	2: string UserId,
+    /** @RuyiJoystickInput_RawOffset_desc */
+	3: i32 RawOffset,
+    /** @RuyiJoystickInput_Value_desc */
+	4: i32 Value,
+    /** @RuyiJoystickInput_Timestamp_desc */
+	5: i32 Timestamp,
+    /** @RuyiJoystickInput_Sequence_desc */
+	6: i32 Sequence,
+    /** @RuyiJoystickInput_Offset_desc */
+	7: JoystickOffset Offset,
 }
 
 /** Action triggered by digital input device ( buttons on gamepad or key on key board ) */

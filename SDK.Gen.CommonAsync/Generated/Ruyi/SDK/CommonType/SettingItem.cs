@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @SettingItem_desc
+  /// </summary>
   public partial class SettingItem : TBase
   {
     private string _id;
@@ -50,6 +53,9 @@ namespace Ruyi.SDK.CommonType
     private string _ActionOnGetValue;
     private List<string> _Tags;
 
+    /// <summary>
+    /// @SettingItem_id_desc
+    /// </summary>
     public string Id
     {
       get
@@ -63,6 +69,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_display_desc
+    /// </summary>
     public string Display
     {
       get
@@ -76,6 +85,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_dataType_desc
+    /// </summary>
     public string DataType
     {
       get
@@ -89,6 +101,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_dataValue_desc
+    /// </summary>
     public string DataValue
     {
       get
@@ -102,6 +117,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_dataList_desc
+    /// </summary>
     public dataListItem DataList
     {
       get
@@ -116,6 +134,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
+    /// @SettingItem_platform_desc
     /// 
     /// <seealso cref="ePlatform"/>
     /// </summary>
@@ -132,6 +151,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_summary_desc
+    /// </summary>
     public string Summary
     {
       get
@@ -145,6 +167,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_description_desc
+    /// </summary>
     public string Description
     {
       get
@@ -159,6 +184,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
+    /// @SettingItem_UIType_desc
     /// 
     /// <seealso cref="eUIType"/>
     /// </summary>
@@ -175,6 +201,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_devModeOnly_desc
+    /// </summary>
     public bool DevModeOnly
     {
       get
@@ -188,6 +217,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_internalOnly_desc
+    /// </summary>
     public bool InternalOnly
     {
       get
@@ -201,6 +233,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_readOnly_desc
+    /// </summary>
     public bool ReadOnly
     {
       get
@@ -214,6 +249,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_isValid_desc
+    /// </summary>
     public bool IsValid
     {
       get
@@ -227,6 +265,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_isActive_desc
+    /// </summary>
     public bool IsActive
     {
       get
@@ -240,6 +281,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_hasNew_desc
+    /// </summary>
     public bool HasNew
     {
       get
@@ -253,6 +297,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_validation_desc
+    /// </summary>
     public string Validation
     {
       get
@@ -266,6 +313,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_activeDependencies_desc
+    /// </summary>
     public List<activeDependency> ActiveDependencies
     {
       get
@@ -279,6 +329,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_ActionName_desc
+    /// </summary>
     public string ActionName
     {
       get
@@ -292,6 +345,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_ActionObject_desc
+    /// </summary>
     public string ActionObject
     {
       get
@@ -305,6 +361,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_ActionOnSetValue_desc
+    /// </summary>
     public string ActionOnSetValue
     {
       get
@@ -318,6 +377,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_ActionOnGetValue_desc
+    /// </summary>
     public string ActionOnGetValue
     {
       get
@@ -331,6 +393,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_Tags_desc
+    /// </summary>
     public List<string> Tags
     {
       get

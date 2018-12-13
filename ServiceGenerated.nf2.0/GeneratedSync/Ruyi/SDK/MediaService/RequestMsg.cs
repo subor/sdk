@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.MediaService
 {
 
+  /// <summary>
+  /// @RequestMsg_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -30,6 +33,9 @@ namespace Ruyi.SDK.MediaService
     private RemovePathMsg _RemovePath;
     private QueryMsg _Query;
 
+    /// <summary>
+    /// @RequestMsg_Play_desc
+    /// </summary>
     public PlayMsg Play
     {
       get
@@ -43,6 +49,9 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
+    /// <summary>
+    /// @RequestMsg_Pause_desc
+    /// </summary>
     public PauseMsg Pause
     {
       get
@@ -56,6 +65,9 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
+    /// <summary>
+    /// @RequestMsg_Stop_desc
+    /// </summary>
     public StopMsg Stop
     {
       get
@@ -69,6 +81,9 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
+    /// <summary>
+    /// @RequestMsg_AddPath_desc
+    /// </summary>
     public AddPathMsg AddPath
     {
       get
@@ -82,6 +97,9 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
+    /// <summary>
+    /// @RequestMsg_RemovePath_desc
+    /// </summary>
     public RemovePathMsg RemovePath
     {
       get
@@ -95,6 +113,9 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
+    /// <summary>
+    /// @RequestMsg_Query_desc
+    /// </summary>
     public QueryMsg Query
     {
       get

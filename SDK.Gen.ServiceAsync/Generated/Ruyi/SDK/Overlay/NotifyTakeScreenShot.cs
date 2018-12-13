@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.Overlay
 {
 
+  /// <summary>
+  /// @NotifyTakeScreenShot_desc
+  /// </summary>
   public partial class NotifyTakeScreenShot : TBase
   {
 

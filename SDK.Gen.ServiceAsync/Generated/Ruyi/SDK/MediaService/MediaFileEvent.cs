@@ -25,12 +25,18 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.MediaService
 {
 
+  /// <summary>
+  /// @MediaFileEvent_desc
+  /// </summary>
   public partial class MediaFileEvent : TBase
   {
     private MediaFile _file;
     private MediaFileEventTypes _event;
     private string _oldname;
 
+    /// <summary>
+    /// @MediaFileEvent_file_desc
+    /// </summary>
     public MediaFile File
     {
       get
@@ -45,6 +51,7 @@ namespace Ruyi.SDK.MediaService
     }
 
     /// <summary>
+    /// @MediaFileEvent_event_desc
     /// 
     /// <seealso cref="MediaFileEventTypes"/>
     /// </summary>
@@ -61,6 +68,9 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
+    /// <summary>
+    /// @MediaFileEvent_oldname_desc
+    /// </summary>
     public string Oldname
     {
       get

@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.MediaService
 {
 
+  /// <summary>
+  /// @StopMsg_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -26,6 +29,7 @@ namespace Ruyi.SDK.MediaService
     private MediaTask _name;
 
     /// <summary>
+    /// @StopMsg_name_desc
     /// 
     /// <seealso cref="MediaTask"/>
     /// </summary>

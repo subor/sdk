@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.UserServiceExternal
 {
 
+  /// <summary>
+  /// @UserInfo_Public_desc
+  /// </summary>
   public partial class UserInfo_Public : TBase
   {
     private string _userId;
@@ -32,6 +35,9 @@ namespace Ruyi.SDK.UserServiceExternal
     private string _portrait;
     private UserGender _gender;
 
+    /// <summary>
+    /// @UserInfo_Public_userId_desc
+    /// </summary>
     public string UserId
     {
       get
@@ -45,6 +51,9 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
+    /// <summary>
+    /// @UserInfo_Public_nickname_desc
+    /// </summary>
     public string Nickname
     {
       get
@@ -58,6 +67,9 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
+    /// <summary>
+    /// @UserInfo_Public_portrait_desc
+    /// </summary>
     public string Portrait
     {
       get
@@ -72,6 +84,7 @@ namespace Ruyi.SDK.UserServiceExternal
     }
 
     /// <summary>
+    /// @UserInfo_Public_gender_desc
     /// 
     /// <seealso cref="UserGender"/>
     /// </summary>

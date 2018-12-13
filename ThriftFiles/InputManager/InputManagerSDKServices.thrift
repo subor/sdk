@@ -16,9 +16,17 @@ service InputManagerService {
 	bool SetGamepadVibration(
 		/** The deviceid of the gamepad */
 		1: string deviceId, 
+		
+		/** @SetGamepadVibration_motor1Value_desc */
 		2: i8 motor1Value, 
+		
+		/** @SetGamepadVibration_motor1Time_desc */
 		3: i8 motor1Time, 
+		
+		/** @SetGamepadVibration_motor2Value_desc */
 		4: i8 motor2Value, 
+		
+		/** @SetGamepadVibration_motor2Time_desc */
 		5: i8 motor2Time
 	),
 

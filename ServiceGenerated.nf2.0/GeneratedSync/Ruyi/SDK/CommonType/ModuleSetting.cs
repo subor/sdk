@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @ModuleSetting_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -27,6 +30,9 @@ namespace Ruyi.SDK.CommonType
     private List<SettingItem> _settings;
     private List<SettingCategory> _categories;
 
+    /// <summary>
+    /// @ModuleSetting_baseInfo_desc
+    /// </summary>
     public ModuleBaseInfo BaseInfo
     {
       get
@@ -40,6 +46,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @ModuleSetting_settings_desc
+    /// </summary>
     public List<SettingItem> Settings
     {
       get
@@ -53,6 +62,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @ModuleSetting_categories_desc
+    /// </summary>
     public List<SettingCategory> Categories
     {
       get

@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// @RuyiNetworkTestResult_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -27,6 +30,9 @@ namespace Ruyi.SDK.SettingSystem.Api
     private RuyiNetworkTestItem _ipaddress;
     private RuyiNetworkTestItem _internetconnection;
 
+    /// <summary>
+    /// @RuyiNetworkTestResult_localconnection_desc
+    /// </summary>
     public RuyiNetworkTestItem Localconnection
     {
       get
@@ -40,6 +46,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkTestResult_ipaddress_desc
+    /// </summary>
     public RuyiNetworkTestItem Ipaddress
     {
       get
@@ -53,6 +62,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkTestResult_internetconnection_desc
+    /// </summary>
     public RuyiNetworkTestItem Internetconnection
     {
       get

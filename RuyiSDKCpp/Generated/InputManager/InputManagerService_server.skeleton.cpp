@@ -33,10 +33,13 @@ class InputManagerServiceHandler : virtual public InputManagerServiceIf {
    * 
    * @param deviceId The deviceid of the gamepad
    * 
-   * @param motor1Value
-   * @param motor1Time
-   * @param motor2Value
-   * @param motor2Time
+   * @param motor1Value @SetGamepadVibration_motor1Value_desc
+   * 
+   * @param motor1Time @SetGamepadVibration_motor1Time_desc
+   * 
+   * @param motor2Value @SetGamepadVibration_motor2Value_desc
+   * 
+   * @param motor2Time @SetGamepadVibration_motor2Time_desc
    */
   bool SetGamepadVibration(const std::string& deviceId, const int8_t motor1Value, const int8_t motor1Time, const int8_t motor2Value, const int8_t motor2Time) {
     // Your implementation goes here

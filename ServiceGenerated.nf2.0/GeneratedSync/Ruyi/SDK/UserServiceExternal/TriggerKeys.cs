@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.UserServiceExternal
 {
 
+  /// <summary>
+  /// @TriggerKeys_summary
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -28,6 +31,9 @@ namespace Ruyi.SDK.UserServiceExternal
     private sbyte _NewValue;
     private sbyte _OldValue;
 
+    /// <summary>
+    /// @TriggerKeys_DeviceType_desc
+    /// </summary>
     public sbyte DeviceType
     {
       get
@@ -41,6 +47,9 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
+    /// <summary>
+    /// @TriggerKeys_Key_desc
+    /// </summary>
     public int Key
     {
       get
@@ -54,6 +63,9 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
+    /// <summary>
+    /// @TriggerKeys_NewValue_desc
+    /// </summary>
     public sbyte NewValue
     {
       get
@@ -67,6 +79,9 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
+    /// <summary>
+    /// @TriggerKeys_OldValue_desc
+    /// </summary>
     public sbyte OldValue
     {
       get

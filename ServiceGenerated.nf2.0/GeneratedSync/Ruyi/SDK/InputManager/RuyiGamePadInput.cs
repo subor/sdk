@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.InputManager
 {
 
+  /// <summary>
+  /// @RuyiGamePadInput_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -33,6 +36,9 @@ namespace Ruyi.SDK.InputManager
     private short _RightThumbX;
     private short _RightThumbY;
 
+    /// <summary>
+    /// @RuyiGamePadInput_DeviceId_desc
+    /// </summary>
     public string DeviceId
     {
       get
@@ -46,6 +52,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiGamePadInput_UserId_desc
+    /// </summary>
     public string UserId
     {
       get
@@ -75,6 +84,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiGamePadInput_LeftTrigger_desc
+    /// </summary>
     public sbyte LeftTrigger
     {
       get
@@ -88,6 +100,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiGamePadInput_RightTrigger_desc
+    /// </summary>
     public sbyte RightTrigger
     {
       get
@@ -101,6 +116,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiGamePadInput_LeftThumbX_desc
+    /// </summary>
     public short LeftThumbX
     {
       get
@@ -114,6 +132,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiGamePadInput_LeftThumbY_desc
+    /// </summary>
     public short LeftThumbY
     {
       get
@@ -127,6 +148,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiGamePadInput_RightThumbX_desc
+    /// </summary>
     public short RightThumbX
     {
       get
@@ -140,6 +164,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiGamePadInput_RightThumbY_desc
+    /// </summary>
     public short RightThumbY
     {
       get

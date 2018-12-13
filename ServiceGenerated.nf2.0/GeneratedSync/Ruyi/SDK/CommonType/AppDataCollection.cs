@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @AppDataCollection_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -27,7 +30,7 @@ namespace Ruyi.SDK.CommonType
     private List<AppDataRecord> _records;
 
     /// <summary>
-    /// The category of the records
+    /// @AppDataCollection_category_desc
     /// </summary>
     public string Category
     {
@@ -43,7 +46,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
-    /// The records of the collection. See AppDataRecord
+    /// @AppDataCollection_records_desc
     /// </summary>
     public List<AppDataRecord> Records
     {

@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.PublisherSubscriber
 {
 
+  /// <summary>
+  /// @UserShellEvent_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -26,6 +29,7 @@ namespace Ruyi.SDK.PublisherSubscriber
     private UserShellEventType _EventType;
 
     /// <summary>
+    /// @UserShellEvent_EventType_desc
     /// 
     /// <seealso cref="UserShellEventType"/>
     /// </summary>

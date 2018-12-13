@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.InputManager
 {
+  /// <summary>
+  /// @Key_desc
+  /// </summary>
   public enum Key
   {
     Unknown = 0,

@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// @CategoryNode_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -28,6 +31,9 @@ namespace Ruyi.SDK.SettingSystem.Api
     private int _sortingPriority;
     private List<CategoryNode> _children;
 
+    /// <summary>
+    /// @CategoryNode_id_desc
+    /// </summary>
     public string Id
     {
       get
@@ -41,6 +47,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @CategoryNode_categoryId_desc
+    /// </summary>
     public string CategoryId
     {
       get
@@ -54,6 +63,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @CategoryNode_sortingPriority_desc
+    /// </summary>
     public int SortingPriority
     {
       get
@@ -67,6 +79,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @CategoryNode_children_desc
+    /// </summary>
     public List<CategoryNode> Children
     {
       get

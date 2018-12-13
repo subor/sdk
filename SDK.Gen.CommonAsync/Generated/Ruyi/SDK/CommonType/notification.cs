@@ -25,12 +25,18 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @notification_desc
+  /// </summary>
   public partial class notification : TBase
   {
     private string _title;
     private string _detail;
     private List<string> _option;
 
+    /// <summary>
+    /// @notification_title_desc
+    /// </summary>
     public string Title
     {
       get
@@ -44,6 +50,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @notification_detail_desc
+    /// </summary>
     public string Detail
     {
       get
@@ -57,6 +66,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @notification_option_desc
+    /// </summary>
     public List<string> Option
     {
       get

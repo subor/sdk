@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.BrainCloudApi
 {
 
+  /// <summary>
+  /// @BCServiceStartedNotification_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif

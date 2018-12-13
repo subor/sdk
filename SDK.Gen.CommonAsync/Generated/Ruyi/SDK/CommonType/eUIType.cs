@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @eUIType_desc
+  /// </summary>
   public enum eUIType
   {
     None = 0,

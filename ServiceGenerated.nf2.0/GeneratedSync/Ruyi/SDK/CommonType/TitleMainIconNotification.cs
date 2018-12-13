@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @TitleMainIconNotification_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -27,6 +30,9 @@ namespace Ruyi.SDK.CommonType
     private string _mainIcon;
     private TitleMainIconNotificationType _NotificationType;
 
+    /// <summary>
+    /// @TitleMainIconNotification_Title
+    /// </summary>
     public string Title
     {
       get
@@ -40,6 +46,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @TitleMainIconNotification_MainIcon
+    /// </summary>
     public string MainIcon
     {
       get
@@ -54,6 +63,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
+    /// @enum.NotificationType_Desc
     /// 
     /// <seealso cref="TitleMainIconNotificationType"/>
     /// </summary>

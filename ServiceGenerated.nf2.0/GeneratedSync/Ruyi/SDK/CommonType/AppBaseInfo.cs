@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @AppBaseInfo_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -33,6 +36,9 @@ namespace Ruyi.SDK.CommonType
     private int _size;
     private List<string> _languages;
 
+    /// <summary>
+    /// @AppBaseInfo_appId_desc
+    /// </summary>
     public string AppId
     {
       get
@@ -46,6 +52,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_name_desc
+    /// </summary>
     public string Name
     {
       get
@@ -59,6 +68,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_icon_hd_desc
+    /// </summary>
     public string Icon_hd
     {
       get
@@ -72,6 +84,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_icon_ld_desc
+    /// </summary>
     public string Icon_ld
     {
       get
@@ -85,6 +100,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_description_desc
+    /// </summary>
     public string Description
     {
       get
@@ -98,6 +116,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_properties_desc
+    /// </summary>
     public List<string> Properties
     {
       get
@@ -111,6 +132,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_platform_desc
+    /// </summary>
     public List<string> Platform
     {
       get
@@ -124,6 +148,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_size_desc
+    /// </summary>
     public int Size
     {
       get
@@ -137,6 +164,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_languages_desc
+    /// </summary>
     public List<string> Languages
     {
       get

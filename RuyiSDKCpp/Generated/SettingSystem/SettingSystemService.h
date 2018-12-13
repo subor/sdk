@@ -88,6 +88,16 @@ class SettingSystemServiceIf {
    * @param category The category of which to restored. Null indicates all settings.
    */
   virtual bool RestoreDefault(const std::string& moduleName, const std::string& category) = 0;
+
+  /**
+   * @RestoreUserDefault_Summary
+   * 
+   * @param userId @RestoreUserDefault_userId_desc
+   * 
+   * @param moduleName @RestoreUserDefault_moduleName_desc
+   * 
+   * @param category @RestoreUserDefault_category_desc
+   */
   virtual bool RestoreUserDefault(const std::string& userId, const std::string& moduleName, const std::string& category) = 0;
 
   /**
@@ -96,8 +106,38 @@ class SettingSystemServiceIf {
    * @param moduleName Module of the setting
    */
   virtual bool UpdateModuleVersion(const std::string& moduleName) = 0;
+
+  /**
+   * @SetUserAppData_Summary
+   * 
+   * @param userId @SetUserAppData_userId_desc
+   * 
+   * @param category @SetUserAppData_category_desc
+   * 
+   * @param settingItems @SetUserAppData_settingItems_desc
+   */
   virtual int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems) = 0;
+
+  /**
+   * @GetUserAppData_Summary
+   * 
+   * @param userId @GetUserAppData_userId_desc
+   * 
+   * @param category @GetUserAppData_category_desc
+   * 
+   * @param settingKeys @GetUserAppData_settingKeys_desc
+   */
   virtual void GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) = 0;
+
+  /**
+   * @RemoveUserAppData_Summary
+   * 
+   * @param userId @RemoveUserAppData_userId_desc
+   * 
+   * @param category @RemoveUserAppData_category_desc
+   * 
+   * @param settingKeys @RemoveUserAppData_settingKeys_desc
+   */
   virtual int32_t RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) = 0;
 
   /**

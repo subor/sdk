@@ -25,10 +25,16 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.MediaService
 {
 
+  /// <summary>
+  /// @RemovePathMsg_desc
+  /// </summary>
   public partial class RemovePathMsg : TBase
   {
     private string _path;
 
+    /// <summary>
+    /// @RemovePathMsg_path_desc
+    /// </summary>
     public string Path
     {
       get

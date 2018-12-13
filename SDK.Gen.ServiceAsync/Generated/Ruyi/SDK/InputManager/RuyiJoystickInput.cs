@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.InputManager
 {
 
+  /// <summary>
+  /// @RuyiJoystickInput_desc
+  /// </summary>
   public partial class RuyiJoystickInput : TBase
   {
     private string _DeviceId;
@@ -35,6 +38,9 @@ namespace Ruyi.SDK.InputManager
     private int _Sequence;
     private JoystickOffset _Offset;
 
+    /// <summary>
+    /// @RuyiJoystickInput_DeviceId_desc
+    /// </summary>
     public string DeviceId
     {
       get
@@ -48,6 +54,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiJoystickInput_UserId_desc
+    /// </summary>
     public string UserId
     {
       get
@@ -61,6 +70,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiJoystickInput_RawOffset_desc
+    /// </summary>
     public int RawOffset
     {
       get
@@ -74,6 +86,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiJoystickInput_Value_desc
+    /// </summary>
     public int Value
     {
       get
@@ -87,6 +102,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiJoystickInput_Timestamp_desc
+    /// </summary>
     public int Timestamp
     {
       get
@@ -100,6 +118,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiJoystickInput_Sequence_desc
+    /// </summary>
     public int Sequence
     {
       get
@@ -114,6 +135,7 @@ namespace Ruyi.SDK.InputManager
     }
 
     /// <summary>
+    /// @RuyiJoystickInput_Offset_desc
     /// 
     /// <seealso cref="JoystickOffset"/>
     /// </summary>

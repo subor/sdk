@@ -82,6 +82,12 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="category">The category of which to restored. Null indicates all settings.</param>
       Task<bool> RestoreDefaultAsync(string moduleName, string category, CancellationToken cancellationToken);
 
+      /// <summary>
+      /// @RestoreUserDefault_Summary
+      /// </summary>
+      /// <param name="userId">@RestoreUserDefault_userId_desc</param>
+      /// <param name="moduleName">@RestoreUserDefault_moduleName_desc</param>
+      /// <param name="category">@RestoreUserDefault_category_desc</param>
       Task<bool> RestoreUserDefaultAsync(string userId, string moduleName, string category, CancellationToken cancellationToken);
 
       /// <summary>
@@ -90,10 +96,28 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="moduleName">Module of the setting</param>
       Task<bool> UpdateModuleVersionAsync(string moduleName, CancellationToken cancellationToken);
 
+      /// <summary>
+      /// @SetUserAppData_Summary
+      /// </summary>
+      /// <param name="userId">@SetUserAppData_userId_desc</param>
+      /// <param name="category">@SetUserAppData_category_desc</param>
+      /// <param name="settingItems">@SetUserAppData_settingItems_desc</param>
       Task<int> SetUserAppDataAsync(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems, CancellationToken cancellationToken);
 
+      /// <summary>
+      /// @GetUserAppData_Summary
+      /// </summary>
+      /// <param name="userId">@GetUserAppData_userId_desc</param>
+      /// <param name="category">@GetUserAppData_category_desc</param>
+      /// <param name="settingKeys">@GetUserAppData_settingKeys_desc</param>
       Task<Ruyi.SDK.CommonType.AppData> GetUserAppDataAsync(string userId, string category, List<string> settingKeys, CancellationToken cancellationToken);
 
+      /// <summary>
+      /// @RemoveUserAppData_Summary
+      /// </summary>
+      /// <param name="userId">@RemoveUserAppData_userId_desc</param>
+      /// <param name="category">@RemoveUserAppData_category_desc</param>
+      /// <param name="settingKeys">@RemoveUserAppData_settingKeys_desc</param>
       Task<int> RemoveUserAppDataAsync(string userId, string category, List<string> settingKeys, CancellationToken cancellationToken);
 
       /// <summary>
@@ -4850,6 +4874,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       private string _moduleName;
       private string _category;
 
+      /// <summary>
+      /// @RestoreUserDefault_userId_desc
+      /// </summary>
       public string UserId
       {
         get
@@ -4863,6 +4890,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @RestoreUserDefault_moduleName_desc
+      /// </summary>
       public string ModuleName
       {
         get
@@ -4876,6 +4906,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @RestoreUserDefault_category_desc
+      /// </summary>
       public string Category
       {
         get
@@ -5483,6 +5516,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       private string _category;
       private Dictionary<string, Ruyi.SDK.CommonType.SettingValue> _settingItems;
 
+      /// <summary>
+      /// @SetUserAppData_userId_desc
+      /// </summary>
       public string UserId
       {
         get
@@ -5496,6 +5532,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @SetUserAppData_category_desc
+      /// </summary>
       public string Category
       {
         get
@@ -5509,6 +5548,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @SetUserAppData_settingItems_desc
+      /// </summary>
       public Dictionary<string, Ruyi.SDK.CommonType.SettingValue> SettingItems
       {
         get
@@ -5860,6 +5902,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       private string _category;
       private List<string> _settingKeys;
 
+      /// <summary>
+      /// @GetUserAppData_userId_desc
+      /// </summary>
       public string UserId
       {
         get
@@ -5873,6 +5918,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @GetUserAppData_category_desc
+      /// </summary>
       public string Category
       {
         get
@@ -5886,6 +5934,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @GetUserAppData_settingKeys_desc
+      /// </summary>
       public List<string> SettingKeys
       {
         get
@@ -6237,6 +6288,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       private string _category;
       private List<string> _settingKeys;
 
+      /// <summary>
+      /// @RemoveUserAppData_userId_desc
+      /// </summary>
       public string UserId
       {
         get
@@ -6250,6 +6304,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @RemoveUserAppData_category_desc
+      /// </summary>
       public string Category
       {
         get
@@ -6263,6 +6320,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @RemoveUserAppData_settingKeys_desc
+      /// </summary>
       public List<string> SettingKeys
       {
         get

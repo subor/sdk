@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @TitleMainIconNotificationType_desc
+  /// </summary>
   public enum TitleMainIconNotificationType
   {
     FriendRequest = 0,

@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.ExternalErrors
 {
 
+  /// <summary>
+  /// @ExternalErrorInfos_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -27,6 +30,7 @@ namespace Ruyi.SDK.ExternalErrors
     private string _description;
 
     /// <summary>
+    /// @ExternalErrorInfos_errorCode_desc
     /// 
     /// <seealso cref="ExternalErrorCode"/>
     /// </summary>
@@ -43,6 +47,9 @@ namespace Ruyi.SDK.ExternalErrors
       }
     }
 
+    /// <summary>
+    /// @ExternalErrorInfos_description_desc
+    /// </summary>
     public string Description
     {
       get

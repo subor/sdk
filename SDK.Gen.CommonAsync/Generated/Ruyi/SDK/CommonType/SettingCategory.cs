@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @SettingCategory_desc
+  /// </summary>
   public partial class SettingCategory : TBase
   {
     private string _id;
@@ -40,6 +43,9 @@ namespace Ruyi.SDK.CommonType
     private string _script;
     private List<string> _Tags;
 
+    /// <summary>
+    /// @SettingCategory_id_desc
+    /// </summary>
     public string Id
     {
       get
@@ -53,6 +59,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingCategory_display_desc
+    /// </summary>
     public string Display
     {
       get
@@ -66,6 +75,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingCategory_summary_desc
+    /// </summary>
     public string Summary
     {
       get
@@ -79,6 +91,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingCategory_description_desc
+    /// </summary>
     public string Description
     {
       get
@@ -92,6 +107,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingCategory_icon_desc
+    /// </summary>
     public string Icon
     {
       get
@@ -105,6 +123,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingCategory_sortingPriority_desc
+    /// </summary>
     public int SortingPriority
     {
       get
@@ -118,6 +139,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingCategory_isSystemCategory_desc
+    /// </summary>
     public bool IsSystemCategory
     {
       get
@@ -131,6 +155,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingCategory_items_desc
+    /// </summary>
     public Dictionary<string, int> Items
     {
       get
@@ -144,6 +171,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingCategory_enable_desc
+    /// </summary>
     public bool Enable
     {
       get
@@ -157,6 +187,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingCategory_showInUI_desc
+    /// </summary>
     public bool ShowInUI
     {
       get
@@ -170,6 +203,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingCategory_script_desc
+    /// </summary>
     public string Script
     {
       get
@@ -183,6 +219,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingCategory_Tags_desc
+    /// </summary>
     public List<string> Tags
     {
       get

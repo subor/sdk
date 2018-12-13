@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// @SettingTree_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -27,6 +30,9 @@ namespace Ruyi.SDK.SettingSystem.Api
     private Dictionary<string, Ruyi.SDK.CommonType.SettingCategory> _SettingCategories;
     private Dictionary<string, Ruyi.SDK.CommonType.SettingItem> _SettingItems;
 
+    /// <summary>
+    /// @SettingTree_CateNode_desc
+    /// </summary>
     public CategoryNode CateNode
     {
       get
@@ -40,6 +46,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @SettingTree_SettingCategories_desc
+    /// </summary>
     public Dictionary<string, Ruyi.SDK.CommonType.SettingCategory> SettingCategories
     {
       get
@@ -53,6 +62,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @SettingTree_SettingItems_desc
+    /// </summary>
     public Dictionary<string, Ruyi.SDK.CommonType.SettingItem> SettingItems
     {
       get

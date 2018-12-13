@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.Overlay
 {
 
+  /// <summary>
+  /// @VideoCaptureState_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -25,6 +28,9 @@ namespace Ruyi.SDK.Overlay
   {
     private bool _isRecording;
 
+    /// <summary>
+    /// @VideoCaptureState_isRecording_desc
+    /// </summary>
     public bool IsRecording
     {
       get

@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.InputManager
 {
+  /// <summary>
+  /// @JoystickOffset_desc
+  /// </summary>
   public enum JoystickOffset
   {
     X = 0,

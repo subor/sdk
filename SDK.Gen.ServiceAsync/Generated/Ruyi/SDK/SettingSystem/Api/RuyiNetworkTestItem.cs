@@ -25,11 +25,17 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// @RuyiNetworkTestItem_desc
+  /// </summary>
   public partial class RuyiNetworkTestItem : TBase
   {
     private RuyiNetworkSettingNameValue _item;
     private bool _result;
 
+    /// <summary>
+    /// @RuyiNetworkTestItem_item_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue Item
     {
       get
@@ -43,6 +49,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkTestItem_result_desc
+    /// </summary>
     public bool Result
     {
       get

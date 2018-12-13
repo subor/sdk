@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @RuyiGamePadButtonFlags_desc
+  /// </summary>
   public enum RuyiGamePadButtonFlags
   {
     GamePad_Up = 1,

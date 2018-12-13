@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.UserServiceExternal
 {
 
+  /// <summary>
+  /// @InputActionEvent_summary
+  /// </summary>
   public partial class InputActionEvent : TBase
   {
     private string _userId;
@@ -32,6 +35,9 @@ namespace Ruyi.SDK.UserServiceExternal
     private long _timestamp;
     private List<TriggerKeys> _Triggers;
 
+    /// <summary>
+    /// @InputActionEvent_deviceId_desc
+    /// </summary>
     public string UserId
     {
       get
@@ -45,6 +51,9 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
+    /// <summary>
+    /// @InputActionEvent_action_desc
+    /// </summary>
     public string Action
     {
       get
@@ -58,6 +67,9 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
+    /// <summary>
+    /// @InputActionEvent_timestamp_desc
+    /// </summary>
     public long Timestamp
     {
       get
@@ -71,6 +83,9 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
+    /// <summary>
+    /// @InputActionEvent_timestamp_desc
+    /// </summary>
     public List<TriggerKeys> Triggers
     {
       get
