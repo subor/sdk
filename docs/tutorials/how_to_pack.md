@@ -96,4 +96,4 @@ If placed in a sub-folder make sure the value of `exePath` reflects this.
 
 ## Developer Tool Operation
 
-Applications can be packed, deployed, and run with [RuyiDev.exe "App Runner"](../topics/devtool#app-runner).
+Applications can be packed, deployed, and run with [RuyiDev.exe "App Runner"](../topics/devtool.md#app-runner).
