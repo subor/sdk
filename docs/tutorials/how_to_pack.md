@@ -1,67 +1,99 @@
 # Package File Preparation
 
-1. Create the Manifest file, It must be named RuyiManifest.json, an typical content should looks like:
+To package an application create a directory structure similar to:
 ```
-     {
-        appID: "app_id",                                                        A
-        application:    {
-                name:"@app_id",                                                 B
-                label:"@antestapp",
-                icon:"bluetooth.png",
-                description:"an test app description",
-                logo:"logo.png",
-                activity:[
-                        {
-                                name:"main",
-                                exePath:"space_shooter/space_shooter.exe",      C
-                                label:"main test activity",
-                                description:"@antestapp",
-                                icon:"logo.png"
-                        }
-                ]
-        },
-        use_permissions:[
-                {
-                        name:"jade.permission.ACHIEVEMENT"
-                }
-        ],
-        use_sdk:{
-                minSdkVersion : "1.0.0.0"
-        }
+│   RuyiManifest.json
+│
+├───res
+│   │   i18n.json
+│   │
+│   ├───hd
+│   │       icon.png
+│   │
+│   └───ld
+│           icon.png
+│
+└───<application>
+```
+
+## Manifest
+
+Create `res/l18n.json` similar to the following:
+```json
+{
+  "i18n": {
+    "en-US": {
+      "com.XXX.space_shooter": "Space Shooter",
+      "description": "A description for this App",
+    },
+    "zh-CN": {
+      "com.XXX.space_shooter": "太空射手",
+      "description": "这个游戏的描述",
     }
-```  A  appID: "app_id" app_idd is the appid Ruyi give the developers(ep.10112)
-     B  name:"@app_id" @app_id is the localization key in ret/i18n.json
-     C  exePath:"space_shooter/space_shooter.exe" is the file path of exe file  
-2. Create an sibling folder named "res" with your manifest file
-3. create "ld" and "hd" folder in "res", put your images used in the manifest file into them according to the "high" or "low" dimension.
-4. create the i18n.json file in "res", which should contain texts in all language you're gonna support. it should looks like this:
+  }
+}
 ```
-    {
-        "i18n": {
-            "en-US": {
-                "trc.item.succeed": "pass",
-                "antestapp": "achievement max number allowed for each title",
-                "com.ruyi.TestApp": "against every game, we only allow specific number of achievement to be created"
-            },
-            "zh-CN": {
-                "trc.item.succeed": "测试通过",
-                "antestapp": "每款APP所允许的最大的成就数量"
-            }
-        }
-    }
+
+Create `RuyiManifest.json` similar to:
+```json
+{
+	appID: "60030",
+	version:"1.0.0.0",
+	use_sdk:{
+		minSdkVersion : "1.0.0.0"
+	},
+	application:	{
+		name:"@com.XXX.space_shooter",
+		icon:"icon.png",
+		description:"@description",
+		properties:[
+			"SinglePlayer",
+			"RuyiAchievements"
+		],
+		platform:[
+			"RuyiConsole",
+			"Windows",
+		],
+		size:12580,
+		languages:[
+			{
+				languageCode:"en-US",
+				uiInterface:true,
+				fullAudio:true,
+				subtitles:true,
+			},
+		],
+		
+		activity:[
+			{
+				name:"main",
+				exePath:"space_shooter/SpaceShooter.exe",
+				description:"@description",
+			}
+		],
+	},
+	use_permissions:[
+		{
+			name:"jade.permission.ACHIEVEMENT"
+		}
+	],
+}
 ```
-5. put your game files in the same folder with "res" folder and RuyiManifest.json, remember the exe file path of your game should
-   match "C" part in 1.
-6. create a zip file named "app_id" and contain all the content above directly in the root
+- __appID__: the application ID (e.g. `"10112"`)
+- __icon__: a filename that exists in both `res/ld/` and `res/hd/`
+- __exePath__: path to application's main executable (e.g. `space_shooter/SpaceShooter.exe`)
+    - Must be child relative to this file; cannot be `../bin/`, etc.
+- Strings starting with `@` are references to values in `i18n.json` file
+    - For example, `@com.XXX.space_shooter` will be `Space Shooter` when the system language is English and `太空射手` when Simplified Chinese
 
 
-# Developer Tool Operation:
-1. open RuyiDev.exe -> select AppRunner -> file the "Host Address" blank with ip address of your console
-2. Select Working Channel List, (Always "dev" for now)
-3. Select the folde whick contains all the file we talk about above, then click "PackApp" button, wait for a second(it depends how big your file is). Until you see the pack output info
-4. Selected the zip file in the "Select install App" blank
-5. Press "install App" button, wait until the success installed info(the length of duration depends on how big of your zip file)
-6. if install successfully, you should see your game option in "Installed App List" options, then you can choose it, press "Run App" button, you should see your game running on the console
-7. you can stop your game by choose it's option in "Running App" Option and click "Stop App" button
-8. you can uninstall your game app by select your game in "Installed App List" and then click "Uninstall App" button, note your game can't be running if your want to uninstall it
-9. each time you reopen AppRunner plugin in develop tool( RuyiDev.exe), you need to press "ForceRefresh" button to refresh all the installed game state
+## Application
+
+The application must be a sibling or child of the folder containing `RuyiManifest.json`.  This must include all data and dependencies required by your application.
+
+If placed in a sub-folder make sure the value of `exePath` reflects this.
+
+
+## Developer Tool Operation
+
+Applications can be packed, deployed, and run with [RuyiDev.exe "App Runner"](../topics/devtool#app-runner).
