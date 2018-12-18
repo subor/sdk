@@ -35,6 +35,22 @@ ConstantsSDKDataTypesConstants::ConstantsSDKDataTypesConstants() {
 
   broker_playback_message = "mmi.developer.playback";
 
+  HDD0_DRIVER_TAG = "/<hdd0>/";
+
+  MEMCACHE_DRIVER_TAG = "/<memcache>/";
+
+  HTTP_HDD_CACHE_DRIVER_TAG = "/<httphddcache>/";
+
+  HTTP_MEM_CACHE_DRIVER_TAG = "/<httpmemcache>/";
+
+  RESOURCES_DRIVER_TAG = "/<resources>/";
+
+  MEDIA_DRIVER_TAG = "/<media>/";
+
+  DOWNLOAD_DRIVER_TAG = "/<download>/";
+
+  DATA_DRIVER_TAG = "/<data>/";
+
 }
 
 }}} // namespace

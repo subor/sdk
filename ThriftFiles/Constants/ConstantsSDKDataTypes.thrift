@@ -40,4 +40,20 @@ const string trc_test_channel = "trc_test_channel"
 /** @broker_playback_message_desc */
 const string broker_playback_message = "mmi.developer.playback"
 
+const string HDD0_DRIVER_TAG = "/<hdd0>/"
+
+const string MEMCACHE_DRIVER_TAG = "/<memcache>/"
+
+const string HTTP_HDD_CACHE_DRIVER_TAG = "/<httphddcache>/"
+
+const string HTTP_MEM_CACHE_DRIVER_TAG = "/<httpmemcache>/"
+
+const string RESOURCES_DRIVER_TAG = "/<resources>/"
+
+const string MEDIA_DRIVER_TAG = "/<media>/"
+
+const string DOWNLOAD_DRIVER_TAG = "/<download>/"
+
+const string DATA_DRIVER_TAG = "/<data>/"
+
 
