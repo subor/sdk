@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.PublisherSubscriber
 {
+  /// <summary>
+  /// @UserShellEventType_desc
+  /// </summary>
   public enum UserShellEventType
   {
     Login = 0,

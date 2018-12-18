@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @AppBaseInfo_desc
+  /// </summary>
   public partial class AppBaseInfo : TBase
   {
     private string _appId;
@@ -37,6 +40,9 @@ namespace Ruyi.SDK.CommonType
     private int _size;
     private List<string> _languages;
 
+    /// <summary>
+    /// @AppBaseInfo_appId_desc
+    /// </summary>
     public string AppId
     {
       get
@@ -50,6 +56,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_name_desc
+    /// </summary>
     public string Name
     {
       get
@@ -63,6 +72,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_icon_hd_desc
+    /// </summary>
     public string Icon_hd
     {
       get
@@ -76,6 +88,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_icon_ld_desc
+    /// </summary>
     public string Icon_ld
     {
       get
@@ -89,6 +104,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_description_desc
+    /// </summary>
     public string Description
     {
       get
@@ -102,6 +120,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_properties_desc
+    /// </summary>
     public List<string> Properties
     {
       get
@@ -115,6 +136,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_platform_desc
+    /// </summary>
     public List<string> Platform
     {
       get
@@ -128,6 +152,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_size_desc
+    /// </summary>
     public int Size
     {
       get
@@ -141,6 +168,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_languages_desc
+    /// </summary>
     public List<string> Languages
     {
       get
@@ -245,12 +275,12 @@ namespace Ruyi.SDK.CommonType
               {
                 {
                   Properties = new List<string>();
-                  TList _list41 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i42 = 0; _i42 < _list41.Count; ++_i42)
+                  TList _list49 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i50 = 0; _i50 < _list49.Count; ++_i50)
                   {
-                    string _elem43;
-                    _elem43 = await iprot.ReadStringAsync(cancellationToken);
-                    Properties.Add(_elem43);
+                    string _elem51;
+                    _elem51 = await iprot.ReadStringAsync(cancellationToken);
+                    Properties.Add(_elem51);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -265,12 +295,12 @@ namespace Ruyi.SDK.CommonType
               {
                 {
                   Platform = new List<string>();
-                  TList _list44 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i45 = 0; _i45 < _list44.Count; ++_i45)
+                  TList _list52 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i53 = 0; _i53 < _list52.Count; ++_i53)
                   {
-                    string _elem46;
-                    _elem46 = await iprot.ReadStringAsync(cancellationToken);
-                    Platform.Add(_elem46);
+                    string _elem54;
+                    _elem54 = await iprot.ReadStringAsync(cancellationToken);
+                    Platform.Add(_elem54);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -295,12 +325,12 @@ namespace Ruyi.SDK.CommonType
               {
                 {
                   Languages = new List<string>();
-                  TList _list47 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i48 = 0; _i48 < _list47.Count; ++_i48)
+                  TList _list55 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i56 = 0; _i56 < _list55.Count; ++_i56)
                   {
-                    string _elem49;
-                    _elem49 = await iprot.ReadStringAsync(cancellationToken);
-                    Languages.Add(_elem49);
+                    string _elem57;
+                    _elem57 = await iprot.ReadStringAsync(cancellationToken);
+                    Languages.Add(_elem57);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -387,9 +417,9 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.String, Properties.Count), cancellationToken);
-            foreach (string _iter50 in Properties)
+            foreach (string _iter58 in Properties)
             {
-              await oprot.WriteStringAsync(_iter50, cancellationToken);
+              await oprot.WriteStringAsync(_iter58, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }
@@ -403,9 +433,9 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.String, Platform.Count), cancellationToken);
-            foreach (string _iter51 in Platform)
+            foreach (string _iter59 in Platform)
             {
-              await oprot.WriteStringAsync(_iter51, cancellationToken);
+              await oprot.WriteStringAsync(_iter59, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }
@@ -428,9 +458,9 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.String, Languages.Count), cancellationToken);
-            foreach (string _iter52 in Languages)
+            foreach (string _iter60 in Languages)
             {
-              await oprot.WriteStringAsync(_iter52, cancellationToken);
+              await oprot.WriteStringAsync(_iter60, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }

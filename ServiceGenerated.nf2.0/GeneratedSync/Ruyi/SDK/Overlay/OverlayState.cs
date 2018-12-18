@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.Overlay
 {
 
+  /// <summary>
+  /// @OverlayState_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -26,6 +29,9 @@ namespace Ruyi.SDK.Overlay
     private bool _isVisible;
     private string _arguments;
 
+    /// <summary>
+    /// @OverlayState_isVisible_desc
+    /// </summary>
     public bool IsVisible
     {
       get
@@ -39,6 +45,9 @@ namespace Ruyi.SDK.Overlay
       }
     }
 
+    /// <summary>
+    /// @OverlayState_arguments_desc
+    /// </summary>
     public string Arguments
     {
       get

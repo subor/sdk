@@ -25,6 +25,7 @@ enum ServiceLaunchEventType {
 	Layer1ServicesResetOver = 7,
 }
 
+/** @UserShellEventType_desc */
 enum UserShellEventType {
     Login = 0,
     Logout = 1,
@@ -39,12 +40,16 @@ struct ServiceLaunchEvent {
 	2: string LastServiceID,
 }
 
+/** @UserShellEvent_desc */
 struct UserShellEvent {
-    1: UserShellEventType EventType,
+    /** @UserShellEvent_EventType_desc */
+	1: UserShellEventType EventType,
 }
 
+/** @PubHeader_desc */
 struct PubHeader {
-    1: string PayloadType,
+    /** @PubHeader_PayloadType_desc */
+	1: string PayloadType,
 }
 
 

@@ -603,7 +603,7 @@ void swap(SettingValue &a, SettingValue &b);
 std::ostream& operator<<(std::ostream& out, const SettingValue& obj);
 
 typedef struct _SettingItem__isset {
-  _SettingItem__isset() : id(false), display(false), dataType(false), dataValue(false), dataList(false), platform(false), summary(false), description(false), UIType(false), devModeOnly(false), internalOnly(false), readOnly(false), isValid(false), isActive(false), hasNew(false), validation(false), activeDependencies(false), ActionName(false), ActionObject(false), ActionOnSetValue(false), ActionOnGetValue(false) {}
+  _SettingItem__isset() : id(false), display(false), dataType(false), dataValue(false), dataList(false), platform(false), summary(false), description(false), UIType(false), devModeOnly(false), internalOnly(false), readOnly(false), isValid(false), isActive(false), hasNew(false), validation(false), activeDependencies(false), ActionName(false), ActionObject(false), ActionOnSetValue(false), ActionOnGetValue(false), Tags(false) {}
   bool id :1;
   bool display :1;
   bool dataType :1;
@@ -625,6 +625,7 @@ typedef struct _SettingItem__isset {
   bool ActionObject :1;
   bool ActionOnSetValue :1;
   bool ActionOnGetValue :1;
+  bool Tags :1;
 } _SettingItem__isset;
 
 class SettingItem : public virtual ::apache::thrift::TBase {
@@ -657,6 +658,7 @@ class SettingItem : public virtual ::apache::thrift::TBase {
   std::string ActionObject;
   std::string ActionOnSetValue;
   std::string ActionOnGetValue;
+  std::vector<std::string>  Tags;
 
   _SettingItem__isset __isset;
 
@@ -701,6 +703,8 @@ class SettingItem : public virtual ::apache::thrift::TBase {
   void __set_ActionOnSetValue(const std::string& val);
 
   void __set_ActionOnGetValue(const std::string& val);
+
+  void __set_Tags(const std::vector<std::string> & val);
 
   bool operator == (const SettingItem & rhs) const
   {
@@ -774,6 +778,10 @@ class SettingItem : public virtual ::apache::thrift::TBase {
       return false;
     else if (__isset.ActionOnGetValue && !(ActionOnGetValue == rhs.ActionOnGetValue))
       return false;
+    if (__isset.Tags != rhs.__isset.Tags)
+      return false;
+    else if (__isset.Tags && !(Tags == rhs.Tags))
+      return false;
     return true;
   }
   bool operator != (const SettingItem &rhs) const {
@@ -793,7 +801,7 @@ void swap(SettingItem &a, SettingItem &b);
 std::ostream& operator<<(std::ostream& out, const SettingItem& obj);
 
 typedef struct _SettingCategory__isset {
-  _SettingCategory__isset() : id(false), display(false), summary(false), description(false), icon(false), sortingPriority(false), isSystemCategory(false), items(false), enable(false), showInUI(false), script(false) {}
+  _SettingCategory__isset() : id(false), display(false), summary(false), description(false), icon(false), sortingPriority(false), isSystemCategory(false), items(false), enable(false), showInUI(false), script(false), Tags(false) {}
   bool id :1;
   bool display :1;
   bool summary :1;
@@ -805,6 +813,7 @@ typedef struct _SettingCategory__isset {
   bool enable :1;
   bool showInUI :1;
   bool script :1;
+  bool Tags :1;
 } _SettingCategory__isset;
 
 class SettingCategory : public virtual ::apache::thrift::TBase {
@@ -827,6 +836,7 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
   bool enable;
   bool showInUI;
   std::string script;
+  std::vector<std::string>  Tags;
 
   _SettingCategory__isset __isset;
 
@@ -851,6 +861,8 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
   void __set_showInUI(const bool val);
 
   void __set_script(const std::string& val);
+
+  void __set_Tags(const std::vector<std::string> & val);
 
   bool operator == (const SettingCategory & rhs) const
   {
@@ -879,6 +891,10 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
     if (!(showInUI == rhs.showInUI))
       return false;
     if (!(script == rhs.script))
+      return false;
+    if (__isset.Tags != rhs.__isset.Tags)
+      return false;
+    else if (__isset.Tags && !(Tags == rhs.Tags))
       return false;
     return true;
   }

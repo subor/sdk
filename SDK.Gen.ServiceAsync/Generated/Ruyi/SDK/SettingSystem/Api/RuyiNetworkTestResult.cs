@@ -25,12 +25,18 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// @RuyiNetworkTestResult_desc
+  /// </summary>
   public partial class RuyiNetworkTestResult : TBase
   {
     private RuyiNetworkTestItem _localconnection;
     private RuyiNetworkTestItem _ipaddress;
     private RuyiNetworkTestItem _internetconnection;
 
+    /// <summary>
+    /// @RuyiNetworkTestResult_localconnection_desc
+    /// </summary>
     public RuyiNetworkTestItem Localconnection
     {
       get
@@ -44,6 +50,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkTestResult_ipaddress_desc
+    /// </summary>
     public RuyiNetworkTestItem Ipaddress
     {
       get
@@ -57,6 +66,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkTestResult_internetconnection_desc
+    /// </summary>
     public RuyiNetworkTestItem Internetconnection
     {
       get

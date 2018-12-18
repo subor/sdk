@@ -19,10 +19,18 @@ namespace Ruyi.SDK.UserServiceExternal
 {
   public partial class UserServExternal {
     public interface ISync {
+      /// <summary>
+      /// @GetPlayingUserInfo_Summary
+      /// </summary>
+      /// <param name="userId">@GetPlayingUserInfo_userId_desc</param>
       Ruyi.SDK.UserServiceExternal.UserInfo_Public GetPlayingUserInfo(string userId);
     }
 
     public interface Iface : ISync {
+      /// <summary>
+      /// @GetPlayingUserInfo_Summary
+      /// </summary>
+      /// <param name="userId">@GetPlayingUserInfo_userId_desc</param>
       #if SILVERLIGHT
       IAsyncResult Begin_GetPlayingUserInfo(AsyncCallback callback, object state, string userId);
       Ruyi.SDK.UserServiceExternal.UserInfo_Public End_GetPlayingUserInfo(IAsyncResult asyncResult);
@@ -100,6 +108,10 @@ namespace Ruyi.SDK.UserServiceExternal
 
       #endif
 
+      /// <summary>
+      /// @GetPlayingUserInfo_Summary
+      /// </summary>
+      /// <param name="userId">@GetPlayingUserInfo_userId_desc</param>
       public Ruyi.SDK.UserServiceExternal.UserInfo_Public GetPlayingUserInfo(string userId)
       {
         #if !SILVERLIGHT
@@ -233,6 +245,9 @@ namespace Ruyi.SDK.UserServiceExternal
     {
       private string _userId;
 
+      /// <summary>
+      /// @GetPlayingUserInfo_userId_desc
+      /// </summary>
       public string UserId
       {
         get

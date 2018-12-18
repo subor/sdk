@@ -51,19 +51,28 @@ enum LobbyType {
 }
 
 
+/** @BCServiceStartedNotification_desc */
 struct BCServiceStartedNotification {
 }
 
+/** @FileUploadSuccessResult_desc */
 struct FileUploadSuccessResult {
-    1: string fileUploadId,
-    2: string jsonResponse,
+    /** @FileUploadSuccessResult_fileUploadId_desc */
+	1: string fileUploadId,
+    /** @FileUploadSuccessResult_jsonResponse_desc */
+	2: string jsonResponse,
 }
 
+/** @FileUploadFailedResult_desc */
 struct FileUploadFailedResult {
-    1: string fileUploadId,
-    2: i32 statusCode,
-    3: i32 reasonCode,
-    4: string jsonResponse,
+    /** @FileUploadFailedResult_fileUploadId_desc */
+	1: string fileUploadId,
+    /** @FileUploadFailedResult_statusCode_desc */
+	2: i32 statusCode,
+    /** @FileUploadFailedResult_reasonCode_desc */
+	3: i32 reasonCode,
+    /** @FileUploadFailedResult_jsonResponse_desc */
+	4: string jsonResponse,
 }
 
 

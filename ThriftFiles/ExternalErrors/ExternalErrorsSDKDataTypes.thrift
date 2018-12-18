@@ -4,6 +4,7 @@ namespace java Ruyi.SDK.ExternalErrors
 namespace netcore Ruyi.SDK.ExternalErrors
 namespace rs Ruyi.SDK.ExternalErrors
 
+/** @ExternalErrorCode_desc */
 enum ExternalErrorCode {
     Err_0 = 0,
     Err_1 = 1,
@@ -27,12 +28,16 @@ enum ExternalErrorCode {
 }
 
 
+/** @ExternalErrorInfos_desc */
 struct ExternalErrorInfos {
-    1: ExternalErrorCode errorCode,
-    2: string description,
+    /** @ExternalErrorInfos_errorCode_desc */
+	1: ExternalErrorCode errorCode,
+    /** @ExternalErrorInfos_description_desc */
+	2: string description,
 }
 
 
+/** @EXTERNALERRORLIST_desc */
 const list<ExternalErrorInfos> EXTERNALERRORLIST = [
 	{
 		"errorCode": ExternalErrorCode.Err_0,

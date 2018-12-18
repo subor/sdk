@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.MediaService
 {
+  /// <summary>
+  /// @MediaTask_desc
+  /// </summary>
   public enum MediaTask
   {
     None = 0,

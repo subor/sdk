@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.MediaService
 {
 
+  /// <summary>
+  /// @QueryResultMsg_desc
+  /// </summary>
   public partial class QueryResultMsg : TBase
   {
     private List<MediaFile> _files;

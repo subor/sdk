@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.InputManager
 {
 
+  /// <summary>
+  /// @RuyiKeyboardInput_desc
+  /// </summary>
   public partial class RuyiKeyboardInput : TBase
   {
     private string _DeviceId;
@@ -37,6 +40,9 @@ namespace Ruyi.SDK.InputManager
     private bool _IsPressed;
     private bool _IsReleased;
 
+    /// <summary>
+    /// @RuyiKeyboardInput_DeviceId_desc
+    /// </summary>
     public string DeviceId
     {
       get
@@ -50,6 +56,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiKeyboardInput_UserId_desc
+    /// </summary>
     public string UserId
     {
       get
@@ -63,6 +72,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiKeyboardInput_RawOffset_desc
+    /// </summary>
     public int RawOffset
     {
       get
@@ -76,6 +88,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiKeyboardInput_Value_desc
+    /// </summary>
     public int Value
     {
       get
@@ -89,6 +104,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiKeyboardInput_Timestamp_desc
+    /// </summary>
     public int Timestamp
     {
       get
@@ -102,6 +120,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiKeyboardInput_Sequence_desc
+    /// </summary>
     public int Sequence
     {
       get
@@ -116,6 +137,7 @@ namespace Ruyi.SDK.InputManager
     }
 
     /// <summary>
+    /// @RuyiKeyboardInput_Key_desc
     /// 
     /// <seealso cref="Key"/>
     /// </summary>
@@ -132,6 +154,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiKeyboardInput_IsPressed_desc
+    /// </summary>
     public bool IsPressed
     {
       get
@@ -145,6 +170,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiKeyboardInput_IsReleased_desc
+    /// </summary>
     public bool IsReleased
     {
       get

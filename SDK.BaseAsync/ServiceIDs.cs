@@ -37,6 +37,7 @@ namespace Ruyi.Layer0
         MEDIA,
         LAYER1,
         NOTIFICATION,
+        SECURITY,
 
         LOW_POWER_END,
         #endregion

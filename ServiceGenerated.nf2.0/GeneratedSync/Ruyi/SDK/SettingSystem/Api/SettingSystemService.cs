@@ -46,7 +46,8 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="parent">The parent node</param>
       /// <param name="nodeType">Specifies whether the child nodes containing setting item or setting category, or both</param>
       /// <param name="param">The parameter passed to the function which will be called while getting the item value</param>
-      Ruyi.SDK.SettingSystem.Api.NodeList GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param);
+      /// <param name="tags">Tags used to filter the setting items. Only items with specified tags will be added in the result</param>
+      Ruyi.SDK.SettingSystem.Api.NodeList GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, List<string> tags);
       /// <summary>
       /// Set the specified setting's "dataValue" with the new value
       /// </summary>
@@ -64,14 +65,38 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="moduleName">Module name specifies the module to be restored.</param>
       /// <param name="category">The category of which to restored. Null indicates all settings.</param>
       bool RestoreDefault(string moduleName, string category);
+      /// <summary>
+      /// @RestoreUserDefault_Summary
+      /// </summary>
+      /// <param name="userId">@RestoreUserDefault_userId_desc</param>
+      /// <param name="moduleName">@RestoreUserDefault_moduleName_desc</param>
+      /// <param name="category">@RestoreUserDefault_category_desc</param>
       bool RestoreUserDefault(string userId, string moduleName, string category);
       /// <summary>
       /// Update the module settings from an older version to the latest one
       /// </summary>
       /// <param name="moduleName">Module of the setting</param>
       bool UpdateModuleVersion(string moduleName);
+      /// <summary>
+      /// @SetUserAppData_Summary
+      /// </summary>
+      /// <param name="userId">@SetUserAppData_userId_desc</param>
+      /// <param name="category">@SetUserAppData_category_desc</param>
+      /// <param name="settingItems">@SetUserAppData_settingItems_desc</param>
       int SetUserAppData(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems);
+      /// <summary>
+      /// @GetUserAppData_Summary
+      /// </summary>
+      /// <param name="userId">@GetUserAppData_userId_desc</param>
+      /// <param name="category">@GetUserAppData_category_desc</param>
+      /// <param name="settingKeys">@GetUserAppData_settingKeys_desc</param>
       Ruyi.SDK.CommonType.AppData GetUserAppData(string userId, string category, List<string> settingKeys);
+      /// <summary>
+      /// @RemoveUserAppData_Summary
+      /// </summary>
+      /// <param name="userId">@RemoveUserAppData_userId_desc</param>
+      /// <param name="category">@RemoveUserAppData_category_desc</param>
+      /// <param name="settingKeys">@RemoveUserAppData_settingKeys_desc</param>
       int RemoveUserAppData(string userId, string category, List<string> settingKeys);
       /// <summary>
       /// Notify layer0 that a setting item has specific event
@@ -138,8 +163,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="parent">The parent node</param>
       /// <param name="nodeType">Specifies whether the child nodes containing setting item or setting category, or both</param>
       /// <param name="param">The parameter passed to the function which will be called while getting the item value</param>
+      /// <param name="tags">Tags used to filter the setting items. Only items with specified tags will be added in the result</param>
       #if SILVERLIGHT
-      IAsyncResult Begin_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param);
+      IAsyncResult Begin_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, List<string> tags);
       Ruyi.SDK.SettingSystem.Api.NodeList End_GetChildNode(IAsyncResult asyncResult);
       #endif
       /// <summary>
@@ -168,6 +194,12 @@ namespace Ruyi.SDK.SettingSystem.Api
       IAsyncResult Begin_RestoreDefault(AsyncCallback callback, object state, string moduleName, string category);
       bool End_RestoreDefault(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// @RestoreUserDefault_Summary
+      /// </summary>
+      /// <param name="userId">@RestoreUserDefault_userId_desc</param>
+      /// <param name="moduleName">@RestoreUserDefault_moduleName_desc</param>
+      /// <param name="category">@RestoreUserDefault_category_desc</param>
       #if SILVERLIGHT
       IAsyncResult Begin_RestoreUserDefault(AsyncCallback callback, object state, string userId, string moduleName, string category);
       bool End_RestoreUserDefault(IAsyncResult asyncResult);
@@ -180,14 +212,32 @@ namespace Ruyi.SDK.SettingSystem.Api
       IAsyncResult Begin_UpdateModuleVersion(AsyncCallback callback, object state, string moduleName);
       bool End_UpdateModuleVersion(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// @SetUserAppData_Summary
+      /// </summary>
+      /// <param name="userId">@SetUserAppData_userId_desc</param>
+      /// <param name="category">@SetUserAppData_category_desc</param>
+      /// <param name="settingItems">@SetUserAppData_settingItems_desc</param>
       #if SILVERLIGHT
       IAsyncResult Begin_SetUserAppData(AsyncCallback callback, object state, string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems);
       int End_SetUserAppData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// @GetUserAppData_Summary
+      /// </summary>
+      /// <param name="userId">@GetUserAppData_userId_desc</param>
+      /// <param name="category">@GetUserAppData_category_desc</param>
+      /// <param name="settingKeys">@GetUserAppData_settingKeys_desc</param>
       #if SILVERLIGHT
       IAsyncResult Begin_GetUserAppData(AsyncCallback callback, object state, string userId, string category, List<string> settingKeys);
       Ruyi.SDK.CommonType.AppData End_GetUserAppData(IAsyncResult asyncResult);
       #endif
+      /// <summary>
+      /// @RemoveUserAppData_Summary
+      /// </summary>
+      /// <param name="userId">@RemoveUserAppData_userId_desc</param>
+      /// <param name="category">@RemoveUserAppData_category_desc</param>
+      /// <param name="settingKeys">@RemoveUserAppData_settingKeys_desc</param>
       #if SILVERLIGHT
       IAsyncResult Begin_RemoveUserAppData(AsyncCallback callback, object state, string userId, string category, List<string> settingKeys);
       int End_RemoveUserAppData(IAsyncResult asyncResult);
@@ -606,9 +656,9 @@ namespace Ruyi.SDK.SettingSystem.Api
 
       
       #if SILVERLIGHT
-      public IAsyncResult Begin_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param)
+      public IAsyncResult Begin_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, List<string> tags)
       {
-        return send_GetChildNode(callback, state, parent, nodeType, param);
+        return send_GetChildNode(callback, state, parent, nodeType, param, tags);
       }
 
       public Ruyi.SDK.SettingSystem.Api.NodeList End_GetChildNode(IAsyncResult asyncResult)
@@ -625,22 +675,23 @@ namespace Ruyi.SDK.SettingSystem.Api
       /// <param name="parent">The parent node</param>
       /// <param name="nodeType">Specifies whether the child nodes containing setting item or setting category, or both</param>
       /// <param name="param">The parameter passed to the function which will be called while getting the item value</param>
-      public Ruyi.SDK.SettingSystem.Api.NodeList GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param)
+      /// <param name="tags">Tags used to filter the setting items. Only items with specified tags will be added in the result</param>
+      public Ruyi.SDK.SettingSystem.Api.NodeList GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, List<string> tags)
       {
         #if !SILVERLIGHT
-        send_GetChildNode(parent, nodeType, param);
+        send_GetChildNode(parent, nodeType, param, tags);
         return recv_GetChildNode();
 
         #else
-        var asyncResult = Begin_GetChildNode(null, null, parent, nodeType, param);
+        var asyncResult = Begin_GetChildNode(null, null, parent, nodeType, param, tags);
         return End_GetChildNode(asyncResult);
 
         #endif
       }
       #if SILVERLIGHT
-      public IAsyncResult send_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param)
+      public IAsyncResult send_GetChildNode(AsyncCallback callback, object state, string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, List<string> tags)
       #else
-      public void send_GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param)
+      public void send_GetChildNode(string parent, Ruyi.SDK.SettingSystem.Api.NodeType nodeType, string param, List<string> tags)
       #endif
       {
         oprot_.WriteMessageBegin(new TMessage("GetChildNode", TMessageType.Call, seqid_));
@@ -648,6 +699,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         args.Parent = parent;
         args.NodeType = nodeType;
         args.Param = param;
+        args.Tags = tags;
         args.Write(oprot_);
         oprot_.WriteMessageEnd();
         #if SILVERLIGHT
@@ -903,6 +955,12 @@ namespace Ruyi.SDK.SettingSystem.Api
 
       #endif
 
+      /// <summary>
+      /// @RestoreUserDefault_Summary
+      /// </summary>
+      /// <param name="userId">@RestoreUserDefault_userId_desc</param>
+      /// <param name="moduleName">@RestoreUserDefault_moduleName_desc</param>
+      /// <param name="category">@RestoreUserDefault_category_desc</param>
       public bool RestoreUserDefault(string userId, string moduleName, string category)
       {
         #if !SILVERLIGHT
@@ -1039,6 +1097,12 @@ namespace Ruyi.SDK.SettingSystem.Api
 
       #endif
 
+      /// <summary>
+      /// @SetUserAppData_Summary
+      /// </summary>
+      /// <param name="userId">@SetUserAppData_userId_desc</param>
+      /// <param name="category">@SetUserAppData_category_desc</param>
+      /// <param name="settingItems">@SetUserAppData_settingItems_desc</param>
       public int SetUserAppData(string userId, string category, Dictionary<string, Ruyi.SDK.CommonType.SettingValue> settingItems)
       {
         #if !SILVERLIGHT
@@ -1106,6 +1170,12 @@ namespace Ruyi.SDK.SettingSystem.Api
 
       #endif
 
+      /// <summary>
+      /// @GetUserAppData_Summary
+      /// </summary>
+      /// <param name="userId">@GetUserAppData_userId_desc</param>
+      /// <param name="category">@GetUserAppData_category_desc</param>
+      /// <param name="settingKeys">@GetUserAppData_settingKeys_desc</param>
       public Ruyi.SDK.CommonType.AppData GetUserAppData(string userId, string category, List<string> settingKeys)
       {
         #if !SILVERLIGHT
@@ -1173,6 +1243,12 @@ namespace Ruyi.SDK.SettingSystem.Api
 
       #endif
 
+      /// <summary>
+      /// @RemoveUserAppData_Summary
+      /// </summary>
+      /// <param name="userId">@RemoveUserAppData_userId_desc</param>
+      /// <param name="category">@RemoveUserAppData_category_desc</param>
+      /// <param name="settingKeys">@RemoveUserAppData_settingKeys_desc</param>
       public int RemoveUserAppData(string userId, string category, List<string> settingKeys)
       {
         #if !SILVERLIGHT
@@ -2614,7 +2690,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         {
           try
           {
-            result.Success = iface_.GetChildNode(args.Parent, args.NodeType, args.Param);
+            result.Success = iface_.GetChildNode(args.Parent, args.NodeType, args.Param, args.Tags);
           }
           catch (Ruyi.SDK.CommonType.ErrorException error1)
           {
@@ -4603,6 +4679,7 @@ namespace Ruyi.SDK.SettingSystem.Api
       private string _parent;
       private Ruyi.SDK.SettingSystem.Api.NodeType _nodeType;
       private string _param;
+      private List<string> _tags;
 
       /// <summary>
       /// The parent node
@@ -4654,6 +4731,22 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// Tags used to filter the setting items. Only items with specified tags will be added in the result
+      /// </summary>
+      public List<string> Tags
+      {
+        get
+        {
+          return _tags;
+        }
+        set
+        {
+          __isset.tags = true;
+          this._tags = value;
+        }
+      }
+
 
       public Isset __isset;
       #if !SILVERLIGHT
@@ -4663,6 +4756,7 @@ namespace Ruyi.SDK.SettingSystem.Api
         public bool parent;
         public bool nodeType;
         public bool param;
+        public bool tags;
       }
 
       public GetChildNode_args() {
@@ -4700,6 +4794,23 @@ namespace Ruyi.SDK.SettingSystem.Api
               case 3:
                 if (field.Type == TType.String) {
                   Param = iprot.ReadString();
+                } else { 
+                  TProtocolUtil.Skip(iprot, field.Type);
+                }
+                break;
+              case 4:
+                if (field.Type == TType.List) {
+                  {
+                    Tags = new List<string>();
+                    TList _list9 = iprot.ReadListBegin();
+                    for( int _i10 = 0; _i10 < _list9.Count; ++_i10)
+                    {
+                      string _elem11;
+                      _elem11 = iprot.ReadString();
+                      Tags.Add(_elem11);
+                    }
+                    iprot.ReadListEnd();
+                  }
                 } else { 
                   TProtocolUtil.Skip(iprot, field.Type);
                 }
@@ -4749,6 +4860,21 @@ namespace Ruyi.SDK.SettingSystem.Api
             oprot.WriteString(Param);
             oprot.WriteFieldEnd();
           }
+          if (Tags != null && __isset.tags) {
+            field.Name = "tags";
+            field.Type = TType.List;
+            field.ID = 4;
+            oprot.WriteFieldBegin(field);
+            {
+              oprot.WriteListBegin(new TList(TType.String, Tags.Count));
+              foreach (string _iter12 in Tags)
+              {
+                oprot.WriteString(_iter12);
+              }
+              oprot.WriteListEnd();
+            }
+            oprot.WriteFieldEnd();
+          }
           oprot.WriteFieldStop();
           oprot.WriteStructEnd();
         }
@@ -4778,6 +4904,12 @@ namespace Ruyi.SDK.SettingSystem.Api
           __first = false;
           __sb.Append("Param: ");
           __sb.Append(Param);
+        }
+        if (Tags != null && __isset.tags) {
+          if(!__first) { __sb.Append(", "); }
+          __first = false;
+          __sb.Append("Tags: ");
+          __sb.Append(Tags);
         }
         __sb.Append(")");
         return __sb.ToString();
@@ -5287,14 +5419,14 @@ namespace Ruyi.SDK.SettingSystem.Api
                 if (field.Type == TType.Map) {
                   {
                     KeyValues = new Dictionary<string, string>();
-                    TMap _map9 = iprot.ReadMapBegin();
-                    for( int _i10 = 0; _i10 < _map9.Count; ++_i10)
+                    TMap _map13 = iprot.ReadMapBegin();
+                    for( int _i14 = 0; _i14 < _map13.Count; ++_i14)
                     {
-                      string _key11;
-                      string _val12;
-                      _key11 = iprot.ReadString();
-                      _val12 = iprot.ReadString();
-                      KeyValues[_key11] = _val12;
+                      string _key15;
+                      string _val16;
+                      _key15 = iprot.ReadString();
+                      _val16 = iprot.ReadString();
+                      KeyValues[_key15] = _val16;
                     }
                     iprot.ReadMapEnd();
                   }
@@ -5330,10 +5462,10 @@ namespace Ruyi.SDK.SettingSystem.Api
             oprot.WriteFieldBegin(field);
             {
               oprot.WriteMapBegin(new TMap(TType.String, TType.String, KeyValues.Count));
-              foreach (string _iter13 in KeyValues.Keys)
+              foreach (string _iter17 in KeyValues.Keys)
               {
-                oprot.WriteString(_iter13);
-                oprot.WriteString(KeyValues[_iter13]);
+                oprot.WriteString(_iter17);
+                oprot.WriteString(KeyValues[_iter17]);
               }
               oprot.WriteMapEnd();
             }
@@ -5817,6 +5949,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       private string _moduleName;
       private string _category;
 
+      /// <summary>
+      /// @RestoreUserDefault_userId_desc
+      /// </summary>
       public string UserId
       {
         get
@@ -5830,6 +5965,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @RestoreUserDefault_moduleName_desc
+      /// </summary>
       public string ModuleName
       {
         get
@@ -5843,6 +5981,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @RestoreUserDefault_category_desc
+      /// </summary>
       public string Category
       {
         get
@@ -6402,6 +6543,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       private string _category;
       private Dictionary<string, Ruyi.SDK.CommonType.SettingValue> _settingItems;
 
+      /// <summary>
+      /// @SetUserAppData_userId_desc
+      /// </summary>
       public string UserId
       {
         get
@@ -6415,6 +6559,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @SetUserAppData_category_desc
+      /// </summary>
       public string Category
       {
         get
@@ -6428,6 +6575,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @SetUserAppData_settingItems_desc
+      /// </summary>
       public Dictionary<string, Ruyi.SDK.CommonType.SettingValue> SettingItems
       {
         get
@@ -6488,15 +6638,15 @@ namespace Ruyi.SDK.SettingSystem.Api
                 if (field.Type == TType.Map) {
                   {
                     SettingItems = new Dictionary<string, Ruyi.SDK.CommonType.SettingValue>();
-                    TMap _map14 = iprot.ReadMapBegin();
-                    for( int _i15 = 0; _i15 < _map14.Count; ++_i15)
+                    TMap _map18 = iprot.ReadMapBegin();
+                    for( int _i19 = 0; _i19 < _map18.Count; ++_i19)
                     {
-                      string _key16;
-                      Ruyi.SDK.CommonType.SettingValue _val17;
-                      _key16 = iprot.ReadString();
-                      _val17 = new Ruyi.SDK.CommonType.SettingValue();
-                      _val17.Read(iprot);
-                      SettingItems[_key16] = _val17;
+                      string _key20;
+                      Ruyi.SDK.CommonType.SettingValue _val21;
+                      _key20 = iprot.ReadString();
+                      _val21 = new Ruyi.SDK.CommonType.SettingValue();
+                      _val21.Read(iprot);
+                      SettingItems[_key20] = _val21;
                     }
                     iprot.ReadMapEnd();
                   }
@@ -6548,10 +6698,10 @@ namespace Ruyi.SDK.SettingSystem.Api
             oprot.WriteFieldBegin(field);
             {
               oprot.WriteMapBegin(new TMap(TType.String, TType.Struct, SettingItems.Count));
-              foreach (string _iter18 in SettingItems.Keys)
+              foreach (string _iter22 in SettingItems.Keys)
               {
-                oprot.WriteString(_iter18);
-                SettingItems[_iter18].Write(oprot);
+                oprot.WriteString(_iter22);
+                SettingItems[_iter22].Write(oprot);
               }
               oprot.WriteMapEnd();
             }
@@ -6750,6 +6900,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       private string _category;
       private List<string> _settingKeys;
 
+      /// <summary>
+      /// @GetUserAppData_userId_desc
+      /// </summary>
       public string UserId
       {
         get
@@ -6763,6 +6916,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @GetUserAppData_category_desc
+      /// </summary>
       public string Category
       {
         get
@@ -6776,6 +6932,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @GetUserAppData_settingKeys_desc
+      /// </summary>
       public List<string> SettingKeys
       {
         get
@@ -6836,12 +6995,12 @@ namespace Ruyi.SDK.SettingSystem.Api
                 if (field.Type == TType.List) {
                   {
                     SettingKeys = new List<string>();
-                    TList _list19 = iprot.ReadListBegin();
-                    for( int _i20 = 0; _i20 < _list19.Count; ++_i20)
+                    TList _list23 = iprot.ReadListBegin();
+                    for( int _i24 = 0; _i24 < _list23.Count; ++_i24)
                     {
-                      string _elem21;
-                      _elem21 = iprot.ReadString();
-                      SettingKeys.Add(_elem21);
+                      string _elem25;
+                      _elem25 = iprot.ReadString();
+                      SettingKeys.Add(_elem25);
                     }
                     iprot.ReadListEnd();
                   }
@@ -6893,9 +7052,9 @@ namespace Ruyi.SDK.SettingSystem.Api
             oprot.WriteFieldBegin(field);
             {
               oprot.WriteListBegin(new TList(TType.String, SettingKeys.Count));
-              foreach (string _iter22 in SettingKeys)
+              foreach (string _iter26 in SettingKeys)
               {
-                oprot.WriteString(_iter22);
+                oprot.WriteString(_iter26);
               }
               oprot.WriteListEnd();
             }
@@ -7097,6 +7256,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       private string _category;
       private List<string> _settingKeys;
 
+      /// <summary>
+      /// @RemoveUserAppData_userId_desc
+      /// </summary>
       public string UserId
       {
         get
@@ -7110,6 +7272,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @RemoveUserAppData_category_desc
+      /// </summary>
       public string Category
       {
         get
@@ -7123,6 +7288,9 @@ namespace Ruyi.SDK.SettingSystem.Api
         }
       }
 
+      /// <summary>
+      /// @RemoveUserAppData_settingKeys_desc
+      /// </summary>
       public List<string> SettingKeys
       {
         get
@@ -7183,12 +7351,12 @@ namespace Ruyi.SDK.SettingSystem.Api
                 if (field.Type == TType.List) {
                   {
                     SettingKeys = new List<string>();
-                    TList _list23 = iprot.ReadListBegin();
-                    for( int _i24 = 0; _i24 < _list23.Count; ++_i24)
+                    TList _list27 = iprot.ReadListBegin();
+                    for( int _i28 = 0; _i28 < _list27.Count; ++_i28)
                     {
-                      string _elem25;
-                      _elem25 = iprot.ReadString();
-                      SettingKeys.Add(_elem25);
+                      string _elem29;
+                      _elem29 = iprot.ReadString();
+                      SettingKeys.Add(_elem29);
                     }
                     iprot.ReadListEnd();
                   }
@@ -7240,9 +7408,9 @@ namespace Ruyi.SDK.SettingSystem.Api
             oprot.WriteFieldBegin(field);
             {
               oprot.WriteListBegin(new TList(TType.String, SettingKeys.Count));
-              foreach (string _iter26 in SettingKeys)
+              foreach (string _iter30 in SettingKeys)
               {
-                oprot.WriteString(_iter26);
+                oprot.WriteString(_iter30);
               }
               oprot.WriteListEnd();
             }
@@ -10726,13 +10894,13 @@ namespace Ruyi.SDK.SettingSystem.Api
                 if (field.Type == TType.List) {
                   {
                     Success = new List<Ruyi.SDK.SettingSystem.Api.WifiEntity>();
-                    TList _list27 = iprot.ReadListBegin();
-                    for( int _i28 = 0; _i28 < _list27.Count; ++_i28)
+                    TList _list31 = iprot.ReadListBegin();
+                    for( int _i32 = 0; _i32 < _list31.Count; ++_i32)
                     {
-                      Ruyi.SDK.SettingSystem.Api.WifiEntity _elem29;
-                      _elem29 = new Ruyi.SDK.SettingSystem.Api.WifiEntity();
-                      _elem29.Read(iprot);
-                      Success.Add(_elem29);
+                      Ruyi.SDK.SettingSystem.Api.WifiEntity _elem33;
+                      _elem33 = new Ruyi.SDK.SettingSystem.Api.WifiEntity();
+                      _elem33.Read(iprot);
+                      Success.Add(_elem33);
                     }
                     iprot.ReadListEnd();
                   }
@@ -10778,9 +10946,9 @@ namespace Ruyi.SDK.SettingSystem.Api
               oprot.WriteFieldBegin(field);
               {
                 oprot.WriteListBegin(new TList(TType.Struct, Success.Count));
-                foreach (Ruyi.SDK.SettingSystem.Api.WifiEntity _iter30 in Success)
+                foreach (Ruyi.SDK.SettingSystem.Api.WifiEntity _iter34 in Success)
                 {
-                  _iter30.Write(oprot);
+                  _iter34.Write(oprot);
                 }
                 oprot.WriteListEnd();
               }

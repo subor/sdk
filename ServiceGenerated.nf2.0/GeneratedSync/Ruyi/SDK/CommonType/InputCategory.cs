@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @InputCategory_desc
+  /// </summary>
   public enum InputCategory
   {
     GamePad = 0,

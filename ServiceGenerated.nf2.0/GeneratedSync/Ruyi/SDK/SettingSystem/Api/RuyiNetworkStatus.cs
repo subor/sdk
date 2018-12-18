@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// @RuyiNetworkStatus_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -28,6 +31,9 @@ namespace Ruyi.SDK.SettingSystem.Api
     private bool _AdapterStatus;
     private bool _InternetStatus;
 
+    /// <summary>
+    /// @RuyiNetworkStatus_isWifi_desc
+    /// </summary>
     public bool IsWifi
     {
       get
@@ -41,6 +47,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkStatus_Name_desc
+    /// </summary>
     public string Name
     {
       get
@@ -54,6 +63,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkStatus_AdapterStatus_desc
+    /// </summary>
     public bool AdapterStatus
     {
       get
@@ -67,6 +79,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkStatus_InternetStatus_desc
+    /// </summary>
     public bool InternetStatus
     {
       get

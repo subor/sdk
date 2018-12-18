@@ -25,10 +25,16 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.PublisherSubscriber
 {
 
+  /// <summary>
+  /// @PubHeader_desc
+  /// </summary>
   public partial class PubHeader : TBase
   {
     private string _PayloadType;
 
+    /// <summary>
+    /// @PubHeader_PayloadType_desc
+    /// </summary>
     public string PayloadType
     {
       get

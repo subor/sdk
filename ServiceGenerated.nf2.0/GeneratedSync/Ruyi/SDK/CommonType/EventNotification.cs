@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @EventNotification_Summary
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -26,6 +29,9 @@ namespace Ruyi.SDK.CommonType
     private string _key;
     private string _contents;
 
+    /// <summary>
+    /// @EventNotification_key_desc
+    /// </summary>
     public string Key
     {
       get
@@ -39,6 +45,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @EventNotification_contents_desc
+    /// </summary>
     public string Contents
     {
       get

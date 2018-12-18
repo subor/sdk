@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @Features_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -34,6 +37,9 @@ namespace Ruyi.SDK.CommonType
     private OverlayRendererHooking _renderer_hooking;
     private OverlayCursor _forcecursor;
 
+    /// <summary>
+    /// @Features_overlay_desc
+    /// </summary>
     public bool Overlay
     {
       get
@@ -47,6 +53,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @Features_forcebind_desc
+    /// </summary>
     public bool Forcebind
     {
       get
@@ -61,6 +70,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
+    /// @Features_forcebind-adapter_desc
     /// 
     /// <seealso cref="OverlayForceBindAdapter"/>
     /// </summary>
@@ -77,6 +87,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @Features_forcetopmost_desc
+    /// </summary>
     public bool Forcetopmost
     {
       get
@@ -90,6 +103,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @Features_opengl-vbo-rendering_desc
+    /// </summary>
     public bool Opengl_vbo_rendering
     {
       get
@@ -103,6 +119,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @Features_opengl-state-hooking_desc
+    /// </summary>
     public bool Opengl_state_hooking
     {
       get
@@ -116,6 +135,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @Features_game-window-subclassing_desc
+    /// </summary>
     public bool Game_window_subclassing
     {
       get
@@ -130,6 +152,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
+    /// @Features_forcerenderer_desc
     /// 
     /// <seealso cref="OverlayRenderer"/>
     /// </summary>
@@ -147,6 +170,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
+    /// @Features_renderer-hooking_desc
     /// 
     /// <seealso cref="OverlayRendererHooking"/>
     /// </summary>
@@ -164,6 +188,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
+    /// @Features_forcecursor_desc
     /// 
     /// <seealso cref="OverlayCursor"/>
     /// </summary>

@@ -25,11 +25,17 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.Overlay
 {
 
+  /// <summary>
+  /// @OverlayState_desc
+  /// </summary>
   public partial class OverlayState : TBase
   {
     private bool _isVisible;
     private string _arguments;
 
+    /// <summary>
+    /// @OverlayState_isVisible_desc
+    /// </summary>
     public bool IsVisible
     {
       get
@@ -43,6 +49,9 @@ namespace Ruyi.SDK.Overlay
       }
     }
 
+    /// <summary>
+    /// @OverlayState_arguments_desc
+    /// </summary>
     public string Arguments
     {
       get

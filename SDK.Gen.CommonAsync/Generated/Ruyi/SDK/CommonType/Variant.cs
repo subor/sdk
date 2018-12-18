@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @Variant_desc
+  /// </summary>
   public partial class Variant : TBase
   {
     private string _name;
@@ -32,6 +35,9 @@ namespace Ruyi.SDK.CommonType
     private int _order;
     private List<@If> _rules;
 
+    /// <summary>
+    /// @Variant_name_desc
+    /// </summary>
     public string Name
     {
       get
@@ -45,6 +51,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @Variant_id_desc
+    /// </summary>
     public string Id
     {
       get
@@ -58,6 +67,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @Variant_order_desc
+    /// </summary>
     public int Order
     {
       get
@@ -71,6 +83,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @Variant_rules_desc
+    /// </summary>
     public List<@If> Rules
     {
       get

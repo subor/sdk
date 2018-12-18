@@ -25,12 +25,18 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @Cond_desc
+  /// </summary>
   public partial class Cond : TBase
   {
     private string _name;
     private CondType _type;
     private string _additionalArg;
 
+    /// <summary>
+    /// @Cond_name_desc
+    /// </summary>
     public string Name
     {
       get
@@ -45,6 +51,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
+    /// @Cond_type_desc
     /// 
     /// <seealso cref="CondType"/>
     /// </summary>
@@ -61,6 +68,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @Cond_additionalArg_desc
+    /// </summary>
     public string AdditionalArg
     {
       get

@@ -28,6 +28,10 @@ namespace Ruyi.SDK.UserServiceExternal
   {
     public interface IAsync
     {
+      /// <summary>
+      /// @GetPlayingUserInfo_Summary
+      /// </summary>
+      /// <param name="userId">@GetPlayingUserInfo_userId_desc</param>
       Task<Ruyi.SDK.UserServiceExternal.UserInfo_Public> GetPlayingUserInfoAsync(string userId, CancellationToken cancellationToken);
 
     }
@@ -170,6 +174,9 @@ namespace Ruyi.SDK.UserServiceExternal
     {
       private string _userId;
 
+      /// <summary>
+      /// @GetPlayingUserInfo_userId_desc
+      /// </summary>
       public string UserId
       {
         get

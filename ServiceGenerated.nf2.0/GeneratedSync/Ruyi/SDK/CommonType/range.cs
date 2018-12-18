@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @range_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -26,6 +29,9 @@ namespace Ruyi.SDK.CommonType
     private double _minimum;
     private double _maximum;
 
+    /// <summary>
+    /// @range_minimum_desc
+    /// </summary>
     public double Minimum
     {
       get
@@ -39,6 +45,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @range_maximum_desc
+    /// </summary>
     public double Maximum
     {
       get

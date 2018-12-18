@@ -25,11 +25,17 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @activeDependency_desc
+  /// </summary>
   public partial class activeDependency : TBase
   {
     private string _name;
     private string _condition;
 
+    /// <summary>
+    /// @activeDependency_name_desc
+    /// </summary>
     public string Name
     {
       get
@@ -43,6 +49,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @activeDependency_condition_desc
+    /// </summary>
     public string Condition
     {
       get

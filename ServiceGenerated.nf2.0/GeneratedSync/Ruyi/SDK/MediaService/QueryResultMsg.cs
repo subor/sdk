@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.MediaService
 {
 
+  /// <summary>
+  /// @QueryResultMsg_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif

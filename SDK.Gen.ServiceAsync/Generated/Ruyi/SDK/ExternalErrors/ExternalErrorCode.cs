@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.ExternalErrors
 {
+  /// <summary>
+  /// @ExternalErrorCode_desc
+  /// </summary>
   public enum ExternalErrorCode
   {
     Err_0 = 0,

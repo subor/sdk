@@ -32,6 +32,9 @@ namespace Ruyi.SDK.InputManager
     private MouseOffset _Offset;
     private bool _IsButton;
 
+    /// <summary>
+    /// @RuyiMouseInput_DeviceId_desc
+    /// </summary>
     public string DeviceId
     {
       get
@@ -45,6 +48,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiMouseInput_UserId_desc
+    /// </summary>
     public string UserId
     {
       get
@@ -58,6 +64,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiMouseInput_RawOffset_desc
+    /// </summary>
     public int RawOffset
     {
       get
@@ -71,6 +80,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiMouseInput_Value_desc
+    /// </summary>
     public int Value
     {
       get
@@ -84,6 +96,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiMouseInput_Timestamp_desc
+    /// </summary>
     public int Timestamp
     {
       get
@@ -97,6 +112,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiMouseInput_Sequence_desc
+    /// </summary>
     public int Sequence
     {
       get
@@ -111,6 +129,7 @@ namespace Ruyi.SDK.InputManager
     }
 
     /// <summary>
+    /// @RuyiMouseInput_Offset_desc
     /// 
     /// <seealso cref="MouseOffset"/>
     /// </summary>
@@ -127,6 +146,9 @@ namespace Ruyi.SDK.InputManager
       }
     }
 
+    /// <summary>
+    /// @RuyiMouseInput_IsButton_desc
+    /// </summary>
     public bool IsButton
     {
       get

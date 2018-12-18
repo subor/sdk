@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @GameDB_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -31,6 +34,7 @@ namespace Ruyi.SDK.CommonType
     private Runtime _runtime;
 
     /// <summary>
+    /// @GameDB_type_desc
     /// 
     /// <seealso cref="OverlayGameType"/>
     /// </summary>
@@ -47,6 +51,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @GameDB_id_desc
+    /// </summary>
     public int Id
     {
       get
@@ -60,6 +67,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @GameDB_name_desc
+    /// </summary>
     public string Name
     {
       get
@@ -73,6 +83,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @GameDB_conditions_desc
+    /// </summary>
     public List<Cond> Conditions
     {
       get
@@ -86,6 +99,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @GameDB_detection_desc
+    /// </summary>
     public List<Variant> Detection
     {
       get
@@ -99,6 +115,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @GameDB_runtime_desc
+    /// </summary>
     public Runtime Runtime
     {
       get

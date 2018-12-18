@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// @SettingSearchResult_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -26,6 +29,9 @@ namespace Ruyi.SDK.SettingSystem.Api
     private string _Version;
     private List<Ruyi.SDK.CommonType.SettingItem> _SettingItems;
 
+    /// <summary>
+    /// @SettingSearchResult_Version_desc
+    /// </summary>
     public string Version
     {
       get
@@ -39,6 +45,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @SettingSearchResult_SettingItems_desc
+    /// </summary>
     public List<Ruyi.SDK.CommonType.SettingItem> SettingItems
     {
       get

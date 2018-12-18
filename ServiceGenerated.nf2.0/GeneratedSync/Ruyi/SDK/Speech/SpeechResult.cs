@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.Speech
 {
+  /// <summary>
+  /// @SpeechResult_desc
+  /// </summary>
   public enum SpeechResult
   {
     Ok = 0,

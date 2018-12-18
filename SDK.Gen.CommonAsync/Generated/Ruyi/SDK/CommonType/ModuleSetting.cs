@@ -25,12 +25,18 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @ModuleSetting_desc
+  /// </summary>
   public partial class ModuleSetting : TBase
   {
     private ModuleBaseInfo _baseInfo;
     private List<SettingItem> _settings;
     private List<SettingCategory> _categories;
 
+    /// <summary>
+    /// @ModuleSetting_baseInfo_desc
+    /// </summary>
     public ModuleBaseInfo BaseInfo
     {
       get
@@ -44,6 +50,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @ModuleSetting_settings_desc
+    /// </summary>
     public List<SettingItem> Settings
     {
       get
@@ -57,6 +66,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @ModuleSetting_categories_desc
+    /// </summary>
     public List<SettingCategory> Categories
     {
       get
@@ -116,13 +128,13 @@ namespace Ruyi.SDK.CommonType
               {
                 {
                   Settings = new List<SettingItem>();
-                  TList _list25 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i26 = 0; _i26 < _list25.Count; ++_i26)
+                  TList _list33 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i34 = 0; _i34 < _list33.Count; ++_i34)
                   {
-                    SettingItem _elem27;
-                    _elem27 = new SettingItem();
-                    await _elem27.ReadAsync(iprot, cancellationToken);
-                    Settings.Add(_elem27);
+                    SettingItem _elem35;
+                    _elem35 = new SettingItem();
+                    await _elem35.ReadAsync(iprot, cancellationToken);
+                    Settings.Add(_elem35);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -137,13 +149,13 @@ namespace Ruyi.SDK.CommonType
               {
                 {
                   Categories = new List<SettingCategory>();
-                  TList _list28 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i29 = 0; _i29 < _list28.Count; ++_i29)
+                  TList _list36 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i37 = 0; _i37 < _list36.Count; ++_i37)
                   {
-                    SettingCategory _elem30;
-                    _elem30 = new SettingCategory();
-                    await _elem30.ReadAsync(iprot, cancellationToken);
-                    Categories.Add(_elem30);
+                    SettingCategory _elem38;
+                    _elem38 = new SettingCategory();
+                    await _elem38.ReadAsync(iprot, cancellationToken);
+                    Categories.Add(_elem38);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -194,9 +206,9 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, Settings.Count), cancellationToken);
-            foreach (SettingItem _iter31 in Settings)
+            foreach (SettingItem _iter39 in Settings)
             {
-              await _iter31.WriteAsync(oprot, cancellationToken);
+              await _iter39.WriteAsync(oprot, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }
@@ -210,9 +222,9 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, Categories.Count), cancellationToken);
-            foreach (SettingCategory _iter32 in Categories)
+            foreach (SettingCategory _iter40 in Categories)
             {
-              await _iter32.WriteAsync(oprot, cancellationToken);
+              await _iter40.WriteAsync(oprot, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }

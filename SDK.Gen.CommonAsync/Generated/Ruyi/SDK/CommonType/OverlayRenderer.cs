@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @OverlayRenderer_desc
+  /// </summary>
   public enum OverlayRenderer
   {
     Unspecified = 0,

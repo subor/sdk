@@ -21,6 +21,12 @@ namespace Ruyi { namespace SDK { namespace UserServiceExternal {
 class UserServExternalIf {
  public:
   virtual ~UserServExternalIf() {}
+
+  /**
+   * @GetPlayingUserInfo_Summary
+   * 
+   * @param userId @GetPlayingUserInfo_userId_desc
+   */
   virtual void GetPlayingUserInfo( ::Ruyi::SDK::UserServiceExternal::UserInfo_Public& _return, const std::string& userId) = 0;
 };
 

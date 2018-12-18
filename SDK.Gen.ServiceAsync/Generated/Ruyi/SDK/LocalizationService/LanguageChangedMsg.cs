@@ -25,11 +25,17 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.LocalizationService
 {
 
+  /// <summary>
+  /// @LanguageChangedMsg_desc
+  /// </summary>
   public partial class LanguageChangedMsg : TBase
   {
     private string _newLanguage;
     private string _oldLanguage;
 
+    /// <summary>
+    /// @LanguageChangedMsg_newLanguage_desc
+    /// </summary>
     public string NewLanguage
     {
       get
@@ -43,6 +49,9 @@ namespace Ruyi.SDK.LocalizationService
       }
     }
 
+    /// <summary>
+    /// @LanguageChangedMsg_oldLanguage_desc
+    /// </summary>
     public string OldLanguage
     {
       get

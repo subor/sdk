@@ -25,11 +25,17 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.MediaService
 {
 
+  /// <summary>
+  /// @QueryMsg_desc
+  /// </summary>
   public partial class QueryMsg : TBase
   {
     private string _path;
     private string _pattern;
 
+    /// <summary>
+    /// @QueryMsg_path_desc
+    /// </summary>
     public string Path
     {
       get
@@ -43,6 +49,9 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
+    /// <summary>
+    /// @QueryMsg_pattern_desc
+    /// </summary>
     public string Pattern
     {
       get

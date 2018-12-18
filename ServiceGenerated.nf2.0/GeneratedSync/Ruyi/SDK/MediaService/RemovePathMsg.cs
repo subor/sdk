@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.MediaService
 {
 
+  /// <summary>
+  /// @RemovePathMsg_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -25,6 +28,9 @@ namespace Ruyi.SDK.MediaService
   {
     private string _path;
 
+    /// <summary>
+    /// @RemovePathMsg_path_desc
+    /// </summary>
     public string Path
     {
       get

@@ -25,10 +25,16 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @If_desc
+  /// </summary>
   public partial class @If : TBase
   {
     private string _cond;
 
+    /// <summary>
+    /// @If_cond_desc
+    /// </summary>
     public string Cond
     {
       get

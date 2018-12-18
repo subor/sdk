@@ -954,6 +954,26 @@ uint32_t SettingSystemService_GetChildNode_args::read(::apache::thrift::protocol
           xfer += iprot->skip(ftype);
         }
         break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->tags.clear();
+            uint32_t _size27;
+            ::apache::thrift::protocol::TType _etype30;
+            xfer += iprot->readListBegin(_etype30, _size27);
+            this->tags.resize(_size27);
+            uint32_t _i31;
+            for (_i31 = 0; _i31 < _size27; ++_i31)
+            {
+              xfer += iprot->readString(this->tags[_i31]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.tags = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -983,6 +1003,18 @@ uint32_t SettingSystemService_GetChildNode_args::write(::apache::thrift::protoco
   xfer += oprot->writeString(this->param);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("tags", ::apache::thrift::protocol::T_LIST, 4);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->tags.size()));
+    std::vector<std::string> ::const_iterator _iter32;
+    for (_iter32 = this->tags.begin(); _iter32 != this->tags.end(); ++_iter32)
+    {
+      xfer += oprot->writeString((*_iter32));
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -1008,6 +1040,18 @@ uint32_t SettingSystemService_GetChildNode_pargs::write(::apache::thrift::protoc
 
   xfer += oprot->writeFieldBegin("param", ::apache::thrift::protocol::T_STRING, 3);
   xfer += oprot->writeString((*(this->param)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("tags", ::apache::thrift::protocol::T_LIST, 4);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->tags)).size()));
+    std::vector<std::string> ::const_iterator _iter33;
+    for (_iter33 = (*(this->tags)).begin(); _iter33 != (*(this->tags)).end(); ++_iter33)
+    {
+      xfer += oprot->writeString((*_iter33));
+    }
+    xfer += oprot->writeListEnd();
+  }
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -1396,17 +1440,17 @@ uint32_t SettingSystemService_SetSettingItems_args::read(::apache::thrift::proto
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->keyValues.clear();
-            uint32_t _size27;
-            ::apache::thrift::protocol::TType _ktype28;
-            ::apache::thrift::protocol::TType _vtype29;
-            xfer += iprot->readMapBegin(_ktype28, _vtype29, _size27);
-            uint32_t _i31;
-            for (_i31 = 0; _i31 < _size27; ++_i31)
+            uint32_t _size34;
+            ::apache::thrift::protocol::TType _ktype35;
+            ::apache::thrift::protocol::TType _vtype36;
+            xfer += iprot->readMapBegin(_ktype35, _vtype36, _size34);
+            uint32_t _i38;
+            for (_i38 = 0; _i38 < _size34; ++_i38)
             {
-              std::string _key32;
-              xfer += iprot->readString(_key32);
-              std::string& _val33 = this->keyValues[_key32];
-              xfer += iprot->readString(_val33);
+              std::string _key39;
+              xfer += iprot->readString(_key39);
+              std::string& _val40 = this->keyValues[_key39];
+              xfer += iprot->readString(_val40);
             }
             xfer += iprot->readMapEnd();
           }
@@ -1435,11 +1479,11 @@ uint32_t SettingSystemService_SetSettingItems_args::write(::apache::thrift::prot
   xfer += oprot->writeFieldBegin("keyValues", ::apache::thrift::protocol::T_MAP, 1);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->keyValues.size()));
-    std::map<std::string, std::string> ::const_iterator _iter34;
-    for (_iter34 = this->keyValues.begin(); _iter34 != this->keyValues.end(); ++_iter34)
+    std::map<std::string, std::string> ::const_iterator _iter41;
+    for (_iter41 = this->keyValues.begin(); _iter41 != this->keyValues.end(); ++_iter41)
     {
-      xfer += oprot->writeString(_iter34->first);
-      xfer += oprot->writeString(_iter34->second);
+      xfer += oprot->writeString(_iter41->first);
+      xfer += oprot->writeString(_iter41->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -1463,11 +1507,11 @@ uint32_t SettingSystemService_SetSettingItems_pargs::write(::apache::thrift::pro
   xfer += oprot->writeFieldBegin("keyValues", ::apache::thrift::protocol::T_MAP, 1);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->keyValues)).size()));
-    std::map<std::string, std::string> ::const_iterator _iter35;
-    for (_iter35 = (*(this->keyValues)).begin(); _iter35 != (*(this->keyValues)).end(); ++_iter35)
+    std::map<std::string, std::string> ::const_iterator _iter42;
+    for (_iter42 = (*(this->keyValues)).begin(); _iter42 != (*(this->keyValues)).end(); ++_iter42)
     {
-      xfer += oprot->writeString(_iter35->first);
-      xfer += oprot->writeString(_iter35->second);
+      xfer += oprot->writeString(_iter42->first);
+      xfer += oprot->writeString(_iter42->second);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -2321,17 +2365,17 @@ uint32_t SettingSystemService_SetUserAppData_args::read(::apache::thrift::protoc
         if (ftype == ::apache::thrift::protocol::T_MAP) {
           {
             this->settingItems.clear();
-            uint32_t _size36;
-            ::apache::thrift::protocol::TType _ktype37;
-            ::apache::thrift::protocol::TType _vtype38;
-            xfer += iprot->readMapBegin(_ktype37, _vtype38, _size36);
-            uint32_t _i40;
-            for (_i40 = 0; _i40 < _size36; ++_i40)
+            uint32_t _size43;
+            ::apache::thrift::protocol::TType _ktype44;
+            ::apache::thrift::protocol::TType _vtype45;
+            xfer += iprot->readMapBegin(_ktype44, _vtype45, _size43);
+            uint32_t _i47;
+            for (_i47 = 0; _i47 < _size43; ++_i47)
             {
-              std::string _key41;
-              xfer += iprot->readString(_key41);
-               ::Ruyi::SDK::CommonType::SettingValue& _val42 = this->settingItems[_key41];
-              xfer += _val42.read(iprot);
+              std::string _key48;
+              xfer += iprot->readString(_key48);
+               ::Ruyi::SDK::CommonType::SettingValue& _val49 = this->settingItems[_key48];
+              xfer += _val49.read(iprot);
             }
             xfer += iprot->readMapEnd();
           }
@@ -2368,11 +2412,11 @@ uint32_t SettingSystemService_SetUserAppData_args::write(::apache::thrift::proto
   xfer += oprot->writeFieldBegin("settingItems", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->settingItems.size()));
-    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> ::const_iterator _iter43;
-    for (_iter43 = this->settingItems.begin(); _iter43 != this->settingItems.end(); ++_iter43)
+    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> ::const_iterator _iter50;
+    for (_iter50 = this->settingItems.begin(); _iter50 != this->settingItems.end(); ++_iter50)
     {
-      xfer += oprot->writeString(_iter43->first);
-      xfer += _iter43->second.write(oprot);
+      xfer += oprot->writeString(_iter50->first);
+      xfer += _iter50->second.write(oprot);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -2404,11 +2448,11 @@ uint32_t SettingSystemService_SetUserAppData_pargs::write(::apache::thrift::prot
   xfer += oprot->writeFieldBegin("settingItems", ::apache::thrift::protocol::T_MAP, 3);
   {
     xfer += oprot->writeMapBegin(::apache::thrift::protocol::T_STRING, ::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>((*(this->settingItems)).size()));
-    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> ::const_iterator _iter44;
-    for (_iter44 = (*(this->settingItems)).begin(); _iter44 != (*(this->settingItems)).end(); ++_iter44)
+    std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> ::const_iterator _iter51;
+    for (_iter51 = (*(this->settingItems)).begin(); _iter51 != (*(this->settingItems)).end(); ++_iter51)
     {
-      xfer += oprot->writeString(_iter44->first);
-      xfer += _iter44->second.write(oprot);
+      xfer += oprot->writeString(_iter51->first);
+      xfer += _iter51->second.write(oprot);
     }
     xfer += oprot->writeMapEnd();
   }
@@ -2593,14 +2637,14 @@ uint32_t SettingSystemService_GetUserAppData_args::read(::apache::thrift::protoc
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->settingKeys.clear();
-            uint32_t _size45;
-            ::apache::thrift::protocol::TType _etype48;
-            xfer += iprot->readListBegin(_etype48, _size45);
-            this->settingKeys.resize(_size45);
-            uint32_t _i49;
-            for (_i49 = 0; _i49 < _size45; ++_i49)
+            uint32_t _size52;
+            ::apache::thrift::protocol::TType _etype55;
+            xfer += iprot->readListBegin(_etype55, _size52);
+            this->settingKeys.resize(_size52);
+            uint32_t _i56;
+            for (_i56 = 0; _i56 < _size52; ++_i56)
             {
-              xfer += iprot->readString(this->settingKeys[_i49]);
+              xfer += iprot->readString(this->settingKeys[_i56]);
             }
             xfer += iprot->readListEnd();
           }
@@ -2637,10 +2681,10 @@ uint32_t SettingSystemService_GetUserAppData_args::write(::apache::thrift::proto
   xfer += oprot->writeFieldBegin("settingKeys", ::apache::thrift::protocol::T_LIST, 3);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->settingKeys.size()));
-    std::vector<std::string> ::const_iterator _iter50;
-    for (_iter50 = this->settingKeys.begin(); _iter50 != this->settingKeys.end(); ++_iter50)
+    std::vector<std::string> ::const_iterator _iter57;
+    for (_iter57 = this->settingKeys.begin(); _iter57 != this->settingKeys.end(); ++_iter57)
     {
-      xfer += oprot->writeString((*_iter50));
+      xfer += oprot->writeString((*_iter57));
     }
     xfer += oprot->writeListEnd();
   }
@@ -2672,10 +2716,10 @@ uint32_t SettingSystemService_GetUserAppData_pargs::write(::apache::thrift::prot
   xfer += oprot->writeFieldBegin("settingKeys", ::apache::thrift::protocol::T_LIST, 3);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->settingKeys)).size()));
-    std::vector<std::string> ::const_iterator _iter51;
-    for (_iter51 = (*(this->settingKeys)).begin(); _iter51 != (*(this->settingKeys)).end(); ++_iter51)
+    std::vector<std::string> ::const_iterator _iter58;
+    for (_iter58 = (*(this->settingKeys)).begin(); _iter58 != (*(this->settingKeys)).end(); ++_iter58)
     {
-      xfer += oprot->writeString((*_iter51));
+      xfer += oprot->writeString((*_iter58));
     }
     xfer += oprot->writeListEnd();
   }
@@ -2860,14 +2904,14 @@ uint32_t SettingSystemService_RemoveUserAppData_args::read(::apache::thrift::pro
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->settingKeys.clear();
-            uint32_t _size52;
-            ::apache::thrift::protocol::TType _etype55;
-            xfer += iprot->readListBegin(_etype55, _size52);
-            this->settingKeys.resize(_size52);
-            uint32_t _i56;
-            for (_i56 = 0; _i56 < _size52; ++_i56)
+            uint32_t _size59;
+            ::apache::thrift::protocol::TType _etype62;
+            xfer += iprot->readListBegin(_etype62, _size59);
+            this->settingKeys.resize(_size59);
+            uint32_t _i63;
+            for (_i63 = 0; _i63 < _size59; ++_i63)
             {
-              xfer += iprot->readString(this->settingKeys[_i56]);
+              xfer += iprot->readString(this->settingKeys[_i63]);
             }
             xfer += iprot->readListEnd();
           }
@@ -2904,10 +2948,10 @@ uint32_t SettingSystemService_RemoveUserAppData_args::write(::apache::thrift::pr
   xfer += oprot->writeFieldBegin("settingKeys", ::apache::thrift::protocol::T_LIST, 3);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->settingKeys.size()));
-    std::vector<std::string> ::const_iterator _iter57;
-    for (_iter57 = this->settingKeys.begin(); _iter57 != this->settingKeys.end(); ++_iter57)
+    std::vector<std::string> ::const_iterator _iter64;
+    for (_iter64 = this->settingKeys.begin(); _iter64 != this->settingKeys.end(); ++_iter64)
     {
-      xfer += oprot->writeString((*_iter57));
+      xfer += oprot->writeString((*_iter64));
     }
     xfer += oprot->writeListEnd();
   }
@@ -2939,10 +2983,10 @@ uint32_t SettingSystemService_RemoveUserAppData_pargs::write(::apache::thrift::p
   xfer += oprot->writeFieldBegin("settingKeys", ::apache::thrift::protocol::T_LIST, 3);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>((*(this->settingKeys)).size()));
-    std::vector<std::string> ::const_iterator _iter58;
-    for (_iter58 = (*(this->settingKeys)).begin(); _iter58 != (*(this->settingKeys)).end(); ++_iter58)
+    std::vector<std::string> ::const_iterator _iter65;
+    for (_iter65 = (*(this->settingKeys)).begin(); _iter65 != (*(this->settingKeys)).end(); ++_iter65)
     {
-      xfer += oprot->writeString((*_iter58));
+      xfer += oprot->writeString((*_iter65));
     }
     xfer += oprot->writeListEnd();
   }
@@ -5676,14 +5720,14 @@ uint32_t SettingSystemService_GetAvailableWifi_result::read(::apache::thrift::pr
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size59;
-            ::apache::thrift::protocol::TType _etype62;
-            xfer += iprot->readListBegin(_etype62, _size59);
-            this->success.resize(_size59);
-            uint32_t _i63;
-            for (_i63 = 0; _i63 < _size59; ++_i63)
+            uint32_t _size66;
+            ::apache::thrift::protocol::TType _etype69;
+            xfer += iprot->readListBegin(_etype69, _size66);
+            this->success.resize(_size66);
+            uint32_t _i70;
+            for (_i70 = 0; _i70 < _size66; ++_i70)
             {
-              xfer += this->success[_i63].read(iprot);
+              xfer += this->success[_i70].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -5722,10 +5766,10 @@ uint32_t SettingSystemService_GetAvailableWifi_result::write(::apache::thrift::p
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> ::const_iterator _iter64;
-      for (_iter64 = this->success.begin(); _iter64 != this->success.end(); ++_iter64)
+      std::vector< ::Ruyi::SDK::SettingSystem::Api::WifiEntity> ::const_iterator _iter71;
+      for (_iter71 = this->success.begin(); _iter71 != this->success.end(); ++_iter71)
       {
-        xfer += (*_iter64).write(oprot);
+        xfer += (*_iter71).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -5770,14 +5814,14 @@ uint32_t SettingSystemService_GetAvailableWifi_presult::read(::apache::thrift::p
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size65;
-            ::apache::thrift::protocol::TType _etype68;
-            xfer += iprot->readListBegin(_etype68, _size65);
-            (*(this->success)).resize(_size65);
-            uint32_t _i69;
-            for (_i69 = 0; _i69 < _size65; ++_i69)
+            uint32_t _size72;
+            ::apache::thrift::protocol::TType _etype75;
+            xfer += iprot->readListBegin(_etype75, _size72);
+            (*(this->success)).resize(_size72);
+            uint32_t _i76;
+            for (_i76 = 0; _i76 < _size72; ++_i76)
             {
-              xfer += (*(this->success))[_i69].read(iprot);
+              xfer += (*(this->success))[_i76].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -7091,13 +7135,13 @@ void SettingSystemServiceClient::recv_GetCategoryNode( ::Ruyi::SDK::SettingSyste
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "GetCategoryNode failed: unknown result");
 }
 
-void SettingSystemServiceClient::GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param)
+void SettingSystemServiceClient::GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param, const std::vector<std::string> & tags)
 {
-  send_GetChildNode(parent, nodeType, param);
+  send_GetChildNode(parent, nodeType, param, tags);
   recv_GetChildNode(_return);
 }
 
-void SettingSystemServiceClient::send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param)
+void SettingSystemServiceClient::send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param, const std::vector<std::string> & tags)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("GetChildNode", ::apache::thrift::protocol::T_CALL, cseqid);
@@ -7106,6 +7150,7 @@ void SettingSystemServiceClient::send_GetChildNode(const std::string& parent, co
   args.parent = &parent;
   args.nodeType = &nodeType;
   args.param = &param;
+  args.tags = &tags;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -9016,7 +9061,7 @@ void SettingSystemServiceProcessor::process_GetChildNode(int32_t seqid, ::apache
 
   SettingSystemService_GetChildNode_result result;
   try {
-    iface_->GetChildNode(result.success, args.parent, args.nodeType, args.param);
+    iface_->GetChildNode(result.success, args.parent, args.nodeType, args.param, args.tags);
     result.__isset.success = true;
   } catch ( ::Ruyi::SDK::CommonType::ErrorException &error1) {
     result.error1 = error1;
@@ -10879,13 +10924,13 @@ void SettingSystemServiceConcurrentClient::recv_GetCategoryNode( ::Ruyi::SDK::Se
   } // end while(true)
 }
 
-void SettingSystemServiceConcurrentClient::GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param)
+void SettingSystemServiceConcurrentClient::GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param, const std::vector<std::string> & tags)
 {
-  int32_t seqid = send_GetChildNode(parent, nodeType, param);
+  int32_t seqid = send_GetChildNode(parent, nodeType, param, tags);
   recv_GetChildNode(_return, seqid);
 }
 
-int32_t SettingSystemServiceConcurrentClient::send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param)
+int32_t SettingSystemServiceConcurrentClient::send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param, const std::vector<std::string> & tags)
 {
   int32_t cseqid = this->sync_.generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(&this->sync_);
@@ -10895,6 +10940,7 @@ int32_t SettingSystemServiceConcurrentClient::send_GetChildNode(const std::strin
   args.parent = &parent;
   args.nodeType = &nodeType;
   args.param = &param;
+  args.tags = &tags;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();

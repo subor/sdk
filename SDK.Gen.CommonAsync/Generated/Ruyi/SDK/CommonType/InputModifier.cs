@@ -25,11 +25,17 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @InputModifier_desc
+  /// </summary>
   public partial class InputModifier : TBase
   {
     private range _DeadZone;
     private double _Scale;
 
+    /// <summary>
+    /// @InputModifier_DeadZone_desc
+    /// </summary>
     public range DeadZone
     {
       get
@@ -43,6 +49,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @InputModifier_Scale_desc
+    /// </summary>
     public double Scale
     {
       get

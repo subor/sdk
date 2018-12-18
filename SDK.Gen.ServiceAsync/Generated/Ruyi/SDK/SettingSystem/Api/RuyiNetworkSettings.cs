@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// @RuyiNetworkSettings_desc
+  /// </summary>
   public partial class RuyiNetworkSettings : TBase
   {
     private RuyiNetworkSettingNameValue _connection;
@@ -42,6 +45,9 @@ namespace Ruyi.SDK.SettingSystem.Api
     private RuyiNetworkSettingNameValue _MacAddress;
     private RuyiNetworkSettingNameValue _Proxy;
 
+    /// <summary>
+    /// @RuyiNetworkSettings_connection_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue Connection
     {
       get
@@ -55,6 +61,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkSettings_networkType_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue NetworkType
     {
       get
@@ -68,6 +77,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkSettings_quality_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue Quality
     {
       get
@@ -81,6 +93,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkSettings_SSID_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue SSID
     {
       get
@@ -94,6 +109,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkSettings_BSSID_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue BSSID
     {
       get
@@ -107,6 +125,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkSettings_Authentication_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue Authentication
     {
       get
@@ -120,6 +141,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkSettings_DHCPEnabled_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue DHCPEnabled
     {
       get
@@ -133,6 +157,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkSettings_IpAddress_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue IpAddress
     {
       get
@@ -146,6 +173,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkSettings_SubMask_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue SubMask
     {
       get
@@ -159,6 +189,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkSettings_Gateway_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue Gateway
     {
       get
@@ -172,6 +205,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkSettings_MainDNS_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue MainDNS
     {
       get
@@ -185,6 +221,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkSettings_SubDNS_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue SubDNS
     {
       get
@@ -198,6 +237,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkSettings_MacAddress_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue MacAddress
     {
       get
@@ -211,6 +253,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @RuyiNetworkSettings_Proxy_desc
+    /// </summary>
     public RuyiNetworkSettingNameValue Proxy
     {
       get

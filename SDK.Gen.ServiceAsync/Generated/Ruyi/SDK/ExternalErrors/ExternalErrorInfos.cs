@@ -25,12 +25,16 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.ExternalErrors
 {
 
+  /// <summary>
+  /// @ExternalErrorInfos_desc
+  /// </summary>
   public partial class ExternalErrorInfos : TBase
   {
     private ExternalErrorCode _errorCode;
     private string _description;
 
     /// <summary>
+    /// @ExternalErrorInfos_errorCode_desc
     /// 
     /// <seealso cref="ExternalErrorCode"/>
     /// </summary>
@@ -47,6 +51,9 @@ namespace Ruyi.SDK.ExternalErrors
       }
     }
 
+    /// <summary>
+    /// @ExternalErrorInfos_description_desc
+    /// </summary>
     public string Description
     {
       get

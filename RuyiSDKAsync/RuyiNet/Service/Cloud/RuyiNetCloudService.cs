@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Ruyi.SDK.Constants;
 using Ruyi.SDK.StorageLayer;
 using System;
 using System.IO;
@@ -112,7 +113,7 @@ namespace Ruyi.SDK.Online
                         message = e.ToString()
                     };
 #else
-                        throw;
+                    throw;
 #endif
                 }
             }
@@ -239,7 +240,7 @@ namespace Ruyi.SDK.Online
 
         private string GetPersistentDataPath(int index)
         {
-            var path = mStorageLayerService.GetLocalPathAsync("/<HTTPHDDCACHE>/" + GetCloudLocation(index), token).Result;
+            var path = mStorageLayerService.GetLocalPathAsync(ConstantsSDKDataTypesConstants.HTTP_HDD_CACHE_DRIVER_TAG + GetCloudLocation(index), token).Result;
             if (path.Result)
             {
                 return path.Path;

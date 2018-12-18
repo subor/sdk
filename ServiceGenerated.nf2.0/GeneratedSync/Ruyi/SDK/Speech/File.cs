@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.Speech
 {
 
+  /// <summary>
+  /// @File_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -25,6 +28,9 @@ namespace Ruyi.SDK.Speech
   {
     private string _filename;
 
+    /// <summary>
+    /// @File_filename_desc
+    /// </summary>
     public string Filename
     {
       get

@@ -25,11 +25,17 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @range_desc
+  /// </summary>
   public partial class range : TBase
   {
     private double _minimum;
     private double _maximum;
 
+    /// <summary>
+    /// @range_minimum_desc
+    /// </summary>
     public double Minimum
     {
       get
@@ -43,6 +49,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @range_maximum_desc
+    /// </summary>
     public double Maximum
     {
       get

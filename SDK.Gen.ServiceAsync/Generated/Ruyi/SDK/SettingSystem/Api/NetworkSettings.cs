@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// @NetworkSettings_desc
+  /// </summary>
   public partial class NetworkSettings : TBase
   {
     private bool _isWifi;
@@ -40,6 +43,9 @@ namespace Ruyi.SDK.SettingSystem.Api
     private string _proxyServer;
     private string _proxyPort;
 
+    /// <summary>
+    /// @NetworkSettings_isWifi_desc
+    /// </summary>
     public bool IsWifi
     {
       get
@@ -53,6 +59,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkSettings_proxyUsed_desc
+    /// </summary>
     public bool ProxyUsed
     {
       get
@@ -66,6 +75,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkSettings_DHCPEnabled_desc
+    /// </summary>
     public bool DHCPEnabled
     {
       get
@@ -79,6 +91,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkSettings_NetworkName_desc
+    /// </summary>
     public string NetworkName
     {
       get
@@ -92,6 +107,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkSettings_AuthType_desc
+    /// </summary>
     public string AuthType
     {
       get
@@ -105,6 +123,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkSettings_IPAddress_desc
+    /// </summary>
     public string IPAddress
     {
       get
@@ -118,6 +139,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkSettings_SubMask_desc
+    /// </summary>
     public string SubMask
     {
       get
@@ -131,6 +155,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkSettings_GateWay_desc
+    /// </summary>
     public string GateWay
     {
       get
@@ -144,6 +171,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkSettings_mainDNS_desc
+    /// </summary>
     public string MainDNS
     {
       get
@@ -157,6 +187,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkSettings_subDNS_desc
+    /// </summary>
     public string SubDNS
     {
       get
@@ -170,6 +203,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkSettings_proxyServer_desc
+    /// </summary>
     public string ProxyServer
     {
       get
@@ -183,6 +219,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NetworkSettings_proxyPort_desc
+    /// </summary>
     public string ProxyPort
     {
       get
