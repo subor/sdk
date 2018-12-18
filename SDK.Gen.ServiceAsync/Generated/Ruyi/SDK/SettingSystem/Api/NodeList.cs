@@ -25,11 +25,17 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// @NodeList_desc
+  /// </summary>
   public partial class NodeList : TBase
   {
     private List<Ruyi.SDK.CommonType.SettingCategory> _SettingCategories;
     private List<Ruyi.SDK.CommonType.SettingItem> _SettingItems;
 
+    /// <summary>
+    /// @NodeList_SettingCategories_desc
+    /// </summary>
     public List<Ruyi.SDK.CommonType.SettingCategory> SettingCategories
     {
       get
@@ -43,6 +49,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @NodeList_SettingItems_desc
+    /// </summary>
     public List<Ruyi.SDK.CommonType.SettingItem> SettingItems
     {
       get

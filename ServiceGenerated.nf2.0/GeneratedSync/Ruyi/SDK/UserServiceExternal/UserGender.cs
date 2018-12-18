@@ -7,10 +7,22 @@
 
 namespace Ruyi.SDK.UserServiceExternal
 {
+  /// <summary>
+  /// @UserGender_desc
+  /// </summary>
   public enum UserGender
   {
+    /// <summary>
+    /// @UserGender_Unknown
+    /// </summary>
     Unknown = 0,
+    /// <summary>
+    /// @UserGender_Male
+    /// </summary>
     Male = 1,
+    /// <summary>
+    /// @UserGender_Female
+    /// </summary>
     Female = 2,
   }
 }

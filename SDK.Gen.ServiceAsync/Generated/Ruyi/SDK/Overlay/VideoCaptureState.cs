@@ -25,10 +25,16 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.Overlay
 {
 
+  /// <summary>
+  /// @VideoCaptureState_desc
+  /// </summary>
   public partial class VideoCaptureState : TBase
   {
     private bool _isRecording;
 
+    /// <summary>
+    /// @VideoCaptureState_isRecording_desc
+    /// </summary>
     public bool IsRecording
     {
       get

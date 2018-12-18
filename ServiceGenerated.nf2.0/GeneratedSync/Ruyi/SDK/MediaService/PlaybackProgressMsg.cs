@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.MediaService
 {
 
+  /// <summary>
+  /// @PlaybackProgressMsg_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -27,6 +30,9 @@ namespace Ruyi.SDK.MediaService
     private double _CurrentTime;
     private double _TotalTime;
 
+    /// <summary>
+    /// @PlaybackProgressMsg_url_desc
+    /// </summary>
     public string Url
     {
       get
@@ -40,6 +46,9 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
+    /// <summary>
+    /// @PlaybackProgressMsg_CurrentTime_desc
+    /// </summary>
     public double CurrentTime
     {
       get
@@ -53,6 +62,9 @@ namespace Ruyi.SDK.MediaService
       }
     }
 
+    /// <summary>
+    /// @PlaybackProgressMsg_TotalTime_desc
+    /// </summary>
     public double TotalTime
     {
       get

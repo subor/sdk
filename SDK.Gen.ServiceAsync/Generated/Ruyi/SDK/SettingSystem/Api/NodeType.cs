@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.SettingSystem.Api
 {
+  /// <summary>
+  /// @NodeType_desc
+  /// </summary>
   public enum NodeType
   {
     Category = 1,

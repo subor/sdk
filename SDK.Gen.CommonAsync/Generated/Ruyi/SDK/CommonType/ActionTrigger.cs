@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @ActionTrigger_desc
+  /// </summary>
   public partial class ActionTrigger : TBase
   {
     private int _Id;
@@ -32,6 +35,9 @@ namespace Ruyi.SDK.CommonType
     private List<int> _TriggerButtons;
     private List<int> _TriggerValue;
 
+    /// <summary>
+    /// @ActionTrigger_Id_desc
+    /// </summary>
     public int Id
     {
       get
@@ -46,6 +52,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
+    /// @ActionTrigger_InputCagetory_desc
     /// 
     /// <seealso cref="InputCategory"/>
     /// </summary>
@@ -62,6 +69,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @ActionTrigger_TriggerButtons_desc
+    /// </summary>
     public List<int> TriggerButtons
     {
       get
@@ -75,6 +85,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @ActionTrigger_TriggerValue_desc
+    /// </summary>
     public List<int> TriggerValue
     {
       get

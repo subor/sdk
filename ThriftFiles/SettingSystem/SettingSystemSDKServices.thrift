@@ -43,7 +43,10 @@ According to the format of json string your write, searching can be separated to
 		2: SettingSystemSDKDataTypes.NodeType nodeType, 
 		
 		/** The parameter passed to the function which will be called while getting the item value */
-		3: string param
+		3: string param, 
+		
+		/** Tags used to filter the setting items. Only items with specified tags will be added in the result */
+		4: list<string> tags
 	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	/** Set the specified setting's "dataValue" with the new value */
@@ -70,7 +73,17 @@ According to the format of json string your write, searching can be separated to
 		2: string category
 	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
-	bool RestoreUserDefault(1: string userId, 2: string moduleName, 3: string category) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+	/** @RestoreUserDefault_Summary */
+	bool RestoreUserDefault(
+		/** @RestoreUserDefault_userId_desc */
+		1: string userId, 
+		
+		/** @RestoreUserDefault_moduleName_desc */
+		2: string moduleName, 
+		
+		/** @RestoreUserDefault_category_desc */
+		3: string category
+	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	/** Update the module settings from an older version to the latest one */
 	bool UpdateModuleVersion(
@@ -78,11 +91,41 @@ According to the format of json string your write, searching can be separated to
 		1: string moduleName
 	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
-	i32 SetUserAppData(1: string userId, 2: string category, 3: map<string, CommonTypeSDKDataTypes.SettingValue> settingItems) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+	/** @SetUserAppData_Summary */
+	i32 SetUserAppData(
+		/** @SetUserAppData_userId_desc */
+		1: string userId, 
+		
+		/** @SetUserAppData_category_desc */
+		2: string category, 
+		
+		/** @SetUserAppData_settingItems_desc */
+		3: map<string, CommonTypeSDKDataTypes.SettingValue> settingItems
+	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
-	CommonTypeSDKDataTypes.AppData GetUserAppData(1: string userId, 2: string category, 3: list<string> settingKeys) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+	/** @GetUserAppData_Summary */
+	CommonTypeSDKDataTypes.AppData GetUserAppData(
+		/** @GetUserAppData_userId_desc */
+		1: string userId, 
+		
+		/** @GetUserAppData_category_desc */
+		2: string category, 
+		
+		/** @GetUserAppData_settingKeys_desc */
+		3: list<string> settingKeys
+	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
-	i32 RemoveUserAppData(1: string userId, 2: string category, 3: list<string> settingKeys) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+	/** @RemoveUserAppData_Summary */
+	i32 RemoveUserAppData(
+		/** @RemoveUserAppData_userId_desc */
+		1: string userId, 
+		
+		/** @RemoveUserAppData_category_desc */
+		2: string category, 
+		
+		/** @RemoveUserAppData_settingKeys_desc */
+		3: list<string> settingKeys
+	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 
 	/** Notify layer0 that a setting item has specific event */
 	bool SettingItemNotify(

@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @CondType_desc
+  /// </summary>
   public enum CondType
   {
     ExePresent = 0,

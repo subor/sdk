@@ -25,13 +25,16 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @AppData_desc
+  /// </summary>
   public partial class AppData : TBase
   {
     private string _appId;
     private List<AppDataCollection> _data;
 
     /// <summary>
-    /// The App ID
+    /// @AppData_appId_desc
     /// </summary>
     public string AppId
     {
@@ -47,7 +50,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
-    /// The user data of the App. See AppDataCollection
+    /// @AppData_data_desc
     /// </summary>
     public List<AppDataCollection> Data
     {
@@ -106,13 +109,13 @@ namespace Ruyi.SDK.CommonType
               {
                 {
                   Data = new List<AppDataCollection>();
-                  TList _list37 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i38 = 0; _i38 < _list37.Count; ++_i38)
+                  TList _list45 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i46 = 0; _i46 < _list45.Count; ++_i46)
                   {
-                    AppDataCollection _elem39;
-                    _elem39 = new AppDataCollection();
-                    await _elem39.ReadAsync(iprot, cancellationToken);
-                    Data.Add(_elem39);
+                    AppDataCollection _elem47;
+                    _elem47 = new AppDataCollection();
+                    await _elem47.ReadAsync(iprot, cancellationToken);
+                    Data.Add(_elem47);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -163,9 +166,9 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.Struct, Data.Count), cancellationToken);
-            foreach (AppDataCollection _iter40 in Data)
+            foreach (AppDataCollection _iter48 in Data)
             {
-              await _iter40.WriteAsync(oprot, cancellationToken);
+              await _iter48.WriteAsync(oprot, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }

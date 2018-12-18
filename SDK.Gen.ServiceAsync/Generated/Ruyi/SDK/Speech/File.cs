@@ -25,10 +25,16 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.Speech
 {
 
+  /// <summary>
+  /// @File_desc
+  /// </summary>
   public partial class File : TBase
   {
     private string _filename;
 
+    /// <summary>
+    /// @File_filename_desc
+    /// </summary>
     public string Filename
     {
       get

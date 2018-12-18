@@ -27,10 +27,10 @@ namespace Ruyi.SDK.InputManager
       /// Activate the vibration of gamepad
       /// </summary>
       /// <param name="deviceId">The deviceid of the gamepad</param>
-      /// <param name="motor1Value"></param>
-      /// <param name="motor1Time"></param>
-      /// <param name="motor2Value"></param>
-      /// <param name="motor2Time"></param>
+      /// <param name="motor1Value">@SetGamepadVibration_motor1Value_desc</param>
+      /// <param name="motor1Time">@SetGamepadVibration_motor1Time_desc</param>
+      /// <param name="motor2Value">@SetGamepadVibration_motor2Value_desc</param>
+      /// <param name="motor2Time">@SetGamepadVibration_motor2Time_desc</param>
       bool SetGamepadVibration(string deviceId, sbyte motor1Value, sbyte motor1Time, sbyte motor2Value, sbyte motor2Time);
       /// <summary>
       /// SetGamepadLight_desc
@@ -72,10 +72,10 @@ namespace Ruyi.SDK.InputManager
       /// Activate the vibration of gamepad
       /// </summary>
       /// <param name="deviceId">The deviceid of the gamepad</param>
-      /// <param name="motor1Value"></param>
-      /// <param name="motor1Time"></param>
-      /// <param name="motor2Value"></param>
-      /// <param name="motor2Time"></param>
+      /// <param name="motor1Value">@SetGamepadVibration_motor1Value_desc</param>
+      /// <param name="motor1Time">@SetGamepadVibration_motor1Time_desc</param>
+      /// <param name="motor2Value">@SetGamepadVibration_motor2Value_desc</param>
+      /// <param name="motor2Time">@SetGamepadVibration_motor2Time_desc</param>
       #if SILVERLIGHT
       IAsyncResult Begin_SetGamepadVibration(AsyncCallback callback, object state, string deviceId, sbyte motor1Value, sbyte motor1Time, sbyte motor2Value, sbyte motor2Time);
       bool End_SetGamepadVibration(IAsyncResult asyncResult);
@@ -253,10 +253,10 @@ namespace Ruyi.SDK.InputManager
       /// Activate the vibration of gamepad
       /// </summary>
       /// <param name="deviceId">The deviceid of the gamepad</param>
-      /// <param name="motor1Value"></param>
-      /// <param name="motor1Time"></param>
-      /// <param name="motor2Value"></param>
-      /// <param name="motor2Time"></param>
+      /// <param name="motor1Value">@SetGamepadVibration_motor1Value_desc</param>
+      /// <param name="motor1Time">@SetGamepadVibration_motor1Time_desc</param>
+      /// <param name="motor2Value">@SetGamepadVibration_motor2Value_desc</param>
+      /// <param name="motor2Time">@SetGamepadVibration_motor2Time_desc</param>
       public bool SetGamepadVibration(string deviceId, sbyte motor1Value, sbyte motor1Time, sbyte motor2Value, sbyte motor2Time)
       {
         #if !SILVERLIGHT
@@ -846,6 +846,9 @@ namespace Ruyi.SDK.InputManager
         }
       }
 
+      /// <summary>
+      /// @SetGamepadVibration_motor1Value_desc
+      /// </summary>
       public sbyte Motor1Value
       {
         get
@@ -859,6 +862,9 @@ namespace Ruyi.SDK.InputManager
         }
       }
 
+      /// <summary>
+      /// @SetGamepadVibration_motor1Time_desc
+      /// </summary>
       public sbyte Motor1Time
       {
         get
@@ -872,6 +878,9 @@ namespace Ruyi.SDK.InputManager
         }
       }
 
+      /// <summary>
+      /// @SetGamepadVibration_motor2Value_desc
+      /// </summary>
       public sbyte Motor2Value
       {
         get
@@ -885,6 +894,9 @@ namespace Ruyi.SDK.InputManager
         }
       }
 
+      /// <summary>
+      /// @SetGamepadVibration_motor2Time_desc
+      /// </summary>
       public sbyte Motor2Time
       {
         get

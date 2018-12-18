@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.Overlay
 {
 
+  /// <summary>
+  /// @NotifyTakeScreenShot_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif

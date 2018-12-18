@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @If_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -25,6 +28,9 @@ namespace Ruyi.SDK.CommonType
   {
     private string _cond;
 
+    /// <summary>
+    /// @If_cond_desc
+    /// </summary>
     public string Cond
     {
       get

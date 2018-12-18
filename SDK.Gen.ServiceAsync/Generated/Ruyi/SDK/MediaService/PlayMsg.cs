@@ -25,10 +25,16 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.MediaService
 {
 
+  /// <summary>
+  /// @PlayMsg_desc
+  /// </summary>
   public partial class PlayMsg : TBase
   {
     private string _url;
 
+    /// <summary>
+    /// @PlayMsg_url_desc
+    /// </summary>
     public string Url
     {
       get

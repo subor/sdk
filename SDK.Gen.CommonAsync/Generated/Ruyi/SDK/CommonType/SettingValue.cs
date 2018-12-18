@@ -25,11 +25,17 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @SettingValue_desc
+  /// </summary>
   public partial class SettingValue : TBase
   {
     private string _dataType;
     private string _dataValue;
 
+    /// <summary>
+    /// @SettingValue_dataType_desc
+    /// </summary>
     public string DataType
     {
       get
@@ -43,6 +49,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingValue_dataValue_desc
+    /// </summary>
     public string DataValue
     {
       get

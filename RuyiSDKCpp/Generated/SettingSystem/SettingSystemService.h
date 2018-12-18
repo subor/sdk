@@ -59,8 +59,10 @@ class SettingSystemServiceIf {
    * @param nodeType Specifies whether the child nodes containing setting item or setting category, or both
    * 
    * @param param The parameter passed to the function which will be called while getting the item value
+   * 
+   * @param tags Tags used to filter the setting items. Only items with specified tags will be added in the result
    */
-  virtual void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param) = 0;
+  virtual void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param, const std::vector<std::string> & tags) = 0;
 
   /**
    * Set the specified setting's "dataValue" with the new value
@@ -86,6 +88,16 @@ class SettingSystemServiceIf {
    * @param category The category of which to restored. Null indicates all settings.
    */
   virtual bool RestoreDefault(const std::string& moduleName, const std::string& category) = 0;
+
+  /**
+   * @RestoreUserDefault_Summary
+   * 
+   * @param userId @RestoreUserDefault_userId_desc
+   * 
+   * @param moduleName @RestoreUserDefault_moduleName_desc
+   * 
+   * @param category @RestoreUserDefault_category_desc
+   */
   virtual bool RestoreUserDefault(const std::string& userId, const std::string& moduleName, const std::string& category) = 0;
 
   /**
@@ -94,8 +106,38 @@ class SettingSystemServiceIf {
    * @param moduleName Module of the setting
    */
   virtual bool UpdateModuleVersion(const std::string& moduleName) = 0;
+
+  /**
+   * @SetUserAppData_Summary
+   * 
+   * @param userId @SetUserAppData_userId_desc
+   * 
+   * @param category @SetUserAppData_category_desc
+   * 
+   * @param settingItems @SetUserAppData_settingItems_desc
+   */
   virtual int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems) = 0;
+
+  /**
+   * @GetUserAppData_Summary
+   * 
+   * @param userId @GetUserAppData_userId_desc
+   * 
+   * @param category @GetUserAppData_category_desc
+   * 
+   * @param settingKeys @GetUserAppData_settingKeys_desc
+   */
   virtual void GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) = 0;
+
+  /**
+   * @RemoveUserAppData_Summary
+   * 
+   * @param userId @RemoveUserAppData_userId_desc
+   * 
+   * @param category @RemoveUserAppData_category_desc
+   * 
+   * @param settingKeys @RemoveUserAppData_settingKeys_desc
+   */
   virtual int32_t RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) = 0;
 
   /**
@@ -164,7 +206,7 @@ class SettingSystemServiceNull : virtual public SettingSystemServiceIf {
   void GetCategoryNode( ::Ruyi::SDK::SettingSystem::Api::SettingTree& /* _return */) {
     return;
   }
-  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& /* _return */, const std::string& /* parent */, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type /* nodeType */, const std::string& /* param */) {
+  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& /* _return */, const std::string& /* parent */, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type /* nodeType */, const std::string& /* param */, const std::vector<std::string> & /* tags */) {
     return;
   }
   bool SetSettingItem(const std::string& /* key */, const std::string& /* val */) {
@@ -710,10 +752,11 @@ class SettingSystemService_GetCategoryNode_presult {
 };
 
 typedef struct _SettingSystemService_GetChildNode_args__isset {
-  _SettingSystemService_GetChildNode_args__isset() : parent(false), nodeType(false), param(false) {}
+  _SettingSystemService_GetChildNode_args__isset() : parent(false), nodeType(false), param(false), tags(false) {}
   bool parent :1;
   bool nodeType :1;
   bool param :1;
+  bool tags :1;
 } _SettingSystemService_GetChildNode_args__isset;
 
 class SettingSystemService_GetChildNode_args {
@@ -728,6 +771,7 @@ class SettingSystemService_GetChildNode_args {
   std::string parent;
    ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType;
   std::string param;
+  std::vector<std::string>  tags;
 
   _SettingSystemService_GetChildNode_args__isset __isset;
 
@@ -737,6 +781,8 @@ class SettingSystemService_GetChildNode_args {
 
   void __set_param(const std::string& val);
 
+  void __set_tags(const std::vector<std::string> & val);
+
   bool operator == (const SettingSystemService_GetChildNode_args & rhs) const
   {
     if (!(parent == rhs.parent))
@@ -744,6 +790,8 @@ class SettingSystemService_GetChildNode_args {
     if (!(nodeType == rhs.nodeType))
       return false;
     if (!(param == rhs.param))
+      return false;
+    if (!(tags == rhs.tags))
       return false;
     return true;
   }
@@ -767,6 +815,7 @@ class SettingSystemService_GetChildNode_pargs {
   const std::string* parent;
   const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type* nodeType;
   const std::string* param;
+  const std::vector<std::string> * tags;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -3838,8 +3887,8 @@ class SettingSystemServiceClient : virtual public SettingSystemServiceIf {
   void GetCategoryNode( ::Ruyi::SDK::SettingSystem::Api::SettingTree& _return);
   void send_GetCategoryNode();
   void recv_GetCategoryNode( ::Ruyi::SDK::SettingSystem::Api::SettingTree& _return);
-  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param);
-  void send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param);
+  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param, const std::vector<std::string> & tags);
+  void send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param, const std::vector<std::string> & tags);
   void recv_GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return);
   bool SetSettingItem(const std::string& key, const std::string& val);
   void send_SetSettingItem(const std::string& key, const std::string& val);
@@ -4067,13 +4116,13 @@ class SettingSystemServiceMultiface : virtual public SettingSystemServiceIf {
     return;
   }
 
-  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param) {
+  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param, const std::vector<std::string> & tags) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->GetChildNode(_return, parent, nodeType, param);
+      ifaces_[i]->GetChildNode(_return, parent, nodeType, param, tags);
     }
-    ifaces_[i]->GetChildNode(_return, parent, nodeType, param);
+    ifaces_[i]->GetChildNode(_return, parent, nodeType, param, tags);
     return;
   }
 
@@ -4360,8 +4409,8 @@ class SettingSystemServiceConcurrentClient : virtual public SettingSystemService
   void GetCategoryNode( ::Ruyi::SDK::SettingSystem::Api::SettingTree& _return);
   int32_t send_GetCategoryNode();
   void recv_GetCategoryNode( ::Ruyi::SDK::SettingSystem::Api::SettingTree& _return, const int32_t seqid);
-  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param);
-  int32_t send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param);
+  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param, const std::vector<std::string> & tags);
+  int32_t send_GetChildNode(const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param, const std::vector<std::string> & tags);
   void recv_GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const int32_t seqid);
   bool SetSettingItem(const std::string& key, const std::string& val);
   int32_t send_SetSettingItem(const std::string& key, const std::string& val);

@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @AppDataRecord_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -27,7 +30,7 @@ namespace Ruyi.SDK.CommonType
     private SettingValue _content;
 
     /// <summary>
-    /// The record ID
+    /// @AppDataRecord_id_desc
     /// </summary>
     public string Id
     {
@@ -43,7 +46,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
-    /// The record value
+    /// @AppDataRecord_content_desc
     /// </summary>
     public SettingValue Content
     {

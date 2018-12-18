@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.PublisherSubscriber
 {
 
+  /// <summary>
+  /// @PubHeader_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -25,6 +28,9 @@ namespace Ruyi.SDK.PublisherSubscriber
   {
     private string _PayloadType;
 
+    /// <summary>
+    /// @PubHeader_PayloadType_desc
+    /// </summary>
     public string PayloadType
     {
       get

@@ -9,6 +9,7 @@ namespace rs Ruyi.SDK.SettingSystem.Api
 typedef string JSON
 typedef i32 _int
 
+/** @NodeType_desc */
 enum NodeType {
     Category = 1,
     SettingItem = 2,
@@ -16,102 +17,176 @@ enum NodeType {
 }
 
 
+/** @RuyiNetworkSettingNameValue_desc */
 struct RuyiNetworkSettingNameValue {
-    1: string name,
-    2: string value,
+    /** @RuyiNetworkSettingNameValue_name_desc */
+	1: string name,
+    /** @RuyiNetworkSettingNameValue_value_desc */
+	2: string value,
 }
 
+/** @RuyiNetworkTestItem_desc */
 struct RuyiNetworkTestItem {
-    1: RuyiNetworkSettingNameValue item,
-    2: bool result,
+    /** @RuyiNetworkTestItem_item_desc */
+	1: RuyiNetworkSettingNameValue item,
+    /** @RuyiNetworkTestItem_result_desc */
+	2: bool result,
 }
 
+/** @RuyiNetworkSettings_desc */
 struct RuyiNetworkSettings {
-    1: RuyiNetworkSettingNameValue connection,
-    2: RuyiNetworkSettingNameValue networkType,
-    3: RuyiNetworkSettingNameValue quality,
-    4: RuyiNetworkSettingNameValue SSID,
-    5: RuyiNetworkSettingNameValue BSSID,
-    6: RuyiNetworkSettingNameValue Authentication,
-    7: RuyiNetworkSettingNameValue DHCPEnabled,
-    8: RuyiNetworkSettingNameValue IpAddress,
-    9: RuyiNetworkSettingNameValue SubMask,
-    10: RuyiNetworkSettingNameValue Gateway,
-    11: RuyiNetworkSettingNameValue MainDNS,
-    12: RuyiNetworkSettingNameValue SubDNS,
-    13: RuyiNetworkSettingNameValue MacAddress,
-    14: RuyiNetworkSettingNameValue Proxy,
+    /** @RuyiNetworkSettings_connection_desc */
+	1: RuyiNetworkSettingNameValue connection,
+    /** @RuyiNetworkSettings_networkType_desc */
+	2: RuyiNetworkSettingNameValue networkType,
+    /** @RuyiNetworkSettings_quality_desc */
+	3: RuyiNetworkSettingNameValue quality,
+    /** @RuyiNetworkSettings_SSID_desc */
+	4: RuyiNetworkSettingNameValue SSID,
+    /** @RuyiNetworkSettings_BSSID_desc */
+	5: RuyiNetworkSettingNameValue BSSID,
+    /** @RuyiNetworkSettings_Authentication_desc */
+	6: RuyiNetworkSettingNameValue Authentication,
+    /** @RuyiNetworkSettings_DHCPEnabled_desc */
+	7: RuyiNetworkSettingNameValue DHCPEnabled,
+    /** @RuyiNetworkSettings_IpAddress_desc */
+	8: RuyiNetworkSettingNameValue IpAddress,
+    /** @RuyiNetworkSettings_SubMask_desc */
+	9: RuyiNetworkSettingNameValue SubMask,
+    /** @RuyiNetworkSettings_Gateway_desc */
+	10: RuyiNetworkSettingNameValue Gateway,
+    /** @RuyiNetworkSettings_MainDNS_desc */
+	11: RuyiNetworkSettingNameValue MainDNS,
+    /** @RuyiNetworkSettings_SubDNS_desc */
+	12: RuyiNetworkSettingNameValue SubDNS,
+    /** @RuyiNetworkSettings_MacAddress_desc */
+	13: RuyiNetworkSettingNameValue MacAddress,
+    /** @RuyiNetworkSettings_Proxy_desc */
+	14: RuyiNetworkSettingNameValue Proxy,
 }
 
+/** @RuyiNetworkStatus_desc */
 struct RuyiNetworkStatus {
-    1: bool isWifi,
-    2: string Name,
-    3: bool AdapterStatus,
-    4: bool InternetStatus,
+    /** @RuyiNetworkStatus_isWifi_desc */
+	1: bool isWifi,
+    /** @RuyiNetworkStatus_Name_desc */
+	2: string Name,
+    /** @RuyiNetworkStatus_AdapterStatus_desc */
+	3: bool AdapterStatus,
+    /** @RuyiNetworkStatus_InternetStatus_desc */
+	4: bool InternetStatus,
 }
 
+/** @RuyiNetworkTestResult_desc */
 struct RuyiNetworkTestResult {
-    1: RuyiNetworkTestItem localconnection,
-    2: RuyiNetworkTestItem ipaddress,
-    3: RuyiNetworkTestItem internetconnection,
+    /** @RuyiNetworkTestResult_localconnection_desc */
+	1: RuyiNetworkTestItem localconnection,
+    /** @RuyiNetworkTestResult_ipaddress_desc */
+	2: RuyiNetworkTestItem ipaddress,
+    /** @RuyiNetworkTestResult_internetconnection_desc */
+	3: RuyiNetworkTestItem internetconnection,
 }
 
+/** @NetworkConnectionStatus_desc */
 struct NetworkConnectionStatus {
-    1: bool preLanAdapter,
-    2: bool curLanAdapter,
-    3: bool preWlanAdapter,
-    4: bool curWlanAdapter,
-    5: bool preInternetConnection,
-    6: bool curInternetConnection,
+    /** @NetworkConnectionStatus_preLanAdapter_desc */
+	1: bool preLanAdapter,
+    /** @NetworkConnectionStatus_curLanAdapter_desc */
+	2: bool curLanAdapter,
+    /** @NetworkConnectionStatus_preWlanAdapter_desc */
+	3: bool preWlanAdapter,
+    /** @NetworkConnectionStatus_curWlanAdapter_desc */
+	4: bool curWlanAdapter,
+    /** @NetworkConnectionStatus_preInternetConnection_desc */
+	5: bool preInternetConnection,
+    /** @NetworkConnectionStatus_curInternetConnection_desc */
+	6: bool curInternetConnection,
 }
 
+/** @NetworkSettings_desc */
 struct NetworkSettings {
-    1: bool isWifi,
-    2: bool proxyUsed,
-    3: bool DHCPEnabled,
-    4: string NetworkName,
-    5: string AuthType,
-    6: string IPAddress,
-    7: string SubMask,
-    8: string GateWay,
-    9: string mainDNS,
-    10: string subDNS,
-    11: string proxyServer,
-    12: string proxyPort,
+    /** @NetworkSettings_isWifi_desc */
+	1: bool isWifi,
+    /** @NetworkSettings_proxyUsed_desc */
+	2: bool proxyUsed,
+    /** @NetworkSettings_DHCPEnabled_desc */
+	3: bool DHCPEnabled,
+    /** @NetworkSettings_NetworkName_desc */
+	4: string NetworkName,
+    /** @NetworkSettings_AuthType_desc */
+	5: string AuthType,
+    /** @NetworkSettings_IPAddress_desc */
+	6: string IPAddress,
+    /** @NetworkSettings_SubMask_desc */
+	7: string SubMask,
+    /** @NetworkSettings_GateWay_desc */
+	8: string GateWay,
+    /** @NetworkSettings_mainDNS_desc */
+	9: string mainDNS,
+    /** @NetworkSettings_subDNS_desc */
+	10: string subDNS,
+    /** @NetworkSettings_proxyServer_desc */
+	11: string proxyServer,
+    /** @NetworkSettings_proxyPort_desc */
+	12: string proxyPort,
 }
 
+/** @CategoryNode_desc */
 struct CategoryNode {
-    1: string id,
-    2: string categoryId,
-    3: i32 sortingPriority,
-    4: list<CategoryNode> children,
+    /** @CategoryNode_id_desc */
+	1: string id,
+    /** @CategoryNode_categoryId_desc */
+	2: string categoryId,
+    /** @CategoryNode_sortingPriority_desc */
+	3: i32 sortingPriority,
+    /** @CategoryNode_children_desc */
+	4: list<CategoryNode> children,
 }
 
+/** @SettingSearchResult_desc */
 struct SettingSearchResult {
-    1: string Version,
-    2: list<CommonTypeSDKDataTypes.SettingItem> SettingItems,
+    /** @SettingSearchResult_Version_desc */
+	1: string Version,
+    /** @SettingSearchResult_SettingItems_desc */
+	2: list<CommonTypeSDKDataTypes.SettingItem> SettingItems,
 }
 
+/** @SettingTree_desc */
 struct SettingTree {
-    1: CategoryNode CateNode,
-    2: map<string, CommonTypeSDKDataTypes.SettingCategory> SettingCategories,
-    3: map<string, CommonTypeSDKDataTypes.SettingItem> SettingItems,
+    /** @SettingTree_CateNode_desc */
+	1: CategoryNode CateNode,
+    /** @SettingTree_SettingCategories_desc */
+	2: map<string, CommonTypeSDKDataTypes.SettingCategory> SettingCategories,
+    /** @SettingTree_SettingItems_desc */
+	3: map<string, CommonTypeSDKDataTypes.SettingItem> SettingItems,
 }
 
+/** @NodeList_desc */
 struct NodeList {
-    1: list<CommonTypeSDKDataTypes.SettingCategory> SettingCategories,
-    2: list<CommonTypeSDKDataTypes.SettingItem> SettingItems,
+    /** @NodeList_SettingCategories_desc */
+	1: list<CommonTypeSDKDataTypes.SettingCategory> SettingCategories,
+    /** @NodeList_SettingItems_desc */
+	2: list<CommonTypeSDKDataTypes.SettingItem> SettingItems,
 }
 
+/** @WifiEntity_desc */
 struct WifiEntity {
-    1: string Name,
-    2: string MacAddress,
-    3: _int Channel,
-    4: _int CenterFrequancy,
-    5: _int Rssi,
-    6: bool Connected,
-    7: bool SecurityEnabled,
-    8: bool HasProfile,
+    /** @WifiEntity_Name_desc */
+	1: string Name,
+    /** @WifiEntity_MacAddress_desc */
+	2: string MacAddress,
+    /** @WifiEntity_Channel_desc */
+	3: _int Channel,
+    /** @WifiEntity_CenterFrequancy_desc */
+	4: _int CenterFrequancy,
+    /** @WifiEntity_Rssi_desc */
+	5: _int Rssi,
+    /** @WifiEntity_Connected_desc */
+	6: bool Connected,
+    /** @WifiEntity_SecurityEnabled_desc */
+	7: bool SecurityEnabled,
+    /** @WifiEntity_HasProfile_desc */
+	8: bool HasProfile,
 }
 
 

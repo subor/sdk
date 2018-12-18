@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @OverlayCursor_desc
+  /// </summary>
   public enum OverlayCursor
   {
     Auto = 0,

@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @SettingItem_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -44,7 +47,11 @@ namespace Ruyi.SDK.CommonType
     private string _ActionObject;
     private string _ActionOnSetValue;
     private string _ActionOnGetValue;
+    private List<string> _Tags;
 
+    /// <summary>
+    /// @SettingItem_id_desc
+    /// </summary>
     public string Id
     {
       get
@@ -58,6 +65,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_display_desc
+    /// </summary>
     public string Display
     {
       get
@@ -71,6 +81,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_dataType_desc
+    /// </summary>
     public string DataType
     {
       get
@@ -84,6 +97,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_dataValue_desc
+    /// </summary>
     public string DataValue
     {
       get
@@ -97,6 +113,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_dataList_desc
+    /// </summary>
     public dataListItem DataList
     {
       get
@@ -111,6 +130,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
+    /// @SettingItem_platform_desc
     /// 
     /// <seealso cref="ePlatform"/>
     /// </summary>
@@ -127,6 +147,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_summary_desc
+    /// </summary>
     public string Summary
     {
       get
@@ -140,6 +163,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_description_desc
+    /// </summary>
     public string Description
     {
       get
@@ -154,6 +180,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
+    /// @SettingItem_UIType_desc
     /// 
     /// <seealso cref="eUIType"/>
     /// </summary>
@@ -170,6 +197,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_devModeOnly_desc
+    /// </summary>
     public bool DevModeOnly
     {
       get
@@ -183,6 +213,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_internalOnly_desc
+    /// </summary>
     public bool InternalOnly
     {
       get
@@ -196,6 +229,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_readOnly_desc
+    /// </summary>
     public bool ReadOnly
     {
       get
@@ -209,6 +245,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_isValid_desc
+    /// </summary>
     public bool IsValid
     {
       get
@@ -222,6 +261,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_isActive_desc
+    /// </summary>
     public bool IsActive
     {
       get
@@ -235,6 +277,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_hasNew_desc
+    /// </summary>
     public bool HasNew
     {
       get
@@ -248,6 +293,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_validation_desc
+    /// </summary>
     public string Validation
     {
       get
@@ -261,6 +309,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_activeDependencies_desc
+    /// </summary>
     public List<activeDependency> ActiveDependencies
     {
       get
@@ -274,6 +325,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_ActionName_desc
+    /// </summary>
     public string ActionName
     {
       get
@@ -287,6 +341,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_ActionObject_desc
+    /// </summary>
     public string ActionObject
     {
       get
@@ -300,6 +357,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_ActionOnSetValue_desc
+    /// </summary>
     public string ActionOnSetValue
     {
       get
@@ -313,6 +373,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @SettingItem_ActionOnGetValue_desc
+    /// </summary>
     public string ActionOnGetValue
     {
       get
@@ -323,6 +386,22 @@ namespace Ruyi.SDK.CommonType
       {
         __isset.ActionOnGetValue = true;
         this._ActionOnGetValue = value;
+      }
+    }
+
+    /// <summary>
+    /// @SettingItem_Tags_desc
+    /// </summary>
+    public List<string> Tags
+    {
+      get
+      {
+        return _Tags;
+      }
+      set
+      {
+        __isset.Tags = true;
+        this._Tags = value;
       }
     }
 
@@ -353,6 +432,7 @@ namespace Ruyi.SDK.CommonType
       public bool ActionObject;
       public bool ActionOnSetValue;
       public bool ActionOnGetValue;
+      public bool Tags;
     }
 
     public SettingItem() {
@@ -532,6 +612,23 @@ namespace Ruyi.SDK.CommonType
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
+            case 22:
+              if (field.Type == TType.List) {
+                {
+                  Tags = new List<string>();
+                  TList _list19 = iprot.ReadListBegin();
+                  for( int _i20 = 0; _i20 < _list19.Count; ++_i20)
+                  {
+                    string _elem21;
+                    _elem21 = iprot.ReadString();
+                    Tags.Add(_elem21);
+                  }
+                  iprot.ReadListEnd();
+                }
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
             default: 
               TProtocolUtil.Skip(iprot, field.Type);
               break;
@@ -688,9 +785,9 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, ActiveDependencies.Count));
-            foreach (activeDependency _iter19 in ActiveDependencies)
+            foreach (activeDependency _iter22 in ActiveDependencies)
             {
-              _iter19.Write(oprot);
+              _iter22.Write(oprot);
             }
             oprot.WriteListEnd();
           }
@@ -726,6 +823,21 @@ namespace Ruyi.SDK.CommonType
           field.ID = 21;
           oprot.WriteFieldBegin(field);
           oprot.WriteString(ActionOnGetValue);
+          oprot.WriteFieldEnd();
+        }
+        if (Tags != null && __isset.Tags) {
+          field.Name = "Tags";
+          field.Type = TType.List;
+          field.ID = 22;
+          oprot.WriteFieldBegin(field);
+          {
+            oprot.WriteListBegin(new TList(TType.String, Tags.Count));
+            foreach (string _iter23 in Tags)
+            {
+              oprot.WriteString(_iter23);
+            }
+            oprot.WriteListEnd();
+          }
           oprot.WriteFieldEnd();
         }
         oprot.WriteFieldStop();
@@ -865,6 +977,12 @@ namespace Ruyi.SDK.CommonType
         __first = false;
         __sb.Append("ActionOnGetValue: ");
         __sb.Append(ActionOnGetValue);
+      }
+      if (Tags != null && __isset.Tags) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Tags: ");
+        __sb.Append(Tags);
       }
       __sb.Append(")");
       return __sb.ToString();

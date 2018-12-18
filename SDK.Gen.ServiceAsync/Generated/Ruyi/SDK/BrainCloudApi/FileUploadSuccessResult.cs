@@ -25,11 +25,17 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.BrainCloudApi
 {
 
+  /// <summary>
+  /// @FileUploadSuccessResult_desc
+  /// </summary>
   public partial class FileUploadSuccessResult : TBase
   {
     private string _fileUploadId;
     private string _jsonResponse;
 
+    /// <summary>
+    /// @FileUploadSuccessResult_fileUploadId_desc
+    /// </summary>
     public string FileUploadId
     {
       get
@@ -43,6 +49,9 @@ namespace Ruyi.SDK.BrainCloudApi
       }
     }
 
+    /// <summary>
+    /// @FileUploadSuccessResult_jsonResponse_desc
+    /// </summary>
     public string JsonResponse
     {
       get

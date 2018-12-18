@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @InputModifier_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -26,6 +29,9 @@ namespace Ruyi.SDK.CommonType
     private range _DeadZone;
     private double _Scale;
 
+    /// <summary>
+    /// @InputModifier_DeadZone_desc
+    /// </summary>
     public range DeadZone
     {
       get
@@ -39,6 +45,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @InputModifier_Scale_desc
+    /// </summary>
     public double Scale
     {
       get

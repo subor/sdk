@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @dataListItem_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -27,6 +30,9 @@ namespace Ruyi.SDK.CommonType
     private List<string> _values;
     private notification _removeNotification;
 
+    /// <summary>
+    /// @dataListItem_elementType_desc
+    /// </summary>
     public string ElementType
     {
       get
@@ -40,6 +46,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @dataListItem_values_desc
+    /// </summary>
     public List<string> Values
     {
       get
@@ -53,6 +62,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @dataListItem_removeNotification_desc
+    /// </summary>
     public notification RemoveNotification
     {
       get

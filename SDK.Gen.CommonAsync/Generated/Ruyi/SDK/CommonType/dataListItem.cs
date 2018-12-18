@@ -25,12 +25,18 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @dataListItem_desc
+  /// </summary>
   public partial class dataListItem : TBase
   {
     private string _elementType;
     private List<string> _values;
     private notification _removeNotification;
 
+    /// <summary>
+    /// @dataListItem_elementType_desc
+    /// </summary>
     public string ElementType
     {
       get
@@ -44,6 +50,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @dataListItem_values_desc
+    /// </summary>
     public List<string> Values
     {
       get
@@ -57,6 +66,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @dataListItem_removeNotification_desc
+    /// </summary>
     public notification RemoveNotification
     {
       get

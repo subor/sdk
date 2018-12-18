@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.SettingSystem.Api
 {
 
+  /// <summary>
+  /// @WifiEntity_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -32,6 +35,9 @@ namespace Ruyi.SDK.SettingSystem.Api
     private bool _SecurityEnabled;
     private bool _HasProfile;
 
+    /// <summary>
+    /// @WifiEntity_Name_desc
+    /// </summary>
     public string Name
     {
       get
@@ -45,6 +51,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @WifiEntity_MacAddress_desc
+    /// </summary>
     public string MacAddress
     {
       get
@@ -58,6 +67,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @WifiEntity_Channel_desc
+    /// </summary>
     public int Channel
     {
       get
@@ -71,6 +83,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @WifiEntity_CenterFrequancy_desc
+    /// </summary>
     public int CenterFrequancy
     {
       get
@@ -84,6 +99,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @WifiEntity_Rssi_desc
+    /// </summary>
     public int Rssi
     {
       get
@@ -97,6 +115,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @WifiEntity_Connected_desc
+    /// </summary>
     public bool Connected
     {
       get
@@ -110,6 +131,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @WifiEntity_SecurityEnabled_desc
+    /// </summary>
     public bool SecurityEnabled
     {
       get
@@ -123,6 +147,9 @@ namespace Ruyi.SDK.SettingSystem.Api
       }
     }
 
+    /// <summary>
+    /// @WifiEntity_HasProfile_desc
+    /// </summary>
     public bool HasProfile
     {
       get

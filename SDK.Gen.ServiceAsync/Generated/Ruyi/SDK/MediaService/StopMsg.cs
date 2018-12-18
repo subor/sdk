@@ -25,11 +25,15 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.MediaService
 {
 
+  /// <summary>
+  /// @StopMsg_desc
+  /// </summary>
   public partial class StopMsg : TBase
   {
     private MediaTask _name;
 
     /// <summary>
+    /// @StopMsg_name_desc
     /// 
     /// <seealso cref="MediaTask"/>
     /// </summary>

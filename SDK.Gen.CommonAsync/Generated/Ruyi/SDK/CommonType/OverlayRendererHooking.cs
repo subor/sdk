@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @OverlayRendererHooking_desc
+  /// </summary>
   public enum OverlayRendererHooking
   {
     Normal = 0,

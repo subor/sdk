@@ -25,12 +25,18 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.UserServiceExternal
 {
 
+  /// <summary>
+  /// @UserEvent_summary
+  /// </summary>
   public partial class UserEvent : TBase
   {
     private string _userId;
     private string _action;
     private string _jsonData;
 
+    /// <summary>
+    /// @UserEvent_userId_desc
+    /// </summary>
     public string UserId
     {
       get
@@ -44,6 +50,9 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
+    /// <summary>
+    /// @UserEvent_action_desc
+    /// </summary>
     public string Action
     {
       get
@@ -57,6 +66,9 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
+    /// <summary>
+    /// @UserEvent_parameters_desc
+    /// </summary>
     public string JsonData
     {
       get

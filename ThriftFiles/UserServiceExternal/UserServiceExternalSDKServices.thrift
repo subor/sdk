@@ -9,6 +9,10 @@ namespace rs Ruyi.SDK.UserServiceExternal
 
 
 service UserServExternal {
-	UserServiceExternalSDKDataTypes.UserInfo_Public GetPlayingUserInfo(1: string userId) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
+	/** @GetPlayingUserInfo_Summary */
+	UserServiceExternalSDKDataTypes.UserInfo_Public GetPlayingUserInfo(
+		/** @GetPlayingUserInfo_userId_desc */
+		1: string userId
+	) throws (1: CommonTypeSDKDataTypes.ErrorException error1),
 }
 

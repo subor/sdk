@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @ePlatform_desc
+  /// </summary>
   public enum ePlatform
   {
     None = 0,

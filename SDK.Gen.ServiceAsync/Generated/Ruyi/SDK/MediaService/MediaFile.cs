@@ -25,10 +25,16 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.MediaService
 {
 
+  /// <summary>
+  /// @MediaFile_desc
+  /// </summary>
   public partial class MediaFile : TBase
   {
     private string _name;
 
+    /// <summary>
+    /// @MediaFile_name_desc
+    /// </summary>
     public string Name
     {
       get

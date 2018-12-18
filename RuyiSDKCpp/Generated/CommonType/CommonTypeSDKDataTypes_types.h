@@ -603,7 +603,7 @@ void swap(SettingValue &a, SettingValue &b);
 std::ostream& operator<<(std::ostream& out, const SettingValue& obj);
 
 typedef struct _SettingItem__isset {
-  _SettingItem__isset() : id(false), display(false), dataType(false), dataValue(false), dataList(false), platform(false), summary(false), description(false), UIType(false), devModeOnly(false), internalOnly(false), readOnly(false), isValid(false), isActive(false), hasNew(false), validation(false), activeDependencies(false), ActionName(false), ActionObject(false), ActionOnSetValue(false), ActionOnGetValue(false) {}
+  _SettingItem__isset() : id(false), display(false), dataType(false), dataValue(false), dataList(false), platform(false), summary(false), description(false), UIType(false), devModeOnly(false), internalOnly(false), readOnly(false), isValid(false), isActive(false), hasNew(false), validation(false), activeDependencies(false), ActionName(false), ActionObject(false), ActionOnSetValue(false), ActionOnGetValue(false), Tags(false) {}
   bool id :1;
   bool display :1;
   bool dataType :1;
@@ -625,6 +625,7 @@ typedef struct _SettingItem__isset {
   bool ActionObject :1;
   bool ActionOnSetValue :1;
   bool ActionOnGetValue :1;
+  bool Tags :1;
 } _SettingItem__isset;
 
 class SettingItem : public virtual ::apache::thrift::TBase {
@@ -657,6 +658,7 @@ class SettingItem : public virtual ::apache::thrift::TBase {
   std::string ActionObject;
   std::string ActionOnSetValue;
   std::string ActionOnGetValue;
+  std::vector<std::string>  Tags;
 
   _SettingItem__isset __isset;
 
@@ -701,6 +703,8 @@ class SettingItem : public virtual ::apache::thrift::TBase {
   void __set_ActionOnSetValue(const std::string& val);
 
   void __set_ActionOnGetValue(const std::string& val);
+
+  void __set_Tags(const std::vector<std::string> & val);
 
   bool operator == (const SettingItem & rhs) const
   {
@@ -774,6 +778,10 @@ class SettingItem : public virtual ::apache::thrift::TBase {
       return false;
     else if (__isset.ActionOnGetValue && !(ActionOnGetValue == rhs.ActionOnGetValue))
       return false;
+    if (__isset.Tags != rhs.__isset.Tags)
+      return false;
+    else if (__isset.Tags && !(Tags == rhs.Tags))
+      return false;
     return true;
   }
   bool operator != (const SettingItem &rhs) const {
@@ -793,7 +801,7 @@ void swap(SettingItem &a, SettingItem &b);
 std::ostream& operator<<(std::ostream& out, const SettingItem& obj);
 
 typedef struct _SettingCategory__isset {
-  _SettingCategory__isset() : id(false), display(false), summary(false), description(false), icon(false), sortingPriority(false), isSystemCategory(false), items(false), enable(false), showInUI(false), script(false) {}
+  _SettingCategory__isset() : id(false), display(false), summary(false), description(false), icon(false), sortingPriority(false), isSystemCategory(false), items(false), enable(false), showInUI(false), script(false), Tags(false) {}
   bool id :1;
   bool display :1;
   bool summary :1;
@@ -805,6 +813,7 @@ typedef struct _SettingCategory__isset {
   bool enable :1;
   bool showInUI :1;
   bool script :1;
+  bool Tags :1;
 } _SettingCategory__isset;
 
 class SettingCategory : public virtual ::apache::thrift::TBase {
@@ -827,6 +836,7 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
   bool enable;
   bool showInUI;
   std::string script;
+  std::vector<std::string>  Tags;
 
   _SettingCategory__isset __isset;
 
@@ -851,6 +861,8 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
   void __set_showInUI(const bool val);
 
   void __set_script(const std::string& val);
+
+  void __set_Tags(const std::vector<std::string> & val);
 
   bool operator == (const SettingCategory & rhs) const
   {
@@ -879,6 +891,10 @@ class SettingCategory : public virtual ::apache::thrift::TBase {
     if (!(showInUI == rhs.showInUI))
       return false;
     if (!(script == rhs.script))
+      return false;
+    if (__isset.Tags != rhs.__isset.Tags)
+      return false;
+    else if (__isset.Tags && !(Tags == rhs.Tags))
       return false;
     return true;
   }
@@ -1205,10 +1221,11 @@ void swap(TitleMainIconNotification &a, TitleMainIconNotification &b);
 std::ostream& operator<<(std::ostream& out, const TitleMainIconNotification& obj);
 
 typedef struct _AppBaseInfo__isset {
-  _AppBaseInfo__isset() : appId(false), name(false), icon(false), description(false), properties(false), platform(false), size(false), languages(false) {}
+  _AppBaseInfo__isset() : appId(false), name(false), icon_hd(false), icon_ld(false), description(false), properties(false), platform(false), size(false), languages(false) {}
   bool appId :1;
   bool name :1;
-  bool icon :1;
+  bool icon_hd :1;
+  bool icon_ld :1;
   bool description :1;
   bool properties :1;
   bool platform :1;
@@ -1221,13 +1238,14 @@ class AppBaseInfo : public virtual ::apache::thrift::TBase {
 
   AppBaseInfo(const AppBaseInfo&);
   AppBaseInfo& operator=(const AppBaseInfo&);
-  AppBaseInfo() : appId(), name(), icon(), description(), size(0) {
+  AppBaseInfo() : appId(), name(), icon_hd(), icon_ld(), description(), size(0) {
   }
 
   virtual ~AppBaseInfo() throw();
   std::string appId;
   std::string name;
-  std::string icon;
+  std::string icon_hd;
+  std::string icon_ld;
   std::string description;
   std::vector<std::string>  properties;
   std::vector<std::string>  platform;
@@ -1240,7 +1258,9 @@ class AppBaseInfo : public virtual ::apache::thrift::TBase {
 
   void __set_name(const std::string& val);
 
-  void __set_icon(const std::string& val);
+  void __set_icon_hd(const std::string& val);
+
+  void __set_icon_ld(const std::string& val);
 
   void __set_description(const std::string& val);
 
@@ -1258,7 +1278,9 @@ class AppBaseInfo : public virtual ::apache::thrift::TBase {
       return false;
     if (!(name == rhs.name))
       return false;
-    if (!(icon == rhs.icon))
+    if (!(icon_hd == rhs.icon_hd))
+      return false;
+    if (!(icon_ld == rhs.icon_ld))
       return false;
     if (!(description == rhs.description))
       return false;

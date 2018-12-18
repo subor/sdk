@@ -25,6 +25,9 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.BrainCloudApi
 {
 
+  /// <summary>
+  /// @BCServiceStartedNotification_desc
+  /// </summary>
   public partial class BCServiceStartedNotification : TBase
   {
 

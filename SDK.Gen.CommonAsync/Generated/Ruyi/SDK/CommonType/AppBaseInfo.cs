@@ -25,17 +25,24 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @AppBaseInfo_desc
+  /// </summary>
   public partial class AppBaseInfo : TBase
   {
     private string _appId;
     private string _name;
-    private string _icon;
+    private string _icon_hd;
+    private string _icon_ld;
     private string _description;
     private List<string> _properties;
     private List<string> _platform;
     private int _size;
     private List<string> _languages;
 
+    /// <summary>
+    /// @AppBaseInfo_appId_desc
+    /// </summary>
     public string AppId
     {
       get
@@ -49,6 +56,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_name_desc
+    /// </summary>
     public string Name
     {
       get
@@ -62,19 +72,41 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public string Icon
+    /// <summary>
+    /// @AppBaseInfo_icon_hd_desc
+    /// </summary>
+    public string Icon_hd
     {
       get
       {
-        return _icon;
+        return _icon_hd;
       }
       set
       {
-        __isset.icon = true;
-        this._icon = value;
+        __isset.icon_hd = true;
+        this._icon_hd = value;
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_icon_ld_desc
+    /// </summary>
+    public string Icon_ld
+    {
+      get
+      {
+        return _icon_ld;
+      }
+      set
+      {
+        __isset.icon_ld = true;
+        this._icon_ld = value;
+      }
+    }
+
+    /// <summary>
+    /// @AppBaseInfo_description_desc
+    /// </summary>
     public string Description
     {
       get
@@ -88,6 +120,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_properties_desc
+    /// </summary>
     public List<string> Properties
     {
       get
@@ -101,6 +136,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_platform_desc
+    /// </summary>
     public List<string> Platform
     {
       get
@@ -114,6 +152,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_size_desc
+    /// </summary>
     public int Size
     {
       get
@@ -127,6 +168,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_languages_desc
+    /// </summary>
     public List<string> Languages
     {
       get
@@ -146,7 +190,8 @@ namespace Ruyi.SDK.CommonType
     {
       public bool appId;
       public bool name;
-      public bool icon;
+      public bool icon_hd;
+      public bool icon_ld;
       public bool description;
       public bool properties;
       public bool platform;
@@ -198,7 +243,7 @@ namespace Ruyi.SDK.CommonType
             case 3:
               if (field.Type == TType.String)
               {
-                Icon = await iprot.ReadStringAsync(cancellationToken);
+                Icon_hd = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -208,7 +253,7 @@ namespace Ruyi.SDK.CommonType
             case 4:
               if (field.Type == TType.String)
               {
-                Description = await iprot.ReadStringAsync(cancellationToken);
+                Icon_ld = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -216,19 +261,9 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 5:
-              if (field.Type == TType.List)
+              if (field.Type == TType.String)
               {
-                {
-                  Properties = new List<string>();
-                  TList _list41 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i42 = 0; _i42 < _list41.Count; ++_i42)
-                  {
-                    string _elem43;
-                    _elem43 = await iprot.ReadStringAsync(cancellationToken);
-                    Properties.Add(_elem43);
-                  }
-                  await iprot.ReadListEndAsync(cancellationToken);
-                }
+                Description = await iprot.ReadStringAsync(cancellationToken);
               }
               else
               {
@@ -239,13 +274,13 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.List)
               {
                 {
-                  Platform = new List<string>();
-                  TList _list44 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i45 = 0; _i45 < _list44.Count; ++_i45)
+                  Properties = new List<string>();
+                  TList _list49 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i50 = 0; _i50 < _list49.Count; ++_i50)
                   {
-                    string _elem46;
-                    _elem46 = await iprot.ReadStringAsync(cancellationToken);
-                    Platform.Add(_elem46);
+                    string _elem51;
+                    _elem51 = await iprot.ReadStringAsync(cancellationToken);
+                    Properties.Add(_elem51);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -256,6 +291,26 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 7:
+              if (field.Type == TType.List)
+              {
+                {
+                  Platform = new List<string>();
+                  TList _list52 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i53 = 0; _i53 < _list52.Count; ++_i53)
+                  {
+                    string _elem54;
+                    _elem54 = await iprot.ReadStringAsync(cancellationToken);
+                    Platform.Add(_elem54);
+                  }
+                  await iprot.ReadListEndAsync(cancellationToken);
+                }
+              }
+              else
+              {
+                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+              }
+              break;
+            case 8:
               if (field.Type == TType.I32)
               {
                 Size = await iprot.ReadI32Async(cancellationToken);
@@ -265,17 +320,17 @@ namespace Ruyi.SDK.CommonType
                 await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
               }
               break;
-            case 8:
+            case 9:
               if (field.Type == TType.List)
               {
                 {
                   Languages = new List<string>();
-                  TList _list47 = await iprot.ReadListBeginAsync(cancellationToken);
-                  for(int _i48 = 0; _i48 < _list47.Count; ++_i48)
+                  TList _list55 = await iprot.ReadListBeginAsync(cancellationToken);
+                  for(int _i56 = 0; _i56 < _list55.Count; ++_i56)
                   {
-                    string _elem49;
-                    _elem49 = await iprot.ReadStringAsync(cancellationToken);
-                    Languages.Add(_elem49);
+                    string _elem57;
+                    _elem57 = await iprot.ReadStringAsync(cancellationToken);
+                    Languages.Add(_elem57);
                   }
                   await iprot.ReadListEndAsync(cancellationToken);
                 }
@@ -327,20 +382,29 @@ namespace Ruyi.SDK.CommonType
           await oprot.WriteStringAsync(Name, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Icon != null && __isset.icon)
+        if (Icon_hd != null && __isset.icon_hd)
         {
-          field.Name = "icon";
+          field.Name = "icon_hd";
           field.Type = TType.String;
           field.ID = 3;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Icon, cancellationToken);
+          await oprot.WriteStringAsync(Icon_hd, cancellationToken);
+          await oprot.WriteFieldEndAsync(cancellationToken);
+        }
+        if (Icon_ld != null && __isset.icon_ld)
+        {
+          field.Name = "icon_ld";
+          field.Type = TType.String;
+          field.ID = 4;
+          await oprot.WriteFieldBeginAsync(field, cancellationToken);
+          await oprot.WriteStringAsync(Icon_ld, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         if (Description != null && __isset.description)
         {
           field.Name = "description";
           field.Type = TType.String;
-          field.ID = 4;
+          field.ID = 5;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteStringAsync(Description, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -349,13 +413,13 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "properties";
           field.Type = TType.List;
-          field.ID = 5;
+          field.ID = 6;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.String, Properties.Count), cancellationToken);
-            foreach (string _iter50 in Properties)
+            foreach (string _iter58 in Properties)
             {
-              await oprot.WriteStringAsync(_iter50, cancellationToken);
+              await oprot.WriteStringAsync(_iter58, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }
@@ -365,13 +429,13 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "platform";
           field.Type = TType.List;
-          field.ID = 6;
+          field.ID = 7;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.String, Platform.Count), cancellationToken);
-            foreach (string _iter51 in Platform)
+            foreach (string _iter59 in Platform)
             {
-              await oprot.WriteStringAsync(_iter51, cancellationToken);
+              await oprot.WriteStringAsync(_iter59, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }
@@ -381,7 +445,7 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "size";
           field.Type = TType.I32;
-          field.ID = 7;
+          field.ID = 8;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           await oprot.WriteI32Async(Size, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
@@ -390,13 +454,13 @@ namespace Ruyi.SDK.CommonType
         {
           field.Name = "languages";
           field.Type = TType.List;
-          field.ID = 8;
+          field.ID = 9;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
           {
             await oprot.WriteListBeginAsync(new TList(TType.String, Languages.Count), cancellationToken);
-            foreach (string _iter52 in Languages)
+            foreach (string _iter60 in Languages)
             {
-              await oprot.WriteStringAsync(_iter52, cancellationToken);
+              await oprot.WriteStringAsync(_iter60, cancellationToken);
             }
             await oprot.WriteListEndAsync(cancellationToken);
           }
@@ -429,12 +493,19 @@ namespace Ruyi.SDK.CommonType
         sb.Append("Name: ");
         sb.Append(Name);
       }
-      if (Icon != null && __isset.icon)
+      if (Icon_hd != null && __isset.icon_hd)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Icon: ");
-        sb.Append(Icon);
+        sb.Append("Icon_hd: ");
+        sb.Append(Icon_hd);
+      }
+      if (Icon_ld != null && __isset.icon_ld)
+      {
+        if(!__first) { sb.Append(", "); }
+        __first = false;
+        sb.Append("Icon_ld: ");
+        sb.Append(Icon_ld);
       }
       if (Description != null && __isset.description)
       {

@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @OverlayForceBindAdapter_desc
+  /// </summary>
   public enum OverlayForceBindAdapter
   {
     All = 0,

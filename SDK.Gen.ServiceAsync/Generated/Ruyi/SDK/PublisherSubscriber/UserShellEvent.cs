@@ -25,11 +25,15 @@ using Thrift.Transports.Server;
 namespace Ruyi.SDK.PublisherSubscriber
 {
 
+  /// <summary>
+  /// @UserShellEvent_desc
+  /// </summary>
   public partial class UserShellEvent : TBase
   {
     private UserShellEventType _EventType;
 
     /// <summary>
+    /// @UserShellEvent_EventType_desc
     /// 
     /// <seealso cref="UserShellEventType"/>
     /// </summary>

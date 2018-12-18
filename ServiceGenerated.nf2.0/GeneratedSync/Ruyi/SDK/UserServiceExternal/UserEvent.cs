@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.UserServiceExternal
 {
 
+  /// <summary>
+  /// @UserEvent_summary
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -27,6 +30,9 @@ namespace Ruyi.SDK.UserServiceExternal
     private string _action;
     private string _jsonData;
 
+    /// <summary>
+    /// @UserEvent_userId_desc
+    /// </summary>
     public string UserId
     {
       get
@@ -40,6 +46,9 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
+    /// <summary>
+    /// @UserEvent_action_desc
+    /// </summary>
     public string Action
     {
       get
@@ -53,6 +62,9 @@ namespace Ruyi.SDK.UserServiceExternal
       }
     }
 
+    /// <summary>
+    /// @UserEvent_parameters_desc
+    /// </summary>
     public string JsonData
     {
       get

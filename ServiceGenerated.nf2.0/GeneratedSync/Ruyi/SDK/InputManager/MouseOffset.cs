@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.InputManager
 {
+  /// <summary>
+  /// @MouseOffset_desc
+  /// </summary>
   public enum MouseOffset
   {
     X = 0,

@@ -18,6 +18,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.BrainCloudApi
 {
 
+  /// <summary>
+  /// @FileUploadFailedResult_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -28,6 +31,9 @@ namespace Ruyi.SDK.BrainCloudApi
     private int _reasonCode;
     private string _jsonResponse;
 
+    /// <summary>
+    /// @FileUploadFailedResult_fileUploadId_desc
+    /// </summary>
     public string FileUploadId
     {
       get
@@ -41,6 +47,9 @@ namespace Ruyi.SDK.BrainCloudApi
       }
     }
 
+    /// <summary>
+    /// @FileUploadFailedResult_statusCode_desc
+    /// </summary>
     public int StatusCode
     {
       get
@@ -54,6 +63,9 @@ namespace Ruyi.SDK.BrainCloudApi
       }
     }
 
+    /// <summary>
+    /// @FileUploadFailedResult_reasonCode_desc
+    /// </summary>
     public int ReasonCode
     {
       get
@@ -67,6 +79,9 @@ namespace Ruyi.SDK.BrainCloudApi
       }
     }
 
+    /// <summary>
+    /// @FileUploadFailedResult_jsonResponse_desc
+    /// </summary>
     public string JsonResponse
     {
       get

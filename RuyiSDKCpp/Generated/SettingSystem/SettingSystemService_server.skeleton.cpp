@@ -69,8 +69,10 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
    * @param nodeType Specifies whether the child nodes containing setting item or setting category, or both
    * 
    * @param param The parameter passed to the function which will be called while getting the item value
+   * 
+   * @param tags Tags used to filter the setting items. Only items with specified tags will be added in the result
    */
-  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param) {
+  void GetChildNode( ::Ruyi::SDK::SettingSystem::Api::NodeList& _return, const std::string& parent, const  ::Ruyi::SDK::SettingSystem::Api::NodeType::type nodeType, const std::string& param, const std::vector<std::string> & tags) {
     // Your implementation goes here
     printf("GetChildNode\n");
   }
@@ -109,6 +111,15 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("RestoreDefault\n");
   }
 
+  /**
+   * @RestoreUserDefault_Summary
+   * 
+   * @param userId @RestoreUserDefault_userId_desc
+   * 
+   * @param moduleName @RestoreUserDefault_moduleName_desc
+   * 
+   * @param category @RestoreUserDefault_category_desc
+   */
   bool RestoreUserDefault(const std::string& userId, const std::string& moduleName, const std::string& category) {
     // Your implementation goes here
     printf("RestoreUserDefault\n");
@@ -124,16 +135,43 @@ class SettingSystemServiceHandler : virtual public SettingSystemServiceIf {
     printf("UpdateModuleVersion\n");
   }
 
+  /**
+   * @SetUserAppData_Summary
+   * 
+   * @param userId @SetUserAppData_userId_desc
+   * 
+   * @param category @SetUserAppData_category_desc
+   * 
+   * @param settingItems @SetUserAppData_settingItems_desc
+   */
   int32_t SetUserAppData(const std::string& userId, const std::string& category, const std::map<std::string,  ::Ruyi::SDK::CommonType::SettingValue> & settingItems) {
     // Your implementation goes here
     printf("SetUserAppData\n");
   }
 
+  /**
+   * @GetUserAppData_Summary
+   * 
+   * @param userId @GetUserAppData_userId_desc
+   * 
+   * @param category @GetUserAppData_category_desc
+   * 
+   * @param settingKeys @GetUserAppData_settingKeys_desc
+   */
   void GetUserAppData( ::Ruyi::SDK::CommonType::AppData& _return, const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) {
     // Your implementation goes here
     printf("GetUserAppData\n");
   }
 
+  /**
+   * @RemoveUserAppData_Summary
+   * 
+   * @param userId @RemoveUserAppData_userId_desc
+   * 
+   * @param category @RemoveUserAppData_category_desc
+   * 
+   * @param settingKeys @RemoveUserAppData_settingKeys_desc
+   */
   int32_t RemoveUserAppData(const std::string& userId, const std::string& category, const std::vector<std::string> & settingKeys) {
     // Your implementation goes here
     printf("RemoveUserAppData\n");
