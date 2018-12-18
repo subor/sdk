@@ -4882,6 +4882,17 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Shopping_GetSpecialOffers\n");
   }
 
+  /**
+   * @2304250631
+   * 
+   * @param includeDetails
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_GetMyLibrary(std::string& _return, const bool includeDetails, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetMyLibrary\n");
+  }
+
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {
     // Your implementation goes here
     printf("SocialFeed_ShareVideo\n");

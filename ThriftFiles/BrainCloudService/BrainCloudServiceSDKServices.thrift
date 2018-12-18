@@ -4109,6 +4109,12 @@ service BrainCloudService {
 		3: i32 clientIndex
 	),
 
+	/** @2304250631 */
+	string Shopping_GetMyLibrary(1: bool includeDetails, 
+		/** @BrainCloud_clientIndex_desc */
+		2: i32 clientIndex
+	),
+
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 
 		/** @BrainCloud_clientIndex_desc */
 		6: i32 clientIndex
