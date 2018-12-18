@@ -40,20 +40,28 @@ const string trc_test_channel = "trc_test_channel"
 /** @broker_playback_message_desc */
 const string broker_playback_message = "mmi.developer.playback"
 
+/** @HDD0_DRIVER_TAG_desc */
 const string HDD0_DRIVER_TAG = "/<hdd0>/"
 
+/** @MEMCACHE_DRIVER_TAG_desc */
 const string MEMCACHE_DRIVER_TAG = "/<memcache>/"
 
+/** @HTTP_HDD_CACHE_DRIVER_TAG_desc */
 const string HTTP_HDD_CACHE_DRIVER_TAG = "/<httphddcache>/"
 
+/** @HTTP_MEM_CACHE_DRIVER_TAG_desc */
 const string HTTP_MEM_CACHE_DRIVER_TAG = "/<httpmemcache>/"
 
+/** @RESOURCES_DRIVER_TAG_desc */
 const string RESOURCES_DRIVER_TAG = "/<resources>/"
 
+/** @MEDIA_DRIVER_TAG_desc */
 const string MEDIA_DRIVER_TAG = "/<media>/"
 
+/** @DOWNLOAD_DRIVER_TAG_desc */
 const string DOWNLOAD_DRIVER_TAG = "/<download>/"
 
+/** @DATA_DRIVER_TAG_desc */
 const string DATA_DRIVER_TAG = "/<data>/"
 
 

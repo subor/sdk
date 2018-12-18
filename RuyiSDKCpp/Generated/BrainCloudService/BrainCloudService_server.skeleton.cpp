@@ -4893,6 +4893,61 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Shopping_GetMyLibrary\n");
   }
 
+  /**
+   * @1350446922
+   * 
+   * @param page @1144882702
+   * 
+   * @param pageSize The size of each page.
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_GetPopularTags(std::string& _return, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetPopularTags\n");
+  }
+
+  /**
+   * @3387279661
+   * 
+   * @param tag
+   * @param page @1144882702
+   * 
+   * @param pageSize The size of each page.
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_GetProductsByTag(std::string& _return, const std::string& tag, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetProductsByTag\n");
+  }
+
+  /**
+   * @2681224790
+   * 
+   * @param tags
+   * @param page @1144882702
+   * 
+   * @param pageSize The size of each page.
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_GetProductsByTags(std::string& _return, const std::vector<std::string> & tags, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetProductsByTags\n");
+  }
+
+  /**
+   * @2681224790
+   * 
+   * @param count
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_GetRecommendedProducts(std::string& _return, const int32_t count, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetRecommendedProducts\n");
+  }
+
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {
     // Your implementation goes here
     printf("SocialFeed_ShareVideo\n");

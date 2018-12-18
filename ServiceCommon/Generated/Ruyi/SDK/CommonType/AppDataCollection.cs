@@ -19,6 +19,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @AppDataCollection_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -28,7 +31,7 @@ namespace Ruyi.SDK.CommonType
     private List<AppDataRecord> _records;
 
     /// <summary>
-    /// The category of the records
+    /// @AppDataCollection_category_desc
     /// </summary>
     public string Category
     {
@@ -44,7 +47,7 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
-    /// The records of the collection. See AppDataRecord
+    /// @AppDataCollection_records_desc
     /// </summary>
     public List<AppDataRecord> Records
     {
@@ -98,13 +101,13 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.List) {
                 {
                   Records = new List<AppDataRecord>();
-                  TList _list33 = iprot.ReadListBegin();
-                  for( int _i34 = 0; _i34 < _list33.Count; ++_i34)
+                  TList _list41 = iprot.ReadListBegin();
+                  for( int _i42 = 0; _i42 < _list41.Count; ++_i42)
                   {
-                    AppDataRecord _elem35;
-                    _elem35 = new AppDataRecord();
-                    _elem35.Read(iprot);
-                    Records.Add(_elem35);
+                    AppDataRecord _elem43;
+                    _elem43 = new AppDataRecord();
+                    _elem43.Read(iprot);
+                    Records.Add(_elem43);
                   }
                   iprot.ReadListEnd();
                 }
@@ -148,9 +151,9 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, Records.Count));
-            foreach (AppDataRecord _iter36 in Records)
+            foreach (AppDataRecord _iter44 in Records)
             {
-              _iter36.Write(oprot);
+              _iter44.Write(oprot);
             }
             oprot.WriteListEnd();
           }

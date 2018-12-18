@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @UserType_desc
+  /// </summary>
   public enum UserType
   {
     Guest = 0,

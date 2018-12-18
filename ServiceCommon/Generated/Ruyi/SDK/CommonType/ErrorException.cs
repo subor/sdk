@@ -19,6 +19,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @ErrorException_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -27,6 +30,9 @@ namespace Ruyi.SDK.CommonType
     private int _errId;
     private string _errMsg;
 
+    /// <summary>
+    /// @ErrorException_errId_desc
+    /// </summary>
     public int ErrId
     {
       get
@@ -40,6 +46,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @ErrorException_errMsg_desc
+    /// </summary>
     public string ErrMsg
     {
       get

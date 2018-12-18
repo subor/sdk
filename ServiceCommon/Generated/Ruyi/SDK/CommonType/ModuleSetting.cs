@@ -19,6 +19,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @ModuleSetting_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -28,6 +31,9 @@ namespace Ruyi.SDK.CommonType
     private List<SettingItem> _settings;
     private List<SettingCategory> _categories;
 
+    /// <summary>
+    /// @ModuleSetting_baseInfo_desc
+    /// </summary>
     public ModuleBaseInfo BaseInfo
     {
       get
@@ -41,6 +47,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @ModuleSetting_settings_desc
+    /// </summary>
     public List<SettingItem> Settings
     {
       get
@@ -54,6 +63,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @ModuleSetting_categories_desc
+    /// </summary>
     public List<SettingCategory> Categories
     {
       get
@@ -108,13 +120,13 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.List) {
                 {
                   Settings = new List<SettingItem>();
-                  TList _list25 = iprot.ReadListBegin();
-                  for( int _i26 = 0; _i26 < _list25.Count; ++_i26)
+                  TList _list33 = iprot.ReadListBegin();
+                  for( int _i34 = 0; _i34 < _list33.Count; ++_i34)
                   {
-                    SettingItem _elem27;
-                    _elem27 = new SettingItem();
-                    _elem27.Read(iprot);
-                    Settings.Add(_elem27);
+                    SettingItem _elem35;
+                    _elem35 = new SettingItem();
+                    _elem35.Read(iprot);
+                    Settings.Add(_elem35);
                   }
                   iprot.ReadListEnd();
                 }
@@ -126,13 +138,13 @@ namespace Ruyi.SDK.CommonType
               if (field.Type == TType.List) {
                 {
                   Categories = new List<SettingCategory>();
-                  TList _list28 = iprot.ReadListBegin();
-                  for( int _i29 = 0; _i29 < _list28.Count; ++_i29)
+                  TList _list36 = iprot.ReadListBegin();
+                  for( int _i37 = 0; _i37 < _list36.Count; ++_i37)
                   {
-                    SettingCategory _elem30;
-                    _elem30 = new SettingCategory();
-                    _elem30.Read(iprot);
-                    Categories.Add(_elem30);
+                    SettingCategory _elem38;
+                    _elem38 = new SettingCategory();
+                    _elem38.Read(iprot);
+                    Categories.Add(_elem38);
                   }
                   iprot.ReadListEnd();
                 }
@@ -176,9 +188,9 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, Settings.Count));
-            foreach (SettingItem _iter31 in Settings)
+            foreach (SettingItem _iter39 in Settings)
             {
-              _iter31.Write(oprot);
+              _iter39.Write(oprot);
             }
             oprot.WriteListEnd();
           }
@@ -191,9 +203,9 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.Struct, Categories.Count));
-            foreach (SettingCategory _iter32 in Categories)
+            foreach (SettingCategory _iter40 in Categories)
             {
-              _iter32.Write(oprot);
+              _iter40.Write(oprot);
             }
             oprot.WriteListEnd();
           }

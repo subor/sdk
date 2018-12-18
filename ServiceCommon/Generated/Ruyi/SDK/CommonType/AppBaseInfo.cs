@@ -19,6 +19,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @AppBaseInfo_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -26,13 +29,17 @@ namespace Ruyi.SDK.CommonType
   {
     private string _appId;
     private string _name;
-    private string _icon;
+    private string _icon_hd;
+    private string _icon_ld;
     private string _description;
     private List<string> _properties;
     private List<string> _platform;
     private int _size;
     private List<string> _languages;
 
+    /// <summary>
+    /// @AppBaseInfo_appId_desc
+    /// </summary>
     public string AppId
     {
       get
@@ -46,6 +53,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_name_desc
+    /// </summary>
     public string Name
     {
       get
@@ -59,19 +69,41 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
-    public string Icon
+    /// <summary>
+    /// @AppBaseInfo_icon_hd_desc
+    /// </summary>
+    public string Icon_hd
     {
       get
       {
-        return _icon;
+        return _icon_hd;
       }
       set
       {
-        __isset.icon = true;
-        this._icon = value;
+        __isset.icon_hd = true;
+        this._icon_hd = value;
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_icon_ld_desc
+    /// </summary>
+    public string Icon_ld
+    {
+      get
+      {
+        return _icon_ld;
+      }
+      set
+      {
+        __isset.icon_ld = true;
+        this._icon_ld = value;
+      }
+    }
+
+    /// <summary>
+    /// @AppBaseInfo_description_desc
+    /// </summary>
     public string Description
     {
       get
@@ -85,6 +117,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_properties_desc
+    /// </summary>
     public List<string> Properties
     {
       get
@@ -98,6 +133,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_platform_desc
+    /// </summary>
     public List<string> Platform
     {
       get
@@ -111,6 +149,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_size_desc
+    /// </summary>
     public int Size
     {
       get
@@ -124,6 +165,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @AppBaseInfo_languages_desc
+    /// </summary>
     public List<string> Languages
     {
       get
@@ -145,7 +189,8 @@ namespace Ruyi.SDK.CommonType
     public struct Isset {
       public bool appId;
       public bool name;
-      public bool icon;
+      public bool icon_hd;
+      public bool icon_ld;
       public bool description;
       public bool properties;
       public bool platform;
@@ -187,31 +232,21 @@ namespace Ruyi.SDK.CommonType
               break;
             case 3:
               if (field.Type == TType.String) {
-                Icon = iprot.ReadString();
+                Icon_hd = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 4:
               if (field.Type == TType.String) {
-                Description = iprot.ReadString();
+                Icon_ld = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
             case 5:
-              if (field.Type == TType.List) {
-                {
-                  Properties = new List<string>();
-                  TList _list41 = iprot.ReadListBegin();
-                  for( int _i42 = 0; _i42 < _list41.Count; ++_i42)
-                  {
-                    string _elem43;
-                    _elem43 = iprot.ReadString();
-                    Properties.Add(_elem43);
-                  }
-                  iprot.ReadListEnd();
-                }
+              if (field.Type == TType.String) {
+                Description = iprot.ReadString();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
@@ -219,13 +254,13 @@ namespace Ruyi.SDK.CommonType
             case 6:
               if (field.Type == TType.List) {
                 {
-                  Platform = new List<string>();
-                  TList _list44 = iprot.ReadListBegin();
-                  for( int _i45 = 0; _i45 < _list44.Count; ++_i45)
+                  Properties = new List<string>();
+                  TList _list49 = iprot.ReadListBegin();
+                  for( int _i50 = 0; _i50 < _list49.Count; ++_i50)
                   {
-                    string _elem46;
-                    _elem46 = iprot.ReadString();
-                    Platform.Add(_elem46);
+                    string _elem51;
+                    _elem51 = iprot.ReadString();
+                    Properties.Add(_elem51);
                   }
                   iprot.ReadListEnd();
                 }
@@ -234,22 +269,39 @@ namespace Ruyi.SDK.CommonType
               }
               break;
             case 7:
+              if (field.Type == TType.List) {
+                {
+                  Platform = new List<string>();
+                  TList _list52 = iprot.ReadListBegin();
+                  for( int _i53 = 0; _i53 < _list52.Count; ++_i53)
+                  {
+                    string _elem54;
+                    _elem54 = iprot.ReadString();
+                    Platform.Add(_elem54);
+                  }
+                  iprot.ReadListEnd();
+                }
+              } else { 
+                TProtocolUtil.Skip(iprot, field.Type);
+              }
+              break;
+            case 8:
               if (field.Type == TType.I32) {
                 Size = iprot.ReadI32();
               } else { 
                 TProtocolUtil.Skip(iprot, field.Type);
               }
               break;
-            case 8:
+            case 9:
               if (field.Type == TType.List) {
                 {
                   Languages = new List<string>();
-                  TList _list47 = iprot.ReadListBegin();
-                  for( int _i48 = 0; _i48 < _list47.Count; ++_i48)
+                  TList _list55 = iprot.ReadListBegin();
+                  for( int _i56 = 0; _i56 < _list55.Count; ++_i56)
                   {
-                    string _elem49;
-                    _elem49 = iprot.ReadString();
-                    Languages.Add(_elem49);
+                    string _elem57;
+                    _elem57 = iprot.ReadString();
+                    Languages.Add(_elem57);
                   }
                   iprot.ReadListEnd();
                 }
@@ -294,18 +346,26 @@ namespace Ruyi.SDK.CommonType
           oprot.WriteString(Name);
           oprot.WriteFieldEnd();
         }
-        if (Icon != null && __isset.icon) {
-          field.Name = "icon";
+        if (Icon_hd != null && __isset.icon_hd) {
+          field.Name = "icon_hd";
           field.Type = TType.String;
           field.ID = 3;
           oprot.WriteFieldBegin(field);
-          oprot.WriteString(Icon);
+          oprot.WriteString(Icon_hd);
+          oprot.WriteFieldEnd();
+        }
+        if (Icon_ld != null && __isset.icon_ld) {
+          field.Name = "icon_ld";
+          field.Type = TType.String;
+          field.ID = 4;
+          oprot.WriteFieldBegin(field);
+          oprot.WriteString(Icon_ld);
           oprot.WriteFieldEnd();
         }
         if (Description != null && __isset.description) {
           field.Name = "description";
           field.Type = TType.String;
-          field.ID = 4;
+          field.ID = 5;
           oprot.WriteFieldBegin(field);
           oprot.WriteString(Description);
           oprot.WriteFieldEnd();
@@ -313,13 +373,13 @@ namespace Ruyi.SDK.CommonType
         if (Properties != null && __isset.properties) {
           field.Name = "properties";
           field.Type = TType.List;
-          field.ID = 5;
+          field.ID = 6;
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.String, Properties.Count));
-            foreach (string _iter50 in Properties)
+            foreach (string _iter58 in Properties)
             {
-              oprot.WriteString(_iter50);
+              oprot.WriteString(_iter58);
             }
             oprot.WriteListEnd();
           }
@@ -328,13 +388,13 @@ namespace Ruyi.SDK.CommonType
         if (Platform != null && __isset.platform) {
           field.Name = "platform";
           field.Type = TType.List;
-          field.ID = 6;
+          field.ID = 7;
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.String, Platform.Count));
-            foreach (string _iter51 in Platform)
+            foreach (string _iter59 in Platform)
             {
-              oprot.WriteString(_iter51);
+              oprot.WriteString(_iter59);
             }
             oprot.WriteListEnd();
           }
@@ -343,7 +403,7 @@ namespace Ruyi.SDK.CommonType
         if (__isset.size) {
           field.Name = "size";
           field.Type = TType.I32;
-          field.ID = 7;
+          field.ID = 8;
           oprot.WriteFieldBegin(field);
           oprot.WriteI32(Size);
           oprot.WriteFieldEnd();
@@ -351,13 +411,13 @@ namespace Ruyi.SDK.CommonType
         if (Languages != null && __isset.languages) {
           field.Name = "languages";
           field.Type = TType.List;
-          field.ID = 8;
+          field.ID = 9;
           oprot.WriteFieldBegin(field);
           {
             oprot.WriteListBegin(new TList(TType.String, Languages.Count));
-            foreach (string _iter52 in Languages)
+            foreach (string _iter60 in Languages)
             {
-              oprot.WriteString(_iter52);
+              oprot.WriteString(_iter60);
             }
             oprot.WriteListEnd();
           }
@@ -387,11 +447,17 @@ namespace Ruyi.SDK.CommonType
         __sb.Append("Name: ");
         __sb.Append(Name);
       }
-      if (Icon != null && __isset.icon) {
+      if (Icon_hd != null && __isset.icon_hd) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
-        __sb.Append("Icon: ");
-        __sb.Append(Icon);
+        __sb.Append("Icon_hd: ");
+        __sb.Append(Icon_hd);
+      }
+      if (Icon_ld != null && __isset.icon_ld) {
+        if(!__first) { __sb.Append(", "); }
+        __first = false;
+        __sb.Append("Icon_ld: ");
+        __sb.Append(Icon_ld);
       }
       if (Description != null && __isset.description) {
         if(!__first) { __sb.Append(", "); }

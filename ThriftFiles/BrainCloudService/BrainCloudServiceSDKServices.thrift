@@ -4115,6 +4115,48 @@ service BrainCloudService {
 		2: i32 clientIndex
 	),
 
+	/** @1350446922 */
+	string Shopping_GetPopularTags(
+		/** @1144882702 */
+		1: i32 page, 
+		
+		/** The size of each page. */
+		2: i32 pageSize, 
+		
+		/** @BrainCloud_clientIndex_desc */
+		3: i32 clientIndex
+	),
+
+	/** @3387279661 */
+	string Shopping_GetProductsByTag(1: string tag, 
+		/** @1144882702 */
+		2: i32 page, 
+		
+		/** The size of each page. */
+		3: i32 pageSize, 
+		
+		/** @BrainCloud_clientIndex_desc */
+		4: i32 clientIndex
+	),
+
+	/** @2681224790 */
+	string Shopping_GetProductsByTags(1: list<string> tags, 
+		/** @1144882702 */
+		2: i32 page, 
+		
+		/** The size of each page. */
+		3: i32 pageSize, 
+		
+		/** @BrainCloud_clientIndex_desc */
+		4: i32 clientIndex
+	),
+
+	/** @2681224790 */
+	string Shopping_GetRecommendedProducts(1: i32 count, 
+		/** @BrainCloud_clientIndex_desc */
+		2: i32 clientIndex
+	),
+
 	string SocialFeed_ShareVideo(1: i32 timestamp, 2: string resource, 3: list<string> tagged, 4: list<string> show, 5: list<string> block, 
 		/** @BrainCloud_clientIndex_desc */
 		6: i32 clientIndex

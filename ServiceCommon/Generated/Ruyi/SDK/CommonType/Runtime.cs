@@ -19,6 +19,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @Runtime_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -27,6 +30,9 @@ namespace Ruyi.SDK.CommonType
     private Features _features;
     private RuyiFeatures _ruyifeatures;
 
+    /// <summary>
+    /// @Runtime_features_desc
+    /// </summary>
     public Features Features
     {
       get
@@ -40,6 +46,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @Runtime_ruyifeatures_desc
+    /// </summary>
     public RuyiFeatures Ruyifeatures
     {
       get

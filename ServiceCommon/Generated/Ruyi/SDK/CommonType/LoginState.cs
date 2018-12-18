@@ -7,14 +7,17 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @LoginState_desc
+  /// </summary>
   public enum LoginState
   {
     /// <summary>
-    /// Logout state
+    /// @LoginState_Logout
     /// </summary>
     Logout = 0,
     /// <summary>
-    /// Login state
+    /// @LoginState_Login
     /// </summary>
     Login = 1,
   }
