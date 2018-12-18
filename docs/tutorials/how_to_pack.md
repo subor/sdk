@@ -37,46 +37,57 @@ Create `res/l18n.json` similar to the following:
 Create `RuyiManifest.json` similar to:
 ```json
 {
-	appID: "60030",
-	version:"1.0.0.0",
-	use_sdk:{
-		minSdkVersion : "1.0.0.0"
+	"appID": "60030",
+	"version":"1.0.0.0",
+	"use_sdk":{
+		"minSdkVersion" : "1.0.0.0"
 	},
-	application:	{
-		name:"@com.XXX.space_shooter",
-		icon:"icon.png",
-		description:"@description",
-		properties:[
+	"application":	{
+		"name":"@com.ruyi.PlatformerGame",
+		"icon":"bluetooth.png",
+		"description":"@antestapp",
+		"properties":[
 			"SinglePlayer",
 			"RuyiAchievements"
 		],
-		platform:[
+		"platform":[
 			"RuyiConsole",
-			"Windows",
+			"Windows"
 		],
-		size:12580,
-		languages:[
+		"size":12580,
+		"languages":[
 			{
-				languageCode:"en-US",
-				uiInterface:true,
-				fullAudio:true,
-				subtitles:true,
+				"languageCode":"en-US",
+				"uiInterface":true,
+				"fullAudio":true,
+				"subtitles":true
 			},
-		],
-		
-		activity:[
 			{
-				name:"main",
-				exePath:"space_shooter/SpaceShooter.exe",
-				description:"@description",
+				"languageCode":"ja-JP",
+				"uiInterface":true,
+				"fullAudio":false,
+				"subtitles":true
+			},
+			{
+				"languageCode":"de-DE",
+				"uiInterface":true,
+				"fullAudio":false,
+				"subtitles":false
 			}
 		],
+		"activity":[
+			{
+				"name":"main",
+				"exePath":"PlatformerGame/PlatformerGame.exe",
+				"description":"@antestapp"
+			}
+		]
 	},
-	use_permissions:[
+	"use_permissions":[
 		{
-			name:"jade.permission.ACHIEVEMENT"
+			"name":"jade.permission.ACHIEVEMENT"
 		}
-	],
+	]
 }
 ```
 - __appID__: the application ID (e.g. `"10112"`)
