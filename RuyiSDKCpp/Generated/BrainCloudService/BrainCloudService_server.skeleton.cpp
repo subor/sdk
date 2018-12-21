@@ -4674,9 +4674,20 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param clientIndex @BrainCloud_clientIndex_desc
    */
-  void Shopping_AddToCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) {
+  void Shopping_AddToCart_SISFO(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) {
     // Your implementation goes here
-    printf("Shopping_AddToCart\n");
+    printf("Shopping_AddToCart_SISFO\n");
+  }
+
+  /**
+   * Add a product to the player's shopping cart.
+   * 
+   * @param productIds
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_AddToCart_ISFO(std::string& _return, const std::vector<std::string> & productIds, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_AddToCart_ISFO\n");
   }
 
   /**
@@ -4891,6 +4902,72 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   void Shopping_GetMyLibrary(std::string& _return, const bool includeDetails, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Shopping_GetMyLibrary\n");
+  }
+
+  /**
+   * @1350446922
+   * 
+   * @param page @1144882702
+   * 
+   * @param pageSize The size of each page.
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_GetPopularTags(std::string& _return, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetPopularTags\n");
+  }
+
+  /**
+   * @3387279661
+   * 
+   * @param tag
+   * @param page @1144882702
+   * 
+   * @param pageSize The size of each page.
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_GetProductsByTag(std::string& _return, const std::string& tag, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetProductsByTag\n");
+  }
+
+  /**
+   * @2681224790
+   * 
+   * @param tags
+   * @param page @1144882702
+   * 
+   * @param pageSize The size of each page.
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_GetProductsByTags(std::string& _return, const std::vector<std::string> & tags, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetProductsByTags\n");
+  }
+
+  /**
+   * @2681224790
+   * 
+   * @param count
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_GetRecommendedProducts(std::string& _return, const int32_t count, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetRecommendedProducts\n");
+  }
+
+  /**
+   * @2681224790
+   * 
+   * @param productId
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_GetProduct(std::string& _return, const std::string& productId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetProduct\n");
   }
 
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {

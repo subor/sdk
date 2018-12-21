@@ -7,6 +7,9 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @OverlayGameType_desc
+  /// </summary>
   public enum OverlayGameType
   {
     Standalone = 0,

@@ -19,6 +19,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @RuyiFeatures_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -28,6 +31,9 @@ namespace Ruyi.SDK.CommonType
     private bool _ruyi_dinput;
     private bool _ruyi_sdkinput;
 
+    /// <summary>
+    /// @RuyiFeatures_ruyi_xinput_desc
+    /// </summary>
     public bool Ruyi_xinput
     {
       get
@@ -41,6 +47,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @RuyiFeatures_ruyi_dinput_desc
+    /// </summary>
     public bool Ruyi_dinput
     {
       get
@@ -54,6 +63,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @RuyiFeatures_ruyi_sdkinput_desc
+    /// </summary>
     public bool Ruyi_sdkinput
     {
       get

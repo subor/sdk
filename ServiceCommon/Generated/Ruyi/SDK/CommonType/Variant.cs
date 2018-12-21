@@ -19,6 +19,9 @@ using Thrift.Transport;
 namespace Ruyi.SDK.CommonType
 {
 
+  /// <summary>
+  /// @Variant_desc
+  /// </summary>
   #if !SILVERLIGHT
   [Serializable]
   #endif
@@ -29,6 +32,9 @@ namespace Ruyi.SDK.CommonType
     private int _order;
     private List<@If> _rules;
 
+    /// <summary>
+    /// @Variant_name_desc
+    /// </summary>
     public string Name
     {
       get
@@ -42,6 +48,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @Variant_id_desc
+    /// </summary>
     public string Id
     {
       get
@@ -55,6 +64,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @Variant_order_desc
+    /// </summary>
     public int Order
     {
       get
@@ -68,6 +80,9 @@ namespace Ruyi.SDK.CommonType
       }
     }
 
+    /// <summary>
+    /// @Variant_rules_desc
+    /// </summary>
     public List<@If> Rules
     {
       get

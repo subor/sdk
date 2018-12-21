@@ -3943,7 +3943,7 @@ service BrainCloudService {
 	),
 
 	/** Add a product to the player's shopping cart. */
-	string Shopping_AddToCart(
+	string Shopping_AddToCart_SISFO(
 		/** The ID of the product to add to the cart (usually a Game ID). */
 		1: string productId, 
 		
@@ -3952,6 +3952,12 @@ service BrainCloudService {
 		
 		/** @BrainCloud_clientIndex_desc */
 		3: i32 clientIndex
+	),
+
+	/** Add a product to the player's shopping cart. */
+	string Shopping_AddToCart_ISFO(1: list<string> productIds, 
+		/** @BrainCloud_clientIndex_desc */
+		2: i32 clientIndex
 	),
 
 	/** Empty the player's shopping cart. */
@@ -4111,6 +4117,54 @@ service BrainCloudService {
 
 	/** @2304250631 */
 	string Shopping_GetMyLibrary(1: bool includeDetails, 
+		/** @BrainCloud_clientIndex_desc */
+		2: i32 clientIndex
+	),
+
+	/** @1350446922 */
+	string Shopping_GetPopularTags(
+		/** @1144882702 */
+		1: i32 page, 
+		
+		/** The size of each page. */
+		2: i32 pageSize, 
+		
+		/** @BrainCloud_clientIndex_desc */
+		3: i32 clientIndex
+	),
+
+	/** @3387279661 */
+	string Shopping_GetProductsByTag(1: string tag, 
+		/** @1144882702 */
+		2: i32 page, 
+		
+		/** The size of each page. */
+		3: i32 pageSize, 
+		
+		/** @BrainCloud_clientIndex_desc */
+		4: i32 clientIndex
+	),
+
+	/** @2681224790 */
+	string Shopping_GetProductsByTags(1: list<string> tags, 
+		/** @1144882702 */
+		2: i32 page, 
+		
+		/** The size of each page. */
+		3: i32 pageSize, 
+		
+		/** @BrainCloud_clientIndex_desc */
+		4: i32 clientIndex
+	),
+
+	/** @2681224790 */
+	string Shopping_GetRecommendedProducts(1: i32 count, 
+		/** @BrainCloud_clientIndex_desc */
+		2: i32 clientIndex
+	),
+
+	/** @2681224790 */
+	string Shopping_GetProduct(1: string productId, 
 		/** @BrainCloud_clientIndex_desc */
 		2: i32 clientIndex
 	),

@@ -7,8 +7,14 @@
 
 namespace Ruyi.SDK.CommonType
 {
+  /// <summary>
+  /// @PowerOperations_desc
+  /// </summary>
   public enum PowerOperations
   {
+    /// <summary>
+    /// @PowerOperations_None
+    /// </summary>
     None = 0,
     /// <summary>
     /// Restart the device's OS
