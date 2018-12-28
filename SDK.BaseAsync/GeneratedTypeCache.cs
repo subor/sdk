@@ -78,6 +78,8 @@ namespace Ruyi.Layer0
                 tryLoadAssembly("SDK.Gen.CommonAsync");
                 tryLoadAssembly("SDK.Gen.InternalServiceAsync");
 #endif
+
+                tryLoadAssembly("TypeLibAsync");
             }
         }
 
