@@ -30,7 +30,7 @@ service InputManagerService {
 		5: i8 motor2Time
 	),
 
-	/** SetGamepadLight_desc */
+	/** Change the light of gamepad (for ruyi controller only) */
 	bool SetGamepadLight(
 		/** The device id of the gamepad */
 		1: string deviceId, 
