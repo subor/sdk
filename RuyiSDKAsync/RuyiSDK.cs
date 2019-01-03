@@ -1,18 +1,20 @@
-﻿using Ruyi.Layer0;
+﻿using Newtonsoft.Json.Linq;
+using Ruyi.Layer0;
 using Ruyi.Logging;
+using Ruyi.SDK.CommonType;
 using Ruyi.SDK.Constants;
+using Ruyi.SDK.ExternalErrors;
+using Ruyi.SDK.InputManager;
 using Ruyi.SDK.LocalizationService;
 using Ruyi.SDK.MediaService;
 using Ruyi.SDK.Online;
+using Ruyi.SDK.Overlay;
 using Ruyi.SDK.SDKValidator;
 using Ruyi.SDK.Speech;
 using Ruyi.SDK.StorageLayer;
 using Ruyi.SDK.UserServiceExternal;
-using Ruyi.SDK.InputManager;
-using Ruyi.SDK.Overlay;
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -416,5 +418,75 @@ namespace Ruyi
         }
 
         ISDKFactory factory;
+
+        /// <summary>
+        /// Check Json string return from server, and convert to json token
+        /// </summary>
+        /// <param name="result">The json string from server</param>
+        /// <param name="errCode">If result is not correct, then throw the error message base on this error code</param>
+        /// <param name="moduleName">The caller module name</param>
+        /// <param name="callback">The callback function to call before throwing the error</param>
+        /// <param name="args">Argument passed to the error message</param>
+        /// <returns></returns>
+        public static JToken CheckJsonResult(string result, ExternalErrorCode errCode, string moduleName,
+            Action<ErrorException> callback = null, params object[] args)
+        {
+            JToken retJson = null;
+
+            bool bThrowError = false;
+            if (string.IsNullOrEmpty(result))
+            {
+                bThrowError = true;
+            }
+            else
+            {
+                try
+                {
+                    retJson = JToken.Parse(result);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log($">>>>> {ex} {result}", LogLevel.Warn, MessageCategory.Layer0, moduleName);
+                }
+                if (retJson == null || retJson.Value<long>("status") != 200)
+                {
+                    bThrowError = true;
+                }
+            }
+
+            if (bThrowError)
+            {
+                var err = new ErrorException();
+                err.ErrId = (int)errCode;
+
+                var erroInfo = ExternalErrorsSDKDataTypesConstants.EXTERNALERRORLIST.Find((x) => { return x.ErrorCode == errCode; });
+                if (erroInfo != null)
+                {
+                    if (args == null)
+                    {
+                        err.ErrMsg = erroInfo.Description;
+                    }
+                    else
+                    {
+                        err.ErrMsg = string.Format(erroInfo.Description, args);
+                    }
+                }
+                else
+                {
+                    err.ErrMsg = "Unknown error code: " + errCode;
+                }
+
+                if (retJson != null)
+                {
+                    err.ErrMsg += string.Format("\n\tDetail: BCErr_{0}: {1}", retJson.Value<string>("reason_code"), retJson.Value<string>("status_message"));
+                }
+
+                callback?.Invoke(err);
+
+                throw err;
+            }
+
+            return retJson;
+        }
     }
 }
