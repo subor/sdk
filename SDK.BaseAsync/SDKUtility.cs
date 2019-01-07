@@ -1,10 +1,24 @@
 ﻿using System;
 using System.Diagnostics;
 using Newtonsoft.Json.Linq;
-using Ruyi.SDK.CommonType;
 
 namespace Ruyi
 {
+    /// <summary>
+    /// The common error class to describ an internal or external error
+    /// </summary>
+    public class RuyiErrorMessage
+    {
+        /// <summary>
+        /// The id of the error
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
+        /// The error message
+        /// </summary>
+        public string Msg { get; set; }
+    }
+
     /// <summary>
     /// the common Utility class of SDK
     /// </summary>
@@ -28,21 +42,22 @@ namespace Ruyi
         /// <summary>
         /// Check Json string return from server, and convert to json token
         /// </summary>
+        /// <param name="retJson">The json token parsed from result</param>
         /// <param name="result">The json string from server</param>
-        /// <param name="fcGetErrMsg">Function used to get error message. Return (errorId, errorMessage)</param>
+        /// <param name="fcGetErrMsg">Function used to get error message</param>
         /// <param name="moduleName">The caller module name</param>
-        /// <param name="callback">The callback function to call before throwing the error</param>
         /// <param name="args">Argument passed to the error message</param>
         /// <returns></returns>
-        public static JToken CheckJsonResult( string result, Func<(int, string)> fcGetErrMsg, string moduleName,
-            Action<ErrorException> callback = null, params object[] args )
+        public static RuyiErrorMessage CheckJsonResult(out JToken retJson, string result, 
+            Func<RuyiErrorMessage> fcGetErrMsg, string moduleName, params object[] args )
         {
-            JToken retJson = null;
+            RuyiErrorMessage errMsg = null;
+            retJson = null;
 
-            bool bThrowError = false;
+            bool bHasError = false;
             if (string.IsNullOrEmpty(result))
             {
-                bThrowError = true;
+                bHasError = true;
             }
             else
             {
@@ -56,44 +71,33 @@ namespace Ruyi
                 }
                 if (retJson == null || retJson.Value<long>("status") != 200)
                 {
-                    bThrowError = true;
+                    bHasError = true;
                 }
             }
 
-            if (bThrowError)
+            if (bHasError)
             {
-                var err = new ErrorException();
-                (var errId, var errMsg) = fcGetErrMsg();
+                errMsg = fcGetErrMsg();
 
-                err.ErrId = errId;
-
-                if ( !string.IsNullOrEmpty(errMsg) )
+                if ( !string.IsNullOrEmpty(errMsg.Msg) )
                 {
-                    if (args == null || args.Length == 0)
+                    if (args != null && args.Length > 0)
                     {
-                        err.ErrMsg = errMsg;
-                    }
-                    else
-                    {
-                        err.ErrMsg = string.Format(errMsg, args);
+                        errMsg.Msg = string.Format(errMsg.Msg, args);
                     }
                 }
                 else
                 {
-                    err.ErrMsg = "Unknown error code: " + errId;
+                    errMsg.Msg = "Unknown error code: " + errMsg.Id;
                 }
 
                 if (retJson != null)
                 {
-                    err.ErrMsg += string.Format("\n\tDetail: BCErr_{0}: {1}", retJson.Value<string>("reason_code"), retJson.Value<string>("status_message"));
+                    errMsg.Msg += string.Format("\n\tDetail: BCErr_{0}: {1}", retJson.Value<string>("reason_code"), retJson.Value<string>("status_message"));
                 }
-
-                callback?.Invoke(err);
-
-                throw err;
             }
 
-            return retJson;
+            return errMsg;
         }
     }
 }

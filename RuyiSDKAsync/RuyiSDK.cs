@@ -431,7 +431,8 @@ namespace Ruyi
         public static JToken CheckJsonResult(string result, ExternalErrorCode errCode, string moduleName,
             Action<ErrorException> callback = null, params object[] args)
         {
-            Func<(int, string)> getErrMsg = () => {
+            JToken retJson = null;
+            Func<RuyiErrorMessage> getErrMsg = () => {
                 string errMsg = null;
                 var errInfo = ExternalErrorsSDKDataTypesConstants.EXTERNALERRORLIST.Find(
                             (x) => { return x.ErrorCode == errCode; }
@@ -440,10 +441,23 @@ namespace Ruyi
                 {
                     errMsg = errInfo.Description;
                 }
-                return ((int)errCode, errMsg);
+                return new RuyiErrorMessage() { Id = (int)errCode, Msg = errMsg };
             };
 
-            return Ruyi.SDKUtility.CheckJsonResult(result, getErrMsg, moduleName, callback, args);
+            var err = Ruyi.SDKUtility.CheckJsonResult(out retJson, result, getErrMsg, moduleName, args);
+            if ( err != null )
+            {
+                var errEx = new ErrorException()
+                {
+                    ErrId = err.Id,
+                    ErrMsg = err.Msg
+                };
+                callback?.Invoke(errEx);
+
+                throw errEx;
+            }
+
+            return retJson;
         }
     }
 }
