@@ -4674,20 +4674,9 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param clientIndex @BrainCloud_clientIndex_desc
    */
-  void Shopping_AddToCart_SISFO(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) {
+  void Shopping_AddToCart(std::string& _return, const std::string& productId, const int32_t quantity, const int32_t clientIndex) {
     // Your implementation goes here
-    printf("Shopping_AddToCart_SISFO\n");
-  }
-
-  /**
-   * Add a product to the player's shopping cart.
-   * 
-   * @param productIds
-   * @param clientIndex @BrainCloud_clientIndex_desc
-   */
-  void Shopping_AddToCart_ISFO(std::string& _return, const std::vector<std::string> & productIds, const int32_t clientIndex) {
-    // Your implementation goes here
-    printf("Shopping_AddToCart_ISFO\n");
+    printf("Shopping_AddToCart\n");
   }
 
   /**
@@ -4960,14 +4949,15 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   }
 
   /**
-   * @2681224790
+   * @919332756
    * 
-   * @param productId
+   * @param includeCompleted @1616325051
+   * 
    * @param clientIndex @BrainCloud_clientIndex_desc
    */
-  void Shopping_GetProduct(std::string& _return, const std::string& productId, const int32_t clientIndex) {
+  void Shopping_GetMyOrders(std::string& _return, const bool includeCompleted, const int32_t clientIndex) {
     // Your implementation goes here
-    printf("Shopping_GetProduct\n");
+    printf("Shopping_GetMyOrders\n");
   }
 
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {
