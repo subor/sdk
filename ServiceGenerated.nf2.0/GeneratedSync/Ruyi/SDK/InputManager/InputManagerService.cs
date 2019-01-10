@@ -33,7 +33,7 @@ namespace Ruyi.SDK.InputManager
       /// <param name="motor2Time">@SetGamepadVibration_motor2Time_desc</param>
       bool SetGamepadVibration(string deviceId, sbyte motor1Value, sbyte motor1Time, sbyte motor2Value, sbyte motor2Time);
       /// <summary>
-      /// SetGamepadLight_desc
+      /// Change the light of gamepad (for ruyi controller only)
       /// </summary>
       /// <param name="deviceId">The device id of the gamepad</param>
       /// <param name="RValue"></param>
@@ -81,7 +81,7 @@ namespace Ruyi.SDK.InputManager
       bool End_SetGamepadVibration(IAsyncResult asyncResult);
       #endif
       /// <summary>
-      /// SetGamepadLight_desc
+      /// Change the light of gamepad (for ruyi controller only)
       /// </summary>
       /// <param name="deviceId">The device id of the gamepad</param>
       /// <param name="RValue"></param>
@@ -324,7 +324,7 @@ namespace Ruyi.SDK.InputManager
       #endif
 
       /// <summary>
-      /// SetGamepadLight_desc
+      /// Change the light of gamepad (for ruyi controller only)
       /// </summary>
       /// <param name="deviceId">The device id of the gamepad</param>
       /// <param name="RValue"></param>

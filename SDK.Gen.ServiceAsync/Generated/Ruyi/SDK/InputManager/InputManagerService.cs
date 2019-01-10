@@ -44,7 +44,7 @@ namespace Ruyi.SDK.InputManager
       Task<bool> SetGamepadVibrationAsync(string deviceId, sbyte motor1Value, sbyte motor1Time, sbyte motor2Value, sbyte motor2Time, CancellationToken cancellationToken);
 
       /// <summary>
-      /// SetGamepadLight_desc
+      /// Change the light of gamepad (for ruyi controller only)
       /// </summary>
       /// <param name="deviceId">The device id of the gamepad</param>
       /// <param name="RValue"></param>

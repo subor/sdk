@@ -43,7 +43,7 @@ class InputManagerServiceIf {
   virtual bool SetGamepadVibration(const std::string& deviceId, const int8_t motor1Value, const int8_t motor1Time, const int8_t motor2Value, const int8_t motor2Time) = 0;
 
   /**
-   * SetGamepadLight_desc
+   * Change the light of gamepad (for ruyi controller only)
    * 
    * @param deviceId The device id of the gamepad
    * 
