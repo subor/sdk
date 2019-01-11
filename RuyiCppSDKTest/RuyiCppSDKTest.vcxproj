@@ -203,6 +203,7 @@
       <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(SolutionDir)\RuyiSDKCpp\;$(SolutionDir)..\externals\boost_1_64_0;$(SolutionDir)..\externals\thrift.cpp\src;$(SolutionDir)..\externals\jsoncpp\include\json;$(SolutionDir)..\externals\jsoncpp\src\lib_json;$(SolutionDir)\RuyiSDKCpp\Generated\CommonType;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -282,6 +283,7 @@
       <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(SolutionDir)\RuyiSDKCpp\;$(SolutionDir)..\externals\boost_1_64_0;$(SolutionDir)..\externals\thrift.cpp\src;$(SolutionDir)..\externals\jsoncpp\include\json;$(SolutionDir)..\externals\jsoncpp\src\lib_json;$(SolutionDir)\RuyiSDKCpp\Generated\CommonType;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
