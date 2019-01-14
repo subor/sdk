@@ -4960,6 +4960,18 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   }
 
   /**
+   * @919332756
+   * 
+   * @param includeCompleted @1616325051
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_GetMyOrders(std::string& _return, const bool includeCompleted, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetMyOrders\n");
+  }
+
+  /**
    * @2681224790
    * 
    * @param productId

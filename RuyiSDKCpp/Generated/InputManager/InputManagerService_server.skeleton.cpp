@@ -47,7 +47,7 @@ class InputManagerServiceHandler : virtual public InputManagerServiceIf {
   }
 
   /**
-   * SetGamepadLight_desc
+   * Change the light of gamepad (for ruyi controller only)
    * 
    * @param deviceId The device id of the gamepad
    * 

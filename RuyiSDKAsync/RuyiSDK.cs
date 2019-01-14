@@ -1,18 +1,20 @@
-﻿using Ruyi.Layer0;
+﻿using Newtonsoft.Json.Linq;
+using Ruyi.Layer0;
 using Ruyi.Logging;
+using Ruyi.SDK.CommonType;
 using Ruyi.SDK.Constants;
+using Ruyi.SDK.ExternalErrors;
+using Ruyi.SDK.InputManager;
 using Ruyi.SDK.LocalizationService;
 using Ruyi.SDK.MediaService;
 using Ruyi.SDK.Online;
+using Ruyi.SDK.Overlay;
 using Ruyi.SDK.SDKValidator;
 using Ruyi.SDK.Speech;
 using Ruyi.SDK.StorageLayer;
 using Ruyi.SDK.UserServiceExternal;
-using Ruyi.SDK.InputManager;
-using Ruyi.SDK.Overlay;
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -416,5 +418,46 @@ namespace Ruyi
         }
 
         ISDKFactory factory;
+
+        /// <summary>
+        /// Check Json string return from server, and convert to json token
+        /// </summary>
+        /// <param name="result">The json string from server</param>
+        /// <param name="errCode">If result is not correct, then throw the error message base on this error code</param>
+        /// <param name="moduleName">The caller module name</param>
+        /// <param name="callback">The callback function to call before throwing the error</param>
+        /// <param name="args">Argument passed to the error message</param>
+        /// <returns></returns>
+        public static JToken CheckJsonResult(string result, ExternalErrorCode errCode, string moduleName,
+            Action<ErrorException> callback = null, params object[] args)
+        {
+            JToken retJson = null;
+            Func<RuyiErrorMessage> getErrMsg = () => {
+                string errMsg = null;
+                var errInfo = ExternalErrorsSDKDataTypesConstants.EXTERNALERRORLIST.Find(
+                            (x) => { return x.ErrorCode == errCode; }
+                        );
+                if (errInfo != null)
+                {
+                    errMsg = errInfo.Description;
+                }
+                return new RuyiErrorMessage() { Id = (int)errCode, Msg = errMsg };
+            };
+
+            var err = Ruyi.SDKUtility.CheckJsonResult(out retJson, result, getErrMsg, moduleName, args);
+            if ( err != null )
+            {
+                var errEx = new ErrorException()
+                {
+                    ErrId = err.Id,
+                    ErrMsg = err.Msg
+                };
+                callback?.Invoke(errEx);
+
+                throw errEx;
+            }
+
+            return retJson;
+        }
     }
 }
