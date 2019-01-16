@@ -3916,6 +3916,50 @@ class BrainCloudServiceIf {
    * @param clientIndex @BrainCloud_clientIndex_desc
    */
   virtual void Shopping_GetProduct(std::string& _return, const std::string& productId, const int32_t clientIndex) = 0;
+
+  /**
+   * @1777617418
+   * 
+   * @param productId @3110420339
+   * 
+   * @param page @1144882702
+   * 
+   * @param pageSize The size of each page.
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  virtual void Shopping_GetUserTags(std::string& _return, const std::string& productId, const int32_t page, const int32_t pageSize, const int32_t clientIndex) = 0;
+
+  /**
+   * @274383141
+   * 
+   * @param productId @3110420339
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  virtual void Shopping_GetMyUserTags(std::string& _return, const std::string& productId, const int32_t clientIndex) = 0;
+
+  /**
+   * @3717774610
+   * 
+   * @param productId @3110420339
+   * 
+   * @param tag @605655784
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  virtual void Shopping_SubmitUserTag(std::string& _return, const std::string& productId, const std::string& tag, const int32_t clientIndex) = 0;
+
+  /**
+   * @2944656417
+   * 
+   * @param productId @3110420339
+   * 
+   * @param tag @3017888560
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  virtual void Shopping_RemoveUserTag(std::string& _return, const std::string& productId, const std::string& tag, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareScreenshot(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
   virtual void SocialFeed_ShareAchievement(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) = 0;
@@ -5073,6 +5117,18 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
     return;
   }
   void Shopping_GetProduct(std::string& /* _return */, const std::string& /* productId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Shopping_GetUserTags(std::string& /* _return */, const std::string& /* productId */, const int32_t /* page */, const int32_t /* pageSize */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Shopping_GetMyUserTags(std::string& /* _return */, const std::string& /* productId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Shopping_SubmitUserTag(std::string& /* _return */, const std::string& /* productId */, const std::string& /* tag */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Shopping_RemoveUserTag(std::string& /* _return */, const std::string& /* productId */, const std::string& /* tag */, const int32_t /* clientIndex */) {
     return;
   }
   void SocialFeed_ShareVideo(std::string& /* _return */, const int32_t /* timestamp */, const std::string& /* resource */, const std::vector<std::string> & /* tagged */, const std::vector<std::string> & /* show */, const std::vector<std::string> & /* block */, const int32_t /* clientIndex */) {
@@ -45657,6 +45713,478 @@ class BrainCloudService_Shopping_GetProduct_presult {
 
 };
 
+typedef struct _BrainCloudService_Shopping_GetUserTags_args__isset {
+  _BrainCloudService_Shopping_GetUserTags_args__isset() : productId(false), page(false), pageSize(false), clientIndex(false) {}
+  bool productId :1;
+  bool page :1;
+  bool pageSize :1;
+  bool clientIndex :1;
+} _BrainCloudService_Shopping_GetUserTags_args__isset;
+
+class BrainCloudService_Shopping_GetUserTags_args {
+ public:
+
+  BrainCloudService_Shopping_GetUserTags_args(const BrainCloudService_Shopping_GetUserTags_args&);
+  BrainCloudService_Shopping_GetUserTags_args& operator=(const BrainCloudService_Shopping_GetUserTags_args&);
+  BrainCloudService_Shopping_GetUserTags_args() : productId(), page(0), pageSize(0), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Shopping_GetUserTags_args() throw();
+  std::string productId;
+  int32_t page;
+  int32_t pageSize;
+  int32_t clientIndex;
+
+  _BrainCloudService_Shopping_GetUserTags_args__isset __isset;
+
+  void __set_productId(const std::string& val);
+
+  void __set_page(const int32_t val);
+
+  void __set_pageSize(const int32_t val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Shopping_GetUserTags_args & rhs) const
+  {
+    if (!(productId == rhs.productId))
+      return false;
+    if (!(page == rhs.page))
+      return false;
+    if (!(pageSize == rhs.pageSize))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_GetUserTags_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_GetUserTags_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Shopping_GetUserTags_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_GetUserTags_pargs() throw();
+  const std::string* productId;
+  const int32_t* page;
+  const int32_t* pageSize;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_GetUserTags_result__isset {
+  _BrainCloudService_Shopping_GetUserTags_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_GetUserTags_result__isset;
+
+class BrainCloudService_Shopping_GetUserTags_result {
+ public:
+
+  BrainCloudService_Shopping_GetUserTags_result(const BrainCloudService_Shopping_GetUserTags_result&);
+  BrainCloudService_Shopping_GetUserTags_result& operator=(const BrainCloudService_Shopping_GetUserTags_result&);
+  BrainCloudService_Shopping_GetUserTags_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Shopping_GetUserTags_result() throw();
+  std::string success;
+
+  _BrainCloudService_Shopping_GetUserTags_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Shopping_GetUserTags_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_GetUserTags_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_GetUserTags_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_GetUserTags_presult__isset {
+  _BrainCloudService_Shopping_GetUserTags_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_GetUserTags_presult__isset;
+
+class BrainCloudService_Shopping_GetUserTags_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_GetUserTags_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Shopping_GetUserTags_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Shopping_GetMyUserTags_args__isset {
+  _BrainCloudService_Shopping_GetMyUserTags_args__isset() : productId(false), clientIndex(false) {}
+  bool productId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Shopping_GetMyUserTags_args__isset;
+
+class BrainCloudService_Shopping_GetMyUserTags_args {
+ public:
+
+  BrainCloudService_Shopping_GetMyUserTags_args(const BrainCloudService_Shopping_GetMyUserTags_args&);
+  BrainCloudService_Shopping_GetMyUserTags_args& operator=(const BrainCloudService_Shopping_GetMyUserTags_args&);
+  BrainCloudService_Shopping_GetMyUserTags_args() : productId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Shopping_GetMyUserTags_args() throw();
+  std::string productId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Shopping_GetMyUserTags_args__isset __isset;
+
+  void __set_productId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Shopping_GetMyUserTags_args & rhs) const
+  {
+    if (!(productId == rhs.productId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_GetMyUserTags_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_GetMyUserTags_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Shopping_GetMyUserTags_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_GetMyUserTags_pargs() throw();
+  const std::string* productId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_GetMyUserTags_result__isset {
+  _BrainCloudService_Shopping_GetMyUserTags_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_GetMyUserTags_result__isset;
+
+class BrainCloudService_Shopping_GetMyUserTags_result {
+ public:
+
+  BrainCloudService_Shopping_GetMyUserTags_result(const BrainCloudService_Shopping_GetMyUserTags_result&);
+  BrainCloudService_Shopping_GetMyUserTags_result& operator=(const BrainCloudService_Shopping_GetMyUserTags_result&);
+  BrainCloudService_Shopping_GetMyUserTags_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Shopping_GetMyUserTags_result() throw();
+  std::string success;
+
+  _BrainCloudService_Shopping_GetMyUserTags_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Shopping_GetMyUserTags_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_GetMyUserTags_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_GetMyUserTags_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_GetMyUserTags_presult__isset {
+  _BrainCloudService_Shopping_GetMyUserTags_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_GetMyUserTags_presult__isset;
+
+class BrainCloudService_Shopping_GetMyUserTags_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_GetMyUserTags_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Shopping_GetMyUserTags_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Shopping_SubmitUserTag_args__isset {
+  _BrainCloudService_Shopping_SubmitUserTag_args__isset() : productId(false), tag(false), clientIndex(false) {}
+  bool productId :1;
+  bool tag :1;
+  bool clientIndex :1;
+} _BrainCloudService_Shopping_SubmitUserTag_args__isset;
+
+class BrainCloudService_Shopping_SubmitUserTag_args {
+ public:
+
+  BrainCloudService_Shopping_SubmitUserTag_args(const BrainCloudService_Shopping_SubmitUserTag_args&);
+  BrainCloudService_Shopping_SubmitUserTag_args& operator=(const BrainCloudService_Shopping_SubmitUserTag_args&);
+  BrainCloudService_Shopping_SubmitUserTag_args() : productId(), tag(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Shopping_SubmitUserTag_args() throw();
+  std::string productId;
+  std::string tag;
+  int32_t clientIndex;
+
+  _BrainCloudService_Shopping_SubmitUserTag_args__isset __isset;
+
+  void __set_productId(const std::string& val);
+
+  void __set_tag(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Shopping_SubmitUserTag_args & rhs) const
+  {
+    if (!(productId == rhs.productId))
+      return false;
+    if (!(tag == rhs.tag))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_SubmitUserTag_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_SubmitUserTag_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Shopping_SubmitUserTag_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_SubmitUserTag_pargs() throw();
+  const std::string* productId;
+  const std::string* tag;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_SubmitUserTag_result__isset {
+  _BrainCloudService_Shopping_SubmitUserTag_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_SubmitUserTag_result__isset;
+
+class BrainCloudService_Shopping_SubmitUserTag_result {
+ public:
+
+  BrainCloudService_Shopping_SubmitUserTag_result(const BrainCloudService_Shopping_SubmitUserTag_result&);
+  BrainCloudService_Shopping_SubmitUserTag_result& operator=(const BrainCloudService_Shopping_SubmitUserTag_result&);
+  BrainCloudService_Shopping_SubmitUserTag_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Shopping_SubmitUserTag_result() throw();
+  std::string success;
+
+  _BrainCloudService_Shopping_SubmitUserTag_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Shopping_SubmitUserTag_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_SubmitUserTag_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_SubmitUserTag_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_SubmitUserTag_presult__isset {
+  _BrainCloudService_Shopping_SubmitUserTag_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_SubmitUserTag_presult__isset;
+
+class BrainCloudService_Shopping_SubmitUserTag_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_SubmitUserTag_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Shopping_SubmitUserTag_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Shopping_RemoveUserTag_args__isset {
+  _BrainCloudService_Shopping_RemoveUserTag_args__isset() : productId(false), tag(false), clientIndex(false) {}
+  bool productId :1;
+  bool tag :1;
+  bool clientIndex :1;
+} _BrainCloudService_Shopping_RemoveUserTag_args__isset;
+
+class BrainCloudService_Shopping_RemoveUserTag_args {
+ public:
+
+  BrainCloudService_Shopping_RemoveUserTag_args(const BrainCloudService_Shopping_RemoveUserTag_args&);
+  BrainCloudService_Shopping_RemoveUserTag_args& operator=(const BrainCloudService_Shopping_RemoveUserTag_args&);
+  BrainCloudService_Shopping_RemoveUserTag_args() : productId(), tag(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Shopping_RemoveUserTag_args() throw();
+  std::string productId;
+  std::string tag;
+  int32_t clientIndex;
+
+  _BrainCloudService_Shopping_RemoveUserTag_args__isset __isset;
+
+  void __set_productId(const std::string& val);
+
+  void __set_tag(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Shopping_RemoveUserTag_args & rhs) const
+  {
+    if (!(productId == rhs.productId))
+      return false;
+    if (!(tag == rhs.tag))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_RemoveUserTag_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_RemoveUserTag_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Shopping_RemoveUserTag_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_RemoveUserTag_pargs() throw();
+  const std::string* productId;
+  const std::string* tag;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_RemoveUserTag_result__isset {
+  _BrainCloudService_Shopping_RemoveUserTag_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_RemoveUserTag_result__isset;
+
+class BrainCloudService_Shopping_RemoveUserTag_result {
+ public:
+
+  BrainCloudService_Shopping_RemoveUserTag_result(const BrainCloudService_Shopping_RemoveUserTag_result&);
+  BrainCloudService_Shopping_RemoveUserTag_result& operator=(const BrainCloudService_Shopping_RemoveUserTag_result&);
+  BrainCloudService_Shopping_RemoveUserTag_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Shopping_RemoveUserTag_result() throw();
+  std::string success;
+
+  _BrainCloudService_Shopping_RemoveUserTag_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Shopping_RemoveUserTag_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_RemoveUserTag_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_RemoveUserTag_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_RemoveUserTag_presult__isset {
+  _BrainCloudService_Shopping_RemoveUserTag_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_RemoveUserTag_presult__isset;
+
+class BrainCloudService_Shopping_RemoveUserTag_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_RemoveUserTag_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Shopping_RemoveUserTag_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 typedef struct _BrainCloudService_SocialFeed_ShareVideo_args__isset {
   _BrainCloudService_SocialFeed_ShareVideo_args__isset() : timestamp(false), resource(false), tagged(false), show(false), block(false), clientIndex(false) {}
   bool timestamp :1;
@@ -50940,6 +51468,18 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Shopping_GetProduct(std::string& _return, const std::string& productId, const int32_t clientIndex);
   void send_Shopping_GetProduct(const std::string& productId, const int32_t clientIndex);
   void recv_Shopping_GetProduct(std::string& _return);
+  void Shopping_GetUserTags(std::string& _return, const std::string& productId, const int32_t page, const int32_t pageSize, const int32_t clientIndex);
+  void send_Shopping_GetUserTags(const std::string& productId, const int32_t page, const int32_t pageSize, const int32_t clientIndex);
+  void recv_Shopping_GetUserTags(std::string& _return);
+  void Shopping_GetMyUserTags(std::string& _return, const std::string& productId, const int32_t clientIndex);
+  void send_Shopping_GetMyUserTags(const std::string& productId, const int32_t clientIndex);
+  void recv_Shopping_GetMyUserTags(std::string& _return);
+  void Shopping_SubmitUserTag(std::string& _return, const std::string& productId, const std::string& tag, const int32_t clientIndex);
+  void send_Shopping_SubmitUserTag(const std::string& productId, const std::string& tag, const int32_t clientIndex);
+  void recv_Shopping_SubmitUserTag(std::string& _return);
+  void Shopping_RemoveUserTag(std::string& _return, const std::string& productId, const std::string& tag, const int32_t clientIndex);
+  void send_Shopping_RemoveUserTag(const std::string& productId, const std::string& tag, const int32_t clientIndex);
+  void recv_Shopping_RemoveUserTag(std::string& _return);
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex);
   void send_SocialFeed_ShareVideo(const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex);
   void recv_SocialFeed_ShareVideo(std::string& _return);
@@ -51407,6 +51947,10 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Shopping_GetRecommendedProducts(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Shopping_GetMyOrders(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Shopping_GetProduct(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Shopping_GetUserTags(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Shopping_GetMyUserTags(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Shopping_SubmitUserTag(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Shopping_RemoveUserTag(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SocialFeed_ShareVideo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SocialFeed_ShareScreenshot(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_SocialFeed_ShareAchievement(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -51794,6 +52338,10 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Shopping_GetRecommendedProducts"] = &BrainCloudServiceProcessor::process_Shopping_GetRecommendedProducts;
     processMap_["Shopping_GetMyOrders"] = &BrainCloudServiceProcessor::process_Shopping_GetMyOrders;
     processMap_["Shopping_GetProduct"] = &BrainCloudServiceProcessor::process_Shopping_GetProduct;
+    processMap_["Shopping_GetUserTags"] = &BrainCloudServiceProcessor::process_Shopping_GetUserTags;
+    processMap_["Shopping_GetMyUserTags"] = &BrainCloudServiceProcessor::process_Shopping_GetMyUserTags;
+    processMap_["Shopping_SubmitUserTag"] = &BrainCloudServiceProcessor::process_Shopping_SubmitUserTag;
+    processMap_["Shopping_RemoveUserTag"] = &BrainCloudServiceProcessor::process_Shopping_RemoveUserTag;
     processMap_["SocialFeed_ShareVideo"] = &BrainCloudServiceProcessor::process_SocialFeed_ShareVideo;
     processMap_["SocialFeed_ShareScreenshot"] = &BrainCloudServiceProcessor::process_SocialFeed_ShareScreenshot;
     processMap_["SocialFeed_ShareAchievement"] = &BrainCloudServiceProcessor::process_SocialFeed_ShareAchievement;
@@ -55328,6 +55876,46 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
     return;
   }
 
+  void Shopping_GetUserTags(std::string& _return, const std::string& productId, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Shopping_GetUserTags(_return, productId, page, pageSize, clientIndex);
+    }
+    ifaces_[i]->Shopping_GetUserTags(_return, productId, page, pageSize, clientIndex);
+    return;
+  }
+
+  void Shopping_GetMyUserTags(std::string& _return, const std::string& productId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Shopping_GetMyUserTags(_return, productId, clientIndex);
+    }
+    ifaces_[i]->Shopping_GetMyUserTags(_return, productId, clientIndex);
+    return;
+  }
+
+  void Shopping_SubmitUserTag(std::string& _return, const std::string& productId, const std::string& tag, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Shopping_SubmitUserTag(_return, productId, tag, clientIndex);
+    }
+    ifaces_[i]->Shopping_SubmitUserTag(_return, productId, tag, clientIndex);
+    return;
+  }
+
+  void Shopping_RemoveUserTag(std::string& _return, const std::string& productId, const std::string& tag, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Shopping_RemoveUserTag(_return, productId, tag, clientIndex);
+    }
+    ifaces_[i]->Shopping_RemoveUserTag(_return, productId, tag, clientIndex);
+    return;
+  }
+
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -56748,6 +57336,18 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Shopping_GetProduct(std::string& _return, const std::string& productId, const int32_t clientIndex);
   int32_t send_Shopping_GetProduct(const std::string& productId, const int32_t clientIndex);
   void recv_Shopping_GetProduct(std::string& _return, const int32_t seqid);
+  void Shopping_GetUserTags(std::string& _return, const std::string& productId, const int32_t page, const int32_t pageSize, const int32_t clientIndex);
+  int32_t send_Shopping_GetUserTags(const std::string& productId, const int32_t page, const int32_t pageSize, const int32_t clientIndex);
+  void recv_Shopping_GetUserTags(std::string& _return, const int32_t seqid);
+  void Shopping_GetMyUserTags(std::string& _return, const std::string& productId, const int32_t clientIndex);
+  int32_t send_Shopping_GetMyUserTags(const std::string& productId, const int32_t clientIndex);
+  void recv_Shopping_GetMyUserTags(std::string& _return, const int32_t seqid);
+  void Shopping_SubmitUserTag(std::string& _return, const std::string& productId, const std::string& tag, const int32_t clientIndex);
+  int32_t send_Shopping_SubmitUserTag(const std::string& productId, const std::string& tag, const int32_t clientIndex);
+  void recv_Shopping_SubmitUserTag(std::string& _return, const int32_t seqid);
+  void Shopping_RemoveUserTag(std::string& _return, const std::string& productId, const std::string& tag, const int32_t clientIndex);
+  int32_t send_Shopping_RemoveUserTag(const std::string& productId, const std::string& tag, const int32_t clientIndex);
+  void recv_Shopping_RemoveUserTag(std::string& _return, const int32_t seqid);
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex);
   int32_t send_SocialFeed_ShareVideo(const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex);
   void recv_SocialFeed_ShareVideo(std::string& _return, const int32_t seqid);

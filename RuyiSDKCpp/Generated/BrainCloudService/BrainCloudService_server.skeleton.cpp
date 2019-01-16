@@ -4982,6 +4982,62 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("Shopping_GetProduct\n");
   }
 
+  /**
+   * @1777617418
+   * 
+   * @param productId @3110420339
+   * 
+   * @param page @1144882702
+   * 
+   * @param pageSize The size of each page.
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_GetUserTags(std::string& _return, const std::string& productId, const int32_t page, const int32_t pageSize, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetUserTags\n");
+  }
+
+  /**
+   * @274383141
+   * 
+   * @param productId @3110420339
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_GetMyUserTags(std::string& _return, const std::string& productId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_GetMyUserTags\n");
+  }
+
+  /**
+   * @3717774610
+   * 
+   * @param productId @3110420339
+   * 
+   * @param tag @605655784
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_SubmitUserTag(std::string& _return, const std::string& productId, const std::string& tag, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_SubmitUserTag\n");
+  }
+
+  /**
+   * @2944656417
+   * 
+   * @param productId @3110420339
+   * 
+   * @param tag @3017888560
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_RemoveUserTag(std::string& _return, const std::string& productId, const std::string& tag, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_RemoveUserTag\n");
+  }
+
   void SocialFeed_ShareVideo(std::string& _return, const int32_t timestamp, const std::string& resource, const std::vector<std::string> & tagged, const std::vector<std::string> & show, const std::vector<std::string> & block, const int32_t clientIndex) {
     // Your implementation goes here
     printf("SocialFeed_ShareVideo\n");
