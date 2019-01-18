@@ -13,7 +13,7 @@ namespace Ruyi.SDK.CommonType
   public enum LoginState
   {
     /// <summary>
-    /// This state means that the user needs to go through authentication if he wants to use the console. His save date is still in the console and safe. He can access it after authentication (log in process). The portrait is black and white.
+    /// @LoginState_Logout
     /// </summary>
     Logout = 0,
     /// <summary>
