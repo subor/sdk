@@ -4050,12 +4050,58 @@ service BrainCloudService {
 		
 		/** The text of the review. */
 		2: string reviewText, 
-		
-		/** The rating given to the product. */
-		3: i32 rating, 
+		3: bool positive, 
 		
 		/** @BrainCloud_clientIndex_desc */
 		4: i32 clientIndex
+	),
+
+	/** @3972606582 */
+	string Shopping_LikeUserReview(
+		/** The ID of the product being reviewed. */
+		1: string productId, 
+		
+		/** @2487545452 */
+		2: string reviewId, 
+		
+		/** @BrainCloud_clientIndex_desc */
+		3: i32 clientIndex
+	),
+
+	/** @594218927 */
+	string Shopping_UnlikeUserReview(
+		/** The ID of the product being reviewed. */
+		1: string productId, 
+		
+		/** @2487545452 */
+		2: string reviewId, 
+		
+		/** @BrainCloud_clientIndex_desc */
+		3: i32 clientIndex
+	),
+
+	/** @2222188570 */
+	string Shopping_FunnyUserReview(
+		/** The ID of the product being reviewed. */
+		1: string productId, 
+		
+		/** @2487545452 */
+		2: string reviewId, 
+		
+		/** @BrainCloud_clientIndex_desc */
+		3: i32 clientIndex
+	),
+
+	/** @2806051775 */
+	string Shopping_UnfunnyUserReview(
+		/** The ID of the product being reviewed. */
+		1: string productId, 
+		
+		/** @2487545452 */
+		2: string reviewId, 
+		
+		/** @BrainCloud_clientIndex_desc */
+		3: i32 clientIndex
 	),
 
 	/** Return a list of recently created products. */
