@@ -4260,6 +4260,16 @@ service BrainCloudService {
 		3: i32 clientIndex
 	),
 
+	/** @3717774610 */
+	string Shopping_SubmitUserTags(
+		/** @3110420339 */
+		1: string productId, 
+		2: list<string> tags, 
+		
+		/** @BrainCloud_clientIndex_desc */
+		3: i32 clientIndex
+	),
+
 	/** @2944656417 */
 	string Shopping_RemoveUserTag(
 		/** @3110420339 */

@@ -5080,6 +5080,19 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
   }
 
   /**
+   * @3717774610
+   * 
+   * @param productId @3110420339
+   * 
+   * @param tags
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_SubmitUserTags(std::string& _return, const std::string& productId, const std::vector<std::string> & tags, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_SubmitUserTags\n");
+  }
+
+  /**
    * @2944656417
    * 
    * @param productId @3110420339
