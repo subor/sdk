@@ -4816,13 +4816,68 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param reviewText The text of the review.
    * 
-   * @param rating The rating given to the product.
+   * @param positive
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_SubmitUserReview(std::string& _return, const std::string& productId, const std::string& reviewText, const bool positive, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_SubmitUserReview\n");
+  }
+
+  /**
+   * @3972606582
+   * 
+   * @param productId The ID of the product being reviewed.
+   * 
+   * @param reviewId @2487545452
    * 
    * @param clientIndex @BrainCloud_clientIndex_desc
    */
-  void Shopping_SubmitUserReview(std::string& _return, const std::string& productId, const std::string& reviewText, const int32_t rating, const int32_t clientIndex) {
+  void Shopping_LikeUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex) {
     // Your implementation goes here
-    printf("Shopping_SubmitUserReview\n");
+    printf("Shopping_LikeUserReview\n");
+  }
+
+  /**
+   * @594218927
+   * 
+   * @param productId The ID of the product being reviewed.
+   * 
+   * @param reviewId @2487545452
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_UnlikeUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_UnlikeUserReview\n");
+  }
+
+  /**
+   * @2222188570
+   * 
+   * @param productId The ID of the product being reviewed.
+   * 
+   * @param reviewId @2487545452
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_FunnyUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_FunnyUserReview\n");
+  }
+
+  /**
+   * @2806051775
+   * 
+   * @param productId The ID of the product being reviewed.
+   * 
+   * @param reviewId @2487545452
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  void Shopping_UnfunnyUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Shopping_UnfunnyUserReview\n");
   }
 
   /**

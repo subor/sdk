@@ -3790,11 +3790,54 @@ class BrainCloudServiceIf {
    * 
    * @param reviewText The text of the review.
    * 
-   * @param rating The rating given to the product.
+   * @param positive
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  virtual void Shopping_SubmitUserReview(std::string& _return, const std::string& productId, const std::string& reviewText, const bool positive, const int32_t clientIndex) = 0;
+
+  /**
+   * @3972606582
+   * 
+   * @param productId The ID of the product being reviewed.
+   * 
+   * @param reviewId @2487545452
    * 
    * @param clientIndex @BrainCloud_clientIndex_desc
    */
-  virtual void Shopping_SubmitUserReview(std::string& _return, const std::string& productId, const std::string& reviewText, const int32_t rating, const int32_t clientIndex) = 0;
+  virtual void Shopping_LikeUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex) = 0;
+
+  /**
+   * @594218927
+   * 
+   * @param productId The ID of the product being reviewed.
+   * 
+   * @param reviewId @2487545452
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  virtual void Shopping_UnlikeUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex) = 0;
+
+  /**
+   * @2222188570
+   * 
+   * @param productId The ID of the product being reviewed.
+   * 
+   * @param reviewId @2487545452
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  virtual void Shopping_FunnyUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex) = 0;
+
+  /**
+   * @2806051775
+   * 
+   * @param productId The ID of the product being reviewed.
+   * 
+   * @param reviewId @2487545452
+   * 
+   * @param clientIndex @BrainCloud_clientIndex_desc
+   */
+  virtual void Shopping_UnfunnyUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex) = 0;
 
   /**
    * Return a list of recently created products.
@@ -5080,7 +5123,19 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
   void Shopping_GetUserReviews(std::string& /* _return */, const std::string& /* productId */, const int32_t /* page */, const int32_t /* pageSize */, const int32_t /* clientIndex */) {
     return;
   }
-  void Shopping_SubmitUserReview(std::string& /* _return */, const std::string& /* productId */, const std::string& /* reviewText */, const int32_t /* rating */, const int32_t /* clientIndex */) {
+  void Shopping_SubmitUserReview(std::string& /* _return */, const std::string& /* productId */, const std::string& /* reviewText */, const bool /* positive */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Shopping_LikeUserReview(std::string& /* _return */, const std::string& /* productId */, const std::string& /* reviewId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Shopping_UnlikeUserReview(std::string& /* _return */, const std::string& /* productId */, const std::string& /* reviewId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Shopping_FunnyUserReview(std::string& /* _return */, const std::string& /* productId */, const std::string& /* reviewId */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Shopping_UnfunnyUserReview(std::string& /* _return */, const std::string& /* productId */, const std::string& /* reviewId */, const int32_t /* clientIndex */) {
     return;
   }
   void Shopping_GetRecentlyCreatedProducts(std::string& /* _return */, const int32_t /* page */, const int32_t /* pageSize */, const int32_t /* clientIndex */) {
@@ -44194,10 +44249,10 @@ class BrainCloudService_Shopping_GetUserReviews_presult {
 };
 
 typedef struct _BrainCloudService_Shopping_SubmitUserReview_args__isset {
-  _BrainCloudService_Shopping_SubmitUserReview_args__isset() : productId(false), reviewText(false), rating(false), clientIndex(false) {}
+  _BrainCloudService_Shopping_SubmitUserReview_args__isset() : productId(false), reviewText(false), positive(false), clientIndex(false) {}
   bool productId :1;
   bool reviewText :1;
-  bool rating :1;
+  bool positive :1;
   bool clientIndex :1;
 } _BrainCloudService_Shopping_SubmitUserReview_args__isset;
 
@@ -44206,13 +44261,13 @@ class BrainCloudService_Shopping_SubmitUserReview_args {
 
   BrainCloudService_Shopping_SubmitUserReview_args(const BrainCloudService_Shopping_SubmitUserReview_args&);
   BrainCloudService_Shopping_SubmitUserReview_args& operator=(const BrainCloudService_Shopping_SubmitUserReview_args&);
-  BrainCloudService_Shopping_SubmitUserReview_args() : productId(), reviewText(), rating(0), clientIndex(0) {
+  BrainCloudService_Shopping_SubmitUserReview_args() : productId(), reviewText(), positive(0), clientIndex(0) {
   }
 
   virtual ~BrainCloudService_Shopping_SubmitUserReview_args() throw();
   std::string productId;
   std::string reviewText;
-  int32_t rating;
+  bool positive;
   int32_t clientIndex;
 
   _BrainCloudService_Shopping_SubmitUserReview_args__isset __isset;
@@ -44221,7 +44276,7 @@ class BrainCloudService_Shopping_SubmitUserReview_args {
 
   void __set_reviewText(const std::string& val);
 
-  void __set_rating(const int32_t val);
+  void __set_positive(const bool val);
 
   void __set_clientIndex(const int32_t val);
 
@@ -44231,7 +44286,7 @@ class BrainCloudService_Shopping_SubmitUserReview_args {
       return false;
     if (!(reviewText == rhs.reviewText))
       return false;
-    if (!(rating == rhs.rating))
+    if (!(positive == rhs.positive))
       return false;
     if (!(clientIndex == rhs.clientIndex))
       return false;
@@ -44256,7 +44311,7 @@ class BrainCloudService_Shopping_SubmitUserReview_pargs {
   virtual ~BrainCloudService_Shopping_SubmitUserReview_pargs() throw();
   const std::string* productId;
   const std::string* reviewText;
-  const int32_t* rating;
+  const bool* positive;
   const int32_t* clientIndex;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -44313,6 +44368,478 @@ class BrainCloudService_Shopping_SubmitUserReview_presult {
   std::string* success;
 
   _BrainCloudService_Shopping_SubmitUserReview_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Shopping_LikeUserReview_args__isset {
+  _BrainCloudService_Shopping_LikeUserReview_args__isset() : productId(false), reviewId(false), clientIndex(false) {}
+  bool productId :1;
+  bool reviewId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Shopping_LikeUserReview_args__isset;
+
+class BrainCloudService_Shopping_LikeUserReview_args {
+ public:
+
+  BrainCloudService_Shopping_LikeUserReview_args(const BrainCloudService_Shopping_LikeUserReview_args&);
+  BrainCloudService_Shopping_LikeUserReview_args& operator=(const BrainCloudService_Shopping_LikeUserReview_args&);
+  BrainCloudService_Shopping_LikeUserReview_args() : productId(), reviewId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Shopping_LikeUserReview_args() throw();
+  std::string productId;
+  std::string reviewId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Shopping_LikeUserReview_args__isset __isset;
+
+  void __set_productId(const std::string& val);
+
+  void __set_reviewId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Shopping_LikeUserReview_args & rhs) const
+  {
+    if (!(productId == rhs.productId))
+      return false;
+    if (!(reviewId == rhs.reviewId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_LikeUserReview_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_LikeUserReview_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Shopping_LikeUserReview_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_LikeUserReview_pargs() throw();
+  const std::string* productId;
+  const std::string* reviewId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_LikeUserReview_result__isset {
+  _BrainCloudService_Shopping_LikeUserReview_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_LikeUserReview_result__isset;
+
+class BrainCloudService_Shopping_LikeUserReview_result {
+ public:
+
+  BrainCloudService_Shopping_LikeUserReview_result(const BrainCloudService_Shopping_LikeUserReview_result&);
+  BrainCloudService_Shopping_LikeUserReview_result& operator=(const BrainCloudService_Shopping_LikeUserReview_result&);
+  BrainCloudService_Shopping_LikeUserReview_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Shopping_LikeUserReview_result() throw();
+  std::string success;
+
+  _BrainCloudService_Shopping_LikeUserReview_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Shopping_LikeUserReview_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_LikeUserReview_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_LikeUserReview_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_LikeUserReview_presult__isset {
+  _BrainCloudService_Shopping_LikeUserReview_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_LikeUserReview_presult__isset;
+
+class BrainCloudService_Shopping_LikeUserReview_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_LikeUserReview_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Shopping_LikeUserReview_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Shopping_UnlikeUserReview_args__isset {
+  _BrainCloudService_Shopping_UnlikeUserReview_args__isset() : productId(false), reviewId(false), clientIndex(false) {}
+  bool productId :1;
+  bool reviewId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Shopping_UnlikeUserReview_args__isset;
+
+class BrainCloudService_Shopping_UnlikeUserReview_args {
+ public:
+
+  BrainCloudService_Shopping_UnlikeUserReview_args(const BrainCloudService_Shopping_UnlikeUserReview_args&);
+  BrainCloudService_Shopping_UnlikeUserReview_args& operator=(const BrainCloudService_Shopping_UnlikeUserReview_args&);
+  BrainCloudService_Shopping_UnlikeUserReview_args() : productId(), reviewId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Shopping_UnlikeUserReview_args() throw();
+  std::string productId;
+  std::string reviewId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Shopping_UnlikeUserReview_args__isset __isset;
+
+  void __set_productId(const std::string& val);
+
+  void __set_reviewId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Shopping_UnlikeUserReview_args & rhs) const
+  {
+    if (!(productId == rhs.productId))
+      return false;
+    if (!(reviewId == rhs.reviewId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_UnlikeUserReview_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_UnlikeUserReview_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Shopping_UnlikeUserReview_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_UnlikeUserReview_pargs() throw();
+  const std::string* productId;
+  const std::string* reviewId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_UnlikeUserReview_result__isset {
+  _BrainCloudService_Shopping_UnlikeUserReview_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_UnlikeUserReview_result__isset;
+
+class BrainCloudService_Shopping_UnlikeUserReview_result {
+ public:
+
+  BrainCloudService_Shopping_UnlikeUserReview_result(const BrainCloudService_Shopping_UnlikeUserReview_result&);
+  BrainCloudService_Shopping_UnlikeUserReview_result& operator=(const BrainCloudService_Shopping_UnlikeUserReview_result&);
+  BrainCloudService_Shopping_UnlikeUserReview_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Shopping_UnlikeUserReview_result() throw();
+  std::string success;
+
+  _BrainCloudService_Shopping_UnlikeUserReview_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Shopping_UnlikeUserReview_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_UnlikeUserReview_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_UnlikeUserReview_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_UnlikeUserReview_presult__isset {
+  _BrainCloudService_Shopping_UnlikeUserReview_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_UnlikeUserReview_presult__isset;
+
+class BrainCloudService_Shopping_UnlikeUserReview_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_UnlikeUserReview_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Shopping_UnlikeUserReview_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Shopping_FunnyUserReview_args__isset {
+  _BrainCloudService_Shopping_FunnyUserReview_args__isset() : productId(false), reviewId(false), clientIndex(false) {}
+  bool productId :1;
+  bool reviewId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Shopping_FunnyUserReview_args__isset;
+
+class BrainCloudService_Shopping_FunnyUserReview_args {
+ public:
+
+  BrainCloudService_Shopping_FunnyUserReview_args(const BrainCloudService_Shopping_FunnyUserReview_args&);
+  BrainCloudService_Shopping_FunnyUserReview_args& operator=(const BrainCloudService_Shopping_FunnyUserReview_args&);
+  BrainCloudService_Shopping_FunnyUserReview_args() : productId(), reviewId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Shopping_FunnyUserReview_args() throw();
+  std::string productId;
+  std::string reviewId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Shopping_FunnyUserReview_args__isset __isset;
+
+  void __set_productId(const std::string& val);
+
+  void __set_reviewId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Shopping_FunnyUserReview_args & rhs) const
+  {
+    if (!(productId == rhs.productId))
+      return false;
+    if (!(reviewId == rhs.reviewId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_FunnyUserReview_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_FunnyUserReview_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Shopping_FunnyUserReview_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_FunnyUserReview_pargs() throw();
+  const std::string* productId;
+  const std::string* reviewId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_FunnyUserReview_result__isset {
+  _BrainCloudService_Shopping_FunnyUserReview_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_FunnyUserReview_result__isset;
+
+class BrainCloudService_Shopping_FunnyUserReview_result {
+ public:
+
+  BrainCloudService_Shopping_FunnyUserReview_result(const BrainCloudService_Shopping_FunnyUserReview_result&);
+  BrainCloudService_Shopping_FunnyUserReview_result& operator=(const BrainCloudService_Shopping_FunnyUserReview_result&);
+  BrainCloudService_Shopping_FunnyUserReview_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Shopping_FunnyUserReview_result() throw();
+  std::string success;
+
+  _BrainCloudService_Shopping_FunnyUserReview_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Shopping_FunnyUserReview_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_FunnyUserReview_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_FunnyUserReview_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_FunnyUserReview_presult__isset {
+  _BrainCloudService_Shopping_FunnyUserReview_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_FunnyUserReview_presult__isset;
+
+class BrainCloudService_Shopping_FunnyUserReview_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_FunnyUserReview_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Shopping_FunnyUserReview_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Shopping_UnfunnyUserReview_args__isset {
+  _BrainCloudService_Shopping_UnfunnyUserReview_args__isset() : productId(false), reviewId(false), clientIndex(false) {}
+  bool productId :1;
+  bool reviewId :1;
+  bool clientIndex :1;
+} _BrainCloudService_Shopping_UnfunnyUserReview_args__isset;
+
+class BrainCloudService_Shopping_UnfunnyUserReview_args {
+ public:
+
+  BrainCloudService_Shopping_UnfunnyUserReview_args(const BrainCloudService_Shopping_UnfunnyUserReview_args&);
+  BrainCloudService_Shopping_UnfunnyUserReview_args& operator=(const BrainCloudService_Shopping_UnfunnyUserReview_args&);
+  BrainCloudService_Shopping_UnfunnyUserReview_args() : productId(), reviewId(), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Shopping_UnfunnyUserReview_args() throw();
+  std::string productId;
+  std::string reviewId;
+  int32_t clientIndex;
+
+  _BrainCloudService_Shopping_UnfunnyUserReview_args__isset __isset;
+
+  void __set_productId(const std::string& val);
+
+  void __set_reviewId(const std::string& val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Shopping_UnfunnyUserReview_args & rhs) const
+  {
+    if (!(productId == rhs.productId))
+      return false;
+    if (!(reviewId == rhs.reviewId))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_UnfunnyUserReview_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_UnfunnyUserReview_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Shopping_UnfunnyUserReview_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_UnfunnyUserReview_pargs() throw();
+  const std::string* productId;
+  const std::string* reviewId;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_UnfunnyUserReview_result__isset {
+  _BrainCloudService_Shopping_UnfunnyUserReview_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_UnfunnyUserReview_result__isset;
+
+class BrainCloudService_Shopping_UnfunnyUserReview_result {
+ public:
+
+  BrainCloudService_Shopping_UnfunnyUserReview_result(const BrainCloudService_Shopping_UnfunnyUserReview_result&);
+  BrainCloudService_Shopping_UnfunnyUserReview_result& operator=(const BrainCloudService_Shopping_UnfunnyUserReview_result&);
+  BrainCloudService_Shopping_UnfunnyUserReview_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Shopping_UnfunnyUserReview_result() throw();
+  std::string success;
+
+  _BrainCloudService_Shopping_UnfunnyUserReview_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Shopping_UnfunnyUserReview_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Shopping_UnfunnyUserReview_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Shopping_UnfunnyUserReview_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Shopping_UnfunnyUserReview_presult__isset {
+  _BrainCloudService_Shopping_UnfunnyUserReview_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Shopping_UnfunnyUserReview_presult__isset;
+
+class BrainCloudService_Shopping_UnfunnyUserReview_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Shopping_UnfunnyUserReview_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Shopping_UnfunnyUserReview_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -51429,9 +51956,21 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Shopping_GetUserReviews(std::string& _return, const std::string& productId, const int32_t page, const int32_t pageSize, const int32_t clientIndex);
   void send_Shopping_GetUserReviews(const std::string& productId, const int32_t page, const int32_t pageSize, const int32_t clientIndex);
   void recv_Shopping_GetUserReviews(std::string& _return);
-  void Shopping_SubmitUserReview(std::string& _return, const std::string& productId, const std::string& reviewText, const int32_t rating, const int32_t clientIndex);
-  void send_Shopping_SubmitUserReview(const std::string& productId, const std::string& reviewText, const int32_t rating, const int32_t clientIndex);
+  void Shopping_SubmitUserReview(std::string& _return, const std::string& productId, const std::string& reviewText, const bool positive, const int32_t clientIndex);
+  void send_Shopping_SubmitUserReview(const std::string& productId, const std::string& reviewText, const bool positive, const int32_t clientIndex);
   void recv_Shopping_SubmitUserReview(std::string& _return);
+  void Shopping_LikeUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  void send_Shopping_LikeUserReview(const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  void recv_Shopping_LikeUserReview(std::string& _return);
+  void Shopping_UnlikeUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  void send_Shopping_UnlikeUserReview(const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  void recv_Shopping_UnlikeUserReview(std::string& _return);
+  void Shopping_FunnyUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  void send_Shopping_FunnyUserReview(const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  void recv_Shopping_FunnyUserReview(std::string& _return);
+  void Shopping_UnfunnyUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  void send_Shopping_UnfunnyUserReview(const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  void recv_Shopping_UnfunnyUserReview(std::string& _return);
   void Shopping_GetRecentlyCreatedProducts(std::string& _return, const int32_t page, const int32_t pageSize, const int32_t clientIndex);
   void send_Shopping_GetRecentlyCreatedProducts(const int32_t page, const int32_t pageSize, const int32_t clientIndex);
   void recv_Shopping_GetRecentlyCreatedProducts(std::string& _return);
@@ -51935,6 +52474,10 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_Shopping_RemoveFromWishlist_ISFO(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Shopping_GetUserReviews(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Shopping_SubmitUserReview(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Shopping_LikeUserReview(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Shopping_UnlikeUserReview(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Shopping_FunnyUserReview(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Shopping_UnfunnyUserReview(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Shopping_GetRecentlyCreatedProducts(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Shopping_GetRecentlyUpdatedProducts(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Shopping_GetFeaturedProducts(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -52326,6 +52869,10 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["Shopping_RemoveFromWishlist_ISFO"] = &BrainCloudServiceProcessor::process_Shopping_RemoveFromWishlist_ISFO;
     processMap_["Shopping_GetUserReviews"] = &BrainCloudServiceProcessor::process_Shopping_GetUserReviews;
     processMap_["Shopping_SubmitUserReview"] = &BrainCloudServiceProcessor::process_Shopping_SubmitUserReview;
+    processMap_["Shopping_LikeUserReview"] = &BrainCloudServiceProcessor::process_Shopping_LikeUserReview;
+    processMap_["Shopping_UnlikeUserReview"] = &BrainCloudServiceProcessor::process_Shopping_UnlikeUserReview;
+    processMap_["Shopping_FunnyUserReview"] = &BrainCloudServiceProcessor::process_Shopping_FunnyUserReview;
+    processMap_["Shopping_UnfunnyUserReview"] = &BrainCloudServiceProcessor::process_Shopping_UnfunnyUserReview;
     processMap_["Shopping_GetRecentlyCreatedProducts"] = &BrainCloudServiceProcessor::process_Shopping_GetRecentlyCreatedProducts;
     processMap_["Shopping_GetRecentlyUpdatedProducts"] = &BrainCloudServiceProcessor::process_Shopping_GetRecentlyUpdatedProducts;
     processMap_["Shopping_GetFeaturedProducts"] = &BrainCloudServiceProcessor::process_Shopping_GetFeaturedProducts;
@@ -55746,13 +56293,53 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
     return;
   }
 
-  void Shopping_SubmitUserReview(std::string& _return, const std::string& productId, const std::string& reviewText, const int32_t rating, const int32_t clientIndex) {
+  void Shopping_SubmitUserReview(std::string& _return, const std::string& productId, const std::string& reviewText, const bool positive, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Shopping_SubmitUserReview(_return, productId, reviewText, rating, clientIndex);
+      ifaces_[i]->Shopping_SubmitUserReview(_return, productId, reviewText, positive, clientIndex);
     }
-    ifaces_[i]->Shopping_SubmitUserReview(_return, productId, reviewText, rating, clientIndex);
+    ifaces_[i]->Shopping_SubmitUserReview(_return, productId, reviewText, positive, clientIndex);
+    return;
+  }
+
+  void Shopping_LikeUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Shopping_LikeUserReview(_return, productId, reviewId, clientIndex);
+    }
+    ifaces_[i]->Shopping_LikeUserReview(_return, productId, reviewId, clientIndex);
+    return;
+  }
+
+  void Shopping_UnlikeUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Shopping_UnlikeUserReview(_return, productId, reviewId, clientIndex);
+    }
+    ifaces_[i]->Shopping_UnlikeUserReview(_return, productId, reviewId, clientIndex);
+    return;
+  }
+
+  void Shopping_FunnyUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Shopping_FunnyUserReview(_return, productId, reviewId, clientIndex);
+    }
+    ifaces_[i]->Shopping_FunnyUserReview(_return, productId, reviewId, clientIndex);
+    return;
+  }
+
+  void Shopping_UnfunnyUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Shopping_UnfunnyUserReview(_return, productId, reviewId, clientIndex);
+    }
+    ifaces_[i]->Shopping_UnfunnyUserReview(_return, productId, reviewId, clientIndex);
     return;
   }
 
@@ -57297,9 +57884,21 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Shopping_GetUserReviews(std::string& _return, const std::string& productId, const int32_t page, const int32_t pageSize, const int32_t clientIndex);
   int32_t send_Shopping_GetUserReviews(const std::string& productId, const int32_t page, const int32_t pageSize, const int32_t clientIndex);
   void recv_Shopping_GetUserReviews(std::string& _return, const int32_t seqid);
-  void Shopping_SubmitUserReview(std::string& _return, const std::string& productId, const std::string& reviewText, const int32_t rating, const int32_t clientIndex);
-  int32_t send_Shopping_SubmitUserReview(const std::string& productId, const std::string& reviewText, const int32_t rating, const int32_t clientIndex);
+  void Shopping_SubmitUserReview(std::string& _return, const std::string& productId, const std::string& reviewText, const bool positive, const int32_t clientIndex);
+  int32_t send_Shopping_SubmitUserReview(const std::string& productId, const std::string& reviewText, const bool positive, const int32_t clientIndex);
   void recv_Shopping_SubmitUserReview(std::string& _return, const int32_t seqid);
+  void Shopping_LikeUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  int32_t send_Shopping_LikeUserReview(const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  void recv_Shopping_LikeUserReview(std::string& _return, const int32_t seqid);
+  void Shopping_UnlikeUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  int32_t send_Shopping_UnlikeUserReview(const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  void recv_Shopping_UnlikeUserReview(std::string& _return, const int32_t seqid);
+  void Shopping_FunnyUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  int32_t send_Shopping_FunnyUserReview(const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  void recv_Shopping_FunnyUserReview(std::string& _return, const int32_t seqid);
+  void Shopping_UnfunnyUserReview(std::string& _return, const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  int32_t send_Shopping_UnfunnyUserReview(const std::string& productId, const std::string& reviewId, const int32_t clientIndex);
+  void recv_Shopping_UnfunnyUserReview(std::string& _return, const int32_t seqid);
   void Shopping_GetRecentlyCreatedProducts(std::string& _return, const int32_t page, const int32_t pageSize, const int32_t clientIndex);
   int32_t send_Shopping_GetRecentlyCreatedProducts(const int32_t page, const int32_t pageSize, const int32_t clientIndex);
   void recv_Shopping_GetRecentlyCreatedProducts(std::string& _return, const int32_t seqid);
