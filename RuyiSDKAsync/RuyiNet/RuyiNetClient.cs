@@ -75,22 +75,24 @@ namespace Ruyi.SDK.Online
 
                 NewUser = childProfile.data.newUser;
 
-                var payload = new RuyiNetProfileIdRequest() { profileId = profileId };
-                jsonResponse = await BCService.Script_RunParentScriptAsync("GetProfile", JsonConvert.SerializeObject(payload), "RUYI", i, token);
-
-                var profileData = JsonConvert.DeserializeObject<RuyiNetGetProfileResponse>(jsonResponse);
-                if (profileData.status != RuyiNetHttpStatus.OK ||
-                    profileData.data.success == false)
+                jsonResponse = await BCService.Friend_GetSummaryDataForProfileIdAsync(profileId, i, token);
+                var pdata = JsonConvert.DeserializeObject<RuyiNetGetSummaryDataForProfileIdResponse>(jsonResponse);
+                if (pdata.status != RuyiNetHttpStatus.OK)
                 {
                     continue;
                 }
-
-                CurrentPlayers[i] = profileData.data.response;
+                CurrentPlayers[i] = new RuyiNetProfile()
+                {
+                    profileId = pdata.data.playerId,
+                    profileName = pdata.data.playerName,
+                    pictureUrl = pdata.data.pictureUrl,
+                    email = pdata.data.email,
+                };
             }
 
             Initialised = true;
         }
-        
+
         /// <summary>
         /// Cleanup native resources before destruction.
         /// </summary>
@@ -183,7 +185,7 @@ namespace Ruyi.SDK.Online
         {
             get
             {
-                foreach (var i  in CurrentPlayers)
+                foreach (var i in CurrentPlayers)
                 {
                     if (i != null)
                     {
@@ -214,7 +216,7 @@ namespace Ruyi.SDK.Online
         /// Returns TRUE while there are tasks in the queue.
         /// </summary>
         //public bool IsWorking { get { return mTaskQueue.Work > 0; } }
-        
+
         /// <summary>
         /// Cleanup native resources before destruction.
         /// </summary>

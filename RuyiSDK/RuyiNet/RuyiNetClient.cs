@@ -54,7 +54,7 @@ namespace Ruyi.SDK.Online
             EnqueueTask(() =>
             {
                 var hostString = Dns.GetHostName();
-                
+
                 IPHostEntry hostInfo = Dns.GetHostEntry(hostString);
                 foreach (IPAddress ip in hostInfo.AddressList)
                 {
@@ -79,17 +79,20 @@ namespace Ruyi.SDK.Online
 
                     NewUser = childProfile.data.newUser;
 
-                    var payload = new RuyiNetProfileIdRequest() { profileId = profileId };
-                    jsonResponse = BCService.Script_RunParentScript("GetProfile", JsonConvert.SerializeObject(payload), "RUYI", i);
-
-                    var profileData = JsonConvert.DeserializeObject<RuyiNetGetProfileResponse>(jsonResponse);
-                    if (profileData.status != RuyiNetHttpStatus.OK ||
-                        profileData.data.success == false)
+                    jsonResponse = BCService.Friend_GetSummaryDataForProfileId(profileId, i);
+                    var pdata = JsonConvert.DeserializeObject<RuyiNetGetSummaryDataForProfileIdResponse>(jsonResponse);
+                    if (pdata.status != RuyiNetHttpStatus.OK)
                     {
                         continue;
                     }
-
-                    CurrentPlayers[i] = profileData.data.response;
+                    CurrentPlayers[i] = new RuyiNetProfile()
+                    {
+                        profileId = pdata.data.playerId,
+                        profileName = pdata.data.playerName,
+                        pictureUrl = pdata.data.pictureUrl,
+                        email = pdata.data.email,
+                    };
+                    Logging.Logger.Log($"{pdata.data.playerId} {pdata.data.playerName} {pdata.data.pictureUrl} {pdata.data.email}", Logging.LogLevel.Info);
                 }
 
                 var response = new RuyiNetResponse()
@@ -209,7 +212,7 @@ namespace Ruyi.SDK.Online
         {
             get
             {
-                foreach (var i  in CurrentPlayers)
+                foreach (var i in CurrentPlayers)
                 {
                     if (i != null)
                     {
@@ -240,7 +243,7 @@ namespace Ruyi.SDK.Online
         /// Returns TRUE while there are tasks in the queue.
         /// </summary>
         public bool IsWorking { get { return mTaskQueue.Work > 0; } }
-        
+
         /// <summary>
         /// Cleanup native resources before destruction.
         /// </summary>
