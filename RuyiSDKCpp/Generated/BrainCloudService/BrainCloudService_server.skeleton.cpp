@@ -1262,6 +1262,11 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
     printf("File_GetCDNUrl\n");
   }
 
+  void Friend_FindUserByUniversalId(std::string& _return, const std::string& searchText, const int32_t maxResults, const int32_t clientIndex) {
+    // Your implementation goes here
+    printf("Friend_FindUserByUniversalId\n");
+  }
+
   /**
    * Returns a particular entity of a particular friend.
    * 

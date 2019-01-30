@@ -1059,6 +1059,11 @@ service BrainCloudService {
 		3: i32 clientIndex
 	),
 
+	string Friend_FindUserByUniversalId(1: string searchText, 2: i32 maxResults, 
+		/** @BrainCloud_clientIndex_desc */
+		3: i32 clientIndex
+	),
+
 	/** Returns a particular entity of a particular friend. */
 	string Friend_ReadFriendEntity(
 		/** Id of entity to retrieve. */

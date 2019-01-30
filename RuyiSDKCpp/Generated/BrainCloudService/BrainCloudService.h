@@ -1016,6 +1016,7 @@ class BrainCloudServiceIf {
    * @param clientIndex @BrainCloud_clientIndex_desc
    */
   virtual void File_GetCDNUrl(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const int32_t clientIndex) = 0;
+  virtual void Friend_FindUserByUniversalId(std::string& _return, const std::string& searchText, const int32_t maxResults, const int32_t clientIndex) = 0;
 
   /**
    * Returns a particular entity of a particular friend.
@@ -4366,6 +4367,9 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
     return;
   }
   void File_GetCDNUrl(std::string& /* _return */, const std::string& /* cloudPath */, const std::string& /* cloudFilename */, const int32_t /* clientIndex */) {
+    return;
+  }
+  void Friend_FindUserByUniversalId(std::string& /* _return */, const std::string& /* searchText */, const int32_t /* maxResults */, const int32_t /* clientIndex */) {
     return;
   }
   void Friend_ReadFriendEntity(std::string& /* _return */, const std::string& /* entityId */, const std::string& /* friendId */, const int32_t /* clientIndex */) {
@@ -14467,6 +14471,124 @@ class BrainCloudService_File_GetCDNUrl_presult {
   std::string* success;
 
   _BrainCloudService_File_GetCDNUrl_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _BrainCloudService_Friend_FindUserByUniversalId_args__isset {
+  _BrainCloudService_Friend_FindUserByUniversalId_args__isset() : searchText(false), maxResults(false), clientIndex(false) {}
+  bool searchText :1;
+  bool maxResults :1;
+  bool clientIndex :1;
+} _BrainCloudService_Friend_FindUserByUniversalId_args__isset;
+
+class BrainCloudService_Friend_FindUserByUniversalId_args {
+ public:
+
+  BrainCloudService_Friend_FindUserByUniversalId_args(const BrainCloudService_Friend_FindUserByUniversalId_args&);
+  BrainCloudService_Friend_FindUserByUniversalId_args& operator=(const BrainCloudService_Friend_FindUserByUniversalId_args&);
+  BrainCloudService_Friend_FindUserByUniversalId_args() : searchText(), maxResults(0), clientIndex(0) {
+  }
+
+  virtual ~BrainCloudService_Friend_FindUserByUniversalId_args() throw();
+  std::string searchText;
+  int32_t maxResults;
+  int32_t clientIndex;
+
+  _BrainCloudService_Friend_FindUserByUniversalId_args__isset __isset;
+
+  void __set_searchText(const std::string& val);
+
+  void __set_maxResults(const int32_t val);
+
+  void __set_clientIndex(const int32_t val);
+
+  bool operator == (const BrainCloudService_Friend_FindUserByUniversalId_args & rhs) const
+  {
+    if (!(searchText == rhs.searchText))
+      return false;
+    if (!(maxResults == rhs.maxResults))
+      return false;
+    if (!(clientIndex == rhs.clientIndex))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Friend_FindUserByUniversalId_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Friend_FindUserByUniversalId_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class BrainCloudService_Friend_FindUserByUniversalId_pargs {
+ public:
+
+
+  virtual ~BrainCloudService_Friend_FindUserByUniversalId_pargs() throw();
+  const std::string* searchText;
+  const int32_t* maxResults;
+  const int32_t* clientIndex;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Friend_FindUserByUniversalId_result__isset {
+  _BrainCloudService_Friend_FindUserByUniversalId_result__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Friend_FindUserByUniversalId_result__isset;
+
+class BrainCloudService_Friend_FindUserByUniversalId_result {
+ public:
+
+  BrainCloudService_Friend_FindUserByUniversalId_result(const BrainCloudService_Friend_FindUserByUniversalId_result&);
+  BrainCloudService_Friend_FindUserByUniversalId_result& operator=(const BrainCloudService_Friend_FindUserByUniversalId_result&);
+  BrainCloudService_Friend_FindUserByUniversalId_result() : success() {
+  }
+
+  virtual ~BrainCloudService_Friend_FindUserByUniversalId_result() throw();
+  std::string success;
+
+  _BrainCloudService_Friend_FindUserByUniversalId_result__isset __isset;
+
+  void __set_success(const std::string& val);
+
+  bool operator == (const BrainCloudService_Friend_FindUserByUniversalId_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const BrainCloudService_Friend_FindUserByUniversalId_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const BrainCloudService_Friend_FindUserByUniversalId_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _BrainCloudService_Friend_FindUserByUniversalId_presult__isset {
+  _BrainCloudService_Friend_FindUserByUniversalId_presult__isset() : success(false) {}
+  bool success :1;
+} _BrainCloudService_Friend_FindUserByUniversalId_presult__isset;
+
+class BrainCloudService_Friend_FindUserByUniversalId_presult {
+ public:
+
+
+  virtual ~BrainCloudService_Friend_FindUserByUniversalId_presult() throw();
+  std::string* success;
+
+  _BrainCloudService_Friend_FindUserByUniversalId_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -51322,6 +51444,9 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void File_GetCDNUrl(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const int32_t clientIndex);
   void send_File_GetCDNUrl(const std::string& cloudPath, const std::string& cloudFilename, const int32_t clientIndex);
   void recv_File_GetCDNUrl(std::string& _return);
+  void Friend_FindUserByUniversalId(std::string& _return, const std::string& searchText, const int32_t maxResults, const int32_t clientIndex);
+  void send_Friend_FindUserByUniversalId(const std::string& searchText, const int32_t maxResults, const int32_t clientIndex);
+  void recv_Friend_FindUserByUniversalId(std::string& _return);
   void Friend_ReadFriendEntity(std::string& _return, const std::string& entityId, const std::string& friendId, const int32_t clientIndex);
   void send_Friend_ReadFriendEntity(const std::string& entityId, const std::string& friendId, const int32_t clientIndex);
   void recv_Friend_ReadFriendEntity(std::string& _return);
@@ -52352,6 +52477,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_File_DeleteUserFile(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_File_DeleteUserFiles(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_File_GetCDNUrl(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_Friend_FindUserByUniversalId(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Friend_ReadFriendEntity(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Friend_ReadFriendsEntities(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Friend_ReadFriendUserState(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -52748,6 +52874,7 @@ class BrainCloudServiceProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["File_DeleteUserFile"] = &BrainCloudServiceProcessor::process_File_DeleteUserFile;
     processMap_["File_DeleteUserFiles"] = &BrainCloudServiceProcessor::process_File_DeleteUserFiles;
     processMap_["File_GetCDNUrl"] = &BrainCloudServiceProcessor::process_File_GetCDNUrl;
+    processMap_["Friend_FindUserByUniversalId"] = &BrainCloudServiceProcessor::process_Friend_FindUserByUniversalId;
     processMap_["Friend_ReadFriendEntity"] = &BrainCloudServiceProcessor::process_Friend_ReadFriendEntity;
     processMap_["Friend_ReadFriendsEntities"] = &BrainCloudServiceProcessor::process_Friend_ReadFriendsEntities;
     processMap_["Friend_ReadFriendUserState"] = &BrainCloudServiceProcessor::process_Friend_ReadFriendUserState;
@@ -53876,6 +54003,16 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
       ifaces_[i]->File_GetCDNUrl(_return, cloudPath, cloudFilename, clientIndex);
     }
     ifaces_[i]->File_GetCDNUrl(_return, cloudPath, cloudFilename, clientIndex);
+    return;
+  }
+
+  void Friend_FindUserByUniversalId(std::string& _return, const std::string& searchText, const int32_t maxResults, const int32_t clientIndex) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->Friend_FindUserByUniversalId(_return, searchText, maxResults, clientIndex);
+    }
+    ifaces_[i]->Friend_FindUserByUniversalId(_return, searchText, maxResults, clientIndex);
     return;
   }
 
@@ -57265,6 +57402,9 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void File_GetCDNUrl(std::string& _return, const std::string& cloudPath, const std::string& cloudFilename, const int32_t clientIndex);
   int32_t send_File_GetCDNUrl(const std::string& cloudPath, const std::string& cloudFilename, const int32_t clientIndex);
   void recv_File_GetCDNUrl(std::string& _return, const int32_t seqid);
+  void Friend_FindUserByUniversalId(std::string& _return, const std::string& searchText, const int32_t maxResults, const int32_t clientIndex);
+  int32_t send_Friend_FindUserByUniversalId(const std::string& searchText, const int32_t maxResults, const int32_t clientIndex);
+  void recv_Friend_FindUserByUniversalId(std::string& _return, const int32_t seqid);
   void Friend_ReadFriendEntity(std::string& _return, const std::string& entityId, const std::string& friendId, const int32_t clientIndex);
   int32_t send_Friend_ReadFriendEntity(const std::string& entityId, const std::string& friendId, const int32_t clientIndex);
   void recv_Friend_ReadFriendEntity(std::string& _return, const int32_t seqid);
