@@ -9,10 +9,28 @@ The following is meant to be exemplary and will be updated once specification is
 
 Application meta-data is comprised of:
 
-- A manifest describing the application
+- `RuyiManifest.json` describing the application
 - A resource folder containing assets
 
-The [Unity sample](https://github.com/subor/sample_unity_space_shooter) contains an example of application meta-data used by Ruyi platform.  Running `D:\dev\unity_demo>tree /f pack` displays:
+`RuyiManifest.json` must be placed in the same folder as a built app.  This includes all required data and dependencies.
+
+The directory structure should be similar to:
+```
+│   RuyiManifest.json
+│
+├───res
+│   │   i18n.json
+│   │
+│   ├───hd
+│   │       icon.png
+│   │
+│   └───ld
+│           icon.png
+│
+└───<application>
+```
+
+For example, the [Unity sample](https://github.com/subor/sample_unity_space_shooter) contains an example of application meta-data used by Ruyi platform.  Running `D:\dev\unity_demo>tree /f pack` displays:
 ```
 D:\DEV\UNITY_DEMO\PACK
 │   RuyiManifest.json
@@ -35,45 +53,6 @@ D:\DEV\UNITY_DEMO\PACK
 
 The `space_shooter` folder and `space_shooter.exe` should all match the appID value in the manifest file.
 
-## Manifest
-
-App manifest is similar to other platforms and is typically named `RuyiManifest.json`.
-
-Example from the [Unity sample](https://github.com/subor/sample_unity_space_shooter/blob/master/Pack/RuyiManifest.json):
-```json
-{
-	appID: "com.XXX.space_shooter",
-	application:	{
-		name:"@com.XXX.space_shooter",
-		label:"@antestapp",
-		icon:"bluetooth.png",
-		description:"an test app description",
-		logo:"logo.png",
-		activity:[
-			{
-				name:"main",
-				exePath:"space_shooter/space_shooter.exe",
-				label:"main test activity",
-				description:"@antestapp",
-				icon:"logo.png"
-			}
-		]
-	},
-	use_permissions:[
-		{
-			name:"jade.permission.ACHIEVEMENT"
-		}
-	],
-	use_sdk:{
-		minSdkVersion : "1.0.0.0"
-	}
-}
-```
-
-## Overlay
-
-See [overlay compatibility](overlay.md#compatibility)
-
 ## Strings
 
 Localized strings are stored in `res/i18n.json`.
@@ -83,18 +62,95 @@ Example from the [Unity sample](https://github.com/subor/sample_unity_space_shoo
 {
   "i18n": {
     "en-US": {
-      "trc.item.succeed": "pass",
-      "antestapp": "achievement max number allowed for each title",
-      "com.ruyi.TestApp": "against every game, we only allow specific number of achievement to be created"
+      "com.XXX.space_shooter": "Space Shooter",
+      "description": "A description for this App",
     },
     "zh-CN": {
-      "trc.item.succeed": "测试通过",
-      "antestapp": "每款APP所允许的最大的成就数量"
+      "com.XXX.space_shooter": "太空射手",
+      "description": "这个游戏的描述",
     }
   }
 }
 ```
 
+## Manifest
+
+App manifest is similar to other platforms and is named `RuyiManifest.json`.
+
+Example from the [Unity sample](https://github.com/subor/sample_unity_space_shooter/blob/master/Pack/RuyiManifest.json):
+```json
+{
+  "appID": "18258",
+  "version":"1.0.0.0",
+  "use_sdk":{
+    "minSdkVersion" : "1.0.0.0"
+  },
+  "application":	{
+    "name":"@com.XXX.space_shooter",
+    "icon":"SpaceShooter.png",
+    "description":"@antestapp",
+    "properties":[
+      "SinglePlayer",
+      "RuyiAchievements"
+    ],
+    "platform":[
+      "RuyiConsole",
+      "Windows"
+    ],
+    "size":12580,
+    "languages":[
+      {
+        "languageCode":"en-US",
+        "uiInterface":true,
+        "fullAudio":true,
+        "subtitles":true
+      },
+      {
+        "languageCode":"ja-JP",
+        "uiInterface":true,
+        "fullAudio":false,
+        "subtitles":true
+      },
+      {
+        "languageCode":"de-DE",
+        "uiInterface":true,
+        "fullAudio":false,
+        "subtitles":false
+      }
+    ],
+    "activity":[
+      {
+        "name":"main",
+        "exePath":"space_shooter/space_shooter.exe",
+        "description":"@antestapp"
+      }
+    ]
+  },
+  "use_permissions":[
+    {
+      "name":"jade.permission.ACHIEVEMENT"
+    }
+  ]
+}
+```
+
+- __appID__: the application ID (e.g. `"10112"`)
+- __icon__: a filename that exists in both `res/ld/` and `res/hd/`
+- __exePath__: path to application's main executable (e.g. `space_shooter/SpaceShooter.exe`)
+  - Must be child relative to this file; cannot be `../bin/`, etc.
+  - If app is placed in a sub-folder make sure the value of `exePath` reflects this.
+- Strings starting with `@` are references to values in `i18n.json` file
+    - For example, `@com.XXX.space_shooter` will be `Space Shooter` when the system language is English and `太空射手` when Simplified Chinese
+
+
+## Overlay
+
+See [overlay compatibility](overlay.md#compatibility)
+
 ## Images
 
 Images are placed in `res/hd/` and `res/ld` for high-resolution and low-resolution assets, respectively.
+
+## Devtool
+
+Applications can be installed and run with [RuyiDev.exe "App Runner"](devtool.md#app-runner).

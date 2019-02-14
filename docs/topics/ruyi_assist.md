@@ -1,4 +1,4 @@
-# Ruyi Assist
+# Z+ Assist
 
 Helper application in [PC mode](pc_mode.md) providing quick access to certain features.
 

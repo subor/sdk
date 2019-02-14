@@ -2,7 +2,7 @@
 
 These are instructions to setup and manage the SDK on a developer's workstation or the console.
 
-If you received a devkit from us it should already come with the SDK pre-installed to `c:\ruyi`.  But, the following instructions can be used to update it.
+If you received a devkit from us it should come with the SDK pre-installed to `c:\ruyi`.  But, the following instructions can be used to update it.
 
 ## Prerequisites
 
@@ -64,8 +64,7 @@ End result should be directory structure similar to the following:
 Details regarding the SDK can be found [here](../topics/sdk.md).
 
 ### Notes
-1. All assemblies above should be the same version, you can check by right-clicking a exe/dll, and select __properties->details->file version__
-1. When upgrading, delete the old version first.  That is, don't overwrite the old version with a new one.  This is to ensure files unneeded are removed.
+1. All assemblies above should be the same version, you can check by right-clicking an exe/dll, and select __Properties > Details > File version__
 
 
 ## Login
@@ -86,6 +85,7 @@ __Next step:__
 
 ## Updating SDK
 
-1. Close Main Client and layer0 (if running)
+1. Close Main Client and [stop layer0](../topics/layer0.md)
 1. Delete old SDK folder
+    - Don't just overwrite the old version with a new one.  This is to ensure files unneeded are removed.
 1. Follow [download & install steps](#SDK-Download-and-Installation) above

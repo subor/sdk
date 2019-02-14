@@ -84,6 +84,3 @@ Make sureyou backed up data you need before flash from Windows OS since RuyiOS w
 
 See [Ruyi OS installation instructions](os.md#Installation).
 
-## Resources
-
-- [Support files](https://bitbucket.org/playruyi/support/src/master/files/)

@@ -23,7 +23,7 @@ Assistance for any plugin is available via `RuyiDev.exe <plugin> -h`.
 For example, `RuyiDev.exe settingtool -h` outputs:
 
 ```
-D:\git\jade\dev_tools\Main\bin\Debug>ruyidev.exe settingtool -h
+D:\jade\dev_tools\Main\bin\Debug>ruyidev.exe settingtool -h
 
 Usage: 'RuyiDev [<Options>+] settingtool [<args>]'
 

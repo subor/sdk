@@ -1,17 +1,17 @@
-# Run Unity sample on devkit
+# Run Unity sample on Console
 
-In this tutorial we're going to install an example based on [Unity 3D](https://unity3d.com/) to a devkit and launch it.
+In this tutorial we're going to install an example based on [Unity 3D](https://unity3d.com/) to a console and launch it.
 
 ## Prerequsites
 - Unity 2017.1.1f1 (newer versions likely work)
-- Ruyi console or PC running Windows 10 (demo has not been tested on mobile/Linux/OSX)
+- Ruyi console
 
 ## Steps
 
-1. On the devkit, [launch platform and login](setup.md)
-1. Get IPv4 address of devkit (here we will assume `192.168.1.1`).  On the devkit:
-    - Check main client
-    - Open a command prompt and run `ipconfig`
+1. On the console, [launch platform and login](setup.md)
+1. Get IPv4 address of console (here we will assume `192.168.1.1`).  On the devkit:
+    - In main client: __Settings > Network > Check Network Status > IP Address__
+    - In [PC mode](../topics/pc_mode), open a command prompt and run `ipconfig`
 1. [Download sample](https://github.com/subor/sample_unity_space_shooter) to local PC (here we will assume `d:\dev\unity_demo`).
 1. Setup the SDK
     - Download the [latest version of the SDK](https://github.com/subor/sdk/releases)

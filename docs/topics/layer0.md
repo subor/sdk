@@ -19,7 +19,7 @@ Online services are provided by a customized instance of [brainCloud](http://get
 Layer0 is designed to run as a Windows service.
 
 1. Run `cmd.exe` as __Administrator__
-1. `zpLayer0.exe --install --start` to install and start layer0
+1. `layer0.exe --install --start` to install and start layer0
 
 Once installed, layer0 can be started/stopped via `services.msc`:  
 ![](/docs/img/services.png)
@@ -30,9 +30,4 @@ Once installed, layer0 can be started/stopped via `services.msc`:
 Or, to stop it from the command-line:
 
 1. Run `cmd.exe` as __Administrator__
-1. `zpLayer0.exe --stop`
-
-Alternatively, it can be run as a console application:
-
-1. If it is already running as a service, stop it
-1. Double-click `zpLayer0.exe`
+1. `layer0.exe --stop`

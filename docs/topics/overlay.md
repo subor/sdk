@@ -2,22 +2,18 @@
 
 The overlay is based off technology licensed from [Evolve](www.evolvehq.com) and provides the following functionality:  
 
-* "Overlay" UI displayed on top of apps (including pop-up notifications for achievements, etc.)
-* Taking screenshots
-* [Input](#input) from devices (as an alternative to implementing input portion of SDK)
+* [In-app "overlay" UI](#Overlay-ui) displayed on top of apps (including pop-up notifications for achievements, etc.)
+* [Taking screenshots](#Screenshots)
+* [Input](#input.md) from devices (as an alternative to implementing input portion of SDK)
+* __Coming soon:__ Recording video (see [DVR](dvr.md))
+
 
 ![](/docs/img/warning.png) The following are not (yet) supported:  
 
-* __Coming Soon__ Recording video (see [DVR](dvr.md))
 * Vulkan (coming less soon)
 * HDR10 (not coming soon; see [hardware](hardware.md))
 
-It is implemented via [dll injection](https://en.wikipedia.org/wiki/DLL_injection) (also called dll hooking) so it works without requiring any modifications in compatible applications.  However, this might cause problems if your game uses anti-cheat middleware.
-
-It already supports over 5000 games.  Your game can be made compatible with any of the following methods:
-- __Coming Soon__ Automatic compatibility via `RuyiManifest.json`
-- Creating a [manifest entry](#manifest)
-- Editing [Gamesdb.xml](#gamesdb.xml)
+It is implemented via [dll injection](https://en.wikipedia.org/wiki/DLL_injection) (also called dll hooking) so it works without requiring any modifications to applications (it currently supports over 5000 games).  However, this might cause problems if your game uses anti-cheat middleware.
 
 ## API
 
@@ -25,9 +21,16 @@ Compatible apps don't __have__ to do anything with the SDK.
 
 However, there are some functions related to the overlay in the SDK.  For example, apps can trigger a screenshot.  [See SDK documentation](https://subor.github.io/api/cs/en-US/html/609b22ad-556e-51d2-22a5-112ae52e4d9c.htm) for details.
 
-## Manifest
+## Compatibility
 
-A compatibility entry may be placed in the [application manifest](app_metadata.md):
+Your game can be made compatible with any of the following methods:
+- __Coming Soon__ Automatic compatibility via `RuyiManifest.json`
+- Creating a [manifest entry](#manifest)
+- Editing [Gamesdb.xml](#gamesdb.xml)
+
+### Manifest
+
+Apps can be made compatible with the overlay by placing an entry in the [RuyiManifest](app_metadata.md):
 
 ```json
 {
@@ -51,10 +54,7 @@ A compatibility entry may be placed in the [application manifest](app_metadata.m
 }
 ```
 
-The JSON is similar to that of the [gamesdb.xml format](gamesdb_format.md).  For examples, see:  
-
-- [Unity sample](https://github.com/subor/sample_unity_space_shooter/blob/master/Pack/RuyiManifest.json)
-- [UE4 sample](https://github.com/subor/sample_ue4_platformer/blob/master/Pack/RuyiManifest.json)
+The JSON structure is derived from the [gamesdb.xml format](#gamesdb.xml).
 
 Use [devtool](devtool) to check the overlay works with your app:
 
@@ -67,40 +67,7 @@ Use [devtool](devtool) to check the overlay works with your app:
 
 ![](/docs/img/devtool_update_gamesdb.png)
 
-
-## Input
-
-Instead of integrating the input portion of the SDK, you may be able to leverage dll hooking of input APIs.  This _might_ work if your app uses any of the following:
-
-- Engines: UE4
-- Middleware: [SDL](http://libsdl.org/)
-- APIs: [XInput or DirectInput](https://docs.microsoft.com/en-us/windows/desktop/xinput/xinput-and-directinput)
-
-This currently does __NOT__ work if your app uses:
-- __Coming Soon__ DirectInput and ANSI (`UNICODE`/`_UNICODE` not defined)
-- __Coming Soon__ [New Unity input system](https://github.com/Unity-Technologies/InputSystem)
-- [HID API](https://docs.microsoft.com/en-us/windows-hardware/drivers/hid/introduction-to-hid-concepts) (support will be added in the future)
-- [Unity Input](https://docs.unity3d.com/ScriptReference/Input.html) (which uses HID)
-
-
-```xml
-<runtime>
-    <ruyifeatures>
-        <ruyi_xinput enabled="true" />
-    </ruyifeatures>
-</runtime>
-```
-
-## Debugging
-
-Some registry values in `HKLM/Software/Subor/Ruyi` can be set (or created):
-
-| Name | Type | Description
-|-|-|-
-| `EnableDisplayDriverLogging` | DWORD | If __1__, additional logging is done
-| `DisplayDriverLogFilePath` | string/REG_SZ | Path of file for log output
-
-## Gamesdb.xml
+### Gamesdb.xml
 
 The recommended way to make your app compatible is via [`RuyiManifest.json`](#manifest).  Alternatively, compatible apps may be listed in `RuyiOverlay/Resources/DeployRes/gamesdb.xml`.
 
@@ -128,3 +95,46 @@ The recommended way to make your app compatible is via [`RuyiManifest.json`](#ma
 1. Restart layer0
 
 __In most cases__, a simple entry like above will suffice.  For more advanced uses, consult [gamesdb.xml format](gamesdb_format.md).
+
+## Overlay UI
+
+## Screenshots
+
+In-app screenshots may be taken via any of the following mechanisms:
+
+- __Coming Soon__ Ruyi controller's _share_ button
+- Gamepad or keyboard shortcut ([details](input.md))
+- Selecting menu option in [overlay UI](#Overlay-UI)
+- Programmatically from app via Ruyi SDK
+
+## Input
+
+Instead of integrating the input portion of the SDK, you may be able to leverage dll hooking of input APIs.  This _might_ work if your app uses any of the following:
+
+- Engines: UE4
+- Middleware: [SDL](http://libsdl.org/)
+- APIs: [XInput or DirectInput](https://docs.microsoft.com/en-us/windows/desktop/xinput/xinput-and-directinput)
+
+This currently does __NOT__ work if your app uses:
+- __Coming Soon__ [New Unity input system](https://github.com/Unity-Technologies/InputSystem)
+- [HID API](https://docs.microsoft.com/en-us/windows-hardware/drivers/hid/introduction-to-hid-concepts) (support will be added in the future)
+- [Unity Input](https://docs.unity3d.com/ScriptReference/Input.html) (which uses HID)
+
+
+```json
+"runtime": {
+    "ruyifeatures":{
+
+    }
+}
+```
+
+## Debugging
+
+Some registry values in `HKLM/Software/Subor/Ruyi` can be set (or created):
+
+| Name | Type | Description
+|-|-|-
+| `EnableDisplayDriverLogging` | DWORD | If __1__, additional logging is done
+| `DisplayDriverLogFilePath` | string/REG_SZ | Path of file for log output
+
