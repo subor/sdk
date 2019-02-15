@@ -16,5 +16,6 @@ namespace Ruyi.SDK.CommonType
     FriendAccept = 1,
     BluetoothDeviceStatusChanged = 2,
     NetworkStatusChanged = 3,
+    SMSCodeHasBeenSent = 4,
   }
 }

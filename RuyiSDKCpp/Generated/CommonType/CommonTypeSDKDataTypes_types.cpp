@@ -99,15 +99,17 @@ int _kTitleMainIconNotificationTypeValues[] = {
   TitleMainIconNotificationType::FriendRequest,
   TitleMainIconNotificationType::FriendAccept,
   TitleMainIconNotificationType::BluetoothDeviceStatusChanged,
-  TitleMainIconNotificationType::NetworkStatusChanged
+  TitleMainIconNotificationType::NetworkStatusChanged,
+  TitleMainIconNotificationType::SMSCodeHasBeenSent
 };
 const char* _kTitleMainIconNotificationTypeNames[] = {
   "FriendRequest",
   "FriendAccept",
   "BluetoothDeviceStatusChanged",
-  "NetworkStatusChanged"
+  "NetworkStatusChanged",
+  "SMSCodeHasBeenSent"
 };
-const std::map<int, const char*> _TitleMainIconNotificationType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(4, _kTitleMainIconNotificationTypeValues, _kTitleMainIconNotificationTypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
+const std::map<int, const char*> _TitleMainIconNotificationType_VALUES_TO_NAMES(::apache::thrift::TEnumIterator(5, _kTitleMainIconNotificationTypeValues, _kTitleMainIconNotificationTypeNames), ::apache::thrift::TEnumIterator(-1, NULL, NULL));
 
 std::ostream& operator<<(std::ostream& out, const TitleMainIconNotificationType::type& val) {
   std::map<int, const char*>::const_iterator it = _TitleMainIconNotificationType_VALUES_TO_NAMES.find(val);

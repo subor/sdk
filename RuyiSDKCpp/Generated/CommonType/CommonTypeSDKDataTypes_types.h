@@ -69,7 +69,8 @@ struct TitleMainIconNotificationType {
     FriendRequest = 0,
     FriendAccept = 1,
     BluetoothDeviceStatusChanged = 2,
-    NetworkStatusChanged = 3
+    NetworkStatusChanged = 3,
+    SMSCodeHasBeenSent = 4
   };
 };
 
