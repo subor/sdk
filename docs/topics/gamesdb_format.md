@@ -63,7 +63,7 @@ And `TYPE`, `TYPE_ATTR`, and `ADDITIONAL_ARG` are defined as follows:
 If __TYPE__ is `file-present` or `file-absent`, the `file` attribute may use the following macros:
 
 | Macro | Description
-|-|-|-
+|-|-
 | `{exedir}` | Directory containing running executable
 | `{exe}` | Name of running executable
 

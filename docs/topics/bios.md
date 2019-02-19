@@ -10,9 +10,10 @@ This document will be removed in the future.
 
 __Checking BIOS version of Running Machine__
 
-- When machine starts
-    1. Press `F2` to enter BIOS setup
-    1. Enter __Setup Utility -> Main -> BIOS Version__
+- In Ruyi client
+    1. Go to __Settings > System > System Information__
+    1. Check versions
+    ![](/docs/img/version.png)
 
 OR
 
@@ -25,7 +26,7 @@ __Checking BIOS version of Install Media__
 
 If archive is named `DA220013.zip` then it is version __0.13__.
 
-Check the top of the `DA220REL.txt` file:
+You can verify version number in `DA220REL.txt` file:
 ```
 *   [Version]:
 *   BIOS Version:  DA220013.rom (V0.13)
@@ -50,12 +51,15 @@ __Important__:
 | 0.09 | 0.3 | 0.0.7.2 2017/12/15
 | 0.08 | 0.3 | 0.0.7.2 2017/12/15
 
-Because the BIOS flashing process was changed, please observe the following rules:  
+Because the BIOS flashing process was changed, please follow the steps below for how-to:
 
-| Installed BIOS | BIOS to Flash | Rule
+Skipping steps may cause failure
+
+| Current BIOS | Target BIOS| Rule
 |-|-|-
-0.15-0.20 | 1.01(or later) | __Winflash__: First update to __1.00__; and then update to more recent BIOS/OS.<br/>  __EFI flash__: 1. Disable Secure boot (F2->Secure Boot Option->Erase all Secure Boot Settings); and then update to __1.00__; At last, update to more recent BIOS/OS.
-| 0.09-0.13 | 1.01 (or later) | __EFI flash__: First update to BIOS __0.15__, and then update to __1.00__; at last, update to more recent BIOS/OS.<br/>  __Winflash__: First update to __1.00__ (Machine will freeze for a few minutes, please wait.);  and then update to more recent BIOS/OS.
+1.00 and forward | Latest | __Winflash__: Update to target version directly
+|0.15-0.20 | Latest | __Winflash__: First update to __1.00__; and then update to the latest BIOS/OS.<br/>
+| 0.09-0.13 | Latest |  __Winflash__: First update to __1.00__ (Machine will freeze for a few minutes, please wait.);  and then update to more recent BIOS/OS.
 
 
 Also see:
@@ -65,70 +69,14 @@ Also see:
 
 ## Flashing the BIOS
 
-The BIOS can be flashed from Windows (the preferred method) or via EFI shell with thumb drive.
+Make sureyou backed up data you need before flash from Windows OS since RuyiOS will be unbootable and you have to restore OS afterwards.
 
-![](/docs/img/warning.png) [BIOS](bios.md) updates cannot be done in [PC mode](pc_mode.md).  Starting with OS 0.6, make sure you are __not__ in PC mode before updating the BIOS.
 
-__Flash under Windows__
-
-Available BIOS v0.13 and later:
-
-1. In [Command Prompt with administrator rights](https://technet.microsoft.com/en-us/library/cc947813(v=ws.10).aspx) run: `manage-bde.exe -protectors -disable c:`
-    - This temporarily disables Bitlocker.  __Failure to do this results in an unbootable OS__ due to lost encryption data in TPM chip.
 1. Download the [latest BIOS zip file](https://github.com/subor/sdk/releases)
 1. Extract the zip file and locate `Winflash/` folder
 1. Run `DA22XXXX.exe` to flash BIOS
 
-Flashing will progress as follows:
 
-| Installed BIOS | BIOS to Flash | Process
-|-|-|-
-| 0.16 and up | | Machine will reboot, BIOS install screen will appear, machine will reboot when finished.
-| 0.15 or lower | 0.16 or higher | Machine will freeze for a few minutes and become responsive when finished.  Manually restart the machine.
-| 0.15 or lower | 0.13 to 0.15 | A GUI window will appear
-
-__Flash with EFI shell__
-
-_This approach is only needed in situations where no OS is installed.  We recommend flashing the BIOS under Windows._
-
-First, create USB flash drive:
-
-1. Create bootable USB drive formatted with FAT32 filesystem
-1. Unzip [EFI shell files](https://bitbucket.org/playruyi/support/raw/master/files/bios/efi.zip) to root of USB drive
-1. Unzip [BIOS binaries](https://bitbucket.org/playruyi/support/src/master/files/bios/) to root of USB drive
-
-Resulting directory structure should be similar to the following:
-```
-<USB root>
-│
-├───Shell
-│       DA220010.rom
-│       flash.nsh
-│       H2OFFT-Sx64.efi
-│       PLATFORM.INI
-│
-└───efi
-    └───boot
-            BOOTX64.efi
-```
-
-Next, on the Ruyi:
-
-1. If Windows is already installed, in [Command Prompt with administrator rights](https://technet.microsoft.com/en-us/library/cc947813(v=ws.10).aspx) run: `manage-bde.exe -protectors -disable c:`
-    - This temporarily disables Bitlocker.  __Failure to do this results in an unbootable OS__ due to lost encryption data in TPM chip.
-1. Plug USB drive into any of Ruyi's USB ports and reboot it
-1. Wait for EFI Shell prompt to appear:
-
-       Shell>
-
-1. Consult the _Device mapping table_ for the name of the USB drive
-    - It should be `fs0` or `fs1`
-    - Type `fs0:` (or `fs1:`) and press `Enter` then run `dir` to locate the _Shell_ folder on the USB drive
-1. Change to USB drive with `fs0:` (or `fs1:`), then enter _Shell_ folder with `cd shell`
-1. Start flashing the BIOS by running `flash.nsh`
-    - A progress bar should be displayed during the flashing process
-1. Wait around 1 minute for the flashing to complete
-1. Remove the USB stick and reboot machine
 
 ## Installing Ruyi OS
 
@@ -136,6 +84,3 @@ Next, on the Ruyi:
 
 See [Ruyi OS installation instructions](os.md#Installation).
 
-## Resources
-
-- [Support files](https://bitbucket.org/playruyi/support/src/master/files/)
