@@ -31,7 +31,7 @@ namespace Ruyi.SDK.CommonType
   public partial class Runtime : TBase
   {
     private Features _features;
-    private RuyiFeatures _ruyifeatures;
+    private RuyiFeatures _RuyiFeatures;
 
     /// <summary>
     /// @Runtime_features_desc
@@ -50,18 +50,18 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
-    /// @Runtime_ruyifeatures_desc
+    /// @Runtime_RuyiFeatures_desc
     /// </summary>
-    public RuyiFeatures Ruyifeatures
+    public RuyiFeatures RuyiFeatures
     {
       get
       {
-        return _ruyifeatures;
+        return _RuyiFeatures;
       }
       set
       {
-        __isset.ruyifeatures = true;
-        this._ruyifeatures = value;
+        __isset.RuyiFeatures = true;
+        this._RuyiFeatures = value;
       }
     }
 
@@ -70,7 +70,7 @@ namespace Ruyi.SDK.CommonType
     public struct Isset
     {
       public bool features;
-      public bool ruyifeatures;
+      public bool RuyiFeatures;
     }
 
     public Runtime()
@@ -108,8 +108,8 @@ namespace Ruyi.SDK.CommonType
             case 2:
               if (field.Type == TType.Struct)
               {
-                Ruyifeatures = new RuyiFeatures();
-                await Ruyifeatures.ReadAsync(iprot, cancellationToken);
+                RuyiFeatures = new RuyiFeatures();
+                await RuyiFeatures.ReadAsync(iprot, cancellationToken);
               }
               else
               {
@@ -149,13 +149,13 @@ namespace Ruyi.SDK.CommonType
           await Features.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        if (Ruyifeatures != null && __isset.ruyifeatures)
+        if (RuyiFeatures != null && __isset.RuyiFeatures)
         {
-          field.Name = "ruyifeatures";
+          field.Name = "RuyiFeatures";
           field.Type = TType.Struct;
           field.ID = 2;
           await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Ruyifeatures.WriteAsync(oprot, cancellationToken);
+          await RuyiFeatures.WriteAsync(oprot, cancellationToken);
           await oprot.WriteFieldEndAsync(cancellationToken);
         }
         await oprot.WriteFieldStopAsync(cancellationToken);
@@ -178,12 +178,12 @@ namespace Ruyi.SDK.CommonType
         sb.Append("Features: ");
         sb.Append(Features== null ? "<null>" : Features.ToString());
       }
-      if (Ruyifeatures != null && __isset.ruyifeatures)
+      if (RuyiFeatures != null && __isset.RuyiFeatures)
       {
         if(!__first) { sb.Append(", "); }
         __first = false;
-        sb.Append("Ruyifeatures: ");
-        sb.Append(Ruyifeatures== null ? "<null>" : Ruyifeatures.ToString());
+        sb.Append("RuyiFeatures: ");
+        sb.Append(RuyiFeatures== null ? "<null>" : RuyiFeatures.ToString());
       }
       sb.Append(")");
       return sb.ToString();

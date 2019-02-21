@@ -36,7 +36,7 @@ enum UserType {
 
 /** @LoginState_desc */
 enum LoginState {
-    /** @LoginState_Logout */
+    /** This state means that the user needs to go through authentication if he wants to use the console. His save date is still in the console and safe. He can access it after authentication (log in process). The portrait is black and white. */
 	Logout = 0,
     /** @LoginState_Login */
 	Login = 1,
