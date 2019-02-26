@@ -380,9 +380,10 @@ class BrainCloudServiceHandler : virtual public BrainCloudServiceIf {
    * 
    * @param forceCreate Whether or not to create a new player if they don't exist.
    * 
+   * @param isInternational
    * @param clientIndex @BrainCloud_clientIndex_desc
    */
-  void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex) {
+  void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const bool isInternational, const int32_t clientIndex) {
     // Your implementation goes here
     printf("Authentication_RequestSmsCode\n");
   }

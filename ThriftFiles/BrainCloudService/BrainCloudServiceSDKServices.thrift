@@ -331,9 +331,10 @@ service BrainCloudService {
 		
 		/** Whether or not to create a new player if they don't exist. */
 		2: bool forceCreate, 
+		3: bool isInternational, 
 		
 		/** @BrainCloud_clientIndex_desc */
-		3: i32 clientIndex
+		4: i32 clientIndex
 	),
 
 	string Authentication_CheckUsernameExists(1: string gameId, 2: string playerName, 

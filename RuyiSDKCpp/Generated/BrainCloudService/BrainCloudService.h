@@ -319,9 +319,10 @@ class BrainCloudServiceIf {
    * 
    * @param forceCreate Whether or not to create a new player if they don't exist.
    * 
+   * @param isInternational
    * @param clientIndex @BrainCloud_clientIndex_desc
    */
-  virtual void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex) = 0;
+  virtual void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const bool isInternational, const int32_t clientIndex) = 0;
   virtual void Authentication_CheckUsernameExists(std::string& _return, const std::string& gameId, const std::string& playerName, const int32_t clientIndex) = 0;
 
   /**
@@ -4178,7 +4179,7 @@ class BrainCloudServiceNull : virtual public BrainCloudServiceIf {
   void Authentication_ResetEmailPassword(std::string& /* _return */, const std::string& /* externalId */, const int32_t /* clientIndex */) {
     return;
   }
-  void Authentication_RequestSmsCode(std::string& /* _return */, const std::string& /* phoneNumber */, const bool /* forceCreate */, const int32_t /* clientIndex */) {
+  void Authentication_RequestSmsCode(std::string& /* _return */, const std::string& /* phoneNumber */, const bool /* forceCreate */, const bool /* isInternational */, const int32_t /* clientIndex */) {
     return;
   }
   void Authentication_CheckUsernameExists(std::string& /* _return */, const std::string& /* gameId */, const std::string& /* playerName */, const int32_t /* clientIndex */) {
@@ -7799,9 +7800,10 @@ class BrainCloudService_Authentication_ResetEmailPassword_presult {
 };
 
 typedef struct _BrainCloudService_Authentication_RequestSmsCode_args__isset {
-  _BrainCloudService_Authentication_RequestSmsCode_args__isset() : phoneNumber(false), forceCreate(false), clientIndex(false) {}
+  _BrainCloudService_Authentication_RequestSmsCode_args__isset() : phoneNumber(false), forceCreate(false), isInternational(false), clientIndex(false) {}
   bool phoneNumber :1;
   bool forceCreate :1;
+  bool isInternational :1;
   bool clientIndex :1;
 } _BrainCloudService_Authentication_RequestSmsCode_args__isset;
 
@@ -7810,12 +7812,13 @@ class BrainCloudService_Authentication_RequestSmsCode_args {
 
   BrainCloudService_Authentication_RequestSmsCode_args(const BrainCloudService_Authentication_RequestSmsCode_args&);
   BrainCloudService_Authentication_RequestSmsCode_args& operator=(const BrainCloudService_Authentication_RequestSmsCode_args&);
-  BrainCloudService_Authentication_RequestSmsCode_args() : phoneNumber(), forceCreate(0), clientIndex(0) {
+  BrainCloudService_Authentication_RequestSmsCode_args() : phoneNumber(), forceCreate(0), isInternational(0), clientIndex(0) {
   }
 
   virtual ~BrainCloudService_Authentication_RequestSmsCode_args() throw();
   std::string phoneNumber;
   bool forceCreate;
+  bool isInternational;
   int32_t clientIndex;
 
   _BrainCloudService_Authentication_RequestSmsCode_args__isset __isset;
@@ -7824,6 +7827,8 @@ class BrainCloudService_Authentication_RequestSmsCode_args {
 
   void __set_forceCreate(const bool val);
 
+  void __set_isInternational(const bool val);
+
   void __set_clientIndex(const int32_t val);
 
   bool operator == (const BrainCloudService_Authentication_RequestSmsCode_args & rhs) const
@@ -7831,6 +7836,8 @@ class BrainCloudService_Authentication_RequestSmsCode_args {
     if (!(phoneNumber == rhs.phoneNumber))
       return false;
     if (!(forceCreate == rhs.forceCreate))
+      return false;
+    if (!(isInternational == rhs.isInternational))
       return false;
     if (!(clientIndex == rhs.clientIndex))
       return false;
@@ -7855,6 +7862,7 @@ class BrainCloudService_Authentication_RequestSmsCode_pargs {
   virtual ~BrainCloudService_Authentication_RequestSmsCode_pargs() throw();
   const std::string* phoneNumber;
   const bool* forceCreate;
+  const bool* isInternational;
   const int32_t* clientIndex;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -51261,8 +51269,8 @@ class BrainCloudServiceClient : virtual public BrainCloudServiceIf {
   void Authentication_ResetEmailPassword(std::string& _return, const std::string& externalId, const int32_t clientIndex);
   void send_Authentication_ResetEmailPassword(const std::string& externalId, const int32_t clientIndex);
   void recv_Authentication_ResetEmailPassword(std::string& _return);
-  void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex);
-  void send_Authentication_RequestSmsCode(const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex);
+  void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const bool isInternational, const int32_t clientIndex);
+  void send_Authentication_RequestSmsCode(const std::string& phoneNumber, const bool forceCreate, const bool isInternational, const int32_t clientIndex);
   void recv_Authentication_RequestSmsCode(std::string& _return);
   void Authentication_CheckUsernameExists(std::string& _return, const std::string& gameId, const std::string& playerName, const int32_t clientIndex);
   void send_Authentication_CheckUsernameExists(const std::string& gameId, const std::string& playerName, const int32_t clientIndex);
@@ -53422,13 +53430,13 @@ class BrainCloudServiceMultiface : virtual public BrainCloudServiceIf {
     return;
   }
 
-  void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex) {
+  void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const bool isInternational, const int32_t clientIndex) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->Authentication_RequestSmsCode(_return, phoneNumber, forceCreate, clientIndex);
+      ifaces_[i]->Authentication_RequestSmsCode(_return, phoneNumber, forceCreate, isInternational, clientIndex);
     }
-    ifaces_[i]->Authentication_RequestSmsCode(_return, phoneNumber, forceCreate, clientIndex);
+    ifaces_[i]->Authentication_RequestSmsCode(_return, phoneNumber, forceCreate, isInternational, clientIndex);
     return;
   }
 
@@ -57219,8 +57227,8 @@ class BrainCloudServiceConcurrentClient : virtual public BrainCloudServiceIf {
   void Authentication_ResetEmailPassword(std::string& _return, const std::string& externalId, const int32_t clientIndex);
   int32_t send_Authentication_ResetEmailPassword(const std::string& externalId, const int32_t clientIndex);
   void recv_Authentication_ResetEmailPassword(std::string& _return, const int32_t seqid);
-  void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex);
-  int32_t send_Authentication_RequestSmsCode(const std::string& phoneNumber, const bool forceCreate, const int32_t clientIndex);
+  void Authentication_RequestSmsCode(std::string& _return, const std::string& phoneNumber, const bool forceCreate, const bool isInternational, const int32_t clientIndex);
+  int32_t send_Authentication_RequestSmsCode(const std::string& phoneNumber, const bool forceCreate, const bool isInternational, const int32_t clientIndex);
   void recv_Authentication_RequestSmsCode(std::string& _return, const int32_t seqid);
   void Authentication_CheckUsernameExists(std::string& _return, const std::string& gameId, const std::string& playerName, const int32_t clientIndex);
   int32_t send_Authentication_CheckUsernameExists(const std::string& gameId, const std::string& playerName, const int32_t clientIndex);
