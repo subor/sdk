@@ -56,5 +56,4 @@ Consult the latest [UE4 packaging documentation](https://docs.unrealengine.com/l
                 |       
                 \---ld
 
-1. Use [devtool AppRunner](devtool.md) to pack, install, and run the application:  
-    ![](/docs/img/devtool_ue4_runner.png)
+1. Use [devtool AppRunner](devtool.md) to install and run the application

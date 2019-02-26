@@ -1,26 +1,28 @@
-#Prepare
-1. Connect a keyboard to the RUYI device;
-2. Connect network cable to Internet (Optional);
-3. One USB disk, more than 6GB, fat32 format.
+# Prepare
+1. Connect a keyboard to the RUYI device
+1. Connect network cable to Internet (optional)
+1. One USB disk, more than 6GB, fat32 format.
 
-##Step A: Make a Recovery USB drive (USB)  
+## Step 1: Make a Recovery USB drive (USB)  
 
-###Method 1:  Manually Download source
+There are two ways to create a recovery USB:
+1. Manually download image
+1. Use BIOS Internet Recovery
+
+### Method A:  Manually Download Image
 1. Download RUYI OS image  
 1. Unzip and copy OS files to root of bootable USB drive. (There is an EFI folder in the root path)  
-1. Plug USB drive into system.   
-1. Press power button to boot the system  
-1. Follow the guide to finish the recovery
+1. Plug USB drive into system.
+1. Turn on or reboot the system
 
-###Method 2: Use BIOS Internet Recovery
+### Method B: Use BIOS Internet Recovery
 1. Press power button to boot the system  
-1. Press F11(Keyboard) or “↑”+”Y”+”L1”+”R1” (gamepad) to Enter into Recovery UI;  
-1. Plug USB drive into RUYI device, Connect network cable to Internet  
-1. Follow the guide to finish the recovery  
+1. Press `F11` (keyboard) or `↑+Y+L1+R1` (gamepad) to enter recovery mode
+1. Plug USB drive into console, connect network cable to Internet
+1. Follow onscreen directions
 
-##Step B: Follow the guide to finish the recovery  
-1. Update BIOS (Option)  
-Recovery Process will detect the BIOS and show this step if it need to update the BIOS.  
+## Step 2: Follow Onscreen Guide to Finish Recovery  
+1. If the BIOS needs to be updated this screen will appear.  Otherwise skip to the next step.  
 ![](/docs/img/update_bios.png)  
 1. Clean HDD Confirm  
 ![](/docs/img/clean_hdd.png)  

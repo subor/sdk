@@ -19,3 +19,10 @@ All the following steps should be done on your local PC.
     ```
     ruyidev.exe apprunner --runapp --workingchannellist=dev --installedapplist=com.playruyi.unreal_demo
     ```
+
+## Additional Information
+
+- [Running Apps](../topics/run_app.md)
+- [RuyiManifest](../topics/app_metadata)
+- [Sign Tool](../topics/devtool#sign-tool)
+- [App Runner](../topics/devtool#app-runner)

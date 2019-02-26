@@ -1,25 +1,26 @@
-# Summary
-Start from 0.9.3, we no longer use *app packer* to pack the app before installing it into the kit, instead we use [Microsoft Sync Framework](https://www.microsoft.com/en-us/download/details.aspx?id=19502) to sync the build to the target kit(just during the development), so we don't have to like   
-- Pack 100Gb file every time
-- Send the whold package each time the build updated
+# Running Apps
 
-So, we **Must** install [Microsoft Sync Framework](https://www.microsoft.com/en-us/download/details.aspx?id=19502) (choose <u>**Synchronization-v2.1-x64-ENU.msi**</u>) on devkits and anywhere you use devtools.   
-- It already included in latest OS image ([v1.09]() or later), you'll need to update the OS if you want to test your app in console mode. [OS](os.md)   
-- You can also install it on PC mode and test your app there, if you don't like to update the OS.   
+This document covers how developers can run applications on a devkit/console.
 
-# How to run the app
+Starting with 0.9.3, *App Runner* in no longer needed to pack apps before installation.  Instead, the [Microsoft Sync Framework](https://msdn.microsoft.com/en-us/library/mt763482.aspx?f=255&MSPPError=-2147217396) (see [dev environment](dev_onboarding.md) pre-requisites) is used to sync builds to a target machine.  This avoids unnecessary work like:  
+- Creating large compressed archives
+- Re-transferring an entire build when many files are unchanged
+
+The [Microsoft Sync Framework](dev_onboarding.md) __must be installed on devkits and anywhere you use devtools__.  It is pre-installed in the latest [OS](os.md) image ([v1.09]() or later) for both console and [PC mode](pc_mode.md).
+
+## How to run the app
 There are the basic steps for testing your app on the console.  
-1. Integrate [Ruyi SDK](sdk.md) into your app. (optional)
-1. Create the [App manifest file](app_metadata.md).
-1. Sign the app if you want to test it in console mode. [Sign Tool](devtool.md#sign-tool)
+1. Integrate [Ruyi SDK](sdk.md) into your app
+1. Create a [RuyiManifest.json](app_metadata.md) at the root of a build
+1. If using console mode (i.e. not in [PC mode](pc_mode.md)), you __must__ enable developer mode in _Settings_ and [sign the app](devtool.md#sign-tool)
 1. Open [Dev Tools](devtool.md)
 1. Choose _App Runner_, fill the proper IP address and choose your manifest file
 1. Click _Install App_ 
-1. Wait it to finish   
+1. Wait for it to finish
 
 Done and have fun!!
- > IF error happens, make sure [Microsoft Sync Framework](https://www.microsoft.com/en-us/download/details.aspx?id=19502) has been installed on your PC and the target console, or the OS has been updated to the correct version ([v1.09]() or later) if you're in console mode.
+ > IF error happens, make sure the Microsoft Sync Framework has been installed on your PC and the target console has been updated to the latest version of the [OS](os.md).
 
-# Limitations
-- You'll be required to provide admin priviledge while doing first time installation via dev-tool(we need this to open a specific port for sync), just click yes, we'll fix this later by our dev-tool installer.
-- We're using __net.tcp__ protocol to do the sync, currently it will only support install to the console located in the same LAN with from where your dev-tool running.
+## Limitations
+- You may be asked for admin priviledges the first time you install an app with devtool (we need to open a specific port for sync).  Click __Yes__.
+- The sync is done over _TCP_ protocol.  Currently it only supports machines located in the same LAN as where devtool is running.

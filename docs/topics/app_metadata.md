@@ -19,13 +19,11 @@ The directory structure should be similar to:
 │   RuyiManifest.json
 │
 ├───res
-│   │   i18n.json
+│   ├───i18n.json
 │   │
-│   ├───hd
-│   │       icon.png
+│   ├───hd/
 │   │
-│   └───ld
-│           icon.png
+│   └───ld/
 │
 └───<application>
 ```
@@ -39,10 +37,10 @@ D:\DEV\UNITY_DEMO\PACK
 │   │   i18n.json
 │   │
 │   ├───hd
-│   │       bluetooth.png
+│   │       icon.png
 │   │
 │   └───ld
-│           bluetooth.png
+│           icon.png
 │
 └───space_shooter
     │   space_shooter.exe
@@ -51,7 +49,7 @@ D:\DEV\UNITY_DEMO\PACK
         ...
 ```
 
-The `space_shooter` folder and `space_shooter.exe` should all match the appID value in the manifest file.
+The `space_shooter` folder and `space_shooter.exe` should all match the `AppID` value in the manifest file.
 
 ## Strings
 
@@ -62,11 +60,11 @@ Example from the [Unity sample](https://github.com/subor/sample_unity_space_shoo
 {
   "i18n": {
     "en-US": {
-      "com.XXX.space_shooter": "Space Shooter",
+      "com.playruyi.space_shooter": "Space Shooter",
       "description": "A description for this App",
     },
     "zh-CN": {
-      "com.XXX.space_shooter": "太空射手",
+      "com.playruyi.space_shooter": "太空射手",
       "description": "这个游戏的描述",
     }
   }
@@ -77,70 +75,72 @@ Example from the [Unity sample](https://github.com/subor/sample_unity_space_shoo
 
 App manifest is similar to other platforms and is named `RuyiManifest.json`.
 
+It is JSON where all keys/attributes are [_PascalCase_](https://en.wikipedia.org/wiki/Camel_case).
+
 Example from the [Unity sample](https://github.com/subor/sample_unity_space_shooter/blob/master/Pack/RuyiManifest.json):
 ```json
 {
-  "appID": "18258",
-  "version":"1.0.0.0",
-  "use_sdk":{
-    "minSdkVersion" : "1.0.0.0"
-  },
-  "application":	{
-    "name":"@com.XXX.space_shooter",
-    "icon":"SpaceShooter.png",
-    "description":"@antestapp",
-    "properties":[
-      "SinglePlayer",
-      "RuyiAchievements"
-    ],
-    "platform":[
-      "RuyiConsole",
-      "Windows"
-    ],
-    "size":12580,
-    "languages":[
-      {
-        "languageCode":"en-US",
-        "uiInterface":true,
-        "fullAudio":true,
-        "subtitles":true
-      },
-      {
-        "languageCode":"ja-JP",
-        "uiInterface":true,
-        "fullAudio":false,
-        "subtitles":true
-      },
-      {
-        "languageCode":"de-DE",
-        "uiInterface":true,
-        "fullAudio":false,
-        "subtitles":false
-      }
-    ],
-    "activity":[
-      {
-        "name":"main",
-        "exePath":"space_shooter/space_shooter.exe",
-        "description":"@antestapp"
-      }
-    ]
-  },
-  "use_permissions":[
-    {
-      "name":"jade.permission.ACHIEVEMENT"
-    }
-  ]
+	"AppId": "18258",
+	"Version":"1.0.0.0",
+	"Sdk":{
+		"MinSdkVersion" : "1.0.0.0"
+	},
+	"Application":	{
+		"Name":"@com.playruyi.space_shooter",
+		"Icon":"icon.png",
+		"Description":"@description",
+		"Properties":[
+			"SinglePlayer",
+			"RuyiAchievements"
+		],
+		"Platform":[
+			"RuyiConsole",
+			"Windows"
+		],
+		"Size":12580,
+		"Languages":[
+			{
+				"LanguageCode":"en-US",
+				"Ui":true,
+				"FullAudio":true,
+				"Subtitles":true
+			},
+			{
+				"LanguageCode":"ja-JP",
+				"Ui":true,
+				"FullAudio":false,
+				"Subtitles":true
+			},
+			{
+				"LanguageCode":"de-DE",
+				"Ui":true,
+				"FullAudio":false,
+				"Subtitles":false
+			}
+		],
+		"Activity":[
+			{
+				"Name":"main",
+				"ExePath":"space_shooter/SpaceShooter.exe",
+				"Description":"@description"
+			}
+		]
+	},
+	"Permissions":[
+		{
+			"Name":"jade.permission.ACHIEVEMENT"
+		}
+	]
 }
 ```
 
-- __appID__: the application ID (e.g. `"10112"`)
-- __icon__: a filename that exists in both `res/ld/` and `res/hd/`
-- __exePath__: path to application's main executable (e.g. `space_shooter/SpaceShooter.exe`)
+- __AppId__: the application ID (e.g. `"10112"`)
+- __Icon__: a filename that exists in both `res/ld/` and `res/hd/`
+- __ExePath__: path to application's main executable (e.g. `space_shooter/SpaceShooter.exe`)
   - Must be child relative to this file; cannot be `../bin/`, etc.
-  - If app is placed in a sub-folder make sure the value of `exePath` reflects this.
+  - If app is placed in a sub-folder make sure the value of `ExePath` reflects this.
 - Strings starting with `@` are references to values in `i18n.json` file
-    - For example, `@com.XXX.space_shooter` will be `Space Shooter` when the system language is English and `太空射手` when Simplified Chinese
+    - For example, `@com.playruyi.space_shooter` will be `Space Shooter` when the system language is English and `太空射手` when Simplified Chinese
 
 
 ## Overlay
