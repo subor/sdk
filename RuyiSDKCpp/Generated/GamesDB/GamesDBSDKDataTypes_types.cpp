@@ -566,8 +566,8 @@ void Runtime::__set_features(const Features& val) {
   this->features = val;
 }
 
-void Runtime::__set_RuyiFeatures(const RuyiFeatures& val) {
-  this->RuyiFeatures = val;
+void Runtime::__set_ruyiFeatures(const RuyiFeatures& val) {
+  this->ruyiFeatures = val;
 }
 std::ostream& operator<<(std::ostream& out, const Runtime& obj)
 {
@@ -607,8 +607,8 @@ uint32_t Runtime::read(::apache::thrift::protocol::TProtocol* iprot) {
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_STRUCT) {
-          xfer += this->RuyiFeatures.read(iprot);
-          this->__isset.RuyiFeatures = true;
+          xfer += this->ruyiFeatures.read(iprot);
+          this->__isset.ruyiFeatures = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -634,8 +634,8 @@ uint32_t Runtime::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += this->features.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("RuyiFeatures", ::apache::thrift::protocol::T_STRUCT, 2);
-  xfer += this->RuyiFeatures.write(oprot);
+  xfer += oprot->writeFieldBegin("ruyiFeatures", ::apache::thrift::protocol::T_STRUCT, 2);
+  xfer += this->ruyiFeatures.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -646,18 +646,18 @@ uint32_t Runtime::write(::apache::thrift::protocol::TProtocol* oprot) const {
 void swap(Runtime &a, Runtime &b) {
   using ::std::swap;
   swap(a.features, b.features);
-  swap(a.RuyiFeatures, b.RuyiFeatures);
+  swap(a.ruyiFeatures, b.ruyiFeatures);
   swap(a.__isset, b.__isset);
 }
 
 Runtime::Runtime(const Runtime& other8) {
   features = other8.features;
-  RuyiFeatures = other8.RuyiFeatures;
+  ruyiFeatures = other8.ruyiFeatures;
   __isset = other8.__isset;
 }
 Runtime& Runtime::operator=(const Runtime& other9) {
   features = other9.features;
-  RuyiFeatures = other9.RuyiFeatures;
+  ruyiFeatures = other9.ruyiFeatures;
   __isset = other9.__isset;
   return *this;
 }
@@ -665,7 +665,7 @@ void Runtime::printTo(std::ostream& out) const {
   using ::apache::thrift::to_string;
   out << "Runtime(";
   out << "features=" << to_string(features);
-  out << ", " << "RuyiFeatures=" << to_string(RuyiFeatures);
+  out << ", " << "ruyiFeatures=" << to_string(ruyiFeatures);
   out << ")";
 }
 

@@ -27,7 +27,7 @@ namespace Ruyi.SDK.CommonType
   public partial class Runtime : TBase
   {
     private Features _features;
-    private RuyiFeatures _RuyiFeatures;
+    private RuyiFeatures _ruyiFeatures;
 
     /// <summary>
     /// @Runtime_features_desc
@@ -46,18 +46,18 @@ namespace Ruyi.SDK.CommonType
     }
 
     /// <summary>
-    /// @Runtime_RuyiFeatures_desc
+    /// @Runtime_ruyiFeatures_desc
     /// </summary>
     public RuyiFeatures RuyiFeatures
     {
       get
       {
-        return _RuyiFeatures;
+        return _ruyiFeatures;
       }
       set
       {
-        __isset.RuyiFeatures = true;
-        this._RuyiFeatures = value;
+        __isset.ruyiFeatures = true;
+        this._ruyiFeatures = value;
       }
     }
 
@@ -68,7 +68,7 @@ namespace Ruyi.SDK.CommonType
     #endif
     public struct Isset {
       public bool features;
-      public bool RuyiFeatures;
+      public bool ruyiFeatures;
     }
 
     public Runtime() {
@@ -134,8 +134,8 @@ namespace Ruyi.SDK.CommonType
           Features.Write(oprot);
           oprot.WriteFieldEnd();
         }
-        if (RuyiFeatures != null && __isset.RuyiFeatures) {
-          field.Name = "RuyiFeatures";
+        if (RuyiFeatures != null && __isset.ruyiFeatures) {
+          field.Name = "ruyiFeatures";
           field.Type = TType.Struct;
           field.ID = 2;
           oprot.WriteFieldBegin(field);
@@ -160,7 +160,7 @@ namespace Ruyi.SDK.CommonType
         __sb.Append("Features: ");
         __sb.Append(Features== null ? "<null>" : Features.ToString());
       }
-      if (RuyiFeatures != null && __isset.RuyiFeatures) {
+      if (RuyiFeatures != null && __isset.ruyiFeatures) {
         if(!__first) { __sb.Append(", "); }
         __first = false;
         __sb.Append("RuyiFeatures: ");

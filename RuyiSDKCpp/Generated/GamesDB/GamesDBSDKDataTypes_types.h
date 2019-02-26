@@ -257,9 +257,9 @@ void swap(RuyiFeatures &a, RuyiFeatures &b);
 std::ostream& operator<<(std::ostream& out, const RuyiFeatures& obj);
 
 typedef struct _Runtime__isset {
-  _Runtime__isset() : features(false), RuyiFeatures(false) {}
+  _Runtime__isset() : features(false), ruyiFeatures(false) {}
   bool features :1;
-  bool RuyiFeatures :1;
+  bool ruyiFeatures :1;
 } _Runtime__isset;
 
 class Runtime : public virtual ::apache::thrift::TBase {
@@ -272,19 +272,19 @@ class Runtime : public virtual ::apache::thrift::TBase {
 
   virtual ~Runtime() throw();
   Features features;
-  RuyiFeatures RuyiFeatures;
+  RuyiFeatures ruyiFeatures;
 
   _Runtime__isset __isset;
 
   void __set_features(const Features& val);
 
-  void __set_RuyiFeatures(const RuyiFeatures& val);
+  void __set_ruyiFeatures(const RuyiFeatures& val);
 
   bool operator == (const Runtime & rhs) const
   {
     if (!(features == rhs.features))
       return false;
-    if (!(RuyiFeatures == rhs.RuyiFeatures))
+    if (!(ruyiFeatures == rhs.ruyiFeatures))
       return false;
     return true;
   }
