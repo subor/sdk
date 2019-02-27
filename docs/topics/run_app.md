@@ -2,7 +2,7 @@
 
 This document covers how developers can run applications on a devkit/console.
 
-Starting with 0.9.3, *App Runner* in no longer needed to pack apps before installation.  Instead, the [Microsoft Sync Framework](https://msdn.microsoft.com/en-us/library/mt763482.aspx?f=255&MSPPError=-2147217396) (see [dev environment](dev_onboarding.md) pre-requisites) is used to sync builds to a target machine.  This avoids unnecessary work like:  
+Starting with 0.9.3.3995, *App Runner* in no longer needed to pack apps before installation.  Instead, the [Microsoft Sync Framework](https://msdn.microsoft.com/en-us/library/mt763482.aspx?f=255&MSPPError=-2147217396) (see [dev environment](dev_onboarding.md) pre-requisites) is used to sync builds to a target machine.  This avoids unnecessary work like:  
 - Creating large compressed archives
 - Re-transferring an entire build when many files are unchanged
 
