@@ -118,6 +118,9 @@ namespace Ruyi
         /// <remarks>
         /// Must set <see cref="SDKFeatures.Storage"/> in <see cref="RuyiSDKContext.EnabledFeatures"/>.
         /// </remarks>
+        /// <example>
+        /// <code source="sdk/doctests/doctests.cs" region="Storage"></code>
+        /// </example>
         public StorageLayerService.Client Storage { get; private set; }
 
         /// <summary>

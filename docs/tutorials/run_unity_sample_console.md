@@ -38,6 +38,7 @@ In this tutorial we're going to install an example based on [Unity 3D](https://u
 
 ## Additional Information
 
+- [Running Apps](../topics/run_app.md)
 - [RuyiManifest](../topics/app_metadata)
 - [Sign Tool](../topics/devtool#sign-tool)
 - [App Runner](../topics/devtool#app-runner)

@@ -16,4 +16,4 @@ Along with above,
 
 ## PC mode
 
-[PC mode](pc_mode.md) currently provides no security of any kind.  We are investigating potential solutions however there is currently no roadmap.
+[PC mode](pc_mode.md) provides no security of any kind.

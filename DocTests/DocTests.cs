@@ -16,12 +16,40 @@ namespace Ruyi.SDK.Tests
         [Test]
         public void CreateRuyiSDK()
         {
-            const bool GameIsRunning = false;
+            // Call update once
+            bool isGameRunning = true;
+            bool IsGameRunning()
+            {
+                var retval = isGameRunning;
+                isGameRunning = false;
+                return retval;
+            }
             #region RuyiSDK
             var sdkCtx = new RuyiSDKContext { endpoint = RuyiSDKContext.Endpoint.Console, EnabledFeatures = RuyiSDK.SDKFeatures.All };
-            using (var ruyi = RuyiSDK.CreateInstance(sdkCtx))
+            using (var sdk = RuyiSDK.CreateInstance(sdkCtx))
             {
-                while (GameIsRunning) { ruyi.Update(); }
+                while (IsGameRunning()) { sdk.Update(); }
+            }
+            #endregion
+        }
+
+        [Test]
+        public void Storage()
+        {
+            #region Storage
+            var sdkCtx = new RuyiSDKContext {
+                endpoint = RuyiSDKContext.Endpoint.Console,
+                EnabledFeatures = RuyiSDK.SDKFeatures.Basic | RuyiSDK.SDKFeatures.Storage // or `All`
+            };
+            using (var sdk = RuyiSDK.CreateInstance(sdkCtx))
+            {
+                // `AppId` in your RuyiManifest.json- same as app id you received from Subor Team or on the dev portal
+                var appid = "18258";
+                var writablePath = sdk.Storage.GetLocalPath(Ruyi.SDK.Constants.ConstantsSDKDataTypesConstants.DATA_DRIVER_TAG + appid);
+                // Write files to writable path
+
+                var readonlyPath = sdk.Storage.GetLocalPath(Ruyi.SDK.Constants.ConstantsSDKDataTypesConstants.HDD0_DRIVER_TAG + appid);
+                // Read files from read-only path
             }
             #endregion
         }

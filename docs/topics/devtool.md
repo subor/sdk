@@ -35,10 +35,11 @@ Applications can be installed, started, and stopped with App Runner.
 1. If successful, you should see your app listed in __Installed Apps__ list
 1. Select it and press __Run App__ button to launch it
 
-
 - You can stop your app by selecting it from __Running Apps__ and pressing __Stop App__ button
 - To uninstall an app, select it from __Installed Apps__ and press __Uninstall App__ button, note it can't be running if you want to uninstall it
 - Press __Force Refresh__ to update __Running Apps__ and __Installed Apps__ lists
+
+Also see [Running Apps](run_app.md).
 
 ## Sign Tool
 
