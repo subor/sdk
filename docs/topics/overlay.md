@@ -19,7 +19,7 @@ It is implemented via [dll injection](https://en.wikipedia.org/wiki/DLL_injectio
 
 Compatible apps don't __have__ to do anything with the SDK.
 
-However, there are some functions related to the overlay in the SDK.  For example, apps can trigger a screenshot.  [See SDK documentation](https://subor.github.io/api/cs/en-US/html/609b22ad-556e-51d2-22a5-112ae52e4d9c.htm) for details.
+However, there are some functions related to the overlay in the SDK.  For example, apps can trigger a screenshot.  See SDK documentation ([C++](https://subor.github.io/api/cpp/en-US/class_overlay_external_service_handler.html), C# [.Net Framework 3.5](https://subor.github.io/api/nf3.5/en-US/html/ff892c9a-ca1d-8308-340d-c1dedfba1b11.htm)/[.Net Standard 2.0](https://subor.github.io/api/cs/en-US/html/ff892c9a-ca1d-8308-340d-c1dedfba1b11.htm)) for details.
 
 ## Compatibility
 
@@ -30,25 +30,23 @@ Your game can be made compatible with any of the following methods:
 
 ### Manifest
 
-Apps can be made compatible with the overlay by placing an entry in the [RuyiManifest](app_metadata.md):
+Apps can be made compatible with the overlay by placing an entry in the [RuyiManifest](app_metadata.md) (from [UE4 sample](https://github.com/subor/sample_ue4_platformer/blob/development/Pack/RuyiManifest.json)):
 
 ```json
 {
     ...
-    "gamedb":{
-        "id": 6003,
-        "name": "PlatformerGame",
-        "conditions":[
-            {"name": "is-PlatformerGame.exe-present", "type": "ExePresent", "additionalArg": "PlatformerGame.exe"}
+    "GameDb":{
+        "Id": 6003,
+        "Name": "PlatformerGame",
+        "Conditions":[
+            {"Name": "is-PlatformerGame.exe-present", "Type": "ExePresent", "AdditionalArg": "PlatformerGame.exe"}
         ],
-        "detection": [
-            {"name": "PlatformerGame", "order": "1", "rules": [
-                {"cond": "is-PlatformerGame.exe-present"}
-            ]}
+        "Detection": [
+            {"Name": "PlatformerGame", "Order": 1, "Rules": [{"Cond": "is-PlatformerGame.exe-present"}]}
         ],
-        "runtime": {
-            "features":{},
-            "ruyifeatures":{}
+        "Runtime": {
+            "Features":{},
+            "RuyiFeatures":{}
         }
     }
 }
