@@ -2,7 +2,7 @@
 
 Starting [OS](os.md) v0.6, the console can be booted to a regular PC desktop.  This is referred to as "PC mode".
 
-PC mode is similar to the console OS- same version of Windows- but many of the security features have been turned off (Bitlocker, Device Guard Code Integrity, etc.).
+PC mode is similar to the console OS- same version of Windows- but many of the [security features](security.md) have been turned off.
 
 ![](/docs/img/warning.png) [BIOS](bios.md) updates cannot be done in [PC mode](pc_mode.md).  Make sure you are __not__ in PC mode before updating the BIOS.
 

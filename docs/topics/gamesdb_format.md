@@ -11,7 +11,7 @@ This section describes the full grammar of the gamesdb.xml file.  If you still c
 ## Overview
 
 Gamesdb.xml contains numerous entries similar to:
-```
+```xml
 <game>
     <id>9999</id> 
     <name>YourGameName</name>
@@ -35,7 +35,7 @@ If the rules specified by a `<variant>` matches for a running executable, it wil
 
 | XML Element | Description | Required | Details
 |-|-|-|-
-| id | App ID assigned to you by Subor ([link](dev_onboarding.md)) | Yes | E.g. `<id>12345</id>`
+| id | App Id of the application ([link](dev_onboarding.md)) | Yes | E.g. `<id>12345</id>`
 | name | Title of your application | Yes | E.g. `<name>Ruyi Test App</name>`
 | conditions | All the environment conditions used in `<detection>` to specify `<variant>` rules | Yes | See [Conditions Element](#conditions-element)
 | detection | Specify `<variant>` rules used to identify applications | Yes | See [Detection Element](#detection-element)
@@ -45,7 +45,10 @@ If the rules specified by a `<variant>` matches for a running executable, it wil
 
 `<conditions>` contains one or more `<cond>` elements.  These are simple environment checks that are combined in [`<detection>`](#detection-element).
 
-Format is: `<cond name="CONDITION_NAME" type="TYPE" TYPE_ATTR="ADDITIONAL_ARG" />`
+Format is:
+```xml
+<cond name="CONDITION_NAME" type="TYPE" TYPE_ATTR="ADDITIONAL_ARG" />
+```
 
 Where `CONDITION_NAME` is the unique name of the condition.
 
@@ -89,7 +92,14 @@ Additional attributes:
 
 When the overlay attaches to an application, `<runtime>` configures some aspect of the hooking or rendering.
 
-All are similar to `<ELEMENT ATTR="VALUE" />`.
+It may contain the following sections:
+- `<features>`
+- `<ruyifeatures>`
+
+Each section contains one or more elements similar to:
+```xml
+<ELEMENT ATTR="VALUE" />
+```
 
 Within `<features></features>`:
 

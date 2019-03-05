@@ -14,12 +14,12 @@ Assistance for any plugin is available via `RuyiDev.exe <plugin> -h`.
 
 | Name | Functionality
 |-|-
-| API Tool | Process Thrift files and generate API (see [building SDK source](build_sdk_source.md))
+| [API Tool](#api-tool) | Process Thrift files and generate API (see [building SDK source](build_sdk_source.md))
 | [App Runner](#app-runner) | Installation and starting/stopping of apps
 | Localization Tool | 
 | Setting Tool | Get/set configuration parameters
 | [Sign Tool](#sign-tool) | Sign applications
-| TRC Tool | Both static and runtime checking of app conformance to Ruyi platform requirements
+| [TRC Tool](#trc-tool) | Both static and runtime validation of app conformance
 
 ## App Runner
 
@@ -58,3 +58,48 @@ Click __Sign App__ to sign all files matching the following patterns:
 - `*.ocx`
 
 Later you will be able to customize this via a section in RuyiManifest.
+
+## TRC Tool
+
+![](/docs/img/devtool_trc.png)
+
+TRC tool can be used for static and runtime validation of app compliance.
+
+- __TRC Description__ - path to TRC description file
+- __App Root__ - path to root of app containing `RuyiManifest.json`
+
+__Parse App__ will then do offline, static analysis of the application root, `RuyiManifest.json`, and related [meta-data](app_metadata.md) for issues.  This is similar to the testing done by app runner prior to installation.
+
+- __Remote Address__ - is name or IP address of layer0 to connect to (defaults to localhost)
+
+__Start Remote Test__ and __End Remote Test__ will start/stop runtime validation of an app:
+1.  Begin testing
+1.  Launch your app on the target
+1.  Access all areas or use all features of your app, or other comprehensive QA testing
+1.  End the testing
+1.  Analyze log for runtime compliance issues
+
+
+## API Tool
+
+![](/docs/img/devtool_api_tool.png)
+
+API tool can be used to generate SDK libraries different from what we provide.
+
+- __Thrift Files__ - Thrift [interface definition files from SDK source](https://github.com/subor/sdk/tree/master/ThriftFiles)
+- __Thrift location__ - Thrift executable to use
+- __Gen__ - Passed as `--gen` option to thrift executable
+- __Service Output__ - output folder for generated service source code
+- __Common Output__ - output folder for "common" source code.  Some languages (e.g. C#) need the common code in a separate binary
+- __OutputPrefix__ - output for each thrift file is placed in own subfolder.  Some languages (e.g. C++ and JavaScript) need per-file output directories to avoid problems file clobbering, include pathing issues, etc.
+
+For example, to generate API similar to what we provide in SDK (see [SDK source](https://github.com/subor/sdk)):
+```powershell
+# C++
+DevTools\RuyiDev.exe -v Debug ApiTool --ThriftFiles=sdk\ThriftFiles --ThriftExe=..\tools\thrift\thrift.exe --Gen=cpp --ServiceOutput=sdk\ServiceGenerated\Generated --Options=OutputPrefix --Generate
+
+# C#
+DevTools\RuyiDev.exe -v Debug ApiTool --ThriftFiles=sdk\ThriftFiles --ThriftExe=..\tools\thrift\thrift.exe --Gen="csharp:async,union" --ServiceOutput=sdk\ServiceGenerated\Generated --CommonOutput=sdk\ServiceCommon\Generated --Generate
+```
+
+Also see [building SDK from source](build_sdk_source.md).

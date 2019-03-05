@@ -7,7 +7,6 @@ The overlay is based off technology licensed from [Evolve](www.evolvehq.com) and
 * [Input](#input.md) from devices (as an alternative to implementing input portion of SDK)
 * __Coming soon:__ Recording video (see [DVR](dvr.md))
 
-
 ![](/docs/img/warning.png) The following are not (yet) supported:  
 
 * Vulkan (coming less soon)
@@ -19,7 +18,7 @@ It is implemented via [dll injection](https://en.wikipedia.org/wiki/DLL_injectio
 
 Compatible apps don't __have__ to do anything with the SDK.
 
-However, there are some functions related to the overlay in the SDK.  For example, apps can trigger a screenshot.  See SDK documentation ([C++](https://subor.github.io/api/cpp/en-US/class_overlay_external_service_handler.html), C# [.Net Framework 3.5](https://subor.github.io/api/nf3.5/en-US/html/ff892c9a-ca1d-8308-340d-c1dedfba1b11.htm)/[.Net Standard 2.0](https://subor.github.io/api/cs/en-US/html/ff892c9a-ca1d-8308-340d-c1dedfba1b11.htm)) for details.
+However, there are some functions related to the overlay in the SDK.  For example, apps can trigger a screenshot.  See [SDK documentation](https://subor.github.io/) for details.
 
 ## Compatibility
 
@@ -120,8 +119,8 @@ This currently does __NOT__ work if your app uses:
 
 
 ```json
-"runtime": {
-    "ruyifeatures":{
+"Runtime": {
+    "RuyiFeatures":{
 
     }
 }

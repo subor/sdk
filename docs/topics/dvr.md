@@ -1,6 +1,6 @@
 # DVR
 
-![](/docs/img/warning.png) This feature is not completely ready yet.
+![](/docs/img/warning.png) This feature is not ready yet.
 
 The [overlay](overlay.md) includes functionality to record video in-app.
 

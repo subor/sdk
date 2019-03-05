@@ -17,19 +17,13 @@ __Other__
 
 ## Integration
 
-To explicitly integrate Ruyi's input system register to receive input events published by input manager.  Create an [SDK instance](https://subor.github.io/api/cs/en-US/html/0c612cb2-48f2-a7bb-4726-7dbee95ea768.htm) and [subscribe](https://subor.github.io/api/cs/en-US/html/0b09fff9-d288-42c8-5470-2378590bb6d3.htm) to [`RuyiGamePadInput`](https://subor.github.io/api/cs/en-US/html/7232502d-e856-2b61-c19f-b0f8858c0f6b.htm) events:
-```csharp
-var sdk = RuyiSDK.CreateInstance(new RuyiSDKContext { endpoint = RuyiSDKContext.Endpoint.Console, EnabledFeatures = RuyiSDK.SDKFeatures.Basic });
-sdk.Subscriber.Subscribe(Ruyi.Layer0.ServiceHelper.PubChannelID(ServiceIDs.INPUTMANAGER_INTERNAL));
-sdk.Subscriber.AddMessageHandler<Ruyi.SDK.InputManager.RuyiGamePadInput>((topic, message) => {
-    if ((message.ButtonFlags & (int)Ruyi.SDK.CommonType.RuyiGamePadButtonFlags.GamePad_A) != 0)
-    {
-        // "A" pressed!
-    }
-});
-```
+To explicitly integrate Ruyi's input system, register to receive input events published by input manager:  
+1. Create an [SDK instance](https://subor.github.io/api/cs/en-US/html/0c612cb2-48f2-a7bb-4726-7dbee95ea768.htm)
+1. [Subscribe](https://subor.github.io/api/cs/en-US/html/23dc7650-c5f6-5e03-1d3a-45b67cb55819.htm) to [`RuyiGamePadInput`](https://subor.github.io/api/cs/en-US/html/7232502d-e856-2b61-c19f-b0f8858c0f6b.htm) events.
 
-An alternative to explicit integration is to take advantage of input hooking feature of [overlay](overlay).
+See [API docs](https://subor.github.io/) and [integration samples](https://github.com/subor/) for detailed examples.
+
+An alternative to explicit integration is to take advantage of [input hooking feature of overlay](overlay.md#input).
 
 ## Button Mapping
 
