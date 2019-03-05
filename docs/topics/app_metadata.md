@@ -49,7 +49,7 @@ D:\DEV\UNITY_DEMO\PACK
         ...
 ```
 
-The `space_shooter` folder and `space_shooter.exe` should all match the `AppID` value in the manifest file.
+The `space_shooter` folder and `space_shooter.exe` should all match the `AppId` value in the manifest file.
 
 ## Strings
 

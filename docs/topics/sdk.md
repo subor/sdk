@@ -68,6 +68,6 @@ RuyiSDKUnity/ | RuyiSDKUnity.unitypackage | SDK package for Unity 3D
 ## Links
 
 * [SDK Downloads](https://github.com/subor/sdk/releases)
-* SDK documentation: [C#](http://subor.github.io/api/cs/en-US/), [C++](https://subor.github.io/api/cpp/en-US/), [offline](https://github.com/subor/subor.github.io)
+* [Online documentation](http://subor.github.io), [offline](https://github.com/subor/subor.github.io)
 * [Unity specifics](unity.md)
 * [UE4 specifics](ue4.md)

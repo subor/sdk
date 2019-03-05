@@ -1,4 +1,4 @@
-# Ruyi OS
+# Ruyi/Z+ OS
 
 The operating system installed on the Ruyi console is a version of Windows 10 variably known as __Windows 10 IoT Enterprise__ or __Windows 10 Enterprise LTSB 2016__.  Note that this is __not__ the same as [Windows 10 IoT Core](https://developer.microsoft.com/en-us/windows/iot).   
 
@@ -8,22 +8,15 @@ Essentially, it is Windows 10:
 * With security features of Windows 10 Enterprise (i.e. [AppLocker](https://docs.microsoft.com/en-us/windows/security/threat-protection/applocker/applocker-overview), [BitLocker](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview), and [Device Guard](https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/device-guard-deployment-guide))
 * Without Microsoft Edge, Store, Cortana, and apps like Mail, Calendar, etc.
 
-Together with our configuration, drivers, and shell it is __Ruyi OS__.
-
-Some key changes we make relative to a normal Windows 10 environment:
-
-* Drives (including `c:\`) encrypted with Bitlocker
-* Numerous key combinations disabled (`Ctrl-Alt-Del`, `Alt-tab`, etc.)
-* Windows desktop shell replaced with Ruyi client UI
-* _UPCOMING_ Device Guard Code Integrity enabled (now called Application Control)
+Together with [our configuration](security.md), [drivers](drivers.md), and desktop shell it is __Ruyi OS or Z+ OS__.
 
 A standard Windows Desktop environment is available via [PC mode](pc_mode.md).
 
 ## Version
 
-__Checking Ruyi OS Version of Running Machine__
+__Checking OS Version of Running Machine__
 
-- In Ruyi client open __Settings > System > System Information__:  
+- In client open __Settings > System > System Information__:  
     ![](/docs/img/version.png)
 - If version __0.7__ or later, check registry value of `HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Subor\MachineInfo`
 - For versions before __0.7__, check the top of `c:\windows\ad.log`:
@@ -32,7 +25,7 @@ __Checking Ruyi OS Version of Running Machine__
         RUYI OS v0.5_20180205B
 
 
-__Checking Ruyi OS Version of Install Media__
+__Checking OS Version of Install Media__
 
 Check `<root>\sources\version.txt`:
 ```
@@ -78,6 +71,23 @@ Installation should take 20-40 minutes.
 1. When prompted, remove the USB drive and press `Enter` to reboot and continue
     - During the remainder of the installation process the machine may reboot, open PowerShell/Command Prompt windows, or display a black screen several times
 1. Once a Windows desktop with no visible applications appears, installation is complete
+
+## Console Additional Runtime Components
+
+The following components are available on the console as part of the OS installation:
+
+| Component | Link | Notes
+|-|-|-
+Microsoft Sync Framework | [link](https://www.microsoft.com/en-us/download/details.aspx?id=19502) | Used to transfer builds from devtool on PC to console
+Visual C++ Redistributable for VS 2008 | [x86](https://www.microsoft.com/en-us/download/details.aspx?id=29) and [x64](https://www.microsoft.com/en-us/download/details.aspx?id=15336) | Needed by some apps/games
+Visual C++ Redistributable for VS 2010 | [x86](https://www.microsoft.com/en-us/download/details.aspx?id=5555) and [x64](https://www.microsoft.com/en-us/download/details.aspx?id=14632) | Needed by some apps/games
+Visual C++ Redistributable for VS 2012 | [x86/x64](https://www.microsoft.com/en-us/download/details.aspx?id=30679) | Needed by some apps/games
+Visual C++ Redistributable for VS 2013 | [x86/x64](https://www.microsoft.com/en-us/download/details.aspx?id=40784) | Needed by main client some apps/games
+Visual C++ Redistributable for VS 2017 | [x86/x64](https://go.microsoft.com/fwlink/?LinkId=746572) | Needed by layer0 and some apps/games.  Also covers VS 2015.
+Vulkan Runtime v1.0.54.0 | [x86/x64](https://vulkan.lunarg.com/sdk/home) | Needed by some apps/games
+DirectX 9.0c End-User Runtime | [link](https://www.microsoft.com/en-us/download/details.aspx?id=34429) | Needed by some apps/games
+.NET Framework 3.5 | [link](https://www.microsoft.com/en-us/download/details.aspx?id=22) | Needed by some apps/games
+
 
 ## Resources
 

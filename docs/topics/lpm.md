@@ -22,7 +22,7 @@ Because of the above constraints, apps will need to react to notifications that 
 
 ## Switching
 
-You can enter LPM by:
+You can enter LPM by doing any of the following:  
 - Press and release power button on front of console and wait 2 seconds
 - From main client, select __Settings > Power > Switch to LPM__
 - In [PC mode](pc_mode),  can use [Z+ Assist](ruyi_assist)

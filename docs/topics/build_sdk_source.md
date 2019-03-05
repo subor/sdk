@@ -15,7 +15,7 @@ __Prerequisites__
 
 * See [C++ prerequsites](cplusplus.md#prerequisites)
 * External C++ libraries [provided by us](https://github.com/subor/sdk/releases), or built on your own:
-    * [thrift](https://thrift.apache.org/) version 0.11 [Download](https://thrift.apache.org/download)
+    * [thrift](https://thrift.apache.org/) version 0.12 [Download](https://thrift.apache.org/download)
         * [boost](http://www.boost.org/) version 1.64.0 (used by thrift) [Download](https://sourceforge.net/projects/boost/files/boost-binaries/1.64.0/)
         * [openssl](https://www.openssl.org/) version 1.1.1-dev (used by thrift)
     * [jsoncpp](https://github.com/open-source-parsers/jsoncpp) version version 1.8.3 (used by cpp unit test) [Download](https://github.com/open-source-parsers/jsoncpp/releases/tag/1.8.3)
@@ -25,7 +25,7 @@ __Instructions__
 
 1. Clone or download `https://github.com/subor/sdk.git` to __sdk__ folder:  
     `git clone https://your_username_here@github.com/subor/sdk.git sdk`
-1. Unzip external libs (listed [above in prerequisites](#prerequisites)) to __externals/__ folder beside __sdk/__.  Like this:
+1. Unzip external libs (listed [above in prerequisites](#prerequisites)) to __externals/__ folder which is sibling of __sdk/__:
 
         +---externals
         |   +---boost_1_64_0
@@ -67,14 +67,14 @@ __Instructions__
 
 __Prerequisites__
 
-* [thrift](https://thrift.apache.org/) version 0.11 [Download](https://thrift.apache.org/download)
+* [thrift](https://thrift.apache.org/) version 0.12 [Download](https://thrift.apache.org/download)
 * [netmq](https://netmq.readthedocs.io/en/latest/) version 4.0.0.1 (via nuget)
 
 __Instructions__
 
 1. Open `sdk/SDK.sln`
     * `.Net Framework 3.5` contains projects suitable for Unity 3D
-    * `.Net Standard` contains projects targetting .Net Standard 2.0 ([details](https://docs.microsoft.com/en-us/dotnet/standard/net-standard))
+    * `.Net Standard` contains projects targetting [.Net Standard 2.0](https://docs.microsoft.com/en-us/dotnet/standard/net-standard)
 1. [Build the SDK](#building)
 
 ## Building
@@ -98,13 +98,5 @@ The SDK source also includes the underlying [Thrift interface definitions](https
 
 Run `thrift.exe --help` for a full list of supported languages (generators) and options.
 
-The API Tool provided with [devtool](devtool.md) provdes some assistance working with our Thrift files.
+The API Tool provided with [devtool](devtool.md#api-tool) provdes some assistance working with our Thrift files.
 
-For example, to generate API similar to what we provide in SDK (see [sdk source](https://github.com/subor/sdk)):
-```
-:: C++
-DevTools\RuyiShell.exe -v Debug ApiTool --ThriftFiles=sdk\ThriftFiles --ThriftExe=..\tools\thrift\thrift.exe --Gen=cpp --ServiceOutput=sdk\ServiceGenerated\Generated --Options=OutputPrefix --Generate
-
-:: C#
-DevTools\RuyiShell.exe -v Debug ApiTool --ThriftFiles=sdk\ThriftFiles --ThriftExe=..\tools\thrift\thrift.exe --Gen="csharp:async,union" --ServiceOutput=sdk\ServiceGenerated\Generated --CommonOutput=sdk\ServiceCommon\Generated --Generate
-```
